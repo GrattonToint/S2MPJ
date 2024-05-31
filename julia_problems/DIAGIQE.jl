@@ -1,0 +1,128 @@
+function DIAGIQE(action,args...)
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# 
+# 
+#    Problem : DIAGIQE
+#    *********
+#    A variable dimension indefinite quadratic problem
+#    with equispaced eigenvalues throughout the spectrum
+# 
+#    lambda_i = i - n/2, i = 1, ... , n
+# 
+#    Source: simple test for GALAHAD gltr/glrt
+# 
+#    SIF input: Nick Gould, Feb 2019, corrected May 2024
+# 
+#    classification = "QBR2-AN-V-0"
+# 
+#    Number of variables (variable)
+# 
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    name = "DIAGIQE"
+
+    if action == "setup"
+        pbm          = PBM(name)
+        pb           = PB(name)
+        pb.sifpbname = "DIAGIQE"
+        nargin       = length(args)
+        pbm.call     = eval( Meta.parse( name ) )
+
+        #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
+        v_  = Dict{String,Float64}();
+        ix_ = Dict{String,Int}();
+        ig_ = Dict{String,Int}();
+        if nargin<1
+            v_["N"] = Int64(10);  #  SIF file default value
+        else
+            v_["N"] = Int64(args[1]);
+        end
+#       Alternative values for the SIF file parameters:
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER
+# IE N                   1000000        $-PARAMETER
+        v_["1"] = 1
+        v_["TWO"] = 2.0
+        v_["RN"] = Float64(v_["N"])
+        v_["RN/2"] = v_["RN"]/v_["TWO"]
+        v_["SHIFT"] = -1.0*v_["RN/2"]
+        #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
+        xscale  = Float64[]
+        intvars = Int64[]
+        binvars = Int64[]
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            arrset(pb.xnames,iv,"X"*string(I))
+        end
+        #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
+        gtype    = String[]
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            arrset(gtype,ig,"<>")
+            iv = ix_["X"*string(I)]
+            pbm.A[ig,iv] += Float64(1.0)
+        end
+        #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
+        pb.n   = length(ix_)
+        ngrp   = length(ig_)
+        pbm.objgrps = collect(1:ngrp)
+        pb.m        = 0
+        pb.xlower = zeros(Float64,pb.n)
+        pb.xupper =    fill(Inf,pb.n)
+        #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
+        pb.xlower = fill(-100000.0,pb.n)
+        pb.xupper = fill(1000000.0,pb.n)
+        #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
+        pb.x0 = fill(Float64(1.0),pb.n)
+        #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            v_["RI"] = Float64(I)
+            v_["H"] = v_["RI"]+v_["SHIFT"]
+            ix1 = ix_["X"*string(I)]
+            ix2 = ix_["X"*string(I)]
+            pbm.H[ix1,ix2] = Float64(v_["H"])+pbm.H[ix1,ix2]
+            pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+        end
+        #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+        pb.objlower = 0.0
+        #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
+        pbm.gconst = zeros(Float64,ngrp)
+        Asave = pbm.A[1:ngrp, 1:pb.n]
+        pbm.A = Asave
+        Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
+        pbm.H = Hsave
+        #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
+        pb.pbclass = "QBR2-AN-V-0"
+        return pb, pbm
+
+    #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
+
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+
+        pbm = args[1]
+        if pbm.name == name
+            pbm.has_globs = [0,0]
+            return s2x_eval(action,args...)
+        else
+            println("ERROR: please run "*name*" with action = setup")
+            return ntuple(i->undef,args[end])
+        end
+
+    else
+        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        return ntuple(i->undef,args[end])
+    end
+
+end
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
