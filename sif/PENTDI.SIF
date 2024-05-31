@@ -1,0 +1,132 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PENTDI
+
+*   Problem:
+*   ********
+
+*   A convex quadratic 5-diagonals problem in non-negative variables,
+*   whose matrix has been taken from a paper of Pang and Liu.  
+*   The interesting feature of this matrix is that its condition number 
+*   increases with its order.  
+
+*   Source:
+*   a contribution to fullfill the LANCELOT academic licence agreement,
+*   inspired by
+*   Y. Lin and J. Pang,
+*   "Iterative methods for large convex quadratic programs: a survey",
+*   SIAM Journal on Control and Optimization 25, pp.383-411, 1987.
+
+*   SIF input: J. Judice, University of Coimbra, January 1995.
+*              condensed by Ph. Toint, January 1995.
+
+*   classification QBR2-AN-V-0
+
+*   dimension of the problem (should be even)
+
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER  original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+*IE N                   50000          $-PARAMETER
+
+*   constants
+
+ IE 1                   1  
+ IE 2                   2
+ IA N+1       N         1
+ IA N-2       N         -2
+ I/ N/2       N                        2
+ IA N/2-1     N/2       -1
+ IA N/2+1     N/2       1
+ IA N/2+3     N/2       3
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ OD I
+
+GROUPS
+
+ XN OBJ
+ XN OBJ0
+ XN OBJ1      X(1)      -3.000         X(2)       1.000    
+ XN OBJ1      X(N/2-1)   1.000         X(N/2)    -3.000    
+ XN OBJ1      X(N/2+1)   4.000  
+  
+ DO I         N/2+3                    N
+ XN OBJ1      X(I)       1.000    
+ OD I
+
+ELEMENT TYPE
+
+ EV SQ        V
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT Z(I)      SQ
+ ZV Z(I)      V                        X(I)
+ OD I
+
+ I= P         N
+ DO I         1                        N-2
+ IA I+1       I            1
+ IA I+2       I            2
+ IA P         P            1
+ XT Z(P)      2PR
+ ZV Z(P)      X                        X(I)
+ ZV Z(P)      Y                        X(I+1)
+ IA P         P            1
+ XT Z(P)      2PR
+ ZV Z(P)      X                        X(I)
+ ZV Z(P)      Y                        X(I+2)
+ OD I
+
+GROUP USES
+
+ DO I         1                        N
+ XE OBJ0      Z(I)         6.000    
+ OD I
+
+ DO I         N+1                      P
+ DI I         2
+ IA I+1       I            1
+ XE OBJ       Z(I)         -4.000    
+ XE OBJ       Z(I+1)       1.000 
+ OD I
+
+OBJECT BOUND
+
+*LO SOLUTION               -0.75
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PENTDI
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X*Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      V*V
+ G  V                   V+V
+ H  V         V         2.0
+
+ENDATA

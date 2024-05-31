@@ -1,0 +1,178 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POROUS1
+
+*   Problem :
+*   *********
+
+*   The problem is to solve the porous medium equation on the unit square.
+*   The equation is
+
+*       \Delta ( u^2 ) + d \frac{\partial}{\partial x_1}( u^3 ) + f = 0
+
+*   within the domain.  The boundary condition are that u = 1 on the bottom
+*   and left sides and u = 0 on the top and right sides.  Discretization is
+*   using the usual central differences. The function f is a point source of
+*   maginitude 50 at the lower left grid point.  The initial approximation
+*   is a discretization of 1 - x_1 x_2.
+
+*   Source: example 3.2.4 in
+*   S. Eisenstat and H. Walker,
+*   "Choosing the forcing terms in an inexact Newton method"
+*   Report 6/94/75, Dept of Maths, Utah State University, 1994.
+
+*   SIF input: Ph. Toint, July 1994. Corrected November 2002.
+
+*   classification NOR2-MN-V-V
+
+*   P is the number of points in one side of the unit square.
+*   There are P*P variables.
+
+*IE P                   32             $-PARAMETER      original value
+*IE P                   64             $-PARAMETER 
+*IE P                   72             $-PARAMETER 
+ IE P                   5              $-PARAMETER     modified for S2X tests
+
+*   D is the diffusion parameter d in the equation above.
+*   (see problem POROUS2 for D = 50.0)
+
+ RE D                   50.0           $-PARAMETER  diffusion parameter
+
+*   Define a few helpful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ IA P-1       P         -1
+ RI RP-1      P-1
+ RD H         RP-1      1.0
+ R* H2        H                        H
+ RD 1/H2      H2        1.0
+ RM 2H        H         2.0
+ R/ D/2H      D                        2H
+ RM -D/2H     D/2H      -1.0
+ RM -4/H2     1/H2      -4.0
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit square
+
+ DO J         1                        P
+ DO I         1                        P
+ X  U(I,J)
+ ND
+
+GROUPS
+
+*   Define a group per inner discretized point.
+*   The linear term shows the Laplace operator.
+
+ DO I         2                        P-1
+ DO J         2                        P-1
+ XE G(I,J)    
+ ND
+
+CONSTANTS
+
+ X  POROUS1   G(P-1,P-1)-50.0
+
+BOUNDS
+
+ FR POROUS1   'DEFAULT'
+
+*   Fix the variables on the lower and upper edges of the unit square
+
+ DO J         1                        P
+ XX POROUS1   U(1,J)    1.0
+ XX POROUS1   U(P,J)    0.0
+ ND
+
+*   Fix the variables on the left and right edges of the unit square
+
+ DO I         2                        P-1
+ XX POROUS1   U(I,P)    1.0
+ XX POROUS1   U(I,1)    0.0
+ ND
+
+START POINT
+
+ DO I         1                        P
+ DO J         1                        P
+ RI RI        I
+ RI RJ        J
+ RA I-1       RI        -1.0
+ RA J-1       RJ        -1.0
+ R* X1        I-1                      H
+ R* X2        J-1                      H
+ R* X1X2      X1                       X2
+ RM MX1X2     X1X2      -1.0
+ RA UIJ       MX1X2     1.0
+ ZV POROUS1   U(I,J)                   UIJ
+ ND
+
+ELEMENT TYPE
+
+ EV SQ        U
+ EV CB        U
+
+ELEMENT USES
+
+ DO I         1                        P
+ DO J         1                        P
+ XT US(I,J)   SQ
+ ZV US(I,J)   U                        U(I,J)
+ XT UC(I,J)   CB
+ ZV UC(I,J)   U                        U(I,J)
+ ND
+
+GROUP USES
+
+ DO I         2                        P-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ DO J         2                        P-1
+ IA J-1       J         -1
+ IA J+1       J         1
+ ZE G(I,J)    US(I+1,J)                1/H2
+ ZE G(I,J)    US(I-1,J)                1/H2
+ ZE G(I,J)    US(I,J-1)                1/H2
+ ZE G(I,J)    US(I,J+1)                1/H2
+ ZE G(I,J)    US(I,J)                  -4/H2
+ ZE G(I,J)    UC(I+1,J)                D/2H
+ ZE G(I,J)    UC(I-1,J)                -D/2H
+ ND
+
+OBJECT BOUND
+
+ LO POROUS1             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POROUS1
+
+INDIVIDUALS
+
+*   Square
+
+ T  SQ
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  CB
+ F                      U * U * U
+ G  U                   3.0 * U * U
+ H  U         U         6.0 * U
+
+ENDATA

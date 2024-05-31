@@ -1,0 +1,122 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OSLBQP
+
+*   Problem :
+*   *********
+
+*   Source: Simple convex QP in OSL manual
+
+
+
+*  Minimize   x1 + 2x5 - x8 + 1/2(x1**2 + x2**2 + x3**2 + x4**2
+*                            + x5**2 + x6**2 + x7**2 + x8**2)
+*   Subject to:
+*   2.5 <= x1
+*     0 <= x2 <= 4.1
+*     0 <= x3
+*     0 <= x4
+*   0.5 <= x5 <= 4.0
+*     0 <= x6
+*     0 <= x7
+*     0 <= x8 <= 4.3
+
+
+*   SIF input: A.R. Conn, December 1992
+
+*   classification QBR2-AN-8-0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+    X6
+    X7
+    X8
+
+GROUPS
+
+ N  OBJ       X1        1.0            X5        2.0
+ N  OBJ       X8        -1.0
+
+CONSTANTS
+
+
+BOUNDS
+
+ LO OSLBQP    X1        2.5
+ UP OSLBQP    X2        4.1
+ LO OSLBQP    X5        0.5
+ UP OSLBQP    X5        4.0
+ UP OSLBQP    X8        4.3
+
+START POINT
+
+ XV OSLBQP    'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        SQ
+ V  E3        V1                       X3
+
+ T  E4        SQ
+ V  E4        V1                       X4
+
+ T  E5        SQ
+ V  E5        V1                       X5
+
+ T  E6        SQ
+ V  E6        V1                       X6
+
+ T  E7        SQ
+ V  E7        V1                       X7
+
+ T  E8        SQ
+ V  E8        V1                       X8
+
+GROUP USES
+
+ E  OBJ       E1        0.5            E2        0.5
+ E  OBJ       E3        0.5            E4        0.5
+ E  OBJ       E5        0.5            E6        0.5
+ E  OBJ       E7        0.5            E8        0.5
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION            6.2500000000
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OSLBQP
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

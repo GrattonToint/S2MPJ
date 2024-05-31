@@ -1,0 +1,508 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MAXLIKA
+
+*   Problem :
+*   *********
+
+*   A variant of Hock and Schittkowski problem 105, where the
+*   (inactive) inequality constraint is dropped.
+
+*   Source:
+*   Ph. Toint and A. Griewank.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification OBR2-AY-8-0
+
+*   Constants
+
+ IE 1                   1
+ IE 235                 235
+
+*   Problem dependent data
+
+ RE Y1                  95.0
+ RE Y2                  105.0
+ RE Y3                  110.0
+ RE Y4                  110.0
+ RE Y5                  110.0
+ RE Y6                  110.0
+ RE Y7                  115.0
+ RE Y8                  115.0
+ RE Y9                  115.0
+ RE Y10                 115.0
+ RE Y11                 120.0
+ RE Y12                 120.0
+ RE Y13                 120.0
+ RE Y14                 120.0
+ RE Y15                 120.0
+ RE Y16                 120.0
+ RE Y17                 120.0
+ RE Y18                 120.0
+ RE Y19                 120.0
+ RE Y20                 120.0
+ RE Y21                 120.0
+ RE Y22                 120.0
+ RE Y23                 120.0
+ RE Y24                 120.0
+ RE Y25                 120.0
+ RE Y26                 125.0
+ RE Y27                 125.0
+ RE Y28                 125.0
+ RE Y29                 125.0
+ RE Y30                 125.0
+ RE Y31                 125.0
+ RE Y32                 125.0
+ RE Y33                 125.0
+ RE Y34                 125.0
+ RE Y35                 125.0
+ RE Y36                 125.0
+ RE Y37                 125.0
+ RE Y38                 125.0
+ RE Y39                 125.0
+ RE Y40                 125.0
+ RE Y41                 130.0
+ RE Y42                 130.0
+ RE Y43                 130.0
+ RE Y44                 130.0
+ RE Y45                 130.0
+ RE Y46                 130.0
+ RE Y47                 130.0
+ RE Y48                 130.0
+ RE Y49                 130.0
+ RE Y50                 130.0
+ RE Y51                 130.0
+ RE Y52                 130.0
+ RE Y53                 130.0
+ RE Y54                 130.0
+ RE Y55                 130.0
+ RE Y56                 135.0
+ RE Y57                 135.0
+ RE Y58                 135.0
+ RE Y59                 135.0
+ RE Y60                 135.0
+ RE Y61                 135.0
+ RE Y62                 135.0
+ RE Y63                 135.0
+ RE Y64                 135.0
+ RE Y65                 135.0
+ RE Y66                 135.0
+ RE Y67                 135.0
+ RE Y68                 135.0
+ RE Y69                 140.0
+ RE Y70                 140.0
+ RE Y71                 140.0
+ RE Y72                 140.0
+ RE Y73                 140.0
+ RE Y74                 140.0
+ RE Y75                 140.0
+ RE Y76                 140.0
+ RE Y77                 140.0
+ RE Y78                 140.0
+ RE Y79                 140.0
+ RE Y80                 140.0
+ RE Y81                 140.0
+ RE Y82                 140.0
+ RE Y83                 140.0
+ RE Y84                 140.0
+ RE Y85                 140.0
+ RE Y86                 140.0
+ RE Y87                 140.0
+ RE Y88                 140.0
+ RE Y89                 140.0
+ RE Y90                 145.0
+ RE Y91                 145.0
+ RE Y92                 145.0
+ RE Y93                 145.0
+ RE Y94                 145.0
+ RE Y95                 145.0
+ RE Y96                 145.0
+ RE Y97                 145.0
+ RE Y98                 145.0
+ RE Y99                 145.0
+ RE Y100                145.0
+ RE Y101                145.0
+ RE Y102                150.0
+ RE Y103                150.0
+ RE Y104                150.0
+ RE Y105                150.0
+ RE Y106                150.0
+ RE Y107                150.0
+ RE Y108                150.0
+ RE Y109                150.0
+ RE Y110                150.0
+ RE Y111                150.0
+ RE Y112                150.0
+ RE Y113                150.0
+ RE Y114                150.0
+ RE Y115                150.0
+ RE Y116                150.0
+ RE Y117                150.0
+ RE Y118                150.0
+ RE Y119                155.0
+ RE Y120                155.0
+ RE Y121                155.0
+ RE Y122                155.0
+ RE Y123                160.0
+ RE Y124                160.0
+ RE Y125                160.0
+ RE Y126                160.0
+ RE Y127                160.0
+ RE Y128                160.0
+ RE Y129                160.0
+ RE Y130                160.0
+ RE Y131                160.0
+ RE Y132                160.0
+ RE Y133                160.0
+ RE Y134                160.0
+ RE Y135                160.0
+ RE Y136                160.0
+ RE Y137                160.0
+ RE Y138                160.0
+ RE Y139                160.0
+ RE Y140                160.0
+ RE Y141                160.0
+ RE Y142                160.0
+ RE Y143                165.0
+ RE Y144                165.0
+ RE Y145                165.0
+ RE Y146                165.0
+ RE Y147                165.0
+ RE Y148                165.0
+ RE Y149                165.0
+ RE Y150                165.0
+ RE Y151                170.0
+ RE Y152                170.0
+ RE Y153                170.0
+ RE Y154                170.0
+ RE Y155                170.0
+ RE Y156                170.0
+ RE Y157                170.0
+ RE Y158                170.0
+ RE Y159                170.0
+ RE Y160                170.0
+ RE Y161                170.0
+ RE Y162                170.0
+ RE Y163                170.0
+ RE Y164                170.0
+ RE Y165                170.0
+ RE Y166                170.0
+ RE Y167                170.0
+ RE Y168                175.0
+ RE Y169                175.0
+ RE Y170                175.0
+ RE Y171                175.0
+ RE Y172                175.0
+ RE Y173                175.0
+ RE Y174                175.0
+ RE Y175                175.0
+ RE Y176                180.0
+ RE Y177                180.0
+ RE Y178                180.0
+ RE Y179                180.0
+ RE Y180                180.0
+ RE Y181                180.0
+ RE Y182                185.0
+ RE Y183                185.0
+ RE Y184                185.0
+ RE Y185                185.0
+ RE Y186                185.0
+ RE Y187                185.0
+ RE Y188                190.0
+ RE Y189                190.0
+ RE Y190                190.0
+ RE Y191                190.0
+ RE Y192                190.0
+ RE Y193                190.0
+ RE Y194                190.0
+ RE Y195                195.0
+ RE Y196                195.0
+ RE Y197                195.0
+ RE Y198                195.0
+ RE Y199                200.0
+ RE Y200                200.0
+ RE Y201                200.0
+ RE Y202                205.0
+ RE Y203                205.0
+ RE Y204                205.0
+ RE Y205                210.0
+ RE Y206                210.0
+ RE Y207                210.0
+ RE Y208                210.0
+ RE Y209                210.0
+ RE Y210                210.0
+ RE Y211                210.0
+ RE Y212                210.0
+ RE Y213                215.0
+ RE Y214                220.0
+ RE Y215                220.0
+ RE Y216                220.0
+ RE Y217                220.0
+ RE Y218                220.0
+ RE Y219                220.0
+ RE Y220                230.0
+ RE Y221                230.0
+ RE Y222                230.0
+ RE Y223                230.0
+ RE Y224                230.0
+ RE Y225                235.0
+ RE Y226                240.0
+ RE Y227                240.0
+ RE Y228                240.0
+ RE Y229                240.0
+ RE Y230                240.0
+ RE Y231                240.0
+ RE Y232                240.0
+ RE Y233                245.0
+ RE Y234                250.0
+ RE Y235                250.0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+    X6
+    X7
+    X8
+
+GROUPS
+
+ DO I         1                        235
+ XN L(I)      'SCALE'   -1.0
+ ND
+
+BOUNDS
+
+ LO MAXLIKA   X1        0.001
+ UP MAXLIKA   X1        0.499
+
+ LO MAXLIKA   X2        0.001
+ UP MAXLIKA   X2        0.499
+
+ LO MAXLIKA   X3        100.0
+ UP MAXLIKA   X3        180.0
+
+ LO MAXLIKA   X4        130.0
+ UP MAXLIKA   X4        210.0
+
+ LO MAXLIKA   X5        170.0
+ UP MAXLIKA   X5        240.0
+
+ LO MAXLIKA   X6        5.0
+ UP MAXLIKA   X6        25.0
+
+ LO MAXLIKA   X7        5.0
+ UP MAXLIKA   X7        25.0
+
+ LO MAXLIKA   X8        5.0
+ UP MAXLIKA   X8        25.0
+
+
+START POINT
+
+    MAXLIKA   X1        0.1
+    MAXLIKA   X2        0.2
+    MAXLIKA   X3        100.0
+    MAXLIKA   X4        125.0
+    MAXLIKA   X5        175.0
+    MAXLIKA   X6        11.2
+    MAXLIKA   X7        13.2
+    MAXLIKA   X8        15.8
+
+ELEMENT TYPE
+
+ EV AB        U                        V
+ EV AB        W
+ EP AB        Y
+
+ EV C         U                        X
+ EV C         S                        T
+ IV C         Z                        V
+ IV C         W
+ EP C         Y
+
+ELEMENT USES
+
+ DO I         1                        235
+
+ XT A(I)      AB
+ ZV A(I)      U                        X1
+ ZV A(I)      V                        X6
+ ZV A(I)      W                        X3
+ ZP A(I)      Y                        Y(I)
+
+ XT B(I)      AB
+ ZV B(I)      U                        X2
+ ZV B(I)      V                        X7
+ ZV B(I)      W                        X4
+ ZP B(I)      Y                        Y(I)
+
+ XT C(I)      C
+ ZV C(I)      U                        X2
+ ZV C(I)      X                        X1
+ ZV C(I)      S                        X8
+ ZV C(I)      T                        X5
+ ZP C(I)      Y                        Y(I)
+
+ ND
+
+GROUP TYPE
+
+ GV LN        GVAR
+
+GROUP USES
+
+ DO I         1                        235
+ XT L(I)      LN
+ XE L(I)      A(I)                     B(I)
+ XE L(I)      C(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MAXLIKA
+
+TEMPORARIES
+
+ R  YMW
+ R  YMWSQ
+ R  VSQ
+ R  VCB
+ R  A
+ R  DADV
+ R  DADW
+ R  D2ADV2
+ R  D2ADVW
+ R  D2ADW2
+ R  E
+ R  DEDV
+ R  DEDW
+ R  B
+ R  DBDV
+ R  DBDW
+ R  DBDZ
+ R  D2BDVZ
+ R  D2BDWZ
+ R  D2BDV2
+ R  D2BDVW
+ R  D2BDW2
+
+ M  EXP
+
+INDIVIDUALS
+
+*   First element type
+
+ T  AB
+
+ A  YMW                 Y - W
+ A  YMWSQ               YMW * YMW
+ A  VSQ                 V * V
+ A  VCB                 VSQ * V
+
+ A  A                   - YMWSQ / ( 2.0 * VSQ )
+ A  DADV                YMWSQ / VCB
+ A  DADW                YMW / VSQ
+ A  D2ADV2              -3.0 * YMWSQ / ( VSQ * VSQ )
+ A  D2ADVW              -2.0 * YMW / VCB
+ A  D2ADW2              - 1.0 / VSQ
+
+ A  E                   EXP( A )
+ A  DEDV                E * DADV
+ A  DEDW                E * DADW
+
+ A  B                   U * E
+ A  DBDV                B * DADV
+ A  DBDW                B * DADW
+ A  D2BDV2              DBDV * DADV + B * D2ADV2
+ A  D2BDVW              DBDW * DADV + B * D2ADVW
+ A  D2BDW2              DBDW * DADW + B * D2ADW2
+
+ F                      B / V
+ G  U                   E / V
+ G  V                   ( DBDV - B / V ) / V
+ G  W                   DBDW / V
+ H  U         V         ( DEDV - E / V ) / V
+ H  U         W         DEDW / V
+ H  V         V         ( D2BDV2 -  DBDV / V + B / VSQ ) / V
+ H+                     - ( DBDV - B / V ) / VSQ
+ H  V         W         ( D2BDVW - DBDW / V ) / V
+ H  W         W         D2BDW2 / V
+
+*   Second element type
+
+ T  C
+
+ R  Z         U         1.0            X         1.0
+ R  V         S         1.0
+ R  W         T         1.0
+
+ A  YMW                 Y - W
+ A  YMWSQ               YMW * YMW
+ A  VSQ                 V * V
+ A  VCB                 VSQ * V
+
+ A  A                   - YMWSQ / ( 2.0 * VSQ )
+ A  DADV                YMWSQ / VCB
+ A  DADW                YMW / VSQ
+ A  D2ADV2              -3.0 * YMWSQ / ( VSQ * VSQ )
+ A  D2ADVW              -2.0 * YMW / VCB
+ A  D2ADW2              - 1.0 / VSQ
+
+ A  E                   EXP( A )
+ A  DEDV                E * DADV
+ A  DEDW                E * DADW
+
+ A  B                   (1.0 - Z) * E
+ A  DBDZ                - E
+ A  DBDV                B * DADV
+ A  DBDW                B * DADW
+ A  D2BDVZ              - DEDV
+ A  D2BDWZ              - DEDW
+ A  D2BDV2              DBDV * DADV + B * D2ADV2
+ A  D2BDVW              DBDW * DADV + B * D2ADVW
+ A  D2BDW2              DBDW * DADW + B * D2ADW2
+
+ F                      B / V
+ G  Z                   DBDZ / V
+ G  V                   ( DBDV - B / V ) / V
+ G  W                   DBDW / V
+ H  Z         V         ( DEDV - E / V ) / V
+ H  Z         W         D2BDWZ / V
+ H  V         V         ( D2BDV2 -  DBDV / V + B / VSQ ) / V
+ H+                     - ( DBDV - B / V ) / VSQ
+ H  V         W         ( D2BDVW - DBDW / V ) / V
+ H  W         W         D2BDW2 / V
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MAXLIKA
+
+TEMPORARIES
+
+ M  LOG
+
+INDIVIDUALS
+
+ T  LN
+ F                      LOG ( GVAR * 0.39894228 )
+ G                      1.0 / GVAR
+ H                      - 1.0 / GVAR**2
+
+ENDATA

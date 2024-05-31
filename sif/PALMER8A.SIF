@@ -1,0 +1,179 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER8A
+
+*   Problem :
+*   *********
+
+*   A nonlinear least squares problem with bounds
+*   arising from chemical kinetics.
+
+*   model: H-N=C=Se TZVP + MP2
+*   fitting Y to A0 + A2 X**2 + A4 X**4 + A6 X**6
+*                + B / ( C + X**2 ), B, C nonnegative.
+
+*   Source:
+*   M. Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1992.
+
+*   classification SBR2-RN-6-0
+
+*   Number of data points
+
+ IE M                   23
+
+*   Other data
+
+ IE 1                   1
+ IE 12                  12
+
+*   X (radians)
+
+ RE X12                 0.000000    
+ RE X13                 0.174533    
+ RE X14                 0.314159    
+ RE X15                 0.436332    
+ RE X16                 0.514504    
+ RE X17                 0.610865    
+ RE X18                 0.785398    
+ RE X19                 0.959931    
+ RE X20                 1.134464    
+ RE X21                 1.308997    
+ RE X22                 1.483530    
+ RE X23                 1.570796    
+
+*   Y( KJmol-1)
+
+ RE Y12                  4.757534
+ RE Y13                  3.121416
+ RE Y14                  1.207606
+ RE Y15                  0.131916
+ RE Y16                  0.000000
+ RE Y17                  0.258514
+ RE Y18                  3.380161
+ RE Y19                 10.762813
+ RE Y20                 23.745996
+ RE Y21                 44.471864
+ RE Y22                 76.541947
+ RE Y23                 97.874528
+
+
+VARIABLES
+
+    A0
+    A2
+    A4
+    A6
+    B
+    C
+
+GROUPS
+
+ DO I         12                       M
+ A* XSQR      X(I)                     X(I)
+ A* XQUART    XSQR                     XSQR
+ A* XSEXT     XQUART                   XSQR
+ XN O(I)      A0        1.0
+ ZN O(I)      A2                       XSQR
+ ZN O(I)      A4                       XQUART
+ ZN O(I)      A6                       XSEXT
+ ND
+
+CONSTANTS
+
+ DO I         12                       M
+ Z  PALMER8A  O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER8A  A0
+ FR PALMER8A  A2
+ FR PALMER8A  A4
+ FR PALMER8A  A6
+ LO PALMER8A  B         0.00001
+ LO PALMER8A  C         0.00001
+
+START POINT
+
+ XV PALMER8A  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV QUOT      B                        C
+ EP QUOT      XSQR
+
+ELEMENT USES
+
+ DO I         12                       M
+ A* XSQR      X(I)                     X(I)
+ XT E(I)      QUOT
+ ZV E(I)      B                        B
+ ZV E(I)      C                        C
+ ZP E(I)      XSQR                     XSQR
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         12                       M
+ XT O(I)      L2
+ XE O(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER8A               0.0
+
+*   Solution
+
+*LO SOLTN               4.0606141D-02
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PALMER8A
+
+TEMPORARIES
+
+ R  DENOM
+
+INDIVIDUALS
+
+ T  QUOT
+ A  DENOM               1.0 / ( C + XSQR )
+ F                      B * DENOM
+ G  B                   DENOM
+ G  C                   - B * DENOM * DENOM
+ H  B         C         - DENOM * DENOM
+ H  C         C         2.0 * B * DENOM ** 3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER8A
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

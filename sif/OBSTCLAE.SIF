@@ -1,0 +1,235 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OBSTCLAE
+
+*   Problem :
+*   *********
+
+*   A quadratic obstacle problem by Dembo and Tulowitzki
+
+*   The problem comes from the obstacle problem on a rectangle.
+*   The rectangle is discretized into (px-1)(py-1) little rectangles. The
+*   heights of the considered surface above the corners of these little
+*   rectangles are the problem variables,  There are px*py of them.
+
+*   Source:
+*   R. Dembo and U. Tulowitzki,
+*   "On the minimization of quadratic functions subject to box
+*   constraints",
+*   WP 71, Yale University (new Haven, USA), 1983.
+
+*   See also More 1989 (Problem A, Starting point E)
+
+*   SIF input: Ph. Toint, Dec 1989.
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification QBR2-AY-V-0
+
+*   PX is the number of points along the X side of the rectangle
+*   PY is the number of points along the Y side of the rectangle
+
+*IE PX                  4              $-PARAMETER n = 16
+*IE PY                  4              $-PARAMETER
+
+*IE PX                  10             $-PARAMETER n = 100
+*IE PY                  10             $-PARAMETER
+
+*IE PX                  23             $-PARAMETER n = 529
+*IE PY                  23             $-PARAMETER
+
+*IE PX                  32             $-PARAMETER n = 1024
+*IE PY                  32             $-PARAMETER
+
+*IE PX                  75             $-PARAMETER n = 5625     original value
+*IE PY                  75             $-PARAMETER              original value
+
+*IE PX                  100            $-PARAMETER n = 10000
+ IE PX                  5              $-PARAMETER     modified for S2X tests
+ IE PY                  100            $-PARAMETER
+
+*IE PX                  125            $-PARAMETER n = 15625
+*IE PY                  125            $-PARAMETER
+
+*   The force constant
+
+ RE C                   1.0            $-PARAMETER  the force constant
+
+*   Define a few helpful parameters
+
+ IA PX-1      PX        -1
+ RI RPX-1     PX-1
+ RD HX        RPX-1     1.0
+ IA PY-1      PY        -1
+ RI RPY-1     PY-1
+ RD HY        RPY-1     1.0
+ R* HXHY      HX                       HY
+ RD 1/HX      HX        1.0
+ RD 1/HY      HY        1.0
+ R* HX/HY     HX                       1/HY
+ R* HY/HX     HY                       1/HX
+ RM HY/4HX    HY/HX     0.25
+ RM HX/4HY    HX/HY     0.25
+ R* C0        HXHY                     C
+ RM LINC      C0        -1.0
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit square
+
+ DO J         1                        PX
+ DO I         1                        PY
+ X  X(I,J)
+ ND
+
+GROUPS
+
+*   Define a group per interior node
+
+ DO I         2                        PY-1
+ DO J         2                        PX-1
+ ZN G(I,J)    X(I,J)                   LINC
+ ND
+
+BOUNDS
+
+*   Describe the upper osbtacle (problem A)
+
+ XU OBSTCLAE  'DEFAULT' 2000.0
+
+*   Fix the variables on the lower and upper edges of the unit square
+
+ DO J         1                        PX
+ XX OBSTCLAE  X(1,J)    0.0
+ XX OBSTCLAE  X(PY,J)   0.0
+ ND
+
+*   Fix the variables on the left and right edges of the unit square
+
+ DO I         2                        PY-1
+ XX OBSTCLAE  X(I,PX)   0.0
+ XX OBSTCLAE  X(I,1)    0.0
+ ND
+
+*   Decribe the lower obstacle
+
+ DO I         2                        PY-1
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* XI1       RI-1                     HY
+ RM 3XI1      XI1       3.2
+ R( SXI1      SIN                      3XI1
+ DO J         2                        PX-1
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* XI2       RJ-1                     HX
+ RM 3XI2      XI2       3.3
+ R( SXI2      SIN                      3XI2
+ R* LOW       SXI1                     SXI2
+ ZL OBSTCLAE  X(I,J)                   LOW
+ ND
+
+START POINT
+
+*   All variables not on the boundary are set to 1.0
+*   (Starting point E)
+
+ XV OBSTCLAE  'DEFAULT' 1.0
+
+*   Start from the boundary values on the lower and upper edges
+
+ DO J         1                        PX
+ X  OBSTCLAE  X(1,J)    0.0
+ X  OBSTCLAE  X(PY,J)   0.0
+ ND
+
+*   Start from the boundary values on the left and right edges
+
+ DO I         2                        PY-1
+ X  OBSTCLAE  X(I,PX)   0.0
+ X  OBSTCLAE  X(I,1)    0.0
+ ND
+
+ELEMENT TYPE
+
+ EV ISQ       V1                       V2
+ IV ISQ       U
+
+ELEMENT USES
+
+*   Each node has four elements
+
+ DO I         2                        PY-1
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ DO J         2                        PX-1
+
+ IA J-1       J         -1
+ IA J+1       J         1
+
+ XT A(I,J)    ISQ
+ ZV A(I,J)    V1                       X(I+1,J)
+ ZV A(I,J)    V2                       X(I,J)
+
+ XT B(I,J)    ISQ
+ ZV B(I,J)    V1                       X(I,J+1)
+ ZV B(I,J)    V2                       X(I,J)
+
+ XT C(I,J)    ISQ
+ ZV C(I,J)    V1                       X(I-1,J)
+ ZV C(I,J)    V2                       X(I,J)
+
+ XT D(I,J)    ISQ
+ ZV D(I,J)    V1                       X(I,J-1)
+ ZV D(I,J)    V2                       X(I,J)
+
+ ND
+
+GROUP USES
+
+ DO I         2                        PY-1
+ DO J         2                        PX-1
+ ZE G(I,J)    A(I,J)                   HY/4HX
+ ZE G(I,J)    B(I,J)                   HX/4HY
+ ZE G(I,J)    C(I,J)                   HY/4HX
+ ZE G(I,J)    D(I,J)                   HX/4HY
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(4)            0.753659753
+*LO SOLTN(10)           1.397897560
+*LO SOLTN(23)           1.678027027
+*LO SOLTN(32)           1.748270031
+*LO SOLTN(75)           ???
+*LO SOLTN(100)          ???
+*LO SOLTN(125)          ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OBSTCLAE
+
+INDIVIDUALS
+
+*   Difference squared
+
+ T  ISQ
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA

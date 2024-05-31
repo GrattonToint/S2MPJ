@@ -1,0 +1,155 @@
+NAME          MCONCON
+
+*   Another small gas network problem.
+
+*   SIF input: Sybille Schachler, Oxford, August 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification LOI2-MN-15-11
+
+ IE N                   7
+ IE M                   4
+ IA M+1       M         1
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        M
+ X  P(I)
+ X  Q(I)
+ X  F(I)
+ OD I
+
+ DO I         M+1                      N
+ X  P(I)
+ OD I
+
+GROUPS
+
+ DO I         1                        N
+ XN OBJECT    P(I)      -1.0
+ OD I
+
+ DO I         1                        M
+ XE PAN(I)
+ OD I
+
+ XE MBAL1     Q1        1.0            F3        -1.0
+ XE MBAL2     Q1        -1.0           F1        1.0
+ XE MBAL3     Q2        1.0            F1        -1.0
+ XE MBAL4     Q2        -1.0           Q3        1.0
+ XE MBAL5     Q3        -1.0           F2        -1.0
+ XE MBAL6     Q4        1.0            F2        1.0
+ XE MBAL7     Q4        -1.0           F4        -1.0
+
+* XG COMP1     P2        -1.0           P3         1.0
+* XG COMP2     P6        -1.0           P5         1.0
+
+CONSTANTS
+
+ RE DEMAND              -1000.0
+ Z  MCONCON   MBAL4                    DEMAND
+
+BOUNDS
+
+ FR MCONCON   'DEFAULT'
+
+ RE PMAX1               914.73
+ RE PMAX2               904.73
+
+ ZU MCONCON   P3                       PMAX2
+ ZU MCONCON   P5                       PMAX2
+ ZU MCONCON   P1                       PMAX1
+ ZU MCONCON   P7                       PMAX1
+ XU MCONCON   F4        400.0
+
+START POINT
+
+ DO I         1                        N
+ XV MCONCON   P(I)      965.0
+ OD I
+
+
+ XV MCONCON   Q1        100.0
+ XV MCONCON   Q2        100.0
+ XV MCONCON   Q3        -100.0
+ XV MCONCON   Q4        -100.0
+ XV MCONCON   F1        1000.0
+ XV MCONCON   F2        1000.0
+ XV MCONCON   F3        1000.0
+ XV MCONCON   F4        1000.0
+
+ELEMENT TYPE
+
+ EV SQR       X
+
+ EV FORQ      Y
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT PSQ(I)    SQR
+ ZV PSQ(I)    X                        P(I)
+ OD I
+
+ DO I         1                        M
+ XT QTO(I)    FORQ
+ ZV QTO(I)    Y                        Q(I)
+ OD I
+
+GROUP USES
+
+ RE K                   -0.597053452
+ XE PAN1      PSQ1      1.0            PSQ2      -1.0
+ ZE PAN1      QTO1                     K
+
+ XE PAN2      PSQ3      1.0            PSQ4      -1.0
+ ZE PAN2      QTO2                     K
+
+ XE PAN3      PSQ4      1.0            PSQ5      -1.0
+ ZE PAN3      QTO3                     K
+
+ XE PAN4      PSQ6      1.0            PSQ7      -1.0
+ ZE PAN4      QTO4                     K
+
+ENDATA
+
+ELEMENTS      MCONCON
+
+TEMPORARIES
+
+ L  POS
+ L  PO
+ R  GG
+ R  HH
+ R  GO
+ R  HO
+ M  ABS
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X*ABS(X)
+
+ A  PO                  X .GT. 0.0
+ I  PO        GO        2*X
+ E  PO        GO        -2*X
+ I  PO        HO        2
+ E  PO        HO        -2
+
+ G  X                   GO
+ H  X         X         HO
+
+ T  FORQ
+ F                      Y*ABS(Y)**0.8539
+
+ A  POS                 Y .GT. 0.0
+ I  POS       GG        1.8539* Y**0.8539
+ E  POS       GG        1.8539* ABS(Y)**0.8539
+ I  POS       HH        1.8539*0.8539*Y**(-0.1461)
+ E  POS       HH        -1.8539*0.8539*ABS(Y)**(-0.1461)
+
+ G  Y                   GG
+ H  Y         Y         HH
+
+ENDATA

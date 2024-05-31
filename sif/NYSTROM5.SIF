@@ -1,0 +1,728 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NYSTROM5
+
+*   Problem :
+*   *********
+
+*   The problem is a nonlinear system of equations giving fifth order
+*   Nystrom integration methods for second order ODEs, as specified by
+*   Chawla and Sharma.
+
+*   A necessary condition is that AL1 * B1 = 0.0, which allows fixing
+*   one more variable.
+
+*   The present version sets
+*         AL1 = 0.0         (guaranteeing the above condition)
+*         AL4 = 0.0
+*         B4  = 1.0
+*   Chawla and Sharma give formulae for explicit solutions as
+*   functions of the fixed variables. It has a solution around X =
+*
+*   4.165494E-02   4.162390E-02   0.000000E+00   2.976500E-01   3.721325E-01
+*   2.000000E-01   1.998732E-02   1.607083E-01   4.821132E-01   6.667372E-01 
+*   2.222843E-01   2.591747E-01  -1.332070E-05   1.041303E-01   1.000000E+00
+*   2.425253E-01  -5.756013E-02   2.574457E-01
+
+
+*   Source:
+*   M.M. Chawla and S.R. Sharma,
+*   "Families of Fifth Order Nystrom Methods for y''= f(x,y) and
+*   intervals of periodicity",
+*   Computing 26:247-256, 1981.
+
+*   SIF input: Ph. Toint, March 1991.
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification NOR2-RY-18-20
+
+ IE 1                   1
+ IE 4                   4
+
+VARIABLES
+
+ DO I         1                        4
+ X  A(I)
+ X  B(I)
+ X  AL(I)
+ IA I-1       I          -1
+ DO J         1                        I-1
+ X  BE(I,J)
+ ND
+
+GROUPS
+
+ E  3A        A1         1.0           A2        1.0
+ E  3A        A3         1.0           A4        1.0
+ E  3B
+ E  3C
+ E  3D
+ E  4A
+ E  4B
+ E  4C
+ E  5A        B1         1.0           B2        1.0
+ E  5A        B3         1.0           B4        1.0
+ E  5B
+ E  5C
+ E  5D
+ E  5E
+ E  6A
+ E  6B
+ E  6C
+ E  7
+ E  8A
+ E  8B
+ E  8C
+ E  9
+
+CONSTANTS
+
+ X  NYSTROM5  3A         0.5
+ X  NYSTROM5  3B         0.1666666667
+ X  NYSTROM5  3C         0.0833333333
+ X  NYSTROM5  3D         0.05
+ X  NYSTROM5  4A         0.0416666667
+ X  NYSTROM5  4B         0.025
+ X  NYSTROM5  4C         0.0083333333
+ X  NYSTROM5  5A         1.0
+ X  NYSTROM5  5B         0.5
+ X  NYSTROM5  5C         0.3333333333
+ X  NYSTROM5  5D         0.25
+ X  NYSTROM5  5E         0.2
+ X  NYSTROM5  6A         0.1666666667
+ X  NYSTROM5  6B         0.125
+ X  NYSTROM5  6C         0.1
+ X  NYSTROM5  7          0.05
+ X  NYSTROM5  8A         0.0416666667
+ X  NYSTROM5  8B         0.0333333333
+ X  NYSTROM5  9          0.0083333333
+
+BOUNDS
+
+ FR NYSTROM5  'DEFAULT'
+ FX NYSTROM5  AL1        0.0
+ FX NYSTROM5  AL2        0.2
+ FX NYSTROM5  AL4        1.0
+
+START POINT
+
+ X  NYSTROM5  AL2        0.2
+ X  NYSTROM5  AL4        1.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ EV 2PRI2     X                        Y1
+ EV 2PRI2     Y2
+ IV 2PRI2     XX                       YY
+
+ EV 2PRI3     X                        Y1
+ EV 2PRI3     Y2                       Y3
+ IV 2PRI3     XX                       YY
+
+ EV 4PR       X                        Y
+ EV 4PR       Z                        W
+
+ EV XY2       X                        Y
+
+ EV XY2I2     X                        Y1
+ EV XY2I2     Y2
+ IV XY2I2     XX                       YY
+
+ EV XY2I3     X                        Y1
+ EV XY2I3     Y2                       Y3
+ IV XY2I3     XX                       YY
+
+ EV XY3       X                        Y
+
+ EV XY4       X                        Y
+
+ EV 3PR       X                        Y
+ EV 3PR       Z
+
+ EV 3PRI2     X                        Y
+ EV 3PRI2     Z1                       Z2
+ IV 3PRI2     XX                       YY
+ IV 3PRI2     ZZ
+
+ EV 3PRI3     X                        Y
+ EV 3PRI3     Z1                       Z2
+ EV 3PRI3     Z3
+ IV 3PRI3     XX                       YY
+ IV 3PRI3     ZZ
+
+ EV XY2Z      X                        Y
+ EV XY2Z      Z
+
+ EV XY2ZI2    X                        Y
+ EV XY2ZI2    Z1                       Z2
+ IV XY2ZI2    XX                       YY
+ IV XY2ZI2    ZZ
+
+ EV XY2ZI3    X                        Y
+ EV XY2ZI3    Z1                       Z2
+ EV XY2ZI3    Z3
+ IV XY2ZI3    XX                       YY
+ IV XY2ZI3    ZZ
+
+ELEMENT USES
+
+ T  3BE1      2PR
+ ZV 3BE1      X                        A1
+ ZV 3BE1      Y                        AL1
+
+ T  3BE2      2PR
+ ZV 3BE2      X                        A2
+ ZV 3BE2      Y                        AL2
+
+ T  3BE3      2PR
+ ZV 3BE3      X                        A3
+ ZV 3BE3      Y                        AL3
+
+ T  3BE4      2PR
+ ZV 3BE4      X                        A4
+ ZV 3BE4      Y                        AL4
+
+ T  3CE1      XY2
+ ZV 3CE1      X                        A1
+ ZV 3CE1      Y                        AL1
+
+ T  3CE2      XY2
+ ZV 3CE2      X                        A2
+ ZV 3CE2      Y                        AL2
+
+ T  3CE3      XY2
+ ZV 3CE3      X                        A3
+ ZV 3CE3      Y                        AL3
+
+ T  3CE4      XY2
+ ZV 3CE4      X                        A4
+ ZV 3CE4      Y                        AL4
+
+ T  3DE1      XY3
+ ZV 3DE1      X                        A1
+ ZV 3DE1      Y                        AL1
+
+ T  3DE2      XY3
+ ZV 3DE2      X                        A2
+ ZV 3DE2      Y                        AL2
+
+ T  3DE3      XY3
+ ZV 3DE3      X                        A3
+ ZV 3DE3      Y                        AL3
+
+ T  3DE4      XY3
+ ZV 3DE4      X                        A4
+ ZV 3DE4      Y                        AL4
+
+ T  4AE1      2PR
+ ZV 4AE1      X                        A2
+ ZV 4AE1      Y                        BE2,1
+
+ T  4AE2      2PRI2
+ ZV 4AE2      X                        A3
+ ZV 4AE2      Y1                       BE3,1
+ ZV 4AE2      Y2                       BE3,2
+
+ T  4AE3      2PRI3
+ ZV 4AE3      X                        A4
+ ZV 4AE3      Y1                       BE4,1
+ ZV 4AE3      Y2                       BE4,2
+ ZV 4AE3      Y3                       BE4,3
+
+ T  4BE1      3PR
+ ZV 4BE1      X                        A2
+ ZV 4BE1      Y                        AL2
+ ZV 4BE1      Z                        BE2,1
+
+ T  4BE2      3PRI2
+ ZV 4BE2      X                        A3
+ ZV 4BE2      Y                        AL3
+ ZV 4BE2      Z1                       BE3,1
+ ZV 4BE2      Z2                       BE3,2
+
+ T  4BE3      3PRI3
+ ZV 4BE3      X                        A4
+ ZV 4BE3      Y                        AL4
+ ZV 4BE3      Z1                       BE4,1
+ ZV 4BE3      Z2                       BE4,2
+ ZV 4BE3      Z3                       BE4,3
+
+ T  4CE1      3PR
+ ZV 4CE1      X                        A2
+ ZV 4CE1      Y                        BE2,1
+ ZV 4CE1      Z                        AL1
+
+ T  4CE2      3PR
+ ZV 4CE2      X                        A3
+ ZV 4CE2      Y                        BE3,1
+ ZV 4CE2      Z                        AL1
+
+ T  4CE3      3PR
+ ZV 4CE3      X                        A3
+ ZV 4CE3      Y                        BE3,2
+ ZV 4CE3      Z                        AL2
+
+ T  4CE4      3PR
+ ZV 4CE4      X                        A4
+ ZV 4CE4      Y                        BE4,1
+ ZV 4CE4      Z                        AL1
+
+ T  4CE5      3PR
+ ZV 4CE5      X                        A4
+ ZV 4CE5      Y                        BE4,2
+ ZV 4CE5      Z                        AL2
+
+ T  4CE6      3PR
+ ZV 4CE6      X                        A4
+ ZV 4CE6      Y                        BE4,3
+ ZV 4CE6      Z                        AL3
+
+ T  B1AL1     2PR
+ ZV B1AL1     X                        B1
+ ZV B1AL1     Y                        AL1
+
+ T  B2AL2     2PR
+ ZV B2AL2     X                        B2
+ ZV B2AL2     Y                        AL2
+
+ T  B3AL3     2PR
+ ZV B3AL3     X                        B3
+ ZV B3AL3     Y                        AL3
+
+ T  B4AL4     2PR
+ ZV B4AL4     X                        B4
+ ZV B4AL4     Y                        AL4
+
+ T  B1AL1S    XY2
+ ZV B1AL1S    X                        B1
+ ZV B1AL1S    Y                        AL1
+
+ T  B2AL2S    XY2
+ ZV B2AL2S    X                        B2
+ ZV B2AL2S    Y                        AL2
+
+ T  B3AL3S    XY2
+ ZV B3AL3S    X                        B3
+ ZV B3AL3S    Y                        AL3
+
+ T  B4AL4S    XY2
+ ZV B4AL4S    X                        B4
+ ZV B4AL4S    Y                        AL4
+
+ T  B1AL1C    XY3
+ ZV B1AL1C    X                        B1
+ ZV B1AL1C    Y                        AL1
+
+ T  B2AL2C    XY3
+ ZV B2AL2C    X                        B2
+ ZV B2AL2C    Y                        AL2
+
+ T  B3AL3C    XY3
+ ZV B3AL3C    X                        B3
+ ZV B3AL3C    Y                        AL3
+
+ T  B4AL4C    XY3
+ ZV B4AL4C    X                        B4
+ ZV B4AL4C    Y                        AL4
+
+ T  B1AL1F    XY4
+ ZV B1AL1F    X                        B1
+ ZV B1AL1F    Y                        AL1
+
+ T  B2AL2F    XY4
+ ZV B2AL2F    X                        B2
+ ZV B2AL2F    Y                        AL2
+
+ T  B3AL3F    XY4
+ ZV B3AL3F    X                        B3
+ ZV B3AL3F    Y                        AL3
+
+ T  B4AL4F    XY4
+ ZV B4AL4F    X                        B4
+ ZV B4AL4F    Y                        AL4
+
+ T  B2BE21    2PR
+ ZV B2BE21    X                        B2
+ ZV B2BE21    Y                        BE2,1
+
+ T  6AE2      2PRI2
+ ZV 6AE2      X                        B3
+ ZV 6AE2      Y1                       BE3,1
+ ZV 6AE2      Y2                       BE3,2
+
+ T  6AE3      2PRI3
+ ZV 6AE3      X                        B4
+ ZV 6AE3      Y1                       BE4,1
+ ZV 6AE3      Y2                       BE4,2
+ ZV 6AE3      Y3                       BE4,3
+
+ T  6BE1      3PR
+ ZV 6BE1      X                        B2
+ ZV 6BE1      Y                        AL2
+ ZV 6BE1      Z                        BE2,1
+
+ T  6BE2      3PRI2
+ ZV 6BE2      X                        B3
+ ZV 6BE2      Y                        AL3
+ ZV 6BE2      Z1                       BE3,1
+ ZV 6BE2      Z2                       BE3,2
+
+ T  6BE3      3PRI3
+ ZV 6BE3      X                        B4
+ ZV 6BE3      Y                        AL4
+ ZV 6BE3      Z1                       BE4,1
+ ZV 6BE3      Z2                       BE4,2
+ ZV 6BE3      Z3                       BE4,3
+
+ T  6CE1      XY2Z
+ ZV 6CE1      X                        B2
+ ZV 6CE1      Y                        AL2
+ ZV 6CE1      Z                        BE2,1
+
+ T  6CE2      XY2ZI2
+ ZV 6CE2      X                        B3
+ ZV 6CE2      Y                        AL3
+ ZV 6CE2      Z1                       BE3,1
+ ZV 6CE2      Z2                       BE3,2
+
+ T  6CE3      XY2ZI3
+ ZV 6CE3      X                        B4
+ ZV 6CE3      Y                        AL4
+ ZV 6CE3      Z1                       BE4,1
+ ZV 6CE3      Z2                       BE4,2
+ ZV 6CE3      Z3                       BE4,3
+
+ T  7E1       XY2
+ ZV 7E1       X                        B2
+ ZV 7E1       Y                        BE2,1
+
+ T  7E2       XY2I2
+ ZV 7E2       X                        B3
+ ZV 7E2       Y1                       BE3,1
+ ZV 7E2       Y2                       BE3,2
+
+ T  7E3       XY2I3
+ ZV 7E3       X                        B4
+ ZV 7E3       Y1                       BE4,1
+ ZV 7E3       Y2                       BE4,2
+ ZV 7E3       Y3                       BE4,3
+
+ T  8AE1      3PR
+ ZV 8AE1      X                        B2
+ ZV 8AE1      Y                        BE2,1
+ ZV 8AE1      Z                        AL1
+
+ T  8AE2      3PR
+ ZV 8AE2      X                        B3
+ ZV 8AE2      Y                        BE3,1
+ ZV 8AE2      Z                        AL1
+
+ T  8AE3      3PR
+ ZV 8AE3      X                        B3
+ ZV 8AE3      Y                        BE3,2
+ ZV 8AE3      Z                        AL2
+
+ T  8AE4      3PR
+ ZV 8AE4      X                        B4
+ ZV 8AE4      Y                        BE4,1
+ ZV 8AE4      Z                        AL1
+
+ T  8AE5      3PR
+ ZV 8AE5      X                        B4
+ ZV 8AE5      Y                        BE4,2
+ ZV 8AE5      Z                        AL2
+
+ T  8AE6      3PR
+ ZV 8AE6      X                        B4
+ ZV 8AE6      Y                        BE4,3
+ ZV 8AE6      Z                        AL3
+
+ T  8BE1      4PR
+ ZV 8BE1      X                        B2
+ ZV 8BE1      Y                        BE2,1
+ ZV 8BE1      Z                        AL2
+ ZV 8BE1      W                        AL1
+
+ T  8BE2      4PR
+ ZV 8BE2      X                        B3
+ ZV 8BE2      Y                        BE3,1
+ ZV 8BE2      Z                        AL3
+ ZV 8BE2      W                        AL1
+
+ T  8BE3      4PR
+ ZV 8BE3      X                        B3
+ ZV 8BE3      Y                        BE3,2
+ ZV 8BE3      Z                        AL3
+ ZV 8BE3      W                        AL2
+
+ T  8BE4      4PR
+ ZV 8BE4      X                        B4
+ ZV 8BE4      Y                        BE4,1
+ ZV 8BE4      Z                        AL4
+ ZV 8BE4      W                        AL1
+
+ T  8BE5      4PR
+ ZV 8BE5      X                        B4
+ ZV 8BE5      Y                        BE4,2
+ ZV 8BE5      Z                        AL4
+ ZV 8BE5      W                        AL2
+
+ T  8BE6      4PR
+ ZV 8BE6      X                        B4
+ ZV 8BE6      Y                        BE4,3
+ ZV 8BE6      Z                        AL4
+ ZV 8BE6      W                        AL3
+
+ T  8CE1      XY2Z
+ ZV 8CE1      X                        B2
+ ZV 8CE1      Y                        AL1
+ ZV 8CE1      Z                        BE2,1
+
+ T  8CE2      XY2Z
+ ZV 8CE2      X                        B3
+ ZV 8CE2      Y                        AL1
+ ZV 8CE2      Z                        BE3,1
+
+ T  8CE3      XY2Z
+ ZV 8CE3      X                        B4
+ ZV 8CE3      Y                        AL1
+ ZV 8CE3      Z                        BE4,1
+
+ T  9E1       3PR
+ ZV 9E1       X                        B3
+ ZV 9E1       Y                        BE3,2
+ ZV 9E1       Z                        BE2,1
+
+ T  9E2       3PR
+ ZV 9E2       X                        B4
+ ZV 9E2       Y                        BE4,2
+ ZV 9E2       Z                        BE2,1
+
+ T  9E3       3PRI2
+ ZV 9E3       X                        B4
+ ZV 9E3       Y                        BE4,3
+ ZV 9E3       Z1                       BE3,1
+ ZV 9E3       Z2                       BE3,2
+
+GROUP USES
+
+ E  3B        3BE1                     3BE2
+ E  3B        3BE3                     3BE4
+
+ E  3C        3CE1                     3CE2
+ E  3C        3CE3                     3CE4
+
+ E  3D        3DE1                     3DE2
+ E  3D        3DE3                     3DE4
+
+ E  4A        4AE1                     4AE2
+ E  4A        4AE3
+
+ E  4B        4BE1                     4BE2
+ E  4B        4BE3
+
+ E  4C        4CE1                     4CE2
+ E  4C        4CE3                     4CE4
+ E  4C        4CE5                     4CE6
+
+ E  5B        B1AL1                    B2AL2
+ E  5B        B3AL3                    B4AL4
+
+ E  5C        B1AL1S                   B2AL2S
+ E  5C        B3AL3S                   B4AL4S
+
+ E  5D        B1AL1C                   B2AL2C
+ E  5D        B3AL3C                   B4AL4C
+
+ E  5E        B1AL1F                   B2AL2F
+ E  5E        B3AL3F                   B4AL4F
+
+ E  6A        B2BE21                   6AE2
+ E  6A        6AE3
+
+ E  6B        6BE1                     6BE2
+ E  6B        6BE3
+
+ E  6C        6CE1                     6CE2
+ E  6C        6CE3
+
+ E  7         7E1                      7E2
+ E  7         7E3
+
+ E  8A        8AE1                     8AE2
+ E  8A        8AE3                     8AE4
+ E  8A        8AE5                     8AE6
+
+ E  8B        8BE1                     8BE2
+ E  8B        8BE3                     8BE4
+ E  8B        8BE5                     8BE6
+
+ E  8C        8CE1                     8CE2
+ E  8C        8CE3
+
+ E  9         9E1                      9E2
+ E  9         9E3
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      NYSTROM5
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  2PRI2
+ R  XX        X         1.0
+ R  YY        Y1        1.0            Y2        1.0
+ F                      XX * YY
+ G  XX                  YY
+ G  YY                  XX
+ H  XX        YY        1.0
+
+ T  2PRI3
+ R  XX        X         1.0
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0
+ F                      XX * YY
+ G  XX                  YY
+ G  YY                  XX
+ H  XX        YY        1.0
+
+ T  3PR
+ F                      X * Y * Z
+ G  X                   Y * Z
+ G  Y                   X * Z
+ G  Z                   X * Y
+ H  X         Y         Z
+ H  X         Z         Y
+ H  Y         Z         X
+
+ T  3PRI2
+ R  XX        X         1.0
+ R  YY        Y         1.0
+ R  ZZ        Z1        1.0            Z2        1.0
+ F                      XX * YY * ZZ
+ G  XX                  YY * ZZ
+ G  YY                  XX * ZZ
+ G  ZZ                  XX * YY
+ H  XX        YY        ZZ
+ H  XX        ZZ        YY
+ H  YY        ZZ        XX
+
+ T  3PRI3
+ R  XX        X         1.0
+ R  YY        Y         1.0
+ R  ZZ        Z1        1.0            Z2        1.0
+ R  ZZ        Z3        1.0
+ F                      XX * YY * ZZ
+ G  XX                  YY * ZZ
+ G  YY                  XX * ZZ
+ G  ZZ                  XX * YY
+ H  XX        YY        ZZ
+ H  XX        ZZ        YY
+ H  YY        ZZ        XX
+
+ T  4PR
+ F                      X * Y * Z * W
+ G  X                   Y * Z * W
+ G  Y                   X * Z * W
+ G  Z                   X * Y * W
+ G  W                   X * Y * Z
+ H  X         Y         Z * W
+ H  X         Z         Y * W
+ H  X         W         Y * Z
+ H  Y         Z         X * W
+ H  Y         W         X * Z
+ H  Z         W         X * Y
+
+ T  XY2
+ F                      X * Y * Y
+ G  X                   Y * Y
+ G  Y                   2.0 * X * Y
+ H  X         Y         2.0 * Y
+ H  Y         Y         2.0 * X
+
+ T  XY2I2
+ R  XX        X         1.0
+ R  YY        Y1        1.0            Y2        1.0
+ F                      XX * YY * YY
+ G  XX                  YY * YY
+ G  YY                  2.0 * XX * YY
+ H  XX        YY        2.0 * YY
+ H  YY        YY        2.0 * XX
+
+ T  XY2I3
+ R  XX        X         1.0
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0
+ F                      XX * YY * YY
+ G  XX                  YY * YY
+ G  YY                  2.0 * XX * YY
+ H  XX        YY        2.0 * YY
+ H  YY        YY        2.0 * XX
+
+ T  XY3
+ F                      X * Y**3
+ G  X                   Y**3
+ G  Y                   3.0 * X * Y**2
+ H  X         Y         3.0 * Y**2
+ H  Y         Y         6.0 * X * Y
+
+ T  XY4
+ F                      X * Y**4
+ G  X                   Y**4
+ G  Y                   4.0 * X * Y**3
+ H  X         Y         4.0 * Y**3
+ H  Y         Y         12.0 * X * Y**2
+
+ T  XY2Z
+ F                      X * Y * Y * Z
+ G  X                   Y * Y * Z
+ G  Y                   2.0 * X * Y * Z
+ G  Z                   X * Y * Y
+ H  X         Y         2.0 * Y * Z
+ H  X         Z         Y * Y
+ H  Y         Y         2.0 * X * Z
+ H  Y         Z         2.0 * X * Y
+
+ T  XY2ZI2
+ R  XX        X         1.0
+ R  YY        Y         1.0
+ R  ZZ        Z1        1.0            Z2        1.0
+ F                      XX * YY * YY * ZZ
+ G  XX                  YY * YY * ZZ
+ G  YY                  2.0 * XX * YY * ZZ
+ G  ZZ                  XX * YY * YY
+ H  XX        YY        2.0 * YY * ZZ
+ H  XX        ZZ        YY * YY
+ H  YY        YY        2.0 * XX * ZZ
+ H  YY        ZZ        2.0 * XX * YY
+
+ T  XY2ZI3
+ R  XX        X         1.0
+ R  YY        Y         1.0
+ R  ZZ        Z1        1.0            Z2        1.0
+ R  ZZ        Z3        1.0
+ F                      XX * YY * YY * ZZ
+ G  XX                  YY * YY * ZZ
+ G  YY                  2.0 * XX * YY * ZZ
+ G  ZZ                  XX * YY * YY
+ H  XX        YY        2.0 * YY * ZZ
+ H  XX        ZZ        YY * YY
+ H  YY        YY        2.0 * XX * ZZ
+ H  YY        ZZ        2.0 * XX * YY
+
+ENDATA

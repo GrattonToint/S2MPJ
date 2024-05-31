@@ -1,0 +1,139 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POWELLBC
+
+*   Problem :
+*   --------
+
+*   A bound-constrained optimization problem to 
+*   separate points within a square in the plane
+
+*   Given points p_j = ( x_2j-1 , x_2j ), i = 1, ..., p
+
+*   minimize sum_k=2^p sum_j=1^k-1 1 / || p_j - p_k ||_2
+
+*   subject to 0 <= x_i <= 1, i = 1, ..., 2p = n
+
+*   Source: 
+*   M. J. D. Powell
+*   Private communication (Optbridge, 2006)
+
+*   SIF input: Nick Gould, Aug 2006.
+
+*   classification OBR2-AN-V-0
+
+*   Number of points
+
+*IE P                   2              $-PARAMETER
+*IE P                   5              $-PARAMETER
+ IE P                   12             $-PARAMETER     modified for S2X tests
+*IE P                   10             $-PARAMETER
+*IE P                   100            $-PARAMETER
+*IE P                   500            $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ IM N         P         2
+ RI RN        N
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+CONSTANTS
+
+BOUNDS
+
+ LO POWELLBC  'DEFAULT' 0.0
+ UP POWELLBC  'DEFAULT' 1.0
+
+START POINT
+
+*  start with X(I) = (I/N)**2
+
+ DO I         1                        N
+ RI RI        I
+ R/ T         RI                       RN
+ R* T         T                        T
+ ZV POWELLBC  X(I)                     T
+ ND
+
+ELEMENT TYPE
+
+ EV INVNRM    XJ                       YJ
+ EV INVNRM    XK                       YK
+ IV INVNRM    X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' INVNRM
+
+ DO K         2                        P
+ I- K-1       K                        1
+ I* 2K        2                        K
+ I- 2K-1      2K                       1
+ DO J         1                        K-1
+ I* 2J        2                        J
+ I- 2J-1      2J                       1
+ ZV E(K,J)    XJ                       X(2J-1)
+ ZV E(K,J)    XK                       X(2K-1)
+ ZV E(K,J)    YJ                       X(2J)
+ ZV E(K,J)    YK                       X(2K)
+ ND
+
+GROUP USES
+
+ DO K         2                        P
+ I- K-1       K                        1
+ DO J         1                        K-1
+ XE OBJ       E(K,J)
+ ND
+
+OBJECT BOUND
+
+ LO POWELLBC            0.0
+
+*   Solution
+
+*LO SOLTN               ??
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POWELLBC
+
+TEMPORARIES
+
+ R  NORM
+
+INDIVIDUALS
+
+ T  INVNRM
+ R  X         XJ        1.0            XK        -1.0
+ R  Y         YJ        1.0            YK        -1.0
+ A  NORM                1.0 / SQRT( X * X + Y * Y )
+ F                      NORM
+ G  X                   - X * NORM ** 3
+ G  Y                   - Y * NORM ** 3
+ H  X         X         ( 3.0 * X * X * NORM ** 2 - 1.0 ) 
+ H+                       * NORM ** 3         
+ H  X         Y         3.0 * X * Y * NORM ** 5
+ H  Y         Y         ( 3.0 * Y * Y * NORM ** 2 - 1.0 ) 
+ H+                       * NORM ** 3
+
+ENDATA
+

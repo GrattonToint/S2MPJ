@@ -1,0 +1,120 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PORTSNQP 
+
+*   Problem :
+*   *********
+
+*   A convex quadratic program of portfolio type
+
+*   The objective function is of the form
+*
+*      sum (i=1,n) ( x_i - ( 2 i - n ) / n )^2
+*
+*   There is a single equality constraint of the form
+*
+*      sum(i=1,n) x_i = 1
+*
+*   Finally, there are simple bounds
+*
+*         0 <= x_i   (i=1,n)
+
+*   SIF input: Nick Gould, June 2001
+
+*   classification QLR2-AN-V-1
+
+*   The number of equality constraints
+
+*IE N                   10
+*IE N                   100
+*IE N                   1000
+*IE N                   10000
+ IE N                   100000
+*IE N                   1000000
+ IE N                   10
+
+*   The number of block-variables.
+
+*  Other useful values.
+
+ IE 1                   1
+ RI RN        N
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ RI RI        I
+ RM 2I        RI        2.0
+ R- 2I-N      2I                       RN
+ R/ C         2I-N                     RN
+ XN O(I)      X(I)      1.0
+ XE E         X(I)      1.0
+ ZE E2        X(I)                     C
+ ND
+ XN O         X(N)      1.0
+ XN O         'SCALE'   -0.5
+
+CONSTANTS
+
+ DO I         1                        N
+ RI RI        I
+ RM 2I        RI        2.0
+ R- 2I-N      2I                       RN
+ R/ C         2I-N                     RN
+ ZE PORTSNQP  O(I)                     C
+ ND
+
+ XE PORTSNQP  E         1.0
+ XE PORTSNQP  E2        0.5
+
+BOUNDS
+
+ DO I         1                        N
+ XL PORTSNQP  X(I)      0.0
+ ND
+
+START POINT
+
+ XV PORTSNQP  'DEFAULT' 0.5
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ XT O(I)      L2
+ ND
+ XT O         L2
+ 
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PORTSNQP
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

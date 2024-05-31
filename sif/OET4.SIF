@@ -1,0 +1,151 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OET4
+
+*   Problem :
+*   *********
+
+*   A nonlinear programming formulation of a discretization of
+*   a nonlinear Chebychev problem.
+
+*   The problem is
+
+*       min  max || phi(x,w) ||, for all w in the interval I.
+*        x    w
+
+*   I is discretized, and the problem solved over the
+*   discrete points.
+
+*   Nonlinear programming formulation
+*
+*       min   u     s.t.  u - phi >= 0, u + phi >= 0
+*       x,u
+
+*   Specific problem: I = [0,1]
+*   phi(x,w) = exp(w) - ( x1 + x2 w ) / ( 1 + x3 w )
+ 
+*   Source: K. Oettershagen
+*   "Ein superlinear knonvergenter algorithmus zur losung 
+*    semi-infiniter optimierungsproblem",
+*    Ph.D thesis, Bonn University, 1982
+
+*   SIF input: Nick Gould, February, 1994.
+
+*   classification LOR2-AN-4-V
+
+*   Discretization
+
+*IE M                   2
+*IE M                   100
+ IE M                   500
+
+*   Define the interval
+
+ RE LOWER               0.0
+ RE UPPER               1.0
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+
+ R- DIFF      UPPER                    LOWER
+ RI RM        M
+ R/ H         DIFF                     RM
+
+VARIABLES
+
+    U
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       U         1.0
+
+ DO I         0                        M
+ XG LO(I)     U         1.0
+ XG UP(I)     U         1.0
+ OD I
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+
+ R( EXPW      EXP                      W
+ RM -EXPW     EXPW      -1.0
+
+ Z  OET4      LO(I)                    -EXPW
+ Z  OET4      UP(I)                    EXPW
+ ND
+
+BOUNDS
+
+ FR OET4      'DEFAULT'
+
+ELEMENT TYPE
+
+ EV RATIO     X1                       X2
+ EV RATIO     X3
+ EP RATIO     W
+
+ELEMENT USES
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+
+ XT E(1,I)    RATIO
+ ZV E(1,I)    X1                       X1
+ ZV E(1,I)    X2                       X2
+ ZV E(1,I)    X3                       X3
+ ZP E(1,I)    W                        W
+
+ ND
+
+GROUP USES
+
+ DO I         0                        M
+ XE LO(I)     E(1,I)    -1.0
+ XE UP(I)     E(1,I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OET4
+
+TEMPORARIES
+
+ R  NUMER
+ R  DENOM
+
+INDIVIDUALS
+
+ T  RATIO
+ A  NUMER               X1 + X2 * W
+ A  DENOM               1.0 + X3 * W
+
+ F                      NUMER / DENOM
+
+ G  X1                  1.0 / DENOM
+ G  X2                  W / DENOM
+ G  X3                  - NUMER * W / DENOM ** 2
+
+ H  X1        X3        - W / DENOM ** 2
+ H  X2        X3        - W * W / DENOM ** 2
+ H  X3        X3        2.0 * NUMER * W * W / DENOM ** 3 
+
+ENDATA
+

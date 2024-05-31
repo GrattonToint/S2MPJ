@@ -1,0 +1,145 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PENTAGON
+
+*   Problem :
+*   *********
+
+*   An approximation to the problem of finding 3 points in a 2D
+*   pentagon whose minimal distance is maximal.
+
+*   Source:
+*   M.J.D. Powell,
+*   " TOLMIN: a Fortran package for linearly constrained
+*   optimization problems",
+*   Report DAMTP 1989/NA2, University of Cambridge, UK, 1989.
+
+*   SIF input: Ph. Toint, May 1990.
+
+*   classification OLR2-AY-6-15
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 3                   3
+ IE 4                   4
+
+ RE 2PI/5               1.2566371
+
+*   Computed parameters
+
+ DO J         0                        4
+ RI RJ        J
+ R* TJ        2PI/5                    RJ
+ A( C(J)      COS                      TJ
+ A( S(J)      SIN                      TJ
+ ND
+
+VARIABLES
+
+ DO I         1                        3
+ X  X(I)
+ X  Y(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        3
+ DO J         0                        4
+ ZL C(I,J)    X(I)                     C(J)
+ ZL C(I,J)    Y(I)                     S(J)
+ ND
+
+CONSTANTS
+
+ X  PENTAGON  'DEFAULT' 1.0
+    PENTAGON  OBJ       0.0
+
+BOUNDS
+
+ FR PENTAGON  'DEFAULT'
+
+START POINT
+
+    PENTA     X1        -1.0
+    PENTA     Y1        0.0
+    PENTA     X2        0.0
+    PENTA     Y2        -1.0
+    PENTA     X3        1.0
+    PENTA     Y3        1.0
+
+ELEMENT TYPE
+
+ EV IDIST     XA                       YA
+ EV IDIST     XB                       YB
+ IV IDIST     DX                       DY
+
+ELEMENT USES
+
+ T  D12       IDIST
+ V  D12       XA                       X1
+ V  D12       YA                       Y1
+ V  D12       XB                       X2
+ V  D12       YB                       Y2
+
+ T  D13       IDIST
+ V  D13       XA                       X1
+ V  D13       YA                       Y1
+ V  D13       XB                       X3
+ V  D13       YB                       Y3
+
+ T  D32       IDIST
+ V  D32       XA                       X3
+ V  D32       YA                       Y3
+ V  D32       XB                       X2
+ V  D32       YB                       Y2
+
+GROUP USES
+
+ E  OBJ       D12                      D13
+ E  OBJ       D32
+
+OBJECT BOUND
+
+ LO PENTAGON            0.0
+
+*   Solution
+
+* LO SOLTN              1.36521631D-04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PENTAGON
+
+TEMPORARIES
+
+ R  D
+ R  D9
+ R  D10
+
+INDIVIDUALS
+
+ T  IDIST
+ R  DX        XA        1.0            XB        -1.0
+ R  DY        YA        1.0            YB        -1.0
+ A  D                   DX * DX + DY * DY
+ A  D9                  D**9
+ A  D10                 D9 * D
+ F                      1.0 / D**8
+ G  DX                  -16.0 * DX / D9
+ G  DY                  -16.0 * DY / D9
+ H  DX        DX        16.0 * ( 18.0 * DX * DX - D ) / D10
+ H  DX        DY        288.0 * DX * DY / D10
+ H  DY        DY        16.0 * ( 18.0 * DY * DY - D ) / D10
+
+ENDATA

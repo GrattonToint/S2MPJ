@@ -1,0 +1,257 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ORTHREGA
+
+*   Problem :
+*   *********
+
+*   An orthogonal regression problem.
+
+*   The problem is to fit (orthogonally) an ellipse to a set of points
+*   in the plane.
+
+*   Source:
+*   M. Gulliksson,
+*   "Algorithms for nonlinear Least-squares with Applications to
+*   Orthogonal Regression",
+*   UMINF-178.90, University of Umea, Sweden, 1990.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification QQR2-AN-V-V
+
+*   Number of levels in the generation of the data points
+*   ( number of data points =     4**LEVELS
+*     number of variables   = 2 * 4**LEVELS + 5
+*     number of constraints =     4**LEVELS         )
+
+*IE LEVELS              3              $-PARAMETER n = 133    original value
+*IE LEVELS              4              $-PARAMETER n = 517
+*IE LEVELS              5              $-PARAMETER n = 2053
+*IE LEVELS              6              $-PARAMETER n = 8197
+ IE LEVELS              2              $-PARAMETER     modified for S2X tests
+*IE LEVELS              7              $-PARAMETER n = 32773
+*IE LEVELS              8              $-PARAMETER n = 131077
+
+*   Parameters for the generation of the data points
+
+ RE A                   9.0
+ RE B                   6.0
+ RE CX                  0.5
+ RE CY                  0.5
+
+*   Constants
+
+ IE 1                   1
+
+ RE PI                  3.1415926535
+
+*   Computed parameters
+
+ RM -A        A         -1.0
+ RM -B        B         -1.0
+
+*   Construct the data points
+
+ IE NPTS                1
+ A= XD(1)     CX
+ A= YD(1)     CY
+
+ DO I         1                        LEVELS
+
+ IA NP        NPTS      0
+
+ DO J         1                        NP
+ A= XZ(J)     XD(J)
+ A= YZ(J)     YD(J)
+ OD J
+
+ IE NPTS                0
+
+ DO J         1                        NP
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ(J)                    A
+ A+ YD(NPTS)  YZ(J)                    A
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ(J)                    B
+ A+ YD(NPTS)  YZ(J)                    -B
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ(J)                    -A
+ A+ YD(NPTS)  YZ(J)                    -A
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ(J)                    -B
+ A+ YD(NPTS)  YZ(J)                    B
+ OD J
+
+ R/ A         A                        PI
+ R/ B         B                        PI
+ R/ -A        -A                       PI
+ R/ -B        -B                       PI
+
+ ND
+
+VARIABLES
+
+*   Parameters of the ellipse
+
+    H11
+    H12
+    H22
+    G1
+    G2
+
+*   Projections of the data points onto the ellipse
+
+ DO I         1                        NPTS
+ X  X(I)
+ X  Y(I)
+ ND
+
+GROUPS
+
+ DO I         1                        NPTS
+ XN OX(I)     X(I)       1.0
+ XN OY(I)     Y(I)       1.0
+ XE E(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        NPTS
+ Z  ORTHREGA  OX(I)                    XD(I)
+ Z  ORTHREGA  OY(I)                    YD(I)
+ X  ORTHREGA  E(I)       1.0
+ ND
+
+BOUNDS
+
+ FR ORTHREGA  'DEFAULT'
+
+START POINT
+
+    ORTHREGA  H11        1.0
+    ORTHREGA  H12        0.0
+    ORTHREGA  H22        1.0
+    ORTHREGA  G1         0.0
+    ORTHREGA  G2         0.0
+
+ DO I         1                        NPTS
+ Z  ORTHREGA  X(I)                     XD(I)
+ Z  ORTHREGA  Y(I)                     YD(I)
+ ND
+
+ELEMENT TYPE
+
+ EV HXX       H                        X
+
+ EV HXY       H                        X
+ EV HXY       Y
+
+ EV GX        G                        X
+
+ELEMENT USES
+
+ DO I         1                        NPTS
+
+ XT EA(I)     HXX
+ ZV EA(I)     H                        H11
+ ZV EA(I)     X                        X(I)
+
+ XT EB(I)     HXY
+ ZV EB(I)     H                        H12
+ ZV EB(I)     X                        X(I)
+ ZV EB(I)     Y                        Y(I)
+
+ XT EC(I)     HXX
+ ZV EC(I)     H                        H22
+ ZV EC(I)     X                        Y(I)
+
+ XT ED(I)     GX
+ ZV ED(I)     G                        G1
+ ZV ED(I)     X                        X(I)
+
+ XT EE(I)     GX
+ ZV EE(I)     G                        G2
+ ZV EE(I)     X                        Y(I)
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        NPTS
+ XT OX(I)     L2
+ XT OY(I)     L2
+ XE E(I)      EA(I)                    EB(I)     2.0
+ XE E(I)      EC(I)                    ED(I)     -2.0
+ XE E(I)      EE(I)      -2.0
+ ND
+
+OBJECT BOUND
+
+ LO ORTHREGA             0.0
+
+*   Solution
+
+*LO SOLTN(3)             350.29936756
+*LO SOLTN(4)             1414.0524915
+*LO SOLTN(5)             ???
+*LO SOLTN(6)             ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ORTHREGA
+
+INDIVIDUALS
+
+ T  HXX
+ F                      H * X * X
+ G  H                   X * X
+ G  X                   2.0 * H * X
+ H  H         X         X + X
+ H  X         X         H + H
+
+ T  HXY
+ F                      H * X * Y
+ G  H                   X * Y
+ G  X                   H * Y
+ G  Y                   H * X
+ H  H         X         Y
+ H  H         Y         X
+ H  X         Y         H
+
+ T  GX
+ F                      G * X
+ G  G                   X
+ G  X                   G
+ H  G         X         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ORTHREGA
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

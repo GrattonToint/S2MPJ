@@ -1,0 +1,190 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POLAK2
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in ten variables.
+
+*   Source: 
+*   E. Polak, D.H. Mayne and J.E. Higgins,
+*   "Superlinearly convergent algorithm for min-max problems"
+*   JOTA 69, pp. 407-439, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-11-2
+
+ IE 1                   1
+ IE 10                  10
+
+VARIABLES
+
+ DO I         1                        10
+ X  X(I)
+ OD I
+
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0 
+ XL F2        U         -1.0 
+
+BOUNDS
+
+*   All variables are free
+
+ FR POLAK2    'DEFAULT'
+
+START POINT
+
+ V  POLAK2    'DEFAULT' 0.1
+    POLAK2    X1        100.0
+
+ELEMENT TYPE
+
+ EV EL        XX1                      XX2
+ EV EL        XX3                      XX4
+ EV EL        XX5                      XX6
+ EV EL        XX7                      XX8
+ EV EL        XX9                      XX10
+ EP EL        P
+
+ELEMENT USES
+
+ T  E1        EL
+ V  E1        XX1                      X1
+ V  E1        XX2                      X2
+ V  E1        XX3                      X3
+ V  E1        XX4                      X4
+ V  E1        XX5                      X5
+ V  E1        XX6                      X6
+ V  E1        XX7                      X7
+ V  E1        XX8                      X8
+ V  E1        XX9                      X9
+ V  E1        XX10                     X10
+ P  E1        P         2.0
+
+ T  E2        EL
+ V  E2        XX1                      X1
+ V  E2        XX2                      X2
+ V  E2        XX3                      X3
+ V  E2        XX4                      X4
+ V  E2        XX5                      X5
+ V  E2        XX6                      X6
+ V  E2        XX7                      X7
+ V  E2        XX8                      X8
+ V  E2        XX9                      X9
+ V  E2        XX10                     X10
+ P  E2        P         -2.0
+
+GROUP USES
+
+ E  F1        E1
+ E  F2        E2
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               54.598146
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POLAK2
+
+TEMPORARIES
+
+ R  A
+ R  EA
+
+ M  EXP
+
+INDIVIDUALS
+
+ T  EL
+ A  A                   1.0D-8 * XX1 * XX1 + ( XX2 + P ) **2
+ A  A                   A + XX3 * XX3 + 4.0 * XX4 * XX4
+ A  A                   A + XX5 * XX5 + XX6 * XX6 + XX7 * XX7
+ A  A                   A + XX8 * XX8 + XX9 * XX9 + XX10 * XX10
+ A  EA                  EXP( A )
+ F                      EA
+ G  XX1                 2.0D-8 * XX1 * EA
+ G  XX2                 2.0 * ( XX2 + P ) * EA
+ G  XX3                 2.0 * XX3 * EA
+ G  XX4                 8.0 * XX4 * EA
+ G  XX5                 2.0 * XX5 * EA
+ G  XX6                 2.0 * XX6 * EA
+ G  XX7                 2.0 * XX7 * EA
+ G  XX8                 2.0 * XX8 * EA
+ G  XX9                 2.0 * XX9 * EA
+ G  XX10                2.0 * XX10 * EA
+ H  XX1       XX1       2.0D-8 * EA * ( 1.0 + 2.0D-8 * XX1 ** 2 )
+ H  XX1       XX2       4.0D-8 * XX1 * ( XX2 + P ) * EA
+ H  XX1       XX3       4.0D-8 * XX1 * XX3 * EA
+ H  XX1       XX4       1.6D-7 * XX1 * XX4 * EA
+ H  XX1       XX5       4.0D-8 * XX1 * XX5 * EA
+ H  XX1       XX6       4.0D-8 * XX1 * XX6 * EA
+ H  XX1       XX7       4.0D-8 * XX1 * XX7 * EA
+ H  XX1       XX8       4.0D-8 * XX1 * XX8 * EA
+ H  XX1       XX9       4.0D-8 * XX1 * XX9 * EA
+ H  XX1       XX10      4.0D-8 * XX1 * XX10 * EA
+ H  XX2       XX2       2.0 * EA * ( 1.0 + 2.0 * ( XX2 + P)**2 )
+ H  XX2       XX3       4.0 * ( XX2 + P ) * XX3 * EA
+ H  XX2       XX4       16.0 * ( XX2 + P ) * XX4 * EA
+ H  XX2       XX5       4.0 * ( XX2 + P ) * XX5 * EA
+ H  XX2       XX6       4.0 * ( XX2 + P ) * XX6 * EA
+ H  XX2       XX7       4.0 * ( XX2 + P ) * XX7 * EA
+ H  XX2       XX8       4.0 * ( XX2 + P ) * XX8 * EA
+ H  XX2       XX9       4.0 * ( XX2 + P ) * XX9 * EA
+ H  XX2       XX10      4.0 * ( XX2 + P ) * XX10 * EA
+ H  XX3       XX3       2.0 * EA * ( 1.0 + 2.0 * XX3 * XX3 )
+ H  XX3       XX4       16.0 * XX3 * XX4 * EA
+ H  XX3       XX5       4.0 * XX3 * XX5 * EA
+ H  XX3       XX6       4.0 * XX3 * XX6 * EA
+ H  XX3       XX7       4.0 * XX3 * XX7 * EA
+ H  XX3       XX8       4.0 * XX3 * XX8 * EA
+ H  XX3       XX9       4.0 * XX3 * XX9 * EA
+ H  XX3       XX10      4.0 * XX3 * XX10 * EA
+ H  XX4       XX4       8.0 * EA * ( 1.0 + 8.0 * XX4 * XX4 )
+ H  XX4       XX5       16.0 * XX4 * XX5 * EA
+ H  XX4       XX6       16.0 * XX4 * XX6 * EA
+ H  XX4       XX7       16.0 * XX4 * XX7 * EA
+ H  XX4       XX8       16.0 * XX4 * XX8 * EA
+ H  XX4       XX9       16.0 * XX4 * XX9 * EA
+ H  XX4       XX10      16.0 * XX4 * XX10 * EA
+ H  XX5       XX5       2.0 * EA * ( 1.0 + 2.0 * XX5 * XX5 )
+ H  XX5       XX6       4.0 * XX5 * XX6 * EA
+ H  XX5       XX7       4.0 * XX5 * XX7 * EA
+ H  XX5       XX8       4.0 * XX5 * XX8 * EA
+ H  XX5       XX9       4.0 * XX5 * XX9 * EA
+ H  XX5       XX10      4.0 * XX5 * XX10 * EA
+ H  XX6       XX6       2.0 * EA * ( 1.0 + 2.0 * XX6 * XX6 )
+ H  XX6       XX7       4.0 * XX6 * XX7 * EA
+ H  XX6       XX8       4.0 * XX6 * XX8 * EA
+ H  XX6       XX9       4.0 * XX6 * XX9 * EA
+ H  XX6       XX10      4.0 * XX6 * XX10 * EA
+ H  XX7       XX7       2.0 * EA * ( 1.0 + 2.0 * XX7 * XX7 )
+ H  XX7       XX8       4.0 * XX7 * XX8 * EA
+ H  XX7       XX9       4.0 * XX7 * XX9 * EA
+ H  XX7       XX10      4.0 * XX7 * XX10 * EA
+ H  XX8       XX8       2.0 * EA * ( 1.0 + 2.0 * XX8 * XX8 )
+ H  XX8       XX9       4.0 * XX8 * XX9 * EA
+ H  XX8       XX10      4.0 * XX8 * XX10 * EA
+ H  XX9       XX9       2.0 * EA * ( 1.0 + 2.0 * XX9 * XX9 )
+ H  XX9       XX10      4.0 * XX9 * XX10 * EA
+ H  XX10      XX10      2.0 * EA * ( 1.0 + 2.0 * XX10 * XX10 )
+
+ENDATA
+

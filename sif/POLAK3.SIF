@@ -1,0 +1,117 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POLAK3
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in eleven variables.
+
+*   Note: the original statement of the problem contains an inconsistant
+*         index i.  This has been replaced by 1, assuming a very common typo.
+*         But the optimal solution of the resulting problem differs from that
+*         quoted in the source. 
+
+*   Source: 
+*   E. Polak, D.H. Mayne and J.E. Higgins,
+*   "Superlinearly convergent algorithm for min-max problems"
+*   JOTA 69, pp. 407-439, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-12-10
+
+ IE 1                   1
+ IE 10                  10
+ IE 11                  11
+
+VARIABLES
+
+ DO I         1                        11
+ X  X(I)
+ OD I
+
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ DO I         1                        10
+ XL F(I)      U         -1.0 
+ OD I
+
+BOUNDS
+
+*   All variables are free
+
+ FR POLAK3    'DEFAULT'
+
+START POINT
+
+ V  POLAK3    'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV EL        XX
+ EP EL        A                        B
+
+ELEMENT USES
+
+ DO I         1                        10
+ IA I-1       I         -1
+ RI RI-1      I-1
+ DO J         1                        11
+ IA J-1       J         -1
+ RI RJ-1      J
+ XT E(I,J)    EL
+ ZV E(I,J)    XX                       X(J)
+ ZP E(I,J)    A                        RI-1
+ ZP E(I,J)    B                        RJ-1
+ OD J
+ OD I
+
+GROUP USES
+
+ DO I         1                        10
+ DO J         1                        11
+ RI RJ        J
+ RD 1/J       RJ        1.0
+ ZE F(I)      E(I,J)                   1/J
+ OD J
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                5.93300252
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POLAK3
+
+TEMPORARIES
+
+ R  V
+ R  EV
+
+ M  EXP
+
+INDIVIDUALS
+
+ T  EL
+ A  V                   XX - SIN( A + B + B )
+ A  EV                  EXP( V * V )
+ F                      EV
+ G  XX                  2.0 * V * EV
+ H  XX        XX        ( 4.0 * V * V  + 2.0 ) * EV
+
+ENDATA

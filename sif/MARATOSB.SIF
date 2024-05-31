@@ -1,0 +1,106 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MARATOSB
+
+*   Problem :
+*   *********
+
+*   A variant of the Maratos problem
+*   with penalty parameter = 0.000001
+
+*   Source:
+*   Ph. Toint.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification OUR2-AN-2-0
+
+*   Penalty parameter
+
+ RE INVP                0.000001
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  F         X1        1.0
+ ZN C         'SCALE'                  INVP
+
+CONSTANTS
+
+    MARATOSB  C         1.0
+
+BOUNDS
+
+ FR MARATOSB  'DEFAULT'
+
+START POINT
+
+    MARATOSB  X1        1.1
+    MARATOSB  X2        0.1
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  C         L2
+ E  C         X1SQ                     X2SQ
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MARATOSB
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MARATOSB
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

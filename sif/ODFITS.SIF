@@ -1,0 +1,294 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ODFITS
+
+*   Problem:
+*   ********
+
+*   A simple Origin/Destination matrix fit using a minimum entropy
+*   approach.  The objective is a combination of different aims, namely
+*   to be close to an a priori matrix for some entries, to be consistent
+*   with some traffic counts (for some entries) and to be small (for entries
+*   where nothing else is known).
+
+*   The objective function is of the form
+*
+*        SUM   m T [ ln( T / a ) - 1 ] + E   SUM  T [ ln ( T  ) - 1 ]
+*       i in I  i i       i   i            i in J  i        i
+*
+*               +  g   SUM   q  F [ ln( F / c ) - 1 ]
+*                    i in K   i  i       i   i
+*
+*   with the constraints that all Ti and Fi be positive and that
+*
+*                        F  =  SUM p   T
+*                         i     j   ij  j
+*
+*   where the pij represent path weights from an a priori assignment.
+
+*   Source: a modification of an example in
+*   L.G. Willumsen,
+*   "Origin-Destination Matrix: static estimation"
+*   in "Concise Encyclopedia of Traffic and Transportation Systems"
+*   (M. Papageorgiou, ed.), Pergamon Press, 1991.
+
+*   M. Bierlaire, private communication, 1991.
+
+*   SIF input: Ph Toint, Dec 1991.
+
+*   classification OLR2-MN-10-6
+
+*   Number of available traffic counts
+
+ IE ARCS                6
+
+*   The traffic counts values (in veh.) [ ci ]
+
+ RE TC1                 100.0
+ RE TC2                 500.0
+ RE TC3                 400.0
+ RE TC4                 1100.0
+ RE TC5                 600.0
+ RE TC6                 700.0
+
+*   quality of the traffic counts [ qi ]
+
+ RE QLT1                1.0
+ RE QLT2                1.0
+ RE QLT3                1.0
+ RE QLT4                1.0
+ RE QLT5                1.0
+ RE QLT6                1.0
+
+*   Path weights resulting from the assignment phase [ pij ]
+
+ RE P131                1.0
+ RE P132                0.0
+ RE P133                0.0
+ RE P134                0.0
+ RE P135                0.0
+ RE P136                0.0
+
+ RE P141                0.0
+ RE P142                1.0
+ RE P143                0.0
+ RE P144                1.0
+ RE P145                0.0
+ RE P146                0.0
+
+ RE P231                0.0
+ RE P232                0.0
+ RE P233                1.0
+ RE P234                1.0
+ RE P235                1.0
+ RE P236                0.0
+
+ RE P241                0.0
+ RE P242                0.0
+ RE P243                0.0
+ RE P244                1.0
+ RE P245                1.0
+ RE P246                1.0
+
+*   A priori known values for some entries [ ai ]
+
+ RE APV13               90.0
+ RE APV14               450.0
+ RE APV23               360.0
+
+*   A priori known coefficients and their inverse [ mi ]
+
+ RE MU13                0.5
+ RE MU14                0.5
+ RE MU23                0.5
+
+ RD 1/MU13    MU13      1.0
+ RD 1/MU14    MU14      1.0
+ RD 1/MU23    MU23      1.0
+
+*   [ g ]
+
+ RE GAMMA               1.5
+
+*  entropic coefficient [ E ] and its inverse
+
+ RE ENTROP              0.2
+ RD 1/ENTR    ENTROP    1.0
+
+*   usefull parameters
+
+ IE 1                   1
+
+ DO I         1                        ARCS
+ AD 1/QLT(I)  QLT(I)    1.0
+ A* G/QLT(I)  1/QLT(I)                 GAMMA
+ OD I
+
+VARIABLES
+
+*   entries with a priori known value [ in I ]
+
+    T13
+    T14
+    T23
+
+*   entries with no information [ in J ]
+
+    T24
+
+*   arc flows acorresponding to traffic counts [ in K ]
+
+ DO I         1                        ARCS
+ X  F(I)
+ OD I
+
+GROUPS
+
+*   fit for entries with a priori known values
+
+ N  AP13      T13       -1.0
+ ZN AP13      'SCALE'                  1/MU13
+
+ N  AP14      T14       -1.0
+ ZN AP14      'SCALE'                  1/MU14
+
+ N  AP23      T23       -1.0
+ ZN AP23      'SCALE'                  1/MU23
+
+*   fit for entries without information
+
+ N  AP24      T24       -1.0
+ ZN AP24      'SCALE'                  1/ENTR
+
+*   fit for arc flows corresponding to traffic counts
+
+ DO I         1                        ARCS
+ XN CP(I)     F(I)      -1.0
+ ZN CP(I)     'SCALE'                  G/QLT(I)
+ OD I
+
+*   constraints expressing arc flows as the sum of their flows to
+*   the destinations, weighted by the assignment phase coefficients
+
+ DO I         1                        ARCS
+ XE C(I)      F(I)      -1.0
+ ZE C(I)      T13                      P13(I)
+ ZE C(I)      T14                      P14(I)
+ ZE C(I)      T23                      P23(I)
+ ZE C(I)      T24                      P24(I)
+ OD I
+
+BOUNDS
+
+ LO ODFITS    'DEFAULT' 0.1
+
+START POINT
+
+*   start from the a priori known values for variables where this is known
+
+ ZV ODFITS    T13                      APV13
+ ZV ODFITS    T14                      APV14
+ ZV ODFITS    T23                      APV23
+
+*    start from 1.0 for variables corresponding to entries about which
+*    nothing is known
+
+ XV ODFITS    T24       1.0
+
+*    start from the traffic count values for the corresponding arc flows,
+
+ DO I         1                        ARCS
+ ZV ODFITS    F(I)                     TC(I)
+ OD I
+
+ELEMENT TYPE
+
+*   element = x * ln( x / den )
+
+ EV XLOGX     X
+ EP XLOGX     DEN
+
+ELEMENT USES
+
+*   entries with apriori known values
+
+ XT TFIT13    XLOGX
+ ZV TFIT13    X                        T13
+ ZP TFIT13    DEN                      APV13
+
+ XT TFIT23    XLOGX
+ ZV TFIT23    X                        T23
+ ZP TFIT23    DEN                      APV23
+
+ XT TFIT14    XLOGX
+ ZV TFIT14    X                        T14
+ ZP TFIT14    DEN                      APV14
+
+*   entries without information
+
+ XT TFIT24    XLOGX
+ ZV TFIT24    X                        T24
+ XP TFIT24    DEN       1.0
+
+*   arc flows corresponding to traffic counts
+
+ DO I         1                        ARCS
+ XT CFIT(I)   XLOGX
+ ZV CFIT(I)   X                        F(I)
+ ZP CFIT(I)   DEN                      TC(I)
+ OD I
+
+GROUP USES
+
+*   fit entries with a priori known values
+
+ E  AP13      TFIT13
+ E  AP14      TFIT14
+ E  AP23      TFIT23
+
+*   fit entries without information
+
+ E  AP24      TFIT24
+
+*   fit arc flows to corresponding traffic counts
+
+ DO I         1                        ARCS
+ XE CP(I)     CFIT(I)
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO ODFITS             -2380.026775
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ODFITS
+
+TEMPORARIES
+
+ R  LOGX
+ M  LOG
+
+INDIVIDUALS
+
+ T  XLOGX
+ A  LOGX                LOG( X / DEN )
+ F                      X * LOGX
+ G  X                   1.0 + LOGX
+ H  X         X         1.0 / X
+
+ENDATA
+
+
+
+

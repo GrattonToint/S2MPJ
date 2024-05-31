@@ -1,0 +1,75 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MAKELA4
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in twenty variables.
+
+*   Source: 
+*   M.M. Makela,
+*   "Nonsmooth optimization",
+*   Ph.D. thesis, Jyvaskyla University, 1990
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LLR2-AN-21-40
+
+ IE 1                   1
+ IE 20                  20
+
+VARIABLES
+
+ DO I         1                        20
+ X  X(I)
+ OD I
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ DO I         1                        20
+ XL F(I)      U         -1.0           X(I)      1.0
+ XL MF(I)     U         -1.0           X(I)      -1.0
+ OD I
+
+BOUNDS
+
+*   All variables are free
+
+ FR MAKELA3   'DEFAULT'
+
+START POINT
+
+    MAKELA3   X1        1.0
+    MAKELA3   X2        2.0
+    MAKELA3   X3        3.0
+    MAKELA3   X4        4.0
+    MAKELA3   X5        5.0
+    MAKELA3   X6        6.0
+    MAKELA3   X7        7.0
+    MAKELA3   X8        8.0
+    MAKELA3   X9        9.0
+    MAKELA3   X10       10.0
+    MAKELA3   X11       -11.0
+    MAKELA3   X12       -12.0
+    MAKELA3   X13       -13.0
+    MAKELA3   X14       -14.0
+    MAKELA3   X15       -15.0
+    MAKELA3   X16       -16.0
+    MAKELA3   X17       -17.0
+    MAKELA3   X18       -18.0
+    MAKELA3   X19       -19.0
+    MAKELA3   X20       -20.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA

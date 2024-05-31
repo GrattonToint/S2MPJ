@@ -1,0 +1,203 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POLAK6
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in four variables. This is a variation
+*   on problem ROSENMMX.
+
+*   Source: 
+*   E. Polak, D.H. Mayne and J.E. Higgins,
+*   "Superlinearly convergent algorithm for min-max problems"
+*   JOTA 69, pp. 407-439, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-5-4
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0
+ XL F1        X1        -5.0           X2        -5.0
+ XL F1        X3        -21.0          X4        7.0
+
+ XL F2        U         -1.0
+ XL F2        X1        5.0            X2        -15.0
+ XL F2        X3        -11.0          X4        -3.0
+
+ XL F3        U         -1.0 
+ XL F3        X1        -15.0          X2        -5.0
+ XL F3        X3        -21.0          X4        -3.0
+
+ XL F4        U         -1.0 
+ XL F4        X1        15.0           X2        -15.0
+ XL F4        X3        -21.0          X4        -3.0
+
+CONSTANTS
+
+    POLAK6    F2        80.0
+    POLAK6    F3        100.0
+    POLAK6    F4        50.0
+
+BOUNDS
+
+*   All variables are free
+
+ FR POLAK6    'DEFAULT'
+
+ELEMENT TYPE
+
+ EV SQ        XX
+
+ EV EL42      XX                       YY
+
+ EV EL442     XX                       YY
+ EV EL442     ZZ
+
+ EV EL4       XX
+
+ EV EL44      XX                       YY
+
+ELEMENT USES
+
+ T  E1        EL42
+ V  E1        XX                       X1
+ V  E1        YY                       X4
+
+ T  E2        EL442
+ V  E2        XX                       X2
+ V  E2        YY                       X1
+ V  E2        ZZ                       X4
+
+ T  E3        EL4
+ V  E3        XX                       X4
+
+ T  E4        EL44
+ V  E4        XX                       X1
+ V  E4        YY                       X4
+
+ T  X3SQ      SQ
+ V  X3SQ      XX                       X3
+
+ T  X4SQ      SQ
+ V  X4SQ      XX                       X4
+
+GROUP USES
+
+ E  F1        E1                       E2
+ E  F1        X3SQ      2.0            X4SQ
+ E  F1        E3        5.0            E4        5.0
+
+ E  F2        E1        11.0           E2        11.0
+ E  F2        X3SQ      12.0           X4SQ      11.0
+ E  F2        E3        -5.0           E4        15.0
+
+ E  F3        E1        11.0           E2        21.0
+ E  F3        X3SQ      12.0           X4SQ      21.0
+ E  F3        E3        15.0           E4        5.0
+
+ E  F4        E1        11.0           E2        11.0
+ E  F4        X3SQ      12.0           X4SQ
+ E  F4        E3        -15.0          E4        15.0       
+
+OBJECT BOUND
+
+*   Solution at ( 0, 1, 2, -1 )
+
+*LO SOLTN               -44.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POLAK6
+
+TEMPORARIES
+
+ R  A
+ R  B
+ R  C
+ R  DCDY
+ R  DADY
+ R  DADZ
+ R  DCDZ
+ R  D2CDZZ
+ R  D2ADYY
+ R  D2ADYZ
+ R  D2ADZZ
+
+INDIVIDUALS
+
+ T  EL42
+ A  B                   YY + 1.0
+ A  A                   XX - B ** 4
+ F                      A * A
+ G  XX                  2.0 * A
+ G  YY                  - 8.0 * A * B ** 3
+ H  XX        XX        2.0
+ H  XX        YY        - 8.0 * B ** 3
+ H  YY        YY        32.0 * B ** 6 - 24.0 * A * B ** 2
+
+ T  EL442
+ A  B                   ZZ + 1.0
+ A  C                   YY - B ** 4
+ A  DCDZ                - 4.0 * B ** 3
+ A  D2CDZZ              - 12.0 * B ** 2
+ A  A                   XX - C ** 4
+ A  DADY                - 4.0 * C ** 3
+ A  DADZ                DADY * DCDZ
+ A  D2ADYY              - 12.0 * C ** 2
+ A  D2ADYZ              D2ADYY * DCDZ
+ A  D2ADZZ              D2ADYZ * DCDZ + DADY * D2CDZZ
+ F                      A * A
+ G  XX                  2.0 * A
+ G  YY                  2.0 * A * DADY
+ G  ZZ                  2.0 * A * DADZ
+ H  XX        XX        2.0
+ H  XX        YY        2.0 * DADY
+ H  XX        ZZ        2.0 * DADZ
+ H  YY        YY        2.0 * ( DADY * DADY + A * D2ADYY )
+ H  YY        ZZ        2.0 * ( DADZ * DADY + A * D2ADYZ )
+ H  ZZ        ZZ        2.0 * ( DADZ * DADZ + A * D2ADZZ )
+
+ T  EL4
+ A  B                   XX + 1.0
+ F                      B ** 4
+ G  XX                  4.0 * B ** 3
+ H  XX        XX        12.0 * B ** 2
+
+ T  EL44
+ A  B                   YY + 1.0
+ A  A                   XX - B ** 4
+ F                      A ** 4
+ G  XX                  4.0 * A ** 3
+ G  YY                  - 16.0 * ( A * B ) ** 3
+ H  XX        XX        12.0 * A ** 2
+ H  XX        YY        - 48.0 * A ** 2 * B ** 3
+ H  YY        YY        - 48.0 * ( A * B ) ** 2 * 
+ H+                      ( A - 4.0 * B ** 4 )
+
+ T  SQ
+ F                      XX * XX
+ G  XX                  XX + XX
+ H  XX        XX        2.0
+
+ENDATA
+

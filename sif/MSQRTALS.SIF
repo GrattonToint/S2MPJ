@@ -1,0 +1,164 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MSQRTALS
+
+*   Problem :
+*   *********
+
+*   The dense matrix square root problem by Nocedal and Liu (Case 0).
+
+*   This is a least-squares variant of problem MSQRTA.
+
+*   Source:  problem 201 (p. 93) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-V-V
+
+*   Dimension of the matrix
+
+*IE P                   2              $-PARAMETER n = 4     original value
+*IE P                   7              $-PARAMETER n = 49
+*IE P                   10             $-PARAMETER n = 100
+*IE P                   23             $-PARAMETER n = 529
+*IE P                   32             $-PARAMETER n = 1024
+ IE P                   5              $-PARAMETER     modified for S2X tests
+*IE P                   70             $-PARAMETER n = 4900
+
+*   Number of variables
+
+ I* N         P                        P
+
+*   other parameter definitions
+
+ IE 1                   1
+
+*   Define the matrix B (solution of the problem)
+
+ RE K                   0.0
+
+ DO I         1                        P
+ DO J         1                        P
+ RA K         K         1.0
+ R* K2        K                        K
+ A( B(I,J)    SIN                      K2
+ ND
+
+*  Compute A = B * B
+
+ DO I         1                        P
+ DO J         1                        P
+ AE A(I,J)              0.0
+
+ DO K         1                        P
+ A* PROD      B(I,K)                   B(K,J)
+ A+ A(I,J)    A(I,J)                   PROD
+ ND
+
+VARIABLES
+
+ DO I         1                        P
+ DO J         1                        P
+ X  X(I,J)
+ ND
+
+GROUPS
+
+ DO I         1                        P
+ DO J         1                        P
+ XN G(I,J)
+ ND
+
+CONSTANTS
+
+ DO I         1                        P
+ DO J         1                        P
+ Z  MSQRTALS  G(I,J)                   A(I,J)
+ ND
+
+BOUNDS
+
+ FR MSQRTALS  'DEFAULT'
+
+START POINT
+
+ RE K                   0.0
+
+ DO I         1                        P
+ DO J         1                        P
+ RA K         K         1.0
+ R* K2        K                        K
+ R( SK2       SIN                      K2
+ RM -4SK2/5   SK2       -0.8
+ A+ XIJ       B(I,J)                   -4SK2/5
+ Z  MSQRTALS  X(I,J)                   XIJ
+ ND
+
+ELEMENT TYPE
+
+ EV 2PR       XIT                      XTJ
+
+ELEMENT USES
+
+ DO I         1                        P
+ DO J         1                        P
+ DO T         1                        P
+ XT E(I,J,T)  2PR
+ ZV E(I,J,T)  XIT                      X(I,T)
+ ZV E(I,J,T)  XTJ                      X(T,J)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        P
+ DO J         1                        P
+ DO T         1                        P
+ XE G(I,J)    E(I,J,T)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MSQRTALS
+
+INDIVIDUALS
+
+ T  2PR
+ F                      XIT * XTJ
+ G  XIT                 XTJ
+ G  XTJ                 XIT
+ H  XIT       XTJ       1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MSQRTALS
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

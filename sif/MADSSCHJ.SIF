@@ -1,0 +1,192 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MADSSCHJ
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem with variable dimension.
+*   The Jacobian of the constraints is dense.
+
+*   Source:
+*   K. Madsen and H. Schjaer-Jacobsen,
+*   "Linearly Constrained Minmax Optimization",
+*   Mathematical Programming 14, pp. 208-223, 1978.
+
+*   SIF input: Ph. Toint, August 1993.
+
+*   classification LQR2-AN-V-V
+
+*   N is the number of variables - 1, and must be even and at least 4.
+*   The number of inequality constraints is 2*N - 2.
+
+*IE N                   4              $-PARAMETER  n=  5, m=  6
+*IE N                   10             $-PARAMETER  n= 11, m= 18  original value
+*IE N                   20             $-PARAMETER  n= 21, m= 38
+*IE N                   30             $-PARAMETER  n= 31, m= 58
+*IE N                   40             $-PARAMETER  n= 41, m= 78
+*IE N                   50             $-PARAMETER  n= 51, m= 98
+*IE N                   60             $-PARAMETER  n= 61, m=118
+*IE N                   70             $-PARAMETER  n= 71, m=138
+*IE N                   80             $-PARAMETER  n= 81, m=158
+*IE N                   90             $-PARAMETER  n= 91, m=178
+*IE N                   100            $-PARAMETER  n=101, m=198
+*IE N                   200            $-PARAMETER  n=201, m=398
+ IE N                   4              $-PARAMETER     modified for S2X tests
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IA N-1       N         -1
+ I+ 2N        N                        N
+ IA M         2N        -2
+ IA M-1       M         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ OD I
+
+    Z
+
+GROUPS
+
+*   Objective
+
+ XN OBJ       Z         1.0
+
+*   First constraint
+
+ XG C1        Z         1.0
+ DO I         2                        N
+ XG C1        X(I)      -1.0
+ OD I
+
+*   Second constraint
+
+ XG C2        Z         1.0            X1        -1.0
+ DO I         3                        N
+ XG C2        X(I)      -1.0
+ OD I
+        
+*   Third constraint
+
+ XG C3        Z         1.0            X1        -1.0
+ DO I         3                        N
+ XG C3        X(I)      -1.0
+ OD I
+
+*   Subsequent intermediate constraints, by blocks of 2
+
+ DO K         4                        M-1
+ DI K         2
+ IA K+1       K         1
+ IA K+2       K         2
+ I/ J         K+2                      2
+ IA J-1       J         -1
+ IA J+1       J         1
+
+ XG C(K)      Z         1.0
+ XG C(K+1)    Z         1.0
+ DO I         1                        J-1
+ XG C(K)      X(I)      -1.0
+ XG C(K+1)    X(I)      -1.0
+ OD I
+ DO I         J+1                      N
+ XG C(K)      X(I)      -1.0
+ XG C(K+1)    X(I)      -1.0
+ OD I
+
+ OD K
+
+*   Last constraint
+
+ XG C(M)      Z         1.0
+ DO I         1                        N-1
+ XG C(M)      X(I)      -1.0
+ OD I
+
+CONSTANTS
+
+ DO K         1                        M
+ X  MADSSCHJ  C(K)      -1.0
+ OD K
+  
+BOUNDS
+
+ FR MADSSCHJ  'DEFAULT'
+
+START POINT
+
+ XV MADSSCHJ  'DEFAULT' 10.0
+ XV MADSSCHJ  Z         0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT XSQ(I)    SQ
+ ZV XSQ(I)    X                        X(I)
+ OD I
+
+GROUP USES
+
+ XE C(1)      XSQ(1)    -1.0
+ XE C(2)      XSQ(2)    -1.0
+ XE C(3)      XSQ(2)    -2.0
+
+ DO K         4                        M-1
+ DI K         2
+ IA K+1       K         1
+ IA K+2       K         2
+ I/ J         K+2                      2
+ XE C(K)      XSQ(J)    -1.0
+ XE C(K+1)    XSQ(J)    -2.0
+ OD K
+
+ XE C(M)      XSQ(N)    -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(4)             -2.6121094144
+*LO SOLTN(10)            -12.814452425
+*LO SOLTN(20)            -49.869888156
+*LO SOLTN(30)            -111.93545559
+*LO SOLTN(40)            -199.00371592
+*LO SOLTN(50)            -311.07308068
+*LO SOLTN(60)            -448.14300524
+*LO SOLTN(70)            -610.21325256
+*LO SOLTN(80)            -797.28370289
+*LO SOLTN(90)            -1009.3542892
+*LO SOLTN(100)           -1246.4249710
+*LO SOLTN(200)           -4992.1339031
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MADSSCHJ
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+

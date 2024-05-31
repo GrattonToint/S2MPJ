@@ -1,0 +1,143 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MATRIX2
+
+*   Problem :
+*   *********
+*   Find the pair of 2 by 2 symmetric matrices that are closest in
+*   Frobenius norm, subject to the first (X) being positive semidefinite and
+*   the second (Y) being negative semidefinite.
+
+*   Source : a problem made up for the SIF/LANCELOT user' manual.
+
+*   SIF input: Ph. Toint, Jan 91.
+
+*   classification  QOR2-AY-6-2
+
+VARIABLES
+
+    X11
+    X12
+    X22
+    Y11
+    Y12
+    Y22
+
+GROUPS
+
+ XN FROBDIST
+ XG XPOSDEF
+ XL YNEGDEF
+
+BOUNDS
+
+ XR MATRIX2   X12
+ XR MATRIX2   Y12
+ XM MATRIX2   Y11
+ XM MATRIX2   Y22
+
+START POINT
+
+ XV MATRIX2   'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV ISQ       V                        W
+ IV ISQ       U
+ EV SQ        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+*   Elements from the objective
+
+ XT XY11SQ    ISQ
+ ZV XY11SQ    V                        X11
+ ZV XY11SQ    W                        Y11
+
+ XT XY12SQ    ISQ
+ ZV XY12SQ    V                        X12
+ ZV XY12SQ    W                        Y12
+
+ XT XY22SQ    ISQ
+ ZV XY22SQ    V                        X22
+ ZV XY22SQ    W                        Y22
+
+*   Constraint that X is positive semidefinite
+
+ XT X1122     2PR
+ ZV X1122     X                        X11
+ ZV X1122     Y                        X22
+
+ XT X12SQ     SQ
+ ZV X12SQ     X                        X12
+
+*   Constraint that Y is negative semidefinite
+
+ XT Y1122     2PR
+ ZV Y1122     X                        Y11
+ ZV Y1122     Y                        Y22
+
+ XT Y12SQ     SQ
+ ZV Y12SQ     X                        Y12
+
+GROUP USES
+
+*   Objective function
+
+ XE FROBDIST  XY11SQ                   XY22SQ
+ XE FROBDIST  XY12SQ    2.0
+
+*   Constraint that X is positive semidefinite
+
+ XE XPOSDEF   X1122                    X12SQ     -1.0
+
+*   Constraint that Y is negative semidefinite
+
+ XE YNEGDEF   Y1122                    Y12SQ     -1.0
+
+OBJECT BOUND
+
+ LO MATRIX2             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE ELEMENTS *
+* ROUTINE             *
+***********************
+
+ELEMENTS      MATRIX2
+
+INDIVIDUALS
+
+*   Square of an internal variable
+
+ T  ISQ
+ R  U         V         1.0            W         -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+*   Square of an elemental variable
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*   Product of 2 elemental variables
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

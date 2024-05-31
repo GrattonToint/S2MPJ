@@ -1,0 +1,140 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PRICE4B
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example PRICE4
+
+*   Fit: (2x_1^2 x_2 - x_2^3,6x_1-x_2^2+x_2) +  e = 0
+
+*   version with box-constrained feasible region
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification SBR2-MN-2-0
+
+*   Number of data values
+
+ IE M                   2
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  F1
+ N  F2        X1        6.0            X2        1.0
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -50.0
+ UP BOUNDS    'DEFAULT' 50.0
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+ELEMENT TYPE
+
+ EV SQR       X
+ EV CUBE      X
+ EV CUBEL     X1                       X2
+
+ELEMENT USES
+
+ T  E12       CUBEL
+ V  E12       X1                       X1
+ V  E12       X2                       X2
+
+ T  E1        CUBE
+ V  E1        X                        X2
+
+ T  E2        SQR
+ V  E2        X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ E  F1        E12       2.0            E1        -1.0
+ E  F2        E2        -1.0
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PRICE4              0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PRICE4B
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X ** 2
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  CUBE
+ F                      X ** 3
+ G  X                   3.0 * X ** 2
+ H  X         X         6.0 * X
+
+ T  CUBEL
+ F                      X2 * X1 ** 3
+ G  X1                  3.0 * X2 * X1 ** 2
+ G  X2                  X1 ** 3
+ H  X1        X1        6.0 * X2 * X1
+ H  X1        X2        3.0 * X1 ** 2
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PRICE4B
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

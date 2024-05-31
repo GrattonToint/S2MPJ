@@ -1,0 +1,132 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MCCORMCK
+
+*   Problem :
+*   *********
+
+*   The extended Mc Cormick bounded problem
+
+*   Source: Problem 29 in
+*   Ph. L. Toint,
+*   "Test problems for partially separable optimization and results
+*   for the routine PSPMIN",
+*   Report 83/4, FUNDP (Namur, B), 1983.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OBR2-AY-V-0
+
+*   This problem is a sum of n-1 groups containing each 2 nonlinear
+*   elements.
+
+*   N is the number of variables
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+*IE N                   50000          $-PARAMETER
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XN E(I)      X(I)      -1.5           X(I+1)    2.5
+ ND
+
+CONSTANTS
+
+ X  MCCORMCK  'DEFAULT' -1.0
+
+BOUNDS
+
+*   All variables are in [-1.5, 3.0]
+
+ XL MCCORMCK  'DEFAULT' -1.5
+ XU MCCORMCK  'DEFAULT' 3.0
+
+ELEMENT TYPE
+
+ EV SQUARE    V1                       V2
+ IV SQUARE    U
+
+ EV SINE      V1                       V2
+ IV SINE      U
+
+ELEMENT USES
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XT Y(I)      SQUARE
+ ZV Y(I)      V1                       X(I+1)
+ ZV Y(I)      V2                       X(I)
+ XT Z(I)      SINE
+ ZV Z(I)      V1                       X(I)
+ ZV Z(I)      V2                       X(I+1)
+ ND
+
+GROUP USES
+
+ DO I         1                        N-1
+ XE E(I)      Y(I)                     Z(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MCCORMCK
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+*   Square elements
+
+ T  SQUARE
+ R  U         V1        -1.0           V2         1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+*   Sine groups
+
+ T  SINE
+ R  U         V1        1.0            V2         1.0
+ F                      SIN(U)
+ G  U                   COS(U)
+ H  U         U         -SIN(U)
+
+ENDATA

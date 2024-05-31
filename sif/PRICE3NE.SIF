@@ -1,0 +1,113 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PRICE3NE
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example Price03
+
+*   Fit: y  =  (10(x_1^2-x_2),sqrt(6)(6.4(x_2-0.5)^2 -x_1)) +  e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   Nonlinear-equation formulation of PRICE3.SIF
+
+*   SIF input: Nick Gould, Jan 2020
+
+*   classification NOR2-MN-2-2
+
+*   Number of data values
+
+ IE M                   2
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ E  F1        X2        -1.0
+ E  F1        'SCALE'   0.1
+ E  F2        X1        -1.0
+
+CONSTANTS
+
+    PRICE3    F2        0.6
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+ELEMENT TYPE
+
+ EV SQR       X
+ EV SSQR      X
+
+ELEMENT USES
+
+ T  E1        SQR
+ V  E1        X                        X1
+ T  E2        SSQR
+ V  E2        X                        X2
+
+GROUP USES
+
+ E  F1        E1
+ E  F2        E2        6.4
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PRICE3              0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PRICE3NE
+
+TEMPORARIES
+ R  Z
+ M  LOG
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X ** 2
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  SSQR
+ F                      ( X - 0.5 ) ** 2
+ G  X                   X + X - 1.0
+ H  X         X         2.0
+
+ENDATA

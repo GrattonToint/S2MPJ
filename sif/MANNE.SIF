@@ -1,0 +1,201 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MANNE
+
+*   Problem :
+*   *********
+
+*   A variable dimension econometric equilibrium problem
+*   suggested by A. Manne
+
+*   Source:
+*   B. Murtagh and M. Saunders,
+*   Mathematical Programming Studies 16, pp. 84-117,
+*   (example 5.12).
+
+*   SIF input: N. Gould and Ph. Toint, March 1990.
+
+*   classification OOR2-MN-V-V
+
+*   Number of periods
+*   The number of variables in the problem N = 3*T
+
+*IE T                   100            $-PARAMETER n = 300    original value
+*IE T                   365            $-PARAMETER n = 995
+*IE T                   1000           $-PARAMETER n = 3000
+*IE T                   2000           $-PARAMETER n = 6000
+ IE T                   4              $-PARAMETER     modified for S2X tests
+
+*   Problem parameters
+
+ RE GROW                0.03
+ RE BETA                0.95
+ RE XK0                 3.0
+ RE XC0                 0.95
+ RE XI0                 0.05
+ RE B                   0.25
+ RE BPROB               1.0
+
+*   Computed parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA T-1       T         -1
+ IA T-2       T         -2
+
+ R( LOGXK     LOG                      XK0
+ R* BLOGX     LOGXK                    B
+ R( XK0**B    EXP                      BLOGX
+ R+ NUM       XC0                      XI0
+ R/ A         NUM                      XK0**B
+
+ RS 1-B       B         1.0
+ RA 1+G       GROW      1.0
+ R( LOG1+G    LOG                      1+G
+ R* SOME      LOG1+G                   1-B
+ R( GFAC      EXP                      SOME
+
+ R* AT1       A                        GFAC
+ RA BT1       BETA      0.0
+
+ DO J         2                        T
+ IA J-1       J         -1
+ A* AT(J)     AT(J-1)                  GFAC
+ A* BT(J)     BT(J-1)                  BETA
+ ND
+
+ RS 1-BETA    BETA      1.0
+ RD 1/1-BETA  1-BETA    1.0
+ A* BT(T)     BT(T)                    1/1-BETA
+
+VARIABLES
+
+ DO I         1                        T
+ X  C(I)                               $ consumptions
+ X  I(I)                               $ investments
+ X  K(I)                               $ capitals
+ ND
+
+GROUPS
+
+ N  OBJ
+
+*   nonlinear constraints
+
+ DO I         1                        T
+ XG NL(I)     C(I)      -1.0           I(I)      -1.0
+*XG NL(I)     K(I)      0.1
+ ND
+
+*   linear constraints
+
+ DO I         1                        T-1
+ IA I+1       I         1
+ XL L(I)      K(I+1)    1.0            K(I)      -1.0
+ XL L(I)      I(I)      -1.0
+ ND
+
+ ZL L(T)      K(T)                     GROW
+ XL L(T)      I(T)      -1.0
+
+RANGES
+
+*X  MANNE     L(T-1)    10.0
+*X  MANNE     L(T)      20.0
+
+BOUNDS
+
+ FX MANNE     K1        3.05
+
+ DO I         2                        T
+ XL MANNE     K(I)      3.05
+ ND
+
+ RE 1.04**T             0.05
+
+ DO I         1                        T
+ RM 1.04**T   1.04**T   1.04
+ XL MANNE     C(I)      0.95
+ XL MANNE     I(I)      0.05
+ ZU MANNE     I(I)                     1.04**T
+ ND
+
+START POINT
+
+    MANNE     K1        3.05
+
+ DO I         2                        T
+ IA I-1       I         -1
+ RI RI-1      I-1
+ RM I-1/10    RI-1      0.1
+ RA VAL       I-1/10    3.0
+ Z  MANNE     K(I)                     VAL
+ ND
+
+ DO I         1                        T
+ X  MANNE     C(I)      0.95
+ X  MANNE     I(I)      0.05
+ ND
+
+ELEMENT TYPE
+
+ EV LOGS      C
+
+ EV POWER     K
+ EP POWER     B
+
+ELEMENT USES
+
+ DO I         1                        T
+ XT LOGC(I)   LOGS
+ ZV LOGC(I)   C                        C(I)
+ XT KS(I)     POWER
+ ZV KS(I)     K                        K(I)
+ ZP KS(I)     B                        B
+ ND
+
+GROUP USES
+
+ DO I         1                        T
+ ZE OBJ       LOGC(I)                  BT(I)
+ ZE NL(I)     KS(I)                    AT(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -9.7457259D-01
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MANNE
+
+TEMPORARIES
+
+ M  LOG
+
+INDIVIDUALS
+
+*   Logarithmics
+
+ T  LOGS
+ F                      LOG( C )
+ G  C                   1.0 / C
+ H  C         C         -1.0 / C**2
+
+*   Powers
+
+ T  POWER
+ F                      K**B
+ G  K                   B * K**( B - 1.0 )
+ H  K         K         B * ( B - 1.0 ) * K**( B - 2.0 )
+
+ENDATA

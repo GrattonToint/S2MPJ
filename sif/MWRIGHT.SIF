@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MWRIGHT
+
+*   Problem :
+*   *********
+
+*   An example by Margaret Wright
+
+*   Source: problem 4 starting point D in
+*   M.H. Wright:
+*   "Numerical Methods for Nonlinearly Constrained Optimization",
+*   Ph.D. Thesis, Stanford (USA), 1976.
+
+*   SIF input: Ph. Toint, March 1991.
+*              correction by Ph. Shott, January, 1995.
+
+*   classification OQR2-AN-5-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ1      X1        1.0
+ N  OBJ2      X1        1.0            X2        -1.0
+ N  OBJ3      X2        1.0            X3        -1.0
+ N  OBJ4      X3        1.0            X4        -1.0
+ N  OBJ5      X4        1.0            X5        -1.0
+
+ E  C1        X1        1.0
+ E  C2        X2        1.0            X4         1.0
+ E  C3
+
+CONSTANTS
+
+ RF SQ2       SQRT       2.0
+ RM 3SQ2      SQ2        3.0
+ RA 3SQ2+2    3SQ2       2.0
+ RM 2SQ2      SQ2        2.0
+ RA 2SQ2-2    2SQ2      -2.0
+
+ Z  MWRIGHT   C1                       3SQ2+2
+ Z  MWRIGHT   C2                       2SQ2-2
+    MWRIGHT   C3         2.0
+
+BOUNDS
+
+ FR MWRIGHT   'DEFAULT'
+
+START POINT
+
+    MWRIGHT   X1        -1.0
+    MWRIGHT   X2         2.0
+    MWRIGHT   X3         1.0
+    MWRIGHT   X4        -2.0
+    MWRIGHT   X5        -2.0
+
+ELEMENT TYPE
+
+ EV 2PR       U                        V
+
+ EV SQ        U
+
+ELEMENT USES
+
+ T  X2SQ      SQ
+ ZV X2SQ      U                        X2
+
+ T  X3SQ      SQ
+ ZV X3SQ      U                        X3
+
+ T  X1X5      2PR
+ ZV X1X5      U                        X1
+ ZV X1X5      V                        X5
+
+GROUP TYPE
+
+ GV L2        GVAR
+ GV L3        GVAR
+ GV L4        GVAR
+
+GROUP USES
+
+*   Objective function
+
+ T  OBJ1      L2
+ T  OBJ2      L2
+ T  OBJ3      L3
+ T  OBJ4      L4
+ T  OBJ5      L4
+
+*   Constraints
+
+ E  C1        X2SQ                     X3SQ
+ E  C2        X3SQ      -1.0
+ E  C3        X1X5
+
+OBJECT BOUND
+
+ LO NGONE               0.0
+
+*   Solution
+
+*LO SOLTN               32.851791437
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MWRIGHT
+
+INDIVIDUALS
+
+ T  2PR
+ F                      U * V
+ G  U                   V
+ G  V                   U
+ H  U         V         1.0
+
+ T  SQ
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MWRIGHT
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ T  L3
+ F                      GVAR**3
+ G                      3.0 * GVAR**2
+ H                      6.0 * GVAR
+
+ T  L4
+ F                      GVAR**4
+ G                      4.0 * GVAR**3
+ H                      12.0 * GVAR**2
+
+ENDATA

@@ -1,0 +1,157 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER6C
+
+*   Problem :
+*   *********
+
+*   A linear least squares problem
+*   arising from chemical kinetics.
+
+*    model: H-N=C=Se TZVP + MP2
+*   fitting Y to A0 + A2 X**2 + A4 X**4 + A6 X**6 + A8 X**8 +
+*                A10 X**10 + A12 X**12 + A14 X**14
+
+*   Source:
+*   M. Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1992.
+
+*   classification SUR2-RN-8-0
+
+*   Number of data points
+
+ IE M                   24
+
+*   Other data
+
+ IE 1                   1
+ IE 12                  12
+
+*   X (radians)
+
+ RE X12                 0.000000  
+ RE X13                 1.570796  
+ RE X14                 1.396263  
+ RE X15                 1.221730  
+ RE X16                 1.047198  
+ RE X17                 0.872665  
+ RE X18                 0.785398  
+ RE X19                 0.732789  
+ RE X20                 0.698132  
+ RE X21                 0.610865  
+ RE X22                 0.523599  
+ RE X23                 0.349066  
+ RE X24                 0.174533
+
+*   Y( KJmol-1)
+
+ RE Y12                 10.678659
+ RE Y13                 75.414511
+ RE Y14                 41.513459
+ RE Y15                 20.104735
+ RE Y16                  7.432436
+ RE Y17                  1.298082
+ RE Y18                  0.171300
+ RE Y19                  0.000000
+ RE Y20                  0.068203
+ RE Y21                  0.774499
+ RE Y22                  2.070002
+ RE Y23                  5.574556
+ RE Y24                  9.026378
+
+VARIABLES
+
+    A0
+    A2
+    A4
+    A6
+    A8
+    A10
+    A12
+    A14
+
+GROUPS
+
+ DO I         12                       M
+ A* XSQR      X(I)                     X(I)
+ A* XQUART    XSQR                     XSQR
+ A* X**6      XSQR                     XQUART
+ A* X**8      XSQR                     X**6
+ A* X**10     XSQR                     X**8
+ A* X**12     XSQR                     X**10
+ A* X**14     XSQR                     X**12
+ XN O(I)      A0        1.0
+ ZN O(I)      A2                       XSQR
+ ZN O(I)      A4                       XQUART
+ ZN O(I)      A6                       X**6
+ ZN O(I)      A8                       X**8
+ ZN O(I)      A10                      X**10
+ ZN O(I)      A12                      X**12
+ ZN O(I)      A14                      X**14
+ ND
+
+CONSTANTS
+
+ DO I         12                       M
+ Z  PALMER6C  O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER6C  A0
+ FR PALMER6C  A2
+ FR PALMER6C  A4
+ FR PALMER6C  A6
+ FR PALMER6C  A8
+ FR PALMER6C  A10
+ FR PALMER6C  A12
+ FR PALMER6C  A14
+
+START POINT
+
+ XV PALMER6C  'DEFAULT' 1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         12                       M
+ XT O(I)      L2
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER6C               0.0
+
+*   Solution
+
+*LO SOLTN              5.0310687D-02
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER6C
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+
+
+
+

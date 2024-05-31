@@ -1,0 +1,147 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POWERSUMNE
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example POWERSUM
+
+*   Fit: y  = sum_j=1^n x_j^i +  e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   Nonlinear-equation formulation of POWERSUM.SIF
+
+*   SIF input: Nick Gould, Jan 2020
+
+*   classification NOR2-MN-V-V
+
+*   Number of variables
+
+*IE N                   4              $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10             $-PARAMETER
+*IE N                   20             $-PARAMETER
+
+*   Number of data values
+
+ I= M         N
+
+*   Useful parameters
+
+ IE 1                   1
+ IE 4                   4
+
+*  Data values (these reproduce the standard n=4 case)
+
+ RE X1                  1.0
+ RE X2                  2.0
+ RE X3                  3.0
+ RE X4                  2.0
+
+ DO I         1                        M
+ RI P         I
+ RE SUM                 0.0
+ DO J         1                        4
+ A= XJ        X(J)
+ R( A         LOG                      XJ
+ R* A         A                        P
+ R( A         EXP                      A
+ R+ SUM       SUM                      A
+ OD J
+ A= Y(I)      SUM
+ OD I
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XE F(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  POWERSUM  F(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ X  START     X(I)      2.0
+ ND
+
+*  optimal solution (with X5 onward = 0)
+
+    SOL       X1        1.0
+    SOL       X2        2.0
+    SOL       X3        3.0
+    SOL       X4        2.0
+
+ELEMENT TYPE
+
+ EV POWER     X
+ EP POWER     P
+
+ELEMENT USES
+
+ DO I         1                        M
+ RI RI        I
+ DO J         1                        N
+ XT E(I,J)    POWER
+ ZV E(I,J)    X                        X(J)
+ ZP E(I,J)    P                        RI
+ ND
+
+GROUP USES
+
+ DO I         1                        M
+ DO J         1                        N
+ XE F(I)      E(I,J)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO POWERSUM            0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POWERSUMNE
+
+TEMPORARIES
+ R  Z
+ M  LOG
+
+INDIVIDUALS
+
+ T  POWER
+ F                      X ** P
+ G  X                   P * X ** ( P - 1.0 )
+ H  X         X         P * ( P - 1.0 ) * X ** ( P - 2.0 )
+
+ENDATA

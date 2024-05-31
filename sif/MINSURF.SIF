@@ -1,0 +1,108 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MINSURF
+
+*   Problem :
+*   *********
+*   Variable dimension full rank linear problem
+*   A version of the minimum surface problem
+*   on the unit square with simple boundary conditions.
+
+*   SIF input: Ph. Toint, Jan 1991.
+
+*   classification OXR2-MY-64-0
+
+*   Discretization parameter
+ IE P                    7
+*   Other parameters
+ IE 1                    1
+ IA P+1       P          1
+ RI RP        P
+ R* RPSQ      RP                       RP
+VARIABLES
+ DO i         1                        P+1
+ DO j         1                        P+1
+ X  X(i,j)
+ OD j
+ OD i
+GROUPS
+ DO i         1                        P
+ DO j         1                        P
+ XN S(i,j)
+ ZN S(i,j)    'SCALE'                  RPSQ
+ OD j
+ OD i
+CONSTANTS
+ DO i         1                        P
+ DO j         1                        P
+ X  MINSURF   S(i,j)    -1.0
+ OD j
+ OD i
+BOUNDS
+*   Free variables inside the unit square
+ IE 2                   2
+ DO i         2                        P
+ DO j         2                        P
+ XR MINSURF   X(i,j)
+ OD j
+ OD i
+*   Boundaries
+ DO i         1                        P+1
+ XX MINSURF   X(1,i)    1.0
+ XX MINSURF   X(P+1,i)  1.0
+ XX MINSURF   X(i,1)    1.0
+ XX MINSURF   X(i,P+1)  1.0
+ OD i
+ELEMENT TYPE
+ EV ISQ       V                        W
+ IV ISQ       U
+ELEMENT USES
+ DO i         1                        P
+ IA i+1       i         1
+ DO j         1                        P
+ IA j+1       j         1
+*   Diagonal
+ XT A(i,j)    ISQ
+ ZV A(i,j)    V                        X(i,j)
+ ZV A(i,j)    W                        X(i+1,j+1)
+*   Antidiagonal
+ XT B(i,j)    ISQ
+ ZV B(i,j)    V                        X(i,j+1)
+ ZV B(i,j)    W                        X(i+1,j)
+ OD j
+ OD i
+GROUP TYPE
+ GV SQROOT    ALPHA
+GROUP USES
+ RM WEIGHT    RPSQ      0.5
+ DO i         1                        P
+ DO j         1                        P
+ XT S(i,j)    SQROOT
+ ZE S(i,j)    A(i,j)                   WEIGHT
+ ZE S(i,j)    B(i,j)                   WEIGHT
+ OD j
+ OD i
+ENDATA
+
+ELEMENTS      MINSURF
+INDIVIDUALS
+ T  ISQ
+ R  U         V         1.0            W         -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+ENDATA
+
+GROUPS        MINSURF
+TEMPORARIES
+ R  SQRAL
+ M  SQRT
+INDIVIDUALS
+ T  SQROOT
+ A  SQRAL               SQRT( ALPHA )
+ F                      SQRAL
+ G                      0.5 / SQRAL
+ H                      -0.25 / ( ALPHA * SQRAL )
+ENDATA

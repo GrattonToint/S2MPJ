@@ -1,0 +1,101 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PT   
+
+*   Problem :
+*   *********
+
+*   A nonlinear programming formulation of a discretization of
+*   a nonlinear minimax problem.
+
+*   The problem is
+
+*       min  max phi(x,w), for all w in the interval I.
+*        x    w
+
+*   I is discretized, and the problem solved over the
+*   discrete points.
+
+*   Nonlinear programming formulation
+*
+*       min   u     s.t.  u - phi >= 0
+*       x,u
+
+*   Specific problem: I = [0,1]
+*   phi(x,w) = (2w^2-1)x + w(1-w)(1-x)
+ 
+*   Source: E. Polak and A. L. Tits,
+*   "A recursive quadratic programming algorithm for semi-infinite
+*    optimization problems",
+*   Appl. Math. Optim. 8, 1982, pp 325-349.
+
+*   SIF input: Nick Gould, February, 1994.
+
+*   classification LLR2-AN-2-V
+
+*   Discretization
+
+*IE M                   2
+*IE M                   100
+ IE M                   500
+
+*   Define the interval
+
+ RE LOWER               0.0
+ RE UPPER               1.0
+
+*   Define constants
+
+ RE ONE                 1.0
+ IE 0                   0
+
+ R- DIFF      UPPER                    LOWER
+ RI RM        M
+ R/ H         DIFF                     RM
+
+VARIABLES
+
+    U
+    X
+
+GROUPS
+
+ N  OBJ       U         1.0
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+
+ RS 1-W       W         1.0
+ R* W(1-W)    W                        1-W
+ R* W**2      W                        W
+ RM 2W**2     W**2      2.0
+ R- 2W**2-1   2W**2                    ONE
+ R- XCOEFF    W(1-W)                   2W**2-1
+ 
+ XG LO(I)     U         1.0            
+ ZG LO(I)     X                        XCOEFF
+ 
+ ND
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+ 
+ RS 1-W       W         1.0
+ R* W-W**2    W                        1-W
+ 
+ Z  PT        LO(I)                    W-W**2
+ ND
+
+BOUNDS
+
+ FR PT        'DEFAULT'
+
+ENDATA

@@ -1,0 +1,151 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER8C
+
+*   Problem :
+*   *********
+
+*   A linear least squares problem
+*   arising from chemical kinetics.
+
+*    model: H-N=C=Se TZVP + MP2
+*   fitting Y to A0 + A2 X**2 + A4 X**4 + A6 X**6 + A8 X**8 +
+*                A10 X**10 + A12 X**12 + A14 X**14
+
+*   Source:
+*   M. Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1992.
+
+*   classification QUR2-RN-8-0
+
+*   Number of data points
+
+ IE M                   23
+
+*   Other data
+
+ IE 1                   1
+ IE 12                  12
+
+*   X (radians)
+
+ RE X12                 0.000000
+ RE X13                 0.174533
+ RE X14                 0.314159
+ RE X15                 0.436332
+ RE X16                 0.514504
+ RE X17                 0.610865
+ RE X18                 0.785398
+ RE X19                 0.959931
+ RE X20                 1.134464
+ RE X21                 1.308997
+ RE X22                 1.483530
+ RE X23                 1.570796
+
+*   Y( KJmol-1)
+
+ RE Y12                  4.757534
+ RE Y13                  3.121416
+ RE Y14                  1.207606
+ RE Y15                  0.131916
+ RE Y16                  0.000000
+ RE Y17                  0.258514
+ RE Y18                  3.380161
+ RE Y19                 10.762813
+ RE Y20                 23.745996
+ RE Y21                 44.471864
+ RE Y22                 76.541947
+ RE Y23                 97.874528
+
+VARIABLES
+
+    A0
+    A2
+    A4
+    A6
+    A8
+    A10
+    A12
+    A14
+
+GROUPS
+
+ DO I         12                       M
+ A* XSQR      X(I)                     X(I)
+ A* XQUART    XSQR                     XSQR
+ A* X**6      XSQR                     XQUART
+ A* X**8      XSQR                     X**6
+ A* X**10     XSQR                     X**8
+ A* X**12     XSQR                     X**10
+ A* X**14     XSQR                     X**12
+ XN O(I)      A0        1.0
+ ZN O(I)      A2                       XSQR
+ ZN O(I)      A4                       XQUART
+ ZN O(I)      A6                       X**6
+ ZN O(I)      A8                       X**8
+ ZN O(I)      A10                      X**10
+ ZN O(I)      A12                      X**12
+ ZN O(I)      A14                      X**14
+ ND
+
+CONSTANTS
+
+ DO I         12                       M
+ Z  PALMER8C  O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER8C  A0
+ FR PALMER8C  A2
+ FR PALMER8C  A4
+ FR PALMER8C  A6
+ FR PALMER8C  A8
+ FR PALMER8C  A10
+ FR PALMER8C  A12
+ FR PALMER8C  A14
+
+START POINT
+
+ XV PALMER8C  'DEFAULT' 1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         12                       M
+ XT O(I)      L2
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER8C               0.0
+
+*   Solution
+
+*LO SOLTN              5.0310687D-02
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER8C
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

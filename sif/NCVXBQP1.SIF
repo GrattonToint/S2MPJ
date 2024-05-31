@@ -1,0 +1,130 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NCVXBQP1 
+
+*   Problem :
+*   *********
+
+*   A non-convex bound constrained quadratic program.
+
+*   SIF input: Nick Gould, July 1995
+
+*   classification QBR2-AN-V-0
+
+*   The number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER    original value
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  Other useful values.
+
+ IE 1                   1
+ IE 2                   2
+ IE 4                   4
+
+*   The number of equality constraints
+
+ I/ M         N                        2
+
+*   25% positive eigenvalues
+
+ I/ NPLUS     N                        4
+ IA NPLUS+1   NPLUS     1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  Objective function groups:
+
+*  the i-th group has nonzeros in positions 
+*  i, mod( 2i - 1, n ) + 1 and mod( 3i - 1, n ) + 1
+
+ DO I         1                        N
+ XN OBJ(I)    X(I)      1.0
+ IM J         I         2
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XN OBJ(I)    X(J)      1.0
+ IM J         I         3
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XN OBJ(I)    X(J)      1.0
+ ND
+
+BOUNDS
+
+ DO I         1                        N
+ XL NCVXBQP1  X(I)      0.1
+ XU NCVXBQP1  X(I)      10.0
+ ND
+
+START POINT
+
+ XV NCVXBQP1  'DEFAULT' 0.5
+
+GROUP TYPE
+
+ GV SQR       ALPHA
+ GP SQR       P
+
+GROUP USES
+
+* nplus positive rank-one terms
+
+ DO I         1                        NPLUS
+ XT OBJ(I)    SQR
+ RI RI        I
+ ZP OBJ(I)    P                        RI
+ ND
+
+* n - nplus negative rank-one terms
+
+ DO I         NPLUS+1                  N
+ XT OBJ(I)    SQR
+ RI RI        I
+ RM RI        RI        -1.0
+ ZP OBJ(I)    P                        RI
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.99558D+06   $ (n=100)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+GROUPS        NCVXBQP1
+
+INDIVIDUALS
+
+ T  SQR
+ F                      0.5 * P * ALPHA * ALPHA
+ G                      P * ALPHA 
+ H                      P
+
+ENDATA
+

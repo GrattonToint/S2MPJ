@@ -1,0 +1,109 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POLAK1
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   E. Polak, D.H. Mayne and J.E. Higgins,
+*   "Superlinearly convergent algorithm for min-max problems"
+*   JOTA 69, pp. 407-439, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0 
+ XL F2        U         -1.0 
+
+BOUNDS
+
+*   All variables are free
+
+ FR POLAK1    'DEFAULT'
+
+START POINT
+
+    POLAK1    X1        50.0
+    POLAK1    X2        0.05
+
+ELEMENT TYPE
+
+ EV EL        XX1                      XX2
+ EP EL        S
+
+ELEMENT USES
+
+ T  E1        EL
+ V  E1        XX1                      X1
+ V  E1        XX2                      X2
+ P  E1        S         -1.0
+
+ T  E2        EL
+ V  E2        XX1                      X1
+ V  E2        XX2                      X2
+ P  E2        S         1.0
+
+GROUP USES
+
+ E  F1        E1
+ E  F2        E2
+
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               2.7182818
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POLAK1
+
+TEMPORARIES
+
+ R  TX1
+ R  DTX1
+ R  TX2
+ R  DTX2
+ R  EARG
+
+ M  EXP
+
+INDIVIDUALS
+
+ T  EL
+ A  TX1                 0.001 * XX1 * XX1
+ A  DTX1                0.002 * XX1
+ A  TX2                 ( XX2 + S ) ** 2
+ A  DTX2                2.0 * ( XX2 + S )
+ A  EARG                EXP( TX1 + TX2 )
+ F                      EARG
+ G  XX1                 DTX1 * EARG
+ G  XX2                 DTX2 * EARG
+ H  XX1       XX1       ( 0.002 + DTX1 * DTX1 ) * EARG
+ H  XX1       XX2       DTX1 * DTX2 * EARG
+ H  XX2       XX2       ( 2.0 + DTX2 * DTX2 ) * EARG
+
+ENDATA
+

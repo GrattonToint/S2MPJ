@@ -1,0 +1,148 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NONCVXU2
+
+*   Problem :
+*   *********
+
+*   A nonconvex unconstrained function with a unique minimum value
+
+*   SIF input: Nick Gould, April 1996
+
+*   classification OUR2-AN-V-0
+
+*   The number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+
+*  Other useful values.
+
+ IA N-1       N         -1
+ IE -1                  -1
+ IE 1                   1
+ IE 2                   2
+ IE 4                   4
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  Objective function groups:
+
+ XN OBJ
+
+BOUNDS
+
+ XR NONCVXU2  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ RI RI        I
+ ZV NONCVXU2  X(I)                     RI
+ ND
+
+ V  START2    'DEFAULT' 0.6318
+
+ELEMENT TYPE
+
+ EV SQ        V1                       V2
+ EV SQ        V3
+ IV SQ        V
+
+ EV COS       V1                       V2
+ EV COS       V3
+ IV COS       V
+
+ELEMENT USES
+
+*  the i-th square and cosine elements have nonzeros in positions
+*  i, mod( 3i - 2, n ) + 1 and mod( 7i - 3, n ) + 1
+
+ DO I         1                        N
+ XT SQ(I)     SQ
+ XT COS(I)    COS
+ ZV SQ(I)     V1                       X(I)
+ ZV COS(I)    V1                       X(I)
+ IM J         I         3
+ IA J         J         -2
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K
+ IA J         J         1
+ ZV SQ(I)     V2                       X(J)
+ ZV COS(I)    V2                       X(J)
+ IM J         I         7
+ IA J         J         -3
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K
+ IA J         J         1
+ ZV SQ(I)     V3                       X(J)
+ ZV COS(I)    V3                       X(J)
+ ND
+
+GROUP USES
+
+* n positive rank-one terms
+
+ DO I         1                        N
+ XE OBJ       SQ(I)                    COS(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION            2.3168084D+1   $ (n=10)
+*LO SOLUTION            2.3168084D+2   $ (n=100)
+*LO SOLUTION            2.3168084D+3   $ (n=1000)
+*LO SOLUTION            1.1584042E+4   $ (n=5000)
+*LO SOLUTION            2.3168084D+4   $ (n=10000)
+*LO SOLUTION            2.3168084D+5   $ (n=100000)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      NONCVXU2
+
+TEMPORARIES
+
+ R  COSV
+ M  COS
+ M  SIN
+
+INDIVIDUALS
+
+ T  SQ
+ R  V         V1        1.0            V2        1.0
+ R  V         V3        1.0
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ T  COS
+ R  V         V1        1.0            V2        1.0
+ R  V         V3        1.0
+ A  COSV                4.0 * COS( V )
+ F                      COSV
+ G  V                   - 4.0 * SIN( V )
+ H  V         V         - COSV
+
+ENDATA

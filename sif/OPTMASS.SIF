@@ -1,0 +1,199 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OPTMASS
+
+*   Problem :
+*   *********
+
+*   A constrained optimal control problem
+*   adapted from Gawande and Dunn
+
+*   The problem is that of a particle of unit mass moving on a
+*   frictionless plane under the action of a controlling force whose
+*   magnitude may not exceed unity. At time=0, the particle moves through
+*   the origin of the plane in the direction of the positive x-axis with
+*   speed SPEED.  The cost function incorporates two conflicting control
+*   objectives, namely: maximization of the particle's final (at time=1)
+*   distance from the origin and minimization of its final speed.  By
+*   increasing the  value of the penalty constant PEN, more stress can be
+*   placed on the latter objective.
+
+*   Gawande and Dunn originally use a starting point (in the control
+*   only) that is much closer to the solution than the one chosen
+*   here.
+
+*   Source:
+*   M. Gawande and J. Dunn,
+*   "A Projected Newton Method in a Cartesian Product of Balls",
+*   JOTA 59(1): 59-69, 1988.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification QQR2-AN-V-V
+
+*   Number of discretization steps in the time interval
+*   The number of variables is 6 * (N + 2) -2 , 4 of which are fixed.
+
+*IE N                   10             $-PARAMETER n = 70    original value
+*IE N                   100            $-PARAMETER n = 610
+*IE N                   200            $-PARAMETER n = 1210
+*IE N                   500            $-PARAMETER n = 3010
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   1000           $-PARAMETER n = 6010
+*IE N                   5000           $-PARAMETER n = 30010
+
+*   Initial speed (as in reference)
+
+ RE SPEED               0.01
+
+*   Penalty parameter (as in reference)
+
+ RE PEN                 0.335
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+*   Derived parameters
+
+ IA N+1       N         1
+ RI RN        N
+ RD 1/N       RN        1.0
+ RM -1/N      1/N       -1.0
+ R* 1/N2      1/N                      1/N
+ RM -1/2N2    1/N2      -0.5
+
+VARIABLES
+
+ DO I         0                        N
+ DO J         1                        2
+ X  X(J,I)
+ X  V(J,I)
+ X  F(J,I)
+ ND
+
+ DO J         1                        2
+ X  X(J,N+1)
+ X  V(J,N+1)
+ ND
+
+GROUPS
+
+*   Objective
+
+ N  F
+
+*   State equations
+
+ DO I         1                        N+1
+
+ IA I-1       I         -1
+
+ DO J         1                        2
+
+ XE A(J,I)    X(J,I)    1.0            X(J,I-1)  -1.0
+ ZE A(J,I)    V(J,I-1)                 -1/N
+ ZE A(J,I)    F(J,I-1)                 -1/2N2
+
+ XE B(J,I)    V(J,I)    1.0            V(J,I-1)  -1.0
+ ZE B(J,I)    F(J,I-1)                 -1/N
+
+ ND
+
+*   Limit on the force
+
+ DO I         0                        N
+ XL C(I)
+ ND
+
+CONSTANTS
+
+ DO I         0                        N
+ X  OPTMASS   C(I)      1.0
+ ND
+
+BOUNDS
+
+ FR OPTMASS   'DEFAULT'
+ XX OPTMASS   X(1,0)    0.0
+ XX OPTMASS   X(2,0)    0.0
+ ZX OPTMASS   V(1,0)                   SPEED
+ XX OPTMASS   V(2,0)    0.0
+
+START POINT
+
+ XV OPTMASS   'DEFAULT' 0.0
+ Z  OPTMASS   V(1,0)                   SPEED
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+*   Objective
+
+ T  O1        SQ
+ ZV O1        X                        X(1,N+1)
+
+ T  O2        SQ
+ ZV O2        X                        X(2,N+1)
+
+ T  O3        SQ
+ ZV O3        X                        V(1,N+1)
+
+ T  O4        SQ
+ ZV O4        X                        V(2,N+1)
+
+*   Limit on the force
+
+ DO I         0                        N
+ DO J         1                        2
+ XT D(J,I)    SQ
+ ZV D(J,I)    X                        F(J,I)
+ ND
+
+GROUP USES
+
+*   Objective
+
+ E  F         O1        -1.0           O2        -1.0
+ ZE F         O3                       PEN
+ ZE F         O4                       PEN
+
+*   Limit on the force
+
+ DO I         0                        N
+ XE C(I)      D(1,I)                   D(2,I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)           -0.04647
+*LO SOLTN(100)          ???
+*LO SOLTN(200)          ???
+*LO SOLTN(500)          ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OPTMASS
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

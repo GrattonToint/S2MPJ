@@ -1,0 +1,547 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          METHANL8LS
+
+*   Problem:
+*   ********
+
+*   The methanol-8 problem by Fletcher.
+
+*   Source: Problem 2c in
+*   J.J. More',"A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer Seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: N. Gould, Dec 1989.
+*   Least-squares version of METHANL8.SIF, Nick Gould, Jan 2020.
+
+*   classification SUR2-MN-31-0
+
+ IE N                   8
+ IE M                   2
+ IE K                   2
+
+ IE 0                   0
+ IE 1                   1
+ IA N-1       N         -1
+ IA N-2       N         -2
+ IA K-        K         -1
+ IA K+        K         1
+
+ RE A1                  18.5751
+ RE B1                  -3632.649
+ RE C1                  239.2
+ RE A2                  18.3443
+ RE B2                  -3841.2203
+ RE C2                  228.0
+ RE AL1                 0.0
+ RE AL'1                15.97
+ RE AL''1               0.0422
+ RE AL2                 0.0
+ RE AL'2                18.1
+ RE AL''2               0.0
+ RE BE1                 9566.67
+ RE BE'1                -1.59
+ RE BE''1               0.0422
+ RE BE2                 10834.67
+ RE BE'2                8.74
+ RE BE''2               0.0
+ RE FL1                 451.25
+ RE FL2                 684.25
+ RE FV1                 0.0
+ RE FV2                 0.0
+ RE TF                  89.0
+ RE B                   693.37
+ RE D                   442.13
+ RE Q                   8386200.0
+ RE PI0                 1210.0
+ RE PI1                 1200.0
+ RE PI2                 1190.0
+ RE PI3                 1180.0
+ RE PI4                 1170.0
+ RE PI5                 1160.0
+ RE PI6                 1150.0
+ RE PI7                 1140.0
+
+VARIABLES
+
+ DO I         0                        N-1
+ X  T(I)
+ AD INVPI(I)  PI(I)     1.0
+ DO J         1                        M
+ X  X(I,J)
+ ND
+
+ DO I         0                        N-2
+ X  V(I)
+ ND
+
+GROUPS
+
+ DO J         1                        M
+ ZN 2.1-(J)   X(0,J)                   B
+ XN 2.1-(J)   'SCALE'   1.0D+4
+ XN 2.3-(J)   X(N-1,J)  -1.0
+ DO I         1                        N-2
+ XN 2.2-(I,J) 'SCALE'   1.0D+4
+ ND
+
+ DO I         0                        N-1
+ XN 2.7-(I)
+ ND
+
+ N  2.8       'SCALE'   1.0D+10
+
+ DO I         1                        N-2
+ XN 2.9-(I)   'SCALE'   1.0D+10
+ ND
+
+CONSTANTS
+
+ RE SMALLHF             0.0D+0
+ RE BIGHF               0.0D+0
+
+ DO J         1                        M
+ Z  METHANL8  2.2-(K,J)                FL(J)
+ Z  METHANL8  2.2-(K+,J)               FV(J)
+ R* TFTF      TF                       TF
+ A* TEMP1     TFTF                     AL''(J)
+ A* TEMP2     TF                       AL'(J)
+ R+ TEMP1     TEMP1                    TEMP2
+ A+ TEMP1     TEMP1                    AL(J)
+ A* TEMP1     TEMP1                    FL(J)
+ R+ SMALLHF   SMALLHF                  TEMP1
+ A* TEMP1     TFTF                     BE''(J)
+ A* TEMP2     TF                       BE'(J)
+ R+ TEMP1     TEMP1                    TEMP2
+ A+ TEMP1     TEMP1                    BE(J)
+ A* TEMP1     TEMP1                    FV(J)
+ R+ BIGHF     BIGHF                    TEMP1
+ ND
+
+ DO I         0                        N-1
+ X  METHANL8  2.7-(I)   1.0
+ ND
+
+ Z  METHANL8  2.8                      Q
+ Z  METHANL8  2.9-(K)                  SMALLHF
+ Z  METHANL8  2.9-(K+)                 BIGHF
+
+BOUNDS
+
+ FR B1        'DEFAULT'
+
+START POINT
+
+    METHANL8  X0,1      0.09203
+    METHANL8  X0,2      0.908
+    METHANL8  X1,1      0.1819
+    METHANL8  X1,2      0.8181
+    METHANL8  X2,1      0.284
+    METHANL8  X2,2      0.716
+    METHANL8  X3,1      0.3051
+    METHANL8  X3,2      0.6949
+    METHANL8  X4,1      0.3566
+    METHANL8  X4,2      0.6434
+    METHANL8  X5,1      0.468
+    METHANL8  X5,2      0.532
+    METHANL8  X6,1      0.6579
+    METHANL8  X6,2      0.3421
+    METHANL8  X7,1      0.8763
+    METHANL8  X7,2      0.1237
+    METHANL8  T0        120.0
+    METHANL8  T1        110.0
+    METHANL8  T2        100.0
+    METHANL8  T3        88.0
+    METHANL8  T4        86.0
+    METHANL8  T5        84.0
+    METHANL8  T6        80.0
+    METHANL8  T7        76.0
+    METHANL8  V0        886.37
+    METHANL8  V1        910.01
+    METHANL8  V2        922.52
+    METHANL8  V3        926.46
+    METHANL8  V4        935.56
+    METHANL8  V5        952.83
+    METHANL8  V6        975.73
+
+ELEMENT TYPE
+
+ EV 2PROD     V1                       V2
+ EP 2PROD     P1                       P2
+
+ EV POLY1PRD  V1                       V2
+ EP POLY1PRD  P1
+ EP POLY1PRD  P6                       P7
+ EP POLY1PRD  P8
+
+ EV POLY2PRD  V1                       V2
+ EV POLY2PRD  V3
+ EP POLY2PRD  P1                       P2
+ EP POLY2PRD  P6                       P7
+ EP POLY2PRD  P8
+
+ EV EXP2PROD  V2                       V3
+ EP EXP2PROD  P1                       P2
+ EP EXP2PROD  P3                       P4
+ EP EXP2PROD  P5
+
+ EV EXP3PROD  V1                       V2
+ EV EXP3PROD  V3
+ EP EXP3PROD  P1                       P2
+ EP EXP3PROD  P3                       P4
+ EP EXP3PROD  P5
+
+ EV EXP4PROD  V1                       V2
+ EV EXP4PROD  V3
+ EP EXP4PROD  P1                       P2
+ EP EXP4PROD  P3                       P4
+ EP EXP4PROD  P5                       P6
+ EP EXP4PROD  P7                       P8
+
+ELEMENT USES
+
+ RM -D        D         -1.0
+
+ DO J         1                        M
+
+ XT E11-(J)   2PROD
+ ZV E11-(J)   V1                       X(1,J)
+ ZV E11-(J)   V2                       V(0)
+ XP E11-(J)   P1        -1.0
+ ZP E11-(J)   P2                       B
+
+ XT E12-(J)   EXP3PROD
+ ZV E12-(J)   V1                       V(0)
+ ZV E12-(J)   V2                       X(0,J)
+ ZV E12-(J)   V3                       T(0)
+ XP E12-(J)   P1        1.0
+ ZP E12-(J)   P2                       INVPI(0)
+ ZP E12-(J)   P3                       A(J)
+ ZP E12-(J)   P4                       B(J)
+ ZP E12-(J)   P5                       C(J)
+
+ DO I         1                        N-2
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ XT E21-(I,J) 2PROD
+ ZV E21-(I,J) V1                       X(I+1,J)
+ ZV E21-(I,J) V2                       V(I)
+ XP E21-(I,J) P1        -1.0
+
+ XT E22-(I,J) EXP3PROD
+ ZV E22-(I,J) V1                       V(I-1)
+ ZV E22-(I,J) V2                       X(I-1,J)
+ ZV E22-(I,J) V3                       T(I-1)
+ XP E22-(I,J) P1        -1.0
+ ZP E22-(I,J) P2                       INVPI(I-1)
+ ZP E22-(I,J) P3                       A(J)
+ ZP E22-(I,J) P4                       B(J)
+ ZP E22-(I,J) P5                       C(J)
+
+ XT E23-(I,J) 2PROD
+ ZV E23-(I,J) V1                       X(I,J)
+ ZV E23-(I,J) V2                       V(I-1)
+ XP E23-(I,J) P1        1.0
+
+ XT E24-(I,J) EXP3PROD
+ ZV E24-(I,J) V1                       V(I)
+ ZV E24-(I,J) V2                       X(I,J)
+ ZV E24-(I,J) V3                       T(I)
+ XP E24-(I,J) P1        1.0
+ ZP E24-(I,J) P2                       INVPI(I)
+ ZP E24-(I,J) P3                       A(J)
+ ZP E24-(I,J) P4                       B(J)
+ ZP E24-(I,J) P5                       C(J)
+
+ OD I
+
+ DO I         1                        K-
+ ZP E21-(I,J) P2                       B
+ ZP E23-(I,J) P2                       B
+ OD I
+
+ ZP E21-(K,J) P2                       -D
+ ZP E23-(K,J) P2                       B
+
+ DO I         K+                       N-2
+ ZP E21-(I,J) P2                       -D
+ ZP E23-(I,J) P2                       -D
+ OD I
+
+ XT E31-(J)   EXP2PROD
+ ZV E31-(J)   V2                       X(N-2,J)
+ ZV E31-(J)   V3                       T(N-2)
+ XP E31-(J)   P1        1.0
+ ZP E31-(J)   P2                       INVPI(N-2)
+ ZP E31-(J)   P3                       A(J)
+ ZP E31-(J)   P4                       B(J)
+ ZP E31-(J)   P5                       C(J)
+
+ ND
+
+ DO J         1                        M
+
+ DO I         0                        N-1
+ XT E71-(I,J) EXP2PROD
+ ZV E71-(I,J) V2                       X(I,J)
+ ZV E71-(I,J) V3                       T(I)
+ XP E71-(I,J) P1        1.0
+ ZP E71-(I,J) P2                       INVPI(I)
+ ZP E71-(I,J) P3                       A(J)
+ ZP E71-(I,J) P4                       B(J)
+ ZP E71-(I,J) P5                       C(J)
+ ND
+
+ DO J         1                        M
+
+ XT E81-(J)   EXP4PROD
+ ZV E81-(J)   V1                       V(0)
+ ZV E81-(J)   V2                       X(0,J)
+ ZV E81-(J)   V3                       T(0)
+ XP E81-(J)   P1        1.0
+ ZP E81-(J)   P2                       INVPI(0)
+ ZP E81-(J)   P3                       A(J)
+ ZP E81-(J)   P4                       B(J)
+ ZP E81-(J)   P5                       C(J)
+ ZP E81-(J)   P6                       BE(J)
+ ZP E81-(J)   P7                       BE'(J)
+ ZP E81-(J)   P8                       BE''(J)
+
+ XT E82-(J)   POLY1PRD
+ ZV E82-(J)   V1                       X(0,J)
+ ZV E82-(J)   V2                       T(0)
+ ZP E82-(J)   P1                       B
+ ZP E82-(J)   P6                       AL(J)
+ ZP E82-(J)   P7                       AL'(J)
+ ZP E82-(J)   P8                       AL''(J)
+
+ XT E83-(J)   POLY2PRD
+ ZV E83-(J)   V1                       X(1,J)
+ ZV E83-(J)   V2                       V(0)
+ ZV E83-(J)   V3                       T(1)
+ XP E83-(J)   P1        -1.0
+ ZP E83-(J)   P2                       B
+ ZP E83-(J)   P6                       AL(J)
+ ZP E83-(J)   P7                       AL'(J)
+ ZP E83-(J)   P8                       AL''(J)
+
+ DO I         1                        N-2
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ XT E91-(I,J) EXP4PROD
+ ZV E91-(I,J) V1                       V(I)
+ ZV E91-(I,J) V2                       X(I,J)
+ ZV E91-(I,J) V3                       T(I)
+ XP E91-(I,J) P1        1.0
+ ZP E91-(I,J) P2                       INVPI(I)
+ ZP E91-(I,J) P3                       A(J)
+ ZP E91-(I,J) P4                       B(J)
+ ZP E91-(I,J) P5                       C(J)
+ ZP E91-(I,J) P6                       BE(J)
+ ZP E91-(I,J) P7                       BE'(J)
+ ZP E91-(I,J) P8                       BE''(J)
+
+ XT E92-(I,J) POLY2PRD
+ ZV E92-(I,J) V1                       X(I,J)
+ ZV E92-(I,J) V2                       V(I-1)
+ ZV E92-(I,J) V3                       T(I)
+ XP E92-(I,J) P1        1.0
+ ZP E92-(I,J) P6                       AL(J)
+ ZP E92-(I,J) P7                       AL'(J)
+ ZP E92-(I,J) P8                       AL''(J)
+
+ XT E93-(I,J) EXP4PROD
+ ZV E93-(I,J) V1                       V(I-1)
+ ZV E93-(I,J) V2                       X(I-1,J)
+ ZV E93-(I,J) V3                       T(I-1)
+ XP E93-(I,J) P1        -1.0
+ ZP E93-(I,J) P2                       INVPI(I-1)
+ ZP E93-(I,J) P3                       A(J)
+ ZP E93-(I,J) P4                       B(J)
+ ZP E93-(I,J) P5                       C(J)
+ ZP E93-(I,J) P6                       BE(J)
+ ZP E93-(I,J) P7                       BE'(J)
+ ZP E93-(I,J) P8                       BE''(J)
+
+ XT E94-(I,J) POLY2PRD
+ ZV E94-(I,J) V1                       X(I+1,J)
+ ZV E94-(I,J) V2                       V(I)
+ ZV E94-(I,J) V3                       T(I+1)
+ XP E94-(I,J) P1        -1.0
+ ZP E94-(I,J) P6                       AL(J)
+ ZP E94-(I,J) P7                       AL'(J)
+ ZP E94-(I,J) P8                       AL''(J)
+
+ OD I
+
+ DO I         1                        K-
+ ZP E92-(I,J) P2                       B
+ ZP E94-(I,J) P2                       B
+ OD I
+
+ ZP E92-(K,J) P2                       B
+ ZP E94-(K,J) P2                       -D
+
+ DO I         K+                       N-2
+ ZP E92-(I,J) P2                       -D
+ ZP E94-(I,J) P2                       -D
+ OD I
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO J         1                        M
+ XE 2.1-(J)   E11-(J)                  E12-(J)
+ XE 2.3-(J)   E31-(J)
+
+ XE 2.8       E81-(J)                  E82-(J)
+ XE 2.8       E83-(J)
+
+ DO I         1                        N-2
+
+ XE 2.2-(I,J) E21-(I,J)                E22-(I,J)
+ XE 2.2-(I,J) E23-(I,J)                E24-(I,J)
+
+ XE 2.9-(I)   E91-(I,J)                E92-(I,J)
+ XE 2.9-(I)   E93-(I,J)                E94-(I,J)
+
+ OD I
+
+ DO I         0                        N-1
+ XE 2.7-(I)   E71-(I,J)
+ OD I
+
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO METHANL8            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      METHANL8LS
+
+TEMPORARIES
+
+ R  EXPROD
+ R  F
+ R  POLY
+ R  DPOLY
+ R  TERM
+ M  EXP
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      P1 * V1 * ( V2 + P2 )
+ G  V1                  P1 * ( V2 + P2 )
+ G  V2                  P1 * V1
+ H  V1        V2        P1
+
+ T  POLY1PRD
+ A  POLY                P6 + P7 * V2 + P8 * V2 * V2
+ A  DPOLY               P7 + 2.0 * P8 * V2
+ F                      P1 * V1 * POLY
+ G  V1                  P1 * POLY
+ G  V2                  P1 * V1 * DPOLY
+ H  V1        V2        P1 * DPOLY
+ H  V2        V2        P1 * V1 * 2.0D+0 * P8
+
+ T  POLY2PRD
+ A  POLY                P6 + P7 * V3 + P8 * V3 * V3
+ A  DPOLY               P7 + 2.0 * P8 * V3
+ F                      P1 * V1 * ( P2 + V2 ) * POLY
+ G  V1                  P1 * ( P2 + V2 ) * POLY
+ G  V2                  P1 * V1 * POLY
+ G  V3                  P1 * V1 * ( P2 + V2 ) * DPOLY
+ H  V1        V2        P1 * POLY
+ H  V1        V3        P1 * ( P2 + V2 ) * DPOLY
+ H  V2        V3        P1 * V1 * DPOLY
+ H  V3        V3        P1 * V1 * ( P2 + V2 ) * 2.0D+0 * P8
+
+ T  EXP2PROD
+ A  EXPROD              P1 * P2 * EXP(P3 + (P4 / (V3 + P5)))
+ A  F                   V2 * EXPROD
+ F                      F
+ G  V2                  EXPROD
+ G  V3                  - V2 * EXPROD * P4 / (P5 + V3)**2
+ H  V2        V3        - EXPROD * P4 / (P5 + V3)**2
+ H  V3        V3        F * (P4 / (P5 + V3)**2)**2
+ H+                     + 2.0D+0 * F * P4 / (P5 + V3)**3
+
+ T  EXP3PROD
+ A  EXPROD              P1 * P2 * EXP(P3 + (P4 / (V3 + P5)))
+ A  F                   V1 * V2 * EXPROD
+ A  TERM                - P4 / (P5 + V3) ** 2
+ F                      F
+ G  V1                  V2 * EXPROD
+ G  V2                  V1 * EXPROD
+ G  V3                  F * TERM
+ H  V1        V2        EXPROD
+ H  V1        V3        V2 * EXPROD * TERM
+ H  V2        V3        V1 * EXPROD * TERM
+ H  V3        V3        F * ( TERM * TERM
+ H+                     + 2.0D+0 * P4 / (P5 + V3)**3 )
+
+ T  EXP4PROD
+ A  EXPROD              P1 * P2 * EXP(P3 + (P4 / (V3 + P5)))
+ A  F                   V1 * V2 * EXPROD
+ A  POLY                P6 + P7 * V3 + P8 * V3 * V3
+ A  DPOLY               P7 + 2.0 * P8 * V3
+ A  TERM                DPOLY - POLY * P4 / (P5 + V3) ** 2
+ F                      F * POLY
+ G  V1                  V2 * EXPROD * POLY
+ G  V2                  V1 * EXPROD * POLY
+ G  V3                  F * TERM
+ H  V1        V2        EXPROD * POLY
+ H  V1        V3        V2 * EXPROD * TERM
+ H  V2        V3        V1 * EXPROD * TERM
+ H  V3        V3        F * ( - (P4 / (P5 + V3)**2) * TERM
+ H+                     + 2.0 * P8 - DPOLY * P4 / (P5 + V3)**2
+ H+                     + 2.0D+0 * POLY * P4 / (P5 + V3)**3 )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        METHANL8LS
+
+INDIVIDUALS
+
+*   Least-square groups
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

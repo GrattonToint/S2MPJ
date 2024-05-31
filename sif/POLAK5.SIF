@@ -1,0 +1,107 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POLAK5
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   E. Polak, D.H. Mayne and J.E. Higgins,
+*   "Superlinearly convergent algorithm for min-max problems"
+*   JOTA 69, pp. 407-439, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0
+ XL F2        U         -1.0 
+
+BOUNDS
+
+*   All variables are free
+
+ FR POLAK5    'DEFAULT'
+
+START POINT
+
+    POLAK5    X1        0.1
+    POLAK5    X2        0.1
+
+ELEMENT TYPE
+
+ EV EL        XX1                      XX2
+ EP EL        S
+
+ EV SQ        XX
+
+ELEMENT USES
+
+ T  E1        EL
+ V  E1        XX1                      X1
+ V  E1        XX2                      X2
+ P  E1        S         -1.0
+
+ T  E2        EL
+ V  E2        XX1                      X1
+ V  E2        XX2                      X2
+ P  E2        S         1.0
+
+ T  X1SQ      SQ
+ V  X1SQ      XX                       X1
+
+GROUP USES
+
+ XE F1        X1SQ      3.0            E1        50.0
+ XE F2        X1SQ      3.0            E2        50.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               50.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POLAK5
+
+TEMPORARIES
+
+ R  A
+
+INDIVIDUALS
+
+ T  EL
+ A  A                   XX1 - XX2 ** 4 + S
+ F                      A * A
+ G  XX1                 2.0 * A
+ G  XX2                 - 8.0 * A * XX2 ** 3
+ H  XX1       XX1       2.0
+ H  XX1       XX2       - 8.0 * XX2 ** 3
+ H  XX2       XX2       32.0 * XX2 ** 6 - 24.0 * A * XX2 ** 2
+
+ T  SQ
+ F                      XX * XX
+ G  XX                  XX + XX
+ H  XX        XX        2.0
+
+ENDATA

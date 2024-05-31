@@ -1,0 +1,100 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POLAK4
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   E. Polak, D.H. Mayne and J.E. Higgins,
+*   "Superlinearly convergent algorithm for min-max problems"
+*   JOTA 69, pp. 407-439, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LQR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0           X1        -1.0
+ XL F2        U         -1.0 
+ XL F3        U         -1.0 
+
+CONSTANTS
+
+    POLAK4    F1        1.0
+    POLAK4    F2        0.01
+    POLAK4    F3        100000.0
+
+BOUNDS
+
+*   All variables are free
+
+ FR POLAK4    'DEFAULT'
+
+START POINT
+
+    POLAK4    X1        0.9
+    POLAK4    X2        0.1
+
+ELEMENT TYPE
+
+ EV SSQ       XX
+ EP SSQ       S
+
+ELEMENT USES
+
+ T  X1SQ      SSQ
+ V  X1SQ      XX                       X1
+ P  X1SQ      S         0.0
+
+ T  X2SQ      SSQ
+ V  X2SQ      XX                       X2
+ P  X2SQ      S         0.0
+
+ T  X1M2SQ    SSQ
+ V  X1M2SQ    XX                       X1
+ P  X1M2SQ    S         2.0
+
+GROUP USES
+
+ XE F1        X1SQ      2.0            X2SQ      2.0
+ XE F2        X1SQ      0.01           X2SQ      0.01
+ XE F3        X1M2SQ    100000.0       X2SQ      1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POLAK4
+
+INDIVIDUALS
+
+ T  SSQ
+ F                      ( XX - S ) ** 2
+ G  XX                  2.0 * ( XX - S )
+ H  XX        XX        2.0
+
+ENDATA
+

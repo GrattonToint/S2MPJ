@@ -1,0 +1,136 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MEXHAT
+
+*   Problem :
+*   *********
+
+*   The mexican hat problem with penalty parameter 0.00001
+
+*   Source:
+*   A.A. Brown and M. Bartholomew-Biggs,
+*   "Some effective methods for unconstrained optimization based on
+*   the solution of ordinary differential equations",
+*   Technical Report 178, Numerical Optimization Centre, Hatfield
+*   Polytechnic, (Hatfield, UK), 1987.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification OUR2-AN-2-0
+
+*   Penalty parameter
+
+ RE INVP                0.00001
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  F
+ ZN C         'SCALE'                  INVP
+
+CONSTANTS
+
+    MEXHAT    C         0.02
+
+BOUNDS
+
+ FR MEXHAT    'DEFAULT'
+
+START POINT
+
+    MEXHAT    X1        0.86
+    MEXHAT    X2        0.72
+
+ELEMENT TYPE
+
+ EV SSQ       X
+ EP SSQ       S
+
+ EV XMYSQ     X                        Y
+
+ELEMENT USES
+
+ T  O1        SSQ
+ V  O1        X                        X1
+ P  O1        S         1.0
+
+ T  O2        SSQ
+ V  O2        X                        X1
+ P  O2        S         1.0
+
+ T  C1        XMYSQ
+ V  C1        X                        X2
+ V  C1        Y                        X1
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ E  F         O1        -1.0           O2        -1.0
+
+ T  C         L2
+ E  C         C1        10000.0        O1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -0.0898793
+*LO SOLTN               -1.1171526
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MEXHAT
+
+TEMPORARIES
+
+ R  XMS
+ R  XX
+
+INDIVIDUALS
+
+ T  SSQ
+ A  XMS                 X - S
+ F                      XMS * XMS
+ G  X                   XMS + XMS
+ H  X         X         2.0
+
+ T  XMYSQ
+ A  XX                  X - Y * Y
+ F                      XX * XX
+ G  X                   XX + XX
+ G  Y                   - 4.0 * XX * Y
+ H  X         X         2.0
+ H  X         Y         - 4.0 * Y
+ H  Y         Y         - 4.0 * ( XX - 2.0 * Y * Y )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MEXHAT
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

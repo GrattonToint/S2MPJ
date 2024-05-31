@@ -1,0 +1,531 @@
+
+NAME          NET1
+
+*   Problem :
+*   *********
+
+*   A gas network problem for the south-east of England.
+
+*    SIF input: Sybille Schachler, Oxford, August 1992.
+*    classification OOI2-RN-48-57
+
+*   ...Problem size parameters
+
+ IE 1                              1
+ IE NNOD                          22
+ IE NPIP                          17
+ IE NCMP                           3
+ IE NSRC                           2
+ IE CSTART                        18
+ IE CEND                          20
+ IE SSTART                        21
+ IE SEND                          22
+
+VARIABLES
+    NOP17
+    PFL11
+    NOP9
+    PFL10
+    NOP16
+    PFL16
+    NOP19
+    PFL17
+    SFL22
+    SBV22
+    NOP18
+    NOP4
+    PFL13
+    PFL5
+    NOP11
+    PFL8
+    NOP6
+    NOP12
+    CFL19
+    CBV19
+    PFL7
+    NOP5
+    PFL6
+    NOP8
+    CFL20
+    CBV20
+    NOP7
+    PFL9
+    NOP21
+    PFL2
+    SFL21
+    SBV21
+    NOP1
+    PFL1
+    NOP14
+    PFL12
+    NOP10
+    PFL3
+    NOP2
+    CFL18
+    CBV18
+    NOP3
+    PFL4
+    NOP15
+    PFL15
+    NOP20
+    PFL14
+    NOP13
+
+GROUPS
+
+*   Linear constraints
+
+*   ...Mass balance equations...
+ XE MBE1      PFL1                -1   PFL2                -1
+ XE MBE1      SFL21                1
+ XE MBE2      PFL3                -1   CFL18               -1
+ XE MBE3      PFL4                -1   CFL18                1
+ XE MBE4      PFL5                -1   SFL22                1
+ XE MBE5      PFL6                -1   PFL7                -1
+ XE MBE5      CFL19               -1
+ XE MBE6      PFL8                -1   CFL19                1
+ XE MBE7      PFL9                -1   CFL20               -1
+ XE MBE8      PFL6                 1   CFL20                1
+ XE MBE9      PFL10               -1   PFL11               -1
+ XE MBE10     PFL3                 1   PFL12               -1
+ XE MBE11     PFL5                 1   PFL8                 1
+ XE MBE11     PFL13               -1
+ XE MBE12     PFL7                 1
+ XE MBE13     PFL14               -1
+ XE MBE14     PFL1                 1   PFL12                1
+ XE MBE15     PFL4                 1   PFL15               -1
+ XE MBE16     PFL10                1   PFL16               -1
+ XE MBE17     PFL11                1
+ XE MBE18     PFL13                1   PFL17               -1
+ XE MBE19     PFL16                1   PFL17                1
+ XE MBE20     PFL14                1   PFL15                1
+ XE MBE21     PFL2                 1   PFL9                 1
+*   ...Max. compression ratio...
+ XL MCR18     NOP3        1.00000000   NOP2       -1.40000000
+ XL MCR18     CBV18      0.00000D+00
+ XL MCR19     NOP6        1.00000000   NOP5       -1.40000000
+ XL MCR19     CBV19      0.00000D+00
+ XL MCR20     NOP8        1.00000000   NOP7       -1.40000000
+ XL MCR20     CBV20      0.00000D+00
+*   ...Binary flow constraints...
+ XL CLF18     CBV18      1.00000D+04   CFL18      -1.00000000
+ XL CLF19     CBV19      1.00000D+04   CFL19      -1.00000000
+ XL CLF20     CBV20      1.00000D+04   CFL20      -1.00000000
+ XL SLF21     SBV21      0.00000D+00   SFL21      -1.00000000
+ XL SUF21     SBV21     -3.00000D+03   SFL21       1.00000000
+ XL SLF22     SBV22      0.00000D+00   SFL22      -1.00000000
+ XL SUF22     SBV22     -1.06000D+02   SFL22       1.00000000
+*   ...Binary pressure constraints...
+ XL CLP18     NOP3                 1   NOP2                -1
+ XL CLP18     CBV18     -4.72000D+02
+ XL CUP18     NOP3                -1   NOP2                 1
+ XL CLP19     NOP6                 1   NOP5                -1
+ XL CLP19     CBV19     -3.45000D+02
+ XL CUP19     NOP6                -1   NOP5                 1
+ XL CLP20     NOP8                 1   NOP7                -1
+ XL CLP20     CBV20     -5.75000D+02
+ XL CUP20     NOP8                -1   NOP7                 1
+
+*   Nonlinear constraints
+
+*   ...Pressure Drop Equations...
+ DO i         1                        NPIP
+ XE PDE(i)    'SCALE'    1.00000D+03
+ OD i
+*   ...Maximum HP constraints...
+ DO i         CSTART                   CEND
+ XL HPCON(i)  'SCALE'    70.00000000
+ OD i
+*   ...Compressor HP objective...
+ DO i         CSTART                   CEND
+ XN HPOBJ(i)  'SCALE'     0.03500000
+ OD i
+
+CONSTANTS
+
+*   Linear constraints
+
+*   ...Mass balance equations...
+    NET1      MBE1        6.65680000
+    NET1      MBE4        1.96100000
+    NET1      MBE9       3.72060D+02
+    NET1      MBE10      47.17000000
+    NET1      MBE11      1.60060D+02
+    NET1      MBE12      4.25060D+02
+    NET1      MBE13      5.30000D+02
+    NET1      MBE14      24.16800000
+    NET1      MBE15       2.54400000
+    NET1      MBE16      89.14600000
+    NET1      MBE17      4.92900D+02
+    NET1      MBE20      4.64280D+02
+    NET1      MBE21      1.48400D+02
+*   ...Binary flow constraints...
+    NET1      CLF18      1.00000D+04
+    NET1      CLF19      1.00000D+04
+    NET1      CLF20      1.00000D+04
+*   ...Binary pressure constraints...
+
+*   Nonlinear constraints
+
+*   ...Maximum HP values...
+ X  NET1      HPCON18    2.07000D+04
+ X  NET1      HPCON19    2.07000D+04
+ X  NET1      HPCON20    4.14000D+04
+
+BOUNDS
+
+*   ...Default all variables to be free
+
+ FR NET1      'DEFAULT'
+
+*   ...Non-default bounds
+
+ XL NET1      SFL21      0.00000D+00
+ XU NET1      SFL21      3.00000D+03
+ XL NET1      SFL22      0.00000D+00
+ XU NET1      SFL22      1.06000D+02
+ XL NET1      NOP1       5.00000D+02
+ XU NET1      NOP1       1.01500D+03
+ XL NET1      NOP2       5.00000D+02
+ XU NET1      NOP2       1.10000D+03
+ XL NET1      NOP3       5.00000D+02
+ XU NET1      NOP3       9.72000D+02
+ XL NET1      NOP4       5.00000D+02
+ XU NET1      NOP4       1.10000D+03
+ XL NET1      NOP5       5.00000D+02
+ XU NET1      NOP5       1.10000D+03
+ XL NET1      NOP6       5.00000D+02
+ XU NET1      NOP6       8.45000D+02
+ XL NET1      NOP7       5.00000D+02
+ XU NET1      NOP7       1.10000D+03
+ XL NET1      NOP8       5.00000D+02
+ XU NET1      NOP8       1.07500D+03
+ XL NET1      NOP9       5.00000D+02
+ XU NET1      NOP9       1.10000D+03
+ XL NET1      NOP10      5.00000D+02
+ XU NET1      NOP10      1.10000D+03
+ XL NET1      NOP11      5.00000D+02
+ XU NET1      NOP11      1.10000D+03
+ XL NET1      NOP12      5.00000D+02
+ XU NET1      NOP12      1.10000D+03
+ XL NET1      NOP13      5.80000D+02
+ XU NET1      NOP13      1.10000D+03
+ XL NET1      NOP14      5.00000D+02
+ XU NET1      NOP14      1.10000D+03
+ XL NET1      NOP15      5.00000D+02
+ XU NET1      NOP15      1.10000D+03
+ XL NET1      NOP16      5.00000D+02
+ XU NET1      NOP16      1.10000D+03
+ XL NET1      NOP17      5.00000D+02
+ XU NET1      NOP17      1.10000D+03
+ XL NET1      NOP18      5.00000D+02
+ XU NET1      NOP18      1.10000D+03
+ XL NET1      NOP19      5.00000D+02
+ XU NET1      NOP19      1.10000D+03
+ XL NET1      NOP20      5.00000D+02
+ XU NET1      NOP20      1.10000D+03
+ XL NET1      NOP21      5.00000D+02
+ XU NET1      NOP21      1.10000D+03
+ XX NET1      CBV18                0
+ XX NET1      CBV19                1
+ XX NET1      CBV20                1
+ XX NET1      SBV21                1
+ XX NET1      SBV22                1
+
+START POINT
+
+*   ...Default all variables to start at 500
+
+ XV NET1      'DEFAULT'  5.00000D+02
+
+ELEMENT TYPE
+*   ...Panhandle 'A' equation
+ EV A0PANHAN  PIN
+ EV A0PANHAN  POUT
+ EV A0PANHAN  FLOW
+ EP A0PANHAN  PIPRES
+*   ...Compressor horsepower constraint equn.
+ EV A1MAXHP   PIN
+ EV A1MAXHP   POUT
+ EV A1MAXHP   FLOW
+ EV A1MAXHP   CBV
+ EP A1MAXHP   IPL
+ EP A1MAXHP   OPL
+*   ...Compressor horsepower objective function.
+ EV A2HPFUN   PIN
+ EV A2HPFUN   POUT
+ EV A2HPFUN   FLOW
+ EV A2HPFUN   CBV
+ EP A2HPFUN   IPL
+ EP A2HPFUN   OPL
+
+ELEMENT USES
+*   ...Panhandle Elements
+ XT PANH1     A0PANHAN
+ ZV PANH1     PIN                      NOP1
+ ZV PANH1     POUT                     NOP14
+ ZV PANH1     FLOW                     PFL1
+ XP PANH1     PIPRES      0.62131268
+ XT PANH2     A0PANHAN
+ ZV PANH2     PIN                      NOP1
+ ZV PANH2     POUT                     NOP21
+ ZV PANH2     FLOW                     PFL2
+ XP PANH2     PIPRES      0.31605264
+ XT PANH3     A0PANHAN
+ ZV PANH3     PIN                      NOP2
+ ZV PANH3     POUT                     NOP10
+ ZV PANH3     FLOW                     PFL3
+ XP PANH3     PIPRES      0.13104611
+ XT PANH4     A0PANHAN
+ ZV PANH4     PIN                      NOP3
+ ZV PANH4     POUT                     NOP15
+ ZV PANH4     FLOW                     PFL4
+ XP PANH4     PIPRES      0.12796251
+ XT PANH5     A0PANHAN
+ ZV PANH5     PIN                      NOP4
+ ZV PANH5     POUT                     NOP11
+ ZV PANH5     FLOW                     PFL5
+ XP PANH5     PIPRES      3.78624623
+ XT PANH6     A0PANHAN
+ ZV PANH6     PIN                      NOP5
+ ZV PANH6     POUT                     NOP8
+ ZV PANH6     FLOW                     PFL6
+ XP PANH6     PIPRES      0.84948702
+ XT PANH7     A0PANHAN
+ ZV PANH7     PIN                      NOP5
+ ZV PANH7     POUT                     NOP12
+ ZV PANH7     FLOW                     PFL7
+ XP PANH7     PIPRES      2.13696026
+ XT PANH8     A0PANHAN
+ ZV PANH8     PIN                      NOP6
+ ZV PANH8     POUT                     NOP11
+ ZV PANH8     FLOW                     PFL8
+ XP PANH8     PIPRES      0.25900862
+ XT PANH9     A0PANHAN
+ ZV PANH9     PIN                      NOP7
+ ZV PANH9     POUT                     NOP21
+ ZV PANH9     FLOW                     PFL9
+ XP PANH9     PIPRES      0.32838618
+ XT PANH10    A0PANHAN
+ ZV PANH10    PIN                      NOP9
+ ZV PANH10    POUT                     NOP16
+ ZV PANH10    FLOW                     PFL10
+ XP PANH10    PIPRES      0.33657520
+ XT PANH11    A0PANHAN
+ ZV PANH11    PIN                      NOP9
+ ZV PANH11    POUT                     NOP17
+ ZV PANH11    FLOW                     PFL11
+ XP PANH11    PIPRES      0.61512113
+ XT PANH12    A0PANHAN
+ ZV PANH12    PIN                      NOP10
+ ZV PANH12    POUT                     NOP14
+ ZV PANH12    FLOW                     PFL12
+ XP PANH12    PIPRES      0.51339271
+ XT PANH13    A0PANHAN
+ ZV PANH13    PIN                      NOP11
+ ZV PANH13    POUT                     NOP18
+ ZV PANH13    FLOW                     PFL13
+ XP PANH13    PIPRES      0.20890923
+ XT PANH14    A0PANHAN
+ ZV PANH14    PIN                      NOP13
+ ZV PANH14    POUT                     NOP20
+ ZV PANH14    FLOW                     PFL14
+ XP PANH14    PIPRES      0.15474706
+ XT PANH15    A0PANHAN
+ ZV PANH15    PIN                      NOP15
+ ZV PANH15    POUT                     NOP20
+ ZV PANH15    FLOW                     PFL15
+ XP PANH15    PIPRES      0.26980036
+ XT PANH16    A0PANHAN
+ ZV PANH16    PIN                      NOP16
+ ZV PANH16    POUT                     NOP19
+ ZV PANH16    FLOW                     PFL16
+ XP PANH16    PIPRES      0.04255562
+ XT PANH17    A0PANHAN
+ ZV PANH17    PIN                      NOP18
+ ZV PANH17    POUT                     NOP19
+ ZV PANH17    FLOW                     PFL17
+ XP PANH17    PIPRES      0.12570329
+*   ...Horsepower constraint elements
+ XT HPMAX18   A1MAXHP
+ ZV HPMAX18   PIN                      NOP2
+ ZV HPMAX18   POUT                     NOP3
+ ZV HPMAX18   FLOW                     CFL18
+ ZV HPMAX18   CBV                      CBV18
+ XP HPMAX18   IPL        0.00000D+00   OPL        0.00000D+00
+ XT HPMAX19   A1MAXHP
+ ZV HPMAX19   PIN                      NOP5
+ ZV HPMAX19   POUT                     NOP6
+ ZV HPMAX19   FLOW                     CFL19
+ ZV HPMAX19   CBV                      CBV19
+ XP HPMAX19   IPL        0.00000D+00   OPL        0.00000D+00
+ XT HPMAX20   A1MAXHP
+ ZV HPMAX20   PIN                      NOP7
+ ZV HPMAX20   POUT                     NOP8
+ ZV HPMAX20   FLOW                     CFL20
+ ZV HPMAX20   CBV                      CBV20
+ XP HPMAX20   IPL        0.00000D+00   OPL        0.00000D+00
+*   ...Horsepower objective elements
+ XT HPFUN18   A2HPFUN
+ ZV HPFUN18   PIN                      NOP2
+ ZV HPFUN18   POUT                     NOP3
+ ZV HPFUN18   FLOW                     CFL18
+ ZV HPFUN18   CBV                      CBV18
+ XP HPFUN18   IPL        0.00000D+00   OPL        0.00000D+00
+ XT HPFUN19   A2HPFUN
+ ZV HPFUN19   PIN                      NOP5
+ ZV HPFUN19   POUT                     NOP6
+ ZV HPFUN19   FLOW                     CFL19
+ ZV HPFUN19   CBV                      CBV19
+ XP HPFUN19   IPL        0.00000D+00   OPL        0.00000D+00
+ XT HPFUN20   A2HPFUN
+ ZV HPFUN20   PIN                      NOP7
+ ZV HPFUN20   POUT                     NOP8
+ ZV HPFUN20   FLOW                     CFL20
+ ZV HPFUN20   CBV                      CBV20
+ XP HPFUN20   IPL        0.00000D+00   OPL        0.00000D+00
+
+GROUP USES
+*   ...Panhandle Elements
+ DO i         1                        NPIP
+ XE PDE(i)    PANH(i)
+ OD i
+*   ...Horsepower constraint elements
+ DO i         CSTART                   CEND
+ XE HPCON(i)  HPMAX(i)
+ OD i
+*   ...Horsepower objective elements
+ DO i         CSTART                   CEND
+ XE HPOBJ(i)  HPFUN(i)
+ OD i
+ENDATA
+
+
+ELEMENTS      NET1
+
+TEMPORARIES
+*   ...Temps for PDEs
+ L  A0FGT0
+ R  A0FLEX
+ R  A0HFLO
+*   ...Temps for max. HP constraint
+ R  A1BETA
+ R  A1HFAC
+ R  A1PSUC
+ R  A1PDIS
+ R  A1CRB
+ R  A1PROD
+ R  A1GPIN
+ R  A1GPOU
+ R  A1GFLO
+ R  A1GCBV
+ R  A1HII
+ R  A1HIO
+ R  A1HOO
+ R  A1HIC
+ R  A1HOC
+*   ...Temps for horsewpower objective
+ R  A2BETA
+ R  A2HFAC
+ R  A2PSUC
+ R  A2PDIS
+ R  A2CRB
+ R  A2PROD
+ R  A2GPIN
+ R  A2GPOU
+ R  A2GFLO
+ R  A2GCBV
+ R  A2HII
+ R  A2HIO
+ R  A2HOO
+ R  A2HIC
+ R  A2HOC
+*   ...Intrinsic function references
+ M  ABS
+
+INDIVIDUALS
+
+*   ...Pressure drop equation element
+
+ T  A0PANHAN
+ A  A0FLEX              1.8539D0
+ A  A0FGT0              FLOW.GE.0.0D0
+ I  A0FGT0    A0HFLO    -PIPRES*A0FLEX*(A0FLEX-1.0D0)
+ I+                     *FLOW**(A0FLEX-2.0D0)
+ E  A0FGT0    A0HFLO    A0FLEX*(A0FLEX-1.0D0)*PIPRES
+ E+                     *ABS(FLOW)**(A0FLEX-2.0D0)
+ F                      PIN*PIN - POUT*POUT
+ F+                     - PIPRES*FLOW*ABS(FLOW)**(A0FLEX-1.0D0)
+ G  POUT                -2.0D0*POUT
+ G  PIN                 2.0D0*PIN
+ G  FLOW                -PIPRES*A0FLEX*ABS(FLOW)**(A0FLEX-1.0D0)
+ H  POUT      POUT      -2.0D0
+ H  PIN       PIN       2.0D0
+ H  FLOW      FLOW      A0HFLO
+
+*   ...Horsepower (constraint) element
+
+ T  A1MAXHP
+ A  A1BETA              0.23077D0
+ A  A1HFAC              203.712D0
+ A  A1PSUC              PIN - IPL*CBV
+ A  A1PDIS              POUT + OPL*CBV
+ A  A1CRB               (A1PDIS/A1PSUC)**A1BETA
+ A  A1PROD              A1BETA*A1HFAC*A1CRB *FLOW
+ A  A1GPIN              -A1PROD/A1PSUC
+ A  A1GPOU              A1PROD/A1PDIS
+ A  A1GFLO              A1HFAC*( A1CRB  - 1.0D0)
+ A  A1GCBV              -IPL*A1GPIN + OPL*A1GPOU
+ A  A1HII               A1PROD*(A1BETA+1.0D0)/(A1PSUC**2)
+ A  A1HIO               -A1PROD*A1BETA/(A1PSUC*A1PDIS)
+ A  A1HOO               A1PROD*(A1BETA-1.0D0)/(A1PDIS**2)
+ A  A1HIC               -IPL*A1HII  + OPL*A1HIO
+ A  A1HOC               -IPL*A1HIO  + OPL*A1HOO
+ F                      FLOW*A1GFLO
+ G  PIN                 A1GPIN
+ G  POUT                A1GPOU
+ G  FLOW                A1GFLO
+ G  CBV                 A1GCBV
+ H  PIN       PIN       A1HII
+ H  PIN       POUT      A1HIO
+ H  POUT      POUT      A1HOO
+ H  PIN       FLOW      A1GPIN/FLOW
+ H  POUT      FLOW      A1GPOU/FLOW
+ H  PIN       CBV       A1HIC
+ H  POUT      CBV       A1HOC
+ H  FLOW      CBV       A1GCBV/FLOW
+ H  CBV       CBV       -IPL*A1HIC  +  OPL*A1HOC
+
+*   ...Horsepower objective function element
+
+ T  A2HPFUN
+ A  A2BETA              0.23077D0
+ A  A2HFAC              203.712D0
+ A  A2PSUC              PIN - IPL*CBV
+ A  A2PDIS              POUT + OPL*CBV
+ A  A2CRB               (A2PDIS/A2PSUC)**A2BETA
+ A  A2PROD              A2BETA*A2HFAC*A2CRB *FLOW
+ A  A2GPIN              -A2PROD/A2PSUC
+ A  A2GPOU              A2PROD/A2PDIS
+ A  A2GFLO              A2HFAC*( A2CRB  - 1.0D0)
+ A  A2GCBV              -IPL*A2GPIN + OPL*A2GPOU
+ A  A2HII               A2PROD*(A2BETA+1.0D0)/(A2PSUC**2)
+ A  A2HIO               -A2PROD*A2BETA/(A2PSUC*A2PDIS)
+ A  A2HOO               A2PROD*(A2BETA-1.0D0)/(A2PDIS**2)
+ A  A2HIC               -IPL*A2HII  + OPL*A2HIO
+ A  A2HOC               -IPL*A2HIO  + OPL*A2HOO
+ F                      FLOW*A2GFLO
+ G  PIN                 A2GPIN
+ G  POUT                A2GPOU
+ G  FLOW                A2GFLO
+ G  CBV                 A2GCBV
+ H  PIN       PIN       A2HII
+ H  PIN       POUT      A2HIO
+ H  POUT      POUT      A2HOO
+ H  PIN       FLOW      A2GPIN/FLOW
+ H  POUT      FLOW      A2GPOU/FLOW
+ H  PIN       CBV       A2HIC
+ H  POUT      CBV       A2HOC
+ H  FLOW      CBV       A2GCBV/FLOW
+ H  CBV       CBV       -IPL*A2HIC  +  OPL*A2HOC
+ENDATA

@@ -1,0 +1,511 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MESH
+
+*   Problem:
+*   ********
+
+*   The goodness of a finite element grid is characterized by the
+*   smallest angle of all triangles. Given a triangulation of a domain 
+*   in R**2. Find a topological equivalent triangulation so, that the 
+*   smallest angel becomes as large as possible. Topological equivalent 
+*   means shifting the edges of the grid only in such a way that 
+*   neighbouring triangles remain neighbours. 
+
+*   Source: Prof. Dr. Michael Kraetzschmar, Institut fuer Angewandte 
+*           Mathematik der Fachhochschule Flensburg, Kanzleistrasse 91-93, 
+*           D-24943 FLENSBURG, GERMANY
+
+*   SIF input: Prof. Dr. Michael Kraetzschmar
+
+*   classification OOR2-AY-41-48
+
+*   Problem data
+
+ RE omega1              1.0D3
+ RE omega2              -1.0D3
+ RE omega3              -1.0D5
+ RE s                   0.700000
+ RF pi        ARCCOS    -1.0
+ RF sqrt3/2   SQRT      0.75
+ R* h         sqrt3/2                  s
+ RE drei                3.0
+ R/ pi/3      pi                       drei
+
+ IE 1                   1
+ IE np                  5
+ IE nk                  8
+ IE nd                  4
+
+VARIABLES
+
+ DO i         1                        np
+ X  x(i)
+ X  y(i)
+ OD i
+
+ DO i         1                        nk
+ X  l(i)
+ OD i
+
+ DO i         1                        nd
+ X  alpha(i)
+ X  beta(i)
+ X  gamma(i)
+ X  delta(i)
+ X  f(i)
+ OD i
+
+    deltamin
+    fmin
+    fmax
+
+GROUPS
+
+ XN obj1      deltamin  1.0
+ ZN obj1      'SCALE'                  omega1
+ XN obj2      fmax      1.0            fmin      -1.0
+ ZN obj2      'SCALE'                  omega2
+ XN obj3
+ ZN obj3      'SCALE'                  omega3
+
+ DO i         1                        nk
+ XE seit(i)
+ OD i
+
+ DO i         1                        nd
+ XE skal(i)
+ XE skbe(i)
+ OD i
+
+ DO i         1                        nd
+ XE doppf(i)  f(i)      -1.0
+ OD i
+
+ DO i         1                        nd
+ XE wisum(i)  alpha(i)  1.0            beta(i)   1.0
+ XE wisum(i)  gamma(i)  1.0
+ OD i
+
+ DO i         1                        nd
+ XG alphd(i)  alpha(i)  1.0            delta(i)  -1.0
+ XG betad(i)  beta(i)   1.0            delta(i)  -1.0
+ XG gammd(i)  gamma(i)  1.0            delta(i)  -1.0
+ XG deltd(i)  delta(i)  1.0            deltamin  -1.0
+ OD i
+
+ DO i         1                        nd
+ XG fmind(i)  f(i)      1.0            fmin      -1.0
+ XG fmaxd(i)  fmax      1.0            f(i)      -1.0
+ OD i
+
+CONSTANTS
+
+ DO i         1                        nd
+ Z  MESH      wisum(i)                 pi
+ OD i
+
+BOUNDS
+
+ ZU MESH      deltamin                 pi
+ XX MESH      x1        0.000000
+ XX MESH      y1        0.000000
+ XX MESH      x2        0.000000
+ XX MESH      y2        1.000000
+ XX MESH      x3        1.000000
+ XX MESH      y3        1.000000
+ XX MESH      x4        1.000000
+ XX MESH      y4        0.000000
+ XR MESH      x5  
+ XR MESH      y5  
+
+ DO i         1                        nd
+ ZU MESH      alpha(i)                 pi
+ ZU MESH      beta(i)                  pi
+ ZU MESH      gamma(i)                 pi
+ ZU MESH      delta(i)                 pi
+ OD i
+
+ ZU MESH      deltamin                 pi
+
+START POINT
+
+ XV MESH      x1        0.000000
+ XV MESH      y1        0.000000
+ XV MESH      x2        0.000000
+ XV MESH      y2        1.000000
+ XV MESH      x3        1.000000
+ XV MESH      y3        1.000000
+ XV MESH      x4        1.000000
+ XV MESH      y4        0.000000
+ XV MESH      x5        0.350000
+ XV MESH      y5        0.606218
+ XV MESH      l1        0.700000
+ XV MESH      l2        0.526844
+ XV MESH      l3        1.000000
+ XV MESH      l4        0.759977
+ XV MESH      l5        1.000000
+ XV MESH      l6        0.888819
+ XV MESH      l7        1.000000
+ XV MESH      l8        1.000000
+ XV MESH      alpha1    0.523599
+ XV MESH      beta1     1.891392
+ XV MESH      gamma1    0.726602
+ XV MESH      delta1    0.523599
+ XV MESH      f1        0.350000
+ XV MESH      alpha2    0.844195
+ XV MESH      beta2     1.752711
+ XV MESH      gamma2    0.544687
+ XV MESH      delta2    0.544687
+ XV MESH      f2        0.393782
+ XV MESH      alpha3    1.026109
+ XV MESH      beta3     1.295247
+ XV MESH      gamma3    0.820236
+ XV MESH      delta3    0.820236
+ XV MESH      f3        0.650000
+ XV MESH      alpha4    0.750560
+ XV MESH      beta4     1.343835
+ XV MESH      gamma4    1.047198
+ XV MESH      delta4    0.750560
+ XV MESH      f4        0.606218
+ XV MESH      deltamin  0.523599
+ XV MESH      fmin      0.350000
+ XV MESH      fmax      0.650000
+
+ELEMENT TYPE
+
+ EV diffsq    winkel                   minwi
+ IV diffsq    dif
+ EV laenge    lp1x                     lp1y
+ EV laenge    lp2x                     lp2y
+ EV laenge    llaenge
+ IV laenge    lp1p2x                   lp1p2y
+ IV laenge    ll
+ EV vekprod   vp1x                     vp1y
+ EV vekprod   vp2x                     vp2y
+ EV vekprod   vp3x                     vp3y
+ IV vekprod   vp2p1x                   vp2p1y
+ IV vekprod   vp2p3x                   vp2p3y
+ EV sklprod   sp1x                     sp1y
+ EV sklprod   sp2x                     sp2y
+ EV sklprod   sp3x                     sp3y
+ IV sklprod   sp2p1x                   sp2p1y
+ IV sklprod   sp2p3x                   sp2p3y
+ EV cosprod   cl1                      cl2
+ EV cosprod   cw
+
+ELEMENT USES
+
+ DO i         1                        nd
+ XT aldsq(i)  diffsq
+ ZV aldsq(i)  winkel                   alpha(i)
+ ZV aldsq(i)  minwi                    delta(i)
+ XT bedsq(i)  diffsq
+ ZV bedsq(i)  winkel                   beta(i)
+ ZV bedsq(i)  minwi                    delta(i)
+ XT gadsq(i)  diffsq
+ ZV gadsq(i)  winkel                   gamma(i)
+ ZV gadsq(i)  minwi                    delta(i)
+ OD i
+
+ DO i         1                        nk
+ XT laeng(i)  laenge
+ OD i
+
+ ZV laeng1    lp1x                     x1  
+ ZV laeng1    lp1y                     y1  
+ ZV laeng1    lp2x                     x5  
+ ZV laeng1    lp2y                     y5  
+ ZV laeng1    llaenge                  l1  
+ ZV laeng2    lp1x                     x5  
+ ZV laeng2    lp1y                     y5  
+ ZV laeng2    lp2x                     x2  
+ ZV laeng2    lp2y                     y2  
+ ZV laeng2    llaenge                  l2  
+ ZV laeng3    lp1x                     x2  
+ ZV laeng3    lp1y                     y2  
+ ZV laeng3    lp2x                     x1  
+ ZV laeng3    lp2y                     y1  
+ ZV laeng3    llaenge                  l3  
+ ZV laeng4    lp1x                     x5  
+ ZV laeng4    lp1y                     y5  
+ ZV laeng4    lp2x                     x3  
+ ZV laeng4    lp2y                     y3  
+ ZV laeng4    llaenge                  l4  
+ ZV laeng5    lp1x                     x3  
+ ZV laeng5    lp1y                     y3  
+ ZV laeng5    lp2x                     x2  
+ ZV laeng5    lp2y                     y2  
+ ZV laeng5    llaenge                  l5  
+ ZV laeng6    lp1x                     x5  
+ ZV laeng6    lp1y                     y5  
+ ZV laeng6    lp2x                     x4  
+ ZV laeng6    lp2y                     y4  
+ ZV laeng6    llaenge                  l6  
+ ZV laeng7    lp1x                     x4  
+ ZV laeng7    lp1y                     y4  
+ ZV laeng7    lp2x                     x3  
+ ZV laeng7    lp2y                     y3  
+ ZV laeng7    llaenge                  l7  
+ ZV laeng8    lp1x                     x1  
+ ZV laeng8    lp1y                     y1  
+ ZV laeng8    lp2x                     x4  
+ ZV laeng8    lp2y                     y4  
+ ZV laeng8    llaenge                  l8  
+
+ DO i         1                        nd
+ XT sal(i)    sklprod
+ OD i
+
+ ZV sal1      sp1x                     x2  
+ ZV sal1      sp1y                     y2  
+ ZV sal1      sp2x                     x1  
+ ZV sal1      sp2y                     y1  
+ ZV sal1      sp3x                     x5  
+ ZV sal1      sp3y                     y5  
+ ZV sal2      sp1x                     x3  
+ ZV sal2      sp1y                     y3  
+ ZV sal2      sp2x                     x2  
+ ZV sal2      sp2y                     y2  
+ ZV sal2      sp3x                     x5  
+ ZV sal2      sp3y                     y5  
+ ZV sal3      sp1x                     x4  
+ ZV sal3      sp1y                     y4  
+ ZV sal3      sp2x                     x3  
+ ZV sal3      sp2y                     y3  
+ ZV sal3      sp3x                     x5  
+ ZV sal3      sp3y                     y5  
+ ZV sal4      sp1x                     x1  
+ ZV sal4      sp1y                     y1  
+ ZV sal4      sp2x                     x4  
+ ZV sal4      sp2y                     y4  
+ ZV sal4      sp3x                     x5  
+ ZV sal4      sp3y                     y5  
+
+ DO i         1                        nd
+ XT cal(i)    cosprod
+ OD i
+
+ ZV cal1      cl1                      l3  
+ ZV cal1      cl2                      l1  
+ ZV cal1      cw                       alpha1  
+ ZV cal2      cl1                      l5  
+ ZV cal2      cl2                      l2  
+ ZV cal2      cw                       alpha2  
+ ZV cal3      cl1                      l7  
+ ZV cal3      cl2                      l4  
+ ZV cal3      cw                       alpha3  
+ ZV cal4      cl1                      l8  
+ ZV cal4      cl2                      l6  
+ ZV cal4      cw                       alpha4  
+
+ DO i         1                        nd
+ XT sbe(i)    sklprod
+ OD i
+
+ ZV sbe1      sp1x                     x1  
+ ZV sbe1      sp1y                     y1  
+ ZV sbe1      sp2x                     x5  
+ ZV sbe1      sp2y                     y5  
+ ZV sbe1      sp3x                     x2  
+ ZV sbe1      sp3y                     y2  
+ ZV sbe2      sp1x                     x2  
+ ZV sbe2      sp1y                     y2  
+ ZV sbe2      sp2x                     x5  
+ ZV sbe2      sp2y                     y5  
+ ZV sbe2      sp3x                     x3  
+ ZV sbe2      sp3y                     y3  
+ ZV sbe3      sp1x                     x3  
+ ZV sbe3      sp1y                     y3  
+ ZV sbe3      sp2x                     x5  
+ ZV sbe3      sp2y                     y5  
+ ZV sbe3      sp3x                     x4  
+ ZV sbe3      sp3y                     y4  
+ ZV sbe4      sp1x                     x4  
+ ZV sbe4      sp1y                     y4  
+ ZV sbe4      sp2x                     x5  
+ ZV sbe4      sp2y                     y5  
+ ZV sbe4      sp3x                     x1  
+ ZV sbe4      sp3y                     y1  
+
+ DO i         1                        nd
+ XT cbe(i)    cosprod
+ OD i
+
+ ZV cbe1      cl1                      l1  
+ ZV cbe1      cl2                      l2  
+ ZV cbe1      cw                       beta1  
+ ZV cbe2      cl1                      l2  
+ ZV cbe2      cl2                      l4  
+ ZV cbe2      cw                       beta2  
+ ZV cbe3      cl1                      l4  
+ ZV cbe3      cl2                      l6  
+ ZV cbe3      cw                       beta3  
+ ZV cbe4      cl1                      l6  
+ ZV cbe4      cl2                      l1  
+ ZV cbe4      cw                       beta4  
+
+ DO i         1                        nd
+ XT flae(i)   vekprod
+ OD i
+
+ ZV flae1     vp1x                     x1  
+ ZV flae1     vp1y                     y1  
+ ZV flae1     vp2x                     x5  
+ ZV flae1     vp2y                     y5  
+ ZV flae1     vp3x                     x2  
+ ZV flae1     vp3y                     y2  
+ ZV flae2     vp1x                     x2  
+ ZV flae2     vp1y                     y2  
+ ZV flae2     vp2x                     x5  
+ ZV flae2     vp2y                     y5  
+ ZV flae2     vp3x                     x3  
+ ZV flae2     vp3y                     y3  
+ ZV flae3     vp1x                     x3  
+ ZV flae3     vp1y                     y3  
+ ZV flae3     vp2x                     x5  
+ ZV flae3     vp2y                     y5  
+ ZV flae3     vp3x                     x4  
+ ZV flae3     vp3y                     y4  
+ ZV flae4     vp1x                     x4  
+ ZV flae4     vp1y                     y4  
+ ZV flae4     vp2x                     x5  
+ ZV flae4     vp2y                     y5  
+ ZV flae4     vp3x                     x1  
+ ZV flae4     vp3y                     y1  
+
+GROUP TYPE
+
+ GV square    alpha
+
+GROUP USES
+
+ XT obj1      square
+ XT obj2      square
+
+ DO i         1                        nd
+ XE obj3      aldsq(i)  1.0
+ XE obj3      bedsq(i)  1.0
+ XE obj3      gadsq(i)  1.0
+ OD i
+
+ DO i         1                        nk
+ XE seit(i)   laeng(i)  1.0
+ OD i
+
+ DO i         1                        nd
+ XE skal(i)   sal(i)    1.0            cal(i)    -1.0
+ XE skbe(i)   sbe(i)    1.0            cbe(i)    -1.0
+ OD i
+
+ DO i         1                        nd
+ XE doppf(i)  flae(i)   1.0
+ OD i
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN              5.9213448D-4
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MESH
+
+TEMPORARIES
+
+ R  cosa
+ R  sina
+ R  prod2
+ R  prod3
+ M  cos
+ M  sin
+
+INDIVIDUALS
+
+ T  diffsq
+ R  dif       winkel    1.0            minwi     -1.0
+ F                      dif * dif
+ G  dif                 dif + dif
+ H  dif       dif       2.0
+
+ T  laenge
+ R  lp1p2x    lp1x      1.0            lp2x      -1.0
+ R  lp1p2y    lp1y      1.0            lp2y      -1.0
+ R  ll        llaenge   1.0
+ F                      ll * ll
+ F+                     - lp1p2x * lp1p2x - lp1p2y * lp1p2y
+ G  ll                  ll + ll
+ G  lp1p2x              - (lp1p2x + lp1p2x)
+ G  lp1p2y              - (lp1p2y + lp1p2y)
+ H  ll        ll        2.0
+ H  ll        lp1p2x    0.0
+ H  ll        lp1p2y    0.0
+ H  lp1p2x    lp1p2y    0.0
+ H  lp1p2x    lp1p2x    -2.0
+ H  lp1p2y    lp1p2y    -2.0
+
+ T  vekprod
+ R  vp2p1x    vp1x      1.0            vp2x      -1.0
+ R  vp2p1y    vp1y      1.0            vp2y      -1.0
+ R  vp2p3x    vp3x      1.0            vp2x      -1.0
+ R  vp2p3y    vp3y      1.0            vp2y      -1.0
+ F                      vp2p3x * vp2p1y - vp2p1x * vp2p3y
+ G  vp2p1x              -vp2p3y
+ G  vp2p1y              vp2p3x
+ G  vp2p3x              vp2p1y
+ G  vp2p3y              -vp2p1x
+ H  vp2p3x    vp2p1y    1.0
+ H  vp2p1x    vp2p3y    -1.0
+
+ T  sklprod
+ R  sp2p1x    sp1x      1.0            sp2x      -1.0
+ R  sp2p1y    sp1y      1.0            sp2y      -1.0
+ R  sp2p3x    sp3x      1.0            sp2x      -1.0
+ R  sp2p3y    sp3y      1.0            sp2y      -1.0
+ F                      sp2p1x * sp2p3x + sp2p1y * sp2p3y
+ G  sp2p1x              sp2p3x
+ G  sp2p1y              sp2p3y
+ G  sp2p3x              sp2p1x
+ G  sp2p3y              sp2p1y
+ H  sp2p1x    sp2p3x    1.0
+ H  sp2p1y    sp2p3y    1.0
+
+ T  cosprod
+ A  cosa                cos(cw)
+ A  sina                sin(cw)
+ A  prod2               cl1 * cl2
+ A  prod3               prod2 * cosa
+ F                      prod3
+ G  cl1                 cl2 * cosa
+ G  cl2                 cl1 * cosa
+ G  cw                  -sina * prod2
+ H  cl1       cl2       cosa
+ H  cl1       cw        -sina * cl2
+ H  cl2       cw        -sina * cl1
+ H  cw        cw        -prod3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MESH
+
+INDIVIDUALS
+
+ T  square
+ F                      alpha * alpha
+ G                      alpha + alpha
+ H                      2.0
+
+ENDATA

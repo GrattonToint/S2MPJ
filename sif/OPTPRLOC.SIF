@@ -1,0 +1,497 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OPTPRLOC
+
+*   Problem :
+*   *********
+
+*   Optimal positioning of a new product in a multiattribute space.
+*   Consider a market of M existing products, a set of N consumers
+*   in a multiattribute (dim K) space.
+
+*   Source: Test problem 4 in M. Duran & I.E. Grossmann,
+*   "An outer approximation algorithm for a class of mixed integer nonlinear
+*    programs", Mathematical Programming 36, pp. 307-339, 1986.
+
+*   SIF input: S. Leyffer, October 1997
+
+*   classification QQR2-AN-30-30
+
+ IE 1                   1
+ IE K                   5              $ number of attributes
+ IE M                   10             $ number of products
+ IE N                   25             $ number of consumers
+ RE H                   1000.0         
+* ... ideal points Z(I,K)
+ RE Z1,1                2.26
+ RE Z1,2                5.15
+ RE Z1,3                4.03
+ RE Z1,4                1.74
+ RE Z1,5                4.74
+ RE Z2,1                5.51
+ RE Z2,2                9.01
+ RE Z2,3                3.84
+ RE Z2,4                1.47
+ RE Z2,5                9.92
+ RE Z3,1                4.06
+ RE Z3,2                1.80
+ RE Z3,3                0.71
+ RE Z3,4                9.09
+ RE Z3,5                8.13
+ RE Z4,1                6.30
+ RE Z4,2                0.11
+ RE Z4,3                4.08
+ RE Z4,4                7.29
+ RE Z4,5                4.24
+ RE Z5,1                2.81
+ RE Z5,2                1.65
+ RE Z5,3                8.08
+ RE Z5,4                3.99
+ RE Z5,5                3.51
+ RE Z6,1                4.29
+ RE Z6,2                9.49
+ RE Z6,3                2.24
+ RE Z6,4                9.78
+ RE Z6,5                1.52
+ RE Z7,1                9.76
+ RE Z7,2                3.64
+ RE Z7,3                6.62
+ RE Z7,4                3.66
+ RE Z7,5                9.08
+ RE Z8,1                1.37
+ RE Z8,2                6.99
+ RE Z8,3                7.19
+ RE Z8,4                3.03
+ RE Z8,5                3.39
+ RE Z9,1                8.89
+ RE Z9,2                8.29
+ RE Z9,3                6.05
+ RE Z9,4                7.48
+ RE Z9,5                4.09
+ RE Z10,1               7.42
+ RE Z10,2               4.60
+ RE Z10,3               0.30
+ RE Z10,4               0.97
+ RE Z10,5               8.77
+ RE Z11,1               1.54
+ RE Z11,2               7.06
+ RE Z11,3               0.01
+ RE Z11,4               1.23
+ RE Z11,5               3.11
+ RE Z12,1               7.74
+ RE Z12,2               4.40
+ RE Z12,3               7.93
+ RE Z12,4               5.95
+ RE Z12,5               4.88
+ RE Z13,1               9.94
+ RE Z13,2               5.21
+ RE Z13,3               8.58
+ RE Z13,4               0.13
+ RE Z13,5               4.57
+ RE Z14,1               9.54
+ RE Z14,2               1.57
+ RE Z14,3               9.66
+ RE Z14,4               5.24
+ RE Z14,5               7.90
+ RE Z15,1               7.46
+ RE Z15,2               8.81
+ RE Z15,3               1.67
+ RE Z15,4               6.47
+ RE Z15,5               1.81
+ RE Z16,1               0.56
+ RE Z16,2               8.10
+ RE Z16,3               0.19
+ RE Z16,4               6.11
+ RE Z16,5               6.40
+ RE Z17,1               3.86
+ RE Z17,2               6.68
+ RE Z17,3               6.42
+ RE Z17,4               7.29
+ RE Z17,5               4.66
+ RE Z18,1               2.98
+ RE Z18,2               2.98
+ RE Z18,3               3.03
+ RE Z18,4               0.02
+ RE Z18,5               0.67
+ RE Z19,1               3.61
+ RE Z19,2               7.62
+ RE Z19,3               1.79
+ RE Z19,4               7.80
+ RE Z19,5               9.81
+ RE Z20,1               5.68
+ RE Z20,2               4.24
+ RE Z20,3               4.17
+ RE Z20,4               6.75
+ RE Z20,5               1.08
+ RE Z21,1               5.48
+ RE Z21,2               3.74
+ RE Z21,3               3.34
+ RE Z21,4               6.22
+ RE Z21,5               7.94
+ RE Z22,1               8.13
+ RE Z22,2               8.72
+ RE Z22,3               3.93
+ RE Z22,4               8.80
+ RE Z22,5               8.56
+ RE Z23,1               1.37
+ RE Z23,2               0.54
+ RE Z23,3               1.55
+ RE Z23,4               5.56
+ RE Z23,5               5.85
+ RE Z24,1               8.79
+ RE Z24,2               5.04
+ RE Z24,3               4.83
+ RE Z24,4               6.94
+ RE Z24,5               0.38
+ RE Z25,1               2.66
+ RE Z25,2               4.19
+ RE Z25,3               6.49
+ RE Z25,4               8.04
+ RE Z25,5               1.66
+* ... attribute weights W(I,K)
+ RE W1,1                9.57
+ RE W1,2                2.74
+ RE W1,3                9.75
+ RE W1,4                3.96
+ RE W1,5                8.67
+ RE W2,1                8.38
+ RE W2,2                3.93
+ RE W2,3                5.18
+ RE W2,4                5.20
+ RE W2,5                7.82
+ RE W3,1                9.81
+ RE W3,2                0.04
+ RE W3,3                4.21
+ RE W3,4                7.38
+ RE W3,5                4.11
+ RE W4,1                7.41
+ RE W4,2                6.08
+ RE W4,3                5.46
+ RE W4,4                4.86
+ RE W4,5                1.48
+ RE W5,1                9.96
+ RE W5,2                9.13
+ RE W5,3                2.95
+ RE W5,4                8.25
+ RE W5,5                3.58
+ RE W6,1                9.39
+ RE W6,2                4.27
+ RE W6,3                5.09
+ RE W6,4                1.81
+ RE W6,5                7.58
+ RE W7,1                1.88
+ RE W7,2                7.20
+ RE W7,3                6.65
+ RE W7,4                1.74
+ RE W7,5                2.86
+ RE W8,1                4.01
+ RE W8,2                2.67
+ RE W8,3                4.86
+ RE W8,4                2.55
+ RE W8,5                6.91
+ RE W9,1                4.18
+ RE W9,2                1.92
+ RE W9,3                2.60
+ RE W9,4                7.15
+ RE W9,5                2.86
+ RE W10,1               7.81
+ RE W10,2               2.14
+ RE W10,3               9.63
+ RE W10,4               7.61
+ RE W10,5               9.17
+ RE W11,1               8.96
+ RE W11,2               3.47
+ RE W11,3               5.49
+ RE W11,4               4.73
+ RE W11,5               9.43
+ RE W12,1               9.94
+ RE W12,2               1.63
+ RE W12,3               1.23
+ RE W12,4               4.33
+ RE W12,5               7.08
+ RE W13,1               0.31
+ RE W13,2               5.00
+ RE W13,3               0.16
+ RE W13,4               2.52
+ RE W13,5               3.08
+ RE W14,1               6.02
+ RE W14,2               0.92
+ RE W14,3               7.47
+ RE W14,4               9.74
+ RE W14,5               1.76
+ RE W15,1               5.06
+ RE W15,2               4.52
+ RE W15,3               1.89
+ RE W15,4               1.22
+ RE W15,5               9.05
+ RE W16,1               5.92
+ RE W16,2               2.56
+ RE W16,3               7.74
+ RE W16,4               6.96
+ RE W16,5               5.18
+ RE W17,1               6.45
+ RE W17,2               1.52
+ RE W17,3               0.06
+ RE W17,4               5.34
+ RE W17,5               8.47
+ RE W18,1               1.04
+ RE W18,2               1.36
+ RE W18,3               5.99
+ RE W18,4               8.10
+ RE W18,5               5.22
+ RE W19,1               1.40
+ RE W19,2               1.35
+ RE W19,3               0.59
+ RE W19,4               8.58
+ RE W19,5               1.21
+ RE W20,1               6.68
+ RE W20,2               9.48
+ RE W20,3               1.60
+ RE W20,4               6.74
+ RE W20,5               8.92
+ RE W21,1               1.95
+ RE W21,2               0.46
+ RE W21,3               2.90
+ RE W21,4               1.79
+ RE W21,5               0.99
+ RE W22,1               5.18
+ RE W22,2               5.10
+ RE W22,3               8.81
+ RE W22,4               3.27
+ RE W22,5               9.63
+ RE W23,1               1.47
+ RE W23,2               5.71
+ RE W23,3               6.95
+ RE W23,4               1.42
+ RE W23,5               3.49
+ RE W24,1               5.40
+ RE W24,2               3.12
+ RE W24,3               5.37
+ RE W24,4               6.10
+ RE W24,5               3.71
+ RE W25,1               6.32
+ RE W25,2               0.81
+ RE W25,3               6.12
+ RE W25,4               6.73
+ RE W25,5               7.93
+* ... existing products DEL(J,K)
+ RE DEL1,1              0.62
+ RE DEL1,2              5.06
+ RE DEL1,3              7.82
+ RE DEL1,4              0.22
+ RE DEL1,5              4.42
+ RE DEL2,1              5.21
+ RE DEL2,2              2.66
+ RE DEL2,3              9.54
+ RE DEL2,4              5.03
+ RE DEL2,5              8.01
+ RE DEL3,1              5.27
+ RE DEL3,2              7.72
+ RE DEL3,3              7.97
+ RE DEL3,4              3.31
+ RE DEL3,5              6.56
+ RE DEL4,1              1.02
+ RE DEL4,2              8.89
+ RE DEL4,3              8.77
+ RE DEL4,4              3.10
+ RE DEL4,5              6.66
+ RE DEL5,1              1.26
+ RE DEL5,2              6.80
+ RE DEL5,3              2.30
+ RE DEL5,4              1.75
+ RE DEL5,5              6.65
+ RE DEL6,1              3.74
+ RE DEL6,2              9.06
+ RE DEL6,3              9.80
+ RE DEL6,4              3.01
+ RE DEL6,5              9.52
+ RE DEL7,1              4.64
+ RE DEL7,2              7.99
+ RE DEL7,3              6.69
+ RE DEL7,4              5.88
+ RE DEL7,5              8.23
+ RE DEL8,1              8.35
+ RE DEL8,2              3.79
+ RE DEL8,3              1.19
+ RE DEL8,4              1.96
+ RE DEL8,5              5.88
+ RE DEL9,1              6.44
+ RE DEL9,2              0.17
+ RE DEL9,3              9.93
+ RE DEL9,4              6.80
+ RE DEL9,5              9.75
+ RE DEL10,1             6.49
+ RE DEL10,2             1.92
+ RE DEL10,3             0.05
+ RE DEL10,4             4.89
+ RE DEL10,5             6.43
+* ... R(I) = min ( sum_K W(I,K) * ( DEL(J,K) - Z(I,K) )**2 (see AUXIL.SIF)
+ RE R1                  77.83985
+ RE R2                  175.9710
+ RE R3                  201.8226
+ RE R4                  143.9533
+ RE R5                  154.3895
+ RE R6                  433.3177
+ RE R7                  109.0764
+ RE R8                  41.59592
+ RE R9                  144.0623
+ RE R10                 99.83416
+ RE R11                 149.1791
+ RE R12                 123.8074
+ RE R13                 27.22197
+ RE R14                 89.92683
+ RE R15                 293.0766
+ RE R16                 174.3170
+ RE R17                 125.1028
+ RE R18                 222.8417
+ RE R19                 50.48593
+ RE R20                 361.1973
+ RE R21                 40.32642
+ RE R22                 161.8518
+ RE R23                 66.85827
+ RE R24                 340.5807
+ RE R25                 407.5200
+ DO I         1                        N
+ A+ RPH(I)    R(I)                     H
+ ND
+
+VARIABLES
+
+ DO I         1                        K
+ X  X(I)      
+ ND
+ DO I         1                        N
+ X  Y(I)      INTEGER
+ ND
+
+GROUPS
+
+ N  PROFIT    Y1        -1.0           Y2        -0.2
+ N  PROFIT    Y3        -1.0           Y4        -0.2 
+ N  PROFIT    Y5        -0.9           Y6        -0.9
+ N  PROFIT    Y7        -0.1           Y8        -0.8
+ N  PROFIT    Y9        -1.0           Y10       -0.4
+ N  PROFIT    Y11       -1.0           Y12       -0.3
+ N  PROFIT    Y13       -0.1           Y14       -0.3
+ N  PROFIT    Y15       -0.5           Y16       -0.9
+ N  PROFIT    Y17       -0.8           Y18       -0.1
+ N  PROFIT    Y19       -0.9           Y20       -1.0
+ N  PROFIT    Y21       -1.0           Y22       -1.0
+ N  PROFIT    Y23       -0.2           Y24       -0.7
+ N  PROFIT    Y25       -0.7           X2        -0.9
+ N  PROFIT    X3        -0.5           X5        1.0 
+
+
+* ... ellipsoid defining closeness to ideal consumer point
+ DO I         1                        N
+ ZL ELLI(I)   Y(I)                     H
+ ND
+
+* ... definition of attribute space (linear constraints)
+ L  LIN1      X1        1.0            X2        -1.0 
+ L  LIN1      X3        1.0            X4        1.0 
+ L  LIN1      X5        1.0 
+
+ L  LIN2      X1        0.6            X2        -0.9 
+ L  LIN2      X3        -0.5           X4        0.1 
+ L  LIN2      X5        1.0 
+
+ G  LIN3      X1        1.0            X2        -1.0 
+ G  LIN3      X3        1.0            X4        -1.0 
+ G  LIN3      X5        1.0 
+
+ L  LIN4      X1        0.157          X2        0.05 
+
+ G  LIN5      X2        0.25           X4        1.05 
+ G  LIN5      X5        -0.3       
+
+CONSTANTS
+
+
+ DO I         1                        N
+ Z  OPTPRLOC  ELLI(I)                  RPH(I)
+ ND
+    OPTPRLOC  LIN1      10.0
+    OPTPRLOC  LIN2      -0.64
+    OPTPRLOC  LIN3      0.69
+    OPTPRLOC  LIN4      1.5 
+    OPTPRLOC  LIN5      4.5 
+
+BOUNDS
+
+ XL OPTPRLOC  X1        2.0
+ XU OPTPRLOC  X1        4.5
+ XU OPTPRLOC  X2        8.0
+ XL OPTPRLOC  X3        3.0
+ XU OPTPRLOC  X3        9.0
+ XU OPTPRLOC  X4        5.0
+ XL OPTPRLOC  X5        4.0
+ XU OPTPRLOC  X5        10.0
+ DO I         1                        N
+ XU OPTPRLOC  Y(I)      1.0
+ ND
+
+* ... additional bounds (one problem in Branch-and-Bound tree)
+*XL OPTPRLOC  Y22       1.0
+*XU OPTPRLOC  Y4        0.0
+*XU OPTPRLOC  Y23       0.0
+
+ELEMENT TYPE
+
+ EV XMBS      X                          
+ EP XMBS      B                          
+
+ELEMENT USES
+
+ T  OBJSQ1    XMBS     
+ V  OBJSQ1    X                        X1
+ P  OBJSQ1    B         0.0
+
+ T  OBJSQ2    XMBS     
+ V  OBJSQ2    X                        X4
+ P  OBJSQ2    B         0.0
+
+ DO I         1                        N
+ DO L         1                        K
+ XT SQ(I,L)   XMBS
+ ZV SQ(I,L)   X                        X(L)
+ ZP SQ(I,L)   B                        Z(I,L)
+ OD L
+ OD I
+
+GROUP USES
+
+ E  PROFIT    OBJSQ1    0.6            OBJSQ2    0.1
+
+ DO I         1                        N
+ DO L         1                        K
+ ZE ELLI(I)   SQ(I,L)                  W(I,L)
+ OD L
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OPTPRLOC
+
+ EV XMBS      X                            $ element is (X - B)^2
+ EP XMBS      B                            $ where B is a parameter
+
+INDIVIDUALS
+
+ T  XMBS
+ F                      ( X - B )**2
+ G  X                   2.0 * ( X - B )
+ H  X         X         2.0
+
+ENDATA

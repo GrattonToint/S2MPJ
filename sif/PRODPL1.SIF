@@ -1,0 +1,255 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PRODPL1
+
+*   Problem :
+*   *********
+
+*   A production planning problem in the computer industry.
+
+*   Source:
+*   L. Escudero, private communication, 1991.
+
+*   SIF input: A.R. Conn, March 1991.
+
+*   classification LQR2-RY-60-29
+
+*   Constants
+
+ IE T                   5
+ IE 1                   1
+
+GROUPS
+
+ N  COST
+ L  K01
+ L  K02
+ L  K03
+ L  K04
+ L  K05
+ E  D00101
+ E  D00201
+ E  D00301
+ E  D00401
+ E  D00102
+ E  D00202
+ E  D00302
+ E  D00402
+ E  D00103
+ E  D00203
+ E  D00303
+ E  D00403
+ E  D00104
+ E  D00204
+ E  D00304
+ E  D00404
+ E  D00105
+ E  D00205
+ E  D00305
+ E  D00405
+ IA TM1       T         -1
+ DO I         1                        TM1
+ XL SMOOTH(I)
+ ND
+
+VARIABLES
+
+    X00101    K01                  1   D00101    1.
+    X00201    K01                  1   D00201    1.
+    X00301    K01                  1   D00301    1.
+    X00401    K01                  1   D00401    1.
+    X00102    K02                  1   D00102    1.
+    X00202    K02                  1   D00202    1.
+    X00302    K02                  1   D00302    1.
+    X00402    K02                  1   D00402    1.
+    X00103    K03                  1   D00103    1.
+    X00203    K03                  1   D00203    1.
+    X00303    K03                  1   D00303    1.
+    X00403    K03                  1   D00403    1.
+    X00104    K04                  1   D00104    1.
+    X00204    K04                  1   D00204    1.
+    X00304    K04                  1   D00304    1.
+    X00404    K04                  1   D00404    1.
+    X00105    K05                  1   D00105    1.
+    X00205    K05                  1   D00205    1.
+    X00305    K05                  1   D00305    1.
+    X00405    K05                  1   D00405    1.
+    I00101    COST          1.000000   D00101    -1.
+    I00101    D00102    1.
+    Y00101    COST                 2   D00101    1.
+    I00201    COST          2.000000   D00201    -1.
+    I00201    D00202    1.
+    Y00201    COST                 3   D00201    1.
+    I00301    COST          3.000000   D00301    -1.
+    I00301    D00302    1.
+    Y00301    COST                 2   D00301    1.
+    I00401    COST          4.000000   D00401    -1.
+    I00401    D00402    1.
+    Y00401    COST                 5   D00401    1.
+    I00102    COST          1.000000   D00102    -1.
+    I00102    D00103    1.
+    Y00102    COST                 2   D00102    1.
+    I00202    COST          2.000000   D00202    -1.
+    I00202    D00203    1.
+    Y00202    COST                 3   D00202    1.
+    I00302    COST          3.000000   D00302    -1.
+    I00302    D00303    1.
+    Y00302    COST                 2   D00302    1.
+    I00402    COST          4.000000   D00402    -1.
+    I00402    D00403    1.
+    Y00402    COST                 5   D00402    1.
+    I00103    COST          1.000000   D00103    -1.
+    I00103    D00104    1.
+    Y00103    COST                 2   D00103    1.
+    I00203    COST          2.000000   D00203    -1.
+    I00203    D00204    1.
+    Y00203    COST                 3   D00203    1.
+    I00303    COST          3.000000   D00303    -1.
+    I00303    D00304    1.
+    Y00303    COST                 2   D00303    1.
+    I00403    COST          4.000000   D00403    -1.
+    I00403    D00404    1.
+    Y00403    COST                 5   D00403    1.
+    I00104    COST          1.000000   D00104    -1.
+    I00104    D00105    1.
+    Y00104    COST                 2   D00104    1.
+    I00204    COST          2.000000   D00204    -1.
+    I00204    D00205    1.
+    Y00204    COST                 3   D00204    1.
+    I00304    COST          3.000000   D00304    -1.
+    I00304    D00305    1.
+    Y00304    COST                 2   D00304    1.
+    I00404    COST          4.000000   D00404    -1.
+    I00404    D00405    1.
+    Y00404    COST                 5   D00404    1.
+    I00105    COST          1.000000   D00105    -1.
+    Y00105    COST                 2   D00105    1.
+    I00205    COST          2.000000   D00205    -1.
+    Y00205    COST                 3   D00205    1.
+    I00305    COST          3.000000   D00305    -1.
+    Y00305    COST                 2   D00305    1.
+    I00405    COST          4.000000   D00405    -1.
+    Y00405    COST                 5   D00405    1.
+
+CONSTANTS
+
+    PRODPL1   K01                  3
+    PRODPL1   K02                  6
+    PRODPL1   K03                 10
+    PRODPL1   K04               2000
+    PRODPL1   K05                 18
+    PRODPL1   D00101           1.000
+    PRODPL1   D00201           1.000
+    PRODPL1   D00301           1.000
+    PRODPL1   D00401           1.000
+    PRODPL1   D00102           2.667
+    PRODPL1   D00202           1.667
+    PRODPL1   D00302           2.667
+    PRODPL1   D00402           3.333
+    PRODPL1   D00103           2.667
+    PRODPL1   D00203           2.000
+    PRODPL1   D00303           3.000
+    PRODPL1   D00403           3.000
+    PRODPL1   D00104           2.667
+    PRODPL1   D00204           2.667
+    PRODPL1   D00304           2.667
+    PRODPL1   D00404           2.667
+    PRODPL1   D00105           2.667
+    PRODPL1   D00205           2.333
+    PRODPL1   D00305           2.333
+    PRODPL1   D00405           2.333
+
+ELEMENT TYPE
+
+ EV SQMRSQ    V1                       V2
+ EV SQMRSQ    V3                       V4
+ EV SQMRSQ    V5                       V6
+ EV SQMRSQ    V7                       V8
+ IV SQMRSQ    U1                       U2
+
+ELEMENT USES
+
+ T  NLE1      SQMRSQ
+ V  NLE1      V1                       X00102
+ V  NLE1      V2                       X00202
+ V  NLE1      V3                       X00302
+ V  NLE1      V4                       X00402
+ V  NLE1      V5                       X00101
+ V  NLE1      V6                       X00201
+ V  NLE1      V7                       X00301
+ V  NLE1      V8                       X00401
+
+ T  NLE2      SQMRSQ
+ V  NLE2      V1                       X00103
+ V  NLE2      V2                       X00203
+ V  NLE2      V3                       X00303
+ V  NLE2      V4                       X00403
+ V  NLE2      V5                       X00102
+ V  NLE2      V6                       X00202
+ V  NLE2      V7                       X00302
+ V  NLE2      V8                       X00402
+
+ T  NLE3      SQMRSQ
+ V  NLE3      V1                       X00104
+ V  NLE3      V2                       X00204
+ V  NLE3      V3                       X00304
+ V  NLE3      V4                       X00404
+ V  NLE3      V5                       X00103
+ V  NLE3      V6                       X00203
+ V  NLE3      V7                       X00303
+ V  NLE3      V8                       X00403
+
+ T  NLE4      SQMRSQ
+ V  NLE4      V1                       X00105
+ V  NLE4      V2                       X00205
+ V  NLE4      V3                       X00305
+ V  NLE4      V4                       X00405
+ V  NLE4      V5                       X00104
+ V  NLE4      V6                       X00204
+ V  NLE4      V7                       X00304
+ V  NLE4      V8                       X00404
+
+GROUP USES
+
+ E  SMOOTH1   NLE1
+ E  SMOOTH2   NLE2
+ E  SMOOTH3   NLE3
+ E  SMOOTH4   NLE4
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               35.7389601585
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PRODPL1
+
+TEMPORARIES
+
+ R  U1MU2
+
+INDIVIDUALS
+
+ T  SQMRSQ
+ R  U1        V1        1.0            V2        1.0
+ R  U1        V3        1.0            V4        1.0
+ R  U2        V5        1.0            V6        1.0
+ R  U2        V7        1.0            V8        1.0
+ A  U1MU2               U1 - U2
+ F                      U1MU2**2 - 0.1 * U2**2
+ G  U1                  2.0 * U1MU2
+ G  U2                  -2.0 * U1MU2 - 2.0 * 0.1 * U2
+ H  U1        U1        2.0
+ H  U1        U2        -2.0
+ H  U2        U2        2.0* ( 1.0 - 0.1 )
+
+ENDATA

@@ -1,0 +1,88 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MINMAXRB
+
+*   Problem :
+*   *********
+
+*   A Rosenbrock-like nonlinear minmax problem.
+
+*   Source:
+*   J. Hald and K. Madsen
+*   "Combined LP and quasi-Newton methods for minmax optimization"
+*   Mathematical Programming, vol.20, p. 49-62, 1981.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification LQR2-AN-3-4
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XG C1        U         1.0            X2        - 10.0
+ XG C2        U         1.0            X2        10.0
+ XG C3        U         1.0            X1        1.0
+ XG C4        U         1.0            X1        - 1.0
+
+CONSTANTS
+
+ X  MINMAXRB  C3        1.0
+ X  MINMAXRB  C4        - 1.0
+
+BOUNDS
+
+ FR MINMAXRB  'DEFAULT'
+
+START POINT
+
+ XV MINMAXRB  X1        -1.2
+ XV MINMAXRB  X2        1.0
+ XV MINMAXRB  U         1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+GROUP USES
+
+ E  C1        X1SQ      10.0
+ E  C2        X1SQ      -10.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MINMAXRB
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+

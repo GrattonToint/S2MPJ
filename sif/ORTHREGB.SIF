@@ -1,0 +1,272 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ORTHREGB
+
+*   Problem :
+*   *********
+
+*   An orthogonal regression problem.
+
+*   The problem is to fit (orthogonally) an ellipse to a set of 6 points
+*   in the 3D space. These points are compatible with this constraint.
+
+*   Source:
+*   M. Gulliksson,
+*   "Algorithms for nonlinear Least-squares with Applications to
+*   Orthogonal Regression",
+*   UMINF-178.90, University of Umea, Sweden, 1990.
+
+*   SIF input: Ph. Toint, June 1990.
+*              correction by Ph. Shott, Jan 1995.
+
+*   classification QQR2-AN-27-6
+
+*   Parameters for the generation of the data points
+
+ RE A                   9.0
+ RE B                   6.0
+ RE C                   7.0
+ RE CX                  0.5
+ RE CY                  0.5
+ RE CZ                  0.5
+
+*   Constants
+
+ IE 1                   1
+
+*   Computed parameters
+
+ RM -A        A         -1.0
+ RM -B        B         -1.0
+ RM -C        C         -1.0
+
+*   Construct the data points
+
+ IE NPTS                1
+ A= XZ        CX
+ A= YZ        CY
+ A= ZZ        CZ
+
+ IE NPTS                1
+ A+ XD(NPTS)  XZ                       A
+ A+ YD(NPTS)  YZ                       A
+ A= ZD(NPTS)  ZZ
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ                       B
+ A+ YD(NPTS)  YZ                       -B
+ A= ZD(NPTS)  ZZ
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ                       -A
+ A+ YD(NPTS)  YZ                       -A
+ A= ZD(NPTS)  ZZ
+ IA NPTS      NPTS      1
+ A+ XD(NPTS)  XZ                       -B
+ A+ YD(NPTS)  YZ                       B
+ A= ZD(NPTS)  ZZ
+ IA NPTS      NPTS      1
+ A= XD(NPTS)  XZ
+ A= YD(NPTS)  YZ
+ A+ ZD(NPTS)  ZZ                       C
+ IA NPTS      NPTS      1
+ A= XD(NPTS)  XZ
+ A= YD(NPTS)  YZ
+ A+ ZD(NPTS)  ZZ                       -C
+
+VARIABLES
+
+*   Parameters of the ellipse
+
+    H11
+    H12
+    H13
+    H22
+    H23
+    H33
+    G1
+    G2
+    G3
+
+*   Projections of the data points onto the ellipse
+
+ DO I         1                        NPTS
+ X  X(I)
+ X  Y(I)
+ X  Z(I)
+ ND
+
+GROUPS
+
+ DO I         1                        NPTS
+ XN OX(I)     X(I)      1.0
+ XN OY(I)     Y(I)      1.0
+ XN OZ(I)     Z(I)      1.0
+ XE E(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        NPTS
+ Z  ORTHREGB  OX(I)                    XD(I)
+ Z  ORTHREGB  OY(I)                    YD(I)
+ Z  ORTHREGB  OZ(I)                    ZD(I)
+ X  ORTHREGB  E(I)      1.0
+ ND
+
+BOUNDS
+
+ FR ORTHREGB  'DEFAULT'
+
+START POINT
+
+    ORTHREGB  H11       1.0
+    ORTHREGB  H12       0.0
+    ORTHREGB  H13       0.0
+    ORTHREGB  H22       1.0
+    ORTHREGB  H23       0.0
+    ORTHREGB  H33       1.0
+    ORTHREGB  G1        0.0
+    ORTHREGB  G2        0.0
+    ORTHREGB  G3        0.0
+
+ DO I         1                        NPTS
+ Z  ORTHREGB  X(I)                     XD(I)
+ Z  ORTHREGB  Y(I)                     YD(I)
+ Z  ORTHREGB  Z(I)                     ZD(I)
+ ND
+
+ELEMENT TYPE
+
+ EV HXX       H                        X
+
+ EV HXY       H                        X
+ EV HXY       Y
+
+ EV GX        G                        X
+
+ELEMENT USES
+
+ DO I         1                        NPTS
+
+ XT EA(I)     HXX
+ ZV EA(I)     H                        H11
+ ZV EA(I)     X                        X(I)
+
+ XT EB(I)     HXY
+ ZV EB(I)     H                        H12
+ ZV EB(I)     X                        X(I)
+ ZV EB(I)     Y                        Y(I)
+
+ XT EC(I)     HXX
+ ZV EC(I)     H                        H22
+ ZV EC(I)     X                        Y(I)
+
+ XT ED(I)     GX
+ ZV ED(I)     G                        G1
+ ZV ED(I)     X                        X(I)
+
+ XT EE(I)     GX
+ ZV EE(I)     G                        G2
+ ZV EE(I)     X                        Y(I)
+
+ XT EF(I)     HXY
+ ZV EF(I)     H                        H13
+ ZV EF(I)     X                        X(I)
+ ZV EF(I)     Y                        Z(I)
+
+ XT EG(I)     HXY
+ ZV EG(I)     H                        H23
+ ZV EG(I)     X                        Y(I)
+ ZV EG(I)     Y                        Z(I)
+
+ XT EH(I)     HXX
+ ZV EH(I)     H                        H33
+ ZV EH(I)     X                        Z(I)
+
+ XT EI(I)     GX
+ ZV EI(I)     G                        G3
+ ZV EI(I)     X                        Z(I)
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        NPTS
+
+ XT OX(I)     L2
+ XT OY(I)     L2
+ XT OZ(I)     L2
+
+ XE E(I)      EA(I)                    EB(I)     2.0
+ XE E(I)      EC(I)                    ED(I)     -2.0
+ XE E(I)      EE(I)     -2.0           EF(I)     2.0
+ XE E(I)      EG(I)     2.0            EH(I)
+ XE E(I)      EI(I)     -2.0
+
+ ND
+
+OBJECT BOUND
+
+ LO ORTHREGB            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ORTHREGB
+
+INDIVIDUALS
+
+ T  HXX
+ F                      H * X * X
+ G  H                   X * X
+ G  X                   2.0 * H * X
+ H  H         X         X + X
+ H  X         X         H + H
+
+ T  HXY
+ F                      H * X * Y
+ G  H                   X * Y
+ G  X                   H * Y
+ G  Y                   H * X
+ H  H         X         Y
+ H  H         Y         X
+ H  X         Y         H
+
+ T  GX
+ F                      G * X
+ G  G                   X
+ G  X                   G
+ H  G         X         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ORTHREGB
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

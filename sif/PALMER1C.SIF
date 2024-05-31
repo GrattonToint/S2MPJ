@@ -1,0 +1,197 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER1C
+
+*   Problem :
+*   *********
+
+*   A linear least squares problem
+*   arising from chemical kinetics.
+
+*   model: H-N=N=N TZVP+MP2
+*   fitting Y to A0 + A2 X**2 + A4 X**4 + A6 X**6 + A8 X**8 +
+*                A10 X**10 + A12 X**12 + A14 X**14
+
+*   Source:
+*   M. Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1990.
+
+*   classification QUR2-RN-8-0
+
+*   Number of data points
+
+ IE M                   35
+
+*   Other data
+
+ IE 1                   1
+
+*   X (radians)
+
+ RE X1                  -1.788963
+ RE X2                  -1.745329
+ RE X3                  -1.658063
+ RE X4                  -1.570796
+ RE X5                  -1.483530
+ RE X6                  -1.396263
+ RE X7                  -1.308997
+ RE X8                  -1.218612
+ RE X9                  -1.134464
+ RE X10                 -1.047198
+ RE X11                 -0.872665
+ RE X12                 -0.698132
+ RE X13                 -0.523599
+ RE X14                 -0.349066
+ RE X15                 -0.174533
+ RE X16                 0.0000000
+ RE X17                 1.788963
+ RE X18                 1.745329
+ RE X19                 1.658063
+ RE X20                 1.570796
+ RE X21                 1.483530
+ RE X22                 1.396263
+ RE X23                 1.308997
+ RE X24                 1.218612
+ RE X25                 1.134464
+ RE X26                 1.047198
+ RE X27                 0.872665
+ RE X28                 0.698132
+ RE X29                 0.523599
+ RE X30                 0.349066
+ RE X31                 0.174533
+ RE X32                 -1.8762289
+ RE X33                 -1.8325957
+ RE X34                 1.8762289
+ RE X35                 1.8325957
+
+*   Y( KJmol-1)
+
+ RE Y1                  78.596218
+ RE Y2                  65.77963
+ RE Y3                  43.96947
+ RE Y4                  27.038816
+ RE Y5                  14.6126
+ RE Y6                  6.2614
+ RE Y7                  1.538330
+ RE Y8                  0.000000
+ RE Y9                  1.188045
+ RE Y10                 4.6841
+ RE Y11                 16.9321
+ RE Y12                 33.6988
+ RE Y13                 52.3664
+ RE Y14                 70.1630
+ RE Y15                 83.4221
+ RE Y16                 88.3995
+ RE Y17                 78.596218
+ RE Y18                 65.77963
+ RE Y19                 43.96947
+ RE Y20                 27.038816
+ RE Y21                 14.6126
+ RE Y22                 6.2614
+ RE Y23                 1.538330
+ RE Y24                 0.000000
+ RE Y25                 1.188045
+ RE Y26                 4.6841
+ RE Y27                 16.9321
+ RE Y28                 33.6988
+ RE Y29                 52.3664
+ RE Y30                 70.1630
+ RE Y31                 83.4221
+ RE Y32                 108.18086
+ RE Y33                 92.733676
+ RE Y34                 108.18086
+ RE Y35                 92.733676
+
+VARIABLES
+
+    A0
+    A2
+    A4
+    A6
+    A8
+    A10
+    A12
+    A14
+
+GROUPS
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ A* XQUART    XSQR                     XSQR
+ A* X**6      XSQR                     XQUART
+ A* X**8      XSQR                     X**6
+ A* X**10     XSQR                     X**8
+ A* X**12     XSQR                     X**10
+ A* X**14     XSQR                     X**12
+ XN O(I)      A0        1.0
+ ZN O(I)      A2                       XSQR
+ ZN O(I)      A4                       XQUART
+ ZN O(I)      A6                       X**6
+ ZN O(I)      A8                       X**8
+ ZN O(I)      A10                      X**10
+ ZN O(I)      A12                      X**12
+ ZN O(I)      A14                      X**14
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  PALMER1C  O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER3   A0
+ FR PALMER3   A2
+ FR PALMER3   A4
+ FR PALMER3   A6
+ FR PALMER3   A8
+ FR PALMER3   A10
+ FR PALMER3   A12
+ FR PALMER3   A14
+
+START POINT
+
+ XV PALMER1C  'DEFAULT' 1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        M
+ XT O(I)      L2
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER1C               0.0
+
+*   Solution
+
+*LO SOLTN             9.7605048D-02
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER1C
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,198 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER3
+
+*   Problem :
+*   *********
+
+*   A nonlinear least squares problem with bounds
+*   arising from chemical kinetics.
+
+*    model: H-N=C=S TZVP + MP2
+*   fitting Y to A X**2 + B / ( C + X**2 / D ), B, C, D nonnegative.
+
+*   Source:
+*   M. Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1990.
+
+*   classification SBR2-RN-4-0
+
+*   Number of data points
+
+ IE M                   23
+
+*   Other data
+
+ IE 1                   1
+
+*   X (radians)
+
+ RE X1                   -1.658063
+ RE X2                   -1.570796
+ RE X3                   -1.396263
+ RE X4                   -1.221730
+ RE X5                   -1.047198
+ RE X6                   -0.872665
+ RE X7                   -0.766531
+ RE X8                   -0.698132
+ RE X9                   -0.523599
+ RE X10                  -0.349066
+ RE X11                  -0.174533
+ RE X12                  0.0
+ RE X13                  0.174533
+ RE X14                  0.349066
+ RE X15                  0.523599
+ RE X16                  0.698132
+ RE X17                  0.766531
+ RE X18                  0.872665
+ RE X19                  1.047198
+ RE X20                  1.221730
+ RE X21                  1.396263
+ RE X22                  1.570796
+ RE X23                  1.658063
+
+*   Y( KJmol-1)
+
+ RE Y1                  64.87939
+ RE Y2                  50.46046
+ RE Y3                  28.2034
+ RE Y4                  13.4575
+ RE Y5                  4.6547
+ RE Y6                  0.59447
+ RE Y7                  0.0000
+ RE Y8                  0.2177
+ RE Y9                  2.3029
+ RE Y10                 5.5191
+ RE Y11                 8.5519
+ RE Y12                 9.8919
+ RE Y13                 8.5519
+ RE Y14                 5.5191
+ RE Y15                 2.3029
+ RE Y16                 0.2177
+ RE Y17                 0.0000
+ RE Y18                 0.59447
+ RE Y19                 4.6547
+ RE Y20                 13.4575
+ RE Y21                 28.2034
+ RE Y22                 50.46046
+ RE Y23                 64.87939
+
+VARIABLES
+
+    A
+    B
+    C
+    D
+
+GROUPS
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ ZN O(I)      A                        XSQR
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  PALMER3   O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER3   A
+ LO PALMER3   B         0.00001
+ LO PALMER3   C         0.00001
+ LO PALMER3   D         0.00001
+
+START POINT
+
+ XV PALMER3   'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV QUOT      B                        C
+ EV QUOT      D
+ EP QUOT      XSQR
+
+ELEMENT USES
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ XT E(I)      QUOT
+ ZV E(I)      B                        B
+ ZV E(I)      C                        C
+ ZV E(I)      D                        D
+ ZP E(I)      XSQR                     XSQR
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        M
+ XT O(I)      L2
+ XE O(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER3                0.0
+
+*   Solution
+
+*   SOLTN               2265.95822
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PALMER3
+
+TEMPORARIES
+
+ R  DENOM
+
+INDIVIDUALS
+
+ T  QUOT
+ A  DENOM               1.0 / ( C + XSQR / D )
+ F                      B * DENOM
+ G  B                   DENOM
+ G  C                   - B * DENOM * DENOM
+ G  D                   B * XSQR * ( DENOM / D ) ** 2
+ H  B         C         - DENOM * DENOM
+ H  B         D         XSQR * ( DENOM / D ) ** 2
+ H  C         C         2.0 * B * DENOM ** 3
+ H  C         D         - 2.0 * B * XSQR * DENOM *
+ H+                     ( DENOM / D ) ** 2
+ H  D         D         2.0 * B * DENOM ** 3 *
+ H+                     ( XSQR / D ** 2 ) ** 2
+ H+                     - 2.0 * B * DENOM ** 2 *  XSQR / D ** 3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER3
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

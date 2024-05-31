@@ -1,0 +1,223 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER1A
+
+*   Problem :
+*   *********
+
+*   A nonlinear least squares problem with bounds
+*   arising from chemical kenetics.
+
+*   model: H-N=N=N TZVP+MP2
+*   fitting Y to A0 + A2 X**2 + A4 X**4 + A6 X**6
+*                + B / ( C + X**2 ), B, C nonnegative.
+
+*   Source:
+*   M. Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1990.
+
+*   classification SBR2-RN-6-0
+
+*   Number of data points
+
+ IE M                   35
+
+*   Other data
+
+ IE 1                   1
+
+*   X (radians)
+
+ RE X1                  -1.788963
+ RE X2                  -1.745329
+ RE X3                  -1.658063
+ RE X4                  -1.570796
+ RE X5                  -1.483530
+ RE X6                  -1.396263
+ RE X7                  -1.308997
+ RE X8                  -1.218612
+ RE X9                  -1.134464
+ RE X10                 -1.047198
+ RE X11                 -0.872665
+ RE X12                 -0.698132
+ RE X13                 -0.523599
+ RE X14                 -0.349066
+ RE X15                 -0.174533
+ RE X16                 0.0000000
+ RE X17                 1.788963
+ RE X18                 1.745329
+ RE X19                 1.658063
+ RE X20                 1.570796
+ RE X21                 1.483530
+ RE X22                 1.396263
+ RE X23                 1.308997
+ RE X24                 1.218612
+ RE X25                 1.134464
+ RE X26                 1.047198
+ RE X27                 0.872665
+ RE X28                 0.698132
+ RE X29                 0.523599
+ RE X30                 0.349066
+ RE X31                 0.174533
+ RE X32                 -1.8762289
+ RE X33                 -1.8325957
+ RE X34                 1.8762289
+ RE X35                 1.8325957
+
+*   Y( KJmol-1)
+
+ RE Y1                  78.596218
+ RE Y2                  65.77963
+ RE Y3                  43.96947
+ RE Y4                  27.038816
+ RE Y5                  14.6126
+ RE Y6                  6.2614
+ RE Y7                  1.538330
+ RE Y8                  0.000000
+ RE Y9                  1.188045
+ RE Y10                 4.6841
+ RE Y11                 16.9321
+ RE Y12                 33.6988
+ RE Y13                 52.3664
+ RE Y14                 70.1630
+ RE Y15                 83.4221
+ RE Y16                 88.3995
+ RE Y17                 78.596218
+ RE Y18                 65.77963
+ RE Y19                 43.96947
+ RE Y20                 27.038816
+ RE Y21                 14.6126
+ RE Y22                 6.2614
+ RE Y23                 1.538330
+ RE Y24                 0.000000
+ RE Y25                 1.188045
+ RE Y26                 4.6841
+ RE Y27                 16.9321
+ RE Y28                 33.6988
+ RE Y29                 52.3664
+ RE Y30                 70.1630
+ RE Y31                 83.4221
+ RE Y32                 108.18086
+ RE Y33                 92.733676
+ RE Y34                 108.18086
+ RE Y35                 92.733676
+
+VARIABLES
+
+    A0
+    A2
+    A4
+    A6
+    B
+    C
+
+GROUPS
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ A* XQUART    XSQR                     XSQR
+ A* XSEXT     XQUART                   XSQR
+ XN O(I)      A0        1.0
+ ZN O(I)      A2                       XSQR
+ ZN O(I)      A4                       XQUART
+ ZN O(I)      A6                       XSEXT
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  PALMER1A  O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER1A  A0
+ FR PALMER1A  A2
+ FR PALMER1A  A4
+ FR PALMER1A  A6
+ LO PALMER1A  B         0.00001
+ LO PALMER1A  C         0.00001
+
+START POINT
+
+ XV PALMER1A  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV QUOT      B                        C
+ EP QUOT      XSQR
+
+ELEMENT USES
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ XT E(I)      QUOT
+ ZV E(I)      B                        B
+ ZV E(I)      C                        C
+ ZP E(I)      XSQR                     XSQR
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        M
+ XT O(I)      L2
+ XE O(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER1A             0.0
+
+*   Solution
+
+*LO SOLTN                8.98830D-02
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PALMER1A
+
+TEMPORARIES
+
+ R  DENOM
+
+INDIVIDUALS
+
+ T  QUOT
+ A  DENOM               1.0 / ( C + XSQR )
+ F                      B * DENOM
+ G  B                   DENOM
+ G  C                   - B * DENOM * DENOM
+ H  B         C         - DENOM * DENOM
+ H  C         C         2.0 * B * DENOM ** 3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER1A
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

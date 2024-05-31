@@ -1,0 +1,158 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NONDIA
+
+*   Problem :
+*   --------
+
+*   The Shanno nondiagonal extension of Rosenbrock function.
+
+*   Source:
+*   D. Shanno,
+*   " On Variable Metric Methods for Sparse Hessians II: the New
+*   Method",
+*   MIS Tech report 27, University of Arizona (Tucson, UK), 1978.
+
+*   See also Buckley #37 (p. 76) and Toint #15.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   20             $-PARAMETER
+*IE N                   30             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   90             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   Other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN SQ(1)     X(1)      1.0
+
+ DO I         2                        N
+ XN SQ(I)     X(1)      1.0
+ XN SQ(I)     'SCALE'   0.01
+ ND
+
+CONSTANTS
+
+    NONDIA    SQ1       1.0
+
+BOUNDS
+
+*   defaults = free variables
+
+ FR NONDIA    'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ X  NONDIA    X(I)      -1.0
+ ND
+
+ELEMENT TYPE
+
+ EV ETYPE     V1
+ EP ETYPE     GAMMA
+
+ELEMENT USES
+
+ DO I         2                        N
+
+*   element type assignment
+
+ XT ELA(I)    ETYPE
+
+*   problem to elemental variables assignment
+
+ IA J         I                -1
+ ZV ELA(I)    V1                       X(J)
+
+*   element parameter value
+
+ XP ELA(I)    GAMMA     2.0
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT SQ(1)     L2
+
+ DO I         2                        N
+ XT SQ(I)     L2
+ XE SQ(I)     ELA(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO NONDIA              0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      NONDIA
+
+TEMPORARIES
+
+ I  IGAMMA
+
+INDIVIDUALS
+
+ T  ETYPE
+ A  IGAMMA              GAMMA
+ F                      - V1 ** IGAMMA
+ G  V1                  - GAMMA * V1 ** ( IGAMMA - 1 )
+ H  V1        V1        - GAMMA * ( GAMMA - 1.0 ) *
+ H+                     V1 ** ( IGAMMA - 2 )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        NONDIA
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,277 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MINC44
+
+*   Problem :
+*   *********
+
+*   Minimize the permanent of a doubly stochastic n dimensional square matrix
+*   whose trace is zero.
+*   The conjecture is that the minimum is achieved when all non-diagonal
+*   entries of the matrix are equal to 1/(n-1).
+
+*   Source: conjecture 44 in
+*   H. Minc,
+*   "Theory of Permanents 1982-1985",
+*   Linear Algebra and Applications, vol. 21, pp. 109-148, 1987.
+
+*   SIF input: Ph. Toint, April 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification LQR2-AN-V-V
+
+*   Size of matrix
+
+*IE N                   2              $-PARAMETER n = 5
+*IE N                   3              $-PARAMETER n = 13
+*IE N                   4              $-PARAMETER n = 27
+*IE N                   5              $-PARAMETER n = 51
+*IE N                   6              $-PARAMETER n = 93
+*IE N                   7              $-PARAMETER n = 169
+*IE N                   8              $-PARAMETER n = 311
+*IE N                   9              $-PARAMETER n = 583
+*IE N                   10             $-PARAMETER n = 1113
+ IE N                   5              $-PARAMETER     modified for S2X tests
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+ IA N+1       N         1
+ IA N-1       N         -1
+
+*   Compute the number of sub-permanents
+
+ IE 2**N                1
+
+ DO I         1                        N
+ I- N-I+1     N+1                      I
+ IA I-1       I         - 1
+ RI R2**N     2**N
+ AA S(N-I+1)  R2**N     0.1
+ AA T(I-1)    R2**N     0.1
+ I* 2**N      2**N                     2
+ ND
+
+ IA 2**N-1    2**N      - 1
+
+VARIABLES
+
+*   Sub permanents
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+ X  P(K)
+ ND
+
+*   Entries in the doubly stochastic matrix
+
+ DO I         1                        N
+ DO J         1                        N
+ X  A(I,J)
+ ND
+
+GROUPS
+
+*   Define objective function group
+
+ XN OBJ       P(2**N-1) 1.0
+
+*   Linear terms in the sub-permanent constraints
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+ XE PE(K)     P(K)      - 1.0
+ ND
+
+*   Doubly stochastic matrix constraints
+
+ DO I         1                        N
+ DO J         1                        N
+ XE C(J)      A(I,J)    1.0
+ ND
+
+ DO I         1                        N-1
+ DO J         1                        N
+ XE R(I)      A(I,J)    1.0
+ ND
+
+CONSTANTS
+
+*   Doubly stochastic matrix constraints
+
+ DO J         1                        N
+ X  MINC44    C(J)      1.0
+ ND
+ DO I         1                        N-1
+ X  MINC44    R(I)      1.0
+ ND
+
+BOUNDS
+
+*   Entries in the doubly stochastic matrix
+
+ DO I         1                        N
+ DO J         1                        N
+ XU MINC44    A(I,J)    1.0
+ ND
+
+*  Set the trace to zero
+
+ DO I         1                        N
+ XX MINC44    A(I,I)    0.0
+ ND
+
+START POINT
+
+ELEMENT TYPE
+
+ EV 2PR       A                        P
+
+ELEMENT USES
+
+*   Set up the elements associated with sub-permanent constraint K
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+
+ IE ID                  0
+ IE PT                  1
+ I= KK        K
+
+*   Construct the I-th component of the binary representation of K.
+
+ DO I         1                        N
+ A= SI        S(I)
+ IR ISI       SI
+ I/ BI        KK                       ISI
+ I+ ID        ID                       BI
+ I* BISI      BI                       ISI
+ I- KK        KK                       BISI
+ RI RI        I
+ AA RNZ(PT)   RI        0.1
+ I+ PT        PT                       BI
+ OD I
+
+*   Associate elements with nonzero entries in the binary string
+*   This corresponds to finding the sub-permanents which occur
+*   in the usual expansion of the sub-permanent in terms of its
+*   sub-sub-permanents.
+
+ I= I1        0
+ I= I2        1
+ IA ID-2      ID        - 2
+
+ DO I         1                        ID-2
+ I= I1        ID
+ I= I2        0
+ OD I
+
+ DO I         1                        I1
+ A= RJ        RNZ(I)
+ IR J         RJ
+ A= SI        S(J)
+ IR ISI       SI
+ I- IPP       K                        ISI
+ XT E(K,I)    2PR
+ ZV E(K,I)    A                        A(ID,J)
+ ZV E(K,I)    P                        P(IPP)
+ OD I
+
+ DO I         1                        I2
+ A= RJ        RNZ(1)
+ IR J         RJ
+ A= RJJ       RNZ(2)
+ IR JJ        RJJ
+ XT E(K,1)    2PR
+ ZV E(K,1)    A                        A(2,J)
+ ZV E(K,1)    P                        A(1,JJ)
+ XT E(K,2)    2PR
+ ZV E(K,2)    A                        A(2,JJ)
+ ZV E(K,2)    P                        A(1,J)
+ OD I
+
+ RI RD        ID
+ AA D(K)      RD        0.1
+
+ ND
+
+GROUP USES
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+
+ A= RD        D(K)
+ IR ID        RD
+
+ DO I         1                        ID
+ XE PE(K)     E(K,I)
+
+ ND
+
+OBJECT BOUND
+
+ LO MINC44              0.0
+
+*   Solution
+
+*LO SOLTN(2)           1.0
+*LO SOLTN(3)           0.25
+*LO SOLTN(4)           0.11111111
+*LO SOLTN(5)           0.04296835
+*LO SOLTN(6)           0.01695926
+*LO SOLTN(7)           6.62293832D-03
+*LO SOLTN(8)           2.57309338D-03
+*LO SOLTN(9)           9.94617795D-04
+*LO SOLTN(10)          3.83144655D-04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MINC44
+
+INDIVIDUALS
+
+*   product of A and P
+
+ T  2PR
+
+ F                      A * P
+ G  A                   P
+ G  P                   A
+ H  A         P         1.0
+
+ENDATA
+

@@ -1,0 +1,192 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PALMER4B
+
+*   Problem :
+*   *********
+
+*   A nonlinear least squares problem with bounds
+*   arising from chemical kinetics.
+
+*   model: H-N=C=Se TZVP + MP2
+*   fitting Y to A2 X**2 + A4 X**4
+*                + B / ( C + X**2 ), B, C nonnegative.
+
+*   Source:
+*   M.  Palmer, Edinburgh, private communication.
+
+*   SIF input: Nick Gould, 1990.
+
+*   classification SBR2-RN-4-0
+
+*   Number of data points
+
+ IE M                   23
+
+*   Other data
+
+ IE 1                   1
+
+*   X (radians)
+
+ RE X1                   -1.658063
+ RE X2                   -1.570796
+ RE X3                   -1.396263
+ RE X4                   -1.221730
+ RE X5                   -1.047198
+ RE X6                   -0.872665
+ RE X7                   -0.741119
+ RE X8                   -0.698132
+ RE X9                   -0.523599
+ RE X10                  -0.349066
+ RE X11                  -0.174533
+ RE X12                  0.0
+ RE X13                  0.174533
+ RE X14                  0.349066
+ RE X15                  0.523599
+ RE X16                  0.698132
+ RE X17                  0.741119
+ RE X18                  0.872665
+ RE X19                  1.047198
+ RE X20                  1.221730
+ RE X21                  1.396263
+ RE X22                  1.570796
+ RE X23                  1.658063
+
+*   Y( KJmol-1)
+
+ RE Y1                  67.27625
+ RE Y2                  52.8537
+ RE Y3                  30.2718
+ RE Y4                  14.9888
+ RE Y5                  5.5675
+ RE Y6                  0.92603
+ RE Y7                  0.0
+ RE Y8                  0.085108
+ RE Y9                  1.867422
+ RE Y10                 5.014768
+ RE Y11                 8.263520
+ RE Y12                 9.8046208
+ RE Y13                 8.263520
+ RE Y14                 5.014768
+ RE Y15                 1.867422
+ RE Y16                 0.085108
+ RE Y17                 0.0
+ RE Y18                 0.92603
+ RE Y19                 5.5675
+ RE Y20                 14.9888
+ RE Y21                 30.2718
+ RE Y22                 52.8537
+ RE Y23                 67.27625
+
+VARIABLES
+
+    A2
+    A4
+    B
+    C
+
+GROUPS
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ A* XQUART    XSQR                     XSQR
+ ZN O(I)      A2                       XSQR
+ ZN O(I)      A4                       XQUART
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  PALMER4B  O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR PALMER4B  A2
+ FR PALMER4B  A4
+ LO PALMER4B  B         0.00001
+ LO PALMER4B  C         0.00001
+
+START POINT
+
+ XV PALMER4B  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV QUOT      B                        C
+ EP QUOT      XSQR
+
+ELEMENT USES
+
+ DO I         1                        M
+ A* XSQR      X(I)                     X(I)
+ XT E(I)      QUOT
+ ZV E(I)      B                        B
+ ZV E(I)      C                        C
+ ZP E(I)      XSQR                     XSQR
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        M
+ XT O(I)      L2
+ XE O(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO PALMER4B               0.0
+
+*   Solution
+
+*LO SOLTN                6.83513867
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PALMER4B
+
+TEMPORARIES
+
+ R  DENOM
+
+INDIVIDUALS
+
+ T  QUOT
+ A  DENOM               1.0 / ( C + XSQR )
+ F                      B * DENOM
+ G  B                   DENOM
+ G  C                   - B * DENOM * DENOM
+ H  B         C         - DENOM * DENOM
+ H  C         C         2.0 * B * DENOM ** 3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PALMER4B
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,96 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MAKELA2
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   M.M. Makela,
+*   "Nonsmooth optimization",
+*   Ph.D. thesis, Jyvaskyla University, 1990
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LQR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0 
+
+ XL F2        U         -1.0 
+ XL F2        X1        -40.0          X2        -10.0
+
+ XL F3        U         -1.0 
+ XL F3        X1        -10.0          X2        -20.0
+
+CONSTANTS
+
+    MAKELA2   F2        -40.0
+    MAKELA2   F3        -60.0
+
+BOUNDS
+
+*   All variables are free
+
+ FR MAKELA2   'DEFAULT'
+
+START POINT
+
+    MAKELA2   X1        -1.0
+    MAKELA2   X2        5.0
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      V                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      V                        X2
+
+GROUP USES
+
+ E  F1        X1SQ                     X2SQ
+ E  F2        X1SQ                     X2SQ
+ E  F3        X1SQ                     X2SQ
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               7.2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MAKELA2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ENDATA
+

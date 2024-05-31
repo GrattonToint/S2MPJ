@@ -1,0 +1,154 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OET6
+
+*   Problem :
+*   *********
+
+*   A nonlinear programming formulation of a discretization of
+*   a nonlinear Chebychev problem.
+
+*   The problem is
+
+*       min  max || phi(x,w) ||, for all w in the interval I.
+*        x    w
+
+*   I is discretized, and the problem solved over the
+*   discrete points.
+
+*   Nonlinear programming formulation
+*
+*       min   u     s.t.  u - phi >= 0, u + phi >= 0
+*       x,u
+
+*   Specific problem: I = [-0.5,0.5]
+*   phi(x,w) = 1/1+w - x1 exp(w x3) - x2 exp(w x4)
+ 
+*   Source: K. Oettershagen
+*   "Ein superlinear knonvergenter algorithmus zur losung 
+*    semi-infiniter optimierungsproblem",
+*    Ph.D thesis, Bonn University, 1982
+
+*   SIF input: Nick Gould, February, 1994.
+
+*   classification LOR2-AN-5-V
+
+*   Discretization
+
+*IE M                   2
+*IE M                   100
+ IE M                   500
+
+*   Define the interval
+
+ RE LOWER               -0.5
+ RE UPPER               0.5
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+ R- DIFF      UPPER                    LOWER
+ RI RM        M
+ R/ H         DIFF                     RM
+
+VARIABLES
+
+    U
+    X1
+    X2
+    X3
+    X4
+
+GROUPS
+
+ N  OBJ       U         1.0
+
+ DO I         0                        M
+ XG LO(I)     U         1.0
+ XG UP(I)     U         1.0
+ ND
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+
+ RA 1+W       W         1.0
+ RD 1/1+W     1+W       1.0
+ RM -1/1+W    1/1+W     -1.0
+
+ Z  OET6      LO(I)                    -1/1+W
+ Z  OET6      UP(I)                    1/1+W
+ ND
+
+BOUNDS
+
+ FR OET6      'DEFAULT'
+
+ELEMENT TYPE
+
+ EV XEYW      X                        Y
+ EP XEYW      W
+
+ELEMENT USES
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+
+ XT E(1,I)    XEYW
+ ZV E(1,I)    X                        X1
+ ZV E(1,I)    Y                        X3
+ ZP E(1,I)    W                        W
+
+ XT E(2,I)    XEYW
+ ZV E(2,I)    X                        X2
+ ZV E(2,I)    Y                        X4
+ ZP E(2,I)    W                        W
+
+ ND
+ 
+GROUP USES
+
+ DO I         0                        M
+ XE LO(I)     E(1,I)    -1.0
+ XE LO(I)     E(2,I)    -1.0
+
+ XE UP(I)     E(1,I)
+ XE UP(I)     E(2,I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OET6
+
+TEMPORARIES
+
+ R  EYW
+ M  EXP
+
+INDIVIDUALS
+
+ T  XEYW
+ A  EYW                 EXP( Y * W )
+ F                      X * EYW
+ G  X                   EYW
+ G  Y                   X * W * EYW
+ H  X         Y         W * EYW
+ H  Y         Y         X * W * W * EYW
+
+ENDATA
+

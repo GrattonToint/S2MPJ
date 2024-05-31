@@ -1,0 +1,133 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NONDQUAR
+
+*   Problem :
+*   *********
+
+*   A nondiagonal quartic test problem.
+
+*   This problem has an arrow-head type Hessian with a tridiagonal
+*   central part and a border of width 1.
+*   The Hessian is singular at the solution.
+
+*   Source: problem 57 in
+*   A.R. Conn, N.I.M. Gould, M. Lescrenier and Ph.L. Toint,
+*   "Performance of a multi-frontal scheme for partially separable
+*   optimization"
+*   Report 88/4, Dept of Mathematics, FUNDP (Namur, B), 1988.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OUR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   100            $-PARAMETER     original value
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   Number of groups
+
+ IA N-2       N         -2
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   First n-2 groups
+
+ DO I         1                        N-2
+ IA I+1       I         1
+ XN L(I)      X(I)      1.0            X(I+1)    1.0
+ XN L(I)      X(N)      1.0
+ ND
+
+*   The 2 last groups
+
+ XN L(N-1)    X(1)      1.0            X(2)      -1.0
+ XN L(N)      X(N-1)    1.0            X(N)      -1.0
+
+BOUNDS
+
+ FR NONDQUAR  'DEFAULT'
+
+START POINT
+
+*   Starting from (1, -1, 1, -1, ... )
+
+ DO I         1                        N
+ DI I         2
+ IA I+1       I          1
+ X  NONDQUAR  X(I)       1.0
+ X  NONDQUAR  X(I+1)     -1.0
+ ND
+
+GROUP TYPE
+
+ GV L4        V1
+ GV L2        V2
+
+GROUP USES
+
+ DO I         1                        N-2
+ XT L(I)      L4
+ ND
+
+ XT L(N-1)    L2
+ XT L(N)      L2
+
+OBJECT BOUND
+
+ LO NONDQUAR            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        NONDQUAR
+
+TEMPORARIES
+
+ R  V1SQ
+
+INDIVIDUALS
+
+*   Least fourth power groups
+
+ T  L4
+ A  V1SQ                V1 * V1
+ F                      V1SQ * V1SQ
+ G                      4.0 * V1 * V1SQ
+ H                      12.0 * V1SQ
+
+*   Least squares groups
+
+ T  L2
+ F                      V2 * V2
+ G                      V2 + V2
+ H                      2.0
+
+ENDATA

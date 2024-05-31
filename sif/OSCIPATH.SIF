@@ -1,0 +1,130 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OSCIPATH
+
+*   Problem :
+*   *********
+
+*   An "oscillating path" problem due to Yurii Nesterov
+
+*   SIF input: Nick Gould, Dec 2006.
+
+*   classification SUR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   2              $-PARAMETER
+*IE N                   5              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   25             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   the weight factor
+
+*RE RHO                 1.0            $-PARAMETER    Nesterov's original value
+ RE RHO                 500.0          $-PARAMETER    Florian Jarre's value
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN Q(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+    OSCIPATH  Q1        1.0
+
+BOUNDS
+
+ FR OSCIPATH  'DEFAULT'
+
+START POINT
+
+ XV OSCIPATH  X(1)       -1.0
+ DO I         2                        N
+*XV OSCIPATH  X(I)       0.9
+ XV OSCIPATH  X(I)       1.0
+ ND
+
+ELEMENT TYPE
+
+ EV CHEB      TAU
+
+ELEMENT USES
+
+ XT 'DEFAULT' CHEB
+ DO I         2                        N
+ IA I-1       I         -1
+ ZV P(I)      TAU                      X(I-1)
+ ND
+
+GROUP TYPE
+
+ GV PL2       GVAR
+ GP PL2       P
+
+GROUP USES
+
+ T  'DEFAULT' PL2
+ P  Q1        P          0.25
+ DO I         2                        N
+ XE Q(I)      P(I)       -1.0
+ ZP Q(I)      P                        RHO
+ ND
+
+OBJECT BOUND
+
+ LO OSCIPATH             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OSCIPATH
+
+INDIVIDUALS
+
+ T  CHEB
+ F                      2.0 * TAU ** 2 - 1.0
+ G  TAU                 4.0 * TAU
+ H  TAU       TAU       4.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        OSCIPATH
+
+INDIVIDUALS
+
+ T  PL2
+ F                      P * GVAR * GVAR
+ G                      2.0 * P * GVAR
+ H                      2.0 * P
+
+ENDATA

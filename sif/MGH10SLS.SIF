@@ -1,0 +1,210 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MGH10SLS
+
+*   Problem :
+*   *********
+
+*   NIST Data fitting problem MGH10 given as an inconsistent set of
+*   nonlinear equations (scaled version)
+
+*   Fit: y = 0.01 * b1 * exp[ 1000 * b2 / (x + 100 * b3 ) ] + e
+
+*   Source:  Problem from the NIST nonlinear regression test set
+*     http://www.itl.nist.gov/div898/strd/nls/nls_main.shtml
+
+*   Reference: Meyer, R. R. (1970).
+*     Theoretical and computational aspects of nonlinear
+*     regression.  In Nonlinear Programming, Rosen,
+*     Mangasarian and Ritter (Eds).
+*     New York, NY: Academic Press, pp. 465-486.
+
+*   SIF input: Nick Gould and Tyrone Rees, Oct 2015
+
+*   classification SUR2-MN-3-0
+*   Least-squares version of MGH10S.SIF, Nick Gould, Jan 2020
+
+*   Number of data values
+
+ IE M                   16
+
+*   Number of variables
+
+ IE N                   3
+
+*   Useful parameters
+
+ IE 1                   1
+
+*  Data values
+
+ RE X1                  5.00E+01
+ RE X2                  5.50E+01
+ RE X3                  6.00E+01
+ RE X4                  6.50E+01
+ RE X5                  7.00E+01
+ RE X6                  7.50E+01
+ RE X7                  8.00E+01
+ RE X8                  8.50E+01
+ RE X9                  9.00E+01
+ RE X10                 9.50E+01
+ RE X11                 1.00E+02
+ RE X12                 1.05E+02
+ RE X13                 1.10E+02
+ RE X14                 1.15E+02
+ RE X15                 1.20E+02
+ RE X16                 1.25E+02
+
+ RE Y1                  3.478+04
+ RE Y2                  2.861+04
+ RE Y3                  2.365+04
+ RE Y4                  1.963+04
+ RE Y5                  1.637+04
+ RE Y6                  1.372+04
+ RE Y7                  1.154+04
+ RE Y8                  9.744+03
+ RE Y9                  8.261+03
+ RE Y10                 7.030+03
+ RE Y11                 6.005+03
+ RE Y12                 5.147+03
+ RE Y13                 4.427+03
+ RE Y14                 3.820+03
+ RE Y15                 3.307+03
+ RE Y16                 2.872+03
+
+VARIABLES
+
+ DO I         1                        N
+ X  B(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN F(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  MGH10     F(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR MGH10     'DEFAULT'
+
+START POINT
+
+    START1    B1        200.0
+    START1    B2        400.0
+    START1    B3        250.0
+
+*  Alternative start point
+
+    START2    B1        2.0
+    START2    B2        4.0
+    START2    B3        2.5
+
+ELEMENT TYPE
+
+ EV E12       V1
+ EV E12       V2
+ EV E12       V3
+ EP E12       X
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT E(I)      E12
+ ZV E(I)      V1                       B1
+ ZV E(I)      V2                       B2
+ ZV E(I)      V3                       B3
+ ZP E(I)      X                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        M
+ XE F(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO MGH10               0.0
+
+*   Solution
+
+*LO SOLTN
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MGH10SLS
+
+TEMPORARIES
+
+ R  S1
+ R  S2
+ R  S3
+ R  E
+ R  F
+ R  XPV3
+ R  XPV32
+ R  XPV33
+ M  EXP
+
+INDIVIDUALS
+
+ T  E12
+ A  S1                  0.01
+ A  S2                  1000.0
+ A  S3                  100.0
+ A  XPV3                X + S3 * V3
+ A  XPV32               XPV3 * XPV3
+ A  XPV33               XPV3 * XPV32
+ A  E                   S1 * EXP( S2 * V2 / XPV3 )
+ A  F                   V1 * E
+ F                      F
+ G  V1                  E
+ G  V2                  S2 * F / XPV3
+ G  V3                  - S2 * S3 * F * V2 / XPV32
+ H  V1        V2        S2 * E / XPV3
+ H  V1        V3        - S2 * S3 * V2 * E / XPV32
+ H  V2        V2        S2 * S2 * F / XPV32
+ H  V2        V3        - S2 * S3 * F * ( 1.0 / XPV32
+ H+                                       + S2 * V2 / XPV33 )
+ H  V3        V3        S2 * S3 * S3 * F * V2 *
+ H+                     ( S2 * V2 / XPV3 ** 4 + 2.0 / XPV33 )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MGH10SLS
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

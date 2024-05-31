@@ -1,0 +1,110 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OSCIPANE
+
+*   Problem :
+*   *********
+
+*   An "oscillating path" problem due to Yuri Nesterov
+
+*   SIF input: Nick Gould, Dec 2006.
+
+*   classification NOR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   5              $-PARAMETER
+*IE N                   10             $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   15             $-PARAMETER
+*IE N                   25             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+
+*   the weight factor
+
+*RE RHO                 1.0            $-PARAMETER    Nesterov's original value
+ RE RHO                 500.0          $-PARAMETER    Florian Jarre's value
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ RE ONE                 1.0
+ R/ 1/RHO     ONE                      RHO
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ E  Q1        X1        0.5
+ DO I         2                        N
+ XE Q(I)      X(I)      1.0
+ ZE Q(I)      'SCALE'                  1/RHO
+ ND
+
+CONSTANTS
+
+    OSCIPANE  Q1        0.5
+
+BOUNDS
+
+ FR OSCIPANE  'DEFAULT'
+
+START POINT
+
+ XV OSCIPANE  X(1)       -1.0
+ DO I         2                        N
+*XV OSCIPANE  X(I)       0.9
+ XV OSCIPANE  X(I)       1.0
+ ND
+
+ELEMENT TYPE
+
+ EV CHEB      TAU
+
+ELEMENT USES
+
+ XT 'DEFAULT' CHEB
+ DO I         2                        N
+ IA I-1       I         -1
+ ZV P(I)      TAU                      X(I-1)
+ ND
+
+GROUP USES
+
+ DO I         2                        N
+ XE Q(I)      P(I)       -1.0
+ ND
+
+OBJECT BOUND
+
+ LO OSCIPANE             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OSCIPANE
+
+INDIVIDUALS
+
+ T  CHEB
+ F                      2.0 * TAU ** 2 - 1.0
+ G  TAU                 4.0 * TAU
+ H  TAU       TAU       4.0
+
+ENDATA

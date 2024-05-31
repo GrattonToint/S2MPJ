@@ -1,0 +1,323 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NUFFIELD
+
+*   Problem :
+*   *********
+
+*   A problem from economics.
+*   Maximize a 2-D integral representing consumer surplus subject to 
+*   linear and quadratic constraints representing incentive compatibility
+
+*   Let v( . , . ) : R^2 -> R, Omega = [a,a+1] x [a,a+1], and
+*   the corners A, B, C, D be as follows:
+
+*           (a+1,a+1)
+*       A *-----* B
+*         |     |
+*         |     |
+*       D *-----* C
+*       (a,a)  
+
+*   The problem is to maximize
+
+*      (a+1) line integral_{AB U BC} v(w)dw 
+*       - a line integral_{CD U DA} v(w)dw
+*       - 3 volume integral_{Omega} v(w)dw
+
+*   subject to v being symmetric (i.e., v(x,y) = v(y,x))
+*              v(a,a) = 0
+*              nabla_w v(w) >= 0
+*              < e, nabla_w v(w) > <= 1
+*        and   nabla_ww v(w) positive definite
+
+*   this last constraint is guaranteed by ensuring that
+
+*              d^2 v/dx^2 >= 0
+*              d^2 v/dy^2 >= 0
+*              ( d^2 v/dx^2 )( d^2 v/dy^2 ) >= ( d^2 v/dxdy )^2
+
+*   Symmetry is ensured by only considering v(x,y) for x <= y
+
+*   Here v(x,y) is the consumer surplus. that is if the consumer values good 
+*   1 at x pounds and good 2 at y pounds then they will have a utility 
+*   equivalent to v(x,y) pounds after being faced with the optimal monopoly 
+*   pricing strategy. (Apparently, from this we can infer what the optimal 
+*   pricing strategy was... ).
+
+*   More background is available from
+
+*   "Optimal Selling Strategies: When to haggle, when to hold firm",
+*     Riley and Zeckhauser. The Quarterly Journal of Economics, 1983, and
+
+*   "Multidimensional Incentive Compatibility and Mechanism Design", 
+*     McAfee and McMillan. The Journal of Economic Theory, 1988.
+
+*   Source: John Thanassoulis <john.thanassoulis@nuffield.oxford.ac.uk>
+
+*   Standard finite-differences are used to ap[proximate derivatives, and 
+*   1- and 2-D trapezoidal rules to approximate integrals
+
+*   SIF input: Nick Gould, February 2001
+
+*   classification LQR2-AN-V-V
+
+*   The parameter a
+
+*RE A                   5.0            $-PARAMETER
+ RE A                   5.0            $-PARAMETER     modified for S2X tests
+
+*   Number of nodes in each direction
+
+*IE N                   10            $-PARAMETER
+*IE N                   20            $-PARAMETER
+*IE N                   30            $-PARAMETER
+*IE N                   40            $-PARAMETER
+ IE N                   10            $-PARAMETER     modified for S2X tests
+*IE N                   100           $-PARAMETER
+
+*   Other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ RI RN        N
+ RD H         RN        1.0
+ R= 1/H       RN
+ RM -1/H      1/H       -1.0
+ R* H**2      H                        H
+ R* 1/H**2    1/H                      1/H
+ RM -2/H**2   1/H**2    -2.0
+ R* 1/H**4    1/H**2                   1/H**2
+ RA A+1       A         1.0
+ RM -A-1      A+1       -1.0
+
+ RM C2        H         3.0
+ RM C3        C2        0.5
+ R+ C4        C3                       A
+ R+ C1        C3                       -A-1
+ RA C5        C3        -1.0
+ RM C5        C5        0.5
+ RM C6        C3        0.5
+ R+ C6        C6                       -A-1
+ RM C6        C6        0.5
+ 
+ R* C1        C1                       H
+ R* C2        C2                       H
+ R* C3        C3                       H
+ R* C4        C4                       H
+ R* C5        C5                       H
+ R* C6        C6                       H
+
+
+VARIABLES
+
+*  V(I,J) gives the value of v(a+I/N,a+J/N)
+
+ DO I         0                        N
+ DO J         0                        I
+ X  V(I,J)
+ ND
+
+GROUPS
+
+* objective function terms (for minimization!)
+
+ DO J         1                        N-1
+ ZN OBJ       V(N,J)                   C1
+ ND
+ 
+ DO I         2                        N-1
+ IA I-1       I         -1   
+ DO J         1                        I-1
+ ZN OBJ       V(I,J)                   C2
+ ND
+ 
+ DO I         1                        N-1
+ ZN OBJ       V(I,I)                   C3
+ ND
+ 
+ DO I         1                        N-1
+ ZN OBJ       V(I,0)                   C4
+ ND
+ 
+ ZN OBJ       V(N,0)                   C5
+ ZN OBJ       V(N,N)                   C6
+
+* positive gradient
+
+ DO I         0                        N-1
+ IA I+1       I         1   
+ DO J         0                        I
+ ZG VX(I,J)   V(I+1,J)                 1/H
+ ZG VX(I,J)   V(I,J)                   -1/H
+ ZL VV(I,J)   V(I+1,J)                 1/H
+ ZL VV(I,J)   V(I,J)                   -1/H
+ ND
+
+ DO J         0                        N-1
+ ZG VX(N,J)   V(N,J)                   1/H
+ ZG VX(N,J)   V(N-1,J)                 -1/H
+ ZL VV(N,J)   V(N,J)                   1/H
+ ZL VV(N,J)   V(N-1,J)                 -1/H
+ ND
+
+ ZG VX(N,N)   V(N,N)                   1/H
+ ZG VX(N,N)   V(N,N-1)                 -1/H
+ ZL VV(N,N)   V(N,N)                   1/H
+ ZL VV(N,N)   V(N,N-1)                 -1/H
+  
+ DO I         1                        N
+ IA I-1       I         -1   
+ DO J         0                        I-1
+ IA J+1       J         1   
+ ZG VY(I,J)   V(I,J+1)                 1/H
+ ZG VY(I,J)   V(I,J)                   -1/H
+ ZL VV(I,J)   V(I,J+1)                 1/H
+ ZL VV(I,J)   V(I,J)                   -1/H
+ ND
+
+ DO I         1                        N-1
+ IA I+1       I         1   
+ ZG VY(I,I)   V(I+1,I)                 1/H
+ ZG VY(I,I)   V(I,I)                   -1/H
+ ZL VV(I,I)   V(I+1,I)                 1/H
+ ZL VV(I,I)   V(I,I)                   -1/H
+ ND
+
+ ZG VY(N,N)   V(N,N)                   1/H
+ ZG VY(N,N)   V(N,N-1)                 -1/H
+ ZL VV(N,N)   V(N,N)                   1/H
+ ZL VV(N,N)   V(N,N-1)                 -1/H
+  
+* positive curvature
+
+ DO I         1                        N-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ DO J         0                        I-1
+ ZG VXX(I,J)  V(I+1,J)                 1/H**2
+ ZG VXX(I,J)  V(I,J)                   -2/H**2
+ ZG VXX(I,J)  V(I-1,J)                 1/H**2
+ OD J
+ ND
+
+ DO I         2                        N
+ IA I-1       I         -1
+ DO J         1                        I-1
+ IA J-1       J         -1
+ IA J+1       J         1
+ ZG VYY(I,J)  V(I,J+1)                 1/H**2
+ ZG VYY(I,J)  V(I,J)                   -2/H**2
+ ZG VYY(I,J)  V(I,J-1)                 1/H**2
+ OD J
+ ND
+
+ DO I         1                        N-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ ZG VXX(I,I)  V(I+1,I)                 1/H**2
+ ZG VXX(I,I)  V(I,I)                   -2/H**2
+ ZG VXX(I,I)  V(I,I-1)                 1/H**2
+ ZG VYY(I,I)  V(I+1,I)                 1/H**2
+ ZG VYY(I,I)  V(I,I)                   -2/H**2
+ ZG VYY(I,I)  V(I,I-1)                 1/H**2
+ ND
+
+ DO I         1                        N-1
+ DO J         1                        I
+ XG C(I,J)
+ ND
+
+CONSTANTS
+
+ DO I         0                        N
+ DO J         0                        I
+ X  NUFFIELD  VV(I,J)   1.0
+ ND
+
+BOUNDS
+
+ XR NUFFIELD  'DEFAULT'
+ XX NUFFIELD  V(0,0)    0.0
+
+ELEMENT TYPE
+
+ EV CONVEX    VIP1J
+ EV CONVEX    VIJP1
+ EV CONVEX    VIJ
+ EV CONVEX    VIM1J
+ EV CONVEX    VIJM1
+ EV CONVEX    VIPJP
+ EV CONVEX    VIPJM
+ EV CONVEX    VIMJM
+ EV CONVEX    VIMJP
+ IV CONVEX    VXX
+ IV CONVEX    VYY
+ IV CONVEX    VXY
+
+ELEMENT USES
+
+* positive curvature
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ DO J         1                        I
+ IA J+1       J         1
+ IA J-1       J         -1
+ XT C(I,J)    CONVEX
+ ZV C(I,J)    VIP1J                    V(I+1,J) 
+ ZV C(I,J)    VIM1J                    V(I-1,J) 
+ ZV C(I,J)    VIJP1                    V(I,J+1) 
+ ZV C(I,J)    VIJM1                    V(I,J-1) 
+ ZV C(I,J)    VIJ                      V(I,J)
+ ZV C(I,J)    VIPJP                    V(I+1,J+1) 
+ ZV C(I,J)    VIMJM                    V(I-1,J-1) 
+ ZV C(I,J)    VIPJM                    V(I+1,J-1) 
+ ZV C(I,J)    VIMJP                    V(I-1,J+1) 
+ ND
+
+GROUP USES
+
+ DO I         1                        N-1
+ DO J         1                        I
+ ZE C(I,J)    C(I,J)                   1/H**4
+ ND
+
+OBJECT BOUND
+
+*   Solutions (may be local!)
+
+*LO SOLTN               -2.512312500   $ (n=10)
+*LO SOLTN               -2.512359371   $ (n=20)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      NUFFIELD
+
+INDIVIDUALS
+
+ T  CONVEX
+ R  VXX       VIP1J     1.0            VIJ       -2.0
+ R  VXX       VIM1J     1.0
+ R  VYY       VIJP1     1.0            VIJ       -2.0
+ R  VYY       VIJM1     1.0
+ R  VXY       VIPJP     0.25           VIMJM     0.25
+ R  VXY       VIMJP     -0.25          VIPJM     -0.25
+ F                      VXX * VYY - VXY * VXY
+ G  VXX                 VYY
+ G  VYY                 VXX
+ G  VXY                 - 2.0 * VXY
+ H  VXX       VYY       1.0
+ H  VXY       VXY       -2.0
+
+ENDATA

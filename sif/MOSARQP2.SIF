@@ -1,0 +1,486 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MOSARQP2
+
+*   Problem :
+*   *********
+
+*   A convex quadratic problem, with variable dimensions.
+*   In this problem, a third of the linear constraints are active at the
+*   solution. 
+
+*   Source:
+*   J.L. Morales-Perez and R.W.H. Sargent,
+*   "On the implementation and performance of an interior point method for
+*   large sparse convex quadratic programming",
+*   Centre for Process Systems Engineering, Imperial College, London,
+*   November 1991.
+
+*   SIF input: Ph. Toint, August 1993.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification QLR2-AN-V-V
+
+*   Problem variants: these are distinguished by the triplet ( N, M, COND ),
+*   where: - N (nb of variables) must be a multiple of 3
+*            and have an integer square root
+*          - M (nb of constraints) must be at least sqrt(N) 
+*            and at most N - sqrt(N)
+*          - COND (problem conditioning) is a positive integer
+*   Except for the first, the instances suggested are those used by Morales
+*   and Sargent.
+
+*IE N                   36             $-PARAMETER
+*IE M                   10             $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   100            $-PARAMETER     original value
+*IE M                   10             $-PARAMETER     original value
+*RE COND                3.0            $-PARAMETER     original value
+
+*IE N                   900            $-PARAMETER
+*IE M                   30             $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   30             $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   30             $-PARAMETER
+*RE COND                3.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   60             $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   60             $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   60             $-PARAMETER
+*RE COND                3.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   90             $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   90             $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   90             $-PARAMETER
+*RE COND                3.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   120            $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   120            $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   120            $-PARAMETER
+*RE COND                3.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   300            $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   300            $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   300            $-PARAMETER
+*RE COND                3.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   600            $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   600            $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   900            $-PARAMETER
+*IE M                   600            $-PARAMETER
+*RE COND                3.0            $-PARAMETER
+
+*IE N                   2500           $-PARAMETER
+*IE M                   700            $-PARAMETER
+*RE COND                1.0            $-PARAMETER
+
+*IE N                   2500           $-PARAMETER
+*IE M                   700            $-PARAMETER
+*RE COND                2.0            $-PARAMETER
+
+*IE N                   2500           $-PARAMETER
+ IE N                   36             $-PARAMETER     modified for S2X tests
+*IE M                   700            $-PARAMETER
+ IE M                   10             $-PARAMETER     modified for S2X tests
+*RE COND                3.0            $-PARAMETER
+ RE COND                2.0            $-PARAMETER     modified for S2X tests
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IA N-1       N         -1
+ IA N-2       N         -2
+ RI RN-1      N-1
+ RI RN        N 
+ IA M-1       M         -1
+ RA RNP       RN        0.1
+ R( RRTN      SQRT                     RNP
+ IR RTN       RRTN
+ IA RTN-1     RTN       -1
+ IA RTN-2     RTN       -2
+ IA RTN+1     RTN       1
+ I+ 2RTN-1    RTN                      RTN-1
+ I+ 2RTN      RTN                      RTN
+ I- M-RTN+1   M                        RTN-1
+
+*   Determination of the quadratic center
+*   according to the second proposal of Morales and Sargent.
+*   The proportion of 1.0 in this vector is the proportion of linear
+*   constraints active at the solution.
+
+ DO I         1                        N-2
+ DI I         3
+ IA I+1       I         1
+ IA I+2       I         2
+ AE XC(I)               -1.0
+ AE XC(I+1)             -1.0
+ AE XC(I+2)             1.0
+ OD I
+ AE XC(N-1)             -1.0
+ AE XC(N)               1.0
+
+*   Determination of the vector Y
+
+ IE NNZ                 10             $ number of nonzeros in Y (as in paper)
+
+ RE Y1                  -0.3569732     $ values of the NNZ nonzero components 
+ RE Y2                   0.9871576     $ of Y
+ RE Y3                   0.5619363
+ RE Y4                  -0.1984624
+ RE Y5                   0.4653328
+ RE Y6                   0.7364367
+ RE Y7                  -0.4560378
+ RE Y8                  -0.6457813
+ RE Y9                  -0.0601357
+ RE Y10                  0.1035624
+
+ RE NZ1                 0.68971452     $ positions of the NNZ nonzero components
+ RE NZ2                 0.13452678     $ (as a fraction of the dimension)
+ RE NZ3                 0.51234678
+ RE NZ4                 0.76591423
+ RE NZ5                 0.20857854
+ RE NZ6                 0.85672348
+ RE NZ7                 0.04356789
+ RE NZ8                 0.44692743
+ RE NZ9                 0.30136413
+ RE NZ10                0.91367489
+
+*   Compute the integer nonzero positions in Y 
+*   and YN2, the square of norm(Y)
+
+ RE YN2                 0.0
+ DO I         1                        NNZ
+ A* RKI       NZ(I)                    RN
+ AA K(I)      RKI       1.1
+ A* TMP       Y(I)                     Y(I)
+ R+ YN2       YN2                      TMP
+ OD I
+
+*   Set some useful coefficients
+
+ RD -2/YN2    YN2       -2.0
+ R* 4/YN4     -2/YN2                   -2/YN2
+
+*   Determination of the diagonal on which the Hessian of the objective
+*   is constructed.
+
+ DO I         1                        N
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R/ TMP       RI-1                     RN-1
+ R* TMP       TMP                      COND
+ A( D(I)      EXP                      TMP
+ OD I
+
+*   Compute D * y, y^T * xc, y^T * D * xc and y^T * D * y
+
+ RE YDY                 0.0
+ RE YXC                 0.0
+ RE YDXC                0.0
+ DO I         1                        NNZ
+ A= RKI       K(I)
+ IR KI        RKI
+ A* DY(I)     Y(I)                     D(KI)
+ A* TMP       DY(I)                    Y(I)
+ R+ YDY       YDY                      TMP
+ A* TMP       Y(I)                     XC(KI)
+ R+ YXC       YXC                      TMP
+ A* TMP       DY(I)                    XC(KI)
+ R+ YDXC      YDXC                     TMP
+ OD I
+
+ R* AA        -2/YN2                   YXC
+ R* DD        4/YN4                    YDY
+ R* BB        DD                       YXC
+ R* CC        -2/YN2                   YDXC
+ R+ BB+CC     BB                       CC
+ RM DD/2      DD        0.5
+
+*   Compute C, the quadratic's gradient at the origin
+
+ DO I         1                        N
+ A* C(I)      D(I)                     XC(I)
+ OD I
+
+ DO I         1                        NNZ
+ A= RKI       K(I)
+ IR KI        RKI
+ A* TMP       DY(I)                    AA
+ A+ C(KI)     C(KI)                    TMP
+ A* TMP       Y(I)                     BB+CC
+ A+ C(KI)     C(KI)                    TMP
+ OD I
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ OD I
+
+GROUPS
+
+*   Objective linear coefficients
+
+ DO I         1                        N
+ ZN OBJ       X(I)                     C(I)
+ OD I
+
+*   The matrix A of the linear constraints consists of the M first lines
+*   of the matrix corresponding to the discretized 5-points Laplacian
+*   operator in the unit square.
+
+ XG CS(1)     X(1)      4.0
+ XG CS(1)     X(RTN+1)  -1.0           X(2)      -1.0
+
+ DO I         2                        RTN-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ I+ I+RTN     I                        RTN
+ XG CS(I)     X(I)      4.0            X(I+RTN)  -1.0
+ XG CS(I)     X(I-1)    -1.0           X(I+1)    -1.0
+ OD I
+
+ XG CS(RTN)   X(RTN)    4.0 
+ XG CS(RTN)   X(RTN-1)  -1.0           X(2RTN)   -1.0
+
+ I= JS        RTN
+
+ DO J         RTN+1                    M-RTN+1
+ DI J         RTN
+ IA J+1       J         1
+ I+ JS        J                        RTN-1
+ IA JS-1      JS        -1
+
+ I- J-RTN     J                        RTN
+ I+ J+RTN     J                        RTN
+ XG CS(J)     X(J)      4.0            X(J+1)    -1.0
+ XG CS(J)     X(J-RTN)  -1.0           X(J+RTN)  -1.0
+
+ DO I         J+1                      JS-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ I+ I+RTN     I                        RTN
+ I- I-RTN     I                        RTN
+ XG CS(I)     X(I)      4.0
+ XG CS(I)     X(I-1)    -1.0           X(I+1)    -1.0
+ XG CS(I)     X(I-RTN)  -1.0           X(I+RTN)  -1.0
+ OD I
+
+ I+ JS+RTN    JS                       RTN
+ I- JS-RTN    JS                       RTN
+ XG CS(JS)    X(JS)     4.0            X(JS-1)   -1.0
+ XG CS(JS)    X(JS-RTN) -1.0           X(JS+RTN) -1.0
+
+ OD J
+
+ IA K         JS        1
+
+ DO I         K                        M
+ DI I         M
+ IA K+1       K         1
+ I+ K+RTN     K                        RTN
+ I- K-RTN     K                        RTN
+ XG CS(K)     X(K)      4.0            X(K+1)     -1.0
+ XG CS(K)     X(K-RTN)  -1.0           X(K+RTN)   -1.0
+ OD I
+
+ IA K         K         1
+
+ DO I         K                        M
+ IA I+1       I         1
+ IA I-1       I         -1
+ I+ I+RTN     I                        RTN
+ I- I-RTN     I                        RTN
+ XG CS(I)     X(I)      4.0
+ XG CS(I)     X(I-1)    -1.0           X(I+1)    -1.0
+ XG CS(I)     X(I-RTN)  -1.0           X(I+RTN)  -1.0
+ OD I
+
+CONSTANTS
+
+*   The constraints constants are computed as A*x0 - p, where
+*   both x0 and p are set to 0.5 * e
+
+ X  MOSARQP2  CS(1)     0.5
+ X  MOSARQP2  CS(RTN)   0.5
+
+ I= K         RTN+1
+ DO J         RTN+1                    M-RTN+1
+ DI J         RTN
+ IA K         K         1
+ DO I         1                        RTN-2
+ IA K         K         1
+ X  MOSARQP2  CS(K)     -0.5
+ OD I
+ IA K         K         1
+ OD J
+
+ IA K         K         1
+ DO J         K                        M
+ X  MOSARQP2  CS(J)     -0.5
+ OD J
+          
+START POINT
+
+ XV MOSARQP2  'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+*   The elements corresponding to the squre variables
+
+ DO I         1                        N
+ XT XSQ(I)    SQ
+ ZV XSQ(I)    X                        X(I)
+ OD I
+
+*   The mixed products corresponding to the nonzero entries of Y
+
+ DO I         1                        NNZ
+ A= RKI       K(I)
+ IR KI        RKI
+ IA I-1       I         -1
+
+ DO J         1                        I-1
+ A= RKJ       K(J)
+ IR KJ        RKJ
+ XT P(I,J)    2PR
+ ZV P(I,J)    X                        X(KI)
+ ZV P(I,J)    Y                        X(KJ)
+ OD J
+
+ OD I
+
+GROUP USES
+
+*   The diagonal elements
+
+ DO I         1                        N
+ AM TMP       D(I)      0.5
+ ZE OBJ       XSQ(I)                   TMP
+ OD I
+
+*   The elements corresponding to the nonzero entries of Y
+
+ DO I         1                        NNZ
+ A= RKI       K(I)
+ IR KI        RKI
+ IA I-1       I         -1
+
+ DO J         1                        I-1
+ A* TMP       DY(I)                    Y(J)
+ R* WIJ       TMP                      -2/YN2
+ A* TMP       DY(J)                    Y(I)
+ R* TMP       TMP                      -2/YN2
+ R+ WIJ       WIJ                      TMP
+ A* TMP       Y(I)                     Y(J)
+ R* TMP       TMP                      DD
+ R+ WIJ       WIJ                      TMP
+ ZE OBJ       P(I,J)                   WIJ
+ OD J
+
+ A* TMP       DY(I)                    Y(I)
+ R* WII       TMP                      -2/YN2
+ A* TMP       Y(I)                     Y(I)
+ R* TMP       TMP                      DD/2
+ R+ WII       WII                      TMP
+ ZE OBJ       XSQ(KI)                  WII
+
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(  36, 10,2)   -35.69811798
+*LO SOLTN( 900, 30,1)   -509.8245900
+*LO SOLTN( 900, 30,2)   -950.8404853
+*LO SOLTN( 900, 30,3)   -1896.596722
+*LO SOLTN( 900, 60,1)   -504.3600140
+*LO SOLTN( 900, 60,2)   -945.1134463
+*LO SOLTN( 900, 60,3)   -1890.602184
+*LO SOLTN( 900, 90,1)   -498.9518964
+*LO SOLTN( 900, 90,2)   -939.2704526
+*LO SOLTN( 900, 90,3)   -1884.291256
+*LO SOLTN( 900,120,1)   -493.5058050
+*LO SOLTN( 900,120,2)   -933.1963138
+*LO SOLTN( 900,120,3)   -1877.513644
+*LO SOLTN( 900,300,1)   -457.1185630
+*LO SOLTN( 900,300,2)   -887.3869230
+*LO SOLTN( 900,300,3)   -1819.655008
+*LO SOLTN( 900,600,1)   -377.5813314
+*LO SOLTN( 900,600,2)   -755.0919955
+*LO SOLTN( 900,600,3)   -1597.482277
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MOSARQP2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+

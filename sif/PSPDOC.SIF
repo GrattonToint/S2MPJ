@@ -1,0 +1,146 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PSPDOC
+
+*   Problem :
+*   *********
+*   The PSPDOC test problem in 4 variables
+
+*   Source: problem 47 in
+*   Ph.L. Toint,
+*   "Test problems for partially separable optimization and results
+*   for the routine PSPMIN",
+*   Report 83/4, Department of Mathematics, FUNDP (Namur, B), 1983.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SBR2-AY-4-0
+
+*   N is the number of variables
+
+ IE N                   4
+
+*   Number of groups sets
+
+ IA NGS       N         -2
+
+*   Define useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        NGS
+ XN G(I)
+ ND
+
+CONSTANTS
+
+ X  PSPDOC    'DEFAULT' -1.0
+
+BOUNDS
+
+ FR PSPDOC    'DEFAULT'
+
+*   The first variable is bounded above by -1
+
+ XU PSPDOC    X(1)          -1.0
+ XM PSPDOC    X(1)
+
+START POINT
+
+ XV PSPDOC    'DEFAULT' 3.0
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ EV ISQ       V1                       V2
+ IV ISQ       U
+
+ELEMENT USES
+
+ DO I         1                        NGS
+ IA I+1       I         1
+ IA I+2       I         2
+ XT A(I)      SQ
+ ZV A(I)      V                        X(I)
+ XT B(I)      ISQ
+ ZV B(I)      V1                       X(I+1)
+ ZV B(I)      V2                       X(I+2)
+ ND
+
+GROUP TYPE
+
+ GV SQR       GVAR
+
+GROUP USES
+
+ DO I         1                        NGS
+ XT G(I)      SQR
+ XE G(I)      A(I)                     B(I)
+ ND
+
+OBJECT BOUND
+
+ LO PSPDOC              0.0
+
+*   Solution
+
+*LO SOLTN               2.414213562
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      PSPDOC
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ T  ISQ
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        PSPDOC
+
+TEMPORARIES
+
+ M  SQRT
+ R  SQRV
+
+INDIVIDUALS
+
+*   Square root groups
+
+ T  SQR
+ A  SQRV                SQRT(GVAR)
+ F                      SQRV
+ G                      0.5 / SQRV
+ H                      -0.25 / ( SQRV * GVAR )
+
+ENDATA

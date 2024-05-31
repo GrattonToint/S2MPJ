@@ -1,0 +1,91 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MARATOS
+
+*   Problem :
+*   *********
+
+*   The Maratos problem with penalty parameter = 0.000001
+
+*   Source:
+*   A.A. Brown and M. Bartholomew-Biggs,
+*   "Some effective methods for unconstrained optimization based on
+*   the solution of ordinary differential equations",
+*   Technical Report 178, Numerical Optimization Centre, Hatfield
+*   Polytechnic, (Hatfield, UK), 1987.
+
+*   SIF input: Nick Gould, June 1990.
+
+*   classification QQR2-AN-2-1
+
+*   Penalty parameter
+
+ RE TAU                 0.000001
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  F         X1        -1.0
+ E  C
+
+CONSTANTS
+
+ Z  MARATOS   F                        TAU
+    MARATOS   C         1.0
+
+BOUNDS
+
+ FR MARATOS   'DEFAULT'
+
+START POINT
+
+    MARATOS   X1        1.1
+    MARATOS   X2        0.1
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+GROUP USES
+
+ ZE F         X1SQ                     TAU
+ ZE F         X2SQ                     TAU
+ E  C         X1SQ                     X2SQ
+
+OBJECT BOUND
+
+*   Solution
+
+*   LO SOLTN            1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MARATOS
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

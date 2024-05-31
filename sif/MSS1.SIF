@@ -1,0 +1,507 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MSS1    
+
+*   Problem :
+*   *********
+
+*   A rank-two relaxation of a maximum stable set problem
+
+*   SIF input: N. Gould, March 2002
+
+*   classification QQR2-AN-90-73
+
+*   Number of vertices
+
+ IE N                           45
+
+*   Number of edges
+
+ IE E                           72
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ 
+VARIABLES
+
+ DO K         1                        N
+ X  X(K)
+ X  Y(K)
+ ND
+
+GROUPS
+
+*  objective function
+
+ DO I         1                        N
+ XN O1        X(I)      1.0
+ XN O2        Y(I)      1.0
+ ND
+
+*   speherical constraint
+
+ E  S
+
+*   edge constraints
+
+ DO K         1                        E
+ XE C(K)
+ ND
+
+CONSTANTS
+
+    CONSNT    S         1.0
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV SQ        Z
+ EV PROD      X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' PROD
+
+ V  X1        X                        X10       
+ V  X1        Y                        X1        
+ V  Y1        X                        Y10       
+ V  Y1        Y                        Y1        
+
+ V  X2        X                        X11       
+ V  X2        Y                        X2        
+ V  Y2        X                        Y11       
+ V  Y2        Y                        Y2        
+
+ V  X3        X                        X11       
+ V  X3        Y                        X10       
+ V  Y3        X                        Y11       
+ V  Y3        Y                        Y10       
+
+ V  X4        X                        X12       
+ V  X4        Y                        X3        
+ V  Y4        X                        Y12       
+ V  Y4        Y                        Y3        
+
+ V  X5        X                        X12       
+ V  X5        Y                        X10       
+ V  Y5        X                        Y12       
+ V  Y5        Y                        Y10       
+
+ V  X6        X                        X12       
+ V  X6        Y                        X11       
+ V  Y6        X                        Y12       
+ V  Y6        Y                        Y11       
+
+ V  X7        X                        X13       
+ V  X7        Y                        X4        
+ V  Y7        X                        Y13       
+ V  Y7        Y                        Y4        
+
+ V  X8        X                        X14       
+ V  X8        Y                        X5        
+ V  Y8        X                        Y14       
+ V  Y8        Y                        Y5        
+
+ V  X9        X                        X14       
+ V  X9        Y                        X13       
+ V  Y9        X                        Y14       
+ V  Y9        Y                        Y13       
+
+ V  X10       X                        X15       
+ V  X10       Y                        X6        
+ V  Y10       X                        Y15       
+ V  Y10       Y                        Y6        
+
+ V  X11       X                        X15       
+ V  X11       Y                        X13       
+ V  Y11       X                        Y15       
+ V  Y11       Y                        Y13       
+
+ V  X12       X                        X15       
+ V  X12       Y                        X14       
+ V  Y12       X                        Y15       
+ V  Y12       Y                        Y14       
+
+ V  X13       X                        X16       
+ V  X13       Y                        X7        
+ V  Y13       X                        Y16       
+ V  Y13       Y                        Y7        
+
+ V  X14       X                        X17       
+ V  X14       Y                        X8        
+ V  Y14       X                        Y17       
+ V  Y14       Y                        Y8        
+
+ V  X15       X                        X17       
+ V  X15       Y                        X16       
+ V  Y15       X                        Y17       
+ V  Y15       Y                        Y16       
+
+ V  X16       X                        X18       
+ V  X16       Y                        X9        
+ V  Y16       X                        Y18       
+ V  Y16       Y                        Y9        
+
+ V  X17       X                        X18       
+ V  X17       Y                        X16       
+ V  Y17       X                        Y18       
+ V  Y17       Y                        Y16       
+
+ V  X18       X                        X18       
+ V  X18       Y                        X17       
+ V  Y18       X                        Y18       
+ V  Y18       Y                        Y17       
+
+ V  X19       X                        X19       
+ V  X19       Y                        X1        
+ V  Y19       X                        Y19       
+ V  Y19       Y                        Y1        
+
+ V  X20       X                        X20       
+ V  X20       Y                        X5        
+ V  Y20       X                        Y20       
+ V  Y20       Y                        Y5        
+
+ V  X21       X                        X20       
+ V  X21       Y                        X19       
+ V  Y21       X                        Y20       
+ V  Y21       Y                        Y19       
+
+ V  X22       X                        X21       
+ V  X22       Y                        X9        
+ V  Y22       X                        Y21       
+ V  Y22       Y                        Y9        
+
+ V  X23       X                        X21       
+ V  X23       Y                        X19       
+ V  Y23       X                        Y21       
+ V  Y23       Y                        Y19       
+
+ V  X24       X                        X21       
+ V  X24       Y                        X20       
+ V  Y24       X                        Y21       
+ V  Y24       Y                        Y20       
+
+ V  X25       X                        X22       
+ V  X25       Y                        X1        
+ V  Y25       X                        Y22       
+ V  Y25       Y                        Y1        
+
+ V  X26       X                        X23       
+ V  X26       Y                        X4        
+ V  Y26       X                        Y23       
+ V  Y26       Y                        Y4        
+
+ V  X27       X                        X23       
+ V  X27       Y                        X22       
+ V  Y27       X                        Y23       
+ V  Y27       Y                        Y22       
+
+ V  X28       X                        X24       
+ V  X28       Y                        X8        
+ V  Y28       X                        Y24       
+ V  Y28       Y                        Y8        
+
+ V  X29       X                        X24       
+ V  X29       Y                        X22       
+ V  Y29       X                        Y24       
+ V  Y29       Y                        Y22       
+
+ V  X30       X                        X24       
+ V  X30       Y                        X23       
+ V  Y30       X                        Y24       
+ V  Y30       Y                        Y23       
+
+ V  X31       X                        X25       
+ V  X31       Y                        X1        
+ V  Y31       X                        Y25       
+ V  Y31       Y                        Y1        
+
+ V  X32       X                        X26       
+ V  X32       Y                        X6        
+ V  Y32       X                        Y26       
+ V  Y32       Y                        Y6        
+
+ V  X33       X                        X26       
+ V  X33       Y                        X25       
+ V  Y33       X                        Y26       
+ V  Y33       Y                        Y25       
+
+ V  X34       X                        X27       
+ V  X34       Y                        X7        
+ V  Y34       X                        Y27       
+ V  Y34       Y                        Y7        
+
+ V  X35       X                        X27       
+ V  X35       Y                        X25       
+ V  Y35       X                        Y27       
+ V  Y35       Y                        Y25       
+
+ V  X36       X                        X27       
+ V  X36       Y                        X26       
+ V  Y36       X                        Y27       
+ V  Y36       Y                        Y26       
+
+ V  X37       X                        X28       
+ V  X37       Y                        X2        
+ V  Y37       X                        Y28       
+ V  Y37       Y                        Y2        
+
+ V  X38       X                        X29       
+ V  X38       Y                        X4        
+ V  Y38       X                        Y29       
+ V  Y38       Y                        Y4        
+
+ V  X39       X                        X29       
+ V  X39       Y                        X28       
+ V  Y39       X                        Y29       
+ V  Y39       Y                        Y28       
+
+ V  X40       X                        X30       
+ V  X40       Y                        X9        
+ V  Y40       X                        Y30       
+ V  Y40       Y                        Y9        
+
+ V  X41       X                        X30       
+ V  X41       Y                        X28       
+ V  Y41       X                        Y30       
+ V  Y41       Y                        Y28       
+
+ V  X42       X                        X30       
+ V  X42       Y                        X29       
+ V  Y42       X                        Y30       
+ V  Y42       Y                        Y29       
+
+ V  X43       X                        X31       
+ V  X43       Y                        X2        
+ V  Y43       X                        Y31       
+ V  Y43       Y                        Y2        
+
+ V  X44       X                        X32       
+ V  X44       Y                        X5        
+ V  Y44       X                        Y32       
+ V  Y44       Y                        Y5        
+
+ V  X45       X                        X32       
+ V  X45       Y                        X31       
+ V  Y45       X                        Y32       
+ V  Y45       Y                        Y31       
+
+ V  X46       X                        X33       
+ V  X46       Y                        X7        
+ V  Y46       X                        Y33       
+ V  Y46       Y                        Y7        
+
+ V  X47       X                        X33       
+ V  X47       Y                        X31       
+ V  Y47       X                        Y33       
+ V  Y47       Y                        Y31       
+
+ V  X48       X                        X33       
+ V  X48       Y                        X32       
+ V  Y48       X                        Y33       
+ V  Y48       Y                        Y32       
+
+ V  X49       X                        X34       
+ V  X49       Y                        X2        
+ V  Y49       X                        Y34       
+ V  Y49       Y                        Y2        
+
+ V  X50       X                        X35       
+ V  X50       Y                        X6        
+ V  Y50       X                        Y35       
+ V  Y50       Y                        Y6        
+
+ V  X51       X                        X35       
+ V  X51       Y                        X34       
+ V  Y51       X                        Y35       
+ V  Y51       Y                        Y34       
+
+ V  X52       X                        X36       
+ V  X52       Y                        X8        
+ V  Y52       X                        Y36       
+ V  Y52       Y                        Y8        
+
+ V  X53       X                        X36       
+ V  X53       Y                        X34       
+ V  Y53       X                        Y36       
+ V  Y53       Y                        Y34       
+
+ V  X54       X                        X36       
+ V  X54       Y                        X35       
+ V  Y54       X                        Y36       
+ V  Y54       Y                        Y35       
+
+ V  X55       X                        X37       
+ V  X55       Y                        X3        
+ V  Y55       X                        Y37       
+ V  Y55       Y                        Y3        
+
+ V  X56       X                        X38       
+ V  X56       Y                        X6        
+ V  Y56       X                        Y38       
+ V  Y56       Y                        Y6        
+
+ V  X57       X                        X38       
+ V  X57       Y                        X37       
+ V  Y57       X                        Y38       
+ V  Y57       Y                        Y37       
+
+ V  X58       X                        X39       
+ V  X58       Y                        X9        
+ V  Y58       X                        Y39       
+ V  Y58       Y                        Y9        
+
+ V  X59       X                        X39       
+ V  X59       Y                        X37       
+ V  Y59       X                        Y39       
+ V  Y59       Y                        Y37       
+
+ V  X60       X                        X39       
+ V  X60       Y                        X38       
+ V  Y60       X                        Y39       
+ V  Y60       Y                        Y38       
+
+ V  X61       X                        X40       
+ V  X61       Y                        X3        
+ V  Y61       X                        Y40       
+ V  Y61       Y                        Y3        
+
+ V  X62       X                        X41       
+ V  X62       Y                        X5        
+ V  Y62       X                        Y41       
+ V  Y62       Y                        Y5        
+
+ V  X63       X                        X41       
+ V  X63       Y                        X40       
+ V  Y63       X                        Y41       
+ V  Y63       Y                        Y40       
+
+ V  X64       X                        X42       
+ V  X64       Y                        X8        
+ V  Y64       X                        Y42       
+ V  Y64       Y                        Y8        
+
+ V  X65       X                        X42       
+ V  X65       Y                        X40       
+ V  Y65       X                        Y42       
+ V  Y65       Y                        Y40       
+
+ V  X66       X                        X42       
+ V  X66       Y                        X41       
+ V  Y66       X                        Y42       
+ V  Y66       Y                        Y41       
+
+ V  X67       X                        X43       
+ V  X67       Y                        X3        
+ V  Y67       X                        Y43       
+ V  Y67       Y                        Y3        
+
+ V  X68       X                        X44       
+ V  X68       Y                        X4        
+ V  Y68       X                        Y44       
+ V  Y68       Y                        Y4        
+
+ V  X69       X                        X44       
+ V  X69       Y                        X43       
+ V  Y69       X                        Y44       
+ V  Y69       Y                        Y43       
+
+ V  X70       X                        X45       
+ V  X70       Y                        X7        
+ V  Y70       X                        Y45       
+ V  Y70       Y                        Y7        
+
+ V  X71       X                        X45       
+ V  X71       Y                        X43       
+ V  Y71       X                        Y45       
+ V  Y71       Y                        Y43       
+
+ V  X72       X                        X45       
+ V  X72       Y                        X44       
+ V  Y72       X                        Y45       
+ V  Y72       Y                        Y44       
+
+ DO I         1                        N
+ XT XS(I)     SQ
+ ZV XS(I)     Z                        X(I)
+ XT YS(I)     SQ
+ ZV YS(I)     Z                        Y(I)
+ ND
+
+GROUP TYPE
+
+ GV -L2       GVAR
+
+GROUP USES
+
+ XT O1        -L2
+ XT O2        -L2
+
+ DO I         1                        N
+ XE S         XS(I)                    YS(I)
+ ND
+
+ DO K         1                        E
+ XE C(K)      X(K)                     Y(K)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                -16.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+
+ELEMENTS      MSS1    
+
+INDIVIDUALS
+
+ T  SQ
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  PROD
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        MSS1    
+
+INDIVIDUALS
+
+*   Least-square groups
+
+ T  -L2
+ F                      - GVAR * GVAR
+ G                      - GVAR - GVAR
+ H                      - 2.0
+
+ENDATA

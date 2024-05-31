@@ -1,0 +1,140 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MADSEN
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   K. Madsen
+*   "An algorithm for minmax solution of overdetermined systems of non-linear
+*   equations"
+*   JIMA, vol.16, pp. 321-328, 1975.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification LOR2-AN-3-6
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XG C1        U         1.0
+ XG C2        U         1.0
+ XG C3        U         1.0
+ XG C4        U         1.0
+ XG C5        U         1.0
+ XG C6        U         1.0
+
+BOUNDS
+
+ FR MADSEN    'DEFAULT'
+
+START POINT
+
+ XV MADSEN    X1        3.0
+ XV MADSEN    X2        1.0
+ XV MADSEN    U         1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+ EV SIN       X
+ EV COS       X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+ T  X1X2      2PR
+ ZV X1X2      X                        X1
+ ZV X1X2      Y                        X2
+
+ T  SX1       SIN
+ ZV SX1       X                        X1
+
+ T  CX2       COS
+ ZV CX2       X                        X2
+
+GROUP USES
+
+ E  C1        X1SQ      -1.0           X2SQ      -1.0
+ E  C1        X1X2      -1.0
+
+ E  C2        X1SQ      1.0            X2SQ      1.0
+ E  C2        X1X2      1.0
+
+ E  C3        SX1       -1.0
+
+ E  C4        SX1       1.0
+
+ E  C5        CX2       -1.0
+
+ E  C6        CX2       1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MADSEN
+
+TEMPORARIES
+
+ R  S
+ R  C
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SIN
+ A  S                   SIN( X )
+ A  C                   COS( X )
+ F                      S
+ G  X                   C
+ H  X         X         - S
+
+ T  COS
+ A  S                   SIN( X )
+ A  C                   COS( X )
+ F                      C
+ G  X                   - S
+ H  X         X         - C
+
+ENDATA
+

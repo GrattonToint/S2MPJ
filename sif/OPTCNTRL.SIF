@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OPTCNTRL
+
+*   Problem :
+*   *********
+*   An optimal control problem
+
+*   Source:
+*   B. Murtagh and M. Saunders,
+*   Mathematical Programming studies 16, pp 84-117,
+*   (example 5.11)
+
+*   SIF input: Nick Gould, June 1990.
+
+*   classification QQR2-AN-32-20
+
+*   useful parameters
+
+ IE T                   10
+ IA T-1       T         -1
+
+ IE 0                   0
+ IE 1                   1
+
+VARIABLES
+
+ DO t         0                        T
+ X  x(t)
+ X  y(t)
+ ND
+
+ DO t         0                        T-1
+ X  u(t)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO t         0                        T-1
+ IA t+1       t         1
+ XE B(t)      x(t+1)    1.0            x(t)      -1.0
+ XE B(t)      y(t)      -0.2
+ XE C(t)      y(t+1)    1.0            y(t)      -1.0
+ XE C(t)      x(t)      0.004          u(t)      -0.2
+ ND
+
+BOUNDS
+
+ DO t         0                        T-1
+ XR OPTCNTL   x(t)
+ XL OPTCNTL   y(t)      -1.0
+ XL OPTCNTL   u(t)      -0.2
+ XU OPTCNTL   u(t)      0.2
+ ND
+
+ XX OPTCNTL   x(0)      10.0
+ XX OPTCNTL   y(0)      0.0
+ XX OPTCNTL   y(T)      0.0
+
+START POINT
+
+ DO t         1                        T-1
+ X  OPTCNTL   y(t)      -1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       X
+
+ELEMENT USES
+
+ DO t         0                        T
+ XT o(t)      SQR
+ ZV o(t)      X                        x(t)
+ ND
+
+ DO t         0                        T-1
+ XT c(t)      SQR
+ ZV c(t)      X                        y(t)
+ ND
+
+GROUP USES
+
+ DO t         0                        T
+ XE OBJ       o(t)      0.5
+ ND
+
+ DO t         0                        T-1
+ XE C(t)      c(t)      0.01
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO OPTCNTL             0.0
+
+*   Solution
+
+*LO SOLTN               549.9999869
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OPTCNTRL
+
+INDIVIDUALS
+
+*   square element.
+
+ T  SQR
+
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

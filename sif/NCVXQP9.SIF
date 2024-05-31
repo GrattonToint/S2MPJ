@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          NCVXQP9  
+
+*   Problem :
+*   *********
+
+*   A non-convex quadratic program.
+
+*   SIF input: Nick Gould, April 1995
+
+*   classification QLR2-AN-V-V
+
+*   The number of variables constraints
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER    original value
+*IE N                   10000          $-PARAMETER
+ IE N                   50             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  Other useful values.
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+
+*   The number of equality constraints
+
+ I/ M         N                        4
+ I* M         M                        3
+
+*   75% positive eigenvalues
+
+ I/ NPLUS     N                        4
+ I* NPLUS     NPLUS                    3
+ IA NPLUS+1   NPLUS     1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  Objective function groups:
+
+*  the i-th group has nonzeros in positions 
+*  i, mod( 2i - 1, n ) + 1 and mod( 3i - 1, n ) + 1
+
+ DO I         1                        N
+ XN OBJ(I)    X(I)      1.0
+ IM J         I         2
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XN OBJ(I)    X(J)      1.0
+ IM J         I         3
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XN OBJ(I)    X(J)      1.0
+ ND
+
+*  linear constraints: 
+
+*  the i-th constraint has nonzeros in positions 
+*  i, mod( 4i - 1, n ) + 1 and mod( 5i - 1, n ) + 1
+
+ DO I         1                        M
+ XE CON(I)    X(I)      1.0
+ IM J         I         4
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE CON(I)    X(J)      2.0
+ IM J         I         5
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE CON(I)    X(J)      3.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ XE NCVXQP9   CON(I)    6.0
+ ND
+
+BOUNDS
+
+ DO I         1                        N
+ XL NCVXQP9   X(I)      0.1
+ XU NCVXQP9   X(I)      10.0
+ ND
+
+START POINT
+
+ XV NCVXQP9   'DEFAULT' 0.5
+
+GROUP TYPE
+
+ GV SQR       ALPHA
+ GP SQR       P
+
+GROUP USES
+
+* nplus positive rank-one terms
+
+ DO I         1                        NPLUS
+ XT OBJ(I)    SQR
+ RI RI        I
+ ZP OBJ(I)    P                        RI
+ ND
+
+* n - nplus negative rank-one terms
+
+ DO I         NPLUS+1                  N
+ XT OBJ(I)    SQR
+ RI RI        I
+ RM RI        RI        -1.0
+ ZP OBJ(I)    P                        RI
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -2.15788D+07   $ (n=1000)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+GROUPS        NCVXQP9 
+
+INDIVIDUALS
+
+ T  SQR
+ F                      0.5 * P * ALPHA * ALPHA
+ G                      P * ALPHA 
+ H                      P
+
+ENDATA
+

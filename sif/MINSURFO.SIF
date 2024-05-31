@@ -1,0 +1,262 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MINSURFO
+
+*   Problem :
+*   *********
+
+*   Find the surface with minimal area, given boundary conditions, 
+*   and above an obstacle.
+
+*   This is problem 17 in the COPS (Version 2) collection of 
+*   E. Dolan and J. More'
+*   see "Benchmarking Optimization Software with COPS"
+*   Argonne National Labs Technical Report ANL/MCS-246 (2000)
+
+*   SIF input: Nick Gould, December 2000
+
+*   classification OBR2-AN-V-V
+
+* grid points in x direction (fixed at 50 in COPS)
+
+*IE NX                  25
+ IE NX                  50
+*IE NX                  75
+*IE NX                  100
+
+* grid points in y direction
+
+*IE NY                  25
+*IE NY                  50
+*IE NY                  75
+ IE NY                  100
+
+*  Other useful values
+
+ IE 0                   0
+ IE 1                   1
+ RE ONE                 1.0
+ IA NX+1      NX        1
+ IA NY+1      NY        1
+ RI RNX+1     NX+1
+ RI RNY+1     NY+1
+
+*  Grid spacing and area of triangle
+
+ RD HX        RNX+1     1.0
+ RD HY        RNY+1     1.0
+ R* AREA      HX                       HY    
+ RM AREA      AREA      0.5
+ RD 1/AREA    AREA      1.0 
+ RD 1/HX      HX        1.0
+ R* 1/HX2     1/HX                     1/HX
+ RD 1/HY      HY        1.0
+ R* 1/HY2     1/HY                     1/HY
+
+VARIABLES
+
+* v defines the finite element approximation.
+
+ DO I         0                        NX+1
+ DO J         0                        NY+1
+ X  V(I,J)
+ ND
+
+GROUPS
+
+*   Define a group for each objective term {i in 0..nx,j in 0..ny}
+*   area*(1+((v[i+1,j]-v[i,j])/hx)^2+((v[i,j+1]-v[i,j])/hy)^2)^(1/2)
+
+ DO I         0                        NX
+ DO J         0                        NY
+ ZN A(I,J)    'SCALE'                  1/AREA
+ ND
+
+*   Define a group for each objective term {i in 1..nx+1,j in 1..ny+1}
+*   area*(1+((v[i-1,j]-v[i,j])/hx)^2+((v[i,j-1]-v[i,j])/hy)^2)^(1/2))
+
+ DO I         1                        NX+1
+ DO J         1                        NY+1
+ ZN B(I,J)    'SCALE'                  1/AREA
+ ND
+
+CONSTANTS
+
+*  Constant terms for the above
+
+ DO I         0                        NX
+ DO J         0                        NY
+ X  MINSURFO  A(I,J)    -1.0
+ ND
+
+ DO I         1                        NX+1
+ DO J         1                        NY+1
+ X  MINSURFO  B(I,J)    -1.0
+ ND
+
+BOUNDS
+
+* bound {i in floor(0.25/hx)..ceil(0.75/hx),
+*        j in floor(0.25/hy)..ceil(0.75/hy)}: v[i,j] >= 1
+
+ RD 1/4HX     HX        0.25
+ RD 3/4HX     HX        0.75
+ RD 1/4HY     HY        0.25
+ RD 3/4HY     HY        0.75
+ RA 3/4HX     3/4HX     0.9999999999
+ RA 3/4HY     3/4HY     0.9999999999
+ IR 1/4HX     1/4HX
+ IR 1/4HY     1/4HY
+ IR 3/4HX     3/4HX
+ IR 3/4HY     3/4HY
+
+ DO I         1/4HX                    3/4HX
+ DO J         1/4HY                    3/4HY
+ XL MINSURFO  V(I,J)    1.0
+ ND
+
+ DO J         0                        NY+1
+ XX MINSURFO  V(0,J)    0.0
+ XX MINSURFO  V(NX+1,J) 0.0
+ ND
+
+ DO I         0                        NX+1
+ RI I         I
+ RM VIJ       I         2.0
+ R* VIJ       VIJ                      HX 
+ RA VIJ       VIJ       -1.0
+ R* VIJ       VIJ                      VIJ
+ R- VIJ       ONE                      VIJ
+ ZX MINSURFO  V(I,0)                   VIJ
+ ZX MINSURFO  V(I,NY+1)                VIJ
+ ND
+
+START POINT
+
+*  let {i in 0..nx+1,j in 0..ny+1} v[i,j]:= 1 - (2*i*hx-1)^2
+
+ DO I         0                        NX+1
+ RI I         I
+ RM VIJ       I         2.0
+ R* VIJ       VIJ                      HX 
+ RA VIJ       VIJ       -1.0
+ R* VIJ       VIJ                      VIJ
+ R- VIJ       ONE                      VIJ
+ 
+ DO J         0                        NY+1
+ Z  MINSURFO  V(I,J)                   VIJ
+ ND
+
+ELEMENT TYPE
+
+ EV ISQ       V1                       V2
+ IV ISQ       U
+
+ELEMENT USES
+
+ DO I         0                        NX
+ IA I+1       I         1
+ DO J         0                        NY
+ IA J+1       J         1
+ XT I(I,J)    ISQ
+ ZV I(I,J)    V1                       V(I+1,J)
+ ZV I(I,J)    V2                       V(I,J)
+ XT J(I,J)    ISQ
+ ZV J(I,J)    V1                       V(I,J+1)
+ ZV J(I,J)    V2                       V(I,J)
+ ND
+
+ DO J         0                        NY+1
+ IA J1        J         1
+ XT J(NX+1,J) ISQ
+ ZV J(NX+1,J) V1                       V(NX+1,J1)
+ ZV J(NX+1,J) V2                       V(NX+1,J)
+ ND
+
+ DO I         0                        NX+1
+ IA I1        I         1
+ XT I(I,NY+1) ISQ
+ ZV I(I,NY+1) V1                       V(I1,NY+1)
+ ZV I(I,NY+1) V2                       V(I,NY+1)
+ ND
+
+GROUP TYPE
+
+ GV ROOT      ALPHA
+
+GROUP USES
+
+*   Define a group for each objective term {i in 0..nx,j in 0..ny}
+*   area*(1+((v[i+1,j]-v[i,j])/hx)^2+((v[i,j+1]-v[i,j])/hy)^2)^(1/2)
+
+ DO I         0                        NX
+ DO J         0                        NY
+ XT A(I,J)    ROOT
+ ZE A(I,J)    I(I,J)                   1/HX2
+ ZE A(I,J)    J(I,J)                   1/HY2
+ ND
+
+*   Define a group for each objective term {i in 1..nx+1,j in 1..ny+1}
+*   area*(1+((v[i-1,j]-v[i,j])/hx)^2+((v[i,j-1]-v[i,j])/hy)^2)^(1/2))
+
+ DO I         1                        NX+1
+ IA I-1       I         -1
+ DO J         1                        NY+1
+ IA J-1       J         -1
+ XT B(I,J)    ROOT
+ ZE B(I,J)    I(I-1,J)                 1/HX2
+ ZE B(I,J)    J(I,J-1)                 1/HY2
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION            2.51948D+00    $ (NX=50,NY=25)
+*LO SOLUTION            2.51488D+00    $ (NX=50,NY=50)
+*LO SOLUTION            2.50568D+00    $ (NX=50,NY=75)
+*LO SOLUTION            2.50694D+00    $ (NX=50,NY=100)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MINSURFO
+
+INDIVIDUALS
+
+*   Difference squared
+
+ T  ISQ
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA
+
+****************************
+* SET UP THE GROUP ROUTINE *
+****************************
+
+GROUPS        MINSURFO
+
+TEMPORARIES
+
+ R  ROOTAL
+ M  SQRT
+
+INDIVIDUALS
+
+ T  ROOT
+ A  ROOTAL              SQRT( ALPHA )
+ F                      ROOTAL
+ G                      0.5 / ROOTAL
+ H                      - 0.25 / ROOTAL ** 3
+
+ENDATA

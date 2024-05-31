@@ -1,0 +1,145 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          PDE2
+
+*   Problem :
+*   *********
+
+*   The pde_2, _20 & _200.mod AMPL models from Hans Mittelmann 
+*   (mittelmann@asu.edu)
+*   See: http://plato.asu.edu/ftp/barrier/
+
+*   SIF input: Nick Gould, April 25th 2012
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification LLR2-AN-V-V
+
+*   the x-y discretization 
+
+*IE N                   3              $-PARAMETER
+*IE N                   299            $-PARAMETER
+ IE N                   29             $-PARAMETER     modified for S2X tests
+*IE N                   2999           $-PARAMETER     pde_2.mod value
+*IE N                   2099           $-PARAMETER     pde_20.mod value
+*IE N                   1299           $-PARAMETER     pde_200.mod value
+
+*   Other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ RE ONE                 1.0
+
+ IA N1        N         1
+ RI RN1       N1
+
+ RE A                   0.01
+ RE G                   20.0
+
+ R/ H         ONE                      RN1 
+ RM -H        H         -1.0
+ R* H2        H                        H
+ R* GH2       G                        H2
+
+ R* AH        A                        H
+ R( SQRTAH    SQRT                     AH  
+
+VARIABLES
+
+ DO I         0                        N1
+ DO J         0                        N1
+ X  X(I,J)
+ ND
+
+ DO I         1                        N
+ DO J         0                        N1
+ X  T(I,J)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ DO J         0                        N1
+ XN OBJ       T(I,J)    1.0
+ ND
+
+ DO I         1                        N
+ IA I+        I         1
+ IA I-        I         -1
+ DO J         1                        N
+ IA J+        J         1
+ IA J-        J         -1
+ XE P(I,J)    X(I,J)    4.0
+ XE P(I,J)    X(I,J+)   -1.0           X(I,J-)   -1.0
+ XE P(I,J)    X(I+,J)   -1.0           X(I-,J)   -1.0
+ ND
+
+ DO I         1                        N
+ DO J         1                        N
+ XG A(I,J)    T(I,J)    1.0
+ ZG A(I,J)    X(I,J)                   H
+ XL B(I,J)    T(I,J)    -1.0
+ ZG B(I,J)    X(I,J)                   H
+ ND
+
+ DO I         1                        N
+ XG C(I,0)    T(I,0)    1.0
+ ZG C(I,0)    X(I,0)                   SQRTAH
+ XL D(I,0)    T(I,0)    -1.0
+ ZG D(I,0)    X(I,0)                   SQRTAH
+ XG C(I,N1)   T(I,0)    1.0
+ ZG C(I,N1)   X(I,N1)                  SQRTAH
+ XL D(I,N1)   T(I,0)    -1.0
+ ZG D(I,N1)   X(I,N1)                  SQRTAH
+
+ XG E(0,I)    T(I,0)    1.0
+ ZG E(0,I)    X(0,I)                   SQRTAH
+ XL F(0,I)    T(I,0)    -1.0
+ ZG F(0,I)    X(0,I)                   SQRTAH
+ XG E(N1,I)   T(I,0)    1.0
+ ZG E(N1,I)   X(N1,I)                  SQRTAH
+ XL F(N1,I)   T(I,0)    -1.0
+ ZG F(N1,I)   X(N1,I)                  SQRTAH
+ ND
+
+RHS
+
+ DO I         1                        N
+ DO J         1                        N
+ Z  PDE2      P(I,J)                   GH2
+ ND
+
+ DO I         1                        N
+ RI RI        I
+ R* IH        RI                       H
+ RA IH-1      IH        -1.0
+ R* P         RI                       IH-1
+ RM P         P         5.0
+ DO J         1                        N
+
+ RI RJ        J
+ R* JH        RJ                       H
+ RA JH-1      JH        -1.0
+ R* YD        RJ                       JH-1
+ R* YD        YD                       P
+ RA YD        YD        3.0 
+ R* YD        YD                       H
+ RM -YD       YD        -1.0
+ Z  PDE2      A(I,J)                   YD
+ Z  PDE2      B(I,J)                   -YD
+ ND
+
+BOUNDS
+ 
+ LO PDE2      'DEFAULT' 0.0
+ UP PDE2      'DEFAULT' 3.5
+
+ DO I         1                        N
+ XU PDE2      X(I,0)    10.0
+ XU PDE2      X(I,N1)   10.0
+ XU PDE2      X(0,I)    10.0
+ XU PDE2      X(N1,I)   10.0
+ ND
+
+ENDATA

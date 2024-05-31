@@ -1,0 +1,146 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          OSCIGRNE
+
+*   Problem :
+*   *********
+
+*   The roots of the gradient of Yurii Nesterov's "oscillating path" problem
+*   Nonlinear equations version
+
+*   SIF input: Nick Gould, June 2011.
+
+*   classification NOR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   2              $-PARAMETER
+*IE N                   5              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   15             $-PARAMETER
+*IE N                   25             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   the weight factor
+
+*RE RHO                 1.0            $-PARAMETER    Nesterov's original value
+ RE RHO                 500.0          $-PARAMETER    Florian Jarre's value
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ RM 2RHO      RHO       2.0      
+ RM -4RHO     RHO       -4.0      
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ E  G1        X1        0.5
+ DO I         2                        N
+ XE G(I)
+ ND
+
+CONSTANTS
+
+    OSCIGRNE  G1        0.5
+
+BOUNDS
+
+ FR OSCIGRNE  'DEFAULT'
+
+START POINT
+
+ XV OSCIGRNE  X(1)       -2.0
+ DO I         2                        N
+ XV OSCIGRNE  X(I)       1.0
+ ND
+
+ELEMENT TYPE
+
+ EV A         U
+ EV A         V
+ EP A         P
+ EV B         U
+ EV B         V
+ EP B         P
+
+ELEMENT USES
+
+ XT B1        B
+ ZV B1        V                        X2
+ ZV B1        U                        X1
+ ZP B1        P                        -4RHO
+
+ DO I         2                        N-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ XT A(I)      A
+ ZV A(I)      V                        X(I)
+ ZV A(I)      U                        X(I-1)
+ ZP A(I)      P                        2RHO
+ XT B(I)      B
+ ZV B(I)      V                        X(I+1)
+ ZV B(I)      U                        X(I)
+ ZP B(I)      P                        -4RHO
+ ND
+
+ XT A(N)      A
+ ZV A(N)      V                        X(N)
+ ZV A(N)      U                        X(N-1)
+ ZP A(N)      P                        2RHO
+
+GROUP USES
+
+ XE G1        B1         1.0
+ DO I         2                        N-1
+ XE G(I)      A(I)       1.0           B(I)       1.0
+ ND
+ XE G(N)      A(N)       1.0
+
+OBJECT BOUND
+
+ LO OSCIGRNE             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      OSCIGRNE
+
+INDIVIDUALS
+
+ T  A
+ F                      P * ( V - 2.0 * U ** 2 + 1.0 )
+ G  V                   P
+ G  U                   - 4.0 * P * U
+ H  U         U         - 4.0 * P
+
+ T  B
+ F                      P * ( V - 2.0 * U ** 2 + 1.0 ) * U
+ G  V                   P * U
+ G  U                   P * ( V - 6.0 * U ** 2 + 1.0 )
+ H  V         U         P
+ H  U         U         - 12.0 * P * U
+
+ENDATA
+

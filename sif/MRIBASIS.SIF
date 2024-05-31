@@ -1,0 +1,411 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          MRIBASIS
+
+*   Problem:
+*   ******** 
+
+*   An optmization problem arising in the design of medical apparatus.
+
+*   Source:
+*   Contribution from a LANCELOT user.
+
+*   SIF input: Arie Quist, TU Delft (NL), 1994.
+*   Adaptation for CUTE: Ph. Toint, November 1994.
+
+*   classification LOR2-MY-36-55
+
+*   useful constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ RI R2        2
+
+*   problem data
+
+ RE k1                  22.8443
+ RE k2                  12.4402
+ RE k3                  5.23792
+ RE k4                  5.12238
+ RE k5                  6.44999
+ RE k6                  5.32383
+ RE k7                  0.58392
+ RE k8                  3.94584
+ RE k9                  -2.75584
+ RE k10                 32.0669
+ RE k11                 18.2179
+ RE k12                 31.7496
+ RE S1,1                -0.377126
+ RE S1,2                0.919679
+ RE S1,3                0.109389
+ RE S2,1                0.634857
+ RE S2,2                0.170704
+ RE S2,3                0.753536
+ RE S3,1                0.674338
+ RE S3,2                0.353624
+ RE S3,3                -0.648242
+
+*   derived constants
+
+ RM xlo1      k7        1
+ R/ k10/2     k10                      R2
+ R/ k8/2      k8                       R2
+ R- xup1      k10/2                    k8/2             
+ R+ xlo2      k10/2                    k8/2   
+ R* k13       k7                       k5  
+ R* k14       k8/2                     k6   
+ RM xup2      k12        1
+ RM -k1       k1        -1
+ RM -k2       k2        -1
+ R- k4-       k4                       k14   
+ RM -k3       k3        -1
+ RM -S1,1     S1,1      -1
+ RM -S1,2     S1,2      -1
+ RM -S1,3     S1,3      -1
+ RM -S2,1     S2,1      -1
+ RM -S2,2     S2,2      -1
+ RM -S2,3     S2,3      -1
+ RM -S3,1     S3,1      -1
+ RM -S3,2     S3,2      -1
+ RM -S3,3     S3,3      -1
+ RM 2S1,1     S1,1      2
+ RM 2S1,2     S1,2      2
+ RM 2S1,3     S1,3      2
+ RM 2S2,1     S2,1      2
+ RM 2S2,2     S2,2      2
+ RM 2S2,3     S2,3      2
+ RM 2S3,1     S3,1      2
+ RM 2S3,2     S3,2      2
+ RM 2S3,3     S3,3      2
+ RM -2S1,1    S1,1      -2
+ RM -2S1,2    S1,2      -2
+ RM -2S1,3    S1,3      -2
+ RM -2S2,1    S2,1      -2
+ RM -2S2,2    S2,2      -2
+ RM -2S2,3    S2,3      -2
+ RM -2S3,1    S3,1      -2
+ RM -2S3,2    S3,2      -2
+ RM -2S3,3    S3,3      -2
+ R* Llo1,1    S1,1                     k5  
+ R* Llo1,2    S1,2                     k5  
+ R* Llo1,3    S1,3                     k5  
+ R* Lup1,1    S1,1                     k6   
+ R* Lup1,2    S1,2                     k6   
+ R* Lup1,3    S1,3                     k6   
+ R* Llo2,1    S1,1                     k6   
+ R* Llo2,2    S1,2                     k6   
+ R* Llo2,3    S1,3                     k6   
+
+ IE 4                   4
+ IE xm                  6
+ IE Lm                  4
+ IA xm-       xm        -1
+ IA xm-2      xm        -2
+ IA Lm-       Lm        -1
+ IA Lm-2      Lm        -2
+ RE R12                 12
+ RD 1/12      R12       1
+ RM -1/12     1/12      -1
+ RI R0        0
+
+VARIABLES
+
+ DO j         1                        2
+ DO k         1                        xm
+ X  X(j,k)
+ ND
+
+ DO i         1                        3
+ DO j         1                        2
+ DO k         1                        Lm
+ X  L(i,j,k)
+ ND
+
+GROUPS
+
+* Objective
+
+ XN Object    X(2,xm)   1
+
+ DO j         1                        2
+ DO k         2                        xm-2
+ IA k+        k         1
+ XG PS(j,k)   X(j,k+)   1              X(j,k)    -1
+ OD k
+ OD j
+ XG PL        X(2,xm)   1              X(2,xm-)  -1 
+
+ DO i         1                        3
+ DO j         1                        2
+ DO k         1                        Lm-
+ IA k+        k         1
+ IM 2k        k         2
+ IA 2k-       2k        -1
+ XL SU(i,j,k) L(i,j,k+) 1              L(i,j,k)  -1
+ ZL SU(i,j,k) X(j,2k)                  -k1
+ ZL SU(i,j,k) X(j,2k-)                 k1
+ XG SL(i,j,k) L(i,j,k+) 1              L(i,j,k)  -1
+ ZG SL(i,j,k) X(j,2k)                  k1
+ ZG SL(i,j,k) X(j,2k-)                 -k1
+ ND
+
+ DO i         1                        3
+ DO k         2                        Lm-
+ ZE cc1       L(i,2,k)                 S(3,i)
+ ND
+
+ DO i         1                        3
+ ZE c2const(i)L(i,2,Lm)                k10  
+ ND
+
+ XG c3con1
+ XL c3con2
+
+ XG c4const
+
+ DO i         1                        3
+ XE c5con(i)
+ ND
+ DO i         1                        2
+ XE c6cn(i)
+ ND
+
+CONSTANTS
+
+ R* Opmr1     k3                       S2,1
+ R* Opmr2     k3                       S2,2
+ R* Opmr3     k3                       S2,3
+
+ DO i         1                        3
+ Z  MRIBASIS  c2const(i)               Opmr(i)
+ ND
+
+ Z  MRIBASIS  c3con1                   k4-   
+ Z  MRIBASIS  c3con2                   k13  
+ Z  MRIBASIS  c5con1                   k13  
+ Z  MRIBASIS  c5con2                   -k3     
+ Z  MRIBASIS  c5con3                   k9      
+
+BOUNDS
+
+ DO j         1                        2
+ DO k         2                        xm-
+ ZL MRIBASIS  X(j,k)                   xlo(j)
+ ZU MRIBASIS  X(j,k)                   xup(j)
+ OD k
+ ZX MRIBASIS  X(j,1)                   xlo(j)
+ OD j
+
+ ZX MRIBASIS  X(1,xm)                  xup1
+ ZL MRIBASIS  X(2,xm)                  k11  
+ ZU MRIBASIS  X(2,xm)                  k12  
+
+ DO i         1                        3
+ DO j         1                        2
+ DO k         2                        Lm-
+ ZL MRIBASIS  L(i,j,k)                 -k2
+ ZU MRIBASIS  L(i,j,k)                 k2
+ OD k
+ ZX MRIBASIS  L(i,j,1)                 Llo(j,i)
+ OD j
+ ZX MRIBASIS  L(i,1,Lm)                Lup(1,i)
+ ZL MRIBASIS  L(i,2,Lm)                -k2
+ ZU MRIBASIS  L(i,2,Lm)                k2
+ OD i
+
+START POINT
+
+ R- intlen1   xup1                     xlo1
+ RI Rxm-      xm-
+ R/ dx1       intlen1                  Rxm-
+ R- intlen2   k11                      xlo2
+ R/ dx2       intlen2                  Rxm-
+
+ DO k         1                        xm-
+ RI Rk        k
+ R* dist1     dx1                      Rk
+ R+ strtv1    xlo1                     dist1
+ R* dist2     dx2                      Rk
+ R+ strtv2    xlo2                     dist2
+ IA k+        k         1
+ ZV           X(1,k+)                  strtv1
+ ZV           X(2,k+)                  strtv2
+ ND
+
+ELEMENT TYPE
+
+* element (L_(i+1) + L_i)(x_(i+1) - x_i)/2
+
+ EV uv1       v1                       v2
+ EV uv1       v3                       v4
+ IV uv1       u1                       u2
+ EV uv2       v1                       v2
+ EV uv2       v3
+ IV uv2       u1                       u2
+ EV uvw1      v1                       v2
+ EV uvw1      v3
+ EP uvw1      p1
+
+* c2const constraint element
+
+ EV mo        s1                       s2
+
+ELEMENT USES
+
+ DO i         1                        3
+ DO j         1                        2
+ DO k         1                        Lm-
+ IM 2k        k         2
+ IA k+        k         1
+ IA 2k-       2k        -1
+ XT e1(i,j,k) uv1
+ ZV e1(i,j,k) v1                       X(j,2k)
+ ZV e1(i,j,k) v2                       X(j,2k-)
+ ZV e1(i,j,k) v3                       L(i,j,k+)
+ ZV e1(i,j,k) v4                       L(i,j,k)
+
+ XT e3(i,j,k) uvw1
+ ZV e3(i,j,k) v1                       L(i,j,k)
+ ZV e3(i,j,k) v2                       X(j,2k)
+ ZV e3(i,j,k) v3                       X(j,2k-)
+ ZP e3(i,j,k) p1                       1/12
+
+ XT e5(i,j,k) uvw1
+ ZV e5(i,j,k) v1                       L(i,j,k+)
+ ZV e5(i,j,k) v2                       X(j,2k)
+ ZV e5(i,j,k) v3                       X(j,2k-)
+ ZP e5(i,j,k) p1                       -1/12
+ OD k
+
+ DO k         1                        Lm-2
+ IM 2k        k         2
+ IA k+        k         1
+ IA 2k+       2k        1
+
+ XT e2(i,j,k) uv2
+ ZV e2(i,j,k) v1                       X(j,2k+)
+ ZV e2(i,j,k) v2                       X(j,2k)
+ ZV e2(i,j,k) v3                       L(i,j,k+)
+
+ XT e4(i,j,k) uvw1
+ ZV e4(i,j,k) v1                       L(i,j,k+)
+ ZV e4(i,j,k) v2                       X(j,2k+)
+ ZV e4(i,j,k) v3                       X(j,2k)
+ ZP e4(i,j,k) p1                       R0
+ OD k
+
+ ND
+
+ DO i         1                        3
+ XT factr(i)  mo
+ ZV factr(i)  s1                       X(2,xm)
+ ZV factr(i)  s2                       L(i,2,Lm)
+ OD i
+
+GROUP USES
+
+ DO i         1                        3
+ XE c2const(i)factr(i)
+ ND
+
+ DO j         1                        2
+ DO i         1                        3
+ DO k         1                        Lm-
+ ZE c3con(j)  e1(i,2,k)                S(1,i)
+ OD k
+ DO k         1                        Lm-2
+ ZE c3con(j)  e2(i,2,k)                S(1,i)
+ ND
+
+ DO i         1                        3
+ DO k         1                        Lm-
+ ZE c4const   e1(i,2,k)                S(2,i)
+ OD k
+ DO k         1                        Lm-2
+ ZE c4const   e2(i,2,k)                S(2,i)
+ ND
+
+ DO j         1                        3
+ DO i         1                        3
+ DO k         1                        Lm-
+ ZE c5con(j)  e1(i,1,k)                -S(j,i)
+ ZE c5con(j)  e1(i,2,k)                S(j,i)
+ OD k
+ DO k         1                        Lm-2
+ ZE c5con(j)  e2(i,1,k)                -S(j,i)
+ ZE c5con(j)  e2(i,2,k)                S(j,i)
+ ND
+
+ DO j         1                        2
+ DO i         1                        3
+ DO k         1                        Lm-
+ ZE c6cn(j)   e3(i,1,k)                S(j,i)
+ ZE c6cn(j)   e5(i,1,k)                S(j,i)
+ ZE c6cn(j)   e3(i,2,k)                -S(j,i)
+ ZE c6cn(j)   e5(i,2,k)                -S(j,i)
+ OD k
+ DO k         1                        Lm-2
+ ZE c6cn(j)   e4(i,1,k)                2S(j,i)
+ ZE c6cn(j)   e4(i,2,k)                -2S(j,i)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               18.2179000000
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      MRIBASIS
+
+TEMPORARIES
+
+ R  d14
+
+INDIVIDUALS
+
+ T  uv1
+ R  u1        v1        1              v2        -1
+ R  u2        v3        1              v4        1
+ F                      0.5d0 * u1 * u2
+ G  u1                  0.5d0 * u2
+ G  u2                  0.5d0 * u1
+ H  u1        u2        0.5d0
+
+ T  uv2
+ R  u1        v1        1              v2        -1
+ R  u2        v3        1
+ F                      u1 * u2
+ G  u1                  u2
+ G  u2                  u1
+ H  u1        u2        1.0d0
+
+ T  uvw1
+ A  d14                 0.25d0
+ F                      v1*(v2-v3)*((d14+p1)*v2+(d14-p1)*v3)
+ G  v1                  (v2-v3)*((d14+p1)*v2+(d14-p1)*v3)
+ G  v2                  v1 * 2.0d0 * ( v2*(d14+p1) - p1*v3 )
+ G  v3                  v1 * 2.0d0 * ( -v3*(d14-p1) - p1*v2 )
+ H  v1        v2        2.0d0 * ( v2*(d14+p1) - p1*v3 )
+ H  v1        v3        2.0d0 * (-v3*(d14-p1) - p1*v2 )
+ H  v2        v2         v1 * 2.0d0 * ( d14 + p1 )
+ H  v2        v3        -v1 * 2.0d0 * p1
+ H  v3        v3        -v1 * 2.0d0 * ( d14 - p1 )
+
+ T  mo
+ F                      - s2 * s1
+ G  s1                  - s2
+ G  s2                  - s1
+ H  s1        s2        - 1.0d0
+
+ENDATA

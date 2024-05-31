@@ -1,0 +1,97 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          POWELLSQ
+
+*   Problem :
+*   *********
+
+*   Source:
+*   M.J.D. Powell,
+*   " A hybrid method for nonlinear equations",
+*   In P. Rabinowitz(ed.) "Numerical Methods for Nonlinear Algebraic
+*   Equations", Gordon and Breach, 1970.
+
+*   See also Buckley#217 (p.84.)
+
+*   classification NOR2-AN-2-2
+
+*   SIF input: Ph. Toint, Dec 1989, correction November 2002.
+*              NIMG corrected July 2005 (thanks to Roger Fletcher)
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ E  G1
+ E  G2
+
+BOUNDS
+
+ FR POWELLSQ  'DEFAULT'
+
+START POINT
+
+    POWELLSQ  X1        3.0
+    POWELLSQ  X2        1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV A         X
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        X                        X1
+
+ T  E2        A
+ V  E2        X                        X1
+
+ T  E3        SQ
+ V  E3        X                        X2
+
+GROUP USES
+
+ E  G1        E1
+ E  G2        E2                       E3        2.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      POWELLSQ
+
+TEMPORARIES
+
+ R  DEN
+ R  DEN2
+ R  XDEN
+
+INDIVIDUALS
+
+*   Weighted square
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*   Type A
+
+ T  A
+ A  DEN                 X + 0.1
+ A  DEN2                DEN * DEN
+ A  XDEN                X / DEN
+ F                      10.0 * XDEN
+ G  X                   1.0 / DEN2
+ H  X         X         - 2.0 / ( DEN2 * DEN )
+
+ENDATA
