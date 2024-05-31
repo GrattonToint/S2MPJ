@@ -1,0 +1,183 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EIGENA2
+
+*   Problem :
+*   --------
+
+*   Solving symmetric eigenvalue problems as systems of
+*   nonlinear equations.
+
+*   The problem is, given a symmetric matrix A, to find an orthogonal
+*   matrix Q and diagonal matrix D such that A Q(T) = Q(T) D.
+
+*   Example A: a diagonal matrix with eigenvales 1, .... , N.
+
+*   Source:  An idea by Nick Gould
+
+*               Constrained optimization version 2.
+
+*   SIF input: Nick Gould, Nov 1992.
+
+*   classification QQR2-AN-V-V
+
+*   The dimension of the matrix.
+
+*IE N                   2              $-PARAMETER
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+ IE N                   2              $-PARAMETER     modified for S2X tests
+*IE N                   100            $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+
+*   Define the whole matrix.
+
+ DO J         1                        N
+ DO I         1                        N
+ AE A(I,J)              0.0
+ OD I
+ RI RJ        J
+ A= A(J,J)    RJ
+ OD J
+
+VARIABLES
+
+ DO J         1                        N
+
+*  Define the eigenvalues
+
+ X  D(J)
+
+ DO I         1                        N
+
+*  Define the eigenvectors
+
+ X  Q(I,J)
+
+ ND
+
+GROUPS
+
+ DO J         1                        N
+ DO I         1                        J
+
+*  Introduce the orthogonality-equations Q(T) Q - I = 0.
+
+ ZE O(I,J)
+
+ OD I
+
+*  Introduce the eigen-equations Q(T) D - A Q(T) = 0.
+
+ DO I         1                        N
+ DO K         1                        N
+ AM -AIK      A(I,K)    -1.0
+ ZN E(I,J)    Q(J,K)                   -AIK
+
+ ND
+
+CONSTANTS
+
+ DO J         1                        N
+ X  EIGENA2   O(J,J)    1.0
+ ND
+
+BOUNDS
+
+ FR EIGENA2   'DEFAULT'
+
+START POINT
+
+ XV EIGENA2   'DEFAULT' 0.0
+
+ DO J         1                        N
+ RI RJ        J
+*ZV EIGENA2   D(J)                     RJ
+ XV EIGENA2   D(J)      1.0
+ XV EIGENA2   Q(J,J)    1.0
+ ND
+
+ELEMENT TYPE
+
+ EV 2PROD     Q1                       Q2
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PROD
+
+ DO J         1                        N
+ DO I         1                        N
+
+ ZV E(I,J)    Q1                       Q(J,I)
+ ZV E(I,J)    Q2                       D(J)
+
+ OD I
+ DO I         1                        J
+ DO K         1                        N
+
+ ZV O(I,J,K)  Q1                       Q(K,I)
+ ZV O(I,J,K)  Q2                       Q(K,J)
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO J         1                        N
+ DO I         1                        N
+
+ XT E(I,J)    L2
+ XE E(I,J)    E(I,J)
+
+ OD I
+
+ DO I         1                        J
+ DO K         1                        N
+ XE O(I,J)    O(I,J,K)
+
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EIGENA2
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      Q1 * Q2
+ G  Q1                       Q2
+ G  Q2                  Q1
+ H  Q1        Q2        1.0D+0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        EIGENA2
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0D+0
+
+ENDATA
+
+

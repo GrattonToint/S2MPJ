@@ -1,0 +1,114 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HATFLDH
+
+*   Problem :
+*   *********
+
+*   A test problem from the OPTIMA user manual.
+*   This is a nonlinear objective with
+*   linear constraints.
+
+*   Source:
+*   "The OPTIMA user manual (issue No.8, p. 91)",
+*   Numerical Optimization Centre, Hatfield Polytechnic (UK), 1989.
+
+*   SIF input: Ph. Toint, May 1990.
+
+*   classification QLR2-AN-4-7
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+
+GROUPS
+
+ N  OBJ
+
+ G  C1        X1        1.0            X2        1.0
+ G  C2        X1        1.0            X3        1.0
+ G  C3        X1        1.0            X4        1.0
+ G  C4        X2        1.0            X3        1.0
+ G  C5        X2        1.0            X4        1.0
+ G  C6        X3        1.0            X4        1.0
+ G  C7        X1        1.0            X2        1.0
+ G  C7        X3        1.0            X4        1.0
+
+CONSTANTS
+
+    HATFLDH   C1        2.5
+    HATFLDH   C2        2.5
+    HATFLDH   C3        2.5
+    HATFLDH   C4        2.0
+    HATFLDH   C5        2.0
+    HATFLDH   C6        1.5
+    HATFLDH   C7        5.0
+
+RANGES
+
+    HATFLDH   C1        5.0
+    HATFLDH   C2        5.0
+    HATFLDH   C3        5.0
+    HATFLDH   C4        5.0
+    HATFLDH   C5        5.0
+    HATFLDH   C6        5.0
+
+BOUNDS
+
+ XU HATFLDH   'DEFAULT' 5.0
+
+START POINT
+
+    HATFLDH   X1        1.0
+    HATFLDH   X2        5.0
+    HATFLDH   X3        5.0
+    HATFLDH   X4        1.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  A1        2PR
+ V  A1        X                        X1
+ V  A1        Y                        X3
+
+ T  A2        2PR
+
+ V  A2        X                        X2
+ V  A2        Y                        X4
+
+GROUP USES
+
+ E  OBJ       A1        -1.0           A2        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -24.4999998
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HATFLDH
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

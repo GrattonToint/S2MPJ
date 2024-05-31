@@ -1,0 +1,393 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBI
+
+*   Problem :
+*   *********
+
+*   An unpleasant weapon assignment problem by Bracken and McCormick.
+
+*   The real problem has integer variables.
+*   Also, the sign of ci have been reversed in order to have a
+*   meaningful constraints on the total number of weapons (a fully
+*   desirable situation).
+
+*   Source: problem 23 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+*   SIF input: Ph. Toint, March 1991.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification OLR2-MN-100-12
+
+*   Number of variables
+
+ IE N                   100
+
+*   Number of targets
+
+ IE NT                  20
+
+*   Probability that weapon i will damage target j
+
+ RE A1,1                1.0
+ RE A2,1                0.84
+ RE A3,1                0.96
+ RE A4,1                1.0
+ RE A5,1                0.92
+
+
+ RE A1,2                0.95
+ RE A2,2                0.83
+ RE A3,2                0.95
+ RE A4,2                1.0
+ RE A5,2                0.94
+
+ RE A1,3                1.0
+ RE A2,3                0.85
+ RE A3,3                0.95
+ RE A4,3                1.0
+ RE A5,3                0.92
+
+ RE A1,4                1.0
+ RE A2,4                0.84
+ RE A3,4                0.96
+ RE A4,4                1.0
+ RE A5,4                0.95
+
+ RE A1,5                1.0
+ RE A2,5                0.85
+ RE A3,5                0.96
+ RE A4,5                1.0
+ RE A5,5                0.95
+
+ RE A1,6                0.85
+ RE A2,6                0.81
+ RE A3,6                0.90
+ RE A4,6                1.0
+ RE A5,6                0.98
+
+ RE A1,7                0.90
+ RE A2,7                0.81
+ RE A3,7                0.92
+ RE A4,7                1.0
+ RE A5,7                0.98
+
+ RE A1,8                0.85
+ RE A2,8                0.82
+ RE A3,8                0.91
+ RE A4,8                1.0
+ RE A5,8                1.0
+
+ RE A1,9                0.80
+ RE A2,9                0.80
+ RE A3,9                0.92
+ RE A4,9                1.0
+ RE A5,9                1.0
+
+ RE A1,10               1.0
+ RE A2,10               0.86
+ RE A3,10               0.95
+ RE A4,10               0.96
+ RE A5,10               0.90
+
+ RE A1,11               1.0
+ RE A2,11               1.0
+ RE A3,11               0.99
+ RE A4,11               0.91
+ RE A5,11               0.95
+
+ RE A1,12               1.0
+ RE A2,12               0.98
+ RE A3,12               0.98
+ RE A4,12               0.92
+ RE A5,12               0.96
+
+ RE A1,13               1.0
+ RE A2,13               1.0
+ RE A3,13               0.99
+ RE A4,13               0.91
+ RE A5,13               0.91
+
+ RE A1,14               1.0
+ RE A2,14               0.88
+ RE A3,14               0.98
+ RE A4,14               0.92
+ RE A5,14               0.98
+
+ RE A1,15               1.0
+ RE A2,15               0.87
+ RE A3,15               0.97
+ RE A4,15               0.98
+ RE A5,15               0.99
+
+ RE A1,16               1.0
+ RE A2,16               0.88
+ RE A3,16               0.98
+ RE A4,16               0.93
+ RE A5,16               0.99
+
+ RE A1,17               1.0
+ RE A2,17               0.85
+ RE A3,17               0.95
+ RE A4,17               1.0
+ RE A5,17               1.0
+
+ RE A1,18               0.95
+ RE A2,18               0.84
+ RE A3,18               0.92
+ RE A4,18               1.0
+ RE A5,18               1.0
+
+ RE A1,19               1.0
+ RE A2,19               0.85
+ RE A3,19               0.93
+ RE A4,19               1.0
+ RE A5,19               1.0
+
+ RE A1,20               1.0
+ RE A2,20               0.85
+ RE A3,20               0.92
+ RE A4,20               1.0
+ RE A5,20               1.0
+
+*   Minimum number of weapons assigned to target j
+
+ RE B1                  30.0
+ RE B6                  100.0
+ RE B10                 40.0
+ RE B14                 50.0
+ RE B15                 70.0
+ RE B16                 35.0
+ RE B20                 10.0
+
+*   Military value (???) of target j
+
+ RE U1                  60.
+ RE U2                  50.
+ RE U3                  50.
+ RE U4                  75.
+ RE U5                  40.
+ RE U6                  60.
+ RE U7                  35.
+ RE U8                  30.
+ RE U9                  25.
+ RE U10                 150.
+ RE U11                 30.
+ RE U12                 45.
+ RE U13                 125.
+ RE U14                 200.
+ RE U15                 200.
+ RE U16                 130.
+ RE U17                 100.
+ RE U18                 100.
+ RE U19                 100.
+ RE U20                 150.
+
+*   Number of available weapons of type i
+
+ RE C1                  200.0
+ RE C2                  100.0
+ RE C3                  300.0
+ RE C4                  150.0
+ RE C5                  250.0
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+
+*   Total number of weapons
+
+ RE NW                  0.0
+ DO I         1                        5
+ A+ NW        NW                       C(I)
+ ND
+
+VARIABLES
+
+ DO J         1                        NT
+ DO I         1                        5
+ X  X(I,J)
+ ND
+
+GROUPS
+
+ DO J         1                        NT
+ XN P(J)
+ AD 1/UJ      U(J)      1.0
+ ZN P(J)      'SCALE'                  1/UJ
+ OD J
+
+ IE J                   1
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ IE J                   6
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ IE J                   10
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ IE J                   14
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ IE J                   15
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ IE J                   16
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ IE J                   20
+ DO I         1                        5
+ XG CB(J)     X(I,J)    1.0
+ ND
+
+ DO I         1                        5
+ DO J         1                        NT
+ XL CC(I)     X(I,J)    1.0
+ ND
+
+CONSTANTS
+
+ DO J         1                        NT
+ X  HIMMELBI  P(J)      1.0
+ ND
+
+ IE J                   1
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ IE J                   6
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ IE J                   10
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ IE J                   14
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ IE J                   15
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ IE J                   16
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ IE J                   20
+ Z  HIMMELBI  CB(J)                    B(J)
+
+ DO I         1                        5
+ Z  HIMMELBI  CC(I)                    C(I)
+ ND
+
+
+BOUNDS
+
+ ZU HIMMELBI  'DEFAULT'                NW
+
+ELEMENT TYPE
+
+ EV 5PEXP     Y1                       Y2
+ EV 5PEXP     Y3                       Y4
+ EV 5PEXP     Y5
+ EP 5PEXP     A1                       A2
+ EP 5PEXP     A3                       A4
+ EP 5PEXP     A5
+
+ELEMENT USES
+
+ DO J         1                        NT
+ XT PP(J)     5PEXP
+ ZV PP(J)     Y1                       X(1,J)
+ ZV PP(J)     Y2                       X(2,J)
+ ZV PP(J)     Y3                       X(3,J)
+ ZV PP(J)     Y4                       X(4,J)
+ ZV PP(J)     Y5                       X(5,J)
+ ZP PP(J)     A1                       A(1,J)
+ ZP PP(J)     A2                       A(2,J)
+ ZP PP(J)     A3                       A(3,J)
+ ZP PP(J)     A4                       A(4,J)
+ ZP PP(J)     A5                       A(5,J)
+ ND
+
+GROUP USES
+
+ DO J         1                        NT
+ XE P(J)      PP(J)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1735.56958
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBI
+
+TEMPORARIES
+
+ R  LA1
+ R  LA2
+ R  LA3
+ R  LA4
+ R  LA5
+ R  FF
+ M  LOG
+
+INDIVIDUALS
+
+ T  5PEXP
+ A  LA1                 LOG( A1 )
+ A  LA2                 LOG( A2 )
+ A  LA3                 LOG( A3 )
+ A  LA4                 LOG( A4 )
+ A  LA5                 LOG( A5 )
+ A  FF                  A1**Y1 * A2**Y2 * A3**Y3 * A4**Y4 *A5**Y5
+ F                      FF
+ G  Y1                  LA1 * FF
+ G  Y2                  LA2 * FF
+ G  Y3                  LA3 * FF
+ G  Y4                  LA4 * FF
+ G  Y5                  LA5 * FF
+ H  Y1        Y1        LA1 * LA1 * FF
+ H  Y1        Y2        LA1 * LA2 * FF
+ H  Y1        Y3        LA1 * LA3 * FF
+ H  Y1        Y4        LA1 * LA4 * FF
+ H  Y1        Y5        LA1 * LA5 * FF
+ H  Y2        Y2        LA2 * LA2 * FF
+ H  Y2        Y3        LA2 * LA3 * FF
+ H  Y2        Y4        LA2 * LA4 * FF
+ H  Y2        Y5        LA2 * LA5 * FF
+ H  Y3        Y3        LA3 * LA3 * FF
+ H  Y3        Y4        LA3 * LA4 * FF
+ H  Y3        Y5        LA3 * LA5 * FF
+ H  Y4        Y4        LA4 * LA4 * FF
+ H  Y4        Y5        LA4 * LA5 * FF
+ H  Y5        Y5        LA5 * LA5 * FF
+
+ENDATA

@@ -1,0 +1,256 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS119
+
+*   Problem :
+*   *********
+
+*   Source: problem 119 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   Original Source: problem 7 in
+*   A.R. Colville
+*   "A comparative study on nonlinear programming"
+*   IBM Scientific Center Report 320-2949, New York, 1968.
+
+*   SIF input: A.R. Conn, March 1991.
+
+*   classification OLR2-AN-16-8
+
+*   Set useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+ IE 15                  15
+ IE 16                  16
+
+
+ DO I         1                        16
+ DO J         1                        16
+ AE A(I,J)              0.0
+ ND
+ DO I         1                        8
+ DO J         1                        16
+ AE B(I,J)              0.0
+ ND
+ DO I         1                        16
+ AE A(I,I)              1.0
+ ND
+ AE A(1,4)              1.0
+ AE A(1,7)              1.0
+ AE A(1,8)              1.0
+ AE A(1,16)             1.0
+ AE A(2,3)              1.0
+ AE A(2,7)              1.0
+ AE A(2,10)             1.0
+ AE A(3,7)              1.0
+ AE A(3,9)              1.0
+ AE A(3,10)             1.0
+ AE A(3,14)             1.0
+ AE A(4,7)              1.0
+ AE A(4,11)             1.0
+ AE A(4,15)             1.0
+ AE A(5,6)              1.0
+ AE A(5,10)             1.0
+ AE A(5,12)             1.0
+ AE A(5,16)             1.0
+ AE A(6,8)              1.0
+ AE A(6,15)             1.0
+ AE A(7,11)             1.0
+ AE A(7,13)             1.0
+ AE A(8,10)             1.0
+ AE A(8,15)             1.0
+ AE A(9,12)             1.0
+ AE A(9,16)             1.0
+ AE A(10,14)            1.0
+ AE A(11,13)            1.0
+ AE A(12,14)            1.0
+ AE A(13,14)            1.0
+ AE B(1,1)              0.22
+ AE B(2,1)              -1.46
+ AE B(3,1)              1.29
+ AE B(4,1)              -1.10
+ AE B(7,1)              1.12
+ AE B(1,2)              0.20
+ AE B(3,2)              -0.89
+ AE B(4,2)              -1.06
+ AE B(6,2)              -1.72
+ AE B(8,2)              0.45
+ AE B(1,3)              0.19
+ AE B(2,3)              -1.30
+ AE B(4,3)              0.95
+ AE B(6,3)              -0.33
+ AE B(8,3)              0.26
+ AE B(1,4)              0.25
+ AE B(2,4)              1.82
+ AE B(4,4)              -0.54
+ AE B(5,4)              -1.43
+ AE B(7,4)              0.31
+ AE B(8,4)              -1.10
+ AE B(1,5)              0.15
+ AE B(2,5)              -1.15
+ AE B(3,5)              -1.16
+ AE B(5,5)              1.51
+ AE B(6,5)              1.62
+ AE B(8,5)              0.58
+ AE B(1,6)              0.11
+ AE B(3,6)              -0.96
+ AE B(4,6)              -1.78
+ AE B(5,6)              0.59
+ AE B(6,6)              1.24
+ AE B(1,7)              0.12
+ AE B(2,7)              0.80
+ AE B(4,7)              -0.41
+ AE B(5,7)              -0.33
+ AE B(6,7)              0.21
+ AE B(7,7)              1.12
+ AE B(8,7)              -1.03
+ AE B(1,8)              0.13
+ AE B(3,8)              -0.49
+ AE B(5,8)              -0.43
+ AE B(6,8)              -0.26
+ AE B(8,8)              0.10
+ AE B(1,9)              1.00
+ AE B(7,9)              -0.36
+ AE B(2,10)             1.00
+ AE B(3,11)             1.00
+ AE B(4,12)             1.00
+ AE B(5,13)             1.00
+ AE B(6,14)             1.00
+ AE B(7,15)             1.00
+ AE B(8,16)             1.00
+ AE C(1)                2.5
+ AE C(2)                1.1
+ AE C(3)                -3.1
+ AE C(4)                -3.5
+ AE C(5)                1.3
+ AE C(6)                2.1
+ AE C(7)                2.3
+ AE C(8)                -1.5
+
+VARIABLES
+
+ DO I         1                        16
+
+ X  X(I)
+
+ ND
+
+GROUPS
+
+*   Objective function
+
+
+ DO I         1                        16
+
+ ZN OG(I)
+
+ ND
+
+*   Constraint functions
+
+
+ DO I         1                        8
+ DO J         1                        16
+
+ ZE G(I)      X(J)                     B(I,J)
+
+ ND
+
+CONSTANTS
+
+ DO I         1                        8
+
+ Z  HS119     G(I)                     C(I)
+
+ ND
+
+BOUNDS
+
+*   All variables are in [0,5]
+
+ UP HS119     'DEFAULT' 5.0
+
+START POINT
+
+*   Default value for starting point is 10.0
+
+ V  HS119     'DEFAULT' 10.0
+
+
+ELEMENT TYPE
+
+ EV PROD      U1                       U2
+ EP PROD      AIJ
+
+ELEMENT USES
+
+ T  'DEFAULT' PROD
+
+ DO I         1                        16
+ DO J         1                        16
+
+ ZV S(I,J)    U1                       X(I)
+ ZV S(I,J)    U2                       X(J)
+ ZP S(I,J)    AIJ                      A(I,J)
+
+ ND
+
+GROUP USES
+
+ DO I         1                        16
+
+ DO J         1                        16
+
+ XE OG(I)     S(I,J)
+
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS119
+
+TEMPORARIES
+
+ R  FIRST
+ R  SECOND
+ R  TU1P1
+ R  TU2P1
+
+INDIVIDUALS
+
+ T  PROD
+ A  TU1P1               2.0 * U1 + 1
+ A  TU2P1               2.0 * U2 + 1
+ A  FIRST               U1**2 + U1 + 1.0
+ A  SECOND              U2**2 + U2 + 1.0
+ F                      AIJ * FIRST * SECOND
+ G  U1                  AIJ *  TU1P1 * SECOND
+ G  U2                  AIJ *  TU2P1 * FIRST
+ H  U1        U1        AIJ * 2.0 * SECOND
+ H  U1        U2        AIJ *  TU1P1 * TU2P1
+ H  U2        U2        AIJ * 2.0 * FIRST
+
+ENDATA

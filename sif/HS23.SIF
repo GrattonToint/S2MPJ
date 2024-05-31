@@ -1,0 +1,97 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS23
+
+*   Problem :
+*   *********
+
+*   Source: problem 23 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification QQR2-AN-2-5
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ G  CON1      X1        1.0            X2        1.0
+ G  CON2
+ G  CON3
+ G  CON4      X2        -1.0
+ G  CON5      X1        -1.0
+
+CONSTANTS
+
+    HS23      CON1      1.0
+    HS23      CON2      1.0
+    HS23      CON3      9.0
+
+BOUNDS
+
+ XL HS23      'DEFAULT' -50.0
+ XU HS23      'DEFAULT' 50.0
+
+START POINT
+
+    HS23      X1        3.0
+    HS23      X2        1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+*E  CON1
+ E  CON2      E1                       E2
+ E  CON3      E1        9.0            E2
+ E  CON4      E1
+ E  CON5      E2
+
+
+OBJECT BOUND
+
+ LO HS23                0.0
+
+*   Solution
+
+*LO SOLTN               2.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS23
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

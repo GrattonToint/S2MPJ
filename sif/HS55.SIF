@@ -1,0 +1,113 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS55
+
+*   Problem :
+*   *********
+
+*   Source: problem 55 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OLR2-AN-6-6
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   6
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        1.0            X2        2.0
+ N  OBJ       X5        4.0
+
+ E  CON1      X1        1.0            X2        2.0
+ E  CON1      X5        5.0
+ E  CON2      X1        1.0            X2        1.0
+ E  CON2      X3        1.0
+ E  CON3      X4        1.0            X5        1.0
+ E  CON3      X6        1.0
+ E  CON4      X1        1.0            X4        1.0
+ E  CON5      X2        1.0            X5        1.0
+ E  CON6      X3        1.0            X6        1.0
+
+CONSTANTS
+
+    HS55      CON1      6.0
+    HS55      CON2      3.0
+    HS55      CON3      2.0
+    HS55      CON4      1.0
+    HS55      CON5      2.0
+    HS55      CON6      2.0
+
+BOUNDS
+
+ UP HS55      X1        1.0
+ UP HS55      X4        1.0
+
+START POINT
+
+ XV HS55      'DEFAULT' 0.0
+    HS55      X1        1.0
+    HS55      X2        2.0
+    HS55      X6        2.0
+
+ELEMENT TYPE
+
+ EV EPROD     V1                       V2
+
+ELEMENT USES
+
+ T  E1        EPROD
+ V  E1        V1                       X1
+ V  E1        V2                       X4
+
+GROUP USES
+
+ E  OBJ       E1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                6.66666666
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS55
+
+TEMPORARIES
+
+ R  PROD
+ M  EXP
+
+INDIVIDUALS
+
+ T  EPROD
+ A  PROD                EXP(V1 * V2)
+ F                      PROD
+ G  V1                  V2*PROD
+ G  V2                  V1*PROD
+ H  V1        V1        V2*V2*PROD
+ H  V1        V2        PROD + V1*V2*PROD
+ H  V2        V2        V1*V1*PROD
+
+ENDATA

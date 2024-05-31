@@ -1,0 +1,112 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS14
+
+*   Problem :
+*   *********
+
+*   Source: problem 14 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification SQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ G  CON1
+ E  CON2      X1        1.0            X2        -2.0
+
+CONSTANTS
+
+    HS14      CON1      -1.0
+    HS14      CON2      -1.0
+
+BOUNDS
+
+ FR HS14      'DEFAULT'
+
+START POINT
+
+    HS14      X1        2.0
+    HS14      X2        2.0
+
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV SQ-2      V1
+ EV SQ-1      V1
+
+ELEMENT USES
+
+ T  E1        SQ-2
+ V  E1        V1                       X1
+
+ T  E2        SQ-1
+ V  E2        V1                       X2
+
+ T  E3        SQ
+ V  E3        V1                       X1
+
+ T  E4        SQ
+ V  E4        V1                       X2
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  CON1      E3        -0.25          E4        -1.0
+
+OBJECT BOUND
+
+ LO HS14                0.0
+
+*   Solution
+
+*LO SOLTN               1.42322464
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS14
+
+TEMPORARIES
+
+ R  V1M2
+ R  V1M1
+
+INDIVIDUALS
+
+ T  SQ-2
+ A  V1M2                 V1 - 2.0
+ F                      (V1M2)**2
+ G  V1                  2.0*(V1M2)
+ H  V1        V1        2.0
+ T  SQ-1
+ A  V1M1                 V1 - 1.0
+ F                      (V1M1)**2
+ G  V1                  2.0*(V1M1)
+ H  V1        V1        2.0
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

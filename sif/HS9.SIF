@@ -1,0 +1,88 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS9
+
+*   Problem :
+*   *********
+
+*   Source: problem 9 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification OLR2-AN-2-1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        4.0            X2        -3.0
+
+BOUNDS
+
+ FR HS9       'DEFAULT'
+
+START POINT
+
+ XV HS9       'DEFAULT' 0.0
+
+ELEMENT TYPE
+
+ EV SNCS      V1                       V2
+
+ELEMENT USES
+
+ T  E1        SNCS
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+GROUP USES
+
+ E  OBJ       E1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -0.5
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS9
+
+TEMPORARIES
+
+ R  PI
+
+INDIVIDUALS
+
+ T  SNCS
+ A  PI                  4.0D0*ATAN(1.0D0)
+ F                      SIN(PI*V1/12.0D0)*COS(PI*V2/16.0D0)
+ G  V1                  COS(PI*V1/12.0D0)*COS(PI*V2/16.0D0)
+ G+                     *PI/12.0D0
+ G  V2                  -SIN(PI*V1/12.0D0)*SIN(PI*V2/16.0D0)
+ G+                     *PI/16.0D0
+ H  V1        V1        -SIN(PI*V1/12.0D0)*COS(PI*V2/16.0D0)*
+ H+                     PI*PI/144.0D0
+ H  V2        V2        -SIN(PI*V1/12.0D0)*COS(PI*V2/16.0D0)*
+ H+                     PI*PI/256.0D0
+ H  V1        V2        -COS(PI*V1/12.0D0)*SIN(PI*V2/16.0D0)*
+ H+                     PI*PI/192.0D0
+
+ENDATA

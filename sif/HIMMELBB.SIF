@@ -1,0 +1,123 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBB
+
+*   Problem :
+*   *********
+
+*   A 2 variables problem by Himmelblau.
+
+*   Source: problem 27 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+
+*   See Buckley#77 (p. 62)
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OUR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G
+
+BOUNDS
+
+ FR HIMMELBB  'DEFAULT'
+
+START POINT
+
+    HIMMELBB  X1        -1.2
+    HIMMELBB  X2        1.0
+
+ELEMENT TYPE
+
+ EV H         X                        Y
+
+ELEMENT USES
+
+ T  E         H
+ V  E         X                        X1
+ V  E         Y                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  G         L2
+ E  G         E
+
+OBJECT BOUND
+
+ LO HIMMELBB            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBB
+
+TEMPORARIES
+
+ R  R1
+ R  R2
+ R  R3
+ R  DR3DX
+ R  DR3DX2
+
+INDIVIDUALS
+
+ T  H
+
+ A  R1                  X * Y
+ A  R2                  1.0 - X
+ A  R3                  1.0 - Y - X * R2**5
+ A  DR3DX               - R2**4 * ( 1.0 -  6.0 * X )
+ A  DR3DX2              10.0 * R2**3 * ( 1.0 - 3.0* X )
+
+ F                      R1 * R2 * R3
+
+ G  X                   Y * R2 * R3 - R1 * R3 + R1 * R2 * DR3DX
+ G  Y                   X * R2 * R3 - R1 * R2
+
+ H  X         X         - 2.0 * Y * R3 - 2.0 * R1 * DR3DX
+ H+                     + Y * R2 * DR3DX + R1 * R2 * DR3DX2
+ H  X         Y         R2 * R3 + X * R2 * DR3DX - Y * R2
+ H+                     + R1 - X * R3
+ H  Y         Y         - 2.0 *  X * R2
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HIMMELBB
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

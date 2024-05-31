@@ -1,0 +1,325 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          FLOSP2TL
+
+*   Problem :
+*   *********
+
+*   A  two-dimensional base  flow  problem in an inclined enclosure.
+
+*   Temperature constant at y = +/- 1 boundary conditions
+*   Low Reynold's number
+
+*   The flow is considered in a square of length 2,  centered on the
+*   origin and aligned with the x-y axes. The square is divided into
+*   4 n ** 2  sub-squares,  each of  length 1 / n.  The differential
+*   equation is replaced by  discrete nonlinear equations at each of 
+*   the grid points. 
+
+*   The differential equation relates the vorticity, temperature and
+*   a stream function.
+*   
+*   Source: 
+*   J. N. Shadid
+*   "Experimental and computational study of the stability
+*   of Natural convection flow in an inclined enclosure",
+*   Ph. D. Thesis, University of Minnesota, 1989,
+*   problem SP2 (pp.128-130), 
+
+*   SIF input: Nick Gould, August 1993.
+
+*   classification NQR2-MY-V-V
+
+*   Half the number of discretization intervals
+*   Number of variables = 3(2M+1)**2 
+
+*IE M                   1              $-PARAMETER n=27
+*IE M                   2              $-PARAMETER n=75
+*IE M                   5              $-PARAMETER n=363     original value
+*IE M                   8              $-PARAMETER n=867
+*IE M                   10             $-PARAMETER n=1323
+*IE M                   15             $-PARAMETER n=2883
+ IE M                   1              $-PARAMETER     modified for S2X tests
+
+*   Define the Rayleigh number. NB: This determines the difficulty 
+*   of the problem.
+  
+ RE RA                  1.0D+3         $-PARAMETER Rayleigh number
+
+*   Set pi.
+
+ RF PI/4      ARCTAN    1.0
+ RM PI        PI/4      4.0
+
+*   Define other problem parameters
+
+ RE AX                  1.0
+ RM THETA     PI        0.5
+
+* Case 1. Constant temperature at y = +/- 1
+ 
+ RE A1                  0.0
+ RE A2                  1.0
+ RE A3                  0.0
+ RE B1                  0.0
+ RE B2                  1.0
+ RE B3                  1.0
+ RE F1                  1.0
+ RE F2                  0.0
+ RE F3                  0.0
+ RE G1                  1.0
+ RE G2                  0.0
+ RE G3                  0.0
+
+*   Define a few helpful parameters
+
+ IA M-1       M         -1
+ IM -M        M         -1
+ IM -M+1      M-1       -1
+
+ RI 1/H       M
+ RM -1/H      1/H       -1.0
+ RM 2/H       1/H       2.0
+ RM -2/H      1/H       -2.0
+ RD H         1/H       1.0
+ R* H2        H                        H
+ R* 1/H2      1/H                      1/H
+ RM -2/H2     1/H2      -2.0
+ RM 1/2H      1/H       0.5
+ RM -1/2H     1/H       -0.5
+
+ R* AXX       AX                       AX
+ R( SINTHETA  SIN                      THETA    
+ R( COSTHETA  COS                      THETA    
+ R* PI1       AX                       RA
+ R* PI1       PI1                      COSTHETA
+ RM PI1       PI1       -0.5
+ RM -PI1      PI1       -1.0
+ R* PI2       AXX                      RA
+ R* PI2       PI2                      SINTHETA
+ RM PI2       PI2       0.5
+ RM -PI2      PI2       -1.0
+
+ RM 2A1       A1        2.0
+ RM 2B1       B1        2.0
+ RM 2F1       F1        2.0
+ RM 2G1       G1        2.0
+ R/ 2F1/AX    2F1                      AX
+ R/ 2G1/AX    2G1                      AX
+
+ RM AX/2      AX        0.5
+ RM AXX/2     AXX       0.5
+ RM AXX/4     AXX       0.25
+ RM 2AX       AX        2.0
+ RM 2AXX      AXX       2.0
+ RD 2/AX      AX        2.0 
+ R/ 2/AXH     2/H                      AX
+ RM -2/AXH    2/AXH     -1.0
+
+ R* PI1/2H    PI1                      1/2H
+ R* -PI1/2H   PI1                      -1/2H
+ R* PI2/2H    PI2                      1/2H
+ R* -PI2/2H   PI2                      -1/2H
+
+ R* 2A1/H     2A1                      1/H
+ R* -2A1/H    2A1                      -1/H
+ R* 2B1/H     2B1                      1/H
+ R* -2B1/H    2B1                      -1/H
+ R* 2F1/AXH   2F1/AX                   1/H
+ R* -2F1/AXH  2F1/AX                   -1/H
+ R* 2G1/AXH   2G1/AX                   1/H
+ R* -2G1/AXH  2G1/AX                   -1/H
+
+ R* AX/H2     AX                       1/H2
+ RM -AX/H2    AX/H2     -1.0
+ RM AX/4H2    AX/H2     0.25   
+ RM -AX/4H2   AX/H2     -0.25   
+ R* AXX/H2    AXX                      1/H2
+ RM -2AXX/H2  AXX/H2    -2.0
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+*   Define a vorticity(OM), temperature(PH) and stream function(PS)
+*   variable per discretized point in the square
+
+ DO J         -M                       M 
+ DO I         -M                       M 
+ X  OM(I,J)
+ X  PH(I,J)
+ X  PS(I,J)
+ ND
+
+GROUPS
+
+*   Define three equations per interior node 
+
+ DO J         -M+1                     M-1 
+ IA J+        J         1
+ IA J-        J         -1
+
+ DO I         -M+1                     M-1 
+ IA I+        I         1
+ IA I-        I         -1
+
+*   The stream function equation(S) - linear (6.57a in the thesis).
+
+ ZE S(I,J)    OM(I,J)                  -2/H2
+ ZE S(I,J)    OM(I+,J)                 1/H2
+ ZE S(I,J)    OM(I-,J)                 1/H2
+ ZE S(I,J)    OM(I,J)                  -2AXX/H2
+ ZE S(I,J)    OM(I,J+)                 AXX/H2
+ ZE S(I,J)    OM(I,J-)                 AXX/H2
+
+ ZE S(I,J)    PH(I+,J)                 -PI1/2H
+ ZE S(I,J)    PH(I-,J)                 PI1/2H
+ ZE S(I,J)    PH(I,J+)                 -PI2/2H
+ ZE S(I,J)    PH(I,J-)                 PI2/2H
+
+*   The vorticity equation(V) - linear (6.57b in the thesis).
+
+ ZE V(I,J)    PS(I,J)                  -2/H2
+ ZE V(I,J)    PS(I+,J)                 1/H2
+ ZE V(I,J)    PS(I-,J)                 1/H2
+ ZE V(I,J)    PS(I,J)                  -2AXX/H2
+ ZE V(I,J)    PS(I,J+)                 AXX/H2
+ ZE V(I,J)    PS(I,J-)                 AXX/H2
+
+ ZE V(I,J)    OM(I,J)                  AXX/4
+
+*   The thermal energy equation(E) - quadratic (6.57c in the thesis).
+
+ ZE E(I,J)    PH(I,J)                  -2/H2
+ ZE E(I,J)    PH(I+,J)                 1/H2
+ ZE E(I,J)    PH(I-,J)                 1/H2
+ ZE E(I,J)    PH(I,J)                  -2AXX/H2
+ ZE E(I,J)    PH(I,J+)                 AXX/H2
+ ZE E(I,J)    PH(I,J-)                 AXX/H2
+
+ ND
+
+*  Boundary conditions on the temperature.
+
+ DO K         -M                       M
+
+ ZE T(K,M)    PH(K,M)                  2A1/H
+ ZE T(K,M)    PH(K,M-1)                -2A1/H
+ ZE T(K,M)    PH(K,M)                  A2
+
+ ZE T(K,-M)   PH(K,-M+1)               2B1/H
+ ZE T(K,-M)   PH(K,-M)                 -2B1/H
+ ZE T(K,-M)   PH(K,-M)                 B2
+
+ ZE T(M,K)    PH(M,K)                  2F1/AXH
+ ZE T(M,K)    PH(M-1,K)                -2F1/AXH
+ ZE T(M,K)    PH(M,K)                  F2
+
+ ZE T(-M,K)   PH(-M+1,K)               2G1/AXH
+ ZE T(-M,K)   PH(-M,K)                 -2G1/AXH
+ ZE T(-M,K)   PH(-M,K)                 G2
+
+*  Boundary conditions on the vorticity. NB: Steady state assumed
+
+ ZE V(K,M)    PS(K,M)                  -2/H
+ ZE V(K,M)    PS(K,M-1)                2/H
+
+ ZE V(K,-M)   PS(K,-M+1)               2/H
+ ZE V(K,-M)   PS(K,-M)                 -2/H
+
+ ZE V(M,K)    PS(M,K)                  -2/AXH
+ ZE V(M,K)    PS(M-1,K)                2/AXH
+
+ ZE V(-M,K)   PS(-M+1,K)               2/AXH
+ ZE V(-M,K)   PS(-M,K)                 -2/AXH
+
+ ND
+
+CONSTANTS
+
+ DO K         -M                       M
+
+ Z  FLOSP2TL  T(K,M)                   A3 
+ Z  FLOSP2TL  T(K,-M)                  B3 
+ Z  FLOSP2TL  T(M,K)                   F3 
+ Z  FLOSP2TL  T(-M,K)                  G3 
+
+ ND
+
+BOUNDS
+
+ FR FLOSP2TL  'DEFAULT'
+
+*  Boundary conditions on the stream functions.
+
+ DO K         -M                       M 
+
+ XX FLOSP2TL  PS(K,-M)  1.0
+ XX FLOSP2TL  PS(-M,K)  1.0
+ XX FLOSP2TL  PS(K,M)   1.0
+ XX FLOSP2TL  PS(M,K)   1.0
+
+ ND
+
+ELEMENT TYPE
+
+ EV PROD      PSIM                     PSIP
+ EV PROD      PHIM                     PHIP
+ IV PROD      PSIDIF                   PHIDIF
+
+ELEMENT USES
+
+ DO J         -M+1                     M-1
+ IA J+        J         1
+ IA J-        J         -1
+
+ DO I         -M+1                     M-1 
+ IA I+        I         1
+ IA I-        I         -1
+
+ XT E(I,J)    PROD 
+ ZV E(I,J)    PSIP                     PS(I,J+)
+ ZV E(I,J)    PSIM                     PS(I,J-)
+ ZV E(I,J)    PHIP                     PH(I+,J)
+ ZV E(I,J)    PHIM                     PH(I-,J)
+
+ XT F(I,J)    PROD 
+ ZV F(I,J)    PSIP                     PS(I+,J)
+ ZV F(I,J)    PSIM                     PS(I-,J)
+ ZV F(I,J)    PHIP                     PH(I,J+)
+ ZV F(I,J)    PHIM                     PH(I,J-)
+
+ ND 
+
+GROUP USES
+
+ DO J         -M+1                     M-1
+ DO I         -M+1                     M-1 
+ ZE E(I,J)    E(I,J)                   -AX/4H2
+ ZE E(I,J)    F(I,J)                   AX/4H2
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      FLOSP2TL
+
+INDIVIDUALS
+
+ T  PROD
+ R  PSIDIF    PSIP      1.0            PSIM      -1.0      
+ R  PHIDIF    PHIP      1.0            PHIM      -1.0      
+ F                      PSIDIF * PHIDIF
+ G  PSIDIF              PHIDIF
+ G  PHIDIF              PSIDIF
+ H  PSIDIF    PHIDIF    1.0
+
+ENDATA
+

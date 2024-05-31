@@ -1,0 +1,118 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HATFLDG
+
+*   Problem :
+*   *********
+
+*   A test problem from the OPTIMA user manual.
+
+*   Source:
+*   "The OPTIMA user manual (issue No.8, p. 49)",
+*   Numerical Optimization Centre, Hatfield Polytechnic (UK), 1989.
+
+*   SIF input: Ph. Toint, May 1990.
+
+*   classification NOR2-AY-25-25
+
+*   Number of variables
+
+ IE N                   25
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 13                  13
+
+*   Computed parameters
+
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XE G(I)      X(I)      1.0            X(13)     -1.0
+ ND
+
+CONSTANTS
+
+ X  HATFLDG   'DEFAULT' -1.0
+
+BOUNDS
+
+ FR HATFLDG   'DEFAULT'
+
+START POINT
+
+ V  HATFLDG   'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ EV 2PRI      X                        Y
+ EV 2PRI      Z
+ IV 2PRI      U                        V
+
+ELEMENT USES
+
+ T  A1        2PR
+ V  A1        X                        X1
+ V  A1        Y                        X2
+
+ DO I         2                        N-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ XT A(I)      2PRI
+ ZV A(I)      X                        X(I)
+ ZV A(I)      Y                        X(I-1)
+ ZV A(I)      Z                        X(I+1)
+ ND
+
+ XT A(N)      2PR
+ ZV A(N)      X                        X(N-1)
+ ZV A(N)      Y                        X(N)
+
+GROUP USES
+
+ XE G(1)      A(1)      -1.0
+
+ DO I         2                        N
+ XE G(I)      A(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HATFLDG
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  2PRI
+ R  U         X         1.0
+ R  V         Y         1.0            Z         -1.0
+ F                      U * V
+ G  U                   V
+ G  V                   U
+ H  U         V         1.0
+
+ENDATA

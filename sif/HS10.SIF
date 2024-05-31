@@ -1,0 +1,101 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS10
+
+*   Problem :
+*   *********
+
+*   Source: problem 10 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification LQR2-AN-2-1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        1.0            X2        -1.0
+
+ G  CON1
+
+CONSTANTS
+
+    HS10      CON1      -1.0
+
+BOUNDS
+
+ FR HS10      'DEFAULT'
+
+START POINT
+
+    HS10      X1        -10.0
+    HS10      X2        10.0
+
+ELEMENT TYPE
+
+ EV 2PROD     V1                       V2
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        2PROD
+ V  E2        V1                       X1
+ V  E2        V2                       X2
+
+ T  E3        SQ
+ V  E3        V1                       X2
+
+GROUP USES
+
+ E  CON1      E1        -3.0           E2        2.0
+ E  CON1      E3        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS10
+
+TEMPORARIES
+
+ R  ZERO
+
+INDIVIDUALS
+
+ T  2PROD
+ A  ZERO                0.0
+ F                      V1*V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V1        ZERO
+ H  V2        V2        ZERO
+ H  V1        V2        1.0
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

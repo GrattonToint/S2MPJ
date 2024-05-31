@@ -1,0 +1,305 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS107
+
+*   Problem :
+*   *********
+
+*   A static power scheduling problem.
+
+*   There are note enough components for the starting point in the
+*   problem description in the source.  The initial value for X7 has
+*   been set to 1.0454, as for X5 and X6.
+
+*   Source: problem 107 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification OOR2-MY-9-6
+
+*   Problem data
+
+ RE TMP                 50.176
+ RD FACT      TMP       48.4
+ RF SIN1/4    SIN       0.25
+ R* C         FACT                     SIN1/4
+ RF COS1/4    COS       0.25
+ R* D         FACT                     COS1/4
+ RM -C        C         -1.0
+ RM -D        D         -1.0
+ RM 2C        C         2.0
+ RM 2D        D         2.0
+
+*   Constants
+
+ IE 1                   1
+ IE 9                   9
+
+VARIABLES
+
+ DO I         1                        9
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        3000.0         X2        2000.0
+
+ E  C1        X1        -1.0
+ E  C2        X2        -1.0
+ E  C3
+ E  C4        X3        -1.0
+ E  C5        X4        -1.0
+ E  C6
+
+CONSTANTS
+
+ X  HS107     C1        -0.4
+ X  HS107     C2        -0.4
+ X  HS107     C3        -0.8
+ X  HS107     C4        -0.2
+ X  HS107     C5        -0.2
+ X  HS107     C6         0.337
+
+BOUNDS
+
+ FR HS107     'DEFAULT'
+
+ XL HS107     X1        0.0
+ XL HS107     X2        0.0
+ XL HS107     X5        0.90909
+ XL HS107     X6        0.90909
+ XL HS107     X7        0.90909
+ XU HS107     X5        1.09090
+ XU HS107     X6        1.09090
+ XU HS107     X7        1.09090
+
+START POINT
+
+ XV HS107     X1        0.8
+ XV HS107     X2        0.8
+ XV HS107     X3        0.2
+ XV HS107     X4        0.2
+ XV HS107     X5        1.0454
+ XV HS107     X6        1.0454
+ XV HS107     X7        1.0454
+ XV HS107     X8        0.0
+ XV HS107     X9        0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV CB        X
+
+ EV XYP       X                        Y
+ EV XYP       Z
+ EP XYP       A                        B
+
+ EV XYPI      X                        Y
+ EV XYPI      Z1                       Z2
+ EP XYPI      A                        B
+ IV XYPI      XX                       YY
+ IV XYPI      ZZ
+
+ELEMENT USES
+
+ T  X1CB      CB
+ V  X1CB      X                        X1
+
+ T  X2CB      CB
+ V  X2CB      X                        X2
+
+ T  X5SQ      SQ
+ V  X5SQ      X                        X5
+
+ T  X6SQ      SQ
+ V  X6SQ      X                        X6
+
+ T  X7SQ      SQ
+ V  X7SQ      X                        X7
+
+ T  E1        XYP
+ V  E1        X                        X5
+ V  E1        Y                        X6
+ V  E1        Z                        X8
+ ZP E1        A                        D
+ ZP E1        B                        C
+
+ T  E2        XYP
+ V  E2        X                        X5
+ V  E2        Y                        X7
+ V  E2        Z                        X9
+ ZP E2        A                        D
+ ZP E2        B                        C
+
+ T  E3        XYP
+ V  E3        X                        X5
+ V  E3        Y                        X6
+ V  E3        Z                        X8
+ ZP E3        A                        D
+ ZP E3        B                        -C
+
+ T  E4        XYPI
+ V  E4        X                        X6
+ V  E4        Y                        X7
+ V  E4        Z1                       X8
+ V  E4        Z2                       X9
+ ZP E4        A                        D
+ ZP E4        B                        -C
+
+ T  E5        XYP
+ V  E5        X                        X5
+ V  E5        Y                        X7
+ V  E5        Z                        X9
+ ZP E5        A                        D
+ ZP E5        B                        -C
+
+ T  E6        XYPI
+ V  E6        X                        X6
+ V  E6        Y                        X7
+ V  E6        Z1                       X8
+ V  E6        Z2                       X9
+ ZP E6        A                        D
+ ZP E6        B                        C
+
+ T  E7        XYP
+ V  E7        X                        X5
+ V  E7        Y                        X6
+ V  E7        Z                        X8
+ ZP E7        A                        C
+ ZP E7        B                        -D
+
+ T  E8        XYP
+ V  E8        X                        X5
+ V  E8        Y                        X7
+ V  E8        Z                        X9
+ ZP E8        A                        C
+ ZP E8        B                        -D
+
+ T  E9        XYP
+ V  E9        X                        X5
+ V  E9        Y                        X6
+ V  E9        Z                        X8
+ ZP E9        A                        C
+ ZP E9        B                        D
+
+ T  E10       XYPI
+ V  E10       X                        X6
+ V  E10       Y                        X7
+ V  E10       Z1                       X8
+ V  E10       Z2                       X9
+ ZP E10       A                        C
+ ZP E10       B                        D
+
+ T  E11       XYP
+ V  E11       X                        X5
+ V  E11       Y                        X7
+ V  E11       Z                        X9
+ ZP E11       A                        C
+ ZP E11       B                        D
+
+ T  E12       XYPI
+ V  E12       X                        X6
+ V  E12       Y                        X7
+ V  E12       Z1                       X8
+ V  E12       Z2                       X9
+ ZP E12       A                        C
+ ZP E12       B                        -D
+
+GROUP USES
+
+ XE OBJ       X1CB      1000.0         X2CB      666.667
+
+ ZE C1        X5SQ                     2C
+ XE C1        E1        -1.0           E2        -1.0
+
+ ZE C2        X6SQ                     2C
+ XE C2        E3         1.0           E4         1.0
+
+ ZE C3        X7SQ                     2C
+ XE C3        E5         1.0           E6        -1.0
+
+ ZE C4        X5SQ                     2D
+ XE C4        E7         1.0           E8         1.0
+
+ ZE C5        X6SQ                     2D
+ XE C5        E9        -1.0           E10       -1.0
+
+ ZE C6        X7SQ                     2D
+ XE C6        E11       -1.0           E12        1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               5055.011803
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS107
+
+TEMPORARIES
+
+ R  SNZ
+ R  CSZ
+ R  FZ
+ R  DFZ
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+ T  XYP
+ A  SNZ                 SIN( Z )
+ A  CSZ                 COS( Z )
+ A  FZ                  A * SNZ + B * CSZ
+ A  DFZ                 A * CSZ - B * SNZ
+ F                      X * Y * FZ
+ G  X                   Y * FZ
+ G  Y                   X * FZ
+ G  Z                   X * Y * DFZ
+ H  X         Y         FZ
+ H  X         Z         Y * DFZ
+ H  Y         Z         X * DFZ
+ H  Z         Z         - X * Y * FZ
+
+ T  XYPI
+ R  XX        X         1.0
+ R  YY        Y         1.0
+ R  ZZ        Z1        1.0            Z2        -1.0
+ A  SNZ                 SIN( ZZ )
+ A  CSZ                 COS( ZZ )
+ A  FZ                  A * SNZ + B * CSZ
+ A  DFZ                 A * CSZ - B * SNZ
+ F                      XX * YY * FZ
+ G  XX                  YY * FZ
+ G  YY                  XX * FZ
+ G  ZZ                  XX * YY * DFZ
+ H  XX        YY        FZ
+ H  XX        ZZ        YY * DFZ
+ H  YY        ZZ        XX * DFZ
+ H  ZZ        ZZ        - XX * YY * FZ
+
+ENDATA

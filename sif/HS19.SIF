@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS19
+
+*   Problem :
+*   *********
+
+*   Source: problem 19 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn April 1990
+
+*   classification OQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ G  CON1
+ G  CON2
+
+CONSTANTS
+
+    HS19      CON1      100.0
+    HS19      CON2      -82.81
+
+BOUNDS
+
+ LO HS19      X1        13.0
+ UP HS19      X1        100.0
+ UP HS19      X2        100.0
+
+START POINT
+
+    HS19      X1        20.1
+    HS19      X2        5.84
+
+ELEMENT TYPE
+
+ EV CB-10     V1
+ EV CB-20     V1
+ EV SQ-5      V1
+ EV SQ-6      V1
+
+ELEMENT USES
+
+ T  E1        CB-10
+ V  E1        V1                       X1
+
+ T  E2        CB-20
+ V  E2        V1                       X2
+
+ T  E3        SQ-5
+ V  E3        V1                       X1
+
+ T  E4        SQ-5
+ V  E4        V1                       X2
+
+ T  E5        SQ-6
+ V  E5        V1                       X1
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  CON1      E3                       E4
+ E  CON2      E4        -1.0           E5        -1.0
+
+OBJECT BOUND
+
+ LO HS19                0.0
+
+*   Solution
+
+*LO SOLTN               -6961.81381
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS19
+
+TEMPORARIES
+
+ R  DIF
+
+INDIVIDUALS
+
+ T  CB-10
+ A  DIF                 V1 - 10.0
+ F                      DIF**3
+ G  V1                  3.0 * DIF * DIF
+ H  V1        V1        6.0 * DIF
+
+ T  CB-20
+ A  DIF                 V1 - 20.0
+ F                      DIF**3
+ G  V1                  3.0 * DIF * DIF
+ H  V1        V1        6.0 * DIF
+
+ T  SQ-5
+ A  DIF                 V1 - 5.0
+ F                      DIF**2
+ G  V1                  2.0 * DIF
+ H  V1        V1        2.0
+
+ T  SQ-6
+ A  DIF                 V1 - 6.0
+ F                      DIF**2
+ G  V1                  2.0 * DIF
+ H  V1        V1        2.0
+
+ENDATA

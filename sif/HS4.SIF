@@ -1,0 +1,86 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS4
+
+*   Problem :
+*   *********
+
+*   Source: problem 4 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification OBR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X1        1.0
+ N  G1        'SCALE'   3.0
+
+ N  G2        X2        1.0
+
+CONSTANTS
+
+    HS4       G1        -1.0
+
+BOUNDS
+
+ LO HS4       X1        1.0
+
+START POINT
+
+    HS4       X1        1.125
+    HS4       X2        0.125
+
+ELEMENT TYPE
+
+
+ELEMENT USES
+
+
+GROUP TYPE
+
+ GV CUBE      GVAR
+
+GROUP USES
+
+ T  G1        CUBE
+
+OBJECT BOUND
+
+ LO HS4                 2.66
+
+*   Solution
+
+*LO SOLTN               2.66666
+
+ENDATA
+
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS4
+
+INDIVIDUALS
+
+ T  CUBE
+
+ F                      GVAR * GVAR * GVAR
+ G                      3.0 * GVAR * GVAR
+ H                      6.0 * GVAR
+
+ENDATA
+

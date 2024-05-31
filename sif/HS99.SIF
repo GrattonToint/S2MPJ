@@ -1,0 +1,333 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS99
+
+*   Problem :
+*   *********
+
+*   Source: problem 99 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification OOR2-AN-7-2
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 7                   7
+ IE 8                   8
+
+VARIABLES
+
+ DO I         1                        7
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN OBJ       'SCALE'   -1.0
+
+ XE Q8E
+ XE S8E
+
+CONSTANTS
+
+ X  HS99      Q8E       100000.0
+ X  HS99      S8E       1000.0
+
+BOUNDS
+
+ XU HS99      'DEFAULT' 1.58
+
+START POINT
+
+ XV HS99      'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV R8T       X1                       X2
+ EV R8T       X3                       X4
+ EV R8T       X5                       X6
+ EV R8T       X7
+
+ EV Q8T       X1                       X2
+ EV Q8T       X3                       X4
+ EV Q8T       X5                       X6
+ EV Q8T       X7
+
+ EV S8T       X1                       X2
+ EV S8T       X3                       X4
+ EV S8T       X5                       X6
+ EV S8T       X7
+
+ELEMENT USES
+
+ T  R8        R8T
+ ZV R8        X1                       X1
+ ZV R8        X2                       X2
+ ZV R8        X3                       X3
+ ZV R8        X4                       X4
+ ZV R8        X5                       X5
+ ZV R8        X6                       X6
+ ZV R8        X7                       X7
+
+ T  Q8        Q8T
+ ZV Q8        X1                       X1
+ ZV Q8        X2                       X2
+ ZV Q8        X3                       X3
+ ZV Q8        X4                       X4
+ ZV Q8        X5                       X5
+ ZV Q8        X6                       X6
+ ZV Q8        X7                       X7
+
+ T  S8        S8T
+ ZV S8        X1                       X1
+ ZV S8        X2                       X2
+ ZV S8        X3                       X3
+ ZV S8        X4                       X4
+ ZV S8        X5                       X5
+ ZV S8        X6                       X6
+ ZV S8        X7                       X7
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  OBJ       L2
+ XE OBJ       R8
+
+ XE Q8E       Q8
+ XE S8E       S8
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -831079892.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS99
+
+TEMPORARIES
+
+ R  A2
+ R  A3
+ R  A4
+ R  A5
+ R  A6
+ R  A7
+ R  A8
+
+ R  DT2
+ R  DT3
+ R  DT4
+ R  DT5
+ R  DT6
+ R  DT7
+ R  DT8
+
+ R  B
+
+ R  R2
+ R  R3
+ R  R4
+ R  R5
+ R  R6
+ R  R7
+
+ R  S2
+ R  S3
+ R  S4
+ R  S5
+ R  S6
+ R  S7
+
+ R  DSD1
+ R  DSD2
+ R  DSD3
+ R  DSD4
+ R  DSD5
+ R  DSD6
+ R  DSD7
+
+ R  D2SD1
+ R  D2SD2
+ R  D2SD3
+ R  D2SD4
+ R  D2SD5
+ R  D2SD6
+ R  D2SD7
+
+ R  Q2
+ R  Q3
+ R  Q4
+ R  Q5
+ R  Q6
+ R  Q7
+
+ M  SIN
+ M  COS
+
+GLOBALS
+
+ A  A2                  50.0
+ A  A3                  50.0
+ A  A4                  75.0
+ A  A5                  75.0
+ A  A6                  75.0
+ A  A7                  100.0
+ A  A8                  100.0
+
+ A  DT2                 25.0
+ A  DT3                 25.0
+ A  DT4                 50.0
+ A  DT5                 50.0
+ A  DT6                 50.0
+ A  DT7                 90.0
+ A  DT8                 90.0
+
+ A  B                   32.0
+
+INDIVIDUALS
+
+ T  R8T
+ A  R2                  A2 * DT2 * COS( X1 )
+ A  R3                  A3 * DT3 * COS( X2 ) + R2
+ A  R4                  A4 * DT4 * COS( X3 ) + R3
+ A  R5                  A5 * DT5 * COS( X4 ) + R4
+ A  R6                  A6 * DT6 * COS( X5 ) + R5
+ A  R7                  A7 * DT7 * COS( X6 ) + R6
+ F                      A8 * DT8 * COS( X7 ) + R7
+ G  X1                  - A2 * DT2 * SIN( X1 )
+ G  X2                  - A3 * DT3 * SIN( X2 )
+ G  X3                  - A4 * DT4 * SIN( X3 )
+ G  X4                  - A5 * DT5 * SIN( X4 )
+ G  X5                  - A6 * DT6 * SIN( X5 )
+ G  X6                  - A7 * DT7 * SIN( X6 )
+ G  X7                  - A8 * DT8 * SIN( X7 )
+ H  X1        X1        - A2 * DT2 * COS( X1 )
+ H  X2        X2        - A3 * DT3 * COS( X2 )
+ H  X3        X3        - A4 * DT4 * COS( X3 )
+ H  X4        X4        - A5 * DT5 * COS( X4 )
+ H  X5        X5        - A6 * DT6 * COS( X5 )
+ H  X6        X6        - A7 * DT7 * COS( X6 )
+ H  X7        X7        - A8 * DT8 * COS( X7 )
+
+ T  S8T
+ A  S2                  DT2 * ( A2 * SIN( X1 ) - B )
+ A  S3                  DT3 * ( A3 * SIN( X2 ) - B ) + S2
+ A  S4                  DT4 * ( A4 * SIN( X3 ) - B ) + S3
+ A  S5                  DT5 * ( A5 * SIN( X4 ) - B ) + S4
+ A  S6                  DT6 * ( A6 * SIN( X5 ) - B ) + S5
+ A  S7                  DT7 * ( A7 * SIN( X6 ) - B ) + S6
+ F                      DT8 * ( A8 * SIN( X7 ) - B ) + S7
+ G  X1                  A2 * DT2 * COS( X1 )
+ G  X2                  A3 * DT3 * COS( X2 )
+ G  X3                  A4 * DT4 * COS( X3 )
+ G  X4                  A5 * DT5 * COS( X4 )
+ G  X5                  A6 * DT6 * COS( X5 )
+ G  X6                  A7 * DT7 * COS( X6 )
+ G  X7                  A8 * DT8 * COS( X7 )
+ H  X1        X1        - A2 * DT2 * SIN( X1 )
+ H  X2        X2        - A3 * DT3 * SIN( X2 )
+ H  X3        X3        - A4 * DT4 * SIN( X3 )
+ H  X4        X4        - A5 * DT5 * SIN( X4 )
+ H  X5        X5        - A6 * DT6 * SIN( X5 )
+ H  X6        X6        - A7 * DT7 * SIN( X6 )
+ H  X7        X7        - A8 * DT8 * SIN( X7 )
+
+ T  Q8T
+ A  S2                  DT2 * ( A2 * SIN( X1 ) - B )
+ A  S3                  DT3 * ( A3 * SIN( X2 ) - B ) + S2
+ A  S4                  DT4 * ( A4 * SIN( X3 ) - B ) + S3
+ A  S5                  DT5 * ( A5 * SIN( X4 ) - B ) + S4
+ A  S6                  DT6 * ( A6 * SIN( X5 ) - B ) + S5
+ A  S7                  DT7 * ( A7 * SIN( X6 ) - B ) + S6
+ A  DSD1                A2 * DT2 * COS( X1 )
+ A  DSD2                A3 * DT3 * COS( X2 )
+ A  DSD3                A4 * DT4 * COS( X3 )
+ A  DSD4                A5 * DT5 * COS( X4 )
+ A  DSD5                A6 * DT6 * COS( X5 )
+ A  DSD6                A7 * DT7 * COS( X6 )
+ A  DSD7                A8 * DT8 * COS( X7 )
+ A  D2SD1               - A2 * DT2 * SIN( X1 )
+ A  D2SD2               - A3 * DT3 * SIN( X2 )
+ A  D2SD3               - A4 * DT4 * SIN( X3 )
+ A  D2SD4               - A5 * DT5 * SIN( X4 )
+ A  D2SD5               - A6 * DT6 * SIN( X5 )
+ A  D2SD6               - A7 * DT7 * SIN( X6 )
+ A  D2SD7               - A8 * DT8 * SIN( X7 )
+ A  Q2                  0.5 * DT2 * DT2 * ( A2 * SIN( X1) - B )
+ A  Q3                  0.5 * DT3 * DT3 * ( A3 * SIN( X2) - B )
+ A+                     + DT3 * S2 + Q2
+ A  Q4                  0.5 * DT4 * DT4 * ( A4 * SIN( X3) - B )
+ A+                     + DT4 * S3 + Q3
+ A  Q5                  0.5 * DT5 * DT5 * ( A5 * SIN( X4) - B )
+ A+                     + DT5 * S4 + Q4
+ A  Q6                  0.5 * DT6 * DT6 * ( A6 * SIN( X5) - B )
+ A+                     + DT6 * S5 + Q5
+ A  Q7                  0.5 * DT7 * DT7 * ( A7 * SIN( X6) - B )
+ A+                     + DT7 * S6 + Q6
+ F                      0.5 * DT8 * DT8 * ( A8 * SIN( X7) - B )
+ F+                     + DT8 * S7 + Q7
+ G  X1                  0.5 * DT2 * DT2 * A2 * COS( X1 )
+ G+                     + (DT8+DT7+DT6+DT5+DT4+DT3) * DSD1
+ G  X2                  0.5 * DT3 * DT3 * A3 * COS( X2 )
+ G+                     + (DT8+DT7+DT6+DT5+DT4) * DSD2
+ G  X3                  0.5 * DT4 * DT4 * A4 * COS( X3 )
+ G+                     + (DT8+DT7+DT6+DT5) * DSD3
+ G  X4                  0.5 * DT5 * DT5 * A5 * COS( X4 )
+ G+                     + (DT8+DT7+DT6) * DSD4
+ G  X5                  0.5 * DT6 * DT6 * A6 * COS( X5 )
+ G+                     + (DT8+DT7) * DSD5
+ G  X6                  0.5 * DT7 * DT7 * A7 * COS( X6 )
+ G+                     + DT8 * DSD6
+ G  X7                  0.5 * DT8 * DT8 * A8 * COS( X7 )
+ H  X1        X1        - 0.5 * DT2 * DT2 * A2 * SIN( X1 )
+ H+                     + (DT8+DT7+DT6+DT5+DT4+DT3) * D2SD1
+ H  X2        X2        - 0.5 * DT3 * DT3 * A3 * SIN( X2 )
+ H+                     + (DT8+DT7+DT6+DT5+DT4) * D2SD2
+ H  X3        X3        - 0.5 * DT4 * DT4 * A4 * SIN( X3 )
+ H+                     + (DT8+DT7+DT6+DT5) * D2SD3
+ H  X4        X4        - 0.5 * DT5 * DT5 * A5 * SIN( X4 )
+ H+                     + (DT8+DT7+DT6) * D2SD4
+ H  X5        X5        - 0.5 * DT6 * DT6 * A6 * SIN( X5 )
+ H+                     + (DT8+DT7) * D2SD5
+ H  X6        X6        - 0.5 * DT7 * DT7 * A7 * SIN( X6 )
+ H+                     + DT8 * D2SD6
+ H  X7        X7        - 0.5 * DT8 * DT8 * A8 * SIN( X7 )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS99
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

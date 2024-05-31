@@ -1,0 +1,269 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HAIFAS
+
+*   Problem :
+*   *********
+
+*  Truss Topology Design (t6-9)
+
+*  Source: M. Tsibulevsky, Optimization Laboratory,
+*          Faculty of Industrial Engineering, Technion,
+*          Haifa, 32000, Israel.
+
+*  SIF input: Conn, Gould and Toint, May, 1992
+*             minor correction by Ph. Shott, Jan 1995.
+
+*   classification LQR2-AN-13-9
+
+*  2 * Number of nodes
+
+ IE N                   12
+
+*  Number of potential bars
+
+ IE M                   9
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+    Z
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN OBJ       Z          1.0
+
+ DO I         1                        M
+ XL G(I)      Z          -1.0
+
+ IE J                        10
+ XL G(I)      X(J)      -1.00000D+00
+
+ ND
+
+CONSTANTS
+
+BOUNDS
+
+ XR HAIFAS    'DEFAULT'
+
+START POINT
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+ IE I1                        4
+ IE I2                        4
+ IE L                         1
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        5
+ IE I2                        5
+ IE L                         2
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        5
+ IE I2                       11
+ IE L                         3
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       11
+ IE I2                       11
+ IE L                         4
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       10
+ IE I2                       10
+ IE L                         5
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       10
+ IE I2                       11
+ IE L                         6
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       11
+ IE I2                       11
+ IE L                         7
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        4
+ IE I2                        4
+ IE L                         8
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        4
+ IE I2                       10
+ IE L                         9
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       10
+ IE I2                       10
+ IE L                        10
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        5
+ IE I2                        5
+ IE L                        11
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        6
+ IE I2                        6
+ IE L                        12
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        6
+ IE I2                       12
+ IE L                        13
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       12
+ IE I2                       12
+ IE L                        14
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       11
+ IE I2                       11
+ IE L                        15
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       11
+ IE I2                       12
+ IE L                        16
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       12
+ IE I2                       12
+ IE L                        17
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        5
+ IE I2                        5
+ IE L                        18
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        5
+ IE I2                       11
+ IE L                        19
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                       11
+ IE I2                       11
+ IE L                        20
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+ IE I1                        6
+ IE I2                        6
+ IE L                        21
+ ZV E(L)      X                        X(I1)
+ ZV E(L)      Y                        X(I2)
+
+GROUP USES
+
+ IE J                         1
+ IE L                         1
+ XE G(J)      E(L)       1.00000D+01
+ IE J                         2
+ IE L                         2
+ XE G(J)      E(L)       6.40000D+00
+ IE J                         2
+ IE L                         3
+ XE G(J)      E(L)       6.40000D+00
+ IE J                         2
+ IE L                         4
+ XE G(J)      E(L)       1.60000D+00
+ IE J                         3
+ IE L                         5
+ XE G(J)      E(L)       4.00000D+01
+ IE J                         3
+ IE L                         6
+ XE G(J)      E(L)      -8.00000D+01
+ IE J                         3
+ IE L                         7
+ XE G(J)      E(L)       4.00000D+01
+ IE J                         4
+ IE L                         8
+ XE G(J)      E(L)       6.40000D+00
+ IE J                         4
+ IE L                         9
+ XE G(J)      E(L)      -6.40000D+00
+ IE J                         4
+ IE L                        10
+ XE G(J)      E(L)       1.60000D+00
+ IE J                         5
+ IE L                        11
+ XE G(J)      E(L)       1.00000D+01
+ IE J                         6
+ IE L                        12
+ XE G(J)      E(L)       6.40000D+00
+ IE J                         6
+ IE L                        13
+ XE G(J)      E(L)       6.40000D+00
+ IE J                         6
+ IE L                        14
+ XE G(J)      E(L)       1.60000D+00
+ IE J                         7
+ IE L                        15
+ XE G(J)      E(L)       4.00000D+01
+ IE J                         7
+ IE L                        16
+ XE G(J)      E(L)      -8.00000D+01
+ IE J                         7
+ IE L                        17
+ XE G(J)      E(L)       4.00000D+01
+ IE J                         8
+ IE L                        18
+ XE G(J)      E(L)       6.40000D+00
+ IE J                         8
+ IE L                        19
+ XE G(J)      E(L)      -6.40000D+00
+ IE J                         8
+ IE L                        20
+ XE G(J)      E(L)       1.60000D+00
+ IE J                         9
+ IE L                        21
+ XE G(J)      E(L)       1.00000D+01
+
+OBJECT BOUND
+
+ LO HAIFAS              0.0
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HAIFAS
+
+INDIVIDUALS
+
+*   The product of X and Y
+
+ T  2PR
+
+ F                      0.5 * X * Y
+ G  X                   0.5 * Y
+ G  Y                   0.5 * X
+ H  Y         X         0.5
+
+ENDATA
+

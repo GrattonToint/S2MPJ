@@ -1,0 +1,225 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EXPFITB
+
+*   Problem :
+*   *********
+
+*   One sided rational approximation to the exponential function, as
+*   described by Powell.
+
+*   Source:
+*   M.J.D. Powell,
+*   "A tolerant algorithm for linearly constrained optimization
+*   calculations"'
+*   Mathematical Programming 45(3), pp.561--562, 1989.
+
+*   SDIF input: Ph. Toint and N. Gould, May 1990.
+
+*   classification OLR2-AN-5-102
+
+*   Number of fitting points
+
+ IE R                   51
+
+*   Constants
+
+ IE 1                   1
+ RE 5.0                 5.0
+
+*   Computed parameters
+
+ IA R-1       R         -1
+ RI RR-1      R-1
+ R/ 5/R-1     5.0                      RR-1
+
+*   Fitting points and their exponentials
+
+ DO I         1                        R
+ IA I-1       I         -1
+ RI RI-1      I-1
+ A* T(I)      RI-1                     5/R-1
+ A( ET(I)     EXP                      T(I)
+ ND
+
+VARIABLES
+
+    P0
+    P1
+    P2
+    Q1
+    Q2
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        R
+
+ AA TM5       T(I)      -5.0
+ R* TM5SQ     TM5                      TM5
+ A* QC1       TM5                      ET(I)
+ A* QC2       TM5SQ                    ET(I)
+ RM -QC1      QC1       -1.0
+ RM -QC2      QC2       -1.0
+ A* 2T        T(I)                     T(I)
+
+ XG C(I)      P0        1.0
+ ZG C(I)      P1                       T(I)
+ ZG C(I)      P2                       2T
+ ZG C(I)      Q1                       -QC1
+ ZG C(I)      Q2                       -QC2
+
+ ZG B(I)      Q1                       TM5
+ ZG B(I)      Q2                       TM5SQ
+
+ ND
+
+CONSTANTS
+
+ DO I         1                        R
+ Z  EXPFITB   C(I)                     ET(I)
+ X  EXPFITB   B(I)      -0.99999
+ ND
+
+BOUNDS
+
+ FR EXPFITB   'DEFAULT'
+
+START POINT
+
+    EXPFITB   P0        1.0
+    EXPFITB   P1        1.0
+    EXPFITB   P2        6.0
+    EXPFITB   Q1        0.0
+    EXPFITB   Q2        0.0
+
+ELEMENT TYPE
+
+ EV FIT       P0                       P1
+ EV FIT       P2                       Q1
+ EV FIT       Q2
+ EP FIT       T
+
+ELEMENT USES
+
+ DO I         1                        R
+ XT F(I)      FIT
+ ZV F(I)      P0                       P0
+ ZV F(I)      P1                       P1
+ ZV F(I)      P2                       P2
+ ZV F(I)      Q1                       Q1
+ ZV F(I)      Q2                       Q2
+ ZP F(I)      T                        T(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        R
+ XE OBJ       F(I)
+ ND
+
+OBJECT BOUND
+
+ LO EXPFITB             0.0
+
+*   Solution
+
+ LO SOLTN               5.0193D-03
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EXPFITB
+
+TEMPORARIES
+
+ R  T2
+ R  ET
+ R  QT
+ R  ETQT
+ R  ETQT2
+ R  ETQT3
+ R  PT
+ R  TM5
+ R  TM5SQ
+ R  F
+ R  TWOF
+ R  DFDP0
+ R  DFDP1
+ R  DFDP2
+ R  DFDQ1
+ R  DFDQ2
+ R  D2P0Q1
+ R  D2P0Q2
+ R  D2P1Q1
+ R  D2P1Q2
+ R  D2P2Q1
+ R  D2P2Q2
+ R  D2Q1Q1
+ R  D2Q1Q2
+ R  D2Q2Q2
+ M  EXP
+
+INDIVIDUALS
+
+ T  FIT
+ A  TM5                 T - 5.0
+ A  TM5SQ               TM5 * TM5
+ A  T2                  T * T
+ A  ET                  EXP( T )
+ A  QT                  1.0 + Q1 * TM5 + Q2 * TM5SQ
+ A  ETQT                ET * QT
+ A  ETQT2               ETQT * QT
+ A  ETQT3               ETQT2 * QT
+ A  PT                  P0 + P1 * T + P2 * T2
+ A  F                   PT / ETQT - 1.0
+ A  TWOF                F + F
+ A  DFDP0               1.0 / ETQT
+ A  DFDP1               T / ETQT
+ A  DFDP2               T2 / ETQT
+ A  DFDQ1               - PT * TM5 / ETQT2
+ A  DFDQ2               - PT * TM5SQ / ETQT2
+ A  D2P0Q1              - TM5 / ETQT2
+ A  D2P0Q2              - TM5SQ / ETQT2
+ A  D2P1Q1              - T * TM5 / ETQT2
+ A  D2P1Q2              - T * TM5SQ / ETQT2
+ A  D2P2Q1              - T2 * TM5 / ETQT2
+ A  D2P2Q2              - T2 * TM5SQ / ETQT2
+ A  D2Q1Q1              2.0 * PT * TM5SQ / ETQT3
+ A  D2Q1Q2              2.0 * PT * TM5SQ * TM5 / ETQT3
+ A  D2Q2Q2              2.0 * PT * TM5SQ * TM5SQ / ETQT3
+
+ F                      F * F
+
+ G  P0                  TWOF * DFDP0
+ G  P1                  TWOF * DFDP1
+ G  P2                  TWOF * DFDP2
+ G  Q1                  TWOF * DFDQ1
+ G  Q2                  TWOF * DFDQ2
+
+ H  P0        P0        2.0 * DFDP0 * DFDP0
+ H  P0        P1        2.0 * DFDP0 * DFDP1
+ H  P0        P2        2.0 * DFDP0 * DFDP2
+ H  P1        P1        2.0 * DFDP1 * DFDP1
+ H  P1        P2        2.0 * DFDP1 * DFDP2
+ H  P2        P2        2.0 * DFDP2 * DFDP2
+ H  P0        Q1        TWOF * D2P0Q1 + 2.0 * DFDP0 * DFDQ1
+ H  P0        Q2        TWOF * D2P0Q2 + 2.0 * DFDP0 * DFDQ2
+ H  P1        Q1        TWOF * D2P1Q1 + 2.0 * DFDP1 * DFDQ1
+ H  P1        Q2        TWOF * D2P1Q2 + 2.0 * DFDP1 * DFDQ2
+ H  P2        Q1        TWOF * D2P2Q1 + 2.0 * DFDP2 * DFDQ1
+ H  P2        Q2        TWOF * D2P2Q2 + 2.0 * DFDP2 * DFDQ2
+ H  Q1        Q1        TWOF * D2Q1Q1 + 2.0 * DFDQ1 * DFDQ1
+ H  Q1        Q2        TWOF * D2Q1Q2 + 2.0 * DFDQ1 * DFDQ2
+ H  Q2        Q2        TWOF * D2Q2Q2 + 2.0 * DFDQ2 * DFDQ2
+
+ENDATA
+
+

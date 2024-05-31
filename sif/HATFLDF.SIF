@@ -1,0 +1,96 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HATFLDF
+
+*   Problem :
+*   *********
+
+*   A test problem from the OPTIMA user manual.
+
+*   Source:
+*   "The OPTIMA user manual (issue No.8, p. 47)",
+*   Numerical Optimization Centre, Hatfield Polytechnic (UK), 1989.
+
+*   SIF input: Ph. Toint, May 1990.
+
+*   classification NOR2-AN-3-3
+
+*   Constants
+
+ IE 1                   1
+ IE 3                   3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ DO I         1                        3
+ XE G(I)      X1        1.0
+ ND
+
+CONSTANTS
+
+    HATFLDF   G1        0.032
+    HATFLDF   G2        0.056
+    HATFLDF   G3        0.099
+
+BOUNDS
+
+ FR HATFLDF   'DEFAULT'
+
+START POINT
+
+ XV HATFLDF   'DEFAULT' 0.1
+
+ELEMENT TYPE
+
+ EV XPEXP     X                        Y
+ EP XPEXP     T
+
+ELEMENT USES
+
+ XT 'DEFAULT' XPEXP
+ DO I         1                        3
+ RI RI        I
+ ZV A(I)      X                        X2
+ ZV A(I)      Y                        X3
+ ZP A(I)      T                        RI
+ ND
+
+GROUP USES
+
+ DO I         1                        3
+ XE G(I)      A(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HATFLDF
+
+TEMPORARIES
+
+ R  EX
+ M  EXP
+
+INDIVIDUALS
+
+ T  XPEXP
+ A  EX                  EXP( T * Y )
+ F                      X * EX
+ G  X                   EX
+ G  Y                   T * X * EX
+ H  X         Y         T * EX
+ H  Y         Y         T * T * X * EX
+
+ENDATA

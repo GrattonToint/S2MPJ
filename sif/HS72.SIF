@@ -1,0 +1,104 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS72
+
+*   Problem :
+*   *********
+
+*   An optimal sample sizing problem.
+
+*   Source: problem 72 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, March 1990.
+
+*   classification LOR2-MN-4-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+
+GROUPS
+
+ N  F         X1         1.0           X2        1.0
+ N  F         X3         1.0           X4        1.0
+
+ G  CON1
+ G  CON2
+
+CONSTANTS
+
+    HS72      F          -1.0
+    HS72      CON1       -0.0401
+    HS72      CON2       -0.010085
+
+BOUNDS
+
+ LO HS72      'DEFAULT'  0.001
+ UP HS72      X1         4.0D5
+ UP HS72      X2         3.0D5
+ UP HS72      X3         2.0D5
+ UP HS72      X4         1.0D5
+
+START POINT
+
+ V  HS72      'DEFAULT'  1.0
+
+ELEMENT TYPE
+
+ EV 1/X       X
+
+ELEMENT USES
+
+ T  E1        1/X
+ V  E1        X                        X1
+ T  E2        1/X
+ V  E2        X                        X2
+ T  E3        1/X
+ V  E3        X                        X3
+ T  E4        1/X
+ V  E4        X                        X4
+
+GROUP USES
+
+ E  CON1      E1        -4.0           E2        -2.25
+ E  CON1      E3        -1.0           E4        -0.25
+
+ E  CON2      E1        -0.16          E2        -0.36
+ E  CON2      E3        -0.64          E4        -0.64
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               727.5888453
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS72
+
+INDIVIDUALS
+
+ T  1/X
+
+ F                      1.0/X
+
+ G  X                   -1.0/X**2
+
+ H  X         X         2.0/X**3
+
+ENDATA
+

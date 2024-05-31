@@ -1,0 +1,535 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+ 
+NAME          FERRISDC
+ 
+*   Problem :
+*   *********
+ 
+*   A QP suggested by Michael Ferris
+*   from data classification
+*   SIF input: Nick Gould, November 2001.
+ 
+*   classification QLR2-AN-V-V
+
+*IE n                   4              $-PARAMETER
+*IE n                   100            $-PARAMETER
+*IE n                   200            $-PARAMETER
+ IE n                   4              $-PARAMETER     modified for S2X tests
+*IE n                   300            $-PARAMETER
+*IE k                   3              $-PARAMETER
+*IE k                   10             $-PARAMETER
+ IE k                   3              $-PARAMETER     modified for S2X tests
+*IE k                   20             $-PARAMETER
+
+*   Other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ RE 12                  12.0
+ RE 24                  24.0
+ RE 240                 240.0
+ IA k-1       k         -1
+ RI k         k
+ RI k-1       k-1
+ RD -1/k-1    k-1       -1.0
+ 
+ RD -1/k      k         -1.0 
+ RI n         n
+ RE 1                   1.0
+ RE 2                   2.0
+ R/ 1/12      1                        12
+ R/ 1/24      1                        24
+ R/ 1/240     1                        240
+ RM 7/240     1/240     7.0
+
+ R* 2**2      2                        2
+ R* 2**4      2**2                     2**2
+ R* 2**8      2**4                     2**4
+ R* 2**10     2**8                     2**2
+ R* 2**16     2**8                     2**8
+ R* 2**26     2**16                    2**10
+ R/ 2**-26    1                        2**26
+ R* nlambda   n                        2**-26
+ R* -1/k-1*nl nlambda                  -1/k-1
+
+* Initial values and seed value for pseudo random number generator 
+
+ IE ix                  1
+ IE ax                  16807
+ IE b15                 32768
+ IE b16                 65536
+ IE pp                  2147483647
+ RI pp        pp
+ 
+* param x {J} := ExtUniform(1)
+ DO j         1                        n
+* generate a pseudo random number
+* xhi=ix/b16
+ I/ xhi       ix                       b16
+* xalo=(ix-xhi*b16)*ax
+ I* xalo      xhi                      b16
+ I- xalo      ix                       xalo
+ I* xalo      xalo                     ax
+* leftlo=xalo/b16
+ I/ leftlo    xalo                     b16
+* fhi=xhi*ax+leftlo
+ I* fhi       xhi                      ax
+ I+ fhi       fhi                      leftlo
+* kk=fhi/b15
+ I/ kk        fhi                      b15 
+* ix=(((xalo-leftlo*b16)-pp)+(fhi-kk*b15)*b16)+kk
+ I* dum       leftlo                   b16
+ I- dum       xalo                     dum
+ I- ix        dum                      pp
+ I* dum       kk                       b15
+ I- dum       fhi                      dum
+ I* dum       dum                      b16
+ I+ ix        ix                       dum
+ I+ ix        ix                       kk
+* if (ix.lt.0) ix=ix+pp
+* this is how to write if(a>=0) then ... else ... endif !!
+*  start by finding c = min(a,0)
+*  if the value is integer, convert to real
+ RI a         ix
+*  set a <- - a and b to 0
+ RM a         a         -1.0
+ RE b                   0.0
+*  now add |a| + 2 to both
+ R( absa      ABS                      a
+ R( absb      ABS                      b
+ R+ absa+b    absa                     absb
+ RA absa+b+2  absa+b    2.0
+ R+ a         a                        absa+b+2
+ R+ b         b                        absa+b+2
+* only one of [a/b] and [b/a] is nonzero (unless a=0)
+ R/ a/b       a                        b
+ R/ b/a       b                        a
+ IR a/b       a/b
+ IR b/a       b/a
+ RI a/b       a/b
+ RI b/a       b/a
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ R+ sum       a/b                      b/a
+ R* a         a                        a/b
+ R* b         b                        b/a
+ R+ maxa,b    a                        b
+ R/ maxa,b    maxa,b                   sum
+* subtract |a| + |b| + 2 and negate to find the required minimum, c
+ R- c         absa+b+2                 maxa,b
+* reset a to its original value
+ R- a         absa+b+2                 a
+* form f = ( |c| + 2 ) / ( |c| + 1 )
+ R( absc      ABS                      c
+ RA absc+1    absc      1.0
+ RA absc+2    absc      2.0
+ R/ f         absc+2                   absc+1
+ IR f         f
+* form g = 2 - [f]
+ IS g         f         2
+* if ix < 0 ...
+ DO l         1                        g
+* ... ix=ix+pp
+ I+ ix        ix                       pp 
+ OD l
+*  randp=float(ix)*4.656612875e-10
+ RI randp     ix
+ A/ X(j)      randp                    pp
+ OD j
+
+* param r {J} := ExtUniform(1)
+ DO j         1                        n
+* generate a pseudo random number
+* xhi=ix/b16
+ I/ xhi       ix                       b16
+* xalo=(ix-xhi*b16)*ax
+ I* xalo      xhi                      b16
+ I- xalo      ix                       xalo
+ I* xalo      xalo                     ax
+* leftlo=xalo/b16
+ I/ leftlo    xalo                     b16
+* fhi=xhi*ax+leftlo
+ I* fhi       xhi                      ax
+ I+ fhi       fhi                      leftlo
+* kk=fhi/b15
+ I/ kk        fhi                      b15 
+* ix=(((xalo-leftlo*b16)-pp)+(fhi-kk*b15)*b16)+kk
+ I* dum       leftlo                   b16
+ I- dum       xalo                     dum
+ I- ix        dum                      pp
+ I* dum       kk                       b15
+ I- dum       fhi                      dum
+ I* dum       dum                      b16
+ I+ ix        ix                       dum
+ I+ ix        ix                       kk
+* if (ix.lt.0) ix=ix+pp
+* this is how to write if(a>=0) then ... else ... endif !!
+*  start by finding c = min(a,0)
+*  if the value is integer, convert to real
+ RI a         ix
+*  set a <- - a and b to 0
+ RM a         a         -1.0
+ RE b                   0.0
+*  now add |a| + 2 to both
+ R( absa      ABS                      a
+ R( absb      ABS                      b
+ R+ absa+b    absa                     absb
+ RA absa+b+2  absa+b    2.0
+ R+ a         a                        absa+b+2
+ R+ b         b                        absa+b+2
+* only one of [a/b] and [b/a] is nonzero (unless a=0)
+ R/ a/b       a                        b
+ R/ b/a       b                        a
+ IR a/b       a/b
+ IR b/a       b/a
+ RI a/b       a/b
+ RI b/a       b/a
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ R+ sum       a/b                      b/a
+ R* a         a                        a/b
+ R* b         b                        b/a
+ R+ maxa,b    a                        b
+ R/ maxa,b    maxa,b                   sum
+* subtract |a| + |b| + 2 and negate to find the required minimum, c
+ R- c         absa+b+2                 maxa,b
+* reset a to its original value
+ R- a         absa+b+2                 a
+* form f = ( |c| + 2 ) / ( |c| + 1 )
+ R( absc      ABS                      c
+ RA absc+1    absc      1.0
+ RA absc+2    absc      2.0
+ R/ f         absc+2                   absc+1
+ IR f         f
+* form g = 2 - [f]
+ IS g         f         2
+* if ix < 0 ...
+ DO l         1                        g
+* ... ix=ix+pp
+ I+ ix        ix                       pp 
+ OD l
+*  randp=float(ix)*4.656612875e-10
+ RI randp     ix
+ A/ R(j)      randp                    pp
+ OD j
+
+* param p {j = 1, ... , n, i = 1, ..., k} >= 0, <= 1, := 
+*   if i = 1 then .97*exp(-3*x[j])
+*   else if i = 3 then exp(-2.5*(x[j]-1.2)**2)
+*   else 1 - p[j,1] - p[j,3];
+
+ DO j         1                        n
+ AM arg       X(j)      -3.0      
+ R( arg       EXP                      arg
+ AM P(j,1)    arg       0.97
+ AA arg       X(j)      -1.2
+ R* arg       arg                      arg
+ RM arg       arg       -2.5
+ A( P(j,3)    EXP                      arg
+ A- arg       1                        P(j,1)
+ A- P(j,2)    arg                      P(j,3)
+ ND
+
+*param y {j = 1, ... , n} := 
+*  if r[j] <= p[j,1] then 1
+*  else if r[j] <= 1 - p[j,3] then 2
+*  else 3;
+
+ DO j         1                        n
+
+*  if a = p[j,1] - r[j] >= 0 ... 
+
+ A- a         P(j,1)                   R(j)
+
+* this is how to write if(a>=0) then ... else ... endif !!
+*  start by finding c = min(a,0)
+*  set a <- - a and b to 0
+ RM a         a         -1.0
+ RE b                   0.0
+*  now add |a| + 2 to both
+ R( absa      ABS                      a
+ R( absb      ABS                      b
+ R+ absa+b    absa                     absb
+ RA absa+b+2  absa+b    2.0
+ R+ a         a                        absa+b+2
+ R+ b         b                        absa+b+2
+* only one of [a/b] and [b/a] is nonzero (unless a=0)
+ R/ a/b       a                        b
+ R/ b/a       b                        a
+ IR a/b       a/b
+ IR b/a       b/a
+ RI a/b       a/b
+ RI b/a       b/a
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ R+ sum       a/b                      b/a
+ R* a         a                        a/b
+ R* b         b                        b/a
+ R+ maxa,b    a                        b
+ R/ maxa,b    maxa,b                   sum
+* subtract |a| + |b| + 2 and negate to find the required minimum, c
+ R- c         absa+b+2                 maxa,b
+* reset a to its original value
+ R- a         absa+b+2                 a
+* form f = ( |c| + 2 ) / ( |c| + 1 )
+ R( absc      ABS                      c
+ RA absc+1    absc      1.0
+ RA absc+2    absc      2.0
+ R/ f         absc+2                   absc+1
+ IR f         f
+* form g = 2 - [f]
+ IS g         f         2
+
+*  if a = p[j,1] - r[j] >= 0 ... 
+ DO l1        g                        0
+* ... set y(j) = 1
+ AE y(j)                1.0
+ OD l1
+
+*  if a = p[j,1] - r[j] < 0 ... 
+ DO l1        1                        g
+*  then if r[j] <= 1 - p[j,3] ...
+
+*  if a = 1 - p[j,3] - r[j] >= 0 ... 
+
+ A- a         1                        P(j,3)
+ A- a         a                        R(j)
+
+* this is how to write if(a>=0) then ... else ... endif !!
+*  start by finding c = min(a,0)
+*  set a <- - a and b to 0
+ RM a         a         -1.0
+ RE b                   0.0
+*  now add |a| + 2 to both
+ R( absa      ABS                      a
+ R( absb      ABS                      b
+ R+ absa+b    absa                     absb
+ RA absa+b+2  absa+b    2.0
+ R+ a         a                        absa+b+2
+ R+ b         b                        absa+b+2
+* only one of [a/b] and [b/a] is nonzero (unless a=0)
+ R/ a/b       a                        b
+ R/ b/a       b                        a
+ IR a/b       a/b
+ IR b/a       b/a
+ RI a/b       a/b
+ RI b/a       b/a
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ R+ sum       a/b                      b/a
+ R* a         a                        a/b
+ R* b         b                        b/a
+ R+ maxa,b    a                        b
+ R/ maxa,b    maxa,b                   sum
+* subtract |a| + |b| + 2 and negate to find the required minimum, c
+ R- c         absa+b+2                 maxa,b
+* reset a to its original value
+ R- a         absa+b+2                 a
+* form f = ( |c| + 2 ) / ( |c| + 1 )
+ R( absc      ABS                      c
+ RA absc+1    absc      1.0
+ RA absc+2    absc      2.0
+ R/ f         absc+2                   absc+1
+ IR f         f
+* form g = 2 - [f]
+ IS g         f         2
+*  else if r[j] <= 1 - p[j,3] ...
+* if c = 0
+ DO l2        g                        0
+* ... set y(j) = 2
+ AE y(j)                2.0
+ OD l2
+
+* else ...
+ DO l2        1                        g
+* ... set y(j) = 3
+ AE y(j)                3.0
+ OD l2   
+ OD l1
+ OD j
+
+* param Y {i = 1, ..., k, j = 1, ... , n} :=
+* (if y[j] = i then 1
+* else -1/(k-1))*nlambda;
+
+ DO j         1                        n
+ A= yj        y(j)
+ IR yj        yj
+ DO i         1                        k
+
+*  if c = Y(j) - i = 0 ...
+
+ I- c         yj                       i
+
+* this is how to write if(c=0) then ... else ... endif !!
+* if c is integer, convert to real
+ RI c         c  
+* form f = ( |c| + 2 ) / ( |c| + 1 )
+ R( absc      ABS                      c
+ RA absc+1    absc      1.0
+ RA absc+2    absc      2.0
+ R/ f         absc+2                   absc+1
+ IR f         f
+* form g = 2 - [f]
+ IS g         f         2
+
+* (if y[j] = i ...
+
+ DO l         g                        0
+ A= Y(i,j)    nlambda
+ OD l
+
+* else ...
+
+ DO l         1                        g
+ A= Y(i,j)    -1/k-1*nl
+ OD l
+ OD i
+ OD j
+
+*  coefficients of the Hessian
+
+ DO i         1                        n
+ AA di        X(i)       -0.5
+ A* di2       di                       di
+ A- di2       di2                      1/12
+ DO j         i                        n
+
+* b {i = 1, ... , n, j = 1, ... , n} := abs(x[i]-x[j]);
+
+ A- Xi-Xj     X(i)                     X(j)
+ R( bij       ABS                      Xi-Xj    
+
+* K {i = 1, ... , n, j = 1, ... , n} :=
+* (x[i]-0.5)*(x[j]-0.5)
+* + ( (x[i]-0.5)**2-1/12 ) * ( (x[j]-0.5)**2-1/12 ) / 4
+*  - ( (b[i,j]-0.5)**4 - ( (b[i,j]-0.5)**2 ) / 2 + 7/240 ) / 24;
+
+ AA dj        X(j)       -0.5
+ A* dj2       dj                       dj
+ A- dj2       dj2                      1/12
+ RA c         bij        -0.5
+ R* c2        c                        c         
+ R* c4        c2                       c2
+ RM c2        c2         -0.5
+ R+ arg       7/240                    c2
+ R+ arg       arg                      c4
+ R* arg       arg                      1/24 
+ R* dij       di                       dj
+*A= 1-(i,j)   dij
+ R* dij2      di2                      dj2
+ RM dij2      dij2       0.25
+*A= 2-(i,j)   dij2
+*A= 3-(i,j)   arg
+ R- arg       dij2                     arg
+ A+ K(i,j)    dij                      arg       
+ ND 
+
+VARIABLES
+ 
+ DO i         1                        k
+ DO j         1                        n
+ X  A(i,j)
+ ND
+
+ DO i         1                        n
+ X  W(i)
+ ND
+ 
+GROUPS
+ 
+*  linear part of the objective
+*    min 1/2 sum_i=1^k a(i,.) T K a(i,.) - 1/2k w^T K w 
+*    a,w               + sum_i=1^k y(i,.) T a(i,.)
+
+ DO j         1                        n
+ DO i         1                        k
+ ZN OBJ       A(i,j)                   Y(i,j)
+ ND
+
+*  true linear constraints
+*   sum_j=1^n a(i,j) - 1/k sum_j=1^n w(j) = 0  ( i = 1, ... , k )
+
+ DO i         1                        k
+ DO j         1                        n
+ XE C(i)      A(i,j)     1.0
+ ZE C(i)      W(j)                     -1/k
+ ND
+
+*  artificial linear constraints
+*   sum_i=1^k a(i,j) - w(j) = 0 ( j = 1, .... , n )
+
+ DO j         1                        n
+ XE A(j)      W(j)       -1.0
+ DO i         1                        k
+ XE A(j)      A(i,j)     1.0
+ ND
+
+BOUNDS
+ 
+ LO FERRISDC  'DEFAULT' 0.0
+ UP FERRISDC  'DEFAULT' 1.0
+
+ DO i         1                        n
+ XR FERRISDC  W(i)
+ ND
+ 
+* param L {i = 1, ..., k, j = 1, ... , n} binary :=
+*  if y[j] = i then 0
+*  else 1;
+
+ DO j         1                        n
+ A= yj        y(j)
+ IR yj        yj
+ DO i         1                        k
+
+*  if c = Y(j) - i = 0 ...
+
+ I- c         yj                       i
+
+* this is how to write if(c=0) then ... else ... endif !!
+* if c is integer, convert to real
+ RI c         c  
+* form f = ( |c| + 2 ) / ( |c| + 1 )
+ R( absc      ABS                      c
+ RA absc+1    absc      1.0
+ RA absc+2    absc      2.0
+ R/ f         absc+2                   absc+1
+ IR f         f
+* form g = 2 - [f]
+ IS g         f         2
+
+* (if y[j] = i ...
+
+ DO l         g                        0
+ XX FERRISDC  A(i,j)    0.0
+ OD l
+ OD i
+ OD j
+
+QUADRATIC
+
+*  quadratic part of the objective
+*    min 1/2 sum_i=1^k a(i,.) T K a(i,.) - 1/2k w^T K w 
+*    a,w               + sum_i=1^k y(i,.) T a(i,.)
+
+ DO i         1                        k
+ DO l         1                        n
+ DO j         1                        l
+ Z  A(i,j)    A(i,l)                   K(j,l)
+ ND
+
+ DO l         1                        n
+ DO j         1                        l
+ A* coef      -1/k                     K(j,l)
+ Z  W(j)      W(l)                     coef
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
+*XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
+
+ENDATA

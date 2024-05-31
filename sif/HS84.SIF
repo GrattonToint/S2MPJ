@@ -1,0 +1,174 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS84
+
+*   *********
+*   Problem :
+*   *********
+
+*   Source: problem 84 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, March 1991.
+
+*   classification QQR2-AN-5-3
+
+*   Set useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+ IE 15                  15
+ IE 16                  16
+ IE 17                  17
+ IE 18                  18
+ IE 19                  19
+ IE 20                  20
+ IE 21                  21
+
+ AE A(1)                -24345.0
+ AE A(2)                -8720288.849
+ AM MA(2)     A(2)      -1.0
+ AE A(3)                150512.5253
+ AM MA(3)     A(3)      -1.0
+ AE A(4)                -156.6950325
+ AM MA(4)     A(4)      -1.0
+ AE A(5)                476470.3222
+ AM MA(5)     A(5)      -1.0
+ AE A(6)                729482.8271
+ AM MA(6)     A(6)      -1.0
+ AE A(7)                -145421.402
+ AE A(8)                2931.1506
+ AE A(9)                -40.427932
+ AE A(10)               5106.192
+ AE A(11)               15711.36
+ AE A(12)               -155011.1084
+ AE A(13)               4360.53352
+ AE A(14)               12.9492344
+ AE A(15)               10236.884
+ AE A(16)               13176.786
+ AE A(17)               -326669.5104
+ AE A(18)               7390.68412
+ AE A(19)               -27.8986976
+ AE A(20)               16643.076
+ AE A(21)               30988.146
+
+VARIABLES
+
+ DO I         1                        5
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ ZN OBJ       X(1)                     MA(2)
+
+*   Constraint functions
+
+ ZG CON1      X(1)                     A(7)
+ ZG CON2      X(1)                     A(12)
+ ZG CON3      X(1)                     A(17)
+
+CONSTANTS
+
+ Z  HS84      OBJ                      A(1)
+
+RANGES
+
+    HS84      CON1      294000.0
+    HS84      CON2      294000.0
+    HS84      CON3      277200.0
+
+BOUNDS
+
+ XL HS84      X(1)      0.0
+ XL HS84      X(2)      1.2
+ XL HS84      X(3)      20.0
+ XL HS84      X(4)      9.0
+ XL HS84      X(5)      6.5
+ XU HS84      X(1)      1000.0
+ XU HS84      X(2)      2.4
+ XU HS84      X(3)      60.0
+ XU HS84      X(4)      9.3
+ XU HS84      X(5)      7.0
+
+START POINT
+
+ XV HS84      X(1)      2.52
+ XV HS84      X(2)      2.0
+ XV HS84      X(3)      37.5
+ XV HS84      X(4)      9.25
+ XV HS84      X(5)      6.8
+
+ELEMENT TYPE
+
+ EV PROD      U1                       U2
+
+ELEMENT USES
+
+ DO I         1                        4
+ XT E(I)      PROD
+ IA IP1       I         1
+ ZV E(I)      U1                       X(1)
+ ZV E(I)      U2                       X(IP1)
+ ND
+
+GROUP USES
+
+ ZE OBJ       E(1)                     MA(3)
+ ZE OBJ       E(2)                     MA(4)
+ ZE OBJ       E(3)                     MA(5)
+ ZE OBJ       E(4)                     MA(6)
+
+ ZE CON1      E(1)                     A(8)
+ ZE CON1      E(2)                     A(9)
+ ZE CON1      E(3)                     A(10)
+ ZE CON1      E(4)                     A(11)
+
+ ZE CON2      E(1)                     A(13)
+ ZE CON2      E(2)                     A(14)
+ ZE CON2      E(3)                     A(15)
+ ZE CON2      E(4)                     A(16)
+
+ ZE CON3      E(1)                     A(18)
+ ZE CON3      E(2)                     A(19)
+ ZE CON3      E(3)                     A(20)
+ ZE CON3      E(4)                     A(21)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS84
+
+INDIVIDUALS
+
+ T  PROD
+
+ F                      U1*U2
+ G  U1                  U2
+ G  U2                  U1
+ H  U1        U2        1.0
+
+ENDATA

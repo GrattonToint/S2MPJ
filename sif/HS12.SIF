@@ -1,0 +1,94 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS12
+
+*   Problem :
+*   *********
+
+*   Source: problem 12 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification QQR2-AN-2-1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        -7.0           X2        -7.0
+
+ G  CON1
+
+CONSTANTS
+
+    HS12      CON1      -25.0
+
+BOUNDS
+
+ FR HS12      'DEFAULT'
+
+START POINT
+
+ XV HS12      'DEFAULT' 0.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        2PR
+ V  E3        V1                       X1
+ V  E3        V2                       X2
+
+GROUP USES
+
+ E  OBJ       E1        0.5            E2
+ E  OBJ       E3        -1.0
+ E  CON1      E1        -4.0           E2        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -30.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS12
+
+INDIVIDUALS
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

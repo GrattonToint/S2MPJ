@@ -1,0 +1,106 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS29
+
+*   Problem :
+*   *********
+
+*   Source: problem 29 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OQR2-AN-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ G  CON1
+
+CONSTANTS
+
+    HS29      CON1      -48.0
+
+BOUNDS
+
+ FR HS29      'DEFAULT'
+
+START POINT
+
+    HS29      X1        1.0
+    HS29      X2        1.0
+    HS29      X3        1.0
+
+ELEMENT TYPE
+
+ EV PROD3     V1                       V2
+ EV PROD3     V3
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        PROD3
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+ V  E1        V3                       X3
+
+ T  E2        SQ
+ V  E2        V1                       X1
+
+ T  E3        SQ
+ V  E3        V1                       X2
+
+ T  E4        SQ
+ V  E4        V1                       X3
+
+GROUP USES
+
+ E  OBJ       E1
+ E  CON1      E2        -1.0           E3        -2.0
+ E  CON1      E4        -4.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -22.6274169
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS29
+
+
+INDIVIDUALS
+
+ T  PROD3
+ F                      -V1 * V2 * V3
+ G  V1                  -V2 * V3
+ G  V2                  -V1 * V3
+ G  V3                  -V2 * V1
+ H  V1        V2        -V3
+ H  V1        V3        -V2
+ H  V2        V3        -V1
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

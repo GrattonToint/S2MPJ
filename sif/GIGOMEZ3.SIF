@@ -1,0 +1,122 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GIGOMEZ3
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   C. Gigola and S. Gomez,
+*   "A Regularization Method for Solving the Finite Convex Min-Max Problem",
+*   SINUM 27(6), pp. 1621-1634, 1990.
+
+*   SIF input: Ph. Toint, August 1993.
+
+*   classification LOR2-AY-3-3
+
+VARIABLES
+
+    X1
+    X2
+    Z
+
+GROUPS
+
+ XN OBJ       Z         1.0
+ XG C1        Z         1.0
+ XG C2        Z         1.0
+ XG C3        Z         1.0
+
+BOUNDS
+
+ FR GIGOMEZ2  'DEFAULT'
+
+START POINT
+
+ XV GIGOMEZ3  X1        2.0
+ XV GIGOMEZ3  X2        2.0
+ XV GIGOMEZ3  Z         2.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV FR        X
+ EV SSQ       X
+ EV IEXP      X                        Y
+ IV IEXP      YMX
+
+ELEMENT USES
+
+ T  X1FR      FR
+ ZV X1FR      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+ T  SX1       SSQ
+ ZV SX1       X                        X1
+
+ T  SX2       SSQ
+ ZV SX2       X                        X2
+
+ T  EEXP      IEXP
+ ZV EEXP      X                        X1
+ ZV EEXP      Y                        X2
+
+GROUP USES
+
+ E  C1        X1FR      -1.0           X2SQ      -1.0
+ E  C2        SX1       -1.0           SX2       -1.0
+ E  C3        EEXP      -2.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               2.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GIGOMEZ3
+
+TEMPORARIES
+
+ R  E
+ M  EXP
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  FR
+ F                      X**4
+ G  X                   4.0 * X** 3
+ H  X         X         12.0 * X**2
+
+ T  SSQ
+ F                      ( 2.0 - X )**2
+ G  X                   -4.0 + 2.0 * X
+ H  X         X         2.0
+
+ T  IEXP
+ R  YMX       Y         1.0            X         -1.0
+ A  E                   EXP( YMX )
+ F                      E
+ G  YMX                 E
+ H  YMX       YMX       E
+
+ENDATA
+
+

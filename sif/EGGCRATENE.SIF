@@ -1,0 +1,105 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EGGCRATENE
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example EGGCRATE
+
+*   Fit: (x,y,5sinx,5siny) + e = 0
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   Nonlinear-equation formulation of EGGCRATE.SIF
+
+*   SIF input: Nick Gould
+
+*   classification NOR2-MN-4-2
+
+*   Number of data values
+
+ IE M                   4
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+    X
+    Y
+
+GROUPS
+
+ E  F1        X         1.0
+ E  F2        Y         1.0
+ E  F3
+ E  F4
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X         1.0
+    START     Y         2.0
+
+ELEMENT TYPE
+
+ EV SIN       V
+
+ELEMENT USES
+
+ XT E3        SIN
+ ZV E3        V                        X
+ XT E4        SIN
+ ZV E4        V                        Y
+
+GROUP USES
+
+ XE F3        E3        5.0
+ XE F4        E4        5.0
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO EGGCRATE            0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EGGCRATENE
+
+TEMPORARIES
+ R  S
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SIN
+ A  S                   SIN( V )
+ F                      S
+ G  V                   COS( V )
+ H  V         V         - S
+
+ENDATA

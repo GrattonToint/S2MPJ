@@ -1,0 +1,63 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GOFFIN
+
+*   Problem :
+*   *********
+
+*   A linear minmax problem in 50 variables.
+
+*   Source: 
+*   M.M. Makela,
+*   "Nonsmooth optimization",
+*   Ph.D. thesis, Jyvaskyla University, 1990
+
+*   SIF input: Ph. Toint, Nov 1993
+*              comments updated Feb 2001.
+
+*   classification  LLR2-AN-51-50
+
+ IE 1                   1
+ IE 50                  50
+
+VARIABLES
+
+ DO I         1                        50
+ X  X(I)
+ OD I
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ DO I         1                        50
+ XL F(I)      U         -1.0           X(I)      50.0
+ DO J         1                        50
+ XL F(I)      X(J)      -1.0
+ OD J
+ OD I
+
+BOUNDS
+
+*   All variables are free
+
+ FR GOFFIN    'DEFAULT'
+
+START POINT
+
+ DO I         1                        50
+ RI RI        I
+ RA T         RI        -25.5
+ Z  GOFFIN    X(I)                     T
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA

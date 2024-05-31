@@ -1,0 +1,122 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS65
+
+*   Problem:
+*   ********
+
+*   Source: problem 65 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph. Toint and Nick Gould, June 1991.
+
+*   classification QQR2-AN-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ1      X1        1.0
+ N  OBJ1      X2        -1.0
+ N  OBJ2      X1        1.0
+ N  OBJ2      X2        1.0
+ N  OBJ2      'SCALE'   9.0
+ N  OBJ3      X3        1.0
+
+ G  C1
+
+CONSTANTS
+
+    HS65      OBJ2      10.0
+    HS65      OBJ3      5.0
+    HS65      C1        -48.0
+
+BOUNDS
+
+ LO HS65      X1        -4.5
+ UP HS65      X1        4.5
+
+ LO HS65      X2        -4.5
+ UP HS65      X2        4.5
+
+ LO HS65      X3        -5.0
+ UP HS65      X3        5.0
+
+START POINT
+
+    HS65      X1        -5.0
+    HS65      X2        5.0
+    HS65      X3        0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        X                        X1
+ V  E2        X                        X2
+ V  E3        X                        X3
+
+GROUP TYPE
+
+ GV L2        ALPHA
+
+GROUP USES
+
+ T  OBJ1      L2
+ T  OBJ2      L2
+ T  OBJ3      L2
+ E  C1        E1        -1.0           E2        -1.0
+ E  C1        E3        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.9535288567
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS65
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS65
+
+INDIVIDUALS
+
+ T  L2
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0
+
+ENDATA

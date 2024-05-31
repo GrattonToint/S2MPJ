@@ -1,0 +1,200 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS99EXP
+
+*   Problem :
+*   *********
+
+*   Source: an expanded form of problem 99 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification OOR2-AN-31-21
+
+*   Problem data
+
+ RE T1                  0.0
+ RE T2                  25.0
+ RE T3                  50.0
+ RE T4                  100.0
+ RE T5                  150.0
+ RE T6                  200.0
+ RE T7                  290.0
+ RE T8                  380.0
+
+ RE A1                  0.0
+ RE A2                  50.0
+ RE A3                  50.0
+ RE A4                  75.0
+ RE A5                  75.0
+ RE A6                  75.0
+ RE A7                  100.0
+ RE A8                  100.0
+
+ RE B                   32.0
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 7                   7
+ IE 8                   8
+
+*   Increments
+
+ DO I         2                        8
+ IA I-1       I         -1
+ A- DT(I)     T(I)                     T(I-1)
+ A* DTISQ     DT(I)                    DT(I)
+ AM DT(I)SQ/2 DTISQ     0.5
+ ND
+
+VARIABLES
+
+ DO I         1                        7
+ X  X(I)
+ X  R(I)
+ X  Q(I)
+ X  S(I)
+ ND
+
+ X  R(8)
+ X  Q(8)
+ X  S(8)
+
+GROUPS
+
+ DO I         2                        8
+ IA I-1       I         -1
+ XE R(I)DEF   R(I)      -1.0           R(I-1)    1.0
+ XE Q(I)DEF   Q(I)      -1.0           Q(I-1)    1.0
+ ZE Q(I)DEF   S(I-1)                   DT(I)
+ XE S(I)DEF   S(I)      -1.0           S(I-1)    1.0
+ ND
+
+ XN OBJ       R(8)      1.0
+ XN OBJ       'SCALE'   -1.0
+
+CONSTANTS
+
+ DO I         2                        7
+ A* RHS       DT(I)SQ/2                B
+ Z  HS99EXP   Q(I)DEF                  RHS
+ A* RHS       DT(I)                    B
+ Z  HS99EXP   S(I)DEF                  RHS
+ ND
+
+ X  HS99EXP   Q(8)DEF   100000.0
+ X  HS99EXP   S(8)DEF   1000.0
+
+BOUNDS
+
+ FR HS99EXP   'DEFAULT'
+
+ XX HS99EXP   R(1)      0.0
+ XX HS99EXP   Q(1)      0.0
+ XX HS99EXP   S(1)      0.0
+
+ DO I         1                        7
+ XL HS99EXP   X(I)      0.0
+ XU HS99EXP   X(I)      1.58
+ ND
+
+START POINT
+
+ DO I         1                        7
+ XV HS99EXP   X(I)      0.5
+ ND
+
+ELEMENT TYPE
+
+ EV SN        X
+ EV CS        X
+
+ELEMENT USES
+
+ DO I         1                        7
+ XT SNX(I)    SN
+ ZV SNX(I)    X                        X(I)
+ XT CSX(I)    CS
+ ZV CSX(I)    X                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  OBJ       L2
+
+ DO I         2                        8
+ IA I-1       I         -1
+ A* W         A(I)                     DT(I)
+ ZE R(I)DEF   CSX(I-1)                 W
+ ZE S(I)DEF   SNX(I-1)                 W
+ A* W         A(I)                     DT(I)SQ/2
+ ZE Q(I)DEF   SNX(I-1)                 W
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -831079892.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS99EXP
+
+TEMPORARIES
+
+ R  SNX
+ R  CSX
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SN
+ A  SNX                 SIN(X)
+ F                      SNX
+ G  X                   COS(X)
+ H  X         X         - SNX
+
+ T  CS
+ A  CSX                 COS(X)
+ F                      CSX
+ G  X                   - SIN(X)
+ H  X         X         - CSX
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS99EXP
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

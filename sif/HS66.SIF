@@ -1,0 +1,89 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS66
+
+*   Problem :
+*   *********
+
+*   Source: problem 66 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B Baudson, March 1990.
+
+*   classification LOR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X1        -0.8           X3        0.2
+
+ G  C1        X2        1.0
+ G  C2        X3        1.0
+
+BOUNDS
+
+ UP HS66      X1        100
+ UP HS66      X2        100
+ UP HS66      X3        10.0
+
+START POINT
+
+    HS66      X1        0.0
+    HS66      X2        1.05
+    HS66      X3        2.9
+
+ELEMENT TYPE
+
+ EV EXPO      X
+
+ELEMENT USES
+
+ XT 'DEFAULT' EXPO
+
+ V  E1        X                        X1
+ V  E2        X                        X2
+
+GROUP USES
+
+ E  C1        E1        -1.0
+ E  C2        E2        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               .5181632741
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS66
+
+TEMPORARIES
+
+ R  EXPX
+ M  EXP
+
+INDIVIDUALS
+
+ T  EXPO
+ A  EXPX                EXP( X )
+ F                      EXPX
+ G  X                   EXPX
+ H  X         X         EXPX
+
+ENDATA

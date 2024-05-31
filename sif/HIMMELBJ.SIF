@@ -1,0 +1,400 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBJ
+
+*   Problem :
+*   *********
+
+*   An chemical equilibrium problem by A.P. Jones.
+*   It has a nonlinear objective and linear constraints
+
+*   Source: problem 6 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+*   SIF input: Ph. Toint, March 1991.
+
+*   classification OLR2-MY-45-14
+
+*   Number of variable sets
+
+ IE NSETS               7
+
+*   Ranges of each set
+
+ RE NS1                 4.0
+ RE NS2                 13.0
+ RE NS3                 18.0
+ RE NS4                 3.0
+ RE NS5                 3.0
+ RE NS6                 2.0
+ RE NS7                 2.0
+
+*   Number of flow equations
+
+ IE NEQ                 16
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 13                  13
+ IE 18                  18
+
+VARIABLES
+
+ DO K         1                        NSETS
+ A= RNSK      NS(K)
+ IR NSK       RNSK
+ DO J         1                        NSK
+ X  X(J,K)
+ ND
+
+GROUPS
+
+ N  OBJ       X2,1      -7.69          X3,1      -11.52
+ N  OBJ       X4,1      -36.60         X1,2      -10.94
+ N  OBJ       X8,2      2.5966         X9,2      -39.39
+ N  OBJ       X10,2     -21.35         X11,2     -32.84
+ N  OBJ       X12,2     6.26           X1,3      10.45
+ N  OBJ       X3,3      -0.5           X7,3      2.2435
+ N  OBJ       X9,3      -39.39         X10,3     -21.49
+ N  OBJ       X11,3     -32.84         X12,3     6.12
+ N  OBJ       X15,3     -1.9028        X16,3     -2.8889
+ N  OBJ       X17,3     -3.3622        X18,3     -7.4854
+ N  OBJ       X1,4      -15.639        X3,4      21.81
+ N  OBJ       X1,5      -16.79         X3,5      18.9779
+ N  OBJ       X2,6      11.959         X2,7      12.899
+
+ E  C1        X1,1      1.0            X1,2      1.0
+ E  C1        X1,3      1.0            X15,3     1.0
+ E  C1        X16,3     2.0            X17,3     3.0
+ E  C1        X18,3     4.0
+
+ E  C2        X2,1      1.0            X2,2      1.0
+ E  C2        X10,2     1.0            X11,2     1.0
+ E  C2        X12,2     1.0            X2,3      1.0
+ E  C2        X10,3     1.0            X11,3     1.0
+ E  C2        X12,3     1.0            X2,6      1.0
+ E  C2        X2,7      1.0
+
+ E  C3        X3,1      1.0            X3,2      1.0
+ E  C3        X3,3      1.0
+
+ E  C4        X4,1      1.0            X4,2      1.0
+ E  C4        X9,2      1.0            X11,2     1.0
+ E  C4        X12,2     -1.0           X4,3      1.0
+ E  C4        X9,3      1.0            X11,3     1.0
+ E  C4        X12,3     -1.0           X1,4      1.0
+ E  C4        X3,4      -1.0           X1,5      1.0
+ E  C4        X3,5      -1.0           X2,6      -1.0
+ E  C4        X2,7      -1.0
+
+ E  C5        X4,1      1.0            X5,2      1.0
+ E  C5        X9,2      1.0            X10,2     1.0
+ E  C5        X11,2     1.0            X12,2     1.0
+ E  C5        X5,3      1.0            X9,3      1.0
+ E  C5        X10,3     1.0            X11,3     1.0
+ E  C5        X12,3     1.0
+
+ E  C6        X6,2      1.0            X6,3      1.0
+
+ E  C7        X7,2      1.0            X7,3      1.0
+
+ E  C8        X8,2      1.0            X8,3      1.0
+
+ E  C11       X14,3     1.0            X15,3     1.0
+ E  C11       X16,3     1.0            X17,3     1.0
+ E  C11       X18,3     1.0
+
+ E  C12       X4,2      1.0            X5,2      -1.0
+ E  C12       X6,2      -1.0           X7,2      1.0
+ E  C12       X8,2      1.0            X10,2     1.0
+ E  C12       X12,2     -2.0           X13,2     -1.0
+ E  C12       X14,3     -4.0           X15,3     -3.0
+ E  C12       X16,3     -2.0           X17,3     -1.0
+
+ E  C13       X15,3     -1.0           X16,3     -2.0
+ E  C13       X17,3     -3.0           X18,3     -4.0
+ E  C13       X1,4      1.0            X2,4      1.0
+ E  C13       X3,4      1.0
+
+ E  C14       X1,5      1.0            X2,5      1.0
+ E  C14       X3,5      1.0
+
+ E  C15       X3,4      -4.0           X1,6      1.0
+ E  C15       X2,6      1.0
+
+ E  C16       X3,5      -4.0           X1,7      1.0
+ E  C16       X2,7      1.0
+
+CONSTANTS
+
+ X  HIMMELBJ  C1        0.652981
+ X  HIMMELBJ  C2        0.281941
+ X  HIMMELBJ  C3        3.705233
+ X  HIMMELBJ  C4        47.00022
+ X  HIMMELBJ  C5        47.02972
+ X  HIMMELBJ  C6        0.08005
+ X  HIMMELBJ  C7        0.08813
+ X  HIMMELBJ  C8        0.04829
+ X  HIMMELBJ  C11       0.0022725
+
+BOUNDS
+
+ XL HIMMELBJ  'DEFAULT' 1.D-12
+
+ FX HIMMELBJ  X13,2     0.0155
+ FX HIMMELBJ  X13,3     0.0211275
+
+START POINT
+
+ XV HIMMELBJ  'DEFAULT' 0.1
+
+ELEMENT TYPE
+
+ EV XLOGX     X
+
+ EV XLOGX2    Y1                       Y2
+ EV XLOGX2    X
+ IV XLOGX2    XX                       YY
+
+ EV XLOGX3    Y1                       Y2
+ EV XLOGX3    Y3                       X
+ IV XLOGX3    XX                       YY
+
+ EV XLOGX4    Y1                       Y2
+ EV XLOGX4    Y3                       Y4
+ EV XLOGX4    X
+ IV XLOGX4    XX                       YY
+
+ EV XLOGX13   Y1                       Y2
+ EV XLOGX13   Y3                       Y4
+ EV XLOGX13   Y5                       Y6
+ EV XLOGX13   Y7                       Y8
+ EV XLOGX13   Y9                       Y10
+ EV XLOGX13   Y11                      Y12
+ EV XLOGX13   Y13                      X
+ IV XLOGX13   XX                       YY
+
+ EV XLOGX18   Y1                       Y2
+ EV XLOGX18   Y3                       Y4
+ EV XLOGX18   Y5                       Y6
+ EV XLOGX18   Y7                       Y8
+ EV XLOGX18   Y9                       Y10
+ EV XLOGX18   Y11                      Y12
+ EV XLOGX18   Y13                      Y14
+ EV XLOGX18   Y15                      Y16
+ EV XLOGX18   Y17                      Y18
+ EV XLOGX18   X
+ IV XLOGX18   XX                       YY
+
+ELEMENT USES
+
+ DO K         1                        NSETS
+ A= RNSK      NS(K)
+ IR NSK       RNSK
+ DO J         1                        NSK
+ XT A(J,K)    XLOGX
+ ZV A(J,K)    X                        X(J,K)
+ ND
+
+ IE K                   1
+ DO J         1                        4
+ XT B(J,K)    XLOGX4
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,1
+ ZV B(J,K)    Y2                       X2,1
+ ZV B(J,K)    Y3                       X3,1
+ ZV B(J,K)    Y4                       X4,1
+ ND
+
+ IE K                   2
+ DO J         1                        13
+ XT B(J,K)    XLOGX13
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,2
+ ZV B(J,K)    Y2                       X2,2
+ ZV B(J,K)    Y3                       X3,2
+ ZV B(J,K)    Y4                       X4,2
+ ZV B(J,K)    Y5                       X5,2
+ ZV B(J,K)    Y6                       X6,2
+ ZV B(J,K)    Y7                       X7,2
+ ZV B(J,K)    Y8                       X8,2
+ ZV B(J,K)    Y9                       X9,2
+ ZV B(J,K)    Y10                      X10,2
+ ZV B(J,K)    Y11                      X11,2
+ ZV B(J,K)    Y12                      X12,2
+ ZV B(J,K)    Y13                      X13,2
+ ND
+
+ IE K                   3
+ DO J         1                        18
+ XT B(J,K)    XLOGX18
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,3
+ ZV B(J,K)    Y2                       X2,3
+ ZV B(J,K)    Y3                       X3,3
+ ZV B(J,K)    Y4                       X4,3
+ ZV B(J,K)    Y5                       X5,3
+ ZV B(J,K)    Y6                       X6,3
+ ZV B(J,K)    Y7                       X7,3
+ ZV B(J,K)    Y8                       X8,3
+ ZV B(J,K)    Y9                       X9,3
+ ZV B(J,K)    Y10                      X10,3
+ ZV B(J,K)    Y11                      X11,3
+ ZV B(J,K)    Y12                      X12,3
+ ZV B(J,K)    Y13                      X13,3
+ ZV B(J,K)    Y14                      X14,3
+ ZV B(J,K)    Y15                      X15,3
+ ZV B(J,K)    Y16                      X16,3
+ ZV B(J,K)    Y17                      X17,3
+ ZV B(J,K)    Y18                      X18,3
+ ND
+
+ IE K                   4
+ DO J         1                        3
+ XT B(J,K)    XLOGX3
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,4
+ ZV B(J,K)    Y2                       X2,4
+ ZV B(J,K)    Y3                       X3,4
+ ND
+
+ IE K                   5
+ DO J         1                        3
+ XT B(J,K)    XLOGX3
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,5
+ ZV B(J,K)    Y2                       X2,5
+ ZV B(J,K)    Y3                       X3,5
+ ND
+
+ IE K                   6
+ DO J         1                        2
+ XT B(J,K)    XLOGX2
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,6
+ ZV B(J,K)    Y2                       X2,6
+ ND
+
+ IE K                   7
+ DO J         1                        2
+ XT B(J,K)    XLOGX2
+ ZV B(J,K)    X                        X(J,K)
+ ZV B(J,K)    Y1                       X1,7
+ ZV B(J,K)    Y2                       X2,7
+ ND
+
+
+GROUP USES
+
+ DO K         1                        NSETS
+ A= RNSK      NS(K)
+ IR NSK       RNSK
+ DO J         1                        NSK
+ XE OBJ       A(J,K)                   B(J,K)    -1.0
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1910.344724
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBJ
+
+TEMPORARIES
+
+ R  LOGX
+ M  LOG
+
+INDIVIDUALS
+
+ T  XLOGX
+ A  LOGX                LOG( X )
+ F                      X * LOGX
+ G  X                   LOGX + 1.0
+ H  X         X         1.0 / X
+
+ T  XLOGX2
+ R  YY        Y1        1.0            Y2        1.0
+ R  XX        X         1.0
+ A  LOGX                LOG( YY )
+ F                      XX * LOGX
+ G  XX                  LOGX
+ G  YY                  XX / YY
+ H  XX        YY        1.0 / YY
+ H  YY        YY        - XX / YY**2
+
+ T  XLOGX3
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0
+ R  XX        X         1.0
+ A  LOGX                LOG( YY )
+ F                      XX * LOGX
+ G  XX                  LOGX
+ G  YY                  XX / YY
+ H  XX        YY        1.0 / YY
+ H  YY        YY        - XX / YY**2
+
+ T  XLOGX4
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0            Y4        1.0
+ R  XX        X         1.0
+ A  LOGX                LOG( YY )
+ F                      XX * LOGX
+ G  XX                  LOGX
+ G  YY                  XX / YY
+ H  XX        YY        1.0 / YY
+ H  YY        YY        - XX / YY**2
+
+ T  XLOGX13
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0            Y4        1.0
+ R  YY        Y5        1.0            Y6        1.0
+ R  YY        Y7        1.0            Y8        1.0
+ R  YY        Y9        1.0            Y10       1.0
+ R  YY        Y11       1.0            Y12       1.0
+ R  YY        Y13       1.0
+ R  XX        X         1.0
+ A  LOGX                LOG( YY )
+ F                      XX * LOGX
+ G  XX                  LOGX
+ G  YY                  XX / YY
+ H  XX        YY        1.0 / YY
+ H  YY        YY        - XX / YY**2
+
+ T  XLOGX18
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0            Y4        1.0
+ R  YY        Y5        1.0            Y6        1.0
+ R  YY        Y7        1.0            Y8        1.0
+ R  YY        Y9        1.0            Y10       1.0
+ R  YY        Y11       1.0            Y12       1.0
+ R  YY        Y13       1.0            Y14       1.0
+ R  YY        Y15       1.0            Y16       1.0
+ R  YY        Y17       1.0            Y18       1.0
+ R  XX        X         1.0
+ A  LOGX                LOG( YY )
+ F                      XX * LOGX
+ G  XX                  LOGX
+ G  YY                  XX / YY
+ H  XX        YY        1.0 / YY
+ H  YY        YY        - XX / YY**2
+
+ENDATA
+

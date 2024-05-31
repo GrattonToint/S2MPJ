@@ -1,0 +1,238 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS59
+
+*   Problem :
+*   *********
+
+*   Source: problem 59 (corrected) in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn and Ph.L. Toint, November 1990.
+
+*   classification OQR2-AN-2-3
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        3.8112         X2        6.8306
+
+ G  CON1
+ G  CON2      X2        1.0
+ G  CON3      X1        -5.0
+
+CONSTANTS
+
+    HS59      OBJ       75.196
+    HS59      CON1      700.0
+    HS59      CON3      -275.0
+
+BOUNDS
+
+ UP HS59      X1        75.0
+ UP HS59      X2        65.0
+
+START POINT
+
+    HS59      X1        90.0
+    HS59      X2        10.0
+
+ELEMENT TYPE
+
+ EV POWER     V1
+ EP POWER     P
+
+ EV POWPR     V1                       V2
+ EP POWPR     P1                       P2
+
+ EV EXPR      V1                       V2
+
+ EV SHPOW     V1
+ EP SHPOW     P                        S
+
+ELEMENT USES
+
+ T  E1        POWER
+ V  E1        V1                       X1
+ P  E1        P         3.0
+
+ T  E2        POWER
+ V  E2        V1                       X1
+ P  E2        P         4.0
+
+ T  E3        POWPR
+ V  E3        V1                       X1
+ V  E3        V2                       X2
+ P  E3        P1        1.0
+ P  E3        P2        1.0
+
+ T  E4        POWPR
+ V  E4        V1                       X1
+ V  E4        V2                       X2
+ P  E4        P1        2.0
+ P  E4        P2        1.0
+
+ T  E5        POWPR
+ V  E5        V1                       X1
+ V  E5        V2                       X2
+ P  E5        P1        4.0
+ P  E5        P2        1.0
+
+ T  E6        POWER
+ V  E6        V1                       X2
+ P  E6        P         2.0
+
+ T  E7        POWER
+ V  E7        V1                       X2
+ P  E7        P         3.0
+
+ T  E8        POWER
+ V  E8        V1                       X2
+ P  E8        P         4.0
+
+ T  E9        SHPOW
+ V  E9        V1                       X2
+ P  E9        P         -1.0
+ P  E9        S         -1.0
+
+ T  E10       POWPR
+ V  E10       V1                       X1
+ V  E10       V2                       X2
+ P  E10       P1        2.0
+ P  E10       P2        2.0
+
+ T  E11       POWPR
+ V  E11       V1                       X1
+ V  E11       V2                       X2
+ P  E11       P1        3.0
+ P  E11       P2        2.0
+
+ T  E12       POWPR
+ V  E12       V1                       X1
+ V  E12       V2                       X2
+ P  E12       P1        3.0
+ P  E12       P2        3.0
+
+ T  E13       POWPR
+ V  E13       V1                       X1
+ V  E13       V2                       X2
+ P  E13       P1        1.0
+ P  E13       P2        2.0
+
+ T  E14       POWPR
+ V  E14       V1                       X1
+ V  E14       V2                       X2
+ P  E14       P1        1.0
+ P  E14       P2        3.0
+
+ T  E15       EXPR
+ V  E15       V1                       X1
+ V  E15       V2                       X2
+
+ T  E16       POWPR
+ V  E16       V1                       X1
+ V  E16       V2                       X2
+ P  E16       P1        3.0
+ P  E16       P2        1.0
+
+ T  E17       POWER
+ V  E17       V1                       X1
+ P  E17       P         2.0
+
+ T  E18       SHPOW
+ V  E18       V1                       X2
+ P  E18       P         2.0
+ P  E18       S         50.0
+
+GROUP USES
+
+ E  OBJ       E1        0.0020567      E2        -1.0345D-5
+ E  OBJ       E3        -0.030234      E4        1.28134D-3
+ E  OBJ       E5        2.266D-7       E6        -0.25645
+ E  OBJ       E7        0.0034604      E8        -1.3514D-5
+ E  OBJ       E9        28.106         E10       5.2375D-6
+ E  OBJ       E11       6.3D-8         E12       -7.0D-10
+ E  OBJ       E13       -3.405D-4      E14       1.6638D-6
+ E  OBJ       E15       2.8673         E16       -3.5256D-5
+ E  OBJ       E17       -0.12694
+
+ E  CON1      E3
+
+ E  CON2      E17       -0.008
+
+ E  CON3      E18
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -7.8027894
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS59
+
+TEMPORARIES
+
+ R  E
+ R  V1P1
+ R  V2P2
+ R  P1M1
+ R  P2M1
+ R  EH1
+ R  EH2
+ R  VMS
+ M  MAX
+ M  EXP
+
+INDIVIDUALS
+
+ T  POWER
+ F                      V1**P
+ G  V1                  P * V1**( P - 1.0 )
+ H  V1        V1        P * ( P - 1.0 ) * V1**( P - 2.0 )
+
+ T  POWPR
+ A  V1P1                V1**P1
+ A  V2P2                V2**P2
+ A  P1M1                P1 - 1.0
+ A  P2M1                P2 - 1.0
+ A  EH1                 MAX( 0.0D0, P1 - 2.0 )
+ A  EH2                 MAX( 0.0D0, P2 - 2.0 )
+ F                      V1P1 * V2P2
+ G  V1                  P1 * V1**P1M1 * V2P2
+ G  V2                  V1P1 * P2 * V2**P2M1
+ H  V1        V1        P1 * P1M1 * V1**EH1 * V2P2
+ H  V1        V2        P1 * V1**P1M1 * P2 * V2**P2M1
+ H  V2        V2        V1P1 * P2 * P2M1 * V2**EH2
+
+ T  EXPR
+ A  E                   EXP( 0.0005 * V1 * V2 )
+ F                      E
+ G  V1                  0.0005 * V2 * E
+ G  V2                  0.0005 * V1 * E
+ H  V1        V1        2.5D-7 * V2 * V2 * E
+ H  V1        V2        2.5D-7 * V1 * V2 * E + 0.0005 * E
+ H  V2        V2        2.5D-7 * V1 * V1 * E
+
+ T  SHPOW
+ A  VMS                 V1 - S
+ F                      VMS**P
+ G  V1                  P * VMS**( P - 1.0 )
+ H  V1        V1        P * ( P - 1.0 ) * VMS**( P - 2.0 )
+
+ENDATA

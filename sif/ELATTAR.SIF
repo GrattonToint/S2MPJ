@@ -1,0 +1,209 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ELATTAR
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in six variables.
+
+*   The problem is nonconvex and has several local minima.
+
+*   Source: 
+*   R.A. El-Attar, M. Vidyasagar and S.R.K. Dutta,
+*   "An algorithm for l_1-approximation",
+*   SINUM 16, pp.70-86, 1979.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-7-102
+
+ IE 1                   1
+ IE 6                   6
+ IE 51                  51
+
+ RE T                   0.0
+ DO I         1                        51
+
+*   build the t_i
+
+ A= T(I)      T
+ RA T         T         0.1
+
+*   build the y_i
+
+ A( ETI       EXP                      T(I)
+ AM Y(I)      ETI       0.5
+ AM -2TI      T(I)      -2.0
+ R( E-2TI     EXP                      -2TI
+ A- Y(I)      Y(I)                     E-2TI
+ AM -3TI      T(I)      -3.0
+ R( E-3TI     EXP                      -3TI
+ RM E-3TI/2   E-3TI     0.5
+ A+ Y(I)      Y(I)                     E-3TI/2
+ RM -3TI/2    -3TI      0.5
+ R( E-3TI/2   EXP                      -3TI/2
+ AM 7TI       T(I)      7.0
+ R( S7TI      SIN                      7TI
+ R* TT        E-3TI/2                  S7TI
+ RM TT        TT        1.5
+ A+ Y(I)      Y(I)                     TT
+ AM 5TI       T(I)      5.0
+ RM -5TI/2    5TI       -0.5
+ R( E-5TI/2   EXP                      -5TI/2
+ R( S5TI      SIN                      5TI
+ R* TT        E-5TI/2                  S5TI
+ A+ Y(I)      Y(I)                     TT
+ OD I
+
+VARIABLES
+
+ DO I         1                        6
+ X  X(I)
+ OD I
+
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ DO I         1                        51
+ XL F(I)      U         -1.0 
+ XL MF(I)     U         -1.0
+ OD I
+
+CONSTANTS
+
+ DO I         1                        51
+ Z  ELATTAR   F(I)                     Y(I)
+ AM -Y(I)     Y(I)      -1.0
+ Z  ELATTAR   MF(I)                    -Y(I)
+ OD I
+
+BOUNDS
+
+*   All variables are free
+
+ FR ELATTAR   'DEFAULT'
+
+START POINT
+
+*   The proposed starting point is (2,2,7,0,-2,1), but this one seems
+*   to be more interesting.
+
+    ELATTAR   X1        -2.0
+    ELATTAR   X2        -2.0
+    ELATTAR   X3        7.0
+    ELATTAR   X5        -2.0
+    ELATTAR   X6        1.0
+
+ELEMENT TYPE
+
+ EV ET1       V1                       V2
+ EV ET1       V3                       V4
+ EP ET1       T
+
+ EV ET2       V5                       V6
+ EP ET2       T
+
+ELEMENT USES
+
+ DO I         1                        51
+
+ XT EL1(I)    ET1
+ ZV EL1(I)    V1                       X1
+ ZV EL1(I)    V2                       X2
+ ZV EL1(I)    V3                       X3
+ ZV EL1(I)    V4                       X4
+ ZP EL1(I)    T                        T(I)
+
+ XT EL2(I)    ET2
+ ZV EL2(I)    V5                       X5
+ ZV EL2(I)    V6                       X6
+ ZP EL2(I)    T                        T(I)
+
+ OD I
+
+GROUP USES
+
+ DO I         1                        51
+ XE F(I)      EL1(I)    1.0            EL2(I)    1.0
+ XE MF(I)     EL1(I)    -1.0           EL2(I)    -1.0
+ OD I
+
+OBJECT BOUND
+
+ LO ELATTAR             0.0
+
+*   Solution       
+
+*LO SOLTN               0.1427066255
+*LO SOLTN               74.206179244
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ELATTAR
+
+TEMPORARIES
+
+ R  A
+ R  B
+ R  EA
+ R  CB
+ R  SB
+ R  EACB
+ R  EASB
+ R  V1EACB
+ R  V1EASB
+
+ M  EXP
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  ET1
+ A  A                   - V2 * T
+ A  B                   V3 * T + V4
+ A  EA                  EXP( A )
+ A  CB                  COS( B )
+ A  SB                  SIN( B )
+ A  EACB                EA * CB
+ A  EASB                EA * SB
+ A  V1EACB              V1 * EACB
+ A  V1EASB              V1 * EASB
+ F                      V1EACB
+ G  V1                  EACB
+ G  V2                  - T * V1EACB
+ G  V3                  - T * V1EASB
+ G  V4                  - V1EASB
+ H  V1        V2        - T * EACB
+ H  V1        V3        - T * EASB
+ H  V1        V4        - EASB
+ H  V2        V2        T * T * V1EACB
+ H  V2        V3        T * T * V1EASB
+ H  V2        V4        T * V1EASB
+ H  V3        V3        - T * T * V1EACB
+ H  V3        V4        - T * V1EACB
+ H  V4        V4        - V1EACB
+
+ T  ET2
+ A  A                   - V6 * T
+ A  EA                  EXP( A )
+ A  B                   V5 * EA
+ F                      B
+ G  V5                  EA
+ G  V6                  - T * B
+ H  V5        V6        - T * EA
+ H  V6        V6        T * T * B
+
+ENDATA
+

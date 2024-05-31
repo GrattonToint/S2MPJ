@@ -1,0 +1,575 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HYDCAR20
+
+*   Problem :
+*   *********
+
+*   The hydrocarbon-20 problem by Fletcher.
+
+*   Source: Problem 2b in
+*   J.J. More',"A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer Seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input : N. Gould and Ph. Toint, Feb 1991.
+
+*   classification NOR2-AN-99-99
+
+*   Problem data
+
+ IE N                   20
+ IE M                   3
+ IE K                   9
+
+*   Antoine constants, liquid and vapour enthalpies, etc
+
+ RE A1                  9.647
+ RE B1                  -2998.00
+ RE C1                  230.66
+ RE A2                  9.953
+ RE B2                  -3448.10
+ RE C2                  235.88
+ RE A3                  9.466
+ RE B3                  -3347.25
+ RE C3                  215.31
+ RE AL1                 0.0
+ RE AL'1                37.6
+ RE AL''1               0.0
+ RE AL2                 0.0
+ RE AL'2                48.2
+ RE AL''2               0.0
+ RE AL3                 0.0
+ RE AL'3                45.4
+ RE AL''3               0.0
+ RE BE1                 8425.0
+ RE BE'1                24.2
+ RE BE''1               0.0
+ RE BE2                 9395.0
+ RE BE'2                35.6
+ RE BE''2               0.0
+ RE BE3                 10466.0
+ RE BE'3                31.9
+ RE BE''3               0.0
+ RE FL1                 30.0
+ RE FL2                 30.0
+ RE FL3                 40.0
+ RE FV1                 0.0
+ RE FV2                 0.0
+ RE FV3                 0.0
+ RE TF                  100.0
+ RE B                   40.0
+ RE D                   60.0
+ RE Q                   2500000.0
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+*   Computed parameters
+
+ IA N-1       N         -1
+ IA N-2       N         -2
+ IA K-        K         -1
+ IA K+        K         1
+
+ DO I         0                        N-1
+ AE PI(I)               1.0
+ ND
+
+VARIABLES
+
+ DO I         0                        N-1
+ X  T(I)
+ AD INVPI(I)  PI(I)     1.0
+ DO J         1                        M
+ X  X(I,J)
+ ND
+
+ DO I         0                        N-2
+ X  V(I)
+ ND
+
+GROUPS
+
+ DO J         1                        M
+ ZE 2.1-(J)   X(0,J)                   B
+ XE 2.1-(J)   'SCALE'   1.0D+2
+ XE 2.3-(J)   X(N-1,J)  -1.0
+ DO I         1                        N-2
+ XE 2.2-(I,J) 'SCALE'   1.0D+2
+ ND
+
+ DO I         0                        N-1
+ XE 2.7-(I)
+ ND
+
+ E  2.8       'SCALE'   1.0D+5
+
+ DO I         1                        N-2
+ XE 2.9-(I)   'SCALE'   1.0D+5
+ ND
+
+CONSTANTS
+
+ RE SMALLHF             0.0D+0
+ RE BIGHF               0.0D+0
+
+ DO J         1                        M
+ Z  HYDCAR20  2.2-(K,J)                FL(J)
+ Z  HYDCAR20  2.2-(K+,J)               FV(J)
+ R* TFTF      TF                       TF
+ A* TEMP1     TFTF                     AL''(J)
+ A* TEMP2     TF                       AL'(J)
+ R+ TEMP1     TEMP1                    TEMP2
+ A+ TEMP1     TEMP1                    AL(J)
+ A* TEMP1     TEMP1                    FL(J)
+ R+ SMALLHF   SMALLHF                  TEMP1
+ A* TEMP1     TFTF                     BE''(J)
+ A* TEMP2     TF                       BE'(J)
+ R+ TEMP1     TEMP1                    TEMP2
+ A+ TEMP1     TEMP1                    BE(J)
+ A* TEMP1     TEMP1                    FV(J)
+ R+ BIGHF     BIGHF                    TEMP1
+ ND
+
+ DO I         0                        N-1
+ X  HYDCAR20  2.7-(I)   1.0
+ ND
+
+ Z  HYDCAR20  2.8                      Q
+ Z  HYDCAR20  2.9-(K)                  SMALLHF
+ Z  HYDCAR20  2.9-(K+)                 BIGHF
+
+BOUNDS
+
+ FR HYDCAR20  'DEFAULT'
+
+START POINT
+
+    HYDCAR20  X0,1      0.0
+    HYDCAR20  X0,2      0.3
+    HYDCAR20  X0,3      0.1
+    HYDCAR20  X1,1      0.0
+    HYDCAR20  X1,2      0.3
+    HYDCAR20  X1,3      0.9
+    HYDCAR20  X2,1      0.01
+    HYDCAR20  X2,2      0.3
+    HYDCAR20  X2,3      0.9
+    HYDCAR20  X3,1      0.02
+    HYDCAR20  X3,2      0.4
+    HYDCAR20  X3,3      0.8
+    HYDCAR20  X4,1      0.05
+    HYDCAR20  X4,2      0.4
+    HYDCAR20  X4,3      0.8
+    HYDCAR20  X5,1      0.07
+    HYDCAR20  X5,2      0.45
+    HYDCAR20  X5,3      0.8
+    HYDCAR20  X6,1      0.09
+    HYDCAR20  X6,2      0.5
+    HYDCAR20  X6,3      0.7
+    HYDCAR20  X7,1      0.1
+    HYDCAR20  X7,2      0.5
+    HYDCAR20  X7,3      0.7
+    HYDCAR20  X8,1      0.15
+    HYDCAR20  X8,2      0.5
+    HYDCAR20  X8,3      0.6
+    HYDCAR20  X9,1      0.2
+    HYDCAR20  X9,2      0.5
+    HYDCAR20  X9,3      0.6
+    HYDCAR20  X10,1     0.25
+    HYDCAR20  X10,2     0.6
+    HYDCAR20  X10,3     0.5
+    HYDCAR20  X11,1     0.3
+    HYDCAR20  X11,2     0.6
+    HYDCAR20  X11,3     0.5
+    HYDCAR20  X12,1     0.35
+    HYDCAR20  X12,2     0.6
+    HYDCAR20  X12,3     0.5
+    HYDCAR20  X13,1     0.4
+    HYDCAR20  X13,2     0.6
+    HYDCAR20  X13,3     0.4
+    HYDCAR20  X14,1     0.4
+    HYDCAR20  X14,2     0.7
+    HYDCAR20  X14,3     0.4
+    HYDCAR20  X15,1     0.42
+    HYDCAR20  X15,2     0.7
+    HYDCAR20  X15,3     0.3
+    HYDCAR20  X16,1     0.45
+    HYDCAR20  X16,2     0.75
+    HYDCAR20  X16,3     0.3
+    HYDCAR20  X17,1     0.45
+    HYDCAR20  X17,2     0.75
+    HYDCAR20  X17,3     0.2
+    HYDCAR20  X18,1     0.5
+    HYDCAR20  X18,2     0.8
+    HYDCAR20  X18,3     0.1
+    HYDCAR20  X19,1     0.5
+    HYDCAR20  X19,2     0.8
+    HYDCAR20  X19,3     0.0
+
+ DO I         0                        N-1
+ X  HYDCAR20  T(I)      100.0
+ ND
+
+ DO I         0                        N-2
+ X  HYDCAR20  V(I)      300.0
+ ND
+
+ELEMENT TYPE
+
+ EV 2PROD     V1                       V2
+ EP 2PROD     P1                       P2
+
+ EV POLY1PRD  V1                       V2
+ EP POLY1PRD  P1
+ EP POLY1PRD  P6                       P7
+ EP POLY1PRD  P8
+
+ EV POLY2PRD  V1                       V2
+ EV POLY2PRD  V3
+ EP POLY2PRD  P1                       P2
+ EP POLY2PRD  P6                       P7
+ EP POLY2PRD  P8
+
+ EV EXP2PROD  V2                       V3
+ EP EXP2PROD  P1                       P2
+ EP EXP2PROD  P3                       P4
+ EP EXP2PROD  P5
+
+ EV EXP3PROD  V1                       V2
+ EV EXP3PROD  V3
+ EP EXP3PROD  P1                       P2
+ EP EXP3PROD  P3                       P4
+ EP EXP3PROD  P5
+
+ EV EXP4PROD  V1                       V2
+ EV EXP4PROD  V3
+ EP EXP4PROD  P1                       P2
+ EP EXP4PROD  P3                       P4
+ EP EXP4PROD  P5                       P6
+ EP EXP4PROD  P7                       P8
+
+ELEMENT USES
+
+ RM -D        D         -1.0
+
+ DO J         1                        M
+
+ XT E11-(J)   2PROD
+ ZV E11-(J)   V1                       X(1,J)
+ ZV E11-(J)   V2                       V(0)
+ XP E11-(J)   P1        -1.0
+ ZP E11-(J)   P2                       B
+
+ XT E12-(J)   EXP3PROD
+ ZV E12-(J)   V1                       V(0)
+ ZV E12-(J)   V2                       X(0,J)
+ ZV E12-(J)   V3                       T(0)
+ XP E12-(J)   P1        1.0
+ ZP E12-(J)   P2                       INVPI(0)
+ ZP E12-(J)   P3                       A(J)
+ ZP E12-(J)   P4                       B(J)
+ ZP E12-(J)   P5                       C(J)
+
+ DO I         1                        N-2
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ XT E21-(I,J) 2PROD
+ ZV E21-(I,J) V1                       X(I+1,J)
+ ZV E21-(I,J) V2                       V(I)
+ XP E21-(I,J) P1        -1.0
+
+ XT E22-(I,J) EXP3PROD
+ ZV E22-(I,J) V1                       V(I-1)
+ ZV E22-(I,J) V2                       X(I-1,J)
+ ZV E22-(I,J) V3                       T(I-1)
+ XP E22-(I,J) P1        -1.0
+ ZP E22-(I,J) P2                       INVPI(I-1)
+ ZP E22-(I,J) P3                       A(J)
+ ZP E22-(I,J) P4                       B(J)
+ ZP E22-(I,J) P5                       C(J)
+
+ XT E23-(I,J) 2PROD
+ ZV E23-(I,J) V1                       X(I,J)
+ ZV E23-(I,J) V2                       V(I-1)
+ XP E23-(I,J) P1        1.0
+
+ XT E24-(I,J) EXP3PROD
+ ZV E24-(I,J) V1                       V(I)
+ ZV E24-(I,J) V2                       X(I,J)
+ ZV E24-(I,J) V3                       T(I)
+ XP E24-(I,J) P1        1.0
+ ZP E24-(I,J) P2                       INVPI(I)
+ ZP E24-(I,J) P3                       A(J)
+ ZP E24-(I,J) P4                       B(J)
+ ZP E24-(I,J) P5                       C(J)
+
+ OD I
+
+ DO I         1                        K-
+ ZP E21-(I,J) P2                       B
+ ZP E23-(I,J) P2                       B
+ OD I
+
+ ZP E21-(K,J) P2                       -D
+ ZP E23-(K,J) P2                       B
+
+ DO I         K+                       N-2
+ ZP E21-(I,J) P2                       -D
+ ZP E23-(I,J) P2                       -D
+ OD I
+
+ XT E31-(J)   EXP2PROD
+ ZV E31-(J)   V2                       X(N-2,J)
+ ZV E31-(J)   V3                       T(N-2)
+ XP E31-(J)   P1        1.0
+ ZP E31-(J)   P2                       INVPI(N-2)
+ ZP E31-(J)   P3                       A(J)
+ ZP E31-(J)   P4                       B(J)
+ ZP E31-(J)   P5                       C(J)
+
+ ND
+
+ DO J         1                        M
+ DO I         0                        N-1
+ XT E71-(I,J) EXP2PROD
+ ZV E71-(I,J) V2                       X(I,J)
+ ZV E71-(I,J) V3                       T(I)
+ XP E71-(I,J) P1        1.0
+ ZP E71-(I,J) P2                       INVPI(I)
+ ZP E71-(I,J) P3                       A(J)
+ ZP E71-(I,J) P4                       B(J)
+ ZP E71-(I,J) P5                       C(J)
+ ND
+
+ DO J         1                        M
+
+ XT E81-(J)   EXP4PROD
+ ZV E81-(J)   V1                       V(0)
+ ZV E81-(J)   V2                       X(0,J)
+ ZV E81-(J)   V3                       T(0)
+ XP E81-(J)   P1        1.0
+ ZP E81-(J)   P2                       INVPI(0)
+ ZP E81-(J)   P3                       A(J)
+ ZP E81-(J)   P4                       B(J)
+ ZP E81-(J)   P5                       C(J)
+ ZP E81-(J)   P6                       BE(J)
+ ZP E81-(J)   P7                       BE'(J)
+ ZP E81-(J)   P8                       BE''(J)
+
+ XT E82-(J)   POLY1PRD
+ ZV E82-(J)   V1                       X(0,J)
+ ZV E82-(J)   V2                       T(0)
+ ZP E82-(J)   P1                       B
+ ZP E82-(J)   P6                       AL(J)
+ ZP E82-(J)   P7                       AL'(J)
+ ZP E82-(J)   P8                       AL''(J)
+
+ XT E83-(J)   POLY2PRD
+ ZV E83-(J)   V1                       X(1,J)
+ ZV E83-(J)   V2                       V(0)
+ ZV E83-(J)   V3                       T(1)
+ XP E83-(J)   P1        -1.0
+ ZP E83-(J)   P2                       B
+ ZP E83-(J)   P6                       AL(J)
+ ZP E83-(J)   P7                       AL'(J)
+ ZP E83-(J)   P8                       AL''(J)
+
+ DO I         1                        N-2
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ XT E91-(I,J) EXP4PROD
+ ZV E91-(I,J) V1                       V(I)
+ ZV E91-(I,J) V2                       X(I,J)
+ ZV E91-(I,J) V3                       T(I)
+ XP E91-(I,J) P1        1.0
+ ZP E91-(I,J) P2                       INVPI(I)
+ ZP E91-(I,J) P3                       A(J)
+ ZP E91-(I,J) P4                       B(J)
+ ZP E91-(I,J) P5                       C(J)
+ ZP E91-(I,J) P6                       BE(J)
+ ZP E91-(I,J) P7                       BE'(J)
+ ZP E91-(I,J) P8                       BE''(J)
+
+ XT E92-(I,J) POLY2PRD
+ ZV E92-(I,J) V1                       X(I,J)
+ ZV E92-(I,J) V2                       V(I-1)
+ ZV E92-(I,J) V3                       T(I)
+ XP E92-(I,J) P1        1.0
+ ZP E92-(I,J) P6                       AL(J)
+ ZP E92-(I,J) P7                       AL'(J)
+ ZP E92-(I,J) P8                       AL''(J)
+
+ XT E93-(I,J) EXP4PROD
+ ZV E93-(I,J) V1                       V(I-1)
+ ZV E93-(I,J) V2                       X(I-1,J)
+ ZV E93-(I,J) V3                       T(I-1)
+ XP E93-(I,J) P1        -1.0
+ ZP E93-(I,J) P2                       INVPI(I-1)
+ ZP E93-(I,J) P3                       A(J)
+ ZP E93-(I,J) P4                       B(J)
+ ZP E93-(I,J) P5                       C(J)
+ ZP E93-(I,J) P6                       BE(J)
+ ZP E93-(I,J) P7                       BE'(J)
+ ZP E93-(I,J) P8                       BE''(J)
+
+ XT E94-(I,J) POLY2PRD
+ ZV E94-(I,J) V1                       X(I+1,J)
+ ZV E94-(I,J) V2                       V(I)
+ ZV E94-(I,J) V3                       T(I+1)
+ XP E94-(I,J) P1        -1.0
+ ZP E94-(I,J) P6                       AL(J)
+ ZP E94-(I,J) P7                       AL'(J)
+ ZP E94-(I,J) P8                       AL''(J)
+
+ OD I
+
+ DO I         1                        K-
+ ZP E92-(I,J) P2                       B
+ ZP E94-(I,J) P2                       B
+ OD I
+
+ ZP E92-(K,J) P2                       B
+ ZP E94-(K,J) P2                       -D
+
+ DO I         K+                       N-2
+ ZP E92-(I,J) P2                       -D
+ ZP E94-(I,J) P2                       -D
+ OD I
+
+ ND
+
+GROUP USES
+
+ DO J         1                        M
+
+ XE 2.1-(J)   E11-(J)                  E12-(J)
+ XE 2.3-(J)   E31-(J)
+
+ XE 2.8       E81-(J)                  E82-(J)
+ XE 2.8       E83-(J)
+
+ DO I         1                        N-2
+
+ XE 2.2-(I,J) E21-(I,J)                E22-(I,J)
+ XE 2.2-(I,J) E23-(I,J)                E24-(I,J)
+
+ XE 2.9-(I)   E91-(I,J)                E92-(I,J)
+ XE 2.9-(I)   E93-(I,J)                E94-(I,J)
+
+ OD I
+
+ DO I         0                        N-1
+ XE 2.7-(I)   E71-(I,J)
+ OD I
+
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO HYCAR               0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HYDCAR20
+
+TEMPORARIES
+
+ R  EXPROD
+ R  F
+ R  POLY
+ R  DPOLY
+ R  TERM
+ M  EXP
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      P1 * V1 * ( V2 + P2 )
+ G  V1                  P1 * ( V2 + P2 )
+ G  V2                  P1 * V1
+ H  V1        V2        P1
+
+ T  POLY1PRD
+ A  POLY                P6 + P7 * V2 + P8 * V2 * V2
+ A  DPOLY               P7 + 2.0 * P8 * V2
+ F                      P1 * V1 * POLY
+ G  V1                  P1 * POLY
+ G  V2                  P1 * V1 * DPOLY
+ H  V1        V2        P1 * DPOLY
+ H  V2        V2        P1 * V1 * 2.0D+0 * P8
+
+ T  POLY2PRD
+ A  POLY                P6 + P7 * V3 + P8 * V3 * V3
+ A  DPOLY               P7 + 2.0 * P8 * V3
+ F                      P1 * V1 * ( P2 + V2 ) * POLY
+ G  V1                  P1 * ( P2 + V2 ) * POLY
+ G  V2                  P1 * V1 * POLY
+ G  V3                  P1 * V1 * ( P2 + V2 ) * DPOLY
+ H  V1        V2        P1 * POLY
+ H  V1        V3        P1 * ( P2 + V2 ) * DPOLY
+ H  V2        V3        P1 * V1 * DPOLY
+ H  V3        V3        P1 * V1 * ( P2 + V2 ) * 2.0D+0 * P8
+
+ T  EXP2PROD
+ A  EXPROD              P1 * P2 * EXP(P3 + (P4 / (V3 + P5)))
+ A  F                   V2 * EXPROD
+ F                      F
+ G  V2                  EXPROD
+ G  V3                  - V2 * EXPROD * P4 / (P5 + V3)**2
+ H  V2        V3        - EXPROD * P4 / (P5 + V3)**2
+ H  V3        V3        F * (P4 / (P5 + V3)**2)**2
+ H+                     + 2.0D+0 * F * P4 / (P5 + V3)**3
+
+ T  EXP3PROD
+ A  EXPROD              P1 * P2 * EXP(P3 + (P4 / (V3 + P5)))
+ A  F                   V1 * V2 * EXPROD
+ A  TERM                - P4 / (P5 + V3) ** 2
+ F                      F
+ G  V1                  V2 * EXPROD
+ G  V2                  V1 * EXPROD
+ G  V3                  F * TERM
+ H  V1        V2        EXPROD
+ H  V1        V3        V2 * EXPROD * TERM
+ H  V2        V3        V1 * EXPROD * TERM
+ H  V3        V3        F * ( TERM * TERM
+ H+                     + 2.0D+0 * P4 / (P5 + V3)**3 )
+
+ T  EXP4PROD
+ A  EXPROD              P1 * P2 * EXP(P3 + (P4 / (V3 + P5)))
+ A  F                   V1 * V2 * EXPROD
+ A  POLY                P6 + P7 * V3 + P8 * V3 * V3
+ A  DPOLY               P7 + 2.0 * P8 * V3
+ A  TERM                DPOLY - POLY * P4 / (P5 + V3) ** 2
+ F                      F * POLY
+ G  V1                  V2 * EXPROD * POLY
+ G  V2                  V1 * EXPROD * POLY
+ G  V3                  F * TERM
+ H  V1        V2        EXPROD * POLY
+ H  V1        V3        V2 * EXPROD * TERM
+ H  V2        V3        V1 * EXPROD * TERM
+ H  V3        V3        F * ( - (P4 / (P5 + V3)**2) * TERM
+ H+                     + 2.0 * P8 - DPOLY * P4 / (P5 + V3)**2
+ H+                     + 2.0D+0 * POLY * P4 / (P5 + V3)**3 )
+
+ENDATA

@@ -1,0 +1,249 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS108
+
+*   Problem :
+*   *******
+
+*   Source: problem 108 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M Collin and Ph. Toint, Apr 1990.
+
+*   classification QQR2-AY-9-13
+
+*   Number of variables
+
+ IE N                   9
+
+*   Parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective Function
+
+ N  OBJ
+
+*   Constraint function
+
+ L  C1
+ L  C2
+ L  C3
+ L  C4
+ L  C5
+ L  C6
+ L  C7
+ L  C8
+ L  C9
+ G  C10
+ G  C11
+ G  C12
+ L  C13
+
+CONSTANTS
+
+    HS108     C1        1.0
+    HS108     C2        1.0
+    HS108     C3        1.0
+    HS108     C4        1.0
+    HS108     C5        1.0
+    HS108     C6        1.0
+    HS108     C7        1.0
+    HS108     C8        1.0
+    HS108     C9        1.0
+
+BOUNDS
+
+ FR HS108     'DEFAULT'
+ LO HS108     X9        0.0
+
+START POINT
+
+ XV HS108     'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+ EV ISQ       X                        Y
+ IV ISQ       U
+
+ELEMENT USES
+
+ T  OE1       2PR
+ V  OE1       X                        X1
+ V  OE1       Y                        X4
+
+ T  OE2       2PR
+ V  OE2       X                        X2
+ V  OE2       Y                        X3
+
+ T  OE3       2PR
+ V  OE3       X                        X3
+ V  OE3       Y                        X9
+
+ T  OE4       2PR
+ V  OE4       X                        X5
+ V  OE4       Y                        X9
+
+ T  OE5       2PR
+ V  OE5       X                        X5
+ V  OE5       Y                        X8
+
+ T  OE6       2PR
+ V  OE6       X                        X6
+ V  OE6       Y                        X7
+
+ T  CE1       SQ
+ V  CE1       X                        X3
+
+ T  CE2       SQ
+ V  CE2       X                        X4
+
+ T  CE3       SQ
+ V  CE3       X                        X5
+
+ T  CE4       SQ
+ V  CE4       X                        X6
+
+ T  CE5       SQ
+ V  CE5       X                        X9
+
+ T  CE6       SQ
+ V  CE6       X                        X1
+
+ T  CE7       ISQ
+ V  CE7       X                        X2
+ V  CE7       Y                        X9
+
+ T  CE8       ISQ
+ V  CE8       X                        X1
+ V  CE8       Y                        X5
+
+ T  CE9       ISQ
+ V  CE9       X                        X2
+ V  CE9       Y                        X6
+
+ T  CE10      ISQ
+ V  CE10      X                        X1
+ V  CE10      Y                        X7
+
+ T  CE11      ISQ
+ V  CE11      X                        X2
+ V  CE11      Y                        X8
+
+ T  CE12      ISQ
+ V  CE12      X                        X3
+ V  CE12      Y                        X5
+
+ T  CE13      ISQ
+ V  CE13      X                        X4
+ V  CE13      Y                        X6
+
+ T  CE16      ISQ
+ V  CE16      X                        X3
+ V  CE16      Y                        X7
+
+ T  CE17      ISQ
+ V  CE17      X                        X4
+ V  CE17      Y                        X8
+
+ T  CE18      SQ
+ V  CE18      X                        X7
+
+ T  CE20      ISQ
+ V  CE20      X                        X8
+ V  CE20      Y                        X9
+
+ T  CE21      2PR
+ V  CE21      X                        X5
+ V  CE21      Y                        X8
+
+ T  CE22      2PR
+ V  CE22      X                        X6
+ V  CE22      Y                        X7
+
+ T  CE23      2PR
+ V  CE23      X                        X1
+ V  CE23      Y                        X4
+
+ T  CE24      2PR
+ V  CE24      X                        X2
+ V  CE24      Y                        X3
+
+ T  CE25      2PR
+ V  CE25      X                        X5
+ V  CE25      Y                        X9
+
+ T  CE26      2PR
+ V  CE26      X                        X3
+ V  CE26      Y                        X9
+
+GROUP USES
+
+ E  OBJ       OE1       -0.5           OE2       0.5
+ E  OBJ       OE3       -0.5           OE4       0.5
+ E  OBJ       OE5       -0.5           OE6       0.5
+
+ E  C1        CE1                      CE2
+ E  C2        CE3                      CE4
+ E  C3        CE5
+ E  C4        CE6                      CE7
+ E  C5        CE8                      CE9
+ E  C6        CE10                     CE11
+ E  C7        CE12                     CE13
+ E  C8        CE16                     CE17
+ E  C9        CE18                     CE20
+ E  C10       CE26
+ E  C11       CE21                     CE22      -1.0
+ E  C12       CE23                     CE24      -1.0
+ E  C13       CE25
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -0.8660254
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS108
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  ISQ
+ R  U         X         1.0            Y         -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA

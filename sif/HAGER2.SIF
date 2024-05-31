@@ -1,0 +1,159 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HAGER2
+
+*   Problem :
+*   *********
+
+*   A nonlinear optimal control problem, by W. Hager.
+
+*   Source: problem P2 in
+*   W.W. Hager,
+*   "Multiplier Methods for Nonlinear Optimal Control",
+*   SIAM J. on Numercal Analysis 27(4): 1061-1080, 1990.
+
+*   SIF input: Ph. Toint, March 1991.
+
+*   classification OLR2-AN-V-V
+
+*   Number of discretized points in [0,1]
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   2500           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER
+
+*   Mesh
+
+ IA N-1       N         -1
+
+ RI RN        N
+ RD H         RN        1.0
+ RM 4/H       RN        4.0
+ RM 6/H       RN        6.0
+ RA 1/H-1/4   RN        -0.25
+ RM -1/H      RN        -1.0
+ RA -1/H-1/4  -1/H      -0.25
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ ND
+
+ DO I         1                        N
+ X  U(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ ZN OX(I)     'SCALE'                  6/H
+ XN U(I)SQ    U(I)      1.0
+ ZN U(I)SQ    'SCALE'                  4/H
+ ND
+
+ DO I         1                        N
+ IA I-1       I         -1
+ ZE S(I)      X(I)                     1/H-1/4
+ ZE S(I)      X(I-1)                   -1/H-1/4
+ XE S(I)      U(I)      -1.0
+ ND
+
+BOUNDS
+
+ FR HAGER2    'DEFAULT'
+
+ XX HAGER2    X(0)      1.0
+
+START POINT
+
+ XV HAGER2    X(0)      1.0
+
+ELEMENT TYPE
+
+ EV LINSQ     XA                       XB
+
+ELEMENT USES
+
+ XT 'DEFAULT' LINSQ
+
+ DO I         1                        N
+ IA I-1       I         -1
+ ZV E(I)      XA                       X(I-1)
+ ZV E(I)      XB                       X(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ XE OX(I)     E(I)
+ XT U(I)SQ    L2
+ ND
+
+OBJECT BOUND
+
+ LO HAGER2              0.0
+
+*   Solution
+
+*LO SOLTN(10)           0.4325699689
+*LO SOLTN(50)           0.4321017503
+*LO SOLTN(100)          0.4320871769
+*LO SOLTN(500)          0.4320824457
+*LO SOLTN(1000)         0.4320822986
+*LO SOLTN(5000)         0.4320822506
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HAGER2
+
+INDIVIDUALS
+
+ T  LINSQ
+ F                       XA * XA +  XA * XB + XB * XB
+ G  XA                  2.0 * XA +  XB
+ G  XB                  2.0 * XB +  XA
+ H  XA        XA        2.0
+ H  XA        XB        1.0
+ H  XB        XB        2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HAGER2
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

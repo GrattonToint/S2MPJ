@@ -1,0 +1,212 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS80
+
+*   Problem :
+*   *******
+
+*   Source: problem 80 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B.Debarsy, Jan 1990.
+
+*   classification OOR2-AN-5-3
+
+*   Number of variables
+
+ IE N                   5
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ
+
+*   Constraint functions
+
+ E  C1
+ E  C2
+ E  C3
+
+CONSTANTS
+
+    HS80      C1        10.0
+    HS80      C3        -1.0
+
+BOUNDS
+
+ LO HS80      X1        -2.3
+ UP HS80      X1        2.3
+ LO HS80      X2        -2.3
+ UP HS80      X2        2.3
+ LO HS80      X3        -3.2
+ UP HS80      X3        3.2
+ LO HS80      X4        -3.2
+ UP HS80      X4        3.2
+ LO HS80      X5        -3.2
+ UP HS80      X5        3.2
+
+START POINT
+
+    HS80      X1        -2.0
+    HS80      X2        2.0
+    HS80      X3        2.0
+    HS80      X4        -1.0
+    HS80      X5        -1.0
+
+ELEMENT TYPE
+
+ EV EXPO      V1                       V2
+ EV EXPO      V3                       V4
+ EV EXPO      V5
+
+ EV CB        X
+
+ EV SQ        X
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  OBJ1      EXPO
+ V  OBJ1      V1                       X1
+ V  OBJ1      V2                       X2
+ V  OBJ1      V3                       X3
+ V  OBJ1      V4                       X4
+ V  OBJ1      V5                       X5
+
+ DO I         1                        N
+ XT E(I)      SQ
+ ZV E(I)      X                        X(I)
+ ND
+
+ T  E6        2PR
+ V  E6        X                        X2
+ V  E6        Y                        X3
+
+ T  E7        2PR
+ V  E7        X                        X4
+ V  E7        Y                        X5
+
+ T  E8        CB
+ V  E8        X                        X1
+
+ T  E9        CB
+ V  E9        X                        X2
+
+GROUP USES
+
+ E  OBJ       OBJ1
+
+ E  C1        E1                       E2
+ E  C1        E3                       E4
+ E  C1        E5
+
+ E  C2        E6                       E7        -5.0
+
+ E  C3        E8                       E9
+
+OBJECT BOUND
+
+ LO HS80                0.0
+
+*   Solution
+
+*LO SOLTN               0.0539498
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS80
+
+TEMPORARIES
+
+ R  PROD
+ R  EX
+ R  EX1
+
+ M  EXP
+
+INDIVIDUALS
+
+*   Exponential
+
+ T  EXPO
+
+ A  PROD                V1 * V2 * V3 * V4 * V5
+ A  EX                  EXP( PROD )
+ A  EX1                 EX * ( 1.0 + PROD )
+
+ F                      EX
+ G  V1                  EX * V2 * V3 * V4 * V5
+ G  V2                  EX * V1 * V3 * V4 * V5
+ G  V3                  EX * V1 * V2 * V4 * V5
+ G  V4                  EX * V1 * V2 * V3 * V5
+ G  V5                  EX * V1 * V2 * V3 * V4
+
+ H  V1        V1        EX * ( V2 * V3 * V4 * V5 )**2
+ H  V1        V2        EX1 * V3 * V4 * V5
+ H  V1        V3        EX1 * V2 * V4 * V5
+ H  V1        V4        EX1 * V2 * V3 * V5
+ H  V1        V5        EX1 * V2 * V3 * V4
+
+ H  V2        V2        EX * ( V1 * V3 * V4 * V5 )**2
+ H  V2        V3        EX1 * V1 * V4 * V5
+ H  V2        V4        EX1 * V1 * V3 * V5
+ H  V2        V5        EX1 * V1 * V3 * V4
+
+ H  V3        V3        EX * ( V1 * V2 * V4 * V5 )**2
+ H  V3        V4        EX1 * V1 * V2 * V5
+ H  V3        V5        EX1 * V1 * V2 * V4
+
+ H  V4        V4        EX * ( V1 * V2 * V3 * V5 )**2
+ H  V4        V5        EX1 * V1 * V2 * V3
+
+ H  V5        V5        EX * ( V1 * V2 * V3 * V4 )**2
+
+*   Cube
+
+ T  CB
+
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+*   Square
+
+ T  SQ
+
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+
+*   Product of 2 variables
+
+ T  2PR
+
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

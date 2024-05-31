@@ -1,0 +1,277 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS87
+
+*   Problem :
+*   *********
+
+*   Optimization of an electrical network (EDF) by P. Huard.
+
+*   Source: problem 87 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   Note: There are two variants described in the papers
+
+*      D.H. Himmelblau "Applied nonlinear programming",
+*      McGraw-Hill, New-York, 1972, problem 15,
+
+*   and
+
+*      A.R. Colville, "A comparative study on nonlinear programming",
+*      IBM Scientific Center Report 320-2949, New York, 1968, problem 6.
+
+*   SIF input: Nick Gould, August 1991.
+
+*   classification OOI2-MN-6-4
+
+*   Number of variables
+
+ IE N                   6
+
+*   problem parameters
+
+ RE A                   131.078
+ RE B                   1.48577        $ as quoted by H+S
+*RE B                   1.48477        $ as quoted by Himmelblau
+*RE B                   1.48477        $ as quoted by Colville
+ RE C                   0.90798
+ RF D         COS       1.47588
+ RF E         SIN       1.47588
+ RE F                   1.48577        $ as quoted by H+S
+*RE F                   1.48577        $ as quoted by Himmelblau
+*RE F                   1.48477        $ as quoted by Colville
+
+*   Other useful parameters
+
+ IE 1                   1
+ RM -B        B         -1.0D+0
+ RM -F        F         -1.0D+0
+ R/ C/A       C                        A
+ RD 1/A       A         1.0D+0
+ RM -1/A      1/A       -1.0D+0
+ R* CD/A      C/A                      D
+ R* CE/A      C/A                      E
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  C1        X1        -1.0D+0
+ E  C2        X2        -1.0D+0
+ E  C3        X5        -1.0D+0
+ E  C4
+
+CONSTANTS
+
+    HS87      C1        -3.0D+2        C4        -2.0D+2
+
+BOUNDS
+
+ LO HS87      X3        340.0
+ LO HS87      X4        340.0
+ LO HS87      X5        -1000.0
+ UP HS87      X1        400.0
+ UP HS87      X2        1000.0
+ UP HS87      X3        420.0
+ UP HS87      X4        420.0
+ UP HS87      X5        10000.0
+ UP HS87      X6        0.5236
+
+START POINT
+
+*   HS87      X1        390.0          X2        1000.0
+*   HS87      X3        419.5          X4        340.5
+*   HS87      X5        198.175        X6        0.5
+
+    HS87SOL   X1        107.8119       X2        196.3186
+    HS87SOL   X3        373.8307       X4        420.0
+    HS87SOL   X5        21.30713       X6        0.153292
+
+ELEMENT TYPE
+
+*   Objective function F1
+
+ EV F1        V
+
+*   Objective function F2
+
+ EV F2        V
+
+*   Constraint function COS
+
+ EV COS       V1                       V2
+ EV COS       V3
+ EP COS       P
+
+*   Constraint function SIN
+
+ EV SIN       V1                       V2
+ EV SIN       V3
+ EP SIN       P
+
+*   Constraint function SQUARE
+
+ EV SQUARE    V
+
+ELEMENT USES
+
+ T  OF1       F1
+ V  OF1       V                        X1
+
+ T  OF2       F2
+ V  OF2       V                        X2
+
+ T  C1E1      COS
+ V  C1E1      V1                       X3
+ V  C1E1      V2                       X4
+ V  C1E1      V3                       X6
+ ZP C1E1      P                        -F
+
+ T  C1E2      SQUARE
+ V  C1E2      V                        X3
+
+ T  C2E1      COS
+ V  C2E1      V1                       X3
+ V  C2E1      V2                       X4
+ V  C2E1      V3                       X6
+ ZP C2E1      P                        B
+
+ T  C2E2      SQUARE
+ V  C2E2      V                        X4
+
+ T  C3E1      SIN
+ V  C3E1      V1                       X3
+ V  C3E1      V2                       X4
+ V  C3E1      V3                       X6
+ ZP C3E1      P                        B
+
+ T  C3E2      SQUARE
+ V  C3E2      V                        X4
+
+ T  C4E1      SIN
+ V  C4E1      V1                       X3
+ V  C4E1      V2                       X4
+ V  C4E1      V3                       X6
+ ZP C4E1      P                        -B
+
+ T  C4E2      SQUARE
+ V  C4E2      V                        X3
+
+
+GROUP USES
+
+ E  OBJ       OF1                      OF2
+ ZE C1        C1E1                     -1/A
+ ZE C1        C1E2                     CD/A
+ ZE C2        C2E1                     -1/A
+ ZE C2        C2E2                     CD/A
+ ZE C3        C3E1                     -1/A
+ ZE C3        C3E2                     CE/A
+ ZE C4        C4E1                     1/A
+ ZE C4        C4E2                     CE/A
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               8927.5977
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS87
+
+TEMPORARIES
+
+ L  I1
+ L  I2
+ L  I3
+ R  F
+ R  G
+ R  SN
+ R  CS
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+*   Objective function F1
+
+ T  F1
+ A  I1                  V .LT. 300.0
+ A  I2                  V .GE. 300.0
+ I  I1        F         30.0 * V
+ I  I2        F         31.0 * V
+ I  I1        G         30.0
+ I  I2        G         31.0
+ F                      F
+ G  V                   G
+ H  V         V         0.0D+0
+
+*   Objective function F2
+
+ T  F2
+ A  I1                  V .LT. 100.0
+ A  I2                  V .GE. 100.0 .AND. V .LT. 200.0
+ A  I3                  V .GE. 200.0
+ I  I1        F         28.0 * V
+ I  I2        F         29.0 * V
+ I  I3        F         30.0 * V
+ I  I1        G         28.0
+ I  I2        G         29.0
+ I  I3        G         30.0
+ F                      F
+ G  V                   G
+ H  V         V         0.0D+0
+
+*   Constraint function COS
+
+ T  COS
+ A  SN                  SIN( V3 + P )
+ A  CS                  COS( V3 + P )
+ F                      V1 * V2 * CS
+ G  V1                  V2 * CS
+ G  V2                  V1 * CS
+ G  V3                  - V1 * V2 * SN
+ H  V1        V2        CS
+ H  V1        V3        - V2 * SN
+ H  V2        V3        - V1 * SN
+ H  V3        V3        - V1 * V2 * CS
+
+*   Constraint function SIN
+
+ T  SIN
+ A  SN                  SIN( V3 + P )
+ A  CS                  COS( V3 + P )
+ F                      V1 * V2 * SN
+ G  V1                  V2 * SN
+ G  V2                  V1 * SN
+ G  V3                  V1 * V2 * CS
+ H  V1        V2        SN
+ H  V1        V3        V2 * CS
+ H  V2        V3        V1 * CS
+ H  V3        V3        - V1 * V2 * SN
+
+*   Constraint function SQUARE
+
+ T  SQUARE
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0D+0
+
+ENDATA

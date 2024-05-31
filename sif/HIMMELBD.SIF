@@ -1,0 +1,80 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBD
+
+*   Problem :
+*   *********
+
+*   A 2 variables problem by Himmelblau.
+
+*   Source: problem 29 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+*   See Buckley#86 (p. 64)
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ E  G1        X2        12.0
+ E  G2        X1        84.0           X2        2324.0
+
+CONSTANTS
+
+    HIMMELBD  G1        1.0
+    HIMMELBD  G2        681.0
+
+BOUNDS
+
+ FR HIMMELBD  'DEFAULT'
+
+START POINT
+
+ XV HIMMELBD  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        X                        X1
+ V  E2        X                        X1
+ V  E3        X                        X2
+
+GROUP USES
+
+ E  G1        E1
+ E  G2        E2        49.0           E3        49.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBD
+
+INDIVIDUALS
+
+ T  SQ
+
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

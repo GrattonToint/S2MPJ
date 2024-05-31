@@ -1,0 +1,122 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS73
+
+*   Problem :
+*   *********
+
+*   A cattle feed problem
+
+*   Source: problem 73 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B Debarsy, Apr 1990.
+
+*   classification LOR2-MN-4-3
+
+*   Number of variables
+
+ IE N                   4
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X1        24.55          X2        26.75
+ N  OBJ       X3        39.0           X4        40.50
+ G  C1        X1        2.3            X2        5.6
+ G  C1        X3        11.1           X4        1.3
+ G  C2        X1        12.0           X2        11.9
+ G  C2        X3        41.8           X4        52.1
+ E  C3        X1        1.0            X2        1.0
+ E  C3        X3        1.0            X4        1.0
+
+CONSTANTS
+
+    HS73      C1        5.0            C2        21.0
+    HS73      C3        1.0
+
+START POINT
+
+ XV HS73      'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+*   Square root
+
+ EV SQRT      X                        Y
+ EV SQRT      U                        V
+
+ELEMENT USES
+
+ T  E1        SQRT
+ V  E1        X                        X1
+ V  E1        Y                        X2
+ V  E1        U                        X3
+ V  E1        V                        X4
+
+GROUP USES
+
+ E  C2        E1        -1.645
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               29.89422123
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS73
+
+TEMPORARIES
+
+ R  FVALUE
+ R  VALUE
+ R  FVAL
+ M  SQRT
+
+INDIVIDUALS
+
+ T  SQRT
+
+ A  VALUE               0.28*X**2+0.19*Y**2+20.5*U**2+0.62*V**2
+ A  FVALUE              SQRT( VALUE )
+ A  FVAL                FVALUE * VALUE
+ F                      FVALUE
+ G  X                   .28 * X / FVALUE
+ G  Y                   .19 * Y / FVALUE
+ G  U                   20.5 * U / FVALUE
+ G  V                   .62 * V / FVALUE
+ H  X         X         -.0784 * X**2 / FVAL +.28 / FVALUE
+ H  X         Y         -.0532 * X * Y / FVAL
+ H  X         U         -5.74 * X * U / FVAL
+ H  X         V         -.1736 * X * V / FVAL
+ H  Y         Y         -.0361 * Y**2 / FVAL + .19 / FVALUE
+ H  Y         U         -3.895* Y * U /FVAL
+ H  Y         V         -.1178 * Y * V / FVAL
+ H  U         U         -420.25 * U**2 / FVAL + 20.5 / FVALUE
+ H  U         V         -12.71 * U * V /FVAL
+ H  V         V         -.3844 * V**2 / FVAL + .62 / FVALUE
+
+ENDATA

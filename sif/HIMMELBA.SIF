@@ -1,0 +1,49 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBA
+
+*   Problem :
+*   *********
+
+*   A two variables problems by Himmelblau.
+
+*   Source: problem 25 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+*   See Buckley#215 (p. 61)
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NLR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ E  G1        X1        1.0
+ E  G1        'SCALE'   0.25
+
+ E  G2        X2        1.0
+
+CONSTANTS
+
+    HIMMELBA  G1        5.0
+    HIMMELBA  G2        6.0
+
+BOUNDS
+
+ FR HIMMELBA  'DEFAULT'
+
+START POINT
+
+    HIMMELBA  X1        8.0
+    HIMMELBA  X2        9.0
+
+ENDATA

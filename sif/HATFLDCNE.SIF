@@ -1,0 +1,104 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HATFLDCNE
+
+*   Problem :
+*   *********
+
+*   A test problem from the OPTIMA user manual.
+
+*   Source:
+*   "The OPTIMA user manual (issue No.8, p. 26)",
+*   Numerical Optimization Centre, Hatfield Polytechnic (UK), 1989.
+
+*   SIF input: Ph. Toint, May 1990.
+*   Bound-constrained nonlinear equations version: Nick Gould, June 2019.
+
+*   classification NOR2-AN-25-25
+
+*   Number of variables
+
+ IE N                   25
+
+*   Computed parameters and constants
+
+ IA N-1       N         -1
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XE G(1)      X(1)      1.0
+
+ DO I         2                        N-1
+ IA I+1       I         1
+ XE G(I)      X(I+1)    1.0
+ ND
+
+ XE G(N)      X(N)      1.0
+
+CONSTANTS
+
+ X  HATFLDC   G(1)      1.0
+ X  HATFLDC   G(N)      1.0
+
+BOUNDS
+
+ XU HATFLDC   'DEFAULT' 10.0
+ XR HATFLDC   X(N)
+
+START POINT
+
+ XV HATFLDC   'DEFAULT' 0.9
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ DO I         2                        N-1
+ ZV E(I)      X                        X(I)
+ ND
+
+GROUP USES
+
+ DO I         2                        N-1
+ XE G(I)      E(I)      -1.0
+ ND
+
+OBJECT BOUND
+
+*LO HATFLDC             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HATFLDCNE
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

@@ -1,0 +1,401 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS105
+
+*   Problem :
+*   *********
+
+*   Source: problem 105 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991.
+*   bug correction (line 351) Ph. Toint, May 2024
+
+*   classification OLR2-AY-8-1
+
+*   Number of variables
+
+ IE N                   8
+
+*   Other useful parameters
+
+ IE 1                   1
+ IE 235                 235
+
+*   Problem data
+
+ AE Y1                  95.0
+ AE Y2                  105.0
+
+ IE LOW                 3
+ IE UP                  6
+ DO I         LOW                      UP
+ AE Y(I)                110.0
+ ND
+
+ IE LOW                 7
+ IE UP                  10
+ DO I         LOW                      UP
+ AE Y(I)                115.0
+ ND
+
+ IE LOW                 11
+ IE UP                  25
+ DO I         LOW                      UP
+ AE Y(I)                120.0
+ ND
+
+ IE LOW                 26
+ IE UP                  40
+ DO I         LOW                      UP
+ AE Y(I)                125.0
+ ND
+
+ IE LOW                 41
+ IE UP                  55
+ DO I         LOW                      UP
+ AE Y(I)                130.0
+ ND
+
+ IE LOW                 56
+ IE UP                  68
+ DO I         LOW                      UP
+ AE Y(I)                135.0
+ ND
+
+ IE LOW                 69
+ IE UP                  89
+ DO I         LOW                      UP
+ AE Y(I)                140.0
+ ND
+
+ IE LOW                 90
+ IE UP                  101
+ DO I         LOW                      UP
+ AE Y(I)                145.0
+ ND
+
+ IE LOW                 102
+ IE UP                  118
+ DO I         LOW                      UP
+ AE Y(I)                150.0
+ ND
+
+ IE LOW                 119
+ IE UP                  122
+ DO I         LOW                      UP
+ AE Y(I)                155.0
+ ND
+
+ IE LOW                 123
+ IE UP                  142
+ DO I         LOW                      UP
+ AE Y(I)                160.0
+ ND
+
+ IE LOW                 143
+ IE UP                  150
+ DO I         LOW                      UP
+ AE Y(I)                165.0
+ ND
+
+ IE LOW                 151
+ IE UP                  167
+ DO I         LOW                      UP
+ AE Y(I)                170.0
+ ND
+
+ IE LOW                 168
+ IE UP                  175
+ DO I         LOW                      UP
+ AE Y(I)                175.0
+ ND
+
+ IE LOW                 176
+ IE UP                  181
+ DO I         LOW                      UP
+ AE Y(I)                180.0
+ ND
+
+ IE LOW                 182
+ IE UP                  187
+ DO I         LOW                      UP
+ AE Y(I)                185.0
+ ND
+
+ IE LOW                 188
+ IE UP                  194
+ DO I         LOW                      UP
+ AE Y(I)                190.0
+ ND
+
+ IE LOW                 195
+ IE UP                  198
+ DO I         LOW                      UP
+ AE Y(I)                195.0
+ ND
+
+ IE LOW                 199
+ IE UP                  201
+ DO I         LOW                      UP
+ AE Y(I)                200.0
+ ND
+
+ IE LOW                 202
+ IE UP                  204
+ DO I         LOW                      UP
+ AE Y(I)                205.0
+ ND
+
+ IE LOW                 205
+ IE UP                  212
+ DO I         LOW                      UP
+ AE Y(I)                210.0
+ ND
+
+ AE Y213                215.0
+
+ IE LOW                 214
+ IE UP                  219
+ DO I         LOW                      UP
+ AE Y(I)                220.0
+ ND
+
+ IE LOW                 220
+ IE UP                  224
+ DO I         LOW                      UP
+ AE Y(I)                230.0
+ ND
+
+ AE Y225                235.0
+
+ IE LOW                 226
+ IE UP                  232
+ DO I         LOW                      UP
+ AE Y(I)                240.0
+ ND
+
+ AE Y233                245.0
+
+ IE LOW                 234
+ IE UP                  235
+ DO I         LOW                      UP
+ AE Y(I)                250.0
+ ND
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        235
+ XN OBJ(I)
+ ND
+
+ G  C1        X1        -1.0D+0        X2        -1.0D+0
+
+CONSTANTS
+
+    HS105     C1        -1.0D+0
+
+BOUNDS
+
+ LO HS105     X1        0.001
+ UP HS105     X1        0.499
+ LO HS105     X2        0.001
+ UP HS105     X2        0.499
+ LO HS105     X3        100.0
+ UP HS105     X3        180.0
+ LO HS105     X4        130.0
+ UP HS105     X4        210.0
+ LO HS105     X5        170.0
+ UP HS105     X5        240.0
+ LO HS105     X6        5.0
+ UP HS105     X6        25.0
+ LO HS105     X7        5.0
+ UP HS105     X7        25.0
+ LO HS105     X8        5.0
+ UP HS105     X8        25.0
+
+START POINT
+
+    HS105     X1        0.1            X2        0.2
+    HS105     X3        100.0          X4        125.0
+    HS105     X5        175.0          X6        11.2
+    HS105     X7        13.2           X8        15.8
+
+    HS105SOL  X1        0.4128928      X2        0.4033526
+    HS105SOL  X3        131.2613       X4        164.3135
+    HS105SOL  X5        217.4222       X6        12.28018
+    HS105SOL  X7        15.77170       X8        20.74682
+
+ELEMENT TYPE
+
+*   ABI
+
+ EV ABI       V1                       V2
+ EV ABI       V3
+ EP ABI       YI
+
+*   CI
+
+ EV CI        X1                       X2
+ EV CI        X5                       X8
+ IV CI        V1                       V2
+ IV CI        V3
+ EP CI        YI
+
+ELEMENT USES
+
+ DO I         1                        235
+
+ XT A(I)      ABI
+ ZV A(I)      V1                       X1
+ ZV A(I)      V2                       X6
+ ZV A(I)      V3                       X3
+ ZP A(I)      YI                       Y(I)
+
+ XT B(I)      ABI
+ ZV B(I)      V1                       X2
+ ZV B(I)      V2                       X7
+ ZV B(I)      V3                       X4
+ ZP B(I)      YI                       Y(I)
+
+ XT C(I)      CI
+ ZV C(I)      X1                       X1
+ ZV C(I)      X2                       X2
+ ZV C(I)      X5                       X5
+ ZV C(I)      X8                       X8
+ ZP C(I)      YI                       Y(I)
+
+ ND
+
+GROUP TYPE
+
+*   LOG
+
+ GV LOG       T
+
+GROUP USES
+
+ DO I         1                        235
+
+ XT OBJ(I)    LOG
+ XE OBJ(I)    A(I)                     B(I)
+ XE OBJ(I)    C(I)
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1138.416240
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS105
+
+TEMPORARIES
+
+ R  R
+ R  D
+ R  E
+ R  DDV2
+ R  DDV3
+ R  DEV2
+ R  DEV3
+ M  EXP
+
+INDIVIDUALS
+
+*   Element type ABI
+
+ T  ABI
+ A  R                   V1 / V2
+ A  D                   ( YI - V3 ) / V2
+ A  E                   EXP( - 5.0D-1 * D * D )
+ A  DDV2                - D / V2
+ A  DEV2                E * ( - D ) * DDV2
+ A  DDV3                - 1.0D+0 / V2
+ A  DEV3                E * ( - D ) * DDV3
+ F                      R * E
+ G  V1                  E / V2
+ G  V2                  ( D * D - 1.0D+0 ) * R * E / V2
+ G  V3                  D * R * E / V2
+ H  V1        V2        ( DEV2 - E / V2 ) / V2
+ H  V1        V3        DEV3 / V2
+ H  V2        V2        ( 2.0D+0 * D * DDV2 * E +
+ H+                       ( D * D - 1.0D+0 ) * ( DEV2 -
+ H+                       2.0D+0 * E / V2 ) ) * R / V2
+ H  V2        V3        ( DDV2 * E + D * DEV2  -
+ H+                       2.0D+0 * D * E / V2 ) * R / V2
+ H  V3        V3        ( DDV3 * E + D * DEV3 ) * R / V2
+
+*   Element type CI
+
+ T  CI
+ R  V1        X1        -1.0           X2        -1.0
+ R  V2        X8        1.0
+ R  V3        X5        1.0
+ A  R                   ( 1.0D+0 + V1 ) / V2
+ A  D                   ( YI - V3 ) / V2
+ A  E                   EXP( - 5.0D-1 * D * D )
+ A  DDV2                - D / V2
+ A  DEV2                E * ( - D ) * DDV2
+ A  DDV3                - 1.0D+0 / V2
+ A  DEV3                E * ( - D ) * DDV3
+ F                      R * E
+ G  V1                  E / V2
+ G  V2                  ( D * D - 1.0D+0 ) * R * E / V2
+ G  V3                  D * R * E / V2
+ H  V1        V2        ( DEV2 - E / V2 ) / V2
+ H  V1        V3        DEV3 / V2
+ H  V2        V2        ( 2.0D+0 * D * DDV2 * E +
+ H+                       ( D * D - 1.0D+0 ) * ( DEV2 -
+ H+                       2.0D+0 * E / V2 ) ) * R / V2
+ H  V2        V3        ( DDV2 * E + D * DEV2  -
+ H+                       2.0D+0 * D * E / V2 ) * R / V2
+ H  V3        V3        ( DDV3 * E + D * DEV3 ) * R / V2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+GROUPS        HS105
+
+TEMPORARIES
+
+ R  P
+ M  LOG
+
+GLOBALS
+
+ A  P                   3.9894228040143270D-01
+
+INDIVIDUALS
+
+*   group type log
+
+ T  LOG
+ F                      - LOG( P * T )
+ G                      - 1 / T
+ H                      1 / T ** 2
+
+ENDATA

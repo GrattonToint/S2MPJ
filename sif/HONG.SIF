@@ -1,0 +1,115 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HONG
+
+*   Problem:
+*   ********
+
+*   Source: Se June Hong/Chid Apte
+
+*   SIF input: A.R.Conn, Jan 1991.
+
+*   classification OLR2-AN-4-1
+
+*  Problem parameters
+
+
+VARIABLES
+
+    T1
+    T2
+    T3
+    T4
+
+GROUPS
+
+ N  OBJ
+ E  SUM1      T1        1.0            T2        1.0
+ E  SUM1      T3        1.0            T4        1.0
+
+CONSTANTS
+
+ X  HONG      SUM1      1.0
+
+BOUNDS
+
+ LO HONG      'DEFAULT' 0.0
+ UP HONG      'DEFAULT' 1.0
+
+START POINT
+
+ V  HONG      'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV EXP       X
+ EP EXP       P1                       P2
+ EP EXP       P3                       P4
+ EP EXP       P5
+
+ELEMENT USES
+
+ T  'DEFAULT' EXP
+
+ V  E1        X                        T1
+ P  E1        P1        0.0            P2        25.0
+ P  E1        P3        0.92           P4        0.08
+ P  E1        P5        0.38
+
+ V  E2        X                        T2
+ P  E2        P1        0.0            P2        50.0
+ P  E2        P3        -2.95          P4        3.95
+ P  E2        P5        0.11
+
+ V  E3        X                        T3
+ P  E3        P1        9.0            P2        -4.0
+ P  E3        P3        -1.66          P4        1657834.0
+ P  E3        P5        -1.48
+
+ V  E4        X                        T4
+ P  E4        P1        0.0            P2        20000.0
+ P  E4        P3        0.11           P4        0.89
+ P  E4        P5        0.00035
+
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+
+OBJECT BOUND
+
+*   Solution unknown
+
+ LO SOLN                -4.0
+ UP SOLN                300.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HONG
+
+TEMPORARIES
+
+ R  XTOT
+ R  EP5
+ M  EXP
+
+INDIVIDUALS
+
+ T  EXP
+ A  XTOT                P1 + P2*X
+ A  EP5                 EXP( P5*XTOT)
+ F                      P3 + P4 * EP5
+ G  X                   P2 * P4 * P5 * EP5
+ H  X         X         P2 * P2 * P4 * P5 * P5 * EP5
+
+ENDATA
+
+

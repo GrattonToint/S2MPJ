@@ -1,0 +1,391 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          FCCU
+
+*   Problem :
+*   *********
+
+*   A simple data reconciliation for a fluid catalytic cracker.
+
+*                     +--------------------------+
+*                     | FCCU data reconciliation |
+*    +-----------+    +--------------------------+
+* 1) | Flowsheet |                      Off_gas                      |------->
+*    +-----------+                     |----------->                 | Propane
+*                             MF_ohd   |                  |-------->F7
+*                             |------>F4<-------|         |          |
+*                             |        |        |         |DC3_feed  | Butane
+* Feed      Effluent          ^        |        |         |          |------->
+* ------->F1-------->F2......>|        |---------------->F5                  
+*          ^                  v       DC4_feed  |         |DC4_btms  |------->
+*          |                  |                 |         |          |  LCN
+*          |                  |                 |<-------F6-------->F8
+*          |                  | HCN              Lean_oil   C8spl_fd |  MCN
+*          |                  |-------->                             |------->
+*          |                  | LCO          
+*          |                  |-------->              
+*          |                  | HCO          
+*          |                  |-------->              
+*          |                  | MF_btms     
+*          |                  v 
+*          |<----------------F3-------->
+*             Dec_recy         Decant
+*
+*
+*    +--------------------+
+* 2) | Objective function |
+*    +--------------------+
+*
+*   Obj = sum 1->i [W_i*(C_flow_i - M_flow_i)**2]
+*                          
+*
+*    Where: W_i       Weight on term i of objective function
+*           C_flow_i  Computed flow i (a variable for this problem)
+*           M_flow_i  Measrued flow i (a constant for this problem)
+*
+*    +-------------+
+* 3) | Constraints |
+*    +-------------+
+*
+*    These represent the linear mass balances around each
+*    node, where a node (Fx) represents a single unit operation
+*    in a fluid catalytics cracker.
+*
+*
+*    +---------------+
+* 4) | Initial point |
+*    +---------------+
+*
+*    Feed       1.0
+*    Effluent   1.0
+*    MF_ohd     1.0
+*    HCN        1.0
+*    LCO        1.0
+*    HCO        1.0
+*    MF_btms    1.0
+*    Decant     1.0
+*    Dec_recy   1.0
+*    Off_gas    1.0
+*    DC4_feed   1.0
+*    DC3_feed   1.0
+*    DC4_btms   1.0
+*    Lean_oil   1.0
+*    Propane    1.0
+*    Butane     1.0
+*    C8spl_fd   1.0
+*    LCN        1.0
+*    MCN        1.0
+*
+*    Obj        7.36259000271320D+03
+*
+*    +------------------+
+* 5) | Optimal solution |
+*    +------------------+
+*
+*    Feed       3.11639D+01
+*    Effluent   3.53528D+01
+*    MF_ohd     1.94669D+01
+*    HCN        2.94255D+00
+*    LCO        4.94255D+00
+*    HCO        3.44255D+00
+*    MF_btms    4.55828D+00
+*    Decant     3.69371D-01
+*    Dec_recy   4.18891D+00
+*    Off_gas    2.56075D+00
+*    DC4_feed   2.41207D+01
+*    DC3_feed   5.15601D+00
+*    DC4_btms   1.89647D+01
+*    Lean_oil   7.21458D+00
+*    Propane    2.42801D+00
+*    Butane     2.72801D+00
+*    C8spl_fd   1.17501D+01
+*    LCN        5.87506D+00
+*    MCN        5.87506D+00
+*
+*    Obj        1.11491D+01
+*
+*    +-----------------------------------------------+
+* 6) | SPEC.SPC (remove 1st * of every line to use). |
+*    +-----------------------------------------------+
+*BEGIN
+** maximizer-sought
+**  check-derivatives
+*  ignore-derivative-bugs
+** use-scalings
+** print-scalings
+*  finite-difference-gradients
+**  exact-second-derivatives-used
+** bfgs-approximate-second-derivatives-used
+** sr1-approximate-second-derivatives-used
+*  bandsolver-preconditioned-cg-solver-used   5
+** diagonal-preconditioned-cg-solver-used
+** gill-murray-ponceleon-saunders-preconditioned-cg-solver-used
+** schnabel-eskow-preconditioned-cg-solver-used
+** munksgaards-preconditioned-cg-solver-used
+*  exact-cauchy-point-required
+** inexact-cauchy-point-required
+** solve-bqp-accurately
+** two-norm-trust-region
+** gradient-tolerance    1.0D-5
+** constraint-tolerance  1.0D-5
+*  trust-region-radius   1.0D+0
+*  maximum-number-of-iterations   1000
+*  print-level                    1
+*  start-printing-at-iteration    0
+*  stop-printing-at-iteration     1000
+*END
+
+*   Source:
+*   W. J. Korchinski, Profimatics, Inc,
+*   325 Rolling Oaks Drive, Thousand Oaks, California, USA 91361-1200
+*   Telephone: 1-805 496 6661, Fax: 1-805 373 5108
+
+*   SIF input: W. Korchinski, Spring 1993.
+
+*   classification SLR2-MN-19-8
+
+****************************************************************
+*
+* PROBLEM SPECIFICATION BEGINS HERE.
+* **********************************
+* **********************************           
+*
+**************************************
+* Define objective function weights. *
+**************************************
+ RE W1                  0.2
+ RE W2                  1.
+ RE W3                  1.
+ RE W4                  0.33333333
+ RE W5                  0.33333333
+ RE W6                  0.33333333
+ RE W7                  1.
+ RE W8                  1.
+ RE W9                  1.
+ RE W10                 1.
+ RE W11                 1.
+ RE W12                 1.
+ RE W13                 1.
+ RE W14                 1.
+ RE W15                 0.33333333
+ RE W16                 0.33333333
+ RE W17                 1.
+ RE W18                 0.33333333
+ RE W19                 0.33333333
+
+*************************************************
+* Define Measured flows for objective function. *
+*************************************************
+ RE M1                  31.
+ RE M2                  36.
+ RE M3                  20.
+ RE M4                  3. 
+ RE M5                  5. 
+ RE M6                  3.5
+ RE M7                  4.2
+ RE M8                  0.9
+ RE M9                  3.9
+ RE M10                 2.2
+ RE M11                 22.8
+ RE M12                 6.8
+ RE M13                 19.
+ RE M14                 8.5
+ RE M15                 2.2
+ RE M16                 2.5
+ RE M17                 10.8
+ RE M18                 6.5
+ RE M19                 6.5
+
+********************
+* Define variables *
+********************
+VARIABLES
+    Feed      
+    Effluent  
+    MF_ohd    
+    HCN       
+    LCO       
+    HCO       
+    MF_btms   
+    Decant    
+    Dec_recy  
+    Off_gas   
+    DC4_feed  
+    DC3_feed  
+    DC4_btms  
+    Lean_oil  
+    Propane   
+    Butane    
+    C8spl_fd  
+    LCN       
+    MCN       
+
+*********************
+* Set up functions. *
+*********************
+
+GROUPS
+*****************************
+* Define material balances. *
+*****************************
+ XE F1        Feed      1.             Dec_recy  1.
+ XE F1        Effluent  -1.
+ XE F2        Effluent  1.             MF_ohd    -1.
+ XE F2        HCN       -1.            LCO       -1.
+ XE F2        HCO       -1.            MF_btms   -1.
+ XE F3        MF_btms   1.             Decant    -1.
+ XE F3        Dec_recy  -1.
+ XE F4        MF_ohd    1.             Lean_oil  1.
+ XE F4        Off_gas   -1.            DC4_feed  -1.
+ XE F5        DC4_feed  1.             DC3_feed  -1.
+ XE F5        DC4_btms  -1.
+ XE F6        DC4_btms  1.             Lean_oil  -1.
+ XE F6        C8spl_fd  -1.
+ XE F7        DC3_feed  1.             Propane   -1.
+ XE F7        Butane    -1.
+ XE F8        C8spl_fd  1.             LCN       -1.
+ XE F8        MCN       -1.
+
+*****************************************************************************
+* Objective function: 1 variable per term & each term scaled appropriately. *
+*****************************************************************************
+ XN Obj1      Feed      1.             
+ ZN Obj1      'SCALE'                  W1
+ XN Obj2      Effluent  1.             
+ ZN Obj2      'SCALE'                  W2
+ XN Obj3      MF_ohd    1.             
+ ZN Obj3      'SCALE'                  W3
+ XN Obj4      HCN       1.             
+ ZN Obj4      'SCALE'                  W4
+ XN Obj5      LCO       1.             
+ ZN Obj5      'SCALE'                  W5
+ XN Obj6      HCO       1.             
+ ZN Obj6      'SCALE'                  W6
+ XN Obj7      MF_btms   1.             
+ ZN Obj7      'SCALE'                  W7
+ XN Obj8      Decant    1.             
+ ZN Obj8      'SCALE'                  W8
+ XN Obj9      Dec_recy  1.             
+ ZN Obj9      'SCALE'                  W9
+ XN Obj10     Off_gas   1.             
+ ZN Obj10     'SCALE'                  W10
+ XN Obj11     DC4_feed  1.             
+ ZN Obj11     'SCALE'                  W11
+ XN Obj12     DC3_feed  1.             
+ ZN Obj12     'SCALE'                  W12
+ XN Obj13     DC4_btms  1.             
+ ZN Obj13     'SCALE'                  W13
+ XN Obj14     Lean_oil  1.             
+ ZN Obj14     'SCALE'                  W14
+ XN Obj15     Propane   1.             
+ ZN Obj15     'SCALE'                  W15
+ XN Obj16     Butane    1.             
+ ZN Obj16     'SCALE'                  W16
+ XN Obj17     C8spl_fd  1.             
+ ZN Obj17     'SCALE'                  W17
+ XN Obj18     LCN       1.             
+ ZN Obj18     'SCALE'                  W18
+ XN Obj19     MCN       1.             
+ ZN Obj19     'SCALE'                  W19
+
+*************************************************
+* Objective function: terms for measured flows. *
+*************************************************
+CONSTANTS
+ Z  FCCU      Obj1                     M1
+ Z  FCCU      Obj2                     M2
+ Z  FCCU      Obj3                     M3
+ Z  FCCU      Obj4                     M4
+ Z  FCCU      Obj5                     M5
+ Z  FCCU      Obj6                     M6
+ Z  FCCU      Obj7                     M7
+ Z  FCCU      Obj8                     M8
+ Z  FCCU      Obj9                     M9
+ Z  FCCU      Obj10                    M10
+ Z  FCCU      Obj11                    M11
+ Z  FCCU      Obj12                    M12
+ Z  FCCU      Obj13                    M13
+ Z  FCCU      Obj14                    M14
+ Z  FCCU      Obj15                    M15
+ Z  FCCU      Obj16                    M16
+ Z  FCCU      Obj17                    M17
+ Z  FCCU      Obj18                    M18
+ Z  FCCU      Obj19                    M19
+
+**********************************
+* Define initial point to be 1.0 *
+**********************************
+START POINT
+ XV FCCU      Feed      1.  
+ XV FCCU      Effluent  1.
+ XV FCCU      MF_ohd    1.
+ XV FCCU      HCN       1.
+ XV FCCU      LCO       1.
+ XV FCCU      HCO       1.
+ XV FCCU      MF_btms   1.
+ XV FCCU      Decant    1.
+ XV FCCU      Dec_recy  1.
+ XV FCCU      Off_gas   1.
+ XV FCCU      DC4_feed  1.
+ XV FCCU      DC3_feed  1.
+ XV FCCU      DC4_btms  1.
+ XV FCCU      Lean_oil  1.
+ XV FCCU      Propane   1.
+ XV FCCU      Butane    1.
+ XV FCCU      C8spl_fd  1.
+ XV FCCU      LCN       1.
+ XV FCCU      MCN       1.
+
+********************************
+* Declare group type to be X^2 *
+********************************
+GROUP TYPE
+ GV SQUARE    ALPHA
+
+************************************
+* Square objective function terms. *
+************************************
+GROUP USES
+ XT Obj1      SQUARE
+ XT Obj2      SQUARE
+ XT Obj3      SQUARE
+ XT Obj4      SQUARE
+ XT Obj5      SQUARE
+ XT Obj6      SQUARE
+ XT Obj7      SQUARE
+ XT Obj8      SQUARE
+ XT Obj9      SQUARE
+ XT Obj10     SQUARE
+ XT Obj11     SQUARE
+ XT Obj12     SQUARE
+ XT Obj13     SQUARE
+ XT Obj14     SQUARE
+ XT Obj15     SQUARE
+ XT Obj16     SQUARE
+ XT Obj17     SQUARE
+ XT Obj18     SQUARE
+ XT Obj19     SQUARE
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        FCCU
+
+INDIVIDUALS
+***************************
+* Define function SQUARE. *
+***************************
+*   Square of ALPHA.
+ T  SQUARE
+ F                      ALPHA*ALPHA
+ G                      ALPHA+ALPHA
+ H                      2.0
+
+ENDATA
+

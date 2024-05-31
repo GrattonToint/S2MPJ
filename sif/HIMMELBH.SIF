@@ -1,0 +1,92 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBH
+
+*   Problem :
+*   *********
+
+*   A 2 variables problem by Himmelblau.
+
+*   Source:
+*   D.H. Himmelblau,
+*   "A uniform evaluation of unconstrained optimization techniques",
+*   in "Numerical methods for nonlinear optimization" (F.A. Lootsma, ed.),
+*   Academic Press, London, 1972.
+
+*   See Buckley#8 (p. 60)
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OUR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X1        -3.0           X2        -2.0
+
+CONSTANTS
+
+    HIMMELBH  G1        -2.0
+
+BOUNDS
+
+ FR HIMMELBH  'DEFAULT'
+
+START POINT
+
+    HIMMELBH  X1        0.0
+    HIMMELBH  X2        2.0
+
+ELEMENT TYPE
+
+ EV POW       X
+ EP POW       POWER
+
+ELEMENT USES
+
+ XT 'DEFAULT' POW
+
+ V  E1        X                        X1
+ P  E1        POWER     3.0
+
+ V  E2        X                        X2
+ P  E2        POWER     2.0
+
+GROUP USES
+
+ E  G1        E1                       E2
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBH
+
+TEMPORARIES
+
+ R  PM1
+
+INDIVIDUALS
+
+ T  POW
+ A  PM1                 POWER - 1.0
+ F                      X**POWER
+ G  X                   POWER * X**PM1
+ H  X         X         POWER * PM1 * X**( POWER - 2.0 )
+
+ENDATA

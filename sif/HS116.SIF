@@ -1,0 +1,280 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS116
+
+*   Problem :
+*   *******
+
+*   A 3 stage membrane separation model
+
+*   Source: problem 116 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B. Debarsy, Feb 1990.
+
+*   classification LQR2-MN-13-14
+
+*   Number of variables
+
+ IE N                   13
+
+*   Useful parameter
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X11       1.0            X12       1.0
+ N  OBJ       X13       1.0
+
+*   Constraint functions
+
+ G  C1        X3        1.0            X2        -1.0
+
+ G  C2        X2        1.0            X1        -1.0
+
+ G  C3        X7        -0.002         X8        0.002
+
+ G  C4        X11       1.0            X12       1.0
+ G  C4        X13       1.0
+
+ G  C5        X13       1.0            X10       -1.262626
+
+ G  C6        X5        1.0            X2        -0.03475
+
+ G  C7        X6        1.0            X3        -0.03475
+
+ G  C8
+
+ G  C9        X5        -1.0           X6        -1.0
+
+ G  C10       X2        -500.0         X6        500.0
+
+ G  C11       X2        1.0
+
+ G  C12       X4        1.0            X1        -0.03475
+
+ G  C13       X11       1.0            X8        -1.262626
+
+ G  C14       X12       1.0            X9        -1.262626
+
+CONSTANTS
+
+    HS116     C3        -1.0
+    HS116     C4        50.0
+    HS116     C9        -1.0
+    HS116     C11       0.9
+
+RANGES
+
+    HS116     C4        200.0
+
+BOUNDS
+
+ XL HS116     'DEFAULT' 0.1
+
+ UP HS116     X1        1.0
+
+ UP HS116     X2        1.0
+
+ UP HS116     X3        1.0
+
+ LO HS116     X4        0.0001
+ UP HS116     X4        0.1
+
+ UP HS116     X5        0.9
+
+ UP HS116     X6        0.9
+
+ UP HS116     X7        1000.0
+
+ UP HS116     X8        1000.0
+
+ LO HS116     X9        500.0
+ UP HS116     X9        1000.0
+
+ UP HS116     X10       500.0
+
+ LO HS116     X11       1.0
+ UP HS116     X11       150.0
+
+ LO HS116     X12       0.0001
+ UP HS116     X12       150.0
+
+ LO HS116     X13       0.0001
+ UP HS116     X13       150.0
+
+START POINT
+
+    HS116     X1        0.5            X2        0.8
+    HS116     X3        0.9            X4        0.1
+    HS116     X5        0.14           X6        0.5
+    HS116     X7        489.0          X8        80.0
+    HS116     X9        650.0          X10       450.0
+    HS116     X11       150.0          X12       150.0
+    HS116     X13       150.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  E1        2PR
+ V  E1        X                        X3
+ V  E1        Y                        X10
+
+ T  E2        2PR
+ V  E2        X                        X2
+ V  E2        Y                        X5
+
+ T  E3        SQ
+ V  E3        X                        X2
+
+ T  E4        2PR
+ V  E4        X                        X3
+ V  E4        Y                        X6
+
+ T  E5        SQ
+ V  E5        X                        X3
+
+ T  E6        2PR
+ V  E6        X                        X5
+ V  E6        Y                        X7
+
+ T  E7        2PR
+ V  E7        X                        X1
+ V  E7        Y                        X8
+
+ T  E8        2PR
+ V  E8        X                        X4
+ V  E8        Y                        X7
+
+ T  E9        2PR
+ V  E9        X                        X4
+ V  E9        Y                        X8
+
+ T  E10       2PR
+ V  E10       X                        X2
+ V  E10       Y                        X9
+
+ T  E11       2PR
+ V  E11       X                        X5
+ V  E11       Y                        X8
+
+ T  E12       2PR
+ V  E12       X                        X1
+ V  E12       Y                        X8
+
+ T  E13       2PR
+ V  E13       X                        X6
+ V  E13       Y                        X9
+
+ T  E14       2PR
+ V  E14       X                        X2
+ V  E14       Y                        X9
+
+ T  E15       2PR
+ V  E15       X                        X3
+ V  E15       Y                        X10
+
+ T  E16       2PR
+ V  E16       X                        X6
+ V  E16       Y                        X9
+
+ T  E17       2PR
+ V  E17       X                        X2
+ V  E17       Y                        X10
+
+ T  E18       2PR
+ V  E18       X                        X2
+ V  E18       Y                        X10
+
+ T  E19       2PR
+ V  E19       X                        X3
+ V  E19       Y                        X10
+
+ T  E20       2PR
+ V  E20       X                        X1
+ V  E20       Y                        X4
+
+ T  E21       SQ
+ V  E21       X                        X1
+
+ T  E22       2PR
+ V  E22       X                        X1
+ V  E22       Y                        X8
+
+ T  E23       2PR
+ V  E23       X                        X2
+ V  E23       Y                        X9
+
+GROUP USES
+
+ E  C5        E1        1.231059
+
+ E  C6        E2        -0.975         E3        0.00975
+
+ E  C7        E4        -0.975         E5        0.00975
+
+ E  C8        E6                       E7        -1.0
+ E  C8        E8        -1.0           E9
+
+ E  C9        E10       -0.002         E11       -0.002
+ E  C9        E12       0.002          E13       0.002
+
+ E  C10       E14                      E15       -1.0
+ E  C10       E16       -1.0           E17
+
+ E  C11       E18       -0.002         E19       0.002
+
+ E  C12       E20       -0.975         E21       0.00975
+
+ E  C13       E22       1.231059
+
+ E  C14       E23       1.231059
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               97.588409
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS116
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

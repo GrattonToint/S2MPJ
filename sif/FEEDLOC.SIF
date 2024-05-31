@@ -1,0 +1,439 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          FEEDLOC
+
+*   Problem :
+*   *********
+
+*   Feed tray location & determination of optimum number of trays 
+*   in a distillation column
+
+*   SIF input: S. Leyffer, October 1997
+
+*   classification LOR2-AN-90-259
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE M                   2              $ number of components
+ IE NMAX                12             $ max. number of trays
+ IA NMAX-1    NMAX      -1
+ RE F                   100.0          $ Feed stream
+ AE AL1                 1.0            $ relative volatility of component 1
+ AE AL2                 5.13435        $ relative volatility of component 2
+ AE XF1                 0.80           $ feed rate of component 1
+ AE XF2                 0.20           $ feed rate of component 2
+ AE SPEC                0.001          $ purity specification
+ RE BIGM                1000.0         $ a large constant
+
+VARIABLES
+
+ DO I         1                        NMAX
+ X  S(I)      INTEGER                  $ = 1 if N = I
+ X  W(I)      INTEGER                  $ = 1 if tray I is feed tray
+ X  Z(I)      INTEGER                  $ = 1 if tray I exists  
+ ND
+
+    N                                  $ actual number of trays
+
+* ... liquid(X) and vapour(Y) mole fractions
+ DO I         1                        NMAX
+ DO J         1                        M
+ X  X(I,J)
+ X  Y(I,J)
+ ND
+
+    L                                  $ molar flow rate of liquid
+    V                                  $ molar flow rate of vapour
+    R                                  $ reflux ratio
+    P1                                 $ top product rate
+    P2                                 $ bottom product rate
+
+GROUPS
+
+* ... objective
+ N  OBJ       R         1.0
+
+* ... logical constraints
+ DO I         1                        NMAX
+ XE FENTR     W(I)      1.0
+ XE NTRAY     S(I)      1.0
+ XE NDEF1     Z(I)      1.0
+ AI RI        I
+ ZE NDEF2     S(I)                     RI
+ ND
+ XE NDEF1     N         -1.0
+ XE NDEF2     N         -1.0
+
+ DO I         1                        NMAX-1
+ IA I+1       I         1
+ XG NIL(I)    Z(I)      1.0            Z(I+1)    -1.0
+ ND
+
+ DO I         1                        NMAX
+ AI RI        I
+ ZL ENTX      W(I)                     RI
+ AM RI        RI        -1.0
+ ZL ENTX      S(I)                     RI
+ ND
+
+ DO I         1                        NMAX
+ XL LASTX(I)  S(I)      1.0            Z(I)      -1.0
+ ND
+
+ DO I         1                        NMAX
+ XL ZNOT(I)   Z(I)      1.0
+ DO K         I                        NMAX
+ XL ZNOT(I)   S(K)      -1.0
+ OD K
+ OD I
+
+ DO I         1                        NMAX
+ XL FEEDX(I)  W(I)      1.0            Z(I)      -1.0
+ ND
+
+ DO I         2                        NMAX
+ IA I-1       I         -1
+ XL WNES1_(I) W(I)      1.0            S(I)      1.0
+ XL WNES2_(I) W(I-1)    1.0            S(I)      1.0
+ ND
+
+* ... general linear constraints
+ DO I         1                        NMAX
+
+ DO J         1                        M
+ XG PE1(I)    Y(I,J)    1.0
+ XG PE2(I)    Y(I,J)    1.0
+ XG PE3(I)    X(I,J)    1.0
+ XG PE4(I)    X(I,J)    1.0
+ OD J
+ XG PE1(I)    Z(I)      1.0
+ XG PE2(I)    Z(I)      -1.0
+ XG PE3(I)    Z(I)      1.0
+ XG PE4(I)    Z(I)      -1.0
+
+ DO J         1                        M
+ XL XNOT(I,J) X(I,J)    1.0            Z(I)      -1.0
+ XL YNOT(I,J) Y(I,J)    1.0            Z(I)      -1.0
+ OD J
+
+ OD I
+
+* ... nonlinear constraints
+ DO I         1                        NMAX
+ AM TEMP      AL1       -1.0
+ ZE PHEE(I)   X(I,1)                   TEMP
+ OD I
+
+ E  DEFL      L         1.0
+
+ DO J         1                        M
+ AM TEMP      F         -1.0
+ ZE CMB1_(J)  X(2,J)                   TEMP
+ ND
+
+ DO I         2                        NMAX
+ DO J         1                        M
+ AM TEMP      BIGM      -1.0
+ ZL CMBN1(I,J)S(I)                     BIGM
+ ZG CMBN2(I,J)S(I)                     TEMP
+ OD J
+ OD I
+
+ DO I         2                        NMAX-1
+ A* TEMP1     F                        XF(J)
+ AM TEMP1     TEMP1     -1.0
+ ZL CMB1(I)   S(I)                     TEMP
+ ZL CMB1(I)   Z(I)                     BIGM
+ ZL CMB1(I)   W(I)                     TEMP1
+ ZG CMB2(I)   S(I)                     BIGM
+ ZG CMB2(I)   Z(I)                     TEMP
+ ZG CMB2(I)   W(I)                     TEMP1
+ OD I
+
+ DO I         3                        NMAX
+ ZL RECR(I)   S(I)                     BIGM
+ ND
+
+
+CONSTANTS
+
+    FEEDLOC   FENTR     1.0
+    FEEDLOC   NTRAY     1.0
+
+ DO I         2                        NMAX
+ X  FEEDLOC   WNES1_(I) 1.0
+ X  FEEDLOC   WNES2_(I) 1.0
+ ND
+
+ AM TEMP      BIGM      -1.0
+ DO I         2                        NMAX
+ DO J         1                        M
+ Z  FEEDLOC   CMBN1(I,J)               BIGM
+ Z  FEEDLOC   CMBN2(I,J)               TEMP
+ OD J
+ OD I
+
+ DO I         2                        NMAX-1
+ Z  FEEDLOC   CMB1(I)                  BIGM
+ AM TEMP      BIGM      -1.0
+ Z  FEEDLOC   CMB2(I)                  TEMP
+ OD I
+
+ A* TEMP      XF(1)                    SPEC
+ A* TEMP1     TEMP                     F
+ A+ RHS       TEMP1                    BIGM
+ DO I         3                        NMAX
+ Z  FEEDLOC   RECR(I)                  RHS
+ ND
+
+RANGES
+
+ DO I         1                        NMAX
+ X  FEEDLOC   PE1(I)    2.0
+ X  FEEDLOC   PE2(I)    2.0
+ X  FEEDLOC   PE3(I)    2.0
+ X  FEEDLOC   PE4(I)    2.0
+ OD I
+
+BOUNDS
+
+ DO I         1                        NMAX
+ XU FEEDLOC   Z(I)      1.0
+ XU FEEDLOC   W(I)      1.0
+ XU FEEDLOC   S(I)      1.0
+ DO J         1                        M
+ XU FEEDLOC   X(I,J)    1.0
+ XU FEEDLOC   Y(I,J)    1.0
+ OD J
+ OD I
+
+ LO FEEDLOC   N         3.0
+ AI TEMP      NMAX 
+ ZU FEEDLOC   N                        TEMP
+
+ FX FEEDLOC   P2        80.0
+ ZU FEEDLOC   L                        F
+ ZU FEEDLOC   V                        F
+ ZU FEEDLOC   P1                       F
+ UP FEEDLOC   R         5.0
+
+* ... feed may not enter bottom two trays
+ XX FEEDLOC   W(1)      0.0
+ XX FEEDLOC   W(2)      0.0
+
+* ... temporary bounds to simulate B&B tree
+*IE 8                   8
+*IE 4                   4
+*XX FEEDLOC   S(8)      1.0
+*XX FEEDLOC   W(4)      1.0
+*XU FEEDLOC   S(1)      0.0
+
+START POINT
+
+    FEEDLOC   'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV A2PROD    V1                       V2
+ EP A2PROD    A
+
+ELEMENT USES
+
+ DO I         1                        NMAX
+ DO K         1                        M
+ XT PHE(I,K)  A2PROD
+ ZV PHE(I,K)  V1                       X(I,K)
+ ZV PHE(I,K)  V2                       Y(I,1)
+ ZP PHE(I,K)  A                        AL(K)
+ OD K
+ OD I
+
+ T  DEFLE     A2PROD
+ V  DEFLE     V1                       R
+ V  DEFLE     V2                       P1
+ P  DEFLE     A         -1.0
+
+ DO J         1                        M
+ XT CMB11_(J) A2PROD
+ ZV CMB11_(J) V1                       P2
+ ZV CMB11_(J) V2                       X(1,J)
+ XP CMB11_(J) A         1.0
+ XT CMB12_(J) A2PROD
+ ZV CMB12_(J) V1                       V
+ ZV CMB12_(J) V2                       Y(1,J)
+ XP CMB12_(J) A         1.0
+ XT CMB13_(J) A2PROD
+ ZV CMB13_(J) V1                       L
+ ZV CMB13_(J) V2                       X(2,J)
+ XP CMB13_(J) A         -1.0
+ ND
+
+ DO I         2                        NMAX
+ IA I-1       I         -1
+ DO J         1                        M
+ XT CM11(I,J) A2PROD
+ ZV CM11(I,J) V1                       L
+ ZV CM11(I,J) V2                       X(I,J)
+ XP CM11(I,J) A         1.0
+ XT CM12(I,J) A2PROD
+ ZV CM12(I,J) V1                       P1
+ ZV CM12(I,J) V2                       Y(I,J)
+ XP CM12(I,J) A         1.0
+ XT CM13(I,J) A2PROD
+ ZV CM13(I,J) V1                       V
+ ZV CM13(I,J) V2                       Y(I-1,J)
+ XP CM13(I,J) A         -1.0
+ XT CM21(I,J) A2PROD
+ ZV CM21(I,J) V1                       L
+ ZV CM21(I,J) V2                       X(I,J)
+ XP CM21(I,J) A         1.0
+ XT CM22(I,J) A2PROD
+ ZV CM22(I,J) V1                       P1
+ ZV CM22(I,J) V2                       Y(I,J)
+ XP CM22(I,J) A         1.0
+ XT CM23(I,J) A2PROD
+ ZV CM23(I,J) V1                       V
+ ZV CM23(I,J) V2                       Y(I-1,J)
+ XP CM23(I,J) A         -1.0
+ OD J
+ OD I
+
+ DO I         2                        NMAX-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ XT C11(I)    A2PROD
+ ZV C11(I)    V1                       L
+ ZV C11(I)    V2                       X(I,1)
+ XP C11(I)    A         1.0
+ DO K         I                        NMAX
+ XT C12(I,K)  A2PROD
+ ZV C12(I,K)  V1                       X(I,1)
+ ZV C12(I,K)  V2                       W(K)
+ ZP C12(I,K)  A                        F
+ OD K
+ XT C13(I)    A2PROD
+ ZV C13(I)    V1                       V
+ ZV C13(I)    V2                       Y(I,1)
+ XP C13(I)    A         1.0
+ XT C14(I)    A2PROD
+ ZV C14(I)    V1                       L
+ ZV C14(I)    V2                       X(I+1,1)
+ XP C14(I)    A         -1.0
+ DO K         I+1                      NMAX
+ AM TEMP      F         -1.0
+ XT C15(I,K)  A2PROD
+ ZV C15(I,K)  V1                       X(I+1,1)
+ ZV C15(I,K)  V2                       W(K)
+ ZP C15(I,K)  A                        TEMP
+ OD K
+ XT C16(I)    A2PROD
+ ZV C16(I)    V1                       V
+ ZV C16(I)    V2                       Y(I-1,1)
+ XP C16(I)    A         -1.0
+
+ XT C21(I)    A2PROD
+ ZV C21(I)    V1                       L
+ ZV C21(I)    V2                       X(I,1)
+ XP C21(I)    A         1.0
+ DO K         1                        NMAX
+ XT C22(I,K)  A2PROD
+ ZV C22(I,K)  V1                       X(I,1)
+ ZV C22(I,K)  V2                       W(K)
+ ZP C22(I,K)  A                        F
+ OD K
+ XT C23(I)    A2PROD
+ ZV C23(I)    V1                       V
+ ZV C23(I)    V2                       Y(I,1)
+ XP C23(I)    A         1.0
+ XT C24(I)    A2PROD
+ ZV C24(I)    V1                       L
+ ZV C24(I)    V2                       X(I+1,1)
+ XP C24(I)    A         -1.0
+ DO K         I+1                      NMAX
+ AM TEMP      F         -1.0
+ XT C25(I,K)  A2PROD
+ ZV C25(I,K)  V1                       X(I+1,1)
+ ZV C25(I,K)  V2                       W(K)
+ ZP C25(I,K)  A                        TEMP
+ OD K
+ XT C26(I)    A2PROD
+ ZV C26(I)    V1                       V
+ ZV C26(I)    V2                       Y(I-1,1)
+ XP C26(I)    A         -1.0
+ OD I
+
+ DO I         3                        NMAX
+ XT REC(I)    A2PROD
+ ZV REC(I)    V1                       P1
+ ZV REC(I)    V2                       Y(I,1)
+ XP REC(I)    A         1.0
+ OD I
+
+GROUP USES
+
+ DO I         1                        NMAX
+ DO K         1                        M
+ XE PHEE(I)   PHE(I,K)  
+ OD K
+ OD I
+
+ E  DEFL      DEFLE
+
+ DO J         1                        M
+ XE CMB1_(J)  CMB11_(J)                CMB12_(J)
+ XE CMB1_(J)  CMB13_(J)
+ OD J
+
+ DO I         2                        NMAX
+ DO J         1                        M
+ XE CMBN1(I,J)CM11(I,J)                CM12(I,J)
+ XE CMBN1(I,J)CM13(I,J)
+ XE CMBN2(I,J)CM21(I,J)                CM22(I,J)
+ XE CMBN2(I,J)CM23(I,J)
+ OD J
+ OD I
+
+ DO I         2                        NMAX-1
+ XE CMB1(I)   C11(I)                   C13(I)  
+ XE CMB1(I)   C14(I)                   C16(I)  
+ XE CMB2(I)   C21(I)                   C23(I)  
+ XE CMB2(I)   C24(I)                   C26(I)  
+ DO K         I                        NMAX
+ XE CMB1(I)   C12(I,K)
+ XE CMB2(I)   C22(I,K)
+ OD K
+ IA I+1       I         1
+ DO K         I+1                      NMAX
+ XE CMB1(I)   C15(I,K)
+ XE CMB2(I)   C25(I,K)
+ OD K
+ OD I
+
+ DO I         3                        NMAX
+ XE RECR(I)   REC(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      FEEDLOC
+
+ EV A2PROD    V1                       V2
+ EP A2PROD    A
+
+INDIVIDUALS
+
+ T  A2PROD
+ F                      A * V1 * V2
+ G  V1                  A * V2
+ G  V2                  A * V1
+ H  V1        V2        A
+
+ENDATA

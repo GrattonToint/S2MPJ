@@ -1,0 +1,147 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GENROSE
+
+*   Problem :
+*   --------
+
+*   The generalized Rosenbrock function.
+
+*   Source: problem 5 in
+*   S. Nash,
+*   "Newton-type minimization via the Lanczos process",
+*   SIAM J. Num. Anal. 21, 1984, 770-788.
+
+*   SIF input: Nick Gould, Oct 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification SUR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   5              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10             $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N+1       N         1
+ RI RN+1      N+1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         2                        N
+ XN Q(I)      'SCALE'   0.01
+ XN Q(I)      X(I)      1.0
+ XN L(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+    GENROSE   OBJ       -1.0
+
+ DO I         2                        N
+ X  GENROSE   L(I)      1.0
+ ND
+
+BOUNDS
+
+ FR GENROSE   'DEFAULT'
+
+START POINT
+
+*  start with X(I) = I/N+1.
+
+ DO I         1                        N
+
+ RI RI        I
+ R/ T         RI                       RN+1
+ ZV GENROSE   X(I)                     T
+
+ ND
+
+ELEMENT TYPE
+
+ EV MSQR      V
+
+ELEMENT USES
+
+ XT 'DEFAULT' MSQR
+
+ DO I         2                        N
+ IA I-1       I         -1
+ ZV Q(I)      V                        X(I-1)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         2                        N
+ XE Q(I)      Q(I)
+ ND
+
+OBJECT BOUND
+
+ LO GENROSE             1.0
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GENROSE
+
+INDIVIDUALS
+
+ T  MSQR
+ F                      - V ** 2
+ G  V                   - 2.0D+0 * V
+ H  V         V         - 2.0D+0
+
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        GENROSE
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0D+0
+
+ENDATA
+

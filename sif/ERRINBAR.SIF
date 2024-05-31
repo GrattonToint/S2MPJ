@@ -1,0 +1,241 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ERRINBAR
+
+*   Problem :
+*   *********
+*   A nonlinearly constrained problem.
+
+*   Source:
+*   Ph. Toint,
+*   an error in specifying the proroblem TENBARS1
+*   Oct. 90.
+
+*   SIF input: Ph. Toint, October 1990.
+
+*   classification LOR2-MY-18-9
+
+*   Constants 
+
+ IE 1                   1
+ IE 2                   2
+ IE 8                   8
+ IE 10                  10
+
+ RF SQ2       SQRT      2.0
+ RF SQ8       SQRT      8.0
+ RD 1/SQ8     SQ8       1.0
+ RE C0                  2.53106
+ RE -P0                 -589.884
+ R* C0SQ2     C0                       SQ2
+
+
+VARIABLES
+
+ DO I         1                        8
+ X  U(I)
+ ND
+
+ DO I         1                        10
+ X  X(I)
+ ND
+
+GROUPS
+
+ ZN OBJ       X1                       C0
+ ZN OBJ       X2                       C0SQ2
+ ZN OBJ       X3                       C0SQ2
+ ZN OBJ       X4                       C0
+ ZN OBJ       X5                       C0
+ ZN OBJ       X6                       C0
+ ZN OBJ       X7                       C0SQ2
+ ZN OBJ       X8                       C0SQ2
+ ZN OBJ       X9                       C0
+ ZN OBJ       X10                      C0
+
+ DO I         1                        8
+ XE C(I)
+ ND
+
+ L  STR       U2        1.0            U4         -1.0
+
+CONSTANTS
+
+ Z  ERRINBAR  C4                       -P0
+ Z  ERRINBAR  C8                       -P0
+    ERRINBAR  STR       22.86
+
+BOUNDS
+
+ FR ERRINBAR  'DEFAULT'
+
+ DO I         1                        10
+ XL ERRINBAR  X(I)      0.645
+ ND
+
+ DO I         2                        8
+ DI I         2
+ XL ERRINBAR  U(I)      -50.8
+ ND
+
+ELEMENT TYPE
+
+ EV XU        X                        U
+
+ EV XUPV      X
+ EV XUPV      U                        V
+ IV XUPV      RU
+ IV XUPV      XX
+
+ EV XUMV      X
+ EV XUMV      U                        V
+ IV XUMV      RU
+ IV XUMV      XX
+
+ EV XBIG      X
+ EV XBIG      U                        V
+ EV XBIG      W                        Z
+ IV XBIG      RU
+ IV XBIG      XX
+
+ELEMENT USES
+
+ T  'DEFAULT' XUMV
+
+ T  EA        XU
+ V  EA        X                        X1
+ V  EA        U                        U1
+
+ T  EB        XUPV
+ V  EB        X                        X3
+ V  EB        U                        U1
+ V  EB        V                        U2
+
+ V  EC        X                        X6
+ V  EC        U                        U1
+ V  EC        V                        U5
+
+ T  ED        XBIG
+ V  ED        X                        X7
+ V  ED        U                        U1
+ V  ED        V                        U8
+ V  ED        W                        U2
+ V  ED        Z                        U7
+
+ V  EE        X                        X5
+ V  EE        U                        U2
+ V  EE        V                        U4
+
+ V  EF        X                        X2
+ V  EF        U                        U3
+ V  EF        V                        U4
+
+ T  EG        XU
+ V  EG        X                        X4
+ V  EG        U                        U3
+
+ T  EH        XBIG
+ V  EH        X                        X8
+ V  EH        U                        U3
+ V  EH        V                        U4
+ V  EH        W                        U5
+ V  EH        Z                        U6
+
+ V  EI        X                        X9
+ V  EI        U                        U3
+ V  EI        V                        U7
+
+ V  EJ        X                        X10
+ V  EJ        U                        U6
+ V  EJ        V                        U8
+
+GROUP USES
+
+ E  C1        EA                       EC
+ ZE C1        EB                       1/SQ8
+ ZE C1        ED                       1/SQ8
+
+ E  C2        EB                       EE
+ ZE C2        ED                       1/SQ8
+
+ ZE C3        EF                       1/SQ8
+ ZE C3        EG                       1/SQ8
+ ZE C3        EH                       1/SQ8
+ E  C3        EI
+
+ ZE C4        EF                       1/SQ8
+ ZE C4        EH                       1/SQ8
+ E  C4        EE
+
+ ZE C5        EH                       1/SQ8
+ E  C5        EC
+
+ ZE C6        EH                       1/SQ8
+ E  C6        EJ
+
+ ZE C7        ED                       1/SQ8
+ E  C7        EI
+
+ ZE C8        ED                       1/SQ8
+ E  C8        EJ
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               28.04525
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ERRINBAR
+
+INDIVIDUALS
+
+ T  XU
+ F                      X * U
+ G  X                   U
+ G  U                   X
+ H  X         U         1.0
+
+ T  XUPV
+ R  RU        U         1.0            V         1.0
+ R  XX        X         1.0
+ F                      XX * RU
+ G  XX                  RU
+ G  RU                  XX
+ H  XX        RU        1.0
+
+ T  XUMV
+ R  RU        U         1.0            V         -1.0
+ R  XX        X         1.0
+ F                      XX * RU
+ G  XX                  RU
+ G  RU                  XX
+ H  XX        RU        1.0
+
+ T  XBIG
+ R  RU        U         1.0            V         1.0
+ R  RU        W         -1.0           Z         -1.0
+ R  XX        X         1.0
+ F                      XX * RU
+ G  XX                  RU
+ G  RU                  XX
+ H  XX        RU        1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ERRINBAR
+
+ENDATA

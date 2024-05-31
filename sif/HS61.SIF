@@ -1,0 +1,89 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS61
+
+*   Problem :
+*   *********
+
+*   Source: problem 61 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph.L. Toint, November 1990.
+
+*   classification QQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X1        -33.0          X2        16.0
+ N  OBJ       X3        -24.0
+ E  C1        X1        3.0
+ E  C2        X1        4.0
+
+CONSTANTS
+
+    HS61      C1        7.0
+    HS61      C2        11.0
+
+BOUNDS
+
+ FR HS61      'DEFAULT'
+
+START POINT
+
+ XV HS61      'DEFAULT'  0.0
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        V                        X1
+ V  E2        V                        X2
+ V  E3        V                        X3
+
+GROUP USES
+
+ E  OBJ       E1        4.0            E2        2.0
+ E  OBJ       E3        2.0
+
+ E  C1        E2        -2.0
+
+ E  C2        E3        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -143.646142
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS61
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ENDATA

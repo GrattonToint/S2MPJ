@@ -1,0 +1,176 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS78
+
+*   Problem :
+*   *******
+
+*   Source: problem 78 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B.Debarsy, Jan 1990.
+
+*   classification OOR2-AN-5-3
+
+*   Number of variables
+
+ IE N                   5
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ
+
+*   Constraint functions
+
+ E  C1
+ E  C2
+ E  C3
+
+CONSTANTS
+
+    HS78      C1        10.0
+    HS78      C3        -1.0
+
+BOUNDS
+
+ FR HS78      'DEFAULT'
+
+START POINT
+
+    HS78      X1        -2.0
+    HS78      X2        1.5
+    HS78      X3        2.0
+    HS78      X4        -1.0
+    HS78      X5        -1.0
+
+ELEMENT TYPE
+
+ EV 5PR       V1                       V2
+ EV 5PR       V3                       V4
+ EV 5PR       V5
+
+ EV CB        X
+
+ EV SQ        X
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  OBJ1      5PR
+ V  OBJ1      V1                       X1
+ V  OBJ1      V2                       X2
+ V  OBJ1      V3                       X3
+ V  OBJ1      V4                       X4
+ V  OBJ1      V5                       X5
+
+ DO I         1                        N
+ XT E(I)      SQ
+ ZV E(I)      X                        X(I)
+ ND
+
+ T  E6        2PR
+ V  E6        X                        X2
+ V  E6        Y                        X3
+
+ T  E7        2PR
+ V  E7        X                        X4
+ V  E7        Y                        X5
+
+ T  E8        CB
+ V  E8        X                        X1
+
+ T  E9        CB
+ V  E9        X                        X2
+
+GROUP USES
+
+ E  OBJ       OBJ1
+
+ E  C1        E1                       E2
+ E  C1        E3                       E4
+ E  C1        E5
+
+ E  C2        E6                       E7        -5.0
+
+ E  C3        E8                       E9
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -2.91970041
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS78
+
+
+INDIVIDUALS
+
+*   Product
+
+ T  5PR
+ F                      V1 * V2 * V3 * V4 * V5
+ G  V1                  V2 * V3 * V4 * V5
+ G  V2                  V1 * V3 * V4 * V5
+ G  V3                  V1 * V2 * V4 * V5
+ G  V4                  V1 * V2 * V3 * V5
+ G  V5                  V1 * V2 * V3 * V4
+ H  V1        V2        V3 * V4 * V5
+ H  V1        V3        V2 * V4 * V5
+ H  V1        V4        V2 * V3 * V5
+ H  V1        V5        V2 * V3 * V4
+ H  V2        V3        V1 * V4 * V5
+ H  V2        V4        V1 * V3 * V5
+ H  V2        V5        V1 * V3 * V4
+ H  V3        V4        V1 * V2 * V5
+ H  V3        V5        V1 * V2 * V4
+ H  V4        V5        V1 * V2 * V3
+
+*   Cube
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+*   Square
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+
+*   Product of 2 variables
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

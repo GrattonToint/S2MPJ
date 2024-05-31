@@ -1,0 +1,189 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HAGER4
+
+*   Problem :
+*   *********
+
+*   A nonlinear optimal control problem, by W. Hager.
+
+*   NOTE: The solution for x given in the article below by Hager has
+*   a typo. On the interval [1/2, 1], x(t) = (exp(2t) + exp(t))/d. In
+*   other words, the minus sign in the article should be a plus sign.
+
+*   Source: problem P4 in
+*   W.W. Hager,
+*   "Multiplier Methods for Nonlinear Optimal Control",
+*   SIAM J. on Numercal Analysis 27(4): 1061-1080, 1990.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification OLR2-AN-V-V
+
+*   Number of discretized points in [0,1]
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   2500           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER
+
+*   Mesh
+
+ RI 1/H       N
+ RD H         1/H       1.0
+ RM H/2       H         0.5
+ RA 1/H-1     1/H       -1.0
+ RM -1/H      1/H       -1.0
+ R* 1/HSQ     1/H                      1/H
+ RM 1/2HSQ    1/HSQ     0.5
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+*   Time dependent quantities
+
+ DO I         0                        N
+ RI RI        I
+ A* T(I)      RI                       H
+ AM -2TI      T(I)      -2.0
+ A( Z(I)      EXP                      -2TI
+ ND
+
+ DO I         0                        1
+ AM A(I)      Z(I)      -0.5
+ AA TI+1/2    T(I)      0.5
+ A* B(I)      A(I)                     TI+1/2
+ A* TISQ      T(I)                     T(I)
+ R+ TIETC     TISQ                     TI+1/2
+ A* C(I)      A(I)                     TIETC
+ ND
+
+ A- DA        A(1)                     A(0)
+ AM SCDA      DA        0.5
+ A- DB        B(1)                     B(0)
+ A* SCDB      DB                       1/H
+ A- DC        C(1)                     C(0)
+ A* SCDC      DC                       1/2HSQ
+
+*   Initial state
+
+ RF E         EXP       1.0
+ RM 3E        E         3.0
+ RA 1+3E      3E        1.0
+ RS 1-E       E         1.0
+ RM 2-2E      1-E       2.0
+ R/ XX0       1+3E                     2-2E
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ ND
+
+ DO I         1                        N
+ X  U(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        N
+ IA I-1       I         -1
+ ZE S(I)      X(I)                     1/H-1
+ ZE S(I)      X(I-1)                   -1/H
+ A( ETI       EXP                      T(I)
+ RM -ETI      ETI       -1.0
+ ZE S(I)      U(I)                     -ETI
+ ND
+
+BOUNDS
+
+ FR HAGER4    'DEFAULT'
+
+ ZX HAGER4    X(0)                     XX0
+
+ DO I         1                        N
+ XU HAGER4    U(I)      1.0
+ ND
+
+START POINT
+
+ ZV HAGER4    X(0)                     XX0
+
+ELEMENT TYPE
+
+ EV ELT       X                        Y
+ EP ELT       D                        E
+ EP ELT       F
+
+ EV SQ        X
+
+ELEMENT USES
+
+ DO I         1                        N
+ IA I-1       I         -1
+ XT EL(I)     ELT
+ ZV EL(I)     X                        X(I)
+ ZV EL(I)     Y                        X(I-1)
+ A* DD        SCDA                     Z(I-1)
+ A* EE        SCDB                     Z(I-1)
+ A* FF        SCDC                     Z(I-1)
+ ZP EL(I)     D                        DD
+ ZP EL(I)     E                        EE
+ ZP EL(I)     F                        FF
+ XT U(I)SQ    SQ
+ ZV U(I)SQ    X                        U(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE OBJ       EL(I)
+ ZE OBJ       U(I)SQ                   H/2
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)           2.833914199
+*LO SOLTN(50)           2.799810928
+*LO SOLTN(100)          2.796761851
+*LO SOLTN(500)          2.794513229
+*LO SOLTN(1000)         2.794244187
+*LO SOLTN(5000)         ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HAGER4
+
+INDIVIDUALS
+
+ T  ELT
+ F                      D*X*X + E*X*(Y-X) + F*(Y-X)**2
+ G  X                   2.0*D*X + E*(Y-2.0*X) - 2.0*F*(Y-X)
+ G  Y                   E * X + 2.0*F*(Y-X)
+ H  X         X         2.0 * ( D - E + F )
+ H  X         Y         E - 2.0 * F
+ H  Y         Y         2.0 * F
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

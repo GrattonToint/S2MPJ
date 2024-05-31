@@ -1,0 +1,171 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS47
+
+*   Problem :
+*   *********
+
+*   Source: problem 47 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+*   updated to improve numerics, Nick Gould, Oct 2003
+
+*   classification OOR2-AY-5-3
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   5
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ RF RT2       SQRT      2.0
+ RA RT2M2     RT2       -2.0
+ RM 2MRT2     RT2M2     -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0
+ E  CON2      X2        1.0            X4        1.0
+ E  CON3
+
+CONSTANTS
+
+    HS47      CON1      3.0
+    HS47      CON2      1.0
+    HS47      CON3      1.0
+
+BOUNDS
+
+ FR HS47      'DEFAULT'
+
+START POINT
+
+    HS47      X1        2.0
+ Z  HS47      X2                       RT2
+    HS47      X3        -1.0
+ Z  HS47      X4                       2MRT2
+    HS47      X5        0.5
+
+ELEMENT TYPE
+
+ EV DIFF2     V1                       V2
+ IV DIFF2     U
+ EV DIFF3     V1                       V2
+ IV DIFF3     U
+ EV DIFF4     V1                       V2
+ IV DIFF4     U
+
+ EV PROD      V1                       V2
+ EV SQ        V1
+ EV CUBE      V1
+
+ELEMENT USES
+
+ XT E1        DIFF2
+ ZV E1        V1                       X1
+ ZV E1        V2                       X2  
+
+ XT E2        DIFF3
+ ZV E2        V1                       X2
+ ZV E2        V2                       X3  
+
+ XT E3        DIFF4
+ ZV E3        V1                       X3
+ ZV E3        V2                       X4  
+
+ XT E4        DIFF4
+ ZV E4        V1                       X4
+ ZV E4        V2                       X5  
+
+ T  E5        SQ
+ V  E5        V1                       X2
+
+ T  E6        CUBE
+ V  E6        V1                       X3
+
+ T  E7        SQ
+ V  E7        V1                       X3
+
+ T  E8        PROD
+ V  E8        V1                       X1
+ V  E8        V2                       X5
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+
+ E  CON1      E5                       E6
+ E  CON2      E7        -1.0
+ E  CON3      E8
+
+OBJECT BOUND
+
+ LO HS47                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS47
+
+INDIVIDUALS
+
+ T  DIFF2
+ R  U         V1        1.0            V2        -1.0
+ F                      U ** 2
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  DIFF3
+ R  U         V1        1.0            V2        -1.0
+ F                      U ** 3
+ G  U                   3.0 * U ** 2
+ H  U         U         6.0 * U
+
+ T  DIFF4
+ R  U         V1        1.0            V2        -1.0
+ F                      U ** 4
+ G  U                   4.0 * U ** 3
+ H  U         U         12.0 * U ** 2
+
+ T  PROD
+ F                      V1*V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  SQ
+ F                      V1**2
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ T  CUBE
+ F                      V1**3
+ G  V1                  3.0 * V1 * V1
+ H  V1        V1        6.0 * V1
+
+ENDATA

@@ -1,0 +1,142 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS60
+
+*   Problem :
+*   *********
+
+*   Source: problem 60 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M Collin, April 1990.
+
+*   classification OOR2-AY-3-1
+
+*   Number of variables
+
+ IE N                   3
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+ E  C1        X1        1.0
+
+CONSTANTS
+
+    HS60      C1        8.242640687
+
+BOUNDS
+
+ XU HS60      'DEFAULT' 10.0
+ XL HS60      'DEFAULT' -10.0
+
+START POINT
+
+ XV HS60      'DEFAULT'  2.0
+
+ELEMENT TYPE
+
+ EV S2V       X                        Y
+ IV S2V       T
+
+ EV P2V       X                        Y
+ IV P2V       T
+
+ EV PS1VP     X
+ EP PS1VP     A
+
+ EV XF        X
+
+ EV PXY       X                        Y
+
+ELEMENT USES
+
+ T  E1        PS1VP
+ V  E1        X                        X1
+ P  E1        A         1.0
+
+ T  E2        S2V
+ V  E2        X                        X1
+ V  E2        Y                        X2
+
+ T  E3        P2V
+ V  E3        X                        X2
+ V  E3        Y                        X3
+
+ T  E4        XF
+ V  E4        X                        X3
+
+ T  E5        PXY
+ V  E5        X                        X1
+ V  E5        Y                        X2
+
+GROUP USES
+
+ XE OBJ       E1                       E2
+ XE OBJ       E3
+ XE C1        E4                       E5
+
+OBJECT BOUND
+
+ LO HS60                0.0
+
+*   Solution
+
+*LO SOLTN               0.0325682
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS60
+
+INDIVIDUALS
+
+ T  S2V
+ R  T         X         1.0            Y         -1.0
+ F                      T * T
+ G  T                   T + T
+ H  T         T         2.0
+
+ T  P2V
+ R  T         X         1.0            Y         -1.0
+ F                      T**4
+ G  T                   4.0 * T**3
+ H  T         T         12.0 * T * T
+
+ T  PS1VP
+ F                      ( X - A )**2
+ G  X                   2.0 * ( X - A )
+ H  X         X         2.0
+
+ T  XF
+ F                      X**4
+ G  X                   4.0 * X**3
+ H  X         X         12.0 * X * X
+
+ T  PXY
+ F                      X * Y**2
+ G  X                   Y**2
+ G  Y                   2.0 * X * Y
+ H  X         Y         2.0 * Y
+ H  Y         Y         2.0 * X
+
+ENDATA

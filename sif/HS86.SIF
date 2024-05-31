@@ -1,0 +1,236 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS86
+
+*   Problem :
+*   *********
+
+*   Source: problem 86 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991.
+
+*   classification OLR2-AN-5-10
+
+*   Number of variables
+
+ IE N                   5
+
+*   Number of constaints
+
+ IE M                   10
+
+*   Other useful parameters
+
+ IE 1                   1
+
+*   Problem data
+
+ RE E1                  -15.0
+ RE E2                  -27.0
+ RE E3                  -36.0
+ RE E4                  -18.0
+ RE E5                  -12.0
+
+ RE C1,1                30.0
+ RE C2,1                -20.0
+ RE C3,1                -10.0
+ RE C4,1                32.0
+ RE C5,1                -10.0
+ RE C1,2                -20.0
+ RE C2,2                39.0
+ RE C3,2                -6.0
+ RE C4,2                -31.0
+ RE C5,2                32.0
+ RE C1,3                -10.0
+ RE C2,3                -6.0
+ RE C3,3                10.0
+ RE C4,3                -6.0
+ RE C5,3                -10.0
+ RE C1,4                32.0
+ RE C2,4                -31.0
+ RE C3,4                -6.0
+ RE C4,4                39.0
+ RE C5,4                -20.0
+ RE C1,5                -10.0
+ RE C2,5                32.0
+ RE C3,5                -10.0
+ RE C4,5                -20.0
+ RE C5,5                30.0
+
+ RE D1                  4.0
+ RE D2                  8.0
+ RE D3                  10.0
+ RE D4                  6.0
+ RE D5                  2.0
+
+ RE A1,1                -16.0
+ RE A2,1                0.0
+ RE A3,1                -3.5
+ RE A4,1                0.0
+ RE A5,1                0.0
+ RE A6,1                2.0
+ RE A7,1                -1.0
+ RE A8,1                -1.0
+ RE A9,1                1.0
+ RE A10,1               1.0
+ RE A1,2                2.0
+ RE A2,2                -2.0
+ RE A3,2                0.0
+ RE A4,2                -2.0
+ RE A5,2                -9.0
+ RE A6,2                0.0
+ RE A7,2                -1.0
+ RE A8,2                -2.0
+ RE A9,2                2.0
+ RE A10,2               1.0
+ RE A1,3                0.0
+ RE A2,3                0.0
+ RE A3,3                2.0
+ RE A4,3                0.0
+ RE A5,3                -2.0
+ RE A6,3                -4.0
+ RE A7,3                -1.0
+ RE A8,3                -3.0
+ RE A9,3                3.0
+ RE A10,3               1.0
+ RE A1,4                1.0
+ RE A2,4                4.0
+ RE A3,4                0.0
+ RE A4,4                -4.0
+ RE A5,4                1.0
+ RE A6,4                0.0
+ RE A7,4                -1.0
+ RE A8,4                -2.0
+ RE A9,4                4.0
+ RE A10,4               1.0
+ RE A1,5                0.0
+ RE A2,5                2.0
+ RE A3,5                0.0
+ RE A4,5                -1.0
+ RE A5,5                -2.8
+ RE A6,5                0.0
+ RE A7,5                -1.0
+ RE A8,5                -1.0
+ RE A9,5                5.0
+ RE A10,5               1.0
+
+ RE B1                  -40.0
+ RE B2                  -2.0
+ RE B3                  -0.25
+ RE B4                  -4.0
+ RE B5                  -4.0
+ RE B6                  -1.0
+ RE B7                  -40.0
+ RE B8                  -60.0
+ RE B9                  5.0
+ RE B10                 1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO J         1                        N
+ ZN OBJ       X(J)                     E(J)
+ ND
+
+ DO I         1                        M
+ DO J         1                        N
+ ZG C(I)      X(J)                     A(I,J)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  HS86      C(I)                     B(I)
+ ND
+
+
+START POINT
+
+    HS86      'DEFAULT' 0.0
+    HS86      X5        1.0
+
+    HS86SOL   X1        0.3            X2        0.33346761
+    HS86SOL   X3        0.4            X4        0.42831010
+    HS86SOL   X5        0.22396487
+
+ELEMENT TYPE
+
+*   CUBE
+
+ EV CUBE      XJ
+
+*   PROD
+
+ EV PROD      XI                       XJ
+
+ELEMENT USES
+
+ DO J         1                        N
+
+ XT D(J)      CUBE
+ ZV D(J)      XJ                       X(J)
+
+ DO I         1                        N
+
+ XT C(I,J)    PROD
+ ZV C(I,J)    XI                       X(I)
+ ZV C(I,J)    XJ                       X(J)
+
+ ND
+
+GROUP USES
+
+ DO J         1                        N
+
+ ZE OBJ       D(J)                     D(J)
+
+ DO I         1                        N
+
+ ZE OBJ       C(I,J)                   C(I,J)
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -32.34867897
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS86
+
+INDIVIDUALS
+
+*   Element type CUBE
+
+ T  CUBE
+ F                      XJ * XJ * XJ
+ G  XJ                  3.0D+0 * XJ * XJ
+ H  XJ        XJ        6.0D+0 * XJ
+
+*   Element type PROD
+
+ T  PROD
+ F                      XI * XJ
+ G  XI                  XJ
+ G  XJ                  XI
+ H  XI        XJ        1.0D+0
+
+ENDATA

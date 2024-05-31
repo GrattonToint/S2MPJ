@@ -1,0 +1,158 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EIGENA
+
+*   Problem :
+*   --------
+
+*   Solving symmetric eigenvalue problems as systems of
+*   nonlinear equations.
+
+*   The problem is, given a symmetric matrix A, to find an orthogonal
+*   matrix Q and diagonal matrix D such that A = Q(T) D Q.
+
+*   Example A: a diagonal matrix with eigenvales 1, .... , N.
+
+*   Source:  An idea by Nick Gould
+
+*               Nonlinear equations version.
+
+*   SIF input: Nick Gould, Nov 1992.
+
+*   classification NBR2-AN-V-V
+
+*   The dimension of the matrix.
+
+*IE N                   2              $-PARAMETER
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+ IE N                   2              $-PARAMETER     modified for S2X tests
+
+*   other parameter definitions
+
+ IE 1                   1
+
+*   Define the upper triangular part of the matrix.
+
+ DO J         1                        N
+ RI RJ        J
+ A= A(J,J)    RJ
+ IA J-1       J         -1
+ DO I         1                        J-1
+ AE A(I,J)              0.0
+ ND
+
+VARIABLES
+
+ DO J         1                        N
+
+*  Define the eigenvalues
+
+ X  D(J)
+
+ DO I         1                        N
+
+*  Define the eigenvectors
+
+ X  Q(I,J)
+
+ ND
+
+GROUPS
+
+ DO J         1                        N
+ DO I         1                        J
+
+*  Introduce the eigen-equations Q(T) D Q - A = 0.
+
+ XE E(I,J)
+
+*  Introduce the orthogonality-equations Q(T) Q - I = 0.
+
+ XE O(I,J)
+ ND
+
+CONSTANTS
+
+ DO J         1                        N
+ X  EIGENA    O(J,J)    1.0
+ DO I         1                        J
+ Z  EIGENA    E(I,J)                   A(I,J)
+ ND
+
+BOUNDS
+
+* nonnegative eigenvalues
+
+START POINT
+
+ XV EIGENA    'DEFAULT' 0.0
+
+ DO J         1                        N
+ XV EIGENA    D(J)      1.0
+ XV EIGENA    Q(J,J)    1.0
+ ND
+
+ELEMENT TYPE
+
+ EV 2PROD     Q1                       Q2
+ EV 3PROD     Q1                       Q2
+ EV 3PROD     D
+
+ELEMENT USES
+
+ DO J         1                        N
+ DO I         1                        J
+
+ DO K         1                        N
+ XT E(I,J,K)  3PROD
+ ZV E(I,J,K)  Q1                       Q(K,I)
+ ZV E(I,J,K)  Q2                       Q(K,J)
+ ZV E(I,J,K)  D                        D(K)
+
+ XT O(I,J,K)  2PROD
+ ZV O(I,J,K)  Q1                       Q(K,I)
+ ZV O(I,J,K)  Q2                       Q(K,J)
+
+ ND
+
+GROUP USES
+
+ DO J         1                        N
+ DO I         1                        J
+
+ DO K         1                        N
+ XE E(I,J)    E(I,J,K)
+ XE O(I,J)    O(I,J,K)
+
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EIGENA
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      Q1 * Q2
+ G  Q1                       Q2
+ G  Q2                  Q1
+ H  Q1        Q2        1.0D+0
+
+ T  3PROD
+ F                      Q1 * Q2 * D
+ G  Q1                       Q2 * D
+ G  Q2                  Q1      * D
+ G  D                   Q1 * Q2
+ H  Q1        Q2                  D
+ H  Q1        D              Q2
+ H  Q2        D         Q1
+
+ENDATA

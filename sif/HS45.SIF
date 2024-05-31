@@ -1,0 +1,109 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS45
+
+*   Problem :
+*   *********
+
+*   Source: problem 45 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph.L. Toint, October 1990.
+
+*   classification OBR2-AN-5-0
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   5
+ IE 1                   1
+ RE -120                -120.0
+
+*   Computed parameters
+
+ RD PAR       -120      1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+CONSTANTS
+
+    HS45      OBJ       -2.0
+
+BOUNDS
+
+ DO I         1                        N
+ RI RI        I
+ ZU HS45      X(I)                     RI
+ ND
+
+START POINT
+
+ XV HS45      'DEFAULT' 2.0
+
+ELEMENT TYPE
+
+ EV 5PR       V1                       V2
+ EV 5PR       V3                       V4
+ EV 5PR       V5
+
+ELEMENT USES
+
+ T  E1        5PR
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+ V  E1        V3                       X3
+ V  E1        V4                       X4
+ V  E1        V5                       X5
+
+GROUP USES
+
+ ZE OBJ       E1                       PAR
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS45
+
+INDIVIDUALS
+
+ T  5PR
+ F                      V1 * V2 * V3 * V4 * V5
+ G  V1                  V2 * V3 * V4 * V5
+ G  V2                  V1 * V3 * V4 * V5
+ G  V3                  V1 * V2 * V4 * V5
+ G  V4                  V1 * V2 * V3 * V5
+ G  V5                  V1 * V2 * V3 * V4
+ H  V1        V2        V3 * V4 * V5
+ H  V1        V3        V2 * V4 * V5
+ H  V1        V4        V2 * V3 * V5
+ H  V1        V5        V2 * V3 * V4
+ H  V2        V3        V1 * V4 * V5
+ H  V2        V4        V1 * V3 * V5
+ H  V2        V5        V1 * V3 * V4
+ H  V3        V4        V1 * V2 * V5
+ H  V3        V5        V1 * V2 * V4
+ H  V4        V5        V1 * V2 * V3
+
+ENDATA

@@ -1,0 +1,117 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HUMPS
+
+*   Problem :
+*   *********
+
+*   A two dimensional function with a lot of humps.
+*   The density of humps increases with the parameter ZETA,
+*   making the problem more difficult.
+
+*   The problem is nonconvex.
+
+*   Source:
+*   Ph. Toint, private communication, 1997.
+
+*   SDIF input: Ph. Toint, May 1997.
+
+*   classification OUR2-AN-2-0
+
+*   Density of humps
+
+*RE ZETA                2.0
+
+ RE ZETA                20.0
+
+VARIABLES
+
+    X
+    Y
+
+GROUPS
+
+ N  OBJ
+
+BOUNDS
+
+ FR HUMPS     'DEFAULT'
+
+START POINT
+
+ V  HUMPS     X         -506.0
+ V  HUMPS     Y         -506.2
+
+ELEMENT TYPE
+
+ EV HMP       X                        Y
+ EP HMP       A
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  H         HMP
+ V  H         X                        X
+ V  H         Y                        Y
+ ZP H         A                        ZETA
+
+ T  SX        SQ
+ V  SX        X                        X
+
+ T  SY        SQ
+ V  SY        X                        Y
+
+GROUP USES
+
+ E  OBJ       H         1.0
+ E  OBJ       SY        0.05           SX        0.05
+
+OBJECT BOUND
+
+ LO HUMPS               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HUMPS
+
+TEMPORARIES
+
+ R  AA
+ R  AAA
+ R  SAX
+ R  SAY
+ R  CAX
+ R  CAY
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  HMP
+ A  SAX                 SIN( A * X )
+ A  SAY                 SIN( A * Y )
+ A  CAX                 COS( A * X )
+ A  CAY                 COS( A * Y )
+ A  AA                  A + A
+ A  AAA                 A * AA
+ F                      ( SAX * SAY )**2
+ G  X                   AA * SAX * CAX * SAY**2
+ G  Y                   AA * SAX**2 * CAY * SAY
+ H  X         X         AAA * SAY**2 * ( CAX**2 - SAX**2 )
+ H  X         Y         AA * AA * SAX * CAX * SAY * CAY
+ H  Y         Y         AAA * SAX**2 * ( CAY**2 - SAY**2 )
+
+ T  SQ
+ F                      X**2
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

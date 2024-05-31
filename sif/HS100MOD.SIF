@@ -1,0 +1,197 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS100MOD
+
+*   Problem :
+*   *********
+
+*   Source: a modification by Ph. Toint of problem 100 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification OOR2-AN-7-4
+
+ IE 1                   1
+ IE 7                   7
+
+VARIABLES
+
+ DO I         1                        7
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  O1        X1        1.0
+ N  O2        X2        1.0
+ N  O2        'SCALE'   0.2
+ N  O4        X4        1.0
+ N  O4        'SCALE'   0.33333333333
+ N  O5        X6        -10.0          X7        -8.0
+
+ G  C1        X3        -1.0           X5        -5.0
+
+ G  C2        X1        -7.0           X2        -3.0
+ G  C2        X4        -1.0           X5        1.0
+
+ G  C3        X1        -23.0          X7        8.0
+
+ G  C4        X7        11.0           X4        587.0
+ G  C4        X5        391.0          X6        2193.0
+
+CONSTANTS
+
+ X HS100MOD   O1        10.0
+ X HS100MOD   O2        12.0
+ X HS100MOD   O4        11.0
+ X HS100MOD   C1        -127.0
+ X HS100MOD   C2        -282.0
+ X HS100MOD   C3        -196.0
+
+BOUNDS
+
+ FR HS100MOD  'DEFAULT'
+
+START POINT
+
+ XV HS100MOD  X1        1.0
+ XV HS100MOD  X2        2.0
+ XV HS100MOD  X3        0.0
+ XV HS100MOD  X4        4.0
+ XV HS100MOD  X5        0.0
+ XV HS100MOD  X6        1.0
+ XV HS100MOD  X7        1.0
+
+ELEMENT TYPE
+
+ EV ELT       X                        Y
+ EV SQ        X
+ EV P4        X
+ EV P6        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  X5P6      P6
+ ZV X5P6      X                        X5
+
+ T  EL        ELT
+ ZV EL        X                        X6
+ ZV EL        Y                        X7
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ ZV X3SQ      X                        X3
+
+ T  X4SQ      SQ
+ ZV X4SQ      X                        X4
+
+ T  X6SQ      SQ
+ ZV X6SQ      X                        X6
+
+ T  X2P4      P4
+ ZV X2P4      X                        X2
+
+ T  X3P4      P4
+ ZV X3P4      X                        X3
+
+ T  X1X2      2PR
+ ZV X1X2      X                        X1
+ ZV X1X2      Y                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  O1        L2
+ T  O2        L2
+ T  O4        L2
+ E  O5        X5P6      10.0           EL
+ E  O5        X3P4
+ E  C1        X1SQ      -2.0           X2P4      -3.0
+ E  C1        X4SQ      -4.0
+ E  C2        X3SQ      -10.0
+ E  C3        X2SQ      -1.0           X6SQ      -6.0
+ E  C4        X1SQ      -4.0           X2SQ      -1.0
+ E  C4        X1X2      3.0            X3SQ      -2.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               678.679637889
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS100MOD
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  P4
+ F                      X**4
+ G  X                   4.0 * X**3
+ H  X         X         12.0 * X**2
+
+ T  P6
+ F                      X**6
+ G  X                   6.0 * X**5
+ H  X         X         30.0 * X**4
+
+ T  ELT
+ F                      7.0 * X**2 + Y**4 - 4.0 * X * Y
+ G  X                   14.0 * X - 4.0 * Y
+ G  Y                   4.0 * Y**3 - 4.0 * X
+ H  X         X         14.0
+ H  X         Y         -4.0
+ H  Y         Y         12.0 * Y**2
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS100MOD
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+
+

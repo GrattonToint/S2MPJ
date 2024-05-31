@@ -1,0 +1,109 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS33
+
+*   Problem :
+*   *********
+
+*   Source: problem 33 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X3        1.0
+
+ G  CON1
+ G  CON2
+
+CONSTANTS
+
+    HS33      CON2      4.0
+
+BOUNDS
+
+ UP HS33      X3        5.0
+
+START POINT
+
+ XV HS33      'DEFAULT' 0.0
+    HS33      X3        3.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV 3PROD     V1
+
+ELEMENT USES
+
+ T  E1        3PROD
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X1
+
+ T  E3        SQ
+ V  E3        V1                       X2
+
+ T  E4        SQ
+ V  E4        V1                       X3
+
+GROUP USES
+
+ E  OBJ       E1
+ E  CON1      E4                       E3        -1.0
+ E  CON1      E2        -1.0
+ E  CON2      E2                       E3
+ E  CON2      E4
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -4.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS33
+
+TEMPORARIES
+
+ R  X1M1
+ R  X1M2
+ R  X1M3
+
+INDIVIDUALS
+
+ T  3PROD
+ A  X1M1                V1 - 1.0
+ A  X1M2                V1 - 2.0
+ A  X1M3                V1 - 3.0
+ F                      X1M1 * X1M2 * X1M3
+ G  V1                  X1M1 * X1M2 + X1M2  *X1M3 + X1M3 * X1M1
+ H  V1        V1        2.0 * ( X1M1 + X1M2 + X1M3 )
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

@@ -1,0 +1,213 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ELEC   
+
+*   Problem :
+*   *********
+
+*   Given np electrons, find the equilibrium state distribution of minimal
+*   Columb potential of the electrons positioned on a conducting sphere
+
+*   This is problem 2 in the COPS (Version 2) collection of 
+*   E. Dolan and J. More'
+*   see "Benchmarking Optimization Software with COPS"
+*   Argonne National Labs Technical Report ANL/MCS-246 (2000)
+
+*   SIF input: Nick Gould, November 2000
+
+*   classification OOR2-AN-V-V
+
+*   The number of electrons
+
+*IE NP                  25             $-PARAMETER
+*IE NP                  50             $-PARAMETER
+*IE NP                  100            $-PARAMETER
+*IE NP                  200            $-PARAMETER
+ IE NP                  25             $-PARAMETER     modified for S2X tests
+
+* approximation of pi
+
+ RF PI/4      ARCTAN    1.0
+ RM PI        PI/4      4.0
+ RM 2PI       PI        2.0
+
+*  Other useful values
+
+ IE 0                   0
+ IE 1                   1
+ IA NP-1      NP        -1                
+
+VARIABLES
+
+ DO I         1                        NP
+ X  X(I)      $  x-coordinate of the electron
+ X  Y(I)      $  y-coordinate of the electron
+ X  Z(I)      $  z-coordinate of the electron
+ ND
+
+GROUPS
+
+*  Objective function: potential energy
+
+ N  PE
+
+*  Constraints: electrons lie on the unit ball
+
+ DO I         1                        NP
+ XE B(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        NP
+ X  ELEC      B(I)      1.0
+ ND
+
+BOUNDS
+
+ XR ELEC      'DEFAULT'
+
+START POINT
+
+* Set the starting point to a quasi-uniform distribution 
+* of electrons on a unit sphere
+
+*option randseed '861276191';
+*param theta {i in 1..np} := 2*pi*Uniform01();
+*param phi   {i in 1..np} :=   pi*Uniform01();
+
+ RI N         NP
+ RD 1/N       N         1
+ DO I         1                        NP
+ RI I         I
+ R/ U         I                        N
+ R* THETA     2PI                      U
+ A= THETA(I)  THETA
+ R- U         U                        1/N
+ R* PHI       PI                       U
+ A= PHI(I)    PHI
+ ND
+
+ DO I         1                        NP
+ A( COSTHETA  COS                      THETA(I)
+ A( SINTHETA  SIN                      THETA(I)
+ A( SINPHI    SIN                      PHI(I)
+ A( COSPHI    COS                      PHI(I)
+ R* X         COSTHETA                 SINPHI
+ R* Y         SINTHETA                 SINPHI
+ R= Z         COSPHI
+ Z  ELEC      X(I)                     X
+ Z  ELEC      Y(I)                     Y
+ Z  ELEC      Z(I)                     Z
+ ND
+
+ELEMENT TYPE
+
+ EV PE        XI                       XJ
+ EV PE        YI                       YJ
+ EV PE        ZI                       ZJ
+ IV PE        DIFFX                    DIFFY
+ IV PE        DIFFZ
+ EV SQR       X
+
+ELEMENT USES
+
+ DO I         1                        NP-1
+ IA I+1       I         1
+ DO J         I+1                      NP
+ XT P(I,J)    PE
+ ZV P(I,J)    XI                       X(I)
+ ZV P(I,J)    XJ                       X(J)
+ ZV P(I,J)    YI                       Y(I)
+ ZV P(I,J)    YJ                       Y(J)
+ ZV P(I,J)    ZI                       Z(I)
+ ZV P(I,J)    ZJ                       Z(J)
+ ND
+
+ DO I         1                        NP
+ XT X(I)      SQR
+ ZV X(I)      X                        X(I)
+ XT Y(I)      SQR
+ ZV Y(I)      X                        Y(I)
+ XT Z(I)      SQR
+ ZV Z(I)      X                        Z(I)
+ ND
+
+GROUP USES
+
+* Objective function:
+
+ DO I         1                        NP-1
+ IA I+1       I         1
+ DO J         I+1                      NP
+ XE PE        P(I,J)
+ ND
+
+* Constraints
+
+ DO I         1                        NP
+ XE B(I)      X(I)                     Y(I)
+ XE B(I)      Z(I)
+ ND
+ 
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION             2.43812D+02   $ (NH=25)
+*LO SOLUTION             1.05518D+03   $ (NH=50)
+*LO SOLUTION             4.44836D+03   $ (NH=100)
+*LO SOLUTION             1.84389D+04   $ (NH=200)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ELEC   
+
+TEMPORARIES
+
+ R  DIFFX
+ R  DIFFY
+ R  DIFFZ
+ R  SS
+ R  ROOTSS
+
+ M  SQRT
+
+INDIVIDUALS
+
+ T  PE
+ R  DIFFX     XI        1.0            XJ        -1.0
+ R  DIFFY     YI        1.0            YJ        -1.0
+ R  DIFFZ     ZI        1.0            ZJ        -1.0
+ A  SS                  DIFFX ** 2 + DIFFY ** 2 + DIFFZ ** 2
+ A  ROOTSS              SQRT( SS )
+
+ F                      1.0 / ROOTSS
+ G  DIFFX               - DIFFX / ROOTSS ** 3
+ G  DIFFY               - DIFFY / ROOTSS ** 3
+ G  DIFFZ               - DIFFZ / ROOTSS ** 3
+ H  DIFFX     DIFFX     3.0 * DIFFX ** 2 / ROOTSS ** 5 
+ H+                     - 1.0 / ROOTSS ** 3
+ H  DIFFX     DIFFY     3.0 * DIFFX * DIFFY / ROOTSS ** 5
+ H  DIFFX     DIFFZ     3.0 * DIFFX * DIFFZ / ROOTSS ** 5
+ H  DIFFY     DIFFY     3.0 * DIFFY ** 2 / ROOTSS ** 5 
+ H+                     - 1.0 / ROOTSS ** 3
+ H  DIFFY     DIFFZ     3.0 * DIFFY * DIFFZ / ROOTSS ** 5
+ H  DIFFZ     DIFFZ     3.0 * DIFFZ ** 2 / ROOTSS ** 5 
+ H+                     - 1.0 / ROOTSS ** 3
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+

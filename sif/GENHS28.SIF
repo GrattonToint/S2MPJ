@@ -1,0 +1,109 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GENHS28
+
+*   Problem :
+*   *********
+
+*   Source: a multi-dimensional extension of problem 28 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, December 1991
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification QLR2-AY-10-8
+
+*   Number of variables
+
+ IE N                   10
+
+*   Other useful parameters
+
+ IA N-1       N         -1
+ IA N-2       N         -2
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        N-2
+ IA I+1       I         1
+ IA I+2       I         2
+ XE CON(I)    X(I)      1.0            X(I+1)    2.0
+ XE CON(I)    X(I+2)    3.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N-2
+ X  GENHS28   CON(I)    1.0
+ ND
+
+BOUNDS
+
+ FR GENHS28   'DEFAULT'
+
+START POINT
+
+    GENHS28   'DEFAULT' 1.0
+    GENHS28   X1        -4.0
+
+ELEMENT TYPE
+
+ EV SQ        V1                       V2
+ IV SQ        U1
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ ZV E(I)      V1                       X(I)
+ ZV E(I)      V2                       X(I+1)
+ ND
+
+GROUP USES
+
+ DO I         1                        N-1
+ XE OBJ       E(I)
+ ND
+
+OBJECT BOUND
+
+ LO GENHS28             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GENHS28
+
+INDIVIDUALS
+
+ T  SQ
+ R  U1        V1        1.0            V2        1.0
+ F                      U1 * U1
+ G  U1                  U1 + U1
+ H  U1        U1        2.0
+
+ENDATA

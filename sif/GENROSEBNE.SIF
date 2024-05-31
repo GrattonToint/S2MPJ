@@ -1,0 +1,121 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GENROSEBNE
+
+*   Problem :
+*   --------
+
+*   The generalized Rosenbrock function.
+
+*   Source: problem 5 in
+*   S. Nash,
+*   "Newton-type minimization via the Lanczos process",
+*   SIAM J. Num. Anal. 21, 1984, 770-788.
+
+*   SIF input: Nick Gould, Oct 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+*   Bound-constrained nonlinear equations version: Nick Gould, June 2019.
+
+*   version with simple bound constraints
+
+*   classification NOR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   5
+*IE N                   10
+*IE N                   100
+ IE N                   500
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N+1       N         1
+ RI RN+1      N+1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         2                        N
+ XE Q(I)      'SCALE'   0.1
+ XE Q(I)      X(I)      1.0
+ XE L(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         2                        N
+ X  GENROSEB  L(I)      1.0
+ ND
+
+BOUNDS
+
+ LO GENROSEB  'DEFAULT' 0.2
+ UP GENROSEB  'DEFAULT' 0.5
+
+START POINT
+
+*  start with X(I) = I/N+1.
+
+ DO I         1                        N
+
+ RI RI        I
+ R/ T         RI                       RN+1
+ ZV GENROSEB  X(I)                     T
+
+ ND
+
+ELEMENT TYPE
+
+ EV MSQR      V
+
+ELEMENT USES
+
+ XT 'DEFAULT' MSQR
+
+ DO I         2                        N
+ IA I-1       I         -1
+ ZV Q(I)      V                        X(I-1)
+ ND
+
+GROUP USES
+ DO I         2                        N
+ XE Q(I)      Q(I)
+ ND
+
+OBJECT BOUND
+
+*LO GENROSEB            1.0
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GENROSEBNE
+
+INDIVIDUALS
+
+ T  MSQR
+ F                      - V ** 2
+ G  V                   - 2.0D+0 * V
+ H  V         V         - 2.0D+0
+
+
+ENDATA

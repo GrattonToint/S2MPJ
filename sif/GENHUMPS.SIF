@@ -1,0 +1,139 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GENHUMPS
+
+*   Problem :
+*   *********
+
+*   A multi-dimensional variant of HUMPS, a two dimensional function
+*   with a lot of humps. The density of humps increases with the
+*   parameter ZETA, making the problem more difficult.
+
+*   The problem is nonconvex.
+
+*   Source:
+*   Ph. Toint, private communication, 1997.
+
+*   SDIF input: N. Gould and Ph. Toint, November 1997.
+
+*   classification OUR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   5              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER    original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Density of humps
+
+*RE ZETA                2.0            $-PARAMETER
+ RE ZETA                20.0           $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+BOUNDS
+
+ FR GENHUMPS  'DEFAULT'
+
+START POINT
+
+ V  GENHUMPS  'DEFAULT' -506.2
+ XV GENHUMPS  X(1)      -506.0
+
+ELEMENT TYPE
+
+ EV HMP       X                        Y
+ EP HMP       A
+
+ EV SQ        X
+
+ELEMENT USES
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XT Q(I)      HMP
+ ZV Q(I)      X                        X(I)
+ ZV Q(I)      Y                        X(I+1)
+ ZP Q(I)      A                        ZETA
+
+ XT SX(I)     SQ
+ ZV SX(I)     X                        X(I)
+
+ XT SY(I)     SQ
+ ZV SY(I)     X                        X(I+1)
+
+ ND
+
+GROUP USES
+
+ DO I         1                        N-1
+ XE OBJ       Q(I)      1.0
+ XE OBJ       SX(I)     0.05           SY(I)     0.05
+ ND
+
+OBJECT BOUND
+
+ LO GENHUMPS            0.0
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GENHUMPS
+
+TEMPORARIES
+
+ R  AA
+ R  AAA
+ R  SAX
+ R  SAY
+ R  CAX
+ R  CAY
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  HMP
+ A  SAX                 SIN( A * X )
+ A  SAY                 SIN( A * Y )
+ A  CAX                 COS( A * X )
+ A  CAY                 COS( A * Y )
+ A  AA                  A + A
+ A  AAA                 A * AA
+ F                      ( SAX * SAY )**2
+ G  X                   AA * SAX * CAX * SAY**2
+ G  Y                   AA * SAX**2 * CAY * SAY
+ H  X         X         AAA * SAY**2 * ( CAX**2 - SAX**2 )
+ H  X         Y         AA * AA * SAX * CAX * SAY * CAY
+ H  Y         Y         AAA * SAX**2 * ( CAY**2 - SAY**2 )
+
+ T  SQ
+ F                      X**2
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

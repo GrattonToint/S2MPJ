@@ -1,0 +1,107 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS24
+
+*   Problem :
+*   *********
+
+*   Source: problem 24 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+*              modified Nick Gould, May 2024
+
+*   classification OLR2-AN-2-3
+
+*  Parameters
+
+ RF RT3       SQRT      3.0
+ RM MRT3      RT3       -1.0
+ RD C1FAC     RT3       1.0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ ZG CON1      X1                       C1FAC
+ G  CON1      X2        -1.0
+
+ G  CON2      X1        1.0
+ ZG CON2      X2                       RT3
+
+ G  CON3      X1        -1.0
+ ZG CON3      X2                       MRT3
+
+CONSTANTS
+
+    HS24      CON3      -6.0
+
+START POINT
+
+    HS24      X1        1.0
+    HS24      X2        0.5
+
+ELEMENT TYPE
+
+ EV OBJ       V1                       V2
+
+ELEMENT USES
+
+ T  E1        OBJ
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+GROUP USES
+
+ E  OBJ       E1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS24
+
+TEMPORARIES
+
+ R  FACT
+ R  RT3X27
+ R  X1M3
+ R  X1M3M9
+ R  V2SQ
+ R  V2CB
+
+INDIVIDUALS
+
+ T  OBJ
+ A  RT3X27              1.0D0 / ( 27.0D0 * SQRT( 3.0D0 ) )
+ A  V2SQ                V2 * V2
+ A  V2CB                V2SQ * V2
+ A  X1M3                V1 - 3.0
+ A  X1M3M9              X1M3 * X1M3 - 9.0
+ F                      RT3X27 * X1M3M9 * V2CB
+ G  V1                  2.0 * X1M3 * RT3X27 * V2CB
+ G  V2                  3.0 * X1M3M9 * RT3X27 * V2SQ
+ H  V1        V1        2.0 * RT3X27 * V2CB
+ H  V1        V2        6.0 * X1M3 * RT3X27 * V2SQ
+ H  V2        V2        6.0 * X1M3M9 * RT3X27 * V2
+
+ENDATA

@@ -1,0 +1,169 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HATFLDD
+
+*   Problem :
+*   *********
+
+*   An exponential fitting  test problem from the OPTIMA user manual.
+
+*   Source:
+*   "The OPTIMA user manual (issue No.8, p. 35)",
+*   Numerical Optimization Centre, Hatfield Polytechnic (UK), 1989.
+
+*   SIF input: Ph. Toint, May 1990.
+
+*   classification SUR2-AN-3-0
+
+*   Problem data
+
+ IE NG                  10
+
+ RE T1                  0.2
+ RE T2                  0.3
+ RE T3                  0.4
+ RE T4                  0.5
+ RE T5                  0.6
+ RE T6                  0.7
+ RE T7                  0.75
+ RE T8                  0.8
+ RE T9                  0.85
+ RE T10                 0.9
+
+ RE Z1                  1.751
+ RE Z2                  1.561
+ RE Z3                  1.391
+ RE Z4                  1.239
+ RE Z5                  1.103
+ RE Z6                  0.981
+ RE Z7                  0.925
+ RE Z8                  0.8721
+ RE Z9                  0.8221
+ RE Z10                 0.7748
+
+*   Constants
+
+ IE 1                   1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ DO I         1                        NG
+ XN G(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        NG
+ AM -ZI       Z(I)      -1.0
+ Z  HATFLDD   G(I)                     -ZI
+ ND
+
+BOUNDS
+
+ FR HATFLDD   'DEFAULT'
+
+START POINT
+
+    HATFLDD   X1        1.0
+    HATFLDD   X2        -1.0
+    HATFLDD   X3        0.0
+
+ELEMENT TYPE
+
+ EV XPEXP     X                        Y
+ EP XPEXP     T
+
+ EV PEXP      X
+ EP PEXP      T
+
+ELEMENT USES
+
+ DO I         1                        NG
+
+ XT A(I)      XPEXP
+ ZV A(I)      X                        X1
+ ZV A(I)      Y                        X2
+ ZP A(I)      T                        T(I)
+
+ XT B(I)      PEXP
+ ZV B(I)      X                        X3
+ ZP B(I)      T                        T(I)
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        NG
+ XE G(I)      A(I)      -1.0           B(I)
+ ND
+
+OBJECT BOUND
+
+ LO HATFLDD             0.0
+
+*   Solution
+
+*LO SOLTN               6.615114D-08
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HATFLDD
+
+TEMPORARIES
+
+ R  EX
+ M  EXP
+
+INDIVIDUALS
+
+ T  PEXP
+ A  EX                  EXP( T * X )
+ F                      EX
+ G  X                   T * EX
+ H  X         X         T * T * EX
+
+ T  XPEXP
+ A  EX                  EXP( T * Y )
+ F                      X * EX
+ G  X                   EX
+ G  Y                   T * X * EX
+ H  X         Y         T * EX
+ H  Y         Y         T * T * X * EX
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HATFLDD
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,91 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS28
+
+*   Problem :
+*   *********
+
+*   Source: problem 28 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification SLR2-AY-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0            X2        2.0
+ E  CON1      X3        3.0
+
+CONSTANTS
+
+    HS28      CON1      1.0
+
+BOUNDS
+
+ FR HS28      'DEFAULT'
+
+START POINT
+
+    HS28      X1        -4.0
+    HS28      X2        1.0
+    HS28      X3        1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1                       V2
+ IV SQ        U1
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+ V  E2        V1                       X2
+ V  E2        V2                       X3
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+
+OBJECT BOUND
+
+ LO HS28                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS28
+
+INDIVIDUALS
+
+ T  SQ
+ R  U1        V1        1.0            V2        1.0
+ F                      U1 * U1
+ G  U1                  U1 + U1
+ H  U1        U1        2.0
+
+ENDATA

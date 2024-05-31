@@ -1,0 +1,493 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS70
+
+*   Problem :
+*   *********
+
+*   This problem arises in water flow routing.
+
+*   Source: problem 70 incorrectly stated in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991, modified May 2024
+
+*   classification SQR2-MN-4-1
+
+*   Number of variables
+
+ IE N                   4
+
+*   Other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 19                  19
+
+*   Problem data
+
+ AE C1                  0.1
+ AE C2                  1.0
+ AE C3                  2.0
+ AE C4                  3.0
+ AE C5                  4.0
+ AE C6                  5.0
+ AE C7                  6.0
+ AE C8                  7.0
+ AE C9                  8.0
+ AE C10                 9.0
+ AE C11                 10.0
+ AE C12                 11.0
+ AE C13                 12.0
+ AE C14                 13.0
+ AE C15                 14.0
+ AE C16                 15.0
+ AE C17                 16.0
+ AE C18                 17.0
+ AE C19                 18.0
+
+ AE Y1                  0.00189
+ AE Y2                  0.1038
+ AE Y3                  0.268
+ AE Y4                  0.506
+ AE Y5                  0.577
+ AE Y6                  0.604
+ AE Y7                  0.725
+ AE Y8                  0.898
+ AE Y9                  0.947
+ AE Y10                 0.845
+ AE Y11                 0.702
+ AE Y12                 0.528
+ AE Y13                 0.385
+ AE Y14                 0.257
+ AE Y15                 0.159
+ AE Y16                 0.0869
+ AE Y17                 0.0453
+ AE Y18                 0.01509
+ AE Y19                 0.00189
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        19
+ XN OBJ(I)
+ ND
+
+ G  C1        X3        1.0D+0         X4         1.0D+0
+
+CONSTANTS
+
+ DO I         1                        19
+ Z  HS70      OBJ(I)                   Y(I)
+ ND
+
+BOUNDS
+
+ LO HS70      'DEFAULT' 0.00001
+ UP HS70      'DEFAULT' 100.0
+ UP HS70      X3        1.0
+
+START POINT
+
+    HS70      X1        2.0            X2        4.0
+    HS70      X3        0.04           X4        2.0
+
+*   HS70SOL   X1        12.27695       X2        4.631788
+*   HS70SOL   X3        0.3128625      X4        2.029290
+
+ELEMENT TYPE
+
+*   Y1
+
+ EV Y1        V1
+ EV Y1        V2                       V3
+ EP Y1        C
+
+*   Y2
+
+ EV Y2        V1
+ EV Y2        V2                       V3
+ EP Y2        C
+
+*   PROD
+
+ EV PROD      X3                       X4
+
+ELEMENT USES
+
+ DO I         1                        19
+
+ XT Y(I,1)    Y1
+ ZV Y(I,1)    V1                       X2
+ ZV Y(I,1)    V2                       X3
+ ZV Y(I,1)    V3                       X4
+ ZP Y(I,1)    C                        C(I)
+
+ XT Y(I,2)    Y2
+ ZV Y(I,2)    V1                       X1
+ ZV Y(I,2)    V2                       X3
+ ZV Y(I,2)    V3                       X4
+ ZP Y(I,2)    C                        C(I)
+
+ ND
+
+ T  C1        PROD
+ V  C1        X3                       X3
+ V  C1        X4                       X4
+
+GROUP TYPE
+
+*   SQR
+
+ GV SQR       T
+
+GROUP USES
+
+ DO I         1                        19
+
+ XT OBJ(I)    SQR
+ XE OBJ(I)    Y(I,1)                   Y(I,2)
+
+ ND
+
+ E  C1        C1        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.007498464
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS70
+
+TEMPORARIES
+
+ R  B
+ R  CI
+ R  P0
+ R  P0V1
+ R  P0V1V1
+ R  P1
+ R  P1V1
+ R  P1V1V1
+ R  P2
+ R  P3
+ R  P3V1
+ R  P3V2
+ R  P3V3
+ R  P3V1V1
+ R  P3V1V2
+ R  P3V1V3
+ R  P3V2V2
+ R  P3V2V3
+ R  P3V3V3
+ R  C4
+ R  P4
+ R  P4V1
+ R  P4V1V1
+ R  C5
+ R  P5
+ R  P5V1
+ R  P5V1V1
+ R  P6
+ R  P6V1
+ R  P6V2
+ R  P6V3
+ R  P6V1V1
+ R  P6V1V2
+ R  P6V1V3
+ R  P6V2V2
+ R  P6V2V3
+ R  P6V3V3
+ R  LOGB
+ M  SQRT
+ M  EXP
+ M  LOG
+
+GLOBALS
+
+ A  C4                  SQRT( 1.0D+0 / 6.2832D+0 )
+
+INDIVIDUALS
+
+*   Element type Y1
+
+ T  Y1
+ A  B                   V2 + V3 * ( 1.0D+0 - V2 )
+ A  CI                  C / 7.658D+0
+ A  P0                  1.0D+0 + 1.0D+0 / ( 1.2D+1 * V1 )
+ A  P0V1                - 1.0D+0 / ( 1.2D+1 * V1 ** 2 )
+ A  P0V1V1              2.0D+0 / ( 1.2D+1 * V1 ** 3 )
+ A  P1                  1.0D+0 / P0
+ A  P1V1                - P0V1 / ( P0 ** 2 )
+ A  P1V1V1              ( 2.0D+0 * P0V1 ** 2 / P0 - P0V1V1 ) /
+ A+                     ( P0 ** 2 )
+ A  P2                  V2
+ A  P3                  B ** V1
+ A  LOGB                LOG( B )
+ A  P3V1                P3 * LOGB
+ A  P3V2                V1 * ( 1.0D+0 - V3 ) * B**( V1 - 1.0D+0 )
+ A  P3V3                V1 * ( 1.0D+0 - V2 ) * B**( V1 - 1.0D+0 )
+ A  P3V1V1              P3V1 * LOGB
+ A  P3V1V2              P3V2 *  LOGB + P3 * (1.0D+0 - V3) / B
+ A  P3V1V3              P3V3 *  LOGB + P3 * (1.0D+0 - V2) / B
+ A  P3V2V2              V1 * ( V1 - 1.0D+0 ) * ( 1.0D+0 - V3 )**2
+ A+                     * B ** ( V1 - 1.0D+0 )
+ A  P3V2V3              - V1 * B ** ( V1 - 1.0D+0 ) +
+ A+                     V1 * ( V1 - 1.0D+0 ) * ( 1.0D+0 - V2 ) *
+ A+                     ( 1.0D+0 - V3 ) * B ** ( V1 - 2.0D+0 )
+ A  P3V3V3              V1 * ( V1 - 1.0D+0 ) * ( 1.0D+0 - V2 )**2
+ A+                     * B ** ( V1 - 2.0D+0 )
+ A  P4                  C4 * SQRT( V1 )
+ A  P4V1                5.0D-1 * C4 * SQRT( 1.0D+0 / V1 )
+ A  P4V1V1              - 2.5D-1 * C4 * SQRT( 1.0D+0 / V1 **3 )
+ A  C5                  CI ** ( - 1.0D+0 )
+ A  P5                  C5 * CI ** V1
+ A  P5V1                P5 * LOG( CI )
+ A  P5V1V1              P5V1 * LOG( CI )
+ A  P6                  EXP( V1 * ( 1.0D+0 - CI * B ) )
+ A  P6V1                P6 * ( 1.0D+0 - CI * B )
+ A  P6V2                - P6 * V1 * CI * ( 1.0D+0 - V3 )
+ A  P6V3                - P6 * V1 * CI * ( 1.0D+0 - V2 )
+ A  P6V1V1              P6 * ( 1.0D+0 - CI * B ) ** 2
+ A  P6V1V2              P6V2 * ( 1.0D+0 - CI * B )
+ A+                     - P6 * CI * ( 1.0D+0 - V3 )
+ A  P6V1V3              P6V3 * ( 1.0D+0 - CI * B )
+ A+                     - P6 * CI * ( 1.0D+0 - V2 )
+ A  P6V2V2              - P6V2 * V1 * CI * ( 1.0D+0 - V3 )
+ A  P6V2V3              - P6V3 * V1 * CI * ( 1.0D+0 - V3 )
+ A+                     + P6 * V1 * CI
+ A  P6V3V3              - P6V3 * V1 * CI * ( 1.0D+0 - V2 )
+ F                      P1 * P2 * P3 * P4 * P5 * P6
+ G  V1                  P1V1 * P2 * P3 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3V1 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4V1 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5V1 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5 * P6V1
+ G  V2                  P1        * P3 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3V2 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5 * P6V2
+ G  V3                  P1 * P2 * P3V3 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5 * P6V3
+ H  V1        V1        P1V1V1 * P2 * P3 * P4 * P5 * P6 +
+ H+                     P1 * P2 * P3V1V1 * P4 * P5 * P6 +
+ H+                     P1 * P2 * P3 * P4V1V1 * P5 * P6 +
+ H+                     P1 * P2 * P3 * P4 * P5V1V1 * P6 +
+ H+                     P1 * P2 * P3 * P4 * P5 * P6V1V1 +
+ H+                     2.0D+0 * (
+ H+                     P1V1 * P2 * P3V1 * P4 * P5 * P6 +
+ H+                     P1V1 * P2 * P3 * P4V1 * P5 * P6 +
+ H+                     P1V1 * P2 * P3 * P4 * P5V1 * P6 +
+ H+                     P1V1 * P2 * P3 * P4 * P5 * P6V1 +
+ H+                     P1 * P2 * P3V1 * P4V1 * P5 * P6 +
+ H+                     P1 * P2 * P3V1 * P4 * P5V1 * P6 +
+ H+                     P1 * P2 * P3V1 * P4 * P5 * P6V1 +
+ H+                     P1 * P2 * P3 * P4V1 * P5V1 * P6 +
+ H+                     P1 * P2 * P3 * P4V1 * P5 * P6V1 +
+ H+                     P1 * P2 * P3 * P4 * P5V1 * P6V1 )
+ H  V1        V2        P1V1 * (        P3 * P4 * P5 * P6 +
+ H+                     P2 * P3V2 * P4 * P5 * P6 +
+ H+                     P2 * P3 * P4 * P5 * P6V2 ) +
+ H+                     P1 * (        P3V1 * P4 * P5 * P6 +
+ H+                            ( P3 * P4V1 * P5 * P6 +
+ H+                     P3 * P4 * P5V1 * P6 +
+ H+                     P3 * P4 * P5 * P6V1 ) +
+ H+                     P2 * ( P3V1V2 * P4 * P5 * P6 +
+ H+                     P3V1 * P4 * P5 * P6V2 +
+ H+                     P3V2 * P4V1 * P5 * P6 +
+ H+                     P3V2 * P4 * P5V1 * P6 +
+ H+                     P3V2 * P4 * P5 * P6V1 +
+ H+                     P3 * ( P4V1 * P5 * P6V2 +
+ H+                     P4 * P5V1 * P6V2 +
+ H+                     P4 * P5 * P6V1V2 ) ) )
+ H  V1        V3        P2 * ( P1V1 * P3V3 * P4 * P5 * P6 +
+ H+                     P1V1 * P3 * P4 * P5 * P6V3 +
+ H+                     P1 * ( P3V1V3 * P4 * P5 * P6 +
+ H+                     P3V1 * P4 * P5 * P6V3 +
+ H+                     P3V3 * P4V1 * P5 * P6 +
+ H+                     P3V3 * P4 * P5V1 * P6 +
+ H+                     P3V3 * P4 * P5 * P6V1 +
+ H+                     P3 * ( P4 * P5V1 * P6V3 +
+ H+                     P4V1 * P5 * P6V3 +
+ H+                     P4 * P5 * P6V1V3 ) ) )
+ H  V2        V2        P1 * P4 * P5 * ( P2 * P3 * P6V2V2 +
+ H+                     P2 * P3V2V2 * P6 + 2.0D+0 * (
+ H+                     P2 * P3V2 * P6V2 +        P3 * P6V2 +
+ H+                            P3V2  * P6 ) )
+ H  V2        V3        P1 * P4 * P5 * (
+ H+                     P2 * P3V2V3 * P6 + P2 * P3 * P6V2V3 +
+ H+                            P3V3 * P6 +        P3 * P6V3 +
+ H+                     P2 * P3V2 * P6V3 + P2 * P3V3 * P6V2 )
+ H  V3        V3        P1 * P2 * P4 * P5 * (
+ H+                     P3V3V3 * P6 + P3 * P6V3V3 +
+ H+                     2.0D+0 * P3V3 * P6V3 )
+
+
+*   Element type Y2
+
+ T  Y2
+ A  B                   V2 + V3 * ( 1.0D+0 - V2 )
+ A  CI                  C / 7.658D+0
+ A  P0                  1.0D+0 + 1.0D+0 / ( 1.2D+1 * V1 )
+ A  P0V1                - 1.0D+0 / ( 1.2D+1 * V1 ** 2 )
+ A  P0V1V1              2.0D+0 / ( 1.2D+1 * V1 ** 3 )
+ A  P1                  1.0D+0 / P0
+ A  P1V1                - P0V1 / ( P0 ** 2 )
+ A  P1V1V1              ( 2.0D+0 * P0V1 ** 2 / P0 - P0V1V1 ) /
+ A+                     ( P0 ** 2 )
+ A  P2                  1.0D+0 - V2
+ A  P3                  ( B / V3 ) ** V1
+ A  LOGB                LOG( B / V3 )
+ A  P3V1                P3 * LOGB
+ A  P3V2                V1 * ( - 1.0D+0 + 1.0D+0 / V3 ) *
+ A+                     ( B / V3 ) ** ( V1 - 1.0D+0 )
+ A  P3V3                - V1 * ( V2 / V3 ** 2 ) *
+ A+                     ( B / V3 ) ** ( V1 - 1.0D+0 )
+ A  P3V1V1              P3V1 * LOGB
+ A  P3V1V2              P3V2 * LOGB + P3 * V3 *
+ A+                     (- 1.0D+0 + 1.0D+0 / V3) / B
+ A  P3V1V3              P3V3 *  LOGB -
+ A+                     P3 * V2 / ( B * V3  )
+ A  P3V2V2              V1 * ( V1 - 1.0D+0 ) *
+ A+                     ( - 1.0D+0 + 1.0D+0 / V3 ) ** 2
+ A+                     * ( B / V3 ) ** ( V1 - 2.0D+0 )
+ A  P3V2V3              V1 * ( - 1.0D+0 / V3 ** 2 ) *
+ A+                     ( B / V3 ) ** ( V1 - 1.0D+0 ) +
+ A+                     V1 * ( V1 - 1.0D+0 ) *
+ A+                     ( - 1.0D+0 + 1.0D+0 / V3 ) *
+ A+                     ( - V2 / V3 ** 2 ) *
+ A+                     ( B / V3 ) ** ( V1 - 2.0D+0 )
+ A  P3V3V3              2.0D+0 * V1 * ( V2 / V3 ** 3 ) *
+ A+                     ( B / V3 ) ** ( V1 - 1.0D+0 ) +
+ A+                     V1 * ( V1 - 1.0D+0 ) *
+ A+                     ( V2 / V3 ** 2 ) **2 *
+ A+                     ( B / V3 ) ** ( V1 - 2.0D+0 )
+ A  P4                  C4 * SQRT( V1 )
+ A  P4V1                5.0D-1 * C4 * SQRT( 1.0D+0 / V1 )
+ A  P4V1V1              - 2.5D-1 * C4 * SQRT( 1.0D+0 / V1 **3 )
+ A  C5                  CI ** ( - 1.0D+0 )
+ A  P5                  C5 * CI ** V1
+ A  P5V1                P5 * LOG( CI )
+ A  P5V1V1              P5V1 * LOG( CI )
+ A  P6                  EXP( V1 * ( 1.0D+0 - CI * B / V3 ) )
+ A  P6V1                P6 * ( 1.0D+0 - CI * B / V3 )
+ A  P6V2                - P6 * V1 * CI * ( 1.0D+0 - V3 ) / V3
+ A  P6V3                P6 * V1 * CI * V2 / V3 ** 2
+ A  P6V1V1              P6 * ( 1.0D+0 - CI * B / V3 ) ** 2
+ A  P6V1V2              P6V2 * ( 1.0D+0 - CI * B / V3 )
+ A+                     - P6 * CI * ( - 1.0D+0 + 1.0D+0 / V3 )
+ A  P6V1V3              P6V3 * ( 1.0D+0 - CI * B / V3 ) +
+ A+                     P6 * CI * V2 / V3 ** 2
+ A  P6V2V2              - P6V2 * V1 * CI * ( 1.0D+0 - V3 ) / V3
+ A  P6V2V3              - P6V3 * V1 * CI * ( 1.0D+0 - V3 ) / V3
+ A+                     + P6 * V1 * CI / V3 ** 2
+ A  P6V3V3              P6V3 * V1 * CI * V2 / V3 ** 2
+ A+                     - 2.0D+0 * P6 * V1 * CI * V2 / V3 ** 3
+ F                      P1 * P2 * P3 * P4 * P5 * P6
+ G  V1                  P1V1 * P2 * P3 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3V1 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4V1 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5V1 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5 * P6V1
+ G  V2                  - P1 * P3 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3V2 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5 * P6V2
+ G  V3                  P1 * P2 * P3V3 * P4 * P5 * P6 +
+ G+                     P1 * P2 * P3 * P4 * P5 * P6V3
+ H  V1        V1        P1V1V1 * P2 * P3 * P4 * P5 * P6 +
+ H+                     P1 * P2 * P3V1V1 * P4 * P5 * P6 +
+ H+                     P1 * P2 * P3 * P4V1V1 * P5 * P6 +
+ H+                     P1 * P2 * P3 * P4 * P5V1V1 * P6 +
+ H+                     P1 * P2 * P3 * P4 * P5 * P6V1V1 +
+ H+                     2.0D+0 * (
+ H+                     P1V1 * P2 * P3V1 * P4 * P5 * P6 +
+ H+                     P1V1 * P2 * P3 * P4V1 * P5 * P6 +
+ H+                     P1V1 * P2 * P3 * P4 * P5V1 * P6 +
+ H+                     P1V1 * P2 * P3 * P4 * P5 * P6V1 +
+ H+                     P1 * P2 * P3V1 * P4V1 * P5 * P6 +
+ H+                     P1 * P2 * P3V1 * P4 * P5V1 * P6 +
+ H+                     P1 * P2 * P3V1 * P4 * P5 * P6V1 +
+ H+                     P1 * P2 * P3 * P4V1 * P5V1 * P6 +
+ H+                     P1 * P2 * P3 * P4V1 * P5 * P6V1 +
+ H+                     P1 * P2 * P3 * P4 * P5V1 * P6V1 )
+ H  V1        V2        P1V1 * ( - P3 * P4 * P5 * P6 +
+ H+                     P2 * P3V2 * P4 * P5 * P6 +
+ H+                     P2 * P3 * P4 * P5 * P6V2 ) +
+ H+                     P1 * ( - P3V1 * P4 * P5 * P6 -
+ H+                     ( P3 * P4V1 * P5 * P6 +
+ H+                     P3 * P4 * P5V1 * P6 +
+ H+                     P3 * P4 * P5 * P6V1 ) +
+ H+                     P2 * ( P3V1V2 * P4 * P5 * P6 +
+ H+                     P3V1 * P4 * P5 * P6V2 +
+ H+                     P3V2 * P4V1 * P5 * P6 +
+ H+                     P3V2 * P4 * P5V1 * P6 +
+ H+                     P3V2 * P4 * P5 * P6V1 +
+ H+                     P3 * ( P4V1 * P5 * P6V2 +
+ H+                     P4 * P5V1 * P6V2 +
+ H+                     P4 * P5 * P6V1V2 ) ) )
+ H  V1        V3        P2 * ( P1V1 * P3V3 * P4 * P5 * P6 +
+ H+                     P1V1 * P3 * P4 * P5 * P6V3 +
+ H+                     P1 * ( P3V1V3 * P4 * P5 * P6 +
+ H+                     P3V1 * P4 * P5 * P6V3 +
+ H+                     P3V3 * P4V1 * P5 * P6 +
+ H+                     P3V3 * P4 * P5V1 * P6 +
+ H+                     P3V3 * P4 * P5 * P6V1 +
+ H+                     P3 * ( P4 * P5V1 * P6V3 +
+ H+                     P4V1 * P5 * P6V3 +
+ H+                     P4 * P5 * P6V1V3 ) ) )
+ H  V2        V2        P1 * P4 * P5 * ( P2 * P3 * P6V2V2 +
+ H+                     P2 * P3V2V2 * P6 + 2.0D+0 * (
+ H+                     P2 * P3V2 * P6V2 - P3 * P6V2 -
+ H+                     P3V2  * P6 ) )
+ H  V2        V3        P1 * P4 * P5 * (
+ H+                     P2 * P3V2V3 * P6 + P2 * P3 * P6V2V3 -
+ H+                          P3V3 * P6 -        P3 * P6V3 +
+ H+                     P2 * P3V2 * P6V3 + P2 * P3V3 * P6V2 )
+ H  V3        V3        P1 * P2 * P4 * P5 * (
+ H+                     P3V3V3 * P6 + P3 * P6V3V3 +
+ H+                     2.0D+0 * P3V3 * P6V3 )
+
+*   Element type PROD
+
+ T  PROD
+ F                      X3 * X4
+ G  X3                  X4
+ G  X4                  X3
+ H  X3        X4        1.0D+0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+GROUPS        HS70
+
+INDIVIDUALS
+
+*   group type SQR
+
+ T  SQR
+ F                      T * T
+ G                      T + T
+ H                      2.0D+0
+
+ENDATA

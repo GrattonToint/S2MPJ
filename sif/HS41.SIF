@@ -1,0 +1,93 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS41
+
+*   Problem :
+*   *********
+
+*   Source: problem 41 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OLR2-AN-4-1
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   4
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0            X2        2.0
+ E  CON1      X3        2.0            X4        -1.0
+
+CONSTANTS
+
+    HS41      OBJ       -2.0
+
+BOUNDS
+
+ XU HS41      'DEFAULT' 1.0
+ UP HS41      X4        2.0
+
+START POINT
+
+ XV HS41      'DEFAULT' 2.0
+
+ELEMENT TYPE
+
+ EV 3PROD     V1                       V2
+ EV 3PROD     V3
+
+ELEMENT USES
+
+ T  E1        3PROD
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+ V  E1        V3                       X3
+
+GROUP USES
+
+ E  OBJ       E1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                1.925925
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS41
+
+INDIVIDUALS
+
+ T  3PROD
+ F                      -V1 * V2 * V3
+ G  V1                  -V2 * V3
+ G  V2                  -V1 * V3
+ G  V3                  -V1 * V2
+ H  V1        V2        -V3
+ H  V1        V3        -V2
+ H  V2        V3        -V1
+
+ENDATA

@@ -1,0 +1,128 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS26
+
+*   Problem :
+*   *********
+
+*   Source: problem 26 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OOR2-AY-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1
+
+CONSTANTS
+
+    HS26      CON1      3.0
+
+BOUNDS
+
+ FR HS26      'DEFAULT'
+
+START POINT
+
+    HS26      X1        -2.6
+    HS26      X2        2.0
+    HS26      X3        2.0
+
+ELEMENT TYPE
+
+ EV SQ        V1                       V2
+ IV SQ        U1
+
+ EV SQSQ      V1                       V2
+ IV SQSQ      U1
+
+ EV SQL       V1                       V2
+
+ EV QRT       V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+ T  E2        SQSQ
+ V  E2        V1                       X2
+ V  E2        V2                       X3
+
+ T  E3        SQL
+ V  E3        V1                       X2
+ V  E3        V2                       X1
+
+ T  E4        QRT
+ V  E4        V1                       X3
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  CON1      E3                       E4
+
+OBJECT BOUND
+
+ LO HS26                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS26
+
+TEMPORARIES
+
+ R  V1V1P1
+
+INDIVIDUALS
+
+ T  SQ
+ R  U1        V1        1.0            V2        -1.0
+ F                      U1 * U1
+ G  U1                  U1 + U1
+ H  U1        U1        2.0
+
+ T  SQSQ
+ R  U1        V1        1.0            V2        -1.0
+ F                      U1**4
+ G  U1                  4.0 * U1**3
+ H  U1        U1        12.0 * U1 * U1
+
+ T  SQL
+ A  V1V1P1              1.0 + V1*V1
+ F                      V1V1P1 * V2
+ G  V1                  2.0 * V1 * V2
+ G  V2                  V1V1P1
+ H  V1        V1        V2 + V2
+ H  V1        V2        V1 + V1
+
+ T  QRT
+ F                      V1**4
+ G  V1                  4.0 * V1**3
+ H  V1        V1        12.0 * V1 * V1
+
+ENDATA

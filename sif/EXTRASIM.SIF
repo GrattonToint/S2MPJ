@@ -1,0 +1,40 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EXTRASIM
+
+*   Problem :
+*   *********
+
+*   An extremely simple linear program.
+
+*   Source:
+*   A.Conn, N. Gould, Ph. Toint
+*   "LANCELOT, a Fortran package for large-scale nonlinear optimization"
+*   Springer Verlag, 1992
+
+*   SIF input: Ph. Toint, Dec 1991.
+
+*   classification LLR2-AN-2-1
+
+VARIABLES
+    
+    X
+    Y
+
+GROUPS
+
+ XN Object    X         1.0
+ XE Cautious  X         1.0            Y         2.0
+
+CONSTANTS
+
+    EXTRASIM  Object    -1.0
+    EXTRASIM  Cautious  2.0
+
+BOUNDS
+
+ XR EXTRASIM  Y
+
+ENDATA

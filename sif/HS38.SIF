@@ -1,0 +1,164 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS38
+
+*   Problem :
+*   *********
+
+*   Colville #4 test problem
+
+*   Source: problem 38 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OBR2-AN-4-0
+
+*   Problem dimension
+
+ IE N                   4
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ RE P1                  10.1
+ RE P2                  90.0
+ RD 1/P1      P1        1.0
+ RD 1/P2      P2        1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN G(I)      X(I)      1.0
+ ND
+
+ ZN G2        'SCALE'                  1/P1
+ ZN G4        'SCALE'                  1/P1
+
+ N  G5        X2        1.0
+ N  G5        'SCALE'   0.01
+
+ N  G6        X4        1.0
+ ZN G6        'SCALE'                  1/P2
+
+ N  G7
+
+CONSTANTS
+
+ DO I         1                        N
+ X  HS38      G(I)      1.0
+ ND
+
+BOUNDS
+
+ XL HS38      'DEFAULT' -10.0
+ XU HS38      'DEFAULT' 10.0
+
+START POINT
+
+    HS38      X1        -3.0           X2        -1.0
+    HS38      X3        -3.0           X4        -1.0
+
+ELEMENT TYPE
+
+ EV MSQ       V1
+ EV PROD      V1                       V2
+
+ELEMENT USES
+
+ T  E1        MSQ
+ V  E1        V1                       X1
+
+ T  E2        MSQ
+ V  E2        V1                       X3
+
+ T  E3        PROD
+ V  E3        V1                       X2
+ V  E3        V2                       X4
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ XT G(I)      L2
+ ND
+
+ T  G5        L2
+ E  G5        E1
+
+ T  G6        L2
+ E  G6        E2
+
+ E  G7        E3        19.8
+
+
+OBJECT BOUND
+
+ LO HS38                -99.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS38
+
+TEMPORARIES
+
+ R  M2
+ R  M4
+
+INDIVIDUALS
+
+ T  MSQ
+ F                      - V1 * V1
+ G  V1                  - V1 - V1
+ H  V1        V1        - 2.0
+
+ T  PROD
+ A  M2                  1.0 - V1
+ A  M4                  1.0 - V2
+ F                      M2 * M4
+ G  V1                  -M4
+ G  V2                  -M2
+ H  V1        V2        1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS38
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

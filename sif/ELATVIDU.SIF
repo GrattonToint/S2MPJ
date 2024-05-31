@@ -1,0 +1,134 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ELATVIDU
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example ElAttarVidyasagarDutta
+
+*   Fit: (x_1^2 + x_2 − 10, x_1 + x_2^2 − 7,x_1^2 + x_2^3 − 1) + e = 0
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould
+
+*   classification SUR2-MN-2-0
+
+*   Number of data values
+
+ IE M                   3
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  F1        X2        1.0
+ N  F2        X1        1.0
+ N  F3
+
+CONSTANTS
+
+ X  ELATVIDU  F1        10.0
+ X  ELATVIDU  F2        7.0
+ X  ELATVIDU  F3        1.0
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+ELEMENT TYPE
+
+ EV SQR       X
+ EV CUBE      X
+
+ELEMENT USES
+
+ XT E1        SQR
+ ZV E1        X                        X1
+ XT E2        SQR
+ ZV E2        X                        X2
+ XT E3        CUBE
+ ZV E3        X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ E  F1        E1
+ E  F2        E2
+ E  F3        E1                       E3
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO ELATVIDU            0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ELATVIDU
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  CUBE
+ F                      X ** 3
+ G  X                   3.0 * X ** 2
+ H  X         X         6.0 * X
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ELATVIDU
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

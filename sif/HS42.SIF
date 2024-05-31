@@ -1,0 +1,115 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS42
+
+*   Problem :
+*   *********
+
+*   Source: problem 42 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification SQR2-AN-4-2
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   4
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0
+ E  CON2
+
+CONSTANTS
+
+    HS42      CON1      2.0
+    HS42      CON2      2.0
+
+BOUNDS
+
+ FR HS42      'DEFAULT'
+
+START POINT
+
+ XV HS42      'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV SQMP      V1
+ EP SQMP      P
+
+ELEMENT USES
+
+ DO I         1                        N
+
+ RI PAR       I
+
+ XT E(I)      SQMP
+ ZV E(I)      V1                       X(I)
+ ZP E(I)      P                        PAR
+
+ ND
+
+ T  E5        SQ
+ V  E5        V1                       X3
+
+ T  E6        SQ
+ V  E6        V1                       X4
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+ E  CON2      E5                       E6
+
+OBJECT BOUND
+
+ LO HS42                0.0
+
+*   Solution
+
+*LO SOLTN               13.857864
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS42
+
+TEMPORARIES
+
+ R  VMP
+
+INDIVIDUALS
+
+ T  SQMP
+ A  VMP                 V1 - P
+ F                      VMP * VMP
+ G  V1                  VMP + VMP
+ H  V1        V1        2.0
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

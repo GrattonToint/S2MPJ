@@ -1,0 +1,105 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS35MOD
+
+*   Problem :
+*   *********
+
+*   Source: problem 35 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification QLR2-AN-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X1        -8.0           X2        -6.0
+ N  OBJ       X3        -4.0
+
+ G  CON1      X1        -1.0           X2        -1.0
+ G  CON1      X3        -2.0
+
+CONSTANTS
+
+    HS35MOD   OBJ       -9.0
+    HS35MOD   CON1      -3.0
+
+BOUNDS
+
+ FX HS35MOD   X2        0.5
+ 
+START POINT
+
+ XV HS35MOD   'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        SQ
+ V  E3        V1                       X3
+
+ T  E4        2PR
+ V  E4        V1                       X1
+ V  E4        V2                       X2
+
+ T  E5        2PR
+ V  E5        V1                       X1
+ V  E5        V2                       X3
+
+GROUP USES
+
+ E  OBJ       E1        2.0            E2        2.0
+ E  OBJ       E3        1.0            E4        2.0
+ E  OBJ       E5        2.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.1111111111
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS35MOD
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA

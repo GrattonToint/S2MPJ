@@ -1,0 +1,528 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EQC
+
+*   Problem :
+*   *********
+
+*   Source: Quality Control problem 104 from
+*   Betty Schultz and Ben Reiser.
+
+
+*   SIF input: Andrew Conn, August 1992.
+
+*   classification OLR2-MY-9-3
+
+*   Number of variables
+
+ IE M                   9
+
+*   Other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+ IE 15                  15
+ IE 16                  16
+ IE 17                  17
+
+ IE N                   10048
+ IE NGG                 9900
+ IE NGB                 35
+ IE NBG                 15
+ IE NBU                 18
+ IE NBB                 2
+ IE NUU                 40
+ IE NUB                 21
+ IE NGBUU               9
+ IE NBGUU               2
+ IE NBGBU               2
+ IE NGBUB               3
+ IE NBBUU               1
+ IE NBBBU               0
+ IE NBBUB               0
+
+ I+ S1        NGG                      NGB
+ I+ S1        S1                       NGBUU
+ I+ S1        S1                       NGBUB
+ I+ S2        NBG                      NBB
+ I+ S2        S2                       NBU
+ I+ S2        S2                       NBGUU
+ I+ S2        S2                       NBBUU
+ I+ S2        S2                       NBGBU
+ I+ S2        S2                       NBBBU
+ I+ S2        S2                       NBBUB
+ I+ S3        NGG                      NBG
+ I+ S3        S3                       NBGUU
+ I+ S3        S3                       NBGBU
+ I+ S4        NGB                      NBB
+ I+ S4        S4                       NUB
+ I+ S4        S4                       NGBUU
+ I+ S4        S4                       NBBUU
+ I+ S4        S4                       NBBBU
+ I+ S4        S4                       NGBUB
+ I+ S4        S4                       NBBUB
+
+ I+ U1        NGB                      NGBUU
+ I+ U1        U1                       NGBUB
+ I+ L1        U1                       NUU
+ I+ L1        U1                       NUB
+ I+ U2        NBG                      NBGUU
+ I+ U2        U2                       NBGBU
+ I+ L2        U2                       NUU
+ I+ L2        U2                       NBU
+ I+ U3        NBB                      NBBUU
+ I+ U3        U3                       NBBBU
+ I+ U3        U3                       NBBUB
+ I+ L3        U3                       NUU
+ I+ L3        U3                       NBU
+ I+ L3        U3                       NUB
+*I+ L4        U2                       NBBUU
+*I+ L4        L4                       NBBBU
+*I+ L4        L4                       NBBUB
+*I+ L4        L4                       NBU
+*I+ L4        L4                       NBB
+*I+ U4        L4                       NUU
+*I+ U4        U4                       NUB
+ I+ L4        U2                       NBBUU
+ I+ L4        L4                       NBBBU
+ I+ U4        U1                       NBBUB
+ I+ U4        U4                       NBU
+ I+ U4        U4                       NBB
+ I+ U4        U4                       NUU
+ I+ U4        U4                       NUB
+ I+ L5        U1                       NBBUU
+ I+ L5        L5                       NBBBU
+ I+ L5        L5                       NBBUB
+ I+ L5        L5                       NUB
+ I+ L5        L5                       NBB
+ I+ U5        L5                       NUU
+ I+ U5        U5                       NBU
+
+
+ RE TWO                 2.0
+
+ RI RS1       S1
+ RI RS2       S2
+ RI RS3       S3
+ RI RS4       S4
+ RI RNBG      NBG
+ RI RNBGBU    NBGBU
+ RI RNBGUU    NBGUU
+ RI RNGB      NGB
+ RI RNGBUB    NGBUB
+ RI RNGBUU    NGBUU
+ RI RNBB      NBB
+ RI RNBBUB    NBBUB
+ RI RNBBBU    NBBBU
+ RI RNBBUU    NBBUU
+ RI RNBGBU    NBGBU
+ RI RNUU      NUU
+ RI RNUB      NUB
+ RI RNBU      NBU
+ RI RN        N
+ RI RL1       L1
+ RI RU1       U1
+ RI RL2       L2
+ RI RU2       U2
+ RI RL3       L3
+ RI RU3       U3
+ RI RL4       L4
+ RI RU4       U4
+ RI RL5       L5
+ RI RU5       U5
+
+ R/ LF1       RU4                      RN
+ R/ UF1       RL4                      RN
+ R+ SF1       LF1                      UF1
+ R/ SF1       SF1                      TWO
+
+ R/ LF2       RL5                      RN
+ R/ UF2       RU5                      RN
+ R+ SF2       LF2                      UF2
+ R/ SF2       SF2                      TWO
+
+ R/ LGBGB     RNGB                     RL1
+ R/ UGBGB     RNGB                     RU1
+ R+ SGBGB     LGBGB                    UGBGB
+ R/ SGBGB     SGBGB                    TWO
+
+ R/ LUBGB     RNUB                     RL1
+ R/ UUBGB     RNUB                     RU1
+ R+ SUBGB     LUBGB                    UUBGB
+ R/ SUBGB     SUBGB                    TWO
+
+ R/ LBGBG     RNBG                     RL2
+ R/ UBGBG     RNBG                     RU2
+ R+ SBGBG     LBGBG                    UBGBG
+ R/ SBGBG     SBGBG                    TWO
+
+ R/ LBUBG     RNBU                     RL2
+ R/ UBUBG     RNBU                     RU2
+ R+ SBUBG     LBUBG                    UBUBG
+ R/ SBUBG     SBUBG                    TWO
+
+ R/ LBBBB     RNBB                     RL3
+ R/ UBBBB     RNBB                     RU3
+ R+ SBBBB     LBBBB                    UBBBB
+ R/ SBBBB     SBBBB                    TWO
+
+ R/ LBUBB     RNBU                     RL3
+ R/ UBUBB     RNBU                     RU3
+ R+ SBUBB     LBUBB                    UBUBB
+ R/ SBUBB     SBUBB                    TWO
+
+ R/ LUBBB     RNUB                     RL3
+ R/ UUBBB     RNUB                     RU3
+ R+ SUBBB     LUBBB                    UUBBB
+ R/ SUBBB     SUBBB                    TWO
+
+
+VARIABLES
+
+    F1
+    F2
+    PBGBG
+    PBUBG
+    PGBGB
+    PUBGB
+    PBBBB
+    PUBBB
+    PBUBB
+
+GROUPS
+
+
+ XN OBJ(1)    F1        -1.0
+ XN OBJ(2)    F1        1.0
+ XN OBJ(3)    F2        -1.0
+ XN OBJ(4)    F2        1.0
+ XN OBJ(5)    PBUBG     1.0
+ XN OBJ(6)    PUBGB     1.0
+ XN OBJ(7)    F1        1.0            F2        1.0
+ XN OBJ(8)    PGBGB     1.0
+ XN OBJ(9)    PBGBG     1.0
+ XN OBJ(10)   PBBBB     1.0
+ XN OBJ(11)   PGBGB     -1.0           PUBGB     -1.0
+ XN OBJ(12)   PBGBG     -1.0           PBUBG     -1.0
+ XN OBJ(13)   PBBBB     -1.0           PUBBB     -1.0
+ XN OBJ(13)   PBUBB     -1.0
+ XN OBJ(14)   PBUBG     1.0
+ XN OBJ(15)   PBUBB     1.0
+ XN OBJ(16)   PUBGB     1.0
+ XN OBJ(17)   PUBBB     1.0
+ L  CON0      PBGBG     1.0            PBUBG     1.0
+ L  CON1      PGBGB     1.0            PUBGB     1.0
+ L  CON2      PBBBB     1.0            PUBBB     1.0
+ L  CON2      PBUBB     1.0
+
+CONSTANTS
+
+ X  CONST     OBJ(1)    -1.0
+ X  CONST     OBJ(3)    -1.0
+ X  CONST     OBJ(7)    -1.0
+ X  CONST     OBJ(11)   -1.0
+ X  CONST     OBJ(12)   -1.0
+ X  CONST     OBJ(13)   -1.0
+    CONST     CON0      1.0
+    CONST     CON1      1.0
+    CONST     CON2      1.0
+
+BOUNDS
+
+ UP BND       'DEFAULT' 1.0
+*ZL BND       F1                       LF2
+*ZU BND       F1                       UF1
+*ZL BND       F2                       UF2
+*ZU BND       F2                       LF1
+ UP BND       F1        8.1608D-3
+ LO BND       F1        7.9618D-3
+ UP BND       F2        1.0649D-2
+ LO BND       F2        1.0450D-2
+ ZL BND       PBGBG                    LBGBG
+ ZU BND       PBGBG                    UBGBG
+ ZL BND       PBUBG                    LBUBG
+ ZU BND       PBUBG                    UBUBG
+ ZL BND       PGBGB                    LGBGB
+ ZU BND       PGBGB                    UGBGB
+ ZL BND       PUBGB                    LUBGB
+ ZU BND       PUBGB                    UUBGB
+ ZL BND       PBBBB                    LBBBB
+ ZU BND       PBBBB                    UBBBB
+ FX BND       PBUBB     0.0
+ FX BND       PUBBB     0.0
+
+START POINT
+
+ V  EQC       'DEFAULT' 0.0
+*ZV EQC       F1                       SF1
+*ZV EQC       F2                       SF2
+*ZV EQC       PBGBG                    SBGBG
+*ZV EQC       PBUBG                    SBUBG
+*ZV EQC       PGBGB                    SGBGB
+*ZV EQC       PUBGB                    SUBGB
+*ZV EQC       PBBBB                    SBBBB
+
+
+
+ELEMENT TYPE
+
+*   2PROD
+
+ EV 2PROD     V1                       V2
+
+
+*   I2PROD
+
+ EV I2PROD    V1                       V2
+ EV I2PROD    V3
+ IV I2PROD    U1                       U2
+
+*   I3PROD
+
+ EV I3PROD    V1                       V2
+ EV I3PROD    V3                       V4
+ IV I3PROD    U1                       U2
+ IV I3PROD    U3
+
+*   3PRODI
+
+ EV 3PRODI    V1                       V2
+ EV 3PRODI    V3                       V4
+ EV 3PRODI    V5
+ IV 3PRODI    U1                       U2
+ IV 3PRODI    U3
+
+ELEMENT USES
+
+ XT E(1)      2PROD
+ ZV E(1)      V1                       F1
+ ZV E(1)      V2                       PBUBG
+
+ XT E(2)      2PROD
+ ZV E(2)      V1                       F2
+ ZV E(2)      V2                       PBUBB
+
+ XT E(3)      2PROD
+ ZV E(3)      V1                       F1
+ ZV E(3)      V2                       PUBGB
+
+ XT E(4)      2PROD
+ ZV E(4)      V1                       F1
+ ZV E(4)      V2                       PUBBB
+
+ XT E(5)      I2PROD
+ ZV E(5)      V1                       F1
+ ZV E(5)      V2                       PBGBG
+ ZV E(5)      V3                       PBUBG
+
+ XT E(6)      I3PROD
+ ZV E(6)      V1                       F1
+ ZV E(6)      V2                       F2
+ ZV E(6)      V3                       PBGBG
+ ZV E(6)      V4                       PBUBG
+
+ XT E(7)      I2PROD
+ ZV E(7)      V1                       F2
+ ZV E(7)      V2                       PGBGB
+ ZV E(7)      V3                       PUBGB
+
+ XT E(8)      I3PROD
+ ZV E(8)      V1                       F1
+ ZV E(8)      V2                       F2
+ ZV E(8)      V3                       PGBGB
+ ZV E(8)      V4                       PUBGB
+
+ XT E(9)      3PRODI
+ ZV E(9)      V1                       F1
+ ZV E(9)      V2                       F2
+ ZV E(9)      V3                       PBBBB
+ ZV E(9)      V4                       PUBBB
+ ZV E(9)      V5                       PBUBB
+
+
+GROUP TYPE
+
+*   LOG
+
+ GV LOG       T
+ GP LOG       P
+
+GROUP USES
+
+
+ XT OBJ(1)    LOG
+ ZP OBJ(1)    P                        RS1
+ XT OBJ(2)    LOG
+ ZP OBJ(2)    P                        RS2
+ XT OBJ(3)    LOG
+ ZP OBJ(3)    P                        RS3
+ XT OBJ(4)    LOG
+ ZP OBJ(4)    P                        RS4
+ XT OBJ(5)    LOG
+ XE OBJ(5)    E(1)      -1.0           E(2)
+ ZP OBJ(5)    P                        RNBU
+ XT OBJ(6)    LOG
+ XE OBJ(6)    E(3)      -1.0           E(4)
+ ZP OBJ(6)    P                        RNUB
+ XT OBJ(7)    LOG
+ XE OBJ(7)    E(5)                     E(6)      -1.0
+ XE OBJ(7)    E(7)                     E(8)      -1.0
+ XE OBJ(7)    E(9)
+ ZP OBJ(7)    P                        RNUU
+ XT OBJ(8)    LOG
+ ZP OBJ(8)    P                        RNGB
+ XT OBJ(9)    LOG
+ ZP OBJ(9)    P                        RNBG
+ XT OBJ(10)   LOG
+ ZP OBJ(10)   P                        RNBB
+ XT OBJ(11)   LOG
+ ZP OBJ(11)   P                        RNGBUU
+ XT OBJ(12)   LOG
+ ZP OBJ(12)   P                        RNBGUU
+ XT OBJ(13)   LOG
+ ZP OBJ(13)   P                        RNBBUU
+ XT OBJ(14)   LOG
+ ZP OBJ(14)   P                        RNBGBU
+ XT OBJ(15)   LOG
+ ZP OBJ(15)   P                        RNBBBU
+ XT OBJ(16)   LOG
+ ZP OBJ(16)   P                        RNGBUB
+ XT OBJ(17)   LOG
+ ZP OBJ(17)   P                        RNBBUU
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1138.416240
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EQC  
+
+TEMPORARIES
+
+ R  ZERO
+
+INDIVIDUALS
+
+*   Element type 2PROD
+
+ T  2PROD
+ A  ZERO                0.0
+ F                      V1*V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V1        ZERO
+ H  V2        V2        ZERO
+ H  V1        V2        1.0
+
+*   Element type I2PROD
+
+ T  I2PROD
+ R  U1        V1        1.0
+ R  U2        V2        -1.0           V3        -1.0
+ A  ZERO                0.0
+ F                      U1 * (1.0 + U2)
+ G  U1                  1.0 + U2
+ G  U2                  U1
+ H  U1        U1        ZERO
+ H  U2        U2        ZERO
+ H  U1        U2        1.0
+
+*   Element type I3PROD
+
+ T  I3PROD
+ R  U1        V1        1.0
+ R  U2        V2        1.0
+ R  U3        V3        -1.0           V4        -1.0
+ F                      U1 * U2 * (1.0 + U3)
+ G  U1                  U2 * (1.0 + U3)
+ G  U2                  U1 * (1.0 + U3)
+ G  U3                  U1 * U2
+ H  U1        U1        ZERO
+ H  U1        U2        1.0 + U3
+ H  U1        U3        U2
+ H  U2        U2        ZERO
+ H  U2        U3        U1
+ H  U3        U3        ZERO
+
+*   Element type 3PRODI
+
+ T  3PRODI
+ R  U1        V1        1.0
+ R  U2        V2        1.0
+ R  U3        V3        -1.0           V4        -1.0
+ R  U3        V5        -1.0
+ F                      U1 * U2 * (1.0 + U3)
+ G  U1                  U2 * (1.0 + U3)
+ G  U2                  U1 * (1.0 + U3)
+ G  U3                  U1 * U2
+ H  U1        U1        ZERO
+ H  U1        U2        1.0 + U3
+ H  U1        U3        U2
+ H  U2        U2        ZERO
+ H  U2        U3        U1
+ H  U3        U3        ZERO
+
+
+
+ENDATA
+
+
+GROUPS        EQC
+
+TEMPORARIES
+
+ L  ARG0
+ R  SMALL
+ R  LARGE
+ R  FF
+ R  GG
+ R  HH
+ M  LOG
+ M  ABS
+
+
+INDIVIDUALS
+
+*   group type log
+
+ T  LOG
+
+ A  T                   ABS( T )
+ A  SMALL               1.0D-10
+ A  LARGE               1.0D+10
+ A  ARG0                T .LE. SMALL
+ I  ARG0      FF        P * LOG( SMALL)
+ E  ARG0      FF        P * LOG( T )
+ I  ARG0      GG        P * LARGE
+ E  ARG0      GG        P / T
+ I  ARG0      HH        - P * LARGE ** 2
+ E  ARG0      HH        - P / T ** 2
+
+ F                      FF
+ G                      GG
+ H                      HH
+
+ENDATA
+

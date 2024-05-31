@@ -1,0 +1,205 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBK
+
+*   Problem :
+*   *********
+
+*   A blending problem for multi-component mixtures, by Paviani.
+*   It has a linear objective and linear and nonlinear constraints.
+
+*   Compared to the problem specified in Himmelblau, the inequality
+*   constraints have been removed, because, as stated in this source,
+*   they impose that
+*   X(1)=X(2)=X(3)=X(7)=X(9)=X(9)=X(13)=X(14)=X(15)=X(19)=X(20)=X(21)=0
+*   which is clearly contradictory with the given solution(s).  As
+*   there does not seem to be a natural way to correct this statement
+*   without knowing more about the original problem, the troublesome
+*   constraints have been removed.
+
+*   Source: from problem 20 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+*   SIF input: Ph. Toint, March 1991.
+
+*   classification LOR2-MN-24-14
+
+*   Problem data
+
+ RE F                   142.22471      $ F = 0.70302 * 530 * 14.7 / 40.0
+
+ RE B1                  44.094
+ RE B2                  58.12
+ RE B3                  58.12
+ RE B4                  137.4
+ RE B5                  120.9
+ RE B6                  170.9
+ RE B7                  62.501
+ RE B8                  84.94
+ RE B9                  133.425
+ RE B10                 82.507
+ RE B11                 46.07
+ RE B12                 60.097
+ RE B13                 44.094
+ RE B14                 58.12
+ RE B15                 58.12
+ RE B16                 137.4
+ RE B17                 120.9
+ RE B18                 170.9
+ RE B19                 62.501
+ RE B20                 84.94
+ RE B21                 133.425
+ RE B22                 82.507
+ RE B23                 46.07
+ RE B24                 60.097
+
+ RE C1                  123.7
+ RE C2                  31.7
+ RE C3                  45.7
+ RE C4                  14.7
+ RE C5                  84.7
+ RE C6                  27.7
+ RE C7                  49.7
+ RE C8                  7.1
+ RE C9                  2.1
+ RE C10                 17.7
+ RE C11                 0.85
+ RE C12                 0.64
+
+ RE D1                  123.7
+ RE D2                  31.7
+ RE D3                  45.7
+ RE D4                  14.7
+ RE D5                  84.7
+ RE D6                  27.7
+ RE D7                  49.7
+ RE D8                  7.1
+ RE D9                  2.1
+ RE D10                 17.7
+ RE D11                 0.85
+ RE D12                 0.64
+
+*   Constants
+
+ IE 1                   1
+ IE 12                  12
+ IE 13                  13
+ IE 24                  24
+
+VARIABLES
+
+ DO K         1                        24
+ X  X(K)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        0.0693         X2        0.0577
+ N  OBJ       X3        0.05           X4        0.2
+ N  OBJ       X5        0.26           X6        0.55
+ N  OBJ       X7        0.06           X8        0.1
+ N  OBJ       X9        0.12           X10       0.18
+ N  OBJ       X11       0.1            X12       0.09
+ N  OBJ       X13       0.0693         X14        0.0577
+ N  OBJ       X15       0.05           X16       0.2
+ N  OBJ       X17       0.26           X18       0.55
+ N  OBJ       X19       0.06           X20       0.1
+ N  OBJ       X21       0.12           X22       0.18
+ N  OBJ       X23       0.1            X24       0.09
+
+ DO I         1                        12
+ XE CA(I)
+ ND
+
+ DO I         1                        24
+ XE CA13      X(I)      1.0
+ ND
+
+ DO I         1                        12
+ IA I+12      I         12
+ AD 1/DI      D(I)      1.0
+ ZE CA14      X(I)                     1/DI
+ A/ F/BI+12   F                        B(I+12)
+ ZE CA14      X(I+12)                  F/BI+12
+ ND
+
+CONSTANTS
+
+ X  HIMMELBK  CA13      1.0
+ X  HIMMELBK  CA14      1.671
+
+START POINT
+
+ XV HIMMELBK  'DEFAULT' 0.04
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ DO I         1                        12
+ IA I+12      I         12
+
+ DO J         1                        12
+ XT E(I,J)    2PR
+ ZV E(I,J)    X                        X(I+12)
+ ZV E(I,J)    Y                        X(J)
+ OD J
+
+ DO J         13                       24
+ XT E(I,J)    2PR
+ ZV E(I,J)    X                        X(I)
+ ZV E(I,J)    Y                        X(J)
+ OD J
+
+ OD I
+
+GROUP USES
+
+ DO I         1                        12
+ IA I+12      I         12
+
+ DO J         1                        12
+ A/ BI/BJ     B(I)                     B(J)
+ RM 40BI/BJ   BI/BJ     40.0
+ ZE CA(I)     E(I,J)                   40BI/BJ
+ OD J
+
+ DO J         13                       24
+ A/ B+/BJ     B(I+12)                  B(J)
+ A* CB+/BJ    C(I)                     B+/BJ
+ RM -CB+/BJ   CB+/BJ    -1.0
+ ZE CA(I)     E(I,J)                   -CB+/BJ
+ OD J
+
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                0.0893344
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBK
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

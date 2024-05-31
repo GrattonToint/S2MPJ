@@ -1,0 +1,137 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS56
+
+*   Problem :
+*   *********
+
+*   Source: problem 56 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OOR2-AN-7-4
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   7
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+
+ AE PAR(1)              4.2
+ AE PAR(2)              4.2
+ AE PAR(3)              4.2
+ AE PAR(4)              7.2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ XE CON(1)    X1        1.0
+ XE CON(2)    X2        1.0
+ XE CON(3)    X3        1.0
+ XE CON(4)    X1        1.0            X2        2.0
+ XE CON(4)    X3        2.0
+
+BOUNDS
+
+ FR HS56      'DEFAULT'
+
+START POINT
+
+*     0.05097397  = arcsin( sqrt( 1/4.2 ) )
+*     0.09851108  = arcsin( sqrt( 5/7.2 ) )
+*     Note there is a typo in Hock & Schittkowski 
+*     (incorrect leading decimal point).
+
+ XV HS56      'DEFAULT' 1.0
+    HS56      X4        0.50973968
+    HS56      X5        0.50973968
+    HS56      X6        0.50973968
+    HS56      X7        0.98511078
+
+ELEMENT TYPE
+
+ EV 3PROD     V1                       V2
+ EV 3PROD     V3
+
+ EV PSNSQ     V1
+ EP PSNSQ     P
+
+ELEMENT USES
+
+ T  E1        3PROD
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+ V  E1        V3                       X3
+
+ DO I         1                        4
+ IA J         I          1
+ IA K         I          3
+ XT E(J)      PSNSQ
+ ZV E(J)      V1                       X(K)
+ ZP E(J)      P                        PAR(I)
+ ND
+
+GROUP USES
+
+ E  OBJ       E1          -1.0
+
+ DO I         1                        4
+ IA J         I           1
+ XE CON(I)    E(J)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                 -3.456
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS56
+
+TEMPORARIES
+
+ R  SUM
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  3PROD
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+ T  PSNSQ
+ A  SUM                 V1 + V1
+ F                      -P * SIN(V1)**2
+ G  V1                  -P * SIN(SUM)
+ H  V1        V1        -2.0 * P * COS(SUM)
+
+ENDATA

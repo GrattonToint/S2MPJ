@@ -1,0 +1,253 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS81
+
+*   Problem :
+*   *******
+
+*   Source: problem 80 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B.Debarsy, Jan 1990.
+
+*   classification OOR2-AN-5-3
+
+*   Number of variables
+
+ IE N                   5
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ
+
+*   Constraint functions
+
+ E  C1
+ E  C2
+ E  C3
+
+CONSTANTS
+
+    HS81      OBJ       0.5
+    HS81      C1        10.0
+    HS81      C3        -1.0
+
+BOUNDS
+
+ LO HS81      X1        -2.3
+ UP HS81      X1        2.3
+
+ LO HS81      X2        -2.3
+ UP HS81      X2        2.3
+
+ LO HS81      X3        -3.2
+ UP HS81      X3        3.2
+
+ LO HS81      X4        -3.2
+ UP HS81      X4        3.2
+
+ LO HS81      X5        -3.2
+ UP HS81      X5        3.2
+
+START POINT
+
+    HS81      X1        -2.0
+    HS81      X2        2.0
+    HS81      X3        2.0
+    HS81      X4        -1.0
+    HS81      X5        -1.0
+
+ELEMENT TYPE
+
+ EV EXPO      V1                       V2
+ EV EXPO      V3                       V4
+ EV EXPO      V5
+
+ EV X6        X
+
+ EV X3Y3      X                        Y
+
+ EV CB        X
+
+ EV SQ        X
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  OBJ1      EXPO
+ V  OBJ1      V1                       X1
+ V  OBJ1      V2                       X2
+ V  OBJ1      V3                       X3
+ V  OBJ1      V4                       X4
+ V  OBJ1      V5                       X5
+
+ T  OBJ2      X6
+ V  OBJ2      X                        X1
+
+ T  OBJ3      X6
+ V  OBJ3      X                        X2
+
+ T  OBJ4      X3Y3
+ V  OBJ4      X                        X1
+ V  OBJ4      Y                        X2
+
+ T  OBJ5      CB
+ V  OBJ5      X                        X1
+
+ T  OBJ6      CB
+ V  OBJ6      X                        X2
+
+ DO I         1                        N
+ XT E(I)      SQ
+ ZV E(I)      X                        X(I)
+ ND
+
+ T  E6        2PR
+ V  E6        X                        X2
+ V  E6        Y                        X3
+
+ T  E7        2PR
+ V  E7        X                        X4
+ V  E7        Y                        X5
+
+ T  E8        CB
+ V  E8        X                        X1
+
+ T  E9        CB
+ V  E9        X                        X2
+
+GROUP USES
+
+ E  OBJ       OBJ1                     OBJ2      -0.5
+ E  OBJ       OBJ3      -0.5           OBJ4      -1.0
+ E  OBJ       OBJ5      -1.0           OBJ6      -1.0
+
+ E  C1        E1                       E2
+ E  C1        E3                       E4
+ E  C1        E5
+
+ E  C2        E6                       E7        -5.0
+
+ E  C3        E8                       E9
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.539498
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS81
+
+TEMPORARIES
+
+ R  PROD
+ R  EX
+ R  EX1
+ R  X2
+ R  X3
+ R  Y2
+ R  Y3
+
+ M  EXP
+
+INDIVIDUALS
+
+*   Exponential
+
+ T  EXPO
+ A  PROD                V1 * V2 * V3 * V4 * V5
+ A  EX                  EXP( PROD )
+ A  EX1                 EX * ( 1.0 + PROD )
+ F                      EX
+ G  V1                  EX * V2 * V3 * V4 * V5
+ G  V2                  EX * V1 * V3 * V4 * V5
+ G  V3                  EX * V1 * V2 * V4 * V5
+ G  V4                  EX * V1 * V2 * V3 * V5
+ G  V5                  EX * V1 * V2 * V3 * V4
+ H  V1        V1        EX * ( V2 * V3 * V4 * V5 )**2
+ H  V1        V2        EX1 * V3 * V4 * V5
+ H  V1        V3        EX1 * V2 * V4 * V5
+ H  V1        V4        EX1 * V2 * V3 * V5
+ H  V1        V5        EX1 * V2 * V3 * V4
+ H  V2        V2        EX * ( V1 * V3 * V4 * V5 )**2
+ H  V2        V3        EX1 * V1 * V4 * V5
+ H  V2        V4        EX1 * V1 * V3 * V5
+ H  V2        V5        EX1 * V1 * V3 * V4
+ H  V3        V3        EX * ( V1 * V2 * V4 * V5 )**2
+ H  V3        V4        EX1 * V1 * V2 * V5
+ H  V3        V5        EX1 * V1 * V2 * V4
+ H  V4        V4        EX * ( V1 * V2 * V3 * V5 )**2
+ H  V4        V5        EX1 * V1 * V2 * V3
+ H  V5        V5        EX * ( V1 * V2 * V3 * V4 )**2
+
+*   Sixth power
+
+ T  X6
+ F                      X**6
+ G  X                   6.0 * X**5
+ H  X         X         30.0 * X**4
+
+*   Product of cube
+
+ T  X3Y3
+ A  X2                  X * X
+ A  X3                  X2 * X
+ A  Y2                  Y * Y
+ A  Y3                  Y2 * Y
+
+ F                      X3 * Y3
+ G  X                   3.0 * X2 * Y3
+ G  Y                   3.0 * X3 * Y2
+ H  X         X         6.0 * X * Y3
+ H  X         Y         9.0 * X2 * Y2
+ H  Y         Y         6.0 * X3 * Y
+
+*   Cube
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+*   Square
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+
+*   Product of 2 variables
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

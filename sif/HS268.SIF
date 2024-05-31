@@ -1,0 +1,160 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS268
+
+*   Problem :
+*   *********
+
+*   A quadratic programming problem.
+
+*   Source:
+*   K. Schittkowski
+*   "More Test Examples for Nonlinear Programming Codes"
+*   Springer Verlag, Berlin, Lecture notes in economics and 
+*   mathematical systems, volume 282, 1987
+
+*   SIF input: Michel Bierlaire and Annick Sartenaer, October 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification QLR2-AN-5-5
+
+*  the number of functions
+
+
+ RE D1,1                10197.0
+ RE D1,2                -12454.0
+ RE D1,3                -1013.0
+ RE D1,4                1948.0
+ RE D1,5                329.0
+ RE D2,1                -12454.0
+ RE D2,2                20909.0
+ RE D2,3                -1733.0
+ RE D2,4                -4914.0
+ RE D2,5                -186.0
+ RE D3,1                -1013.0
+ RE D3,2                -1733.0
+ RE D3,3                1755.0
+ RE D3,4                1089.0
+ RE D3,5                -174.0
+ RE D4,1                1948.0
+ RE D4,2                -4914.0
+ RE D4,3                1089.0
+ RE D4,4                1515.0
+ RE D4,5                -22.0
+ RE D5,1                329.0
+ RE D5,2                -186.0
+ RE D5,3                -174.0
+ RE D5,4                -22.0
+ RE D5,5                27.0
+
+ RE B1                  -9170.0
+ RE B2                  17099.0
+ RE B3                  -2271.0
+ RE B4                  -4336.0
+ RE B5                  -43.0
+
+ IE 1                   1
+ IE 5                   5
+
+VARIABLES
+
+ DO I         1                        5
+ X  X(I)
+ OD I
+
+GROUPS
+
+ XN NONL
+ DO I         1                        5
+ ZN LINEAR    X(I)                     B(I)
+ OD I
+ XN LINEAR    'SCALE'   -0.5
+
+ XG C1        X1        -1.0
+ XG C1        X2        -1.0
+ XG C1        X3        -1.0
+ XG C1        X4        -1.0
+ XG C1        X5        -1.0
+
+ XG C2        X1        10.0
+ XG C2        X2        10.0
+ XG C2        X3        -3.0
+ XG C2        X4        5.0
+ XG C2        X5        4.0
+
+ XG C3        X1        -8.0
+ XG C3        X2        1.0
+ XG C3        X3        -2.0
+ XG C3        X4        -5.0
+ XG C3        X5        3.0
+
+ XG C4        X1        8.0
+ XG C4        X2        -1.0
+ XG C4        X3        2.0
+ XG C4        X4        5.0
+ XG C4        X5        -3.0
+
+ XG C5        X1        -4.0
+ XG C5        X2        -2.0
+ XG C5        X3        3.0
+ XG C5        X4        -5.0
+ XG C5        X5        1.0
+
+CONSTANTS
+
+    HS268     C1        -5.0
+    HS268     C2        20.0
+    HS268     C3        -40.0
+    HS268     C4        11.0
+    HS268     C5        -30.0
+    HS268     NONL      -14463.0
+
+BOUNDS
+
+ XR HS268     'DEFAULT'
+
+START POINT
+
+ V  HS268     'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV PROD      X
+ EV PROD      Y
+ EP PROD      D
+
+ELEMENT USES
+
+ DO I         1                        5
+ DO J         1                        5
+ XT E(I,J)    PROD
+ ZV E(I,J)    X                        X(I)
+ ZV E(I,J)    Y                        X(J)
+ ZP E(I,J)    D                        D(I,J)
+ OD J
+ OD I
+
+GROUP USES
+
+ DO I         1                        5
+ DO J         1                        5
+ XE NONL      E(I,J)
+ OD J
+ OD I
+
+ENDATA
+
+ELEMENTS      HS268
+
+INDIVIDUALS
+
+ T  PROD
+ F                      D * X * Y
+ G  X                   D * Y
+ G  Y                   D * X
+ H  X         X         0.0
+ H  Y         Y         0.0
+ H  X         Y         D
+ENDATA

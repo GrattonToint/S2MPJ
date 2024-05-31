@@ -1,0 +1,143 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS76I
+
+*   Problem :
+*   *********
+
+*   Source: problem 76 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   PROBLEM USED AS INTEGER QUADRATIC TEST PROBLEM (NEW UPPER BOUNDS)
+
+*   SIF input: A.R. Conn, March 1991.
+
+*   classification QLR2-AN-4-3
+
+*   Number of variables
+
+ IE N                   4
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+
+ X  X(I)
+
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X1        -1.0           X2        -3.0
+ N  OBJ       X3        1.0            X4        -1.0
+
+*   Constraints
+
+ L  C1        X1        1.0            X2        2.0
+ L  C1        X3        1.0            X4        1.0
+ L  C2        X1        3.0            X2        1.0
+ L  C2        X3        2.0            X4        -1.0
+ G  C3        X2        1.0            X3        4.0
+
+CONSTANTS
+
+    HS76I     C1        5.0
+    HS76I     C2        4.0
+    HS76I     C3        1.5
+
+BOUNDS
+
+ UP HS76I     'DEFAULT' 5.0
+
+START POINT
+
+    HS76I     X1        0.5
+    HS76I     X2        0.5
+    HS76I     X3        0.5
+    HS76I     X4        0.5
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV PROD2     X                        Y
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        X                        X1
+
+ T  E2        SQ
+ V  E2        X                        X2
+
+ T  E3        SQ
+ V  E3        X                        X3
+
+ T  E4        SQ
+ V  E4        X                        X4
+
+ T  E5        PROD2
+ V  E5        X                        X1
+ V  E5        Y                        X3
+
+ T  E6        PROD2
+ V  E6        X                        X3
+ V  E6        Y                        X4
+
+GROUP USES
+
+ E  OBJ       E1        1.0            E2        0.5
+ E  OBJ       E3        1.0            E4        0.5
+ E  OBJ       E5        -1.0           E6        1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS76I
+
+
+INDIVIDUALS
+
+ T  SQ
+
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  PROD2
+
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS76I
+
+*   All groups are trivial
+
+ENDATA
+
+
+

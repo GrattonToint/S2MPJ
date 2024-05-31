@@ -1,0 +1,254 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS93
+
+*   Problem :
+*   *********
+
+*   A transformer design problem.
+
+*   Source: problem 93 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991.
+
+*   classification OOR2-MY-6-2
+
+*   Number of variables
+
+ IE N                   6
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ G  C1
+ L  C2
+
+CONSTANTS
+
+    HS93      C1        2.07D+0        C2        1.0D+0
+
+START POINT
+
+    HS93      X1        5.54           X2        4.4
+    HS93      X3        12.02          X4        11.82
+    HS93      X5        0.702          X6        0.852
+
+    HS93SOL   X1        5.332666       X2        4.656744
+    HS93SOL   X3        10.43299       X4        12.08230
+    HS93SOL   X5        0.7526074      X6        0.87865084
+
+ELEMENT TYPE
+
+*   Objective function type 1
+
+ EV OE1       X1                       X2
+ EV OE1       X3                       X4
+ IV OE1       V1                       V2
+ IV OE1       V3
+
+*   Objective function type 2
+
+ EV OE2       X1                       X2
+ EV OE2       X3                       X4
+ IV OE2       V1                       V2
+ IV OE2       V3
+
+*   Objective function type 3
+
+ EV OE3       X1                       X2
+ EV OE3       X3                       X4
+ EV OE3       X5
+ IV OE3       V1                       V2
+ IV OE3       V3                       V4
+
+*   Objective function type 4
+
+ EV OE4       X1                       X2
+ EV OE4       X3                       X4
+ EV OE4       X6
+ IV OE4       V1                       V2
+ IV OE4       V3                       V4
+
+*   Constraint 1 type 1
+
+ EV C1E1      X1                       X2
+ EV C1E1      X3                       X4
+ EV C1E1      X5                       X6
+
+ELEMENT USES
+
+ T  OE1       OE1
+ V  OE1       X1                       X1
+ V  OE1       X2                       X2
+ V  OE1       X3                       X3
+ V  OE1       X4                       X4
+
+ T  OE2       OE2
+ V  OE2       X1                       X1
+ V  OE2       X2                       X2
+ V  OE2       X3                       X3
+ V  OE2       X4                       X4
+
+ T  OE3       OE3
+ V  OE3       X1                       X1
+ V  OE3       X2                       X2
+ V  OE3       X3                       X3
+ V  OE3       X4                       X4
+ V  OE3       X5                       X5
+
+ T  OE4       OE4
+ V  OE4       X1                       X1
+ V  OE4       X2                       X2
+ V  OE4       X3                       X3
+ V  OE4       X4                       X4
+ V  OE4       X6                       X6
+
+ T  C1E1      C1E1
+ V  C1E1      X1                       X1
+ V  C1E1      X2                       X2
+ V  C1E1      X3                       X3
+ V  C1E1      X4                       X4
+ V  C1E1      X5                       X5
+ V  C1E1      X6                       X6
+
+
+GROUP USES
+
+ E  OBJ       OE1       2.04D-2        OE2       1.87D-2
+ E  OBJ       OE3       6.07D-2        OE4       4.37D-2
+ E  C1        C1E1      1.0D-3
+ E  C2        OE3       6.2D-4         OE4       5.8D-4
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               135.075961
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS93
+
+INDIVIDUALS
+
+*   Objective function type 1
+
+ T  OE1
+ R  V1        X1        1.0D+0
+ R  V2        X4        1.0D+0
+ R  V3        X1        1.0D+0         X2        1.0D+0
+ R  V3        X3        1.0D+0
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+*   Objective function type 2
+
+ T  OE2
+ R  V1        X2        1.0D+0
+ R  V2        X3        1.0D+0
+ R  V3        X1        1.0D+0         X2        1.57D+0
+ R  V3        X4        1.0D+0
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+*   Objective function type 3
+
+ T  OE3
+ R  V1        X1        1.0D+0
+ R  V2        X4        1.0D+0
+ R  V3        X5        1.0D+0
+ R  V4        X1        1.0D+0         X2        1.0D+0
+ R  V4        X3        1.0D+0
+ F                      V1 * V2 * ( V3 ** 2 ) * V4
+ G  V1                  V2 * ( V3 ** 2 ) * V4
+ G  V2                  V1 * ( V3 ** 2 ) * V4
+ G  V3                  V1 * V2 * 2.0D+0 * V3 * V4
+ G  V4                  V1 * V2 * ( V3 ** 2 )
+ H  V1        V2        ( V3 ** 2 ) * V4
+ H  V1        V3        V2 * 2.0D+0 * V3 * V4
+ H  V1        V4        V2 * ( V3 ** 2 )
+ H  V2        V3        V1 * 2.0D+0 * V3 * V4
+ H  V2        V4        V1 * ( V3 ** 2 )
+ H  V3        V3        V1 * V2 * 2.0D+0 * V4
+ H  V3        V4        V1 * V2 * 2.0D+0 * V3
+
+*   Objective function type 4
+
+ T  OE4
+ R  V1        X2        1.0D+0
+ R  V2        X3        1.0D+0
+ R  V3        X6        1.0D+0
+ R  V4        X1        1.0D+0         X2        1.57D+0
+ R  V4        X4        1.0D+0
+ F                      V1 * V2 * ( V3 ** 2 ) * V4
+ G  V1                  V2 * ( V3 ** 2 ) * V4
+ G  V2                  V1 * ( V3 ** 2 ) * V4
+ G  V3                  V1 * V2 * 2.0D+0 * V3 * V4
+ G  V4                  V1 * V2 * ( V3 ** 2 )
+ H  V1        V2        ( V3 ** 2 ) * V4
+ H  V1        V3        V2 * 2.0D+0 * V3 * V4
+ H  V1        V4        V2 * ( V3 ** 2 )
+ H  V2        V3        V1 * 2.0D+0 * V3 * V4
+ H  V2        V4        V1 * ( V3 ** 2 )
+ H  V3        V3        V1 * V2 * 2.0D+0 * V4
+ H  V3        V4        V1 * V2 * 2.0D+0 * V3
+
+*   Constraint 1 element type 1
+
+ T  C1E1
+ F                      X1 * X2 * X3 * X4 * X5 * X6
+ G  X1                       X2 * X3 * X4 * X5 * X6
+ G  X2                  X1 *      X3 * X4 * X5 * X6
+ G  X3                  X1 * X2 *      X4 * X5 * X6
+ G  X4                  X1 * X2 * X3 *      X5 * X6
+ G  X5                  X1 * X2 * X3 * X4 *      X6
+ G  X6                  X1 * X2 * X3 * X4 * X5
+ H  X1        X2                  X3 * X4 * X5 * X6
+ H  X1        X3             X2 *      X4 * X5 * X6
+ H  X1        X4             X2 * X3 *      X5 * X6
+ H  X1        X5             X2 * X3 * X4 *      X6
+ H  X1        X6             X2 * X3 * X4 * X5
+ H  X2        X3        X1 *           X4 * X5 * X6
+ H  X2        X4        X1 *      X3 *      X5 * X6
+ H  X2        X5        X1 *      X3 * X4 *      X6
+ H  X2        X6        X1 *      X3 * X4 * X5
+ H  X3        X4        X1 * X2 *           X5 * X6
+ H  X3        X5        X1 * X2 *      X4 *      X6
+ H  X3        X6        X1 * X2 *      X4 * X5
+ H  X4        X5        X1 * X2 * X3 *           X6
+ H  X4        X6        X1 * X2 * X3 *      X5
+ H  X5        X6        X1 * X2 * X3 * X4
+
+ENDATA

@@ -1,0 +1,294 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS114
+
+*   Problem :
+*   *********
+
+*   An alkylation process problem.
+
+*   Source: problem 114 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J.M. Collin, Jan 1990.
+
+*   classification QOR2-MY-10-11
+
+*   Number of variables
+
+ IE N                   10
+
+*   Others Parameters
+
+ IE 1                   1
+ RE A                   0.99
+ RE B                   0.9
+ RM -A        A         -1.0
+ RM -B        B         -1.0
+ RD INVA      A         1.0
+ RD INVB      B         1.0
+ RM -INVA     INVA      -1.0
+ RM -INVB     INVB      -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective Function
+
+ N  OBJ       X2        0.035          X3        10.0
+ N  OBJ       X5        3.36           X1        5.04
+
+*   Constraint function
+
+ G  C1        X10       -0.222
+ ZG C1        X9                       -B
+
+ G  C2        X7        3.0
+ ZG C2        X10                      -A
+
+ G  C3        X10       0.222
+ ZG C3        X9                       INVB
+
+
+ ZG C4        X10                      INVA
+ G  C4        X7        -3.0
+
+ G  C5        X1        1.12
+ ZG C5        X4                       -A
+
+ G  C6        X8        1.098          X6        0.325
+ ZG C6        X7                       -A
+
+ G  C7        X1        -1.12
+ ZG C7        X4                       INVA
+
+ G  C8        X8        -1.098         X6        -0.325
+ ZG C8        X7                       INVA
+
+ E  C9        X4        1.22           X1        -1.0
+ E  C9        X5        -1.0
+
+ E  C10       X6        -1.0
+
+ E  C11       X8        -1.0
+
+CONSTANTS
+
+    HS114     C1        -35.82
+    HS114     C2        133.0
+    HS114     C3        35.82
+    HS114     C4        -133.0
+    HS114     C6        -57.425
+    HS114     C8        57.425
+
+BOUNDS
+
+ LO HS114     X1        0.00001
+ UP HS114     X1        2000.0
+
+ LO HS114     X2        0.00001
+ UP HS114     X2        16000.0
+
+ LO HS114     X3        0.00001
+ UP HS114     X3        120.0
+
+ LO HS114     X4        0.00001
+ UP HS114     X4        5000.0
+
+ LO HS114     X5        0.00001
+ UP HS114     X5        2000.0
+
+ LO HS114     X6        85.0
+ UP HS114     X6        93.0
+
+ LO HS114     X7        90.0
+ UP HS114     X7        95.0
+
+ LO HS114     X8        3.0
+ UP HS114     X8        12.0
+
+ LO HS114     X9        1.2
+ UP HS114     X9        4.0
+
+ LO HS114     X10       145.0
+ UP HS114     X10       162.0
+
+START POINT
+
+    HS114     X1        1745.0
+    HS114     X2        12000.0
+    HS114     X3        110.0
+    HS114     X4        3048.0
+    HS114     X5        1974.0
+    HS114     X6        89.2
+    HS114     X7        92.8
+    HS114     X8        8.0
+    HS114     X9        3.6
+    HS114     X10       145.0
+
+ELEMENT TYPE
+
+* Element : W * X ** 2
+
+ EV WSQ       X
+ EP WSQ       W
+
+* Element : W * (X * Y)
+
+ EV PROD      X                        Y
+ EP PROD      W
+
+* Element : W * (X * Y ** 2)
+
+ EV PROD2     X                        Y
+ EP PROD2     W
+
+* Element : (W * X)/(S * T + 1000 * U)
+
+ EV RAP1      X                        S
+ EV RAP1      T                        U
+ EP RAP1      W
+
+* Element : (X + Y)/Z
+
+ EV RAP2      X                        Y
+ EV RAP2      Z
+ IV RAP2      SUM                      SUMZ
+
+ELEMENT USES
+
+ T  OE1       PROD
+ V  OE1       X                        X4
+ V  OE1       Y                        X7
+ P  OE1       W         -0.063
+
+ T  CE1       PROD
+ V  CE1       X                        X1
+ V  CE1       Y                        X8
+ P  CE1       W         0.13167
+
+ T  CE2       PROD2
+ V  CE2       X                        X1
+ V  CE2       Y                        X8
+ P  CE2       W         -0.00667
+
+ T  CE3       WSQ
+ V  CE3       X                        X8
+ P  CE3       W         -0.038
+
+ T  CE4       PROD
+ V  CE4       X                        X1
+ V  CE4       Y                        X8
+ P  CE4       W         -0.13167
+
+ T  CE5       PROD2
+ V  CE5       X                        X1
+ V  CE5       Y                        X8
+ P  CE5       W         0.00667
+
+ T  CE6       WSQ
+ V  CE6       X                        X8
+ P  CE6       W         0.038
+
+ T  CE7       RAP1
+ V  CE7       X                        X3
+ V  CE7       S                        X4
+ V  CE7       T                        X9
+ V  CE7       U                        X3
+ P  CE7       W         98000.0
+
+ T  CE8       RAP2
+ V  CE8       X                        X2
+ V  CE8       Y                        X5
+ V  CE8       Z                        X1
+
+GROUP USES
+
+ E  OBJ       OE1
+ E  C5        CE1                      CE2
+ E  C6        CE3
+ E  C7        CE4                      CE5
+ E  C8        CE6
+ E  C10       CE7
+ E  C11       CE8
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1768.80696
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS114
+
+TEMPORARIES
+
+ R  WX
+ R  DENOM
+
+INDIVIDUALS
+
+ T  WSQ
+ F                      W * X ** 2
+ G  X                   2.0 * W * X
+ H  X         X         2.0 * W
+
+
+ T  PROD
+ F                      W * X * Y
+ G  X                   W * Y
+ G  Y                   W * X
+ H  X         Y         W
+
+ T  PROD2
+ F                      W * X * Y ** 2
+ G  X                   W * Y ** 2
+ G  Y                   2.0 * W * X * Y
+ H  X         Y         2.0 * W * Y
+ H  Y         Y         2.0 * W * X
+
+ T  RAP1
+ A  WX                  W * X
+ A  DENOM               S * T + 1000.0 * U
+ F                      WX / DENOM
+ G  X                   W / DENOM
+ G  S                   - WX * T / DENOM ** 2
+ G  T                   - WX * S / DENOM ** 2
+ G  U                   - 1000.0 * WX / DENOM ** 2
+ H  X         S         - W * T/ DENOM ** 2
+ H  X         T         - W * S/ DENOM ** 2
+ H  X         U         - 1000.0 * W / DENOM ** 2
+ H  S         S         2.0 * WX * T * T / DENOM ** 3
+ H  S         T         2.0 * WX * S * T / DENOM ** 3
+ H+                     - WX / DENOM ** 2
+ H  S         U         2000.0 * WX * T / DENOM ** 3
+ H  T         T         2.0 * WX * S * S / DENOM ** 3
+ H  T         U         2000.0 * WX * S / DENOM ** 3
+ H  U         U         2000000.0 * WX / DENOM ** 3
+
+ T  RAP2
+ R  SUMZ      Z         1.0
+ R  SUM       X         1.0            Y         1.0
+ F                      SUM / SUMZ
+ G  SUM                 1.0 / SUMZ
+ G  SUMZ                - SUM / SUMZ ** 2
+ H  SUM       SUMZ      - 1.0 / SUMZ ** 2
+ H  SUMZ      SUMZ      2.0 * SUM / SUMZ ** 3
+
+ENDATA

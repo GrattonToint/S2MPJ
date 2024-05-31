@@ -1,0 +1,105 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS44NEW
+
+*   Problem :
+*   *********
+
+*   Source: problem 44 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph.L. Toint, October 1990.
+
+*   classification QLR2-AN-4-6
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   4
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        1.0            X2        -1.0
+ N  OBJ       X3        -1.0
+
+ G  CON1      X1        -1.0           X2        -2.0
+ G  CON2      X1        -4.0           X2        -1.0
+ G  CON3      X1        -3.0           X2        -4.0
+ G  CON4      X3        -2.0           X4        -1.0
+ G  CON5      X3        -1.0           X4        -2.0
+ G  CON6      X3        -1.0           X4        -1.0
+
+CONSTANTS
+
+    HS44NEW   CON1      -8.0
+    HS44NEW   CON2      -12.0
+    HS44NEW   CON3      -12.0
+    HS44NEW   CON4      -8.0
+    HS44NEW   CON5      -8.0
+    HS44NEW   CON6      -5.0
+
+START POINT
+
+ XV HS44NEW   'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+
+ V  E1        V1                       X1
+ V  E1        V2                       X3
+
+ V  E2        V1                       X1
+ V  E2        V2                       X4
+
+ V  E3        V1                       X2
+ V  E3        V2                       X3
+
+ V  E4        V1                       X2
+ V  E4        V2                       X4
+
+GROUP USES
+
+ E  OBJ       E1        -1.0           E2
+ E  OBJ       E4        -1.0           E3
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -13.0
+*LO SOLTN               -15.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS44NEW
+
+INDIVIDUALS
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA

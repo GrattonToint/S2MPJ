@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          FLETCHER
+
+*   Problem :
+*   *********
+
+*   A problem found in Fletcher's book. The problem is to find the least area
+*   of a right-angled triangle which contains a circle of unit radius.
+
+*   Source: 
+*   R. Fletcher
+*   "Practical Methods of Optimization",
+*   second edition, Wiley, 1987.
+
+*   SIF input: Ph. Toint, March 1994.
+
+*   classification QOR2-AN-4-4
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+
+GROUPS
+
+*   Objective function
+
+ XN OBJ
+
+*   Constraints
+
+ XE C1
+
+ XG C2        X1        1.0            X3        -1.0
+
+ XG C3        X2        1.0            X4        -1.0
+
+ XG C4        X3        1.0            X4        -1.0
+
+CONSTANTS
+
+    FLETCHER  C1        -1.0
+    FLETCHER  C2        1.0
+    FLETCHER  C3        1.0
+
+BOUNDS
+
+ FR FLETCHER  'DEFAULT'
+
+ LO FLETCHER  X4        1.0
+
+START POINT
+
+ XV FLETCHER  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV 2PR       XX                       YY
+
+ EV SQ        XX
+
+ EV SPEC      XX                       YY
+ EV SPEC      VV                       WW
+
+ELEMENT USES
+
+ XT OBE1      2PR
+ ZV OBE1      XX                       X1
+ ZV OBE1      YY                       X2
+
+ XT C1E1      SPEC
+ ZV C1E1      XX                       X1
+ ZV C1E1      YY                       X2
+ ZV C1E1      VV                       X3
+ ZV C1E1      WW                       X4
+
+ XT X3SQ      SQ
+ ZV X3SQ      XX                       X3
+
+ XT X4SQ      SQ
+ ZV X4SQ      XX                       X4
+
+GROUP USES
+
+ XE OBJ       OBE1
+
+ XE C1        C1E1
+ XE C1        X3SQ      -1.0           X4SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN             
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+ELEMENTS      FLETCHER
+
+TEMPORARIES
+
+ R  N
+ R  D
+ R  FV
+ R  DX
+ R  DY
+ R  DV
+ R  DW
+
+INDIVIDUALS
+
+ T  2PR
+ F                      XX * YY
+ G  XX                  YY
+ G  YY                  XX
+ H  XX        YY        1.0
+
+
+ T  SQ
+ F                      XX * XX
+ G  XX                  XX + XX
+ H  XX        XX        2.0
+
+
+ T  SPEC
+ A  N                   XX * VV + YY * WW
+ A  D                   XX * XX + YY * YY
+ A  FV                  N * N / D
+ A  DX                  2.0 * ( N * VV - FV * XX ) / D
+ A  DY                  2.0 * ( N * WW - FV * YY ) / D
+ A  DV                  2.0 * N * XX / D
+ A  DW                  2.0 * N * YY / D
+ F                      FV
+ G  XX                  DX
+ G  YY                  DY
+ G  VV                  DV
+ G  WW                  DW
+ H  XX        XX        2.0 * ( VV * VV - DX * XX - FV ) / D
+ H+                     - 2.0 * XX * DX / D
+ H  XX        YY        2.0 * ( WW * VV - DY * XX ) / D
+ H+                     - 2.0 * YY * DX / D
+ H  XX        VV        2.0 * ( XX * VV + N - DV * XX ) / D
+ H  XX        WW        2.0 * ( YY * VV - DW * XX ) / D
+ H  YY        YY        2.0 * ( WW * WW - DY * YY - FV ) / D
+ H+                     - 2.0 * YY * DY / D
+ H  YY        VV        2.0 * ( XX * WW - DV * YY ) / D
+ H  YY        WW        2.0 * ( YY * WW + N - DW * YY ) / D
+ H  VV        VV        2.0 * XX * XX / D
+ H  VV        WW        2.0 * YY * XX / D
+ H  WW        WW        2.0 * YY * YY / D
+
+ENDATA

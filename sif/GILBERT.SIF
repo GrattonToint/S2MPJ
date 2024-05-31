@@ -1,0 +1,155 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GILBERT
+
+*   Problem :
+*   *********
+
+*   A simple constrained problem, where a diagonal convex quadratic objective
+*   is minimized on the unit sphere.
+
+*   Source: 
+*   J.Ch. Gilbert,
+*   "On the Realization of the Wolfe Conditions in Reduced Quasi-Newton
+*   Methods for Equality Constrained Optimization",
+*   RR-2127, INRIA (F), 1993.
+
+*   SIF input: Ph. Toint, April 1994
+
+*   classification QQR2-AN-V-1
+
+*   Problem size
+
+*IE N                   2              $-PARAMETER
+*IE N                   5              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   20             $-PARAMETER
+*IE N                   50             $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+*IE N                   200            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*
+   Constants
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ OD I
+
+GROUPS
+
+*   Objective function
+
+ IA N+1       N         1
+ RI RN        N
+ DO I         1                        N
+ I- N+1-I     N+1                      I
+ RI RD        N+1-I
+ R/ AI        RD                       RN
+ ZN O(I)      X(I)                     AI
+ XN O(I)      'SCALE'   2.0
+ OD I
+
+*   Constraint
+
+ XE SPHERE    'SCALE'   2.0
+
+CONSTANTS
+
+ DO I         1                        N
+ X  GILBERT   O(I)      1.0
+ OD I
+ 
+ X  GILBERT   SPHERE    1.0
+
+BOUNDS
+
+ FR GILBERT   'DEFAULT'
+ XL GILBERT   X(1)      0.0
+
+START POINT
+
+ RE S                   10.0
+ DO I         1                        N
+ ZV GILBERT   X(I)                     S
+ RM S         S         -1.0
+ OD I
+
+ELEMENT TYPE
+
+ EV SQ        XX
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT XSQ(I)    SQ
+ ZV XSQ(I)    XX                       X(I)
+ OD I
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ XT O(I)      L2
+ XE SPHERE    XSQ(I)
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(2)            0.2516255986
+*LO SOLTN(5)            1.3397104096
+*LO SOLTN(10)           3.3451956841
+*LO SOLTN(20)           7.6216246637
+*LO SOLTN(50)           21.153509646
+*LO SOLTN(100)          44.801301992
+*LO SOLTN(200)          92.101619216
+*LO SOLTN(500)          237.36861141
+*LO SOLTN(1000)         482.02730043
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GILBERT
+
+INDIVIDUALS
+
+ T  SQ
+ F                      XX * XX
+ G  XX                  XX + XX
+ H  XX        XX        2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        GILBERT
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

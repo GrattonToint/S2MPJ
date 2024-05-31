@@ -1,0 +1,105 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS7
+
+*   Problem :
+*   *********
+
+*   Source: problem 7 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification OOR2-AN-2-1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X2        -1.0
+
+ E  CON1
+
+CONSTANTS
+
+    HS7       CON1      4.0
+
+BOUNDS
+
+ FR HS7       'DEFAULT'
+
+START POINT
+
+    HS7       X1        2.0
+    HS7       X2        2.0
+
+ELEMENT TYPE
+
+ EV SQ+1      V1
+ EV SQ        V1
+ EV LN        V1
+
+ELEMENT USES
+
+ T  E1        SQ+1
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        LN
+ V  E3        V1                       X1
+
+GROUP USES
+
+
+ E  OBJ       E3
+ E  CON1      E1                       E2
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.73205
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS7
+
+TEMPORARIES
+
+ R  XXP1
+
+INDIVIDUALS
+
+ T  SQ+1
+ A  XXP1                1.0 + V1*V1
+ F                      XXP1**2
+ G  V1                  4.0 * V1*XXP1
+ H  V1        V1        4.0 * (1.0 + 3.0*V1*V1)
+
+ T  LN
+ A  XXP1                1.0 + V1*V1
+ F                      LOG(XXP1)
+ G  V1                  2.0 * V1 / XXP1
+ H  V1        V1        2.0/XXP1 - 4.0 * V1 * V1/(XXP1)**2
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

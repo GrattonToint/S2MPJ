@@ -1,0 +1,140 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HADAMARD
+
+*   Problem :
+*   --------
+
+*   An attempt to find Hadamard matrices of order N.
+
+*   The problem is to find an N by N orthonormal matrix Q,
+*   with column norms N, whose largest entry is as small 
+*   as possible in absolute value.
+
+*   Source:  A suggestion by Alan Edelman (MIT).
+
+*   SIF input: Nick Gould, Nov 1993.
+
+*   classification LQR2-RN-V-V
+
+*   The dimension of the matrix.
+
+*IE N                   2              $-PARAMETER
+*IE N                   4              $-PARAMETER
+*IE N                   6              $-PARAMETER
+*IE N                   8              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   12             $-PARAMETER
+*IE N                   14             $-PARAMETER
+*IE N                   16             $-PARAMETER    original value
+*IE N                   18             $-PARAMETER
+*IE N                   20             $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100            $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ RI RN        N
+   
+VARIABLES
+
+*  Define the largest entry in absolute value.
+
+ X  MAXABSQ
+
+ DO J         1                        N
+ DO I         1                        N
+
+*  Define the orthogonal matrix
+
+ X  Q(I,J)
+
+ ND
+
+GROUPS
+
+ N  OBJECTIVE MAXABSQ   1.0
+
+*  Introduce the orthogonality-equations Q(T) Q - sqrt(N) I = 0.
+
+ DO J         1                        N
+ DO I         1                        J
+ XE O(I,J)
+ ND
+
+*  Introduce the restrictions that |Qij| is bounded by the the
+*  largest such value.
+
+ DO J         1                        N
+ DO I         1                        N
+ XG L(I,J)    MAXABSQ   1.0            Q(I,J)    1.0
+ XG U(I,J)    MAXABSQ   1.0            Q(I,J)    -1.0
+ ND
+
+CONSTANTS
+
+ DO J         1                        N
+ Z  HADAMARD  O(J,J)                   RN
+ ND
+
+BOUNDS
+
+ FR HADAMARD  'DEFAULT'
+ LO HADAMARD  MAXABSQ   0.0   
+
+START POINT
+
+ XV HADAMARD  MAXABSQ   0.0   
+
+ DO I         1                        N
+ DO J         1                        N
+ XV HADAMARD  Q(I,J)    1.0
+ ND
+
+ELEMENT TYPE
+
+ EV 2PROD     Q1                       Q2
+
+ELEMENT USES
+
+ DO J         1                        N
+ DO I         1                        J
+ DO K         1                        N
+
+ XT O(I,J,K)  2PROD
+ ZV O(I,J,K)  Q1                       Q(K,I)
+ ZV O(I,J,K)  Q2                       Q(K,J)
+
+ ND
+
+GROUP USES
+
+ DO J         1                        N
+ DO I         1                        J
+ DO K         1                        N
+
+ XE O(I,J)    O(I,J,K)
+
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HADAMARD
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      Q1 * Q2
+ G  Q1                       Q2
+ G  Q2                  Q1
+ H  Q1        Q2        1.0D+0
+
+ENDATA

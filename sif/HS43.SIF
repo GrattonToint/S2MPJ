@@ -1,0 +1,140 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS43
+
+*   Problem :
+*   *********
+
+*   The Rosen-Suzuki test problem.
+
+*   Source: problem 43 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification QQR2-AN-4-3
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   4
+
+ IE 1                   1
+ IE 3                   3
+ IE 5                   5
+ IE 15                  15
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        -5.0           X2        -5.0
+ N  OBJ       X3        -21.0          X4        7.0
+
+ G  CON1      X1        -1.0           X2        1.0
+ G  CON1      X3        -1.0           X4        1.0
+ G  CON2      X1        1.0            X4        1.0
+ G  CON3      X1        -2.0           X2        1.0
+ G  CON3      X4        1.0
+
+CONSTANTS
+
+    HS43      CON1      -8.0
+    HS43      CON2      -10.0
+    HS43      CON3      -5.0
+
+BOUNDS
+
+ FR HS43      'DEFAULT'
+
+ELEMENT TYPE
+
+ EV PSQ       V1
+ EP PSQ       P
+
+ELEMENT USES
+
+ DO I         1                        N
+ AE FAC(I)              1.0
+ ND
+
+ RE FAC3                2.0
+
+ DO I         5                        15
+ AE FAC(I)              -1.0
+ ND
+
+ RE FAC10               -2.0
+ RE FAC12               -2.0
+ RE FAC13               -2.0
+
+ DO I         1                        N
+ XT E(I)      PSQ
+ ZV E(I)      V1                       X(I)
+ ZP E(I)      P                        FAC(I)
+ ND
+
+ DO I         1                        N
+ IA J         I         4
+ XT E(J)      PSQ
+ ZV E(J)      V1                       X(I)
+ ZP E(J)      P                        FAC(J)
+ ND
+
+ DO I         1                        N
+ IA J         I         8
+ XT E(J)      PSQ
+ ZV E(J)      V1                       X(I)
+ ZP E(J)      P                        FAC(J)
+ ND
+
+ DO I         1                        3
+ IA J         I         12
+ XT E(J)      PSQ
+ ZV E(J)      V1                       X(I)
+ ZP E(J)      P                        FAC(J)
+ ND
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+ E  CON1      E5                       E6
+ E  CON1      E7                       E8
+ E  CON2      E9                       E10
+ E  CON2      E11                      E12
+ E  CON3      E13                      E14
+ E  CON3      E15
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -44.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS43
+
+INDIVIDUALS
+
+ T  PSQ
+ F                      P * V1**2
+ G  V1                  2.0 * P * V1
+ H  V1        V1        2.0 * P
+
+ENDATA

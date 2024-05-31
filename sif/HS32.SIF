@@ -1,0 +1,121 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS32
+
+*   Problem :
+*   *********
+
+*   Source: problem 32 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M COLLIN, April 1990.
+
+*   classification SOR2-AY-3-2
+
+*   Number of variables
+
+ IE N                   3
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ G  C1        X2        6.0            X3        4.0
+ E  C2        X1        -1.0           X2        -1.0
+ E  C2        X3        -1.0
+
+CONSTANTS
+
+    HS32      C1        3.0
+    HS32      C2        -1.0
+
+START POINT
+
+    HS32      X1        0.1
+    HS32      X2        0.7
+    HS32      X3        0.2
+
+ELEMENT TYPE
+
+ EV I3SQ      X                        Y
+ EV I3SQ      Z
+ IV I3SQ      U
+
+ EV ISQ       X                        Y
+ IV ISQ       U
+
+ EV CB        X
+
+ELEMENT USES
+
+ T  E1        I3SQ
+ V  E1        X                        X1
+ V  E1        Y                        X2
+ V  E1        Z                        X3
+
+ T  E2        ISQ
+ V  E2        X                        X1
+ V  E2        Y                        X2
+
+ T  E3        CB
+ V  E3        X                        X1
+
+GROUP USES
+
+ XE OBJ       E1                       E2        4.0
+ XE C1        E3        -1.0
+
+OBJECT BOUND
+
+ LO HS32                0.0
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS32
+
+INDIVIDUALS
+
+ T  I3SQ
+ R  U         X         1.0            Y          3.0
+ R  U         Z         1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+
+ T  ISQ
+ R  U         X         1.0            Y          -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X * X
+ H  X         X         6.0 * X
+
+ENDATA

@@ -1,0 +1,90 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HYPCIR
+
+*   Problem :
+*   *********
+
+*   Intersection of a circle and an hyperbola.
+
+*   Source:  problem 214 (p. 68) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ E  G1
+ E  G2
+
+CONSTANTS
+
+    HYPCIR    G1        1.0
+    HYPCIR    G2        4.0
+
+BOUNDS
+
+ FR HYPCIR    'DEFAULT'
+
+START POINT
+
+    HYPCIR    X1        0.0
+    HYPCIR    X2        1.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+ EV SQ        X
+
+ELEMENT USES
+
+ T  E1        2PR
+ V  E1        X                        X1
+ V  E1        Y                        X2
+
+ T  E2        SQ
+ V  E2        X                        X1
+
+ T  E3        SQ
+ V  E3        X                        X2
+
+GROUP USES
+
+ E  G1        E1
+ E  G2        E2                       E3
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HYPCIR
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

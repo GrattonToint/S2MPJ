@@ -1,0 +1,288 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS111
+
+*   Problem :
+*   *********
+
+*   This problem is a chemical equilibrium problem involving 3 linear
+*   equality constraints.
+
+*   Source: problem 111 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991.
+
+*   classification OOR2-AN-10-3
+
+*   N is the number of variables
+
+ IE N                   10
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+
+*   Define problem constants
+
+ RE C1                   -6.089
+ RE C2                  -17.164
+ RE C3                  -34.054
+ RE C4                   -5.914
+ RE C5                  -24.721
+ RE C6                  -14.986
+ RE C7                  -24.100
+ RE C8                  -10.708
+ RE C9                  -26.662
+ RE C10                 -22.179
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1
+ E  CON2
+ E  CON3
+
+CONSTANTS
+
+    HS111     CON1       2.0
+    HS111     CON2       1.0
+    HS111     CON3       1.0
+
+BOUNDS
+
+ XL HS111     'DEFAULT'  -100.0
+ XU HS111     'DEFAULT'  100.0
+
+START POINT
+
+ XV HS111     'DEFAULT'  -2.3
+
+ELEMENT TYPE
+
+ EV OBJ       V1                       V2
+ EV OBJ       V3                       V4
+ EV OBJ       V5                       V6
+ EV OBJ       V7                       V8
+ EV OBJ       V9                       V10
+ EP OBJ       C
+
+ EV EXP       X
+
+ELEMENT USES
+
+ DO I         1                        N
+ AI RI(I)     I
+ AA RI(I)     RI(I)      0.1
+ ND
+
+ DO I         1                        N
+
+ XT O(I)      OBJ
+ A= TEMP      RI(1)
+ A= RI(1)     RI(I)
+ A= RI(I)     TEMP
+ A= R         RI(1)
+ IR J         R
+ ZV O(I)      V1                       X(J)
+ A= R         RI(2)
+ IR J         R
+ ZV O(I)      V2                       X(J)
+ A= R         RI(3)
+ IR J         R
+ ZV O(I)      V3                       X(J)
+ A= R         RI(4)
+ IR J         R
+ ZV O(I)      V4                       X(J)
+ A= R         RI(5)
+ IR J         R
+ ZV O(I)      V5                       X(J)
+ A= R         RI(6)
+ IR J         R
+ ZV O(I)      V6                       X(J)
+ A= R         RI(7)
+ IR J         R
+ ZV O(I)      V7                       X(J)
+ A= R         RI(8)
+ IR J         R
+ ZV O(I)      V8                       X(J)
+ A= R         RI(9)
+ IR J         R
+ ZV O(I)      V9                       X(J)
+ A= R         RI(10)
+ IR J         R
+ ZV O(I)      V10                      X(J)
+ ZP O(I)      C                        C(I)
+
+ XT E(I)      EXP
+ ZV E(I)      X                        X(I)
+
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE OBJ       O(I)
+ ND
+
+ E  CON1      E1        1.0            E2        2.0
+ E  CON1      E3        2.0            E6        1.0
+ E  CON1      E10       1.0
+ E  CON2      E4        1.0            E5        2.0
+ E  CON2      E6        1.0            E7        1.0
+ E  CON3      E3        1.0            E7        1.0
+ E  CON3      E8        1.0            E9        2.0
+ E  CON3      E10       1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -47.707579
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS111
+
+TEMPORARIES
+
+ M  EXP
+ M  LOG
+ R  LOGX
+ R  EX
+ R  E1
+ R  E2
+ R  E3
+ R  E4
+ R  E5
+ R  E6
+ R  E7
+ R  E8
+ R  E9
+ R  E10
+ R  SUM
+
+INDIVIDUALS
+
+*   Exponential elements
+
+ T  EXP
+ A  EX                  EXP( X )
+ F                      EX
+ G  X                   EX
+ H  X         X         EX
+
+*   Logarithmic elements
+
+ T  OBJ
+ A  E1                  EXP( V1 )
+ A  E2                  EXP( V2 )
+ A  E3                  EXP( V3 )
+ A  E4                  EXP( V4 )
+ A  E5                  EXP( V5 )
+ A  E6                  EXP( V6 )
+ A  E7                  EXP( V7 )
+ A  E8                  EXP( V8 )
+ A  E9                  EXP( V9 )
+ A  E10                 EXP( V10 )
+ A  SUM                 E1 + E2 + E3 + E4 + E5 +
+ A+                     E6 + E7 + E8 + E9 + E10
+ F                      E1 * ( C + V1 - LOG( SUM ) )
+ G  V1                  E1 * ( C + V1 - LOG( SUM ) ) +
+ G+                     E1 * ( 1.0D+0 - E1 / SUM )
+ G  V2                  - E1 * E2  / SUM
+ G  V3                  - E1 * E3  / SUM
+ G  V4                  - E1 * E4  / SUM
+ G  V5                  - E1 * E5  / SUM
+ G  V6                  - E1 * E6  / SUM
+ G  V7                  - E1 * E7  / SUM
+ G  V8                  - E1 * E8  / SUM
+ G  V9                  - E1 * E9  / SUM
+ G  V10                 - E1 * E10 / SUM
+ H  V1        V1        E1 * ( C + V1 - LOG( SUM ) ) +
+ H+                     E1 * ( 1.0D+0 - E1 / SUM ) +
+ H+                     E1 * ( 1.0D+0 - E1 / SUM ) +
+ H+                     E1 * ( - E1 / SUM ) +
+ H+                     E1 * ( E1 ** 2 / SUM ** 2 )
+ H  V1        V2        ( -1.0D+0 + E1 / SUM) * E1 * E2 / SUM
+ H  V2        V2        (- 1.0D+0 + E2 / SUM) * E1 * E2 / SUM
+ H  V1        V3        ( -1.0D+0 + E1 / SUM) * E1 * E3 / SUM
+ H  V2        V3         E1 * E2 * E3 / SUM ** 2
+ H  V3        V3        (- 1.0D+0 + E3 / SUM) * E1 * E3 / SUM
+ H  V1        V4        ( -1.0D+0 + E1 / SUM) * E1 * E4 / SUM
+ H  V2        V4         E1 * E2 * E4 / SUM ** 2
+ H  V3        V4         E1 * E3 * E4 / SUM ** 2
+ H  V4        V4        (- 1.0D+0 + E4 / SUM) * E1 * E4 / SUM
+ H  V1        V5        ( -1.0D+0 + E1 / SUM) * E1 * E5 / SUM
+ H  V2        V5         E1 * E2 * E5 / SUM ** 2
+ H  V3        V5         E1 * E3 * E5 / SUM ** 2
+ H  V4        V5         E1 * E4 * E5 / SUM ** 2
+ H  V5        V5        (- 1.0D+0 + E5 / SUM) * E1 * E5 / SUM
+ H  V1        V6        ( -1.0D+0 + E1 / SUM) * E1 * E6 / SUM
+ H  V2        V6         E1 * E2 * E6 / SUM ** 2
+ H  V3        V6         E1 * E3 * E6 / SUM ** 2
+ H  V4        V6         E1 * E4 * E6 / SUM ** 2
+ H  V5        V6         E1 * E5 * E6 / SUM ** 2
+ H  V6        V6        (- 1.0D+0 + E6 / SUM) * E1 * E6 / SUM
+ H  V1        V7        ( -1.0D+0 + E1 / SUM) * E1 * E7 / SUM
+ H  V2        V7         E1 * E2 * E7 / SUM ** 2
+ H  V3        V7         E1 * E3 * E7 / SUM ** 2
+ H  V4        V7         E1 * E4 * E7 / SUM ** 2
+ H  V5        V7         E1 * E5 * E7 / SUM ** 2
+ H  V6        V7         E1 * E6 * E7 / SUM ** 2
+ H  V7        V7        (- 1.0D+0 + E7 / SUM) * E1 * E7 / SUM
+ H  V1        V8        ( -1.0D+0 + E1 / SUM) * E1 * E8 / SUM
+ H  V2        V8         E1 * E2 * E8 / SUM ** 2
+ H  V3        V8         E1 * E3 * E8 / SUM ** 2
+ H  V4        V8         E1 * E4 * E8 / SUM ** 2
+ H  V5        V8         E1 * E5 * E8 / SUM ** 2
+ H  V6        V8         E1 * E6 * E8 / SUM ** 2
+ H  V7        V8         E1 * E7 * E8 / SUM ** 2
+ H  V8        V8        (- 1.0D+0 + E8 / SUM) * E1 * E8 / SUM
+ H  V1        V9        ( -1.0D+0 + E1 / SUM) * E1 * E9 / SUM
+ H  V2        V9         E1 * E2 * E9 / SUM ** 2
+ H  V3        V9         E1 * E3 * E9 / SUM ** 2
+ H  V4        V9         E1 * E4 * E9 / SUM ** 2
+ H  V5        V9         E1 * E5 * E9 / SUM ** 2
+ H  V6        V9         E1 * E6 * E9 / SUM ** 2
+ H  V7        V9         E1 * E7 * E9 / SUM ** 2
+ H  V8        V9         E1 * E8 * E9 / SUM ** 2
+ H  V9        V9        (- 1.0D+0 + E9 / SUM) * E1 * E9 / SUM
+ H  V1        V10       ( -1.0D+0 + E1 / SUM) * E1 * E10/ SUM
+ H  V2        V10        E1 * E2 * E10/ SUM ** 2
+ H  V3        V10        E1 * E3 * E10/ SUM ** 2
+ H  V4        V10        E1 * E4 * E10/ SUM ** 2
+ H  V5        V10        E1 * E5 * E10/ SUM ** 2
+ H  V6        V10        E1 * E6 * E10/ SUM ** 2
+ H  V7        V10        E1 * E7 * E10/ SUM ** 2
+ H  V8        V10        E1 * E8 * E10/ SUM ** 2
+ H  V9        V10        E1 * E9 * E10/ SUM ** 2
+ H  V10       V10       (- 1.0D+0 + E10/ SUM) * E1 * E10/ SUM
+
+ENDATA

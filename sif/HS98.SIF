@@ -1,0 +1,132 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS98
+
+*   Problem :
+*   *********
+
+*   Source: problem 98 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification LQR2-AN-6-4
+
+ IE 1                   1
+ IE 6                   6
+
+VARIABLES
+
+ DO I         1                        6
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        4.3            X2        31.8
+ N  OBJ       X3        63.3           X4        15.8
+ N  OBJ       X5        68.5           X6        4.7
+
+ G  C1        X1        17.1           X2        38.2
+ G  C1        X3        204.2          X4        212.3
+ G  C1        X5        623.4          X6        1495.5
+
+ G  C2        X1        17.9           X2        36.8
+ G  C2        X3        113.9          X4        169.7
+ G  C2        X5        337.8          X6        1385.2
+
+ G  C3        X2        -273.0         X4        -70.0
+ G  C3        X5        -819.0
+
+ G  C4        X1        159.9          X2        -311.0
+ G  C4        X4        587.0
+ G  C4        X5        391.0          X6        2198.0
+
+CONSTANTS
+
+ X  HS98      C1        32.97
+ X  HS98      C2        25.12
+ X  HS98      C3        -124.08
+ X  HS98      C4        -173.02
+
+BOUNDS
+
+ XU HS98      X1        0.31
+ XU HS98      X2        0.046
+ XU HS98      X3        0.068
+ XU HS98      X4        0.042
+ XU HS98      X5        0.028
+ XU HS98      X6        0.0134
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  X1X3      2PR
+ ZV X1X3      X                        X1
+ ZV X1X3      Y                        X3
+
+ T  X3X5      2PR
+ ZV X3X5      X                        X3
+ ZV X3X5      Y                        X5
+
+ T  X4X5      2PR
+ ZV X4X5      X                        X4
+ ZV X4X5      Y                        X5
+
+ T  X4X6      2PR
+ ZV X4X6      X                        X4
+ ZV X4X6      Y                        X6
+
+ T  X5X6      2PR
+ ZV X5X6      X                        X5
+ ZV X5X6      Y                        X6
+
+ T  X1X6      2PR
+ ZV X1X6      X                        X1
+ ZV X1X6      Y                        X6
+
+GROUP USES
+
+ E  C1        X1X3      -169.0         X3X5      -3580.0
+ E  C1        X4X5      -3810.0        X4X6      -18500.0
+ E  C1        X5X6      -24300.0
+
+ E  C2        X1X3      -139.0         X4X5      -2450.0
+ E  C2        X4X6      -16600.0       X5X6      -17200.0
+
+ E  C3        X4X5      26000.0
+
+ E  C4        X1X6      -14000.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               3.1358091
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS98
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

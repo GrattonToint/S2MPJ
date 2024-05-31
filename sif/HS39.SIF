@@ -1,0 +1,97 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS39
+
+*   Problem :
+*   *********
+
+*   Source: problem 39 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification LOR2-AN-4-2
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   4
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        -1.0
+
+ E  CON1      X2        1.0
+ E  CON2      X2        -1.0
+
+BOUNDS
+
+ FR HS39      'DEFAULT'
+
+START POINT
+
+ XV HS39      'DEFAULT' 2.0
+
+ELEMENT TYPE
+
+ EV MSQ       V1
+ EV MCB       V1
+
+ELEMENT USES
+
+ T  E1        MCB
+ V  E1        V1                       X1
+
+ T  E2        MSQ
+ V  E2        V1                       X3
+
+ T  E3        MSQ
+ V  E3        V1                       X1
+
+ T  E4        MSQ
+ V  E4        V1                       X4
+
+GROUP USES
+
+ E  CON1      E1                       E2
+ E  CON2      E3        -1.0           E4
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS39
+
+INDIVIDUALS
+
+ T  MCB
+ F                      -V1**3
+ G  V1                  -3.0 * V1 * V1
+ H  V1        V1        -6.0 * V1
+
+ T  MSQ
+ F                      -V1 * V1
+ G  V1                  -2.0 * V1
+ H  V1        V1        -2.0
+
+ENDATA

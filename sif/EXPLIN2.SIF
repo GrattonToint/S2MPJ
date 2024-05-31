@@ -1,0 +1,112 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EXPLIN2
+
+*   Problem :
+*   *********
+
+*   A problem with mixed exponential and linear terms.
+
+*   SIF input:  Ph. Toint, 1992.
+
+*   classification OBR2-AN-V-V
+
+*IE N                   12             $-PARAMETER
+*IE M                   6              $-PARAMETER
+
+*IE N                   120            $-PARAMETER     original value
+*IE M                   10             $-PARAMETER     original value
+
+*IE N                   1200           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+ IE M                   100            $-PARAMETER
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ RI RI        I
+ RM C         RI         - 10.0
+ ZN OBJ       X(I)                     C
+ ND
+
+CONSTANTS
+
+BOUNDS
+
+ XU EXPLIN2   'DEFAULT'  10.0
+
+START POINT
+
+ELEMENT TYPE
+
+ EV EXP       X                        Y
+ EP EXP       P
+
+ELEMENT USES
+
+ XT 'DEFAULT' EXP
+ RI RM        M
+ DO I         1                        M
+ RI RI        I
+ R/ C         RI                       RM
+ I+ I+1       I                        1
+ ZV E(I)      X                        X(I)
+ ZV E(I)      Y                        X(I+1)
+ ZP E(I)      P                        C
+ OD I
+
+GROUP USES
+ DO I         1                        M
+ XE OBJ       E(I)
+ OD I
+
+OBJECT BOUND
+
+ LO EXPLIN2            0.0
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EXPLIN2
+
+TEMPORARIES
+
+ M  EXP
+ R  F
+
+INDIVIDUALS
+
+*   Exponential of the product of X and Y divided by 10
+
+ T  EXP
+
+ A  F                   EXP( 0.1 * P * X * Y )
+ F                      F
+ G  X                   0.1 * P * Y * F
+ G  Y                   0.1 * P * X * F
+ H  X         X         ( 0.1 * P * Y ) ** 2 * F
+ H  Y         Y         ( 0.1 * P * X ) ** 2 * F
+ H  Y         X         ( 0.1 + 0.01*P*X*Y ) * F * P
+
+ENDATA
+

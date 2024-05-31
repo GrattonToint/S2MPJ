@@ -1,0 +1,433 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS101
+
+*   Problem:
+*   ********
+
+*   Source: problem 101 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: N. Gould, December 1989.
+
+*   classification OOR2-AN-7-5
+
+ IE 1                   1
+ IE M                   5
+ IE N                   7
+ RE A101                -0.25
+ RE A102                0.125
+ RE A103                0.5
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        M
+ XL CONSTR(I)
+ ND
+
+CONSTANTS
+
+    C1        CONSTR1   1.0
+    C1        CONSTR2   1.0
+    C1        CONSTR3   1.0
+    C1        CONSTR4   1.0
+    C1        CONSTR5   3000.0
+
+RANGES
+
+    R1        CONSTR5   2900.0
+
+BOUNDS
+
+ XL B1        'DEFAULT' 0.1
+ XU B1        'DEFAULT' 10.0
+ LO B1        X7        0.01
+
+START POINT
+
+ XV HS101     'DEFAULT' 6.0
+
+ELEMENT TYPE
+
+ EV 3PR       V1                       V2
+ EV 3PR       V3
+ EP 3PR       P1
+ EP 3PR       P2                       P3
+
+ EV 4PR       V1                       V2
+ EV 4PR       V3                       V4
+ EP 4PR       P1                       P2
+ EP 4PR       P3                       P4
+
+ EV 5PR       V1                       V2
+ EV 5PR       V3                       V4
+ EV 5PR       V5
+ EP 5PR       P1
+ EP 5PR       P2                       P3
+ EP 5PR       P4                       P5
+
+ EV 6PR       V1                       V2
+ EV 6PR       V3                       V4
+ EV 6PR       V5                       V6
+ EP 6PR       P1                       P6
+ EP 6PR       P2                       P3
+ EP 6PR       P4                       P5
+
+ELEMENT USES
+
+ T  E1C1      4PR
+ V  E1C1      V1                       X1
+ V  E1C1      V2                       X3
+ V  E1C1      V3                       X6
+ V  E1C1      V4                       X7
+ P  E1C1      P1        0.5
+ P  E1C1      P2        -1.0
+ P  E1C1      P3        -2.0
+ P  E1C1      P4        1.0
+
+ T  E2C1      5PR
+ V  E2C1      V1                       X1
+ V  E2C1      V2                       X2
+ V  E2C1      V3                       X3
+ V  E2C1      V4                       X6
+ V  E2C1      V5                       X7
+ P  E2C1      P1        3.0
+ P  E2C1      P2        1.0
+ P  E2C1      P3        -2.0
+ P  E2C1      P4        1.0
+ P  E2C1      P5        0.5
+
+ T  E3C1      5PR
+ V  E3C1      V1                       X2
+ V  E3C1      V2                       X3
+ V  E3C1      V3                       X4
+ V  E3C1      V4                       X6
+ V  E3C1      V5                       X7
+ P  E3C1      P1        -1.0
+ P  E3C1      P2        1.0
+ P  E3C1      P3        -0.5
+ P  E3C1      P4        0.66666666
+ P  E3C1      P5        0.25
+
+ T  E1C2      5PR
+ V  E1C2      V1                       X1
+ V  E1C2      V2                       X2
+ V  E1C2      V3                       X3
+ V  E1C2      V4                       X5
+ V  E1C2      V5                       X6
+ P  E1C2      P1        -0.5
+ P  E1C2      P2        1.0
+ P  E1C2      P3        -1.0
+ P  E1C2      P4        -1.0
+ P  E1C2      P5        1.0
+
+ T  E2C2      4PR
+ V  E2C2      V1                       X3
+ V  E2C2      V2                       X4
+ V  E2C2      V3                       X5
+ V  E2C2      V4                       X6
+ P  E2C2      P1        1.0
+ P  E2C2      P2        -1.0
+ P  E2C2      P3        -1.0
+ P  E2C2      P4        2.0
+
+ T  E3C2      5PR
+ V  E3C2      V1                       X1
+ V  E3C2      V2                       X2
+ V  E3C2      V3                       X4
+ V  E3C2      V4                       X5
+ V  E3C2      V5                       X6
+ P  E3C2      P1        -1.0
+ P  E3C2      P2        0.5
+ P  E3C2      P3        -2.0
+ P  E3C2      P4        -1.0
+ P  E3C2      P5        0.33333333333
+
+ T  E1C3      5PR
+ V  E1C3      V1                       X1
+ V  E1C3      V2                       X3
+ V  E1C3      V3                       X5
+ V  E1C3      V4                       X6
+ V  E1C3      V5                       X7
+ P  E1C3      P1        1.0
+ P  E1C3      P2        -1.5
+ P  E1C3      P3        1.0
+ P  E1C3      P4        -1.0
+ P  E1C3      P5        0.33333333333
+
+ T  E2C3      5PR
+ V  E2C3      V1                       X2
+ V  E2C3      V2                       X3
+ V  E2C3      V3                       X5
+ V  E2C3      V4                       X6
+ V  E2C3      V5                       X7
+ P  E2C3      P1        1.0
+ P  E2C3      P2        -0.5
+ P  E2C3      P3        1.0
+ P  E2C3      P4        -1.0
+ P  E2C3      P5        -0.5
+
+ T  E3C3      4PR
+ V  E3C3      V1                       X1
+ V  E3C3      V2                       X2
+ V  E3C3      V3                       X3
+ V  E3C3      V4                       X5
+ P  E3C3      P1        -1.0
+ P  E3C3      P2        1.0
+ P  E3C3      P3        0.5
+ P  E3C3      P4        1.0
+
+ T  E4C3      5PR
+ V  E4C3      V1                       X2
+ V  E4C3      V2                       X3
+ V  E4C3      V3                       X5
+ V  E4C3      V4                       X6
+ V  E4C3      V5                       X7
+ P  E4C3      P1        -2.0
+ P  E4C3      P2        1.0
+ P  E4C3      P3        1.0
+ P  E4C3      P4        -1.0
+ P  E4C3      P5        1.0
+
+ T  E1C4      5PR
+ V  E1C4      V1                       X1
+ V  E1C4      V2                       X2
+ V  E1C4      V3                       X4
+ V  E1C4      V4                       X5
+ V  E1C4      V5                       X7
+ P  E1C4      P1        -2.0
+ P  E1C4      P2        1.0
+ P  E1C4      P3        -1.0
+ P  E1C4      P4        0.5
+ P  E1C4      P5        0.3333333333
+
+ T  E2C4      6PR
+ V  E2C4      V1                       X1
+ V  E2C4      V2                       X2
+ V  E2C4      V3                       X3
+ V  E2C4      V4                       X4
+ V  E2C4      V5                       X5
+ V  E2C4      V6                       X7
+ P  E2C4      P1        0.5
+ P  E2C4      P2        2.0
+ P  E2C4      P3        1.0
+ P  E2C4      P4        0.3333333333
+ P  E2C4      P5        -0.6666666666
+ P  E2C4      P6        0.25
+
+ T  E3C4      5PR
+ V  E3C4      V1                       X1
+ V  E3C4      V2                       X2
+ V  E3C4      V3                       X3
+ V  E3C4      V4                       X5
+ V  E3C4      V5                       X7
+ P  E3C4      P1        -3.0
+ P  E3C4      P2        -2.0
+ P  E3C4      P3        1.0
+ P  E3C4      P4        1.0
+ P  E3C4      P5        0.75
+
+ T  E4C4      3PR
+ V  E4C4      V1                       X3
+ V  E4C4      V2                       X4
+ V  E4C4      V3                       X7
+ P  E4C4      P1        -2.0
+ P  E4C4      P2        1.0
+ P  E4C4      P3        0.5
+
+ T  E1C5      5PR
+ V  E1C5      V1                       X1
+ V  E1C5      V2                       X2
+ V  E1C5      V3                       X4
+ V  E1C5      V4                       X6
+ V  E1C5      V5                       X7
+ P  E1C5      P1        1.0
+ P  E1C5      P2        -1.0
+ P  E1C5      P3        2.0
+ P  E1C5      P4        -3.0
+ ZP E1C5      P5                       A101
+
+ T  E2C5      6PR
+ V  E2C5      V1                       X1
+ V  E2C5      V2                       X2
+ V  E2C5      V3                       X3
+ V  E2C5      V4                       X4
+ V  E2C5      V5                       X5
+ V  E2C5      V6                       X7
+ P  E2C5      P1        -1.0
+ P  E2C5      P2        -2.0
+ P  E2C5      P3        1.0
+ P  E2C5      P4        1.0
+ P  E2C5      P5        -1.0
+ P  E2C5      P6        -0.5
+
+ T  E3C5      5PR
+ V  E3C5      V1                       X1
+ V  E3C5      V2                       X2
+ V  E3C5      V3                       X4
+ V  E3C5      V4                       X5
+ V  E3C5      V5                       X6
+ P  E3C5      P1        -2.0
+ P  E3C5      P2        1.0
+ P  E3C5      P3        -1.0
+ P  E3C5      P4        -2.0
+ P  E3C5      P5        1.0
+
+ T  E4C5      6PR
+ V  E4C5      V1                       X1
+ V  E4C5      V2                       X2
+ V  E4C5      V3                       X3
+ V  E4C5      V4                       X5
+ V  E4C5      V5                       X6
+ V  E4C5      V6                       X7
+ P  E4C5      P1        2.0
+ P  E4C5      P2        2.0
+ P  E4C5      P3        -1.0
+ P  E4C5      P4        0.5
+ P  E4C5      P5        -2.0
+ P  E4C5      P6        1.0
+
+GROUP USES
+
+ E  OBJ       E1C5      10.0           E2C5      15.0
+ E  OBJ       E3C5      20.0           E4C5      25.0
+
+ E  CONSTR1   E1C1      0.5            E2C1      0.7
+ E  CONSTR1   E3C1      0.2
+
+ E  CONSTR2   E1C2      1.3            E2C2      0.8
+ E  CONSTR2   E3C2      3.1
+
+ E  CONSTR3   E1C3      2.0            E2C3      0.1
+ E  CONSTR3   E3C3                     E4C3      0.65
+
+ E  CONSTR4   E1C4      0.2            E2C4      0.3
+ E  CONSTR4   E3C4      0.4            E4C4      0.5
+
+ E  CONSTR5   E1C5      10.0           E2C5      15.0
+ E  CONSTR5   E3C5      20.0           E4C5      25.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1809.76476
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS101
+
+TEMPORARIES
+
+ R  FVALUE
+
+INDIVIDUALS
+
+ T  3PR
+ A  FVALUE              (V1 ** P1)*(V2 ** P2)*(V3 ** P3)
+ F                      FVALUE
+ G  V1                  FVALUE * (P1 / V1)
+ G  V2                  FVALUE * (P2 / V2)
+ G  V3                  FVALUE * (P3 / V3)
+ H  V1        V1        FVALUE * (P1 / V1) * ((P1-1.0) / V1)
+ H  V2        V2        FVALUE * (P2 / V2) * ((P2-1.0) / V2)
+ H  V3        V3        FVALUE * (P3 / V3) * ((P3-1.0) / V3)
+ H  V1        V2        FVALUE * (P1 / V1) * (P2 / V2)
+ H  V1        V3        FVALUE * (P1 / V1) * (P3 / V3)
+ H  V2        V3        FVALUE * (P2 / V2) * (P3 / V3)
+
+ T  4PR
+ A  FVALUE              (V1 ** P1)*(V2 ** P2)*(V3 ** P3)
+ A+                      *(V4 ** P4)
+ F                      FVALUE
+ G  V1                  FVALUE * (P1 / V1)
+ G  V2                  FVALUE * (P2 / V2)
+ G  V3                  FVALUE * (P3 / V3)
+ G  V4                  FVALUE * (P4 / V4)
+ H  V1        V1        FVALUE * (P1 / V1) * ((P1-1.0) / V1)
+ H  V2        V2        FVALUE * (P2 / V2) * ((P2-1.0) / V2)
+ H  V3        V3        FVALUE * (P3 / V3) * ((P3-1.0) / V3)
+ H  V4        V4        FVALUE * (P4 / V4) * ((P4-1.0) / V4)
+ H  V1        V2        FVALUE * (P1 / V1) * (P2 / V2)
+ H  V1        V3        FVALUE * (P1 / V1) * (P3 / V3)
+ H  V1        V4        FVALUE * (P1 / V1) * (P4 / V4)
+ H  V2        V3        FVALUE * (P2 / V2) * (P3 / V3)
+ H  V2        V4        FVALUE * (P2 / V2) * (P4 / V4)
+ H  V3        V4        FVALUE * (P3 / V3) * (P4 / V4)
+
+ T  5PR
+ A  FVALUE              (V1 ** P1)*(V2 ** P2)*(V3 ** P3)
+ A+                      *(V4 ** P4)*(V5 ** P5)
+ F                      FVALUE
+ G  V1                  FVALUE * (P1 / V1)
+ G  V2                  FVALUE * (P2 / V2)
+ G  V3                  FVALUE * (P3 / V3)
+ G  V4                  FVALUE * (P4 / V4)
+ G  V5                  FVALUE * (P5 / V5)
+ H  V1        V1        FVALUE * (P1 / V1) * ((P1-1.0) / V1)
+ H  V2        V2        FVALUE * (P2 / V2) * ((P2-1.0) / V2)
+ H  V3        V3        FVALUE * (P3 / V3) * ((P3-1.0) / V3)
+ H  V4        V4        FVALUE * (P4 / V4) * ((P4-1.0) / V4)
+ H  V5        V5        FVALUE * (P5 / V5) * ((P5-1.0) / V5)
+ H  V1        V2        FVALUE * (P1 / V1) * (P2 / V2)
+ H  V1        V3        FVALUE * (P1 / V1) * (P3 / V3)
+ H  V1        V4        FVALUE * (P1 / V1) * (P4 / V4)
+ H  V1        V5        FVALUE * (P1 / V1) * (P5 / V5)
+ H  V2        V3        FVALUE * (P2 / V2) * (P3 / V3)
+ H  V2        V4        FVALUE * (P2 / V2) * (P4 / V4)
+ H  V2        V5        FVALUE * (P2 / V2) * (P5 / V5)
+ H  V3        V4        FVALUE * (P3 / V3) * (P4 / V4)
+ H  V3        V5        FVALUE * (P3 / V3) * (P5 / V5)
+ H  V4        V5        FVALUE * (P4 / V4) * (P5 / V5)
+
+ T  6PR
+ A  FVALUE              (V1 ** P1)*(V2 ** P2)*(V3 ** P3)
+ A+                      *(V4 ** P4)*(V5 ** P5)*(V6 ** P6)
+ F                      FVALUE
+ G  V1                  FVALUE * (P1 / V1)
+ G  V2                  FVALUE * (P2 / V2)
+ G  V3                  FVALUE * (P3 / V3)
+ G  V4                  FVALUE * (P4 / V4)
+ G  V5                  FVALUE * (P5 / V5)
+ G  V6                  FVALUE * (P6 / V6)
+ H  V1        V1        FVALUE * (P1 / V1) * ((P1-1.0) / V1)
+ H  V2        V2        FVALUE * (P2 / V2) * ((P2-1.0) / V2)
+ H  V3        V3        FVALUE * (P3 / V3) * ((P3-1.0) / V3)
+ H  V4        V4        FVALUE * (P4 / V4) * ((P4-1.0) / V4)
+ H  V5        V5        FVALUE * (P5 / V5) * ((P5-1.0) / V5)
+ H  V6        V6        FVALUE * (P6 / V6) * ((P6-1.0) / V6)
+ H  V1        V2        FVALUE * (P1 / V1) * (P2 / V2)
+ H  V1        V3        FVALUE * (P1 / V1) * (P3 / V3)
+ H  V1        V4        FVALUE * (P1 / V1) * (P4 / V4)
+ H  V1        V5        FVALUE * (P1 / V1) * (P5 / V5)
+ H  V1        V6        FVALUE * (P1 / V1) * (P6 / V6)
+ H  V2        V3        FVALUE * (P2 / V2) * (P3 / V3)
+ H  V2        V4        FVALUE * (P2 / V2) * (P4 / V4)
+ H  V2        V5        FVALUE * (P2 / V2) * (P5 / V5)
+ H  V2        V6        FVALUE * (P2 / V2) * (P6 / V6)
+ H  V3        V4        FVALUE * (P3 / V3) * (P4 / V4)
+ H  V3        V5        FVALUE * (P3 / V3) * (P5 / V5)
+ H  V3        V6        FVALUE * (P3 / V3) * (P6 / V6)
+ H  V4        V5        FVALUE * (P4 / V4) * (P5 / V5)
+ H  V4        V6        FVALUE * (P4 / V4) * (P6 / V6)
+ H  V5        V6        FVALUE * (P5 / V5) * (P6 / V6)
+
+ENDATA

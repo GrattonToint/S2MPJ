@@ -1,0 +1,112 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS27
+
+*   Problem :
+*   *********
+
+*   Source: problem 27 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification SQR2-AN-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0
+
+CONSTANTS
+
+    HS27      CON1      -1.0
+
+BOUNDS
+
+ FR HS27      'DEFAULT'
+
+START POINT
+
+    HS27      X1        2.0            X2        2.0
+    HS27      X3        2.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV SQSQ      V1                       V2
+ EV SQ-1      V1
+
+ELEMENT USES
+
+ T  E1        SQ-1
+ V  E1        V1                       X1
+
+ T  E2        SQSQ
+ V  E2        V1                       X1
+ V  E2        V2                       X2
+
+ T  E3        SQ
+ V  E3        V1                       X3
+
+GROUP USES
+
+ E  OBJ       E1        0.01           E2
+ E  CON1      E3
+
+OBJECT BOUND
+
+ LO HS27                0.0
+
+*   Solution
+
+*LO SOLTN               0.04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS27
+
+TEMPORARIES
+
+ R  WMV1
+ R  TM1SQ
+
+INDIVIDUALS
+
+ T  SQSQ
+ A  TM1SQ               V2 - V1 * V1
+ F                      TM1SQ * TM1SQ
+ G  V1                  -4.0 * TM1SQ * V1
+ G  V2                  2.0 * TM1SQ
+ H  V1        V1        12.0 * V1 * V1 - 4.0 * V2
+ H  V1        V2        -4.0 * V1
+ H  V2        V2        2.0
+
+ T  SQ-1
+ A  WMV1                1.0 - V1
+ F                      WMV1 * WMV1
+ G  V1                  -2.0 * WMV1
+ H  V1        V1        2.0
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

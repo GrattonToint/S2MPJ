@@ -1,0 +1,116 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EG2
+
+*   Problem:
+*   ********
+
+*   A simple nonlinear problem given as an example in Section 1.2.4 of
+*   the LANCELOT Manual.
+*   The problem is non convex and has several local minima.
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "LANCELOT, A Fortran Package for Large-Scale Nonlinear Optimization
+*   (Release A)"
+*   Springer Verlag, 1992.
+
+*   SIF input: N. Gould and Ph. Toint, June 1994.
+
+*   classification OUR2-AN-1000-0
+
+ IE ONE                 1
+ IE N                   1000
+ IA NM1       N         -1
+
+VARIABLES
+
+ DO I         ONE                      N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         ONE                      NM1
+ XN G(I)      X(ONE)    1.0
+ ND
+
+ XN G(N)
+
+CONSTANTS
+
+    EG2       'DEFAULT' 1.0
+ X  EG2       G(N)      0.0
+
+BOUNDS
+
+ FR EG2       'DEFAULT'
+
+ELEMENT TYPE
+
+ EV SQUARE    V
+
+ELEMENT USES
+
+ DO I         ONE                      N
+ XT E(I)      SQUARE
+ ZV E(I)      V                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV SINE      ALPHA
+ GP SINE      P
+
+GROUP USES
+
+ XT 'DEFAULT' SINE
+ DO I         ONE                      NM1
+ XE G(I)      E(I)
+ XP G(I)      P          1.0
+ ND
+ E  G1000     E1000
+ P  G1000     P          0.5
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EG2
+
+INDIVIDUALS
+
+ T  SQUARE
+ F                      V ** 2
+ G  V                   2.0D0 * V
+ H  V         V         2.0D0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        EG2
+
+TEMPORARIES
+
+ R  ISINA
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SINE
+ A  ISINA               P * SIN( ALPHA )
+ F                      ISINA
+ G                      P * COS( ALPHA )
+ H                      - ISINA
+
+ENDATA

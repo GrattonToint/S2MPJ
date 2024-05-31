@@ -1,0 +1,217 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS113
+
+*   Problem :
+*   *********
+
+*   Source: problem 80 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M Collin, Mar 1990.
+
+*   classification QQR2-AN-10-8
+
+*   Number of variables
+
+ IE N                   10
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  Objective function
+
+ N  OBJ       X1        -14.0          X2        -16.0
+ N  OBJ       X3        -20.0          X4        -40.0
+ N  OBJ       X5        -6.0           X6        -4.0
+ N  OBJ       X8        -154.0         X9        -40.0
+ N  OBJ       X10       -14.0
+
+*    Constraints
+
+ G  C1        X1        -4.0           X2        -5.0
+ G  C1        X7        3.0            X8        -9.0
+ G  C2        X1        -10.0          X2        8.0
+ G  C2        X7        17.0           X8        -2.0
+ G  C3        X1        8.0            X2        -2.0
+ G  C3        X9        -5.0           X10       2.0
+ G  C4        X1        12.0           X2        24.0
+ G  C4        X4        7.0
+ G  C5        X2        -8.0           X3        12.0
+ G  C5        X4        2.0
+ G  C6        X1        8.0            X2        16.0
+ G  C6        X6        1.0
+ G  C7        X2        8.0            X5        -14.0
+ G  C7        X6        6.0
+ G  C8        X1        3.0            X2        -6.0
+ G  C8        X9        192.0          X10       7.0
+
+CONSTANTS
+
+    HS113     OBJ       -1352.0
+    HS113     C1        -105.0
+    HS113     C3        -12.0
+    HS113     C4        -72.0
+    HS113     C5        -4.0
+    HS113     C6        34.0
+    HS113     C7        8.0
+    HS113     C8        768.0
+
+BOUNDS
+
+ FR HS113     'DEFAULT'
+
+START POINT
+
+    HS113     X1        2.0
+    HS113     X2        3.0
+    HS113     X3        5.0
+    HS113     X4        5.0
+    HS113     X5        1.0
+    HS113     X6        2.0
+    HS113     X7        7.0
+    HS113     X8        3.0
+    HS113     X9        6.0
+    HS113     X10       10.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+ EV SQ        X
+
+ELEMENT USES
+
+ T  OE1       SQ
+ V  OE1       X                        X1
+
+ T  OE2       SQ
+ V  OE2       X                        X2
+
+ T  OE3       SQ
+ V  OE3       X                        X3
+
+ T  OE4       SQ
+ V  OE4       X                        X4
+
+ T  OE5       SQ
+ V  OE5       X                        X5
+
+ T  OE6       SQ
+ V  OE6       X                        X6
+
+ T  OE7       SQ
+ V  OE7       X                        X7
+
+ T  OE8       SQ
+ V  OE8       X                        X8
+
+ T  OE9       SQ
+ V  OE9       X                        X9
+
+ T  OE10      SQ
+ V  OE10      X                        X10
+
+ T  OE11      2PR
+ V  OE11      X                        X1
+ V  OE11      Y                        X2
+
+ T  CE1       SQ
+ V  CE1       X                        X1
+
+ T  CE2       SQ
+ V  CE2       X                        X2
+
+ T  CE3       SQ
+ V  CE3       X                        X3
+
+ T  CE4       SQ
+ V  CE4       X                        X1
+
+ T  CE5       SQ
+ V  CE5       X                        X3
+
+ T  CE6       SQ
+ V  CE6       X                        X1
+
+ T  CE7       SQ
+ V  CE7       X                        X2
+
+ T  CE8       SQ
+ V  CE8       X                        X5
+
+ T  CE9       SQ
+ V  CE9       X                        X1
+
+ T  CE10      SQ
+ V  CE10      X                        X2
+
+ T  CE11      2PR
+ V  CE11      X                        X1
+ V  CE11      Y                        X2
+
+ T  CE12      SQ
+ V  CE12      X                        X9
+
+GROUP USES
+
+ E  OBJ       OE1                      OE2
+ E  OBJ       OE3                      OE4       4.0
+ E  OBJ       OE5                      OE6       2.0
+ E  OBJ       OE7       5.0            OE8       7.0
+ E  OBJ       OE9       2.0            OE10
+ E  OBJ       OE11
+
+ E  C4        CE1       -3.0           CE2       -4.0
+ E  C4        CE3       -2.0
+
+ E  C5        CE4       -5.0           CE5       -1.0
+
+ E  C6        CE6       -0.5           CE7       -2.0
+ E  C6        CE8       -3.0
+
+ E  C7        CE9       -1.0           CE10      -2.0
+ E  C7        CE11      2.0
+
+ E  C8        CE12      -12.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               24.3062091
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS113
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

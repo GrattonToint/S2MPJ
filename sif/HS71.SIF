@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS71
+
+*   Problem :
+*   *********
+
+*   Source: problem 71 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B Baudson, Apr 1989.
+
+*   classification OOR2-AY-4-2
+
+*   Number of variables
+
+ IE N                   4
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X3        1.0
+
+*   Constraints
+
+ G  C1
+ E  C2
+
+CONSTANTS
+
+    HS71      C1        25.0
+    HS71      C2        40.0
+
+BOUNDS
+
+ LO HS71      'DEFAULT' 1.0
+ UP HS71      'DEFAULT' 5.0
+
+START POINT
+
+    HS71      X1        1.0
+    HS71      X2        5.0
+    HS71      X3        5.0
+    HS71      X4        1.0
+
+ELEMENT TYPE
+
+*   Square
+
+ EV SQ        X
+
+*   Large product
+
+ EV LP        X                        Y
+ EV LP        V1                       V2
+ EV LP        V3
+ IV LP        TX                       TY
+ IV LP        U
+
+*   Product of four variables
+
+ EV 4PRD      V1                       V2
+ EV 4PRD      V3                       V4
+
+ELEMENT USES
+
+ T  E1        LP
+ V  E1        X                        X1
+ V  E1        Y                        X4
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+ V  E1        V3                       X3
+
+ T  E2        4PRD
+ V  E2        V1                       X1
+ V  E2        V2                       X2
+ V  E2        V3                       X3
+ V  E2        V4                       X4
+
+ T  E3        SQ
+ V  E3        X                        X1
+
+ T  E4        SQ
+ V  E4        X                        X2
+
+ T  E5        SQ
+ V  E5        X                        X3
+
+ T  E6        SQ
+ V  E6        X                        X4
+
+GROUP USES
+
+ E  OBJ       E1        1.0
+ E  C1        E2        1.0
+ E  C2        E3        1.0            E5        1.0
+ E  C2        E4        1.0            E6        1.0
+
+OBJECT BOUND
+
+*LO SOLTN               17.0140173
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS71
+
+INDIVIDUALS
+
+ T  LP
+
+ R  TX        X         1.0
+ R  TY        Y         1.0
+ R  U         V1        1.0            V2        1.0
+ R  U         V3        1.0
+
+ F                      TX * TY * U
+ G  TX                  TY * U
+ G  TY                  TX * U
+ G  U                   TX * TY
+
+ H  TX        TY        U
+ H  TX        U         TY
+ H  TY        U         TX
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  4PRD
+ F                      V1 * V2 * V3 * V4
+ G  V1                  V2 * V3 * V4
+ G  V2                  V1 * V3 * V4
+ G  V3                  V1 * V2 * V4
+ G  V4                  V1 * V2 * V3
+ H  V1        V2        V3 * V4
+ H  V1        V3        V2 * V4
+ H  V1        V4        V2 * V3
+ H  V2        V3        V1 * V4
+ H  V2        V4        V1 * V3
+ H  V3        V4        V1 * V2
+
+ENDATA

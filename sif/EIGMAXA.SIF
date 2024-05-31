@@ -1,0 +1,157 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EIGMAXA
+
+*   Problem :
+*   --------
+
+*   Find the largest eigenvalue of a symmetrix matrix.
+
+*   The problem is, given a symmetric matrix A, to find a unit vector
+*   q and scalar d such that A q = d q for which - d is least.
+
+*   Example A: a diagonal matrix with eigenvales 1, .... , N.
+
+*   Source:  An idea by Nick Gould
+
+*   SIF input: Nick Gould, Nov 1992.
+
+*   classification LQR2-AN-V-V
+
+*   The dimension of the matrix.
+
+*IE N                   2              $-PARAMETER
+*IE N                   10             $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+ IE N                   2              $-PARAMETER     modified for S2X tests
+
+*   other parameter definitions
+
+ IE 1                   1
+ RI RN        N
+ R( ROOTN     SQRT                     RN
+ RD 1/ROOTN   ROOTN     1.0
+
+*   Define the whole matrix.
+
+ DO J         1                        N
+ DO I         1                        N
+ AE A(I,J)              0.0
+ OD I
+ RI RJ        J
+ A= A(J,J)    RJ
+ OD J
+
+VARIABLES
+
+*  Define the eigenvalue
+
+ X  D
+
+ DO I         1                        N
+
+*  Define the eigenvector
+
+ X  Q(I)
+
+ ND
+
+GROUPS
+
+*  Define the objective
+
+ N  MAXEIG    D         -1.0
+
+*  Introduce the normalization equation Q(T) Q - 1 = 0.
+
+ E  O
+
+*  Introduce the eigen-equations D Q - A Q = 0.
+
+ DO I         1                        N
+ DO K         1                        N
+ AM -AIK      A(I,K)    -1.0
+ ZE E(I)      Q(K)                     -AIK
+
+ ND
+
+CONSTANTS
+
+ X  EIGMAXA   O         1.0
+
+BOUNDS
+
+ LO EIGMAXA   'DEFAULT' -1.0
+ UP EIGMAXA   'DEFAULT' 1.0
+
+START POINT
+
+ XV EIGMAXA   D         1.0
+
+ DO I         1                        N
+ ZV EIGMAXA   Q(I)                     1/ROOTN
+ ND
+
+ELEMENT TYPE
+
+ EV 2PROD     Q1                       Q2
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PROD
+
+ DO I         1                        N
+
+ ZV E(I)      Q1                       Q(I)
+ ZV E(I)      Q2                       D
+
+ OD I
+
+ DO K         1                        N
+
+ ZV O(K)      Q1                       Q(K)
+ ZV O(K)      Q2                       Q(K)
+
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE E(I)      E(I)
+ ND
+
+ DO K         1                        N
+ XE O         O(K)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EIGMAXA
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      Q1 * Q2
+ G  Q1                       Q2
+ G  Q2                  Q1
+ H  Q1        Q2        1.0D+0
+
+ENDATA
+
+
+
+
+
+
+
+
+
+

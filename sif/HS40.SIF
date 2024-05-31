@@ -1,0 +1,134 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS40
+
+*   Problem :
+*   *********
+
+*   Source: problem 40 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification OOR2-AN-4-3
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   4
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1
+ E  CON2      X3        -1.0
+ E  CON3      X2        -1.0
+
+CONSTANTS
+
+    HS40      CON1      1.0
+
+BOUNDS
+
+ FR HS40      'DEFAULT'
+
+START POINT
+
+ XV HS40      'DEFAULT' 0.8
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV CB        V1
+ EV SQPROD    V1                       V2
+ EV 4PROD     V1                       V2
+ EV 4PROD     V3                       V4
+
+ELEMENT USES
+
+ T  E1        4PROD
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+ V  E1        V3                       X3
+ V  E1        V4                       X4
+
+ T  E2        CB
+ V  E2        V1                       X1
+
+ T  E3        SQ
+ V  E3        V1                       X2
+
+ T  E4        SQPROD
+ V  E4        V1                       X1
+ V  E4        V2                       X4
+
+ T  E5        SQ
+ V  E5        V1                       X4
+
+GROUP USES
+
+ E  OBJ       E1
+ E  CON1      E2                       E3
+ E  CON2      E4
+ E  CON3      E5
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -0.25
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS40
+
+INDIVIDUALS
+
+ T  4PROD
+ F                      -V1 * V2 * V3 * V4
+ G  V1                  -V2 * V3 * V4
+ G  V2                  -V1 * V3 * V4
+ G  V3                  -V1 * V2 * V4
+ G  V4                  -V1 * V2 * V3
+ H  V1        V2        -V3 * V4
+ H  V1        V3        -V2 * V4
+ H  V1        V4        -V2 * V3
+ H  V2        V3        -V1 * V4
+ H  V2        V4        -V1 * V3
+ H  V3        V4        -V1 * V2
+
+ T  SQPROD
+ F                      V1 * V1 * V2
+ G  V1                  2.0 * V1 * V2
+ G  V2                  V1 * V1
+ H  V1        V1        2.0 * V2
+ H  V1        V2        2.0 * V1
+
+ T  CB
+ F                      V1**3
+ G  V1                  3.0 * V1 * V1
+ H  V1        V1        6.0 * V1
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

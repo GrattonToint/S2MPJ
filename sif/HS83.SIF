@@ -1,0 +1,178 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS83
+
+*   Problem :
+*   *********
+
+*   Source: problem 83 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B Baudson, Apr 1989.
+
+*   classification QQR2-AN-5-3
+
+*   Number of variables
+
+ IE N                   5
+
+*   Parameters of the problem
+
+ RE A1                  85.334407
+ RE A2                  0.0056858
+ RE A3                  0.0006262
+ RE A4                  0.0022053
+ RE A5                  80.51249
+ RE A6                  0.0071317
+ RE A7                  0.0029955
+ RE A8                  0.0021813
+ RE A9                  9.300961
+ RE A10                 0.0047026
+ RE A11                 0.0012547
+ RE A12                 0.0019085
+
+*   Other useful parameters
+
+ IE 1                   1
+
+*   Constants
+
+ RM CS1       A1        -1.0
+ RA CS2       A5        -90.0
+ RM CS2       CS2       -1.0
+ RA CS3       A9        -20.0
+ RM CS3       CS3       -1.0
+
+ RM -A4       A4        -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        37.293239
+ G  C1
+ G  C2
+ G  C3
+
+CONSTANTS
+
+    HS83      OBJ       40792.141
+ Z  HS83      C1                       CS1
+ Z  HS83      C2                       CS2
+ Z  HS83      C3                       CS3
+
+RANGES
+
+    HS83      C1        92.0
+    HS83      C2        20.0
+    HS83      C3        5.0
+
+BOUNDS
+
+ XL HS83      'DEFAULT' 27.0
+ XU HS83      'DEFAULT' 45.0
+ LO HS83      X1        78.0
+ UP HS83      X1        102.0
+ LO HS83      X2        33.0
+ UP HS83      X2        45.0
+
+START POINT
+
+ XV HS83      'DEFAULT' 27.0
+    HS83      X1        78.0
+    HS83      X2        33.0
+
+ELEMENT TYPE
+
+*   Square
+
+ EV SQ        X
+
+*   Product of two variables
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        X                        X3
+
+ T  E2        2PR
+ V  E2        X                        X1
+ V  E2        Y                        X5
+
+ T  E3        2PR
+ V  E3        X                        X2
+ V  E3        Y                        X5
+
+ T  E4        2PR
+ V  E4        X                        X1
+ V  E4        Y                        X4
+
+ T  E5        2PR
+ V  E5        X                        X3
+ V  E5        Y                        X5
+
+ T  E6        2PR
+ V  E6        X                        X1
+ V  E6        Y                        X2
+
+ T  E7        2PR
+ V  E7        X                        X1
+ V  E7        Y                        X3
+
+ T  E8        2PR
+ V  E8        X                        X3
+ V  E8        Y                        X4
+
+GROUP USES
+
+ E  OBJ       E1        5.3578547      E2        0.8356891
+ ZE C1        E3                       A2
+ ZE C1        E4                       A3
+ ZE C1        E5                       -A4
+ ZE C2        E3                       A6
+ ZE C2        E6                       A7
+ ZE C2        E1                       A8
+ ZE C3        E5                       A10
+ ZE C3        E7                       A11
+ ZE C3        E8                       A12
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -30665.53867
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS83
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      X**2
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ENDATA

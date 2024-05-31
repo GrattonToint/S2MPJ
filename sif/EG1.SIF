@@ -1,0 +1,140 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EG1
+
+*   Problem:
+*   ********
+
+*   A simple nonlinear problem given as an example in Section 1.2.3 of
+*   the LANCELOT Manual.
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "LANCELOT, A Fortran Package for Large-Scale Nonlinear Optimization
+*   (Release A)"
+*   Springer Verlag, 1992.
+
+*   SIF input: N. Gould and Ph. Toint, June 1994.
+
+*   classification OBR2-AY-3-0
+
+GROUPS
+
+ N  GROUP1
+ N  GROUP2
+ N  GROUP3
+
+VARIABLES
+
+    X1        GROUP1    1.0
+    X2        GROUP3    1.0
+
+    X3
+BOUNDS
+
+ FR EG1       X1
+ LO EG1       X2        -1.0
+ LO EG1       X3        1.0
+ UP EG1       X2        1.0
+ UP EG1       X3        2.0
+
+ELEMENT TYPE
+
+ EV ETYPE1    V1                       V2
+ EV ETYPE2    V1                       V2
+ EV ETYPE2    V3
+ IV ETYPE2    U1                       U2
+
+ELEMENT USES
+
+ T  G2E1      ETYPE1
+ V  G2E1      V1                       X2
+ V  G2E1      V2                       X3
+
+ T  G3E1      ETYPE2
+ V  G3E1      V1                       X2
+ V  G3E1      V2                       X1
+ V  G3E1      V3                       X3
+
+ T  G3E2      ETYPE1
+ V  G3E2      V1                       X1
+ V  G3E2      V2                       X3
+
+GROUP TYPE
+
+ GV GTYPE1    ALPHA
+ GV GTYPE2    ALPHA
+
+GROUP USES
+
+ T  GROUP1    GTYPE1
+ T  GROUP2    GTYPE2
+ E  GROUP2    G2E1
+ E  GROUP3    G3E1                     G3E2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EG1
+
+TEMPORARIES
+
+ R  CS
+ R  SN
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  ETYPE1
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  ETYPE2
+ R  U1        V1        1.0
+ R  U2        V2        1.0            V3        1.0
+ A  CS                  COS( U2 )
+ A  SN                  SIN( U2 )
+ F                      U1 * SN
+ G  U1                  SN
+ G  U2                  U1 * CS
+ H  U1        U2        CS
+ H  U2        U2        -U1 * SN
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        EG1
+
+TEMPORARIES
+
+ R  ALPHA2
+ R  TWO
+
+INDIVIDUALS
+
+ T  GTYPE1
+ A  TWO                 2.0
+ F                      ALPHA * ALPHA
+ G                      TWO * ALPHA
+ H                      TWO
+
+ T  GTYPE2
+ A  ALPHA2              ALPHA * ALPHA
+ F                      ALPHA2 * ALPHA2
+ G                      4.0 * ALPHA2 * ALPHA
+ H                      12.0 * ALPHA2
+
+ENDATA

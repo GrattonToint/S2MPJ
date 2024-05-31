@@ -1,0 +1,133 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ENGVAL1
+
+*   Problem :
+*   *********
+
+*   The ENGVAL1 problem.
+*   This problem is a sum of 2n-2 groups, n-1 of which contain 2 nonlinear
+*   elements.
+
+*   Source: problem 31 in
+*   Ph.L. Toint,
+*   "Test problems for partially separable optimization and results
+*   for the routine PSPMIN",
+*   Report 83/4, Department of Mathematics, FUNDP (Namur, B), 1983.
+
+*   See also Buckley#172 (p. 52)
+*   SIF input: Ph. Toint and N. Gould, Dec 1989.
+
+*   classification OUR2-AN-V-0
+
+*   N is the number of variables
+
+*IE N                   2              $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ XN E(I)
+ XN L(I)      X(I)      -4.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N-1
+ X  ENGVAL1   L(I)      -3.0
+ ND
+
+BOUNDS
+
+ FR ENGVAL1   'DEFAULT'
+
+START POINT
+
+ XV ENGVAL1   'DEFAULT' 2.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ ZV Y(I)      X                        X(I)
+ ZV Z(I)      X                        X(I+1)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        N-1
+ XT E(I)      L2
+ XE E(I)      Y(I)                     Z(I)
+ ND
+
+OBJECT BOUND
+
+ LO ENGVAL1             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ENGVAL1
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ENGVAL1
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

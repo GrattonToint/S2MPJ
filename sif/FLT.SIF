@@ -1,0 +1,111 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          FLT     
+
+*   Problem :
+*   *********
+
+*   Source: a troublesome problem for filter methods
+*   R. Fletcher, S. Leyffer and Ph. L. Toint,
+*   "On the global convergence of a filter-SQP method",
+*   SIAM J. Optimization 13 2002:44-59.
+
+*   SIF input: Nick Gould, May 2008
+
+*   classification QOR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X2        1.0
+
+ E  CON1
+ E  CON2
+
+CONSTANTS
+
+ X  FLT       OBJ       1.0
+
+BOUNDS
+
+ XR FLT       X1
+ XR FLT       X2
+
+START POINT
+
+    FLT       X1        1.0
+    FLT       X2        0.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV CUBE      V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        CUBE
+ V  E2        V1                       X1
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  OBJ       L2
+ E  CON1      E1
+ E  CON2      E2
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      FLT     
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  CUBE
+ F                      V1 ** 3
+ G  V1                  3.0 * V1 ** 2
+ H  V1        V1        6.0 * V1
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        FLT     
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

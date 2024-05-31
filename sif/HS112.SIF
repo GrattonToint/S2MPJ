@@ -1,0 +1,160 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS112
+
+*   Problem :
+*   *********
+
+*   This problem is a chemical equilibrium problem involving 3 linear
+*   equality constraints.
+
+*   Source: problem 80 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, Mar 1990.
+
+*   classification OLR2-MY-10-3
+
+*   N is the number of variables
+
+ IE N                   10
+
+*   Define useful parameters
+
+ IE 1                   1
+
+*   Define problem constants
+
+ RE C1                   -6.089
+ RE C2                  -17.164
+ RE C3                  -34.054
+ RE C4                   -5.914
+ RE C5                  -24.721
+ RE C6                  -14.986
+ RE C7                  -24.100
+ RE C8                  -10.708
+ RE C9                  -26.662
+ RE C10                 -22.179
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ ZN OBJ       X(I)                     C(I)
+ ND
+
+ E  CON1      X1        1.0            X2        2.0
+ E  CON1      X3        2.0            X6        1.0
+ E  CON1      X10       1.0
+ E  CON2      X4        1.0            X5        2.0
+ E  CON2      X6        1.0            X7        1.0
+ E  CON3      X3        1.0            X7        1.0
+ E  CON3      X8        1.0            X9        2.0
+ E  CON3      X10       1.0
+
+CONSTANTS
+
+    HS112     CON1       2.0
+    HS112     CON2       1.0
+    HS112     CON3       1.0
+
+BOUNDS
+
+ XL HS112     'DEFAULT'  1.0D-6
+
+START POINT
+
+ XV HS112     'DEFAULT'  0.1
+
+ELEMENT TYPE
+
+ EV LOG       X
+ EV LOGSUM    X
+ EV LOGSUM    X1                       X2
+ EV LOGSUM    X3                       X4
+ EV LOGSUM    X5                       X6
+ EV LOGSUM    X7                       X8
+ EV LOGSUM    X9                       X10
+ IV LOGSUM    X                        SUM
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT XLOGX(I)  LOG
+ ZV XLOGX(I)  X                        X(I)
+ XT XLOGS(I)  LOGSUM
+ ZV XLOGS(I)  X                        X(I)
+ ZV XLOGS(I)  X1                       X1
+ ZV XLOGS(I)  X2                       X2
+ ZV XLOGS(I)  X3                       X3
+ ZV XLOGS(I)  X4                       X4
+ ZV XLOGS(I)  X5                       X5
+ ZV XLOGS(I)  X6                       X6
+ ZV XLOGS(I)  X7                       X7
+ ZV XLOGS(I)  X8                       X8
+ ZV XLOGS(I)  X9                       X9
+ ZV XLOGS(I)  X10                      X10
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE OBJ       XLOGX(I)                 XLOGS(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -47.707579
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS112
+
+TEMPORARIES
+
+ M  LOG
+ R  LOGX
+ R  LOGSUM
+
+INDIVIDUALS
+
+*   Logarithmic elements
+
+ T  LOG
+ A  LOGX                LOG(X)
+ F                      X*LOGX
+ G  X                   LOGX + 1.0
+ H  X         X         1.0/X
+
+ T  LOGSUM
+ R  X         X         1.0
+ R  SUM       X1        1.0            X2        1.0
+ R  SUM       X3        1.0            X4        1.0
+ R  SUM       X5        1.0            X6        1.0
+ R  SUM       X7        1.0            X8        1.0
+ R  SUM       X9        1.0            X10       1.0
+ A  LOGSUM              LOG(SUM)
+ F                      -X*LOGSUM
+ G  X                   -LOGSUM
+ G  SUM                 -X/SUM
+ H  X         SUM       -1.0/SUM
+ H  SUM       SUM       X/SUM**2
+
+ENDATA

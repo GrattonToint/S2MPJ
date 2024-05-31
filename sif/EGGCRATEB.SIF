@@ -1,0 +1,128 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EGGCRATEB
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example EGGCRATE
+
+*   Fit: (x,y,5sinx,5siny) + e = 0
+
+*   version with box-constrained feasible region
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification SBR2-MN-4-0
+
+*   Number of data values
+
+ IE M                   4
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+    X
+    Y
+
+GROUPS
+
+ N  F1        X         1.0
+ N  F2        Y         1.0
+ N  F3
+ N  F4
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -5.0
+ UP BOUNDS    'DEFAULT' 5.0
+
+START POINT
+
+    START     X         1.0
+    START     Y         2.0
+
+ELEMENT TYPE
+
+ EV SIN       V
+
+ELEMENT USES
+
+ XT E3        SIN
+ ZV E3        V                        X
+ XT E4        SIN
+ ZV E4        V                        Y
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ XE F3        E3        5.0
+ XE F4        E4        5.0
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO EGGCRATE            0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EGGCRATEB
+
+TEMPORARIES
+ R  S
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SIN
+ A  S                   SIN( V )
+ F                      S
+ G  V                   COS( V )
+ H  V         V         - S
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        EGGCRATEB
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

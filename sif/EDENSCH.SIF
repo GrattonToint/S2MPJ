@@ -1,0 +1,148 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EDENSCH
+
+*   Problem :
+*   *********
+
+*   The extended Dennis and Schnabel problem, as defined by Li.
+
+*   Source:
+*   G. Li,
+*   "The secant/finite difference algorithm for solving sparse
+*   nonlinear systems of equations",
+*   SIAM Journal on Optimization, (to appear), 1990.
+
+*   SIF input: Ph. Toint, Apr 1990.
+*              minor correction by Ph. Shott, January 1995.
+
+*   classification OUR2-AN-V-0
+
+*   Number of variables (at least 2)
+
+*IE N                   36             $-PARAMETER     original value
+*IE N                   2000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Constants
+
+ IE 1                   1
+
+*   Computed parameters
+
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XN A(I)      X(I)      1.0
+ XN B(I)      X(I+1)    -2.0
+ XN C(I)      X(I+1)    1.0
+ ND
+
+ XN A(N)      X(N)      0.0
+
+CONSTANTS
+
+ DO I         1                        N-1
+ X  EDENSCH   A(I)      2.0
+ X  EDENSCH   C(I)      -1.0
+ ND
+
+ X  EDENSCH   A(N)      2.0
+
+BOUNDS
+
+ FR EDENSCH   'DEFAULT'
+
+START POINT
+
+ XV EDENSCH   'DEFAULT' 8.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ ZV E(I)      X                        X(I)
+ ZV E(I)      Y                        X(I+1)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+ GV L4        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        N-1
+ XT A(I)      L4
+ XE B(I)      E(I)
+ ND
+
+ XT A(N)      L4
+
+OBJECT BOUND
+
+ LO EDENSCH             0.0
+
+*   Solution
+
+*LO SOLTN(36)           219.28
+*LO SOLTN(2000)         1.20032D+04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EDENSCH
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        EDENSCH
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ T  L4
+ F                      GVAR**4
+ G                      4.0 * GVAR**3
+ H                      12.0 * GVAR**2
+
+ENDATA

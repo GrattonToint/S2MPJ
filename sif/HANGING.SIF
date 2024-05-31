@@ -1,0 +1,196 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HANGING
+
+*   Problem :
+*   *********
+
+*   A catenary problem in 3 dimensions.  A rectangular grid is hung from its
+*   4 corners under gravity.  The problem is to determine the resulting shape.
+
+*   Source:  
+*   an example in a talk by Nesterova and Vial, LLN, 1994.
+
+*   SIF input: Ph. Toint, November 1994.
+
+*   classification LQR2-AY-V-V
+
+*   dimension of the grid
+
+*IE NX                  3              $-PARAMETER n = 27
+*IE NY                  3              $-PARAMETER
+
+*IE NX                  5              $-PARAMETER n = 90
+*IE NY                  6              $-PARAMETER
+
+*IE NX                  10             $-PARAMETER n = 300  original value
+*IE NY                  10             $-PARAMETER
+
+*IE NX                  20             $-PARAMETER n = 1800
+*IE NY                  30             $-PARAMETER
+
+*IE NX                  40             $-PARAMETER n = 3600
+ IE NX                  3              $-PARAMETER     modified for S2X tests
+*IE NY                  30             $-PARAMETER
+ IE NY                  3              $-PARAMETER     modified for S2X tests
+
+*   maximal X and Y distances
+
+ RE LX                  1.8
+ RE LY                  1.8
+
+*   useful constants
+
+ IE 1                   1
+
+ IA NX-1      NX        -1
+ IA NY-1      NY        -1
+ R* LX2       LX                       LX
+ R* LY2       LY                       LY
+ RI RNX       NX
+ RI RNY       NY
+
+VARIABLES
+
+ DO I         1                        NX
+ DO J         1                        NY
+ X  X(I,J)
+ X  Y(I,J)
+ X  Z(I,J)
+ ND
+
+GROUPS
+
+ DO I         1                        NX
+ DO J         1                        NY
+ XN OBJ       Z(I,J)    1.0    
+ ND
+
+ DO I         1                        NX
+ DO J         1                        NY-1
+ XL RC(I,J)
+ ND
+
+ DO I         1                        NX-1
+ DO J         1                        NY
+ XL DC(I,J)
+ ND
+
+CONSTANTS
+
+ DO I         1                        NX
+ DO J         1                        NY-1
+ Z  HANGING   RC(I,J)                  LX2
+ ND
+
+ DO I         1                        NX-1
+ DO J         1                        NY
+ Z  HANGING   DC(I,J)                  LY2
+ ND
+
+BOUNDS
+
+ FR HANGING   'DEFAULT'
+
+ XX HANGING   X(1,1)    0.0
+ XX HANGING   Y(1,1)    0.0
+ XX HANGING   Z(1,1)    0.0
+
+ ZX HANGING   X(NX,1)                  RNX
+ XX HANGING   Y(NX,1)   0.0
+ XX HANGING   Z(NX,1)   0.0
+
+ XX HANGING   X(1,NY)   0.0
+ ZX HANGING   Y(1,NY)                  RNY
+ XX HANGING   Z(1,NY)   0.0
+
+ ZX HANGING   X(NX,NY)                 RNX
+ ZX HANGING   Y(NX,NY)                 RNY
+ XX HANGING   Z(NX,NY)  0.0
+
+START POINT
+
+ DO I         1                        NX
+ IA I-1       I         -1
+ RI RI-1      I-1
+ DO J         1                        NY
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ ZV HANGING   X(I,J)                   RI-1
+ ZV HANGING   Y(I,J)                   RJ-1
+ ND
+
+ELEMENT TYPE
+
+ EV ISQ       XX                       YY
+ IV ISQ       D
+
+ELEMENT USES
+
+ XT 'DEFAULT' ISQ
+
+ DO J         1                        NY-1
+ IA J+1       J          1
+ DO I         1                        NX
+ ZV RX(I,J)   XX                       X(I,J)
+ ZV RX(I,J)   YY                       X(I,J+1)
+ ZV RY(I,J)   XX                       Y(I,J)
+ ZV RY(I,J)   YY                       Y(I,J+1)
+ ZV RZ(I,J)   XX                       Z(I,J)
+ ZV RZ(I,J)   YY                       Z(I,J+1)
+ ND
+
+ DO I         1                        NX-1
+ IA I+1       I          1
+ DO J         1                        NY
+ ZV DX(I,J)   XX                       X(I,J)
+ ZV DX(I,J)   YY                       X(I+1,J)
+ ZV DY(I,J)   XX                       Y(I,J)
+ ZV DY(I,J)   YY                       Y(I+1,J)
+ ZV DZ(I,J)   XX                       Z(I,J)
+ ZV DZ(I,J)   YY                       Z(I+1,J)
+ ND
+
+GROUP USES
+
+ DO I         1                        NX
+ DO J         1                        NY-1
+ XE RC(I,J)   RX(I,J)                  RY(I,J)
+ XE RC(I,J)   RZ(I,J)
+ ND
+
+ DO I         1                        NX-1
+ DO J         1                        NY
+ XE DC(I,J)   DX(I,J)                  DY(I,J)
+ XE DC(I,J)   DZ(I,J)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(3,3)          -6.1184107487
+*LO SOLTN(5,6)          -77.260229515
+*LO SOLTN(10,10)        -620.17603242
+*LO SOLTN(20,30)        -1025.4292887
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HANGING
+
+INDIVIDUALS
+
+ T  ISQ
+ R  D         XX        1.0            YY        -1.0
+ F                      D * D
+ G  D                   D + D
+ H  D         D         2.0
+
+ENDATA

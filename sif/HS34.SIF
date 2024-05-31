@@ -1,0 +1,86 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS34
+
+*   Problem :
+*   *********
+
+*   Source: problem 34 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification LOR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X1        -1.0
+
+ G  CON1      X2        1.0
+ G  CON2      X3        1.0
+
+BOUNDS
+
+ XU HS34      'DEFAULT' 100.0
+ UP HS34      X3        10.0
+
+START POINT
+
+    HS34      X2        1.05
+    HS34      X3        2.9
+
+ELEMENT TYPE
+
+ EV EXP       V1
+
+ELEMENT USES
+
+ XT 'DEFAULT' EXP
+
+ V  E1        V1                       X1
+ V  E2        V1                       X2
+
+GROUP USES
+
+ E  CON1      E1
+ E  CON2      E2
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -0.83403245
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS34
+
+TEMPORARIES
+
+ R  EXPX
+
+INDIVIDUALS
+
+ T  EXP
+ A  EXPX                -EXP(V1)
+ F                      EXPX
+ G  V1                  EXPX
+ H  V1        V1        EXPX
+
+ENDATA

@@ -1,0 +1,102 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GOTTFR
+
+*   Problem :
+*   *********
+
+*   The GOTTFR problem from Sisser.
+
+*   Source:  problem 208 (p. 56) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ E  G1        X1        1.0
+ E  G2        X2        1.0
+
+BOUNDS
+
+ FR GOTTFR    'DEFAULT' 
+
+START POINT
+
+ XV GOTTFR    'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV ET1       X                        Y
+ EV ET2       X                        Y
+
+ELEMENT USES
+
+ T  E1        ET1
+ V  E1        X                        X1
+ V  E1        Y                        X2
+
+ T  E2        ET2
+ V  E2        X                        X1
+ V  E2        Y                        X2
+
+GROUP USES
+
+ E  G1        E1
+ E  G2        E2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GOTTFR
+
+TEMPORARIES
+
+ R  FA
+ R  FB
+
+INDIVIDUALS
+
+*   Element type 1
+
+ T  ET1
+
+ A  FA                  X + 3.0 * Y
+ A  FB                  1.0 - X
+
+ F                      -0.1136 * FA * FB
+ G  X                   -0.1136 * ( FB - FA )
+ G  Y                   -0.3408 * FB
+ H  X         X         0.2272
+ H  X         Y         0.3408
+
+*   Element type 2
+
+ T  ET2
+
+ A  FA                  2.0 * X - Y
+ A  FB                  1.0 - Y
+
+ F                      7.5 * FA * FB
+ G  X                   15.0 * FB
+ G  Y                   - 7.5 * ( FB + FA )
+ H  X         Y         -15.0
+ H  Y         Y         15.0
+
+ENDATA

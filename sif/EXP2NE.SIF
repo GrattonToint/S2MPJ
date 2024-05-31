@@ -1,0 +1,129 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EXP2NE
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example Exp2
+
+*   Fit: y = e^{-i/10 x_1} - 5e^{-i/10 x_2} - e^{-i/10} + 5e^{-i} + e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   Nonlinear-equation formulation of EXP2.SIF
+
+*   SIF input: Nick Gould
+
+*   classification NOR2-MN-2-10
+
+*   Number of data values
+
+ IE M                   10
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IA M-1       M         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         0                        M-1
+ XE F(I)
+ ND
+
+CONSTANTS
+
+ DO I         0                        M-1
+ RI RI        I
+ RM -RI       RI        -1.0
+ RM -RI/10    -RI       0.1
+ R( E1        EXP                      -RI/10
+ R( E2        EXP                      -RI
+ RM -5E2      E2        -5.0
+ R+ Y         E1                       -5E2
+ Z  EXP2      F(I)                     Y
+ ND
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+ELEMENT TYPE
+
+ EV EXP       X
+ EP EXP       P
+
+ELEMENT USES
+
+ DO I         0                        M-1
+ RI RI        I
+ RM -RI       RI        -1.0
+ RM -RI/10    -RI       0.1
+ XT E1(I)     EXP
+ ZV E1(I)     X                        X1
+ ZP E1(I)     P                        -RI/10
+ XT E2(I)     EXP
+ ZV E2(I)     X                        X2
+ ZP E2(I)     P                        -RI/10
+ ND
+
+GROUP USES
+
+ DO I         0                        M-1
+ XE F(I)      E1(I)
+ XE F(I)      E2(I)     -5.0
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO EXP2                0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EXP2NE
+
+TEMPORARIES
+ R  E
+ M  EXP
+
+INDIVIDUALS
+
+ T  EXP
+ A  E                   EXP( P * X )
+ F                      E
+ G  X                   P * E
+ H  X         X         P * P * E
+
+ENDATA

@@ -1,0 +1,107 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS8
+
+*   Problem :
+*   *********
+
+*   Source: problem 8 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification CQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1
+ E  CON2
+
+CONSTANTS
+
+    HS8       OBJ       1.0
+    HS8       CON1      25.0
+    HS8       CON2      9.0
+
+BOUNDS
+
+ FR HS8       'DEFAULT'
+
+START POINT
+
+    HS8       X1        2.0
+    HS8       X2        1.0
+
+ELEMENT TYPE
+
+ EV 2PROD     V1                       V2
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        2PROD
+ V  E3        V1                       X1
+ V  E3        V2                       X2
+
+GROUP USES
+
+ E  CON1      E1                       E2
+ E  CON2      E3
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS8
+
+TEMPORARIES
+
+ R  ZERO
+
+GLOBALS
+
+ A  ZERO                               0.0
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      V1*V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V1        ZERO
+ H  V2        V2        ZERO
+ H  V1        V2        1.0
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA

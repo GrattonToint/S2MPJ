@@ -1,0 +1,184 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS104
+
+*   Problem :
+*   *********
+
+*   Source: problem 104 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991.
+
+*   classification OOR2-AN-8-5
+
+*   Number of variables
+
+ IE N                   8
+
+*   Other useful parameters
+
+ IE 1                   1
+ IE 4                   4
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X1        -1.0D+0        X2        -1.0D+0
+
+ L  C1        X1        1.0D-1
+ L  C2        X1        1.0D-1         X2        1.0D-1
+ L  C3
+ L  C4
+ G  C5        X1        -1.0D+0        X2        -1.0D+0
+
+CONSTANTS
+
+    HS104     'DEFAULT' 1.0D+0
+    HS104     OBJ       -1.0D+1
+    HS104     C5        -9.0D+0
+
+RANGES
+
+    HS104     C5        3.2D+0
+
+BOUNDS
+
+ LO HS104     'DEFAULT' 1.0D-1
+ UP HS104     'DEFAULT' 1.0D+1
+
+START POINT
+
+    HS104     X1        6.0            X2        3.0
+    HS104     X3        0.4            X4        0.2
+    HS104     X5        6.0            X6        6.0
+    HS104     X7        1.0            X8        0.5
+
+    HS104SOL  X1        6.465114       X2        2.232709
+    HS104SOL  X3        0.6673975      X4        0.5957564
+    HS104SOL  X5        5.932676       X6        5.527235
+    HS104SOL  X7        1.0 13322      X8        0.4006682
+
+ELEMENT TYPE
+
+*   Prod
+
+ EV PROD      V1                       V2
+ EP PROD      P1                       P2
+
+ELEMENT USES
+
+ T  OE1       PROD
+ V  OE1       V1                       X1
+ V  OE1       V2                       X7
+ P  OE1       P1        0.67
+ P  OE1       P2        -0.67
+
+ T  OE2       PROD
+ V  OE2       V1                       X2
+ V  OE2       V2                       X8
+ P  OE2       P1        0.67
+ P  OE2       P2        -0.67
+
+ T  C1E1      PROD
+ V  C1E1      V1                       X5
+ V  C1E1      V2                       X7
+ P  C1E1      P1        1.0
+ P  C1E1      P2        1.0
+
+ T  C2E1      PROD
+ V  C2E1      V1                       X6
+ V  C2E1      V2                       X8
+ P  C2E1      P1        1.0
+ P  C2E1      P2        1.0
+
+ T  C3E1      PROD
+ V  C3E1      V1                       X3
+ V  C3E1      V2                       X5
+ P  C3E1      P1        1.0
+ P  C3E1      P2        -1.0
+
+ T  C3E2      PROD
+ V  C3E2      V1                       X3
+ V  C3E2      V2                       X5
+ P  C3E2      P1        -0.71
+ P  C3E2      P2        -1.0
+
+ T  C3E3      PROD
+ V  C3E3      V1                       X3
+ V  C3E3      V2                       X7
+ P  C3E3      P1        -1.3
+ P  C3E3      P2        1.0
+
+ T  C4E1      PROD
+ V  C4E1      V1                       X4
+ V  C4E1      V2                       X6
+ P  C4E1      P1        1.0
+ P  C4E1      P2        -1.0
+
+ T  C4E2      PROD
+ V  C4E2      V1                       X4
+ V  C4E2      V2                       X6
+ P  C4E2      P1        -0.71
+ P  C4E2      P2        -1.0
+
+ T  C4E3      PROD
+ V  C4E3      V1                       X4
+ V  C4E3      V2                       X8
+ P  C4E3      P1        -1.3
+ P  C4E3      P2        1.0
+
+GROUP USES
+
+ E  OBJ       OE1       4.0D-1         OE2       4.0D-1
+ E  C1        C1E1      5.88D-2
+ E  C2        C2E1      5.88D-2
+ E  C3        C3E1      4.0D+0         C3E2      2.0D+0
+ E  C3        C3E3      5.88D-2
+ E  C4        C4E1      4.0D+0         C4E2      2.0D+0
+ E  C4        C4E3      5.88D-2
+ E  C5        OE1       4.0D-1         OE2       4.0D-1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               3.9511634396
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS104
+
+INDIVIDUALS
+
+*   Element type PROD
+
+ T  PROD
+ F                      ( V1 ** P1 ) * ( V2 ** P2 )
+ G  V1                  P1 * ( V1 ** ( P1 - 1.0 ) )
+ G+                        * ( V2 ** P2 )
+ G  V2                  P2 * ( V1 ** P1 )
+ G+                        * ( V2 ** ( P2 - 1.0 ) )
+ H  V1        V1        P1 * ( V1 ** ( P1 - 2.0 ) )
+ H+                        * ( P1 - 1.0 ) * ( V2 ** P2 )
+ H  V1        V2        P1 * ( V1 ** ( P1 - 1.0 ) ) *
+ H+                     P2 * ( V2 ** ( P2 - 1.0 ) )
+ H  V2        V2        P2 * ( P2 - 1.0 ) * ( V1 ** P1 )
+ H+                        * ( V2 ** ( P2 - 2.0 ) )
+
+ENDATA

@@ -1,0 +1,186 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS79
+
+*   Problem :
+*   *********
+
+*   Source: problem 79 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B Debarsy, Apr 1990.
+
+*   classification OOR2-AY-5-3
+
+*   Number of variables
+
+ IE N                   5
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  C1        X1        1.0
+ E  C2        X2        1.0            X4        1.0
+ E  C3
+
+CONSTANTS
+
+ RF SQ2       SQRT      2.0
+ RM 3SQ2      SQ2       3.0
+ RA 2+3SQ2    3SQ2      2.0
+
+ Z  HS79      C1                       2+3SQ2
+
+ RF SQ2       SQRT      2.0
+ RM 2SQ2      SQ2       2.0
+ RA 2SQ2-2    2SQ2      -2.0
+
+ Z  HS79      C2                       2SQ2-2
+    HS79      C3        2.0
+
+BOUNDS
+
+ FR HS79      'DEFAULT'
+
+START POINT
+
+ XV HS79      'DEFAULT' 2.0
+
+ELEMENT TYPE
+
+*   Square
+
+ EV SQ        X
+ EP SQ        P
+
+*   Square of difference
+
+ EV DSQ       X                        Y
+ IV DSQ       U
+
+*   Fourth power of difference
+
+ EV DQU       X                        Y
+ IV DQU       U
+
+*   Cube
+
+ EV CB        X
+
+*   Product of two variables
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  E1        DSQ
+ V  E1        X                        X1
+ V  E1        Y                        X2
+
+ T  E2        DSQ
+ V  E2        X                        X2
+ V  E2        Y                        X3
+
+ T  E3        SQ
+ V  E3        X                        X1
+ P  E3        P         -1.0
+
+ T  E4        SQ
+ V  E4        X                        X2
+ P  E4        P         0.0
+
+ T  E5        SQ
+ V  E5        X                        X3
+ P  E5        P         0.0
+
+ T  E6        CB
+ V  E6        X                        X3
+
+ T  E7        DQU
+ V  E7        X                        X3
+ V  E7        Y                        X4
+
+ T  E8        DQU
+ V  E8        X                        X4
+ V  E8        Y                        X5
+
+ T  E9        2PR
+ V  E9        X                        X1
+ V  E9        Y                        X5
+
+GROUP USES
+
+ E  OBJ       E1        1.0            E2        1.0
+ E  OBJ       E3        1.0            E7        1.0
+ E  OBJ       E8        1.0
+ E  C1        E4        1.0            E6        1.0
+ E  C2        E5        -1.0
+ E  C3        E9        1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0787768
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS79
+
+TEMPORARIES
+
+ R  ARG
+
+INDIVIDUALS
+
+ T  SQ
+ A  ARG                 X + P
+ F                      ARG**2
+ G  X                   2.0 * ARG
+ H  X         X         2.0
+
+ T  DSQ
+ R  U         X         1.0            Y         -1.0
+ F                      U**2
+ G  U                   2.0 * U
+ H  U         U         2.0
+
+ T  DQU
+ R  U         X         1.0            Y         -1.0
+ F                      U**4
+ G  U                   4.0 * U**3
+ H  U         U         12.0 * U**2
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

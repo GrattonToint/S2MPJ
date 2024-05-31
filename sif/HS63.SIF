@@ -1,0 +1,106 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS63
+
+*   Problem :
+*   *********
+
+*   Source: problem 63 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M COLLIN, April 1990.
+
+*   classification QQR2-AY-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ E  C1        X1        8.0            X2        14.0
+ E  C1        X3        7.0
+ E  C2
+
+CONSTANTS
+
+    HS63      OBJ       -1000.0
+    HS63      C1        56.0
+    HS63      C2        25.0
+
+START POINT
+
+    HS63      X1        2.0
+    HS63      X2        2.0
+    HS63      X3        2.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV I2PR      X                        Y
+ EV I2PR      Z
+ IV I2PR      U                        V
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        X                        X1
+
+ V  E2        X                        X2
+
+ V  E3        X                        X3
+
+ T  E4        I2PR
+ V  E4        X                        X1
+ V  E4        Y                        X2
+ V  E4        Z                        X3
+
+GROUP USES
+
+ XE OBJ       E1        -1.0           E2        -2.0
+ XE OBJ       E3        -1.0           E4        -1.0
+
+ XE C2        E1                       E2
+ XE C2        E3
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               961.7151721
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS63
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  I2PR
+ R  U         X         1.0
+ R  V         Y         1.0            Z         1.0
+ F                      U * V
+ G  U                   V
+ G  V                   U
+ H  U         V         1.0
+
+ENDATA

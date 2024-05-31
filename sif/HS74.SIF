@@ -1,0 +1,168 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS74
+
+*   Problem :
+*   *********
+
+*   Source: problem 74 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: B Debarsy, Apr 1990.
+
+*   classification OOR2-AY-4-5
+
+*   Number of variables
+
+ IE N                   4
+
+*   Problem parameters
+
+ RE A                   0.55
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X1        3.0            X2          2.0
+ G  C1        X4        1.0            X3          -1.0
+ G  C2        X3        1.0            X4          -1.0
+ E  C3        X1        -1.0
+ E  C4        X2        -1.0
+ E  C5
+
+CONSTANTS
+
+ RM -A        A         -1.0
+
+ Z  HS74      C1                       -A
+ Z  HS74      C2                       -A
+    HS74      C3        -894.8
+    HS74      C4        -894.8
+    HS74      C5        -1294.8
+
+BOUNDS
+
+ UP HS74      X1        1200.0
+ UP HS74      X2        1200.0
+ ZL HS74      X3                       -A
+ ZU HS74      X3                       A
+ ZL HS74      X4                       -A
+ ZU HS74      X4                       A
+
+ELEMENT TYPE
+
+ EV CB        X
+
+ EV SIN       X
+ EP SIN       P
+
+ EV SIN2      X                        Y
+ IV SIN2      U
+
+ELEMENT USES
+
+ T  E1        CB
+ V  E1        X                        X1
+
+ T  E2        CB
+ V  E2        X                        X2
+
+ T  E3        SIN
+ V  E3        X                        X3
+ P  E3        P         0.25
+
+ T  E4        SIN
+ V  E4        X                        X4
+ P  E4        P         0.25
+
+ T  E5        SIN
+ V  E5        X                        X3
+ P  E5        P         -0.25
+
+ T  E6        SIN
+ V  E6        X                        X4
+ P  E6        P         -0.25
+
+ T  E7        SIN2
+ V  E7        X                        X3
+ V  E7        Y                        X4
+
+ T  E8        SIN2
+ V  E8        X                        X4
+ V  E8        Y                        X3
+
+GROUP USES
+
+ RE TMP                 3.0
+ RD TMP       TMP       0.000002
+
+ E  OBJ       E1        1.0E-6
+ ZE OBJ       E2                       TMP
+ E  C3        E3        -1000.0        E4        -1000.0
+ E  C4        E5        1000.0         E7        1000.0
+ E  C5        E6        1000.0         E8        1000.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               5126.4981
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS74
+
+TEMPORARIES
+
+ R  ARG
+ R  S
+ R  C
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  CB
+ F                      X**3
+ G  X                   3 * (X**2)
+ H  X         X         6 * X
+
+ T  SIN
+ A  ARG                 X + P
+ A  S                   SIN( ARG )
+ A  C                   COS( ARG )
+ F                      S
+ G  X                   C
+ H  X         X         -S
+
+ T  SIN2
+ R  U         X         1.0            Y         -1.0
+ A  ARG                 U - 0.25
+ A  C                   COS( ARG )
+ A  S                   SIN( ARG )
+ F                      S
+ G  U                   C
+ H  U         U         -S
+
+ENDATA

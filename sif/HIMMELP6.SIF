@@ -1,0 +1,234 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELP6
+
+*   Problem :
+*   *********
+
+*   A nonlinear problem with inequality constraints, attributed to Himmelblau
+*   by B.N. Pshenichnyj (case V).
+
+*   The problem is nonconvex and has redundant constraints at the solution.
+
+*   Source: 
+*   B.N. Pshenichnyj
+*   "The Linearization Method for Constrained Optimization",
+*   Springer Verlag, SCM Series 22, Heidelberg, 1994
+
+*   SIF input: Ph. Toint, December 1994.
+
+*   classification OQR2-AN-2-5
+
+*   Problem data
+
+ RE B1                  0.1963666677
+ RA B1        B1        75.0
+ RE B2                  -.8112755343
+ RA B2        B2        -3.0
+ RE B6                  -.8306567613
+ RA B6        B6        -6.0
+
+ RM -B2       B2        -1.0
+ RM -B6       B6        -1.0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ ZN OBJ       X1                       -B2
+ ZN OBJ       X2                       -B6
+
+ XG C5
+ XL C8        X2        -1.0
+ XL C9        X1        5.0            X2        100.0
+ XL C11       X1        1.0            X2        -1.5
+ XL C12       X1        -1.0           X2        0.16
+
+CONSTANTS
+
+ Z  HIMMELP6  OBJ                      B1
+ X  HIMMELP6  C5        700.0
+ X  HIMMELP6  C9        2775.0
+ X  HIMMELP6  C11       22.5
+ X  HIMMELP6  C12       41.4
+
+BOUNDS
+
+ UP HIMMELP6  X1        75.0
+ UP HIMMELP6  X2        65.0
+
+START POINT
+
+ XV HIMMELP6  X1        68.8
+ XV HIMMELP6  X2        31.2
+
+*   Solution
+
+*XV HIMMELP6  X1        75.0
+*XV HIMMELP6  X2        65.0
+
+ELEMENT TYPE
+
+ EV OBNL      X                        Y
+ EV 2PR       X                        Y
+ EV SQ        X
+
+ELEMENT USES
+
+ T  OB        OBNL
+ ZV OB        X                        X1
+ ZV OB        Y                        X2
+
+ T  X1X2      2PR
+ ZV X1X2      X                        X1
+ ZV X1X2      Y                        X2
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+ 
+GROUP USES
+
+ XE OBJ       OB         -1.0
+ XE C5        X1X2
+ XE C8        X1SQ       0.008
+ XE C9        X2SQ       -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                -59.01312394
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELP6
+
+TEMPORARIES
+
+ R  B3
+ R  B4
+ R  B5
+ R  B7
+ R  B8
+ R  B9
+ R  B10
+ R  B11
+ R  B12
+ R  B13
+ R  B14
+ R  B15
+ R  B16
+ R  B17
+ R  B18
+ R  B19
+ R  B20
+ R  E
+ R  DEDX
+ R  DEDY
+ R  D2EDXX
+ R  D2EDXY
+ R  D2EDYY
+ R  A
+ R  DADX
+ R  D2ADXX
+ R  B
+ R  DBDX
+ R  D2BDXX
+ R  C
+ R  DCDX
+ R  D2CDXX
+ R  F
+ R  DFDY
+ R  D2FDYY
+ R  G
+ R  DGDX
+ R  D2GDXX
+
+ M  EXP
+
+INDIVIDUALS
+
+ T  OBNL
+ A  B3                   .1269366345
+ A  B4                   -0.20567665
+ A  B4                   0.01 * B4
+ A  B5                   0.103450d-4
+ A  B7                   .0302344793
+ A  B8                   -0.12813448
+ A  B8                   0.01 * B8
+ A  B9                   0.352599d-4
+ A  B10                  -0.2266d-6
+ A  B11                 0.2564581253
+ A  B12                  -.003460403
+ A  B13                 0.135139d-4
+ A  B14                 -.1064434908
+ A  B14                 B14 - 28.0
+ A  B15                 -0.52375d-5
+ A  B16                 -0.63d-8
+ A  B17                 0.7d-9
+ A  B18                 0.3405462
+ A  B18                 0.001 * B18
+ A  B19                 -0.16638d-5
+ A  B20                 -2.86731123
+ A  B20                 B20-0.92d-8
+ A  A                   B7*X+B8*X**2+B9*X**3+B10*X**4
+ A  DADX                B7+2.0*B8*X+3.0*B9*X**2+4.0*B10*X**3
+ A  D2ADXX              2.0*B8+6.0*B9*X+12.0*B10*X**2
+ A  B                   B18*X+B15*X**2+B16*X**3 
+ A  DBDX                B18+2.0*B15*X+3.0*B16*X**2
+ A  D2BDXX              2.0*B15+6.0*B16*X
+ A  C                   B3*X**2+B4*X**3+B5*X**4
+ A  DCDX                2.0*B3*X+3.0*B4*X**2+4.0*B5*X**3
+ A  D2CDXX              2.0*B3+6.0*B4*X+12.0*B5*X**2
+ A  F                   B11*Y**2+B12*Y**3+B13*Y**4
+ A  DFDY                2.0*B11*Y+3.0*B12*Y**2+4.0*B13*Y**3
+ A  D2FDYY              2.0*B11+ 6.0*B12*Y+12.0*B13*Y**2
+ A  G                   B17*X**3+B19*X
+ A  DGDX                B19 + 3.0 * B17 * X**2
+ A  D2GDXX              6.0 * B17 * X
+ A  E                   EXP( 0.0005 * X * Y )
+ A  DEDX                0.0005 * Y * E
+ A  DEDY                0.0005 * X * E
+ A  D2EDXX              0.0005 * Y * DEDX
+ A  D2EDXY              0.0005 * ( Y * DEDY + E )
+ A  D2EDYY              0.0005 * X * DEDY
+ F                      C + Y * A + F + B14 / ( 1.0 + Y ) 
+ F+                     + B * Y**2 + G * Y**3 + B20 * E
+ G  X                   DCDX + Y * DADX + DBDX * Y**2
+ G+                     + DGDX * Y**3 + B20 * DEDX
+ G  Y                   A + DFDY - B14 / ( 1.0 + Y )**2
+ G+                     + 2.0 * B * Y + 3.0 * G * Y**2
+ G+                     + B20 * DEDY
+ H  X         X         D2CDXX + Y * D2ADXX + D2BDXX * Y**2
+ H+                     + D2GDXX * Y**3 + B20 * D2EDXX
+ H  X         Y         DADX + 2.0 * Y * DBDX 
+ H+                     + 3.0 * DGDX *Y**2 + B20 * D2EDXY
+ H  Y         Y         D2FDYY + 2.0 * B14 / ( 1.0 + Y )**3
+ H+                     + 2.0 * B + 6.0 * G * Y
+ H+                     + B20 * D2EDYY
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

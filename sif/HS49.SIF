@@ -1,0 +1,137 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS49
+
+*   Problem :
+*   *********
+
+*   Source: problem 49 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+*   updated to improve numerics, Nick Gould, Oct 2003
+
+*   classification OLR2-AY-5-2
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   5
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 6                   6
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0            X2        1.0
+ E  CON1      X3        1.0            X4        4.0
+ E  CON2      X3        1.0            X5        5.0
+
+CONSTANTS
+
+    HS49      CON1      7.0
+    HS49      CON2      6.0
+
+BOUNDS
+
+ FR HS49      'DEFAULT'
+
+START POINT
+
+    HS49      X1        10.0
+    HS49      X2        7.0
+    HS49      X3        2.0
+    HS49      X4        -3.0
+    HS49      X5        0.8
+
+ELEMENT TYPE
+
+ EV SQ1M2     V1                       V2
+ IV SQ1M2     U
+ EV VM12      V
+ EV VM14      V
+ EV VM16      V
+
+ELEMENT USES
+
+ T  E1        SQ1M2
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+ T  E2        VM12
+ V  E2        V                        X3
+
+ T  E3        VM14
+ V  E3        V                        X4
+
+ T  E4        VM16
+ V  E4        V                        X5
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+
+OBJECT BOUND
+
+ LO HS49                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS49
+
+TEMPORARIES
+
+ R  VM1 
+
+INDIVIDUALS
+
+ T  SQ1M2
+ R  U         V1        1.0            V2        -1.0
+ F                      U ** 2
+ G  U                   2.0 * U
+ H  U         U         2.0
+
+ T  VM12
+ A  VM1                 V - 1.0
+ F                      VM1 ** 2
+ G  V                   2.0 * VM1 
+ H  V         V         2.0
+
+ T  VM14
+ A  VM1                 V - 1.0
+ F                      VM1  ** 4
+ G  V                   4.0 * VM1 ** 3
+ H  V         V         12.0 * VM1 ** 2
+
+ T  VM16
+ A  VM1                 V - 1.0
+ F                      VM1  ** 6
+ G  V                   6.0 * VM1 ** 5
+ H  V         V         30.0 * VM1 ** 4
+
+ENDATA

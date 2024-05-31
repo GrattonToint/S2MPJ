@@ -1,0 +1,135 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HETmZ
+
+*   Problem :
+*   *********
+
+*   A nonlinear programming formulation of a discretization of
+*   a nonlinear Chebychev problem.
+
+*   The problem is
+
+*       min  max || phi(x,w) ||, for all w in the interval I.
+*        x    w
+
+*   I is discretized, and the problem solved over the
+*   discrete points.
+
+*   Nonlinear programming formulation
+*
+*       min   u     s.t.  u - phi >= 0, u + phi >= 0
+*       x,u
+
+*   Specific problem: I = [-1,1]
+*   phi(x,w) = (1-w^2) - (0.5 x^2 - 2 x w )
+ 
+*   Source: R. Hettich and P. Znecke,
+*   "Numerische Methoden der Approximation und semi-infiniter optimierung",
+*   Teubener Studienbucher, 1982
+
+*   SIF input: Nick Gould, February, 1994.
+
+*   classification LQR2-AN-2-V
+
+*   Discretization
+
+*IE M                   2
+*IE M                   100
+ IE M                   500
+
+*   Define the interval
+
+ RE LOWER               -1.0
+ RE UPPER               1.0
+
+*   Define constants
+
+ RE ONE                 1.0
+ IE 0                   0
+ IE 1                   1
+
+ R- DIFF      UPPER                    LOWER
+ RI RM        M
+ R/ H         DIFF                     RM
+
+VARIABLES
+
+    U
+    X
+
+GROUPS
+
+ N  OBJ       U         1.0
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+
+ RM 2W        W         2.0
+ RM -2W       2W        -1.0
+
+ XG LO(I)     U         1.0            
+ ZG LO(I)     X                        2W
+ XG UP(I)     U         1.0            
+ ZG UP(I)     X                        -2W
+
+ ND
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* W         RI                       H
+ R+ W         W                        LOWER
+ 
+ R* W**2      W                        W
+ RS 1-W**2    W**2      1.0
+ RM -1+W**2   1-W**2    -1.0
+ 
+ Z  HET-Z     LO(I)                    -1+W**2
+ Z  HET-Z     UP(I)                    1-W**2
+
+ ND
+
+BOUNDS
+
+ FR HET-Z     'DEFAULT'
+
+ELEMENT TYPE
+
+ EV QUAD      X
+
+ELEMENT USES
+
+ T  QUAD      QUAD
+ V  QUAD      X                        X
+
+GROUP USES
+
+ DO I         0                        M
+ XE LO(I)     QUAD      -1.0
+ XE UP(I)     QUAD
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HETmZ
+
+INDIVIDUALS
+
+ T  QUAD
+ F                      0.5 * X * X
+ G  X                   X
+ H  X         X         1.0
+
+ENDATA
+

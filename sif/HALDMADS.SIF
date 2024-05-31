@@ -1,0 +1,146 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HALDMADS
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in five variables.
+
+*   Source: 
+*   J. Hald and K. Madsen,
+*   "Combined LP and quasi-Newton methods for minimax optimization",
+*   Mathematical Programming 20, pp. 49-62, 1981.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AN-6-42
+
+ IE 1                   1
+ IE 5                   5
+ IE 21                  21
+
+ RE T                   -1.0
+ DO I         1                        21
+ A= Y(I)      T
+ A( EY(I)     EXP                      T
+ RA T         T         0.1
+ OD I
+
+VARIABLES
+
+ DO I         1                        5
+ X  X(I)
+ OD I
+
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ DO I         1                        21
+ XL F(I)      U         -1.0 
+ XL MF(I)     U         -1.0
+ OD I
+
+CONSTANTS
+
+ DO I         1                        21
+ Z  HALDMADS  F(I)                     EY(I)
+ AM -EY(I)    EY(I)     -1.0
+ Z  HALDMADS  MF(I)                    -EY(I)
+ OD I
+
+BOUNDS
+
+*   All variables are free
+
+ FR HALDMADS  'DEFAULT'
+
+START POINT
+
+    HALDMADS  X1        0.5
+
+ELEMENT TYPE
+
+ EV HM        V1                       V2
+ EV HM        V3                       V4
+ EV HM        V5
+ EP HM        Y
+
+ELEMENT USES
+
+ DO I         1                        21
+ XT EL(I)     HM
+ ZV EL(I)     V1                       X1
+ ZV EL(I)     V2                       X2
+ ZV EL(I)     V3                       X3
+ ZV EL(I)     V4                       X4
+ ZV EL(I)     V5                       X5
+ ZP EL(I)     Y                        Y(I)
+ OD I
+
+GROUP USES
+
+ DO I         1                        21
+ XE F(I)      EL(I)     1.0
+ XE MF(I)     EL(I)     -1.0
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0001207
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HALDMADS
+
+TEMPORARIES
+
+ R  N
+ R  D
+ R  YY
+ R  YYY
+ R  DD
+ R  DDD
+
+INDIVIDUALS
+
+ T  HM
+ A  YY                  Y * Y
+ A  YYY                 YY * Y
+ A  N                   V1 + Y * V2
+ A  D                   1.0 + V3 * Y + V4 * YY + V5 * YYY
+ A  DD                  D * D
+ A  DDD                 DD * D
+ F                      N / D
+ G  V1                  1.0 / D
+ G  V2                  Y / D
+ G  V3                  - N * Y / DD
+ G  V4                  - N * YY / DD
+ G  V5                  - N * YYY / DD
+ H  V1        V3        - Y / DD
+ H  V1        V4        - YY / DD
+ H  V1        V5        - YYY / DD
+ H  V2        V3        - YY / DD
+ H  V2        V4        - YYY / DD
+ H  V2        V5        - YY * YY / DD
+ H  V3        V3        2.0 * N * YY / DDD
+ H  V3        V4        2.0 * N * YYY / DDD
+ H  V3        V5        2.0 * N * YY * YY / DDD
+ H  V4        V4        2.0 * N * YY * YY / DDD
+ H  V4        V5        2.0 * N * YY * YYY / DDD
+ H  V5        V5        2.0 * N * YYY * YYY / DDD
+
+ENDATA
+

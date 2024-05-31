@@ -1,0 +1,83 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS5
+
+*   Problem :
+*   *********
+
+*   Source: problem 5 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification OBR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X1        1.0            X2        1.0
+ N  G2        X1        1.0            X2        -1.0
+ N  G3        X1        -1.5           X2        2.5
+
+CONSTANTS
+
+    HS5       G3        -1.0
+
+BOUNDS
+
+ LO HS5       X1        -1.5
+ UP HS5       X1        4.0
+ LO HS5       X2        -3.0
+ UP HS5       X2        3.0
+
+GROUP TYPE
+
+ GV SINE      GVAR
+ GV SQ        GVAR
+
+GROUP USES
+
+ T  G1        SINE
+ T  G2        SQ
+
+OBJECT BOUND
+
+*   Problem is trivially bounded below by -13.5
+
+ LO HS5                 -13.5
+
+*   Solution
+
+*LO SOLTN               -1.9132229
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS5
+
+INDIVIDUALS
+
+ T  SINE
+ F                      SIN(GVAR)
+ G                      COS(GVAR)
+ H                      -SIN(GVAR)
+
+ T  SQ
+ F                      GVAR*GVAR
+ G                      2.0*GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,115 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EXPFIT
+
+*   Problem :
+*   *********
+*   A simple exponential fit in 2 variables
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "LANCELOT, a Fortran package for large-scale nonlinear optimization",
+*   Springer Verlag, FUNDP, 1992.
+
+*   SIF input: Ph. Toint, Jan 1991.
+
+*   classification SUR2-AN-2-0
+
+*   Number of points
+
+ IE P                    10
+
+*   Stepsize
+
+ RE H                    0.25
+
+*   Other parameters
+
+ IE 1                    1
+
+VARIABLES
+
+    ALPHA
+    BETA
+
+GROUPS
+
+ DO i         1                        P
+ XN R(i)
+ OD i
+
+CONSTANTS
+
+ DO i         1                        P
+ RI Reali     i
+ R* Reali*H   Reali                    H
+ Z  EXPFIT    R(i)                     Reali*H
+ OD i
+
+BOUNDS
+
+*   Free variables inside the unit square
+
+ FR EXPFIT    'DEFAULT'
+
+ELEMENT TYPE
+
+ EV EXPIH     V                        W
+ EP EXPIH     RI
+
+ELEMENT USES
+
+ DO i         1                        P
+ RI Reali     i
+ XT E(i)      EXPIH
+ ZV E(i)      V                        ALPHA
+ ZV E(i)      W                        BETA
+ ZP E(i)      RI                       Reali
+ OD i
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+ DO i         1                        P
+ XE R(i)      E(i)
+ OD i
+
+ENDATA
+
+ELEMENTS      EXPFIT
+
+TEMPORARIES
+
+ R  IH
+ R  EXPWIH
+ M  EXP
+
+INDIVIDUALS
+
+ T  EXPIH
+ A  IH                  0.25 * RI
+ A  EXPWIH              EXP( W * IH )
+ F                      V * EXPWIH
+ G  V                   EXPWIH
+ G  W                   V * IH * EXPWIH
+ H  V         W         IH * EXPWIH
+ H  W         W         V * IH * IH * EXPWIH
+
+ENDATA
+
+GROUPS        EXPFIT
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR**2
+ G                      2.0 * GVAR
+ H                      2.0
+
+ENDATA

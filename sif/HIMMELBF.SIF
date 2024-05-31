@@ -1,0 +1,171 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HIMMELBF
+
+*   Problem :
+*   *********
+
+*   A 4 variables data fitting problems by Himmelblau.
+
+*   Source: problem 32 in
+*   D.H. Himmelblau,
+*   "Applied nonlinear programming",
+*   McGraw-Hill, New-York, 1972.
+
+*   See Buckley#76 (p. 66)
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-4-0
+
+*   Problem data
+
+ RE A1                  0.0
+ RE A2                  0.000428
+ RE A3                  0.001000
+ RE A4                  0.001610
+ RE A5                  0.002090
+ RE A6                  0.003480
+ RE A7                  0.005250
+
+ RE B1                  7.391
+ RE B2                  11.18
+ RE B3                  16.44
+ RE B4                  16.20
+ RE B5                  22.20
+ RE B6                  24.02
+ RE B7                  31.32
+
+*   Parameters
+
+ IE 1                   1
+ IE 7                   7
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+
+GROUPS
+
+ DO I         1                        7
+ XN G(I)      'SCALE'   0.0001
+ ND
+
+CONSTANTS
+
+ X  HIMMELBF  'DEFAULT' 1.0
+
+BOUNDS
+
+ FR HIMMELBF  'DEFAULT'
+
+START POINT
+
+    HIMMELBF  X1        2.7
+    HIMMELBF  X2        90.0
+    HIMMELBF  X3        1500.0
+    HIMMELBF  X4        10.0
+
+ELEMENT TYPE
+
+ EV HF        XA                       XB
+ EV HF        XC                       XD
+ EP HF        A                        B
+
+ELEMENT USES
+
+ T  'DEFAULT' HF
+
+ DO I         1                        7
+ ZV E(I)      XA                       X1
+ ZV E(I)      XB                       X2
+ ZV E(I)      XC                       X3
+ ZV E(I)      XD                       X4
+ ZP E(I)      A                        A(I)
+ ZP E(I)      B                        B(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        7
+ XE G(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               318.572
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HIMMELBF
+
+TEMPORARIES
+
+ R  U
+ R  V
+ R  V2
+ R  AB
+ R  A2
+ R  T
+
+INDIVIDUALS
+
+ T  HF
+
+ A  U                   XA * XA + A * XB * XB + A * A * XC * XC
+ A  V                   B * ( 1.0 + A * XD * XD )
+ A  V2                  V * V
+ A  AB                  A * B
+ A  A2                  A * A
+ A  T                   -4.0 * AB / V2
+
+ F                      U / V
+ G  XA                  2.0 * XA / V
+ G  XB                  2.0 * A * XB / V
+ G  XC                  2.0 * A2* XC / V
+ G  XD                  - 2.0 * AB * XD * U / V2
+
+ H  XA        XA        2.0 / V
+ H  XA        XD        T * XD * XA
+ H  XB        XB        2.0 * A / V
+ H  XB        XD        T * A * XD * XB
+ H  XC        XC        2.0 * A2 / V
+ H  XC        XD        T * A * XD * XC
+ H  XD        XD        -2.0 * AB * U / V2
+ H+                     + 8.0 * ( AB * XD ) **2 * U / ( V2 * V )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HIMMELBF
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,110 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS21MOD
+
+*   Problem :
+*   *********
+
+*   Source: problem 21 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, April 1990
+
+*   classification SLR2-AN-7-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+    X6
+    X7
+
+GROUPS
+
+ N  OBJ
+
+ G  CON1      X1        10.0           X2        -1.0
+
+CONSTANTS
+
+    HS21MOD   OBJ       100.0
+    HS21MOD   CON1      10.0
+
+BOUNDS
+
+ LO HS21MOD   X1        2.0
+ UP HS21MOD   X1        50.0
+ LO HS21MOD   X2        -50.0
+ UP HS21MOD   X2        50.0
+ LO HS21MOD   X3        -1.0D+30
+ UP HS21MOD   X3        50.0
+ LO HS21MOD   X4        2.0
+ UP HS21MOD   X4        1.0D+30
+ LO HS21MOD   X5        -1.0D+30
+ UP HS21MOD   X5        1.0D+30
+ LO HS21MOD   X6        -1.0D+30
+ UP HS21MOD   X6        0.0D+0
+ LO HS21MOD   X7        0.0D+0
+ UP HS21MOD   X7        1.0D+30
+
+START POINT
+
+    HS21MOD   X1        -1.0
+    HS21MOD   X2        -1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        V1                       X1
+ V  E2        V1                       X2
+ V  E3        V1                       X3
+ V  E4        V1                       X4
+ V  E5        V1                       X5
+ V  E6        V1                       X6
+ V  E7        V1                       X7
+
+GROUP USES
+
+ E  OBJ       E1        0.01           E2
+ E  OBJ       E3        0.01           E4
+ E  OBJ       E5        0.01
+ E  OBJ       E6        0.01           E7
+
+OBJECT BOUND
+
+ LO HS21MOD             -100.0
+
+*   Solution
+
+*LO SOLTN               -99.96
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS21MOD
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

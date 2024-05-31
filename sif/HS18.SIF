@@ -1,0 +1,102 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS18
+
+*   Problem :
+*   *********
+
+*   Source: problem 18 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn March 1990
+
+*   classification SQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ G  CON1
+ G  CON2
+
+CONSTANTS
+
+    HS18      CON1      25.0
+    HS18      CON2      25.0
+
+BOUNDS
+
+ LO HS18      X1        2.0
+ UP HS18      X1        50.0
+ UP HS18      X2        50.0
+
+START POINT
+
+    HS18      X1        2.0
+    HS18      X2        2.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        2PR
+ V  E3        V1                       X1
+ V  E3        V2                       X2
+
+GROUP USES
+
+ E  OBJ       E1        0.01           E2
+ E  CON1      E3
+ E  CON2      E1                       E2
+
+OBJECT BOUND
+
+ LO HS18                0.0
+
+*   Solution
+
+*LO SOLTN               5.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS18
+
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA

@@ -1,0 +1,102 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS31
+
+*   Problem :
+*   *********
+
+*   Source: problem 31 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: N. Gould, Dec 1989.
+
+*   classification QQR2-AN-3-1
+
+ IE 1                            1
+ IE 3                            3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ G  CONSTR
+
+CONSTANTS
+
+    C1        CONSTR           1.0
+
+BOUNDS
+
+ LO BOUNDS    X1             -10.0
+ LO BOUNDS    X2               1.0
+ LO BOUNDS    X3             -10.0
+ UP BOUNDS    X1              10.0
+ UP BOUNDS    X2              10.0
+ UP BOUNDS    X3               1.0
+
+START POINT
+
+ XV START     'DEFAULT'        1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ DO I         1                        3
+ XT OBJE(I)   SQ
+ ZV OBJE(I)   V1                       X(I)
+ ND
+
+ T  CONSTR1   2PR
+ V  CONSTR1   V1                       X1
+ V  CONSTR1   V2                       X2
+
+GROUP USES
+
+ E  OBJ       OBJE1     9.0            OBJE2
+ E  OBJ       OBJE3     9.0
+ E  CONSTR    CONSTR1
+
+OBJECT BOUND
+
+*  Solution
+
+*LO SOLTN               6.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS31
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA

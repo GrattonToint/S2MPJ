@@ -1,0 +1,192 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS25
+
+*   Problem :
+*   *********
+
+*   A nonlinear least squares problem with bounds.
+
+*   Source: problem 25 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M Collin, Mar 1990.
+
+*   classification SBR2-AN-3-0
+
+*   Number of variables
+
+ IE N                   3
+
+*   Parameters
+
+ IE 1                   1
+ IE 99                  99
+
+ RE 2/3                 0.66666666666
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ DO I         1                        99
+ XN O(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        99
+ RI IR        I
+ RM I/100     IR        0.01
+ Z  HS25      O(I)                     I/100
+ ND
+
+BOUNDS
+
+ LO HS25      X1        0.1
+ UP HS25      X1        100.0
+
+ LO HS25      X2        0.0
+ UP HS25      X2        25.6
+
+ LO HS25      X3        0.0
+ UP HS25      X3        5.0
+
+START POINT
+
+    HS25      X1        100.0
+    HS25      X2        12.5
+    HS25      X3        3.0
+
+ELEMENT TYPE
+
+ EV WFI       X                        Y
+ EV WFI       Z
+ EP WFI       W
+
+ELEMENT USES
+
+ DO I         1                        99
+
+ RI IR        I
+ RM I/100     IR        0.01
+ R( LOG01I    LOG                      I/100
+ RM M50LOG    LOG01I    -50.0
+ R( EXPLOG    LOG                      M50LOG
+ R* EXPL2/3   EXPLOG                   2/3
+ R( EXP2/3    EXP                      EXPL2/3
+ RA UI        EXP2/3    25.0
+
+ XT E(I)      WFI
+ ZV E(I)      X                        X1
+ ZV E(I)      Y                        X2
+ ZV E(I)      Z                        X3
+ ZP E(I)      W                        UI
+
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        99
+ XE O(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+ LO HS25                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS25
+
+TEMPORARIES
+
+ R  EXPO
+ R  WMY
+ R  WMYEZ
+ R  LWMY
+ R  XI
+ R  X2I
+ R  X3I
+
+ M  LOG
+ M  EXP
+
+INDIVIDUALS
+
+ T  WFI
+
+ A  XI                  1.0 / X
+ A  X2I                 XI * XI
+ A  X3I                 X2I * XI
+ A  WMY                 W - Y
+ A  WMYEZ               WMY**Z
+ A  LWMY                LOG( WMY )
+ A  EXPO                EXP( - XI * WMYEZ )
+
+ F                      EXPO
+
+ G  X                   X2I * WMYEZ  * EXPO
+ G  Y                   XI * Z * WMY**(Z-1.0)  * EXPO
+ G  Z                   - XI * LWMY * WMYEZ * EXPO
+
+ H  X         X         EXPO * WMYEZ * X3I *
+ H+                     ( -2.0 + XI * WMY ** Z )
+
+ H  X         Y         EXPO * Z * X2I * WMY**(Z - 1.0) *
+ H+                     ( - 1.0 + XI * WMYEZ )
+
+ H  X         Z         EXPO * X2I * WMYEZ * LWMY *
+ H+                     ( 1.0 - XI * WMYEZ )
+
+ H  Y         Y         EXPO * XI * WMY**(Z - 2.0) * Z *
+ H+                     ( - Z + 1.0 + XI * Z * WMYEZ )
+
+ H  Y         Z         EXPO * XI * WMY**(Z - 1.0) *
+ H+                     ( 1.0 + Z * LWMY * (1.0  - XI * WMYEZ ))
+
+ H  Z         Z         EXPO * WMYEZ * XI * LWMY**2 *
+ H+                     ( - 1.0 + XI * WMYEZ )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS25
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

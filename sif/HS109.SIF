@@ -1,0 +1,357 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS109
+
+*   Problem :
+*   *********
+
+*   Source: problem 80 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: A.R. Conn, June 1990.
+
+*   classification OOR2-AY-9-10
+
+*   Number of variables
+
+ IE N                   9
+
+*   Problem parameters
+
+ RE A                   50.176
+ RM .0007+A   A         0.0007533
+ RM -22+A     A         -22.938
+ RM 22+A      A         22.938
+ RM -881+A    A         -881.779
+ RM -A        A         -1.0
+ RM 200A      A         200.0
+ RM -400A     A         -400.0
+ RF B         SIN       0.25
+ RM 2B        B         2.0
+ RF C         COS       0.25
+ RM -2C       C         -2.0
+ RM -3C       C         -3.0
+ RE D                   0.55
+ RM -D        D         -1.0
+ RE -E                  -2250000.0
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X1        3.0            X2          2.0
+ G  C1        X4        1.0            X3          -1.0
+ G  C2        X3        1.0            X4          -1.0
+ G  C3
+ G  C4
+ ZE C5        X1                       -A
+ ZE C6        X2                       -A
+ E  C7
+ ZE C8        X8                       A
+ ZE C9        X9                       A
+ E  C10
+
+CONSTANTS
+
+ Z  HS109     C1                       -D
+ Z  HS109     C2                       -D
+ Z  HS109     C3                       -E
+ Z  HS109     C4                       -E
+ Z  HS109     C5                       -400A
+ Z  HS109     C6                       -400A
+ Z  HS109     C7                       -881+A
+ Z  HS109     C8                       200A
+ Z  HS109     C9                       200A
+ Z  HS109     C10                      22+A
+
+BOUNDS
+
+ ZL HS109     X3                       -D
+ ZL HS109     X4                       -D
+ ZU HS109     X3                       D
+ ZU HS109     X4                       D
+ LO HS109     X5        196.0
+ LO HS109     X6        196.0
+ LO HS109     X7        196.0
+ UP HS109     X5        252.0
+ UP HS109     X6        252.0
+ UP HS109     X7        252.0
+ LO HS109     X8        -400.0
+ LO HS109     X9        -400.0
+ UP HS109     X8        800.0
+ UP HS109     X9        800.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV CB        X
+
+ EV SIN       X                        Y
+ EV SIN       Z
+ EP SIN       P
+
+ EV SIN2      W                        X
+ EV SIN2      Y                        Z
+ IV SIN2      U1                       U2
+ IV SIN2      U3
+
+ EV COS       X                        Y
+ EV COS       Z
+ EP COS       P
+
+ EV COS2      W                        X
+ EV COS2      Y                        Z
+ IV COS2      U1                       U2
+ IV COS2      U3
+
+ELEMENT USES
+
+ T  E1        CB
+ V  E1        X                        X1
+
+ T  E2        CB
+ V  E2        X                        X2
+
+ T  E3        SQ
+ V  E3        X                        X1
+
+ T  E4        SQ
+ V  E4        X                        X8
+
+ T  E5        SQ
+ V  E5        X                        X2
+
+ T  E6        SQ
+ V  E6        X                        X9
+
+ T  E7        SIN
+ V  E7        X                        X5
+ V  E7        Y                        X6
+ V  E7        Z                        X3
+ P  E7        P         -1.0
+
+ T  E8        SIN
+ V  E8        X                        X5
+ V  E8        Y                        X7
+ V  E8        Z                        X4
+ P  E8        P         -1.0
+
+ T  E9        SQ
+ V  E9        X                        X5
+
+ T  E10       SIN
+ V  E10       X                        X5
+ V  E10       Y                        X6
+ V  E10       Z                        X3
+ P  E10       P         1.0
+
+ T  E11       SIN2
+ V  E11       W                        X6
+ V  E11       X                        X7
+ V  E11       Y                        X3
+ V  E11       Z                        X4
+
+ T  E12       SQ
+ V  E12       X                        X6
+
+ T  E13       SIN
+ V  E13       X                        X5
+ V  E13       Y                        X7
+ V  E13       Z                        X4
+ P  E13       P         1.0
+
+ T  E14       SIN2
+ V  E14       W                        X6
+ V  E14       X                        X7
+ V  E14       Y                        X4
+ V  E14       Z                        X3
+
+ T  E15       SQ
+ V  E15       X                        X7
+
+ T  E16       COS
+ V  E16       X                        X5
+ V  E16       Y                        X6
+ V  E16       Z                        X3
+ P  E16       P         -1.0
+
+ T  E17       COS
+ V  E17       X                        X5
+ V  E17       Y                        X7
+ V  E17       Z                        X4
+ P  E17       P         -1.0
+
+ T  E18       SQ
+ V  E18       X                        X5
+
+ T  E19       SQ
+ V  E19       X                        X5
+
+ T  E20       COS
+ V  E20       X                        X5
+ V  E20       Y                        X6
+ V  E20       Z                        X3
+ P  E20       P         1.0
+
+ T  E21       COS2
+ V  E21       W                        X6
+ V  E21       X                        X7
+ V  E21       Y                        X3
+ V  E21       Z                        X4
+
+ T  E22       SQ
+ V  E22       X                        X6
+
+ T  E23       SQ
+ V  E23       X                        X6
+
+ T  E24       COS
+ V  E24       X                        X5
+ V  E24       Y                        X7
+ V  E24       Z                        X4
+ P  E24       P         1.0
+
+ T  E25       COS2
+ V  E25       W                        X6
+ V  E25       X                        X7
+ V  E25       Y                        X4
+ V  E25       Z                        X3
+
+ T  E26       SQ
+ V  E26       X                        X7
+
+ T  E27       SQ
+ V  E27       X                        X7
+
+GROUP USES
+
+ E  OBJ       E1        1.0E-6
+ E  OBJ       E2        0.522074E-6
+ E  C3        E3        -1.0           E4        -1.0
+ E  C4        E5        -1.0           E6        -1.0
+ E  C5        E7                       E8
+ ZE C5        E9                       2B
+ E  C6        E10                      E11
+ ZE C6        E12                      2B
+ E  C7        E13                      E14
+ ZE C7        E15                      2B
+ E  C8        E16                      E17
+ ZE C8        E18                      -2C
+ ZE C8        E19                      .0007+A
+ E  C9        E20                      E21
+ ZE C9        E22                      -2C
+ ZE C9        E23                      .0007+A
+ E  C10       E24                      E25
+ ZE C10       E26                      -2C
+ ZE C10       E27                      .0007+A
+
+OBJECT BOUND
+
+*  Solution
+
+*LO SOLTN               5362.06928
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS109
+
+TEMPORARIES
+
+ R  ARG
+ R  S
+ R  C
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * (X**2)
+ H  X         X         6.0 * X
+
+ T  SQ
+ F                      X**2
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  SIN
+ A  ARG                 P*Z - 0.25
+ A  S                   SIN( ARG )
+ A  C                   COS( ARG )
+ F                      X*Y*S
+ G  X                   Y*S
+ G  Y                   X*S
+ G  Z                   P*X*Y*C
+ H  X         Y         S
+ H  X         Z         P*Y*C
+ H  Y         Z         P*X*C
+ H  Z         Z         -P*P*X*Y*S
+
+ T  SIN2
+ R  U1        W         1.0
+ R  U2        X         1.0
+ R  U3        Y         1.0            Z         -1.0
+ A  ARG                 U3 - 0.25
+ A  C                   COS( ARG )
+ A  S                   SIN( ARG )
+ F                      U1*U2*S
+ G  U1                  U2*S
+ G  U2                  U1*S
+ G  U3                  U1*U2*C
+ H  U1        U2        S
+ H  U1        U3        U2*C
+ H  U2        U3        U1*C
+ H  U3        U3        -U1*U2*S
+
+ T  COS
+ A  ARG                 P*Z - 0.25
+ A  C                   COS( ARG )
+ A  S                   SIN( ARG )
+ F                      X*Y*C
+ G  X                   Y*C
+ G  Y                   X*C
+ G  Z                   -P*X*Y*S
+ H  X         Y         C
+ H  X         Z         -P*Y*S
+ H  Y         Z         -P*X*S
+ H  Z         Z         -P*P*X*Y*C
+
+ T  COS2
+ R  U1        W         1.0
+ R  U2        X         1.0
+ R  U3        Y         1.0            Z         -1.0
+ A  ARG                 U3 - 0.25
+ A  C                   COS( ARG )
+ A  S                   SIN( ARG )
+ F                      U1*U2*C
+ G  U1                  U2*C
+ G  U2                  U1*C
+ G  U3                  -U1*U2*S
+ H  U1        U2        C
+ H  U1        U3        -U2*S
+ H  U2        U3        -U1*S
+ H  U3        U3        -U1*U2*C
+
+ENDATA

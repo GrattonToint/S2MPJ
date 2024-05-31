@@ -1,0 +1,109 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          EXTROSNBNE
+
+*   Problem :
+*   --------
+
+*   The extended Rosenbrock function (nonseparable version).
+*   This is a nonlinear equation variant of EXTROSNB
+
+*   Source: problem 10 in
+*   Ph.L. Toint,
+*   "Test problems for partially separable optimization and results
+*   for the routine PSPMIN",
+*   Report 83/4, Department of Mathematics, FUNDP (Namur, B), 1983.
+
+*   See also Buckley#116.  Note that MGH#21 is the separable version.
+*   SIF input: Ph. Toint, Dec 1989.
+*              Nick Gould (nonlinear equation version), Jan 2019
+
+*   classification NOR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   5              $-PARAMETER     original value
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  SQ1       X1        1.0
+
+ DO I         2                        N
+ XE SQ(I)     X(I)      1.0
+ XE SQ(I)     'SCALE'   0.1
+ ND
+
+CONSTANTS
+
+    EXTROSNB  SQ1       1.0
+
+BOUNDS
+
+ FR EXTROSNB  'DEFAULT'
+
+START POINT
+
+ XV EXTROSNB  'DEFAULT' -1.0
+
+ELEMENT TYPE
+
+ EV ETYPE     V1
+
+ELEMENT USES
+
+ XT 'DEFAULT' ETYPE
+
+ DO I         2                        N
+ IA J         I         -1
+ ZV ELA(I)    V1                       X(J)
+ ND
+
+GROUP USES
+
+ DO I         2                        N
+ XE SQ(I)     ELA(I)
+ ND
+
+OBJECT BOUND
+
+ LO EXTROSNB            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      EXTROSNBNE
+
+INDIVIDUALS
+
+ T  ETYPE
+ F                      - V1 ** 2
+ G  V1                  - 2.0 * V1
+ H  V1        V1        - 2.0
+
+ENDATA

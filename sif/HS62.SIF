@@ -1,0 +1,187 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS62
+
+*   Problem :
+*   *********
+
+*   Source: problem 62 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M Collin and Ph. Toint, April 1990.
+
+*   classification OLR2-AY-3-1
+
+*   Number of variables
+
+ IE N                   3
+
+*   Other useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  C1        X1        1.0            X2        1.0
+ E  C1        X3        1.0
+
+CONSTANTS
+
+    HS62      C1        1.0
+
+BOUNDS
+
+ DO I         1                        N
+
+ XL HS62      X(I)      0.0
+ XU HS62      X(I)      1.0
+
+ ND
+
+START POINT
+
+    HS62      X1        0.7
+    HS62      X2        0.2
+    HS62      X3        0.1
+
+ELEMENT TYPE
+
+ EV LN3N      X                        Y
+ EV LN3N      Z
+ IV LN3N      U
+
+ EV LN3D      X                        Y
+ EV LN3D      Z
+ IV LN3D      U
+
+ EV LN2N      X                        Y
+ IV LN2N      U
+
+ EV LN2D      X                        Y
+ IV LN2D      U
+
+ EV LN1N      X
+
+ EV LN1D      X
+
+ELEMENT USES
+
+ T  OE1N      LN3N
+ V  OE1N      X                        X1
+ V  OE1N      Y                        X2
+ V  OE1N      Z                        X3
+
+ T  OE1D      LN3D
+ V  OE1D      X                        X1
+ V  OE1D      Y                        X2
+ V  OE1D      Z                        X3
+
+ T  OE2N      LN2N
+ V  OE2N      X                        X2
+ V  OE2N      Y                        X3
+
+ T  OE2D      LN2D
+ V  OE2D      X                        X2
+ V  OE2D      Y                        X3
+
+ T  OE3N      LN1N
+ V  OE3N      X                        X3
+
+ T  OE3D      LN1D
+ V  OE3D      X                        X3
+
+GROUP USES
+
+ XE OBJ       OE1N      -8204.37       OE1D      8204.37
+ XE OBJ       OE2N      -9008.72       OE2D      9008.72
+ XE OBJ       OE3N      -9330.46       OE3D      9330.46
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -26272.514
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS62
+
+TEMPORARIES
+
+ R  NUM
+ M  LOG
+
+INDIVIDUALS
+
+ T  LN3N
+
+ R  U         X         1.0            Y         1.0
+ R  U         Z         1.0
+
+ A  NUM                 U + 0.03
+ F                      LOG( NUM )
+ G  U                   1.0 / NUM
+ H  U         U         -1.0 / NUM**2
+
+ T  LN3D
+
+ R  U         X         0.09           Y         1.0
+ R  U         Z         1.0
+
+ A  NUM                 U + 0.03
+ F                      LOG( NUM )
+ G  U                   1.0 / NUM
+ H  U         U         -1.0 / NUM**2
+
+ T  LN2N
+
+ R  U         X         1.0            Y         1.0
+
+ A  NUM                 U + 0.03
+ F                      LOG( NUM )
+ G  U                   1.0 / NUM
+ H  U         U         -1.0 / NUM**2
+
+ T  LN2D
+
+ R  U         X         0.07           Y         1.0
+
+ A  NUM                 U + 0.03
+ F                      LOG( NUM )
+ G  U                   1.0 / NUM
+ H  U         U         -1.0 / NUM**2
+
+ T  LN1N
+
+ A  NUM                 X + 0.03
+ F                      LOG( NUM )
+ G  X                   1.0 / NUM
+ H  X         X         -1.0 / NUM**2
+
+ T  LN1D
+
+ A  NUM                 0.13 * X + 0.03
+ F                      LOG( NUM )
+ G  X                   0.13 / NUM
+ H  X         X         -0.0169 / NUM**2
+
+
+ENDATA

@@ -1,0 +1,105 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HARKERP2
+
+*   Problem :
+*   --------
+
+*   A bound-constrained version of a Linear Complementarity problem
+*   posed by Harker and Pang.
+
+*   Source: 
+*   P. T. Harker and J.-S. Pang,
+*   "A damped Newton method for the linear complementarity problem",
+*   in 'Allgower and Georg: Computational solution of nonlinear
+*   systems of equations', AMS lectures in Applied Mathematics 26,
+*   AMS, Providence, Rhode Island, USA, pp 265-284.
+
+*   SIF input: Nick Gould, July 1993.
+
+*   classification QBR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER     original value
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+
+*   other parameter definitions
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN S(I)      'SCALE'   -1.0
+ XN S(I)      X(I)      1.0
+ XN Q(0)      X(I)      -1.0
+ XN Q(1)      X(I)      1.0
+ ND
+
+ XN Q(1)      'SCALE'   0.5
+ DO J         2                        N
+ XN Q(J)      'SCALE'   0.25
+ DO I         J                        N
+ XN Q(J)      X(I)      1.0
+ ND
+
+START POINT
+
+ DO I         1                        N
+ RI RI        I
+ Z  HARKERP2  X(I)                     RI
+ ND
+
+GROUP TYPE
+
+ GV HALFL2    GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ XT S(I)      HALFL2
+ XT Q(I)      HALFL2
+ ND
+
+OBJECT BOUND
+
+ LO HARKERP2             1.0
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HARKERP2
+
+INDIVIDUALS
+
+ T  HALFL2
+ F                      5.0D-1 * GVAR * GVAR
+ G                      GVAR
+ H                      1.0D+0
+
+ENDATA
+

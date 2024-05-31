@@ -1,0 +1,107 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HUBFIT
+
+*   Problem :
+*   *********
+*   Variable dimension full rank linear problem
+*   An elementary fit using the Huber loss function
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "The LANCELOT User's Manual",
+*   Dept of Maths, FUNDP, 1991.
+
+*   SIF input: Ph. Toint, Jan 1991.
+
+*   classification OLR2-AN-2-1
+
+*   Data points
+ RE X1                  0.1
+ RE X2                  0.3
+ RE X3                  0.5
+ RE X4                  0.7
+ RE X5                  0.9
+*   Observed values
+ RE Y1                  0.25
+ RE Y2                  0.3
+ RE Y3                  0.625
+ RE Y4                  0.701
+ RE Y5                  1.0
+*   Upper bound at 1.0
+ RE C                   0.85
+VARIABLES
+    a
+    b
+GROUPS
+*   Objective function groups
+ ZN Obj1      a                        X1
+ XN Obj1      b         1.0
+ XN Obj1      'SCALE'   2.0
+ ZN Obj2      a                        X2
+ XN Obj2      b         1.0
+ XN Obj2      'SCALE'   2.0
+ ZN Obj3      a                        X3
+ XN Obj3      b         1.0
+ XN Obj3      'SCALE'   2.0
+ ZN Obj4      a                        X4
+ XN Obj4      b         1.0
+ XN Obj4      'SCALE'   2.0
+ ZN Obj5      a                        X5
+ XN Obj5      b         1.0
+ XN Obj5      'SCALE'   2.0
+*   Constraint group
+ XL Cons      a         1.0            b         1.0
+CONSTANTS
+ Z  HUBFIT    Obj1                     Y1
+ Z  HUBFIT    Obj2                     Y2
+ Z  HUBFIT    Obj3                     Y3
+ Z  HUBFIT    Obj4                     Y4
+ Z  HUBFIT    Obj5                     Y5
+ Z  HUBFIT    Cons                     C
+BOUNDS
+ XR HUBFIT    b
+GROUP TYPE
+ GV HUBER     ALPHA
+GROUP USES
+ XT Obj1      HUBER
+ XT Obj2      HUBER
+ XT Obj3      HUBER
+ XT Obj4      HUBER
+ XT Obj5      HUBER
+ENDATA
+
+GROUPS        HUBFIT
+TEMPORARIES
+ L  OUT
+ L  NEGOUT
+ L  POSOUT
+ R  ABSA
+ R  HUBERK
+ R  FF
+ R  GG
+ R  HH
+ M  ABS
+INDIVIDUALS
+ T  HUBER
+ A  HUBERK              1.5
+ A  ABSA                ABS( ALPHA )
+ A  OUT                 ABSA .GT. HUBERK
+*  Case 1: alpha is outside [-k, k]
+ I  OUT       FF        HUBERK * ABSA - 0.5 * HUBERK * HUBERK
+ A  NEGOUT              OUT .AND. ( ALPHA .LT. 0.0 )
+ A  POSOUT              OUT .AND. ( ALPHA .GE. 0.0 )
+ I  POSOUT    GG        HUBERK
+ I  NEGOUT    GG        - HUBERK
+ I  OUT       HH        0.0
+*  Case 2: alpha is inside [-k, k]
+ E  OUT       FF        0.5 * ABSA * ABSA
+ E  OUT       GG        ALPHA
+ E  OUT       HH        1.0
+*  Assign the final values
+ F                      FF
+ G                      GG
+ H                      HH
+ENDATA

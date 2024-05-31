@@ -1,0 +1,89 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GIGOMEZ1
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   C. Gigola and S. Gomez,
+*   "A Regularization Method for Solving the Finite Convex Min-Max Problem",
+*   SINUM 27(6), pp. 1621-1634, 1990.
+
+*   SIF input: Ph. Toint, August 1993.
+
+*   classification LQR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    Z
+
+GROUPS
+
+ XN OBJ       Z         1.0
+
+ XG C1        Z         1.0
+ XG C1        X1        5.0            X2        -1.0
+
+ XG C2        Z         1.0            X2        -4.0
+
+ XG C3        Z         1.0
+ XG C3        X1        -5.0           X2        -1.0
+
+BOUNDS
+
+ FR GIGOMEZ1  'DEFAULT'
+
+START POINT
+
+ XV GIGOMEZ1  X1        2.0
+ XV GIGOMEZ1  X2        2.0
+ XV GIGOMEZ1  Z         2.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+GROUP USES
+
+ E  C2        X1SQ      -1.0           X2SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -3.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GIGOMEZ1
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+

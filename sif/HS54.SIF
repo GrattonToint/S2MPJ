@@ -1,0 +1,193 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS54
+
+*   Problem :
+*   *********
+
+*   Source: problem 54, incorrectly stated in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   Betts problem 11.7, JOTA 21, 1977, pp.137-174.
+*   SIF input: A.R. Conn, April 1990 and Nick Gould, October 1990
+
+*   classification OLR2-AN-6-1
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   6
+
+ IE 1                   1
+ IE 6                   6
+
+ RE RHO                 2.0D-1
+ R* RHOSQR    RHO                      RHO
+ RS 1-RHOSQR  RHOSQR    1.0
+ RD FACTOR    1-RHOSQR  1.0
+
+ RE MU1                 1.0D+4
+ RE MU2                 1.0D+0
+ RE MU3                 2.0D+6
+ RE MU4                 1.0D+1
+ RE MU5                 1.0D-3
+ RE MU6                 1.0D+8
+
+ RE SIGMA1              8.0D+3
+ RE SIGMA2              1.0D+0
+ RE SIGMA3              7.0D+6
+ RE SIGMA4              5.0D+1
+ RE SIGMA5              5.0D-2
+ RE SIGMA6              5.0D+8
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+ E  CON1      X1        1.0            X2        4.0D+3
+
+CONSTANTS
+
+ RM 0.2SI1    SIGMA1    2.0D-1
+ RM 2000SI2   SIGMA2    2.0D+3
+ RM 4000MU2   MU2       4.0D+3
+ R+ RHS       MU1                      4000MU2
+ R+ RHS       RHS                      0.2SI1
+ R+ RHS       RHS                      2000SI2
+
+ Z  HS54      CON1                     RHS
+
+BOUNDS
+
+ UP HS54      X1        2.0D+4
+ LO HS54      X2        - 1.0D+1
+ UP HS54      X2        1.0D+1
+ UP HS54      X3        1.0D+7
+ UP HS54      X4        2.0D+1
+ LO HS54      X5        - 1.0D+0
+ UP HS54      X5        1.0D+0
+ UP HS54      X6        2.0D+8
+
+START POINT
+
+    HS54      X1        6.0D+3
+    HS54      X2        1.5D+0
+    HS54      X3        4.0D+6
+    HS54      X4        2.0D+0
+    HS54      X5        3.0D-3
+    HS54      X6        5.0D+7
+
+ELEMENT TYPE
+
+ EV SQR       V1
+ EP SQR       MU                       SIGMA
+ EV PROD      V1                       V2
+ EP PROD      MU1                      MU2
+ EP PROD      SIGMA1                   SIGMA2
+ EP PROD      RHO
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQR
+
+ DO I         1                        6
+
+ ZV E(I)      V1                       X(I)
+ ZP E(I)      MU                       MU(I)
+ ZP E(I)      SIGMA                    SIGMA(I)
+
+ ND
+
+ T  F1        PROD
+ V  F1        V1                       X1
+ V  F1        V2                       X2
+ ZP F1        RHO                      RHO
+ ZP F1        MU1                      MU1
+ ZP F1        MU2                      MU2
+ ZP F1        SIGMA1                   SIGMA1
+ ZP F1        SIGMA2                   SIGMA2
+
+GROUP TYPE
+
+ GV NORMAL    Q
+
+GROUP USES
+
+ T  OBJ       NORMAL
+ ZE OBJ       E1                       FACTOR
+ ZE OBJ       E2                       FACTOR
+ E  OBJ       E3        1.0D+0         E4        1.0D+0
+ E  OBJ       E5        1.0D+0         E6        1.0D+0
+ ZE OBJ       F1                       FACTOR
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.90807482
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS54
+
+TEMPORARIES
+
+ R  V1MP
+ R  TERM1
+ R  TERM2
+ R  RHO2
+
+INDIVIDUALS
+
+ T  SQR
+ A  V1MP                ( V1 - MU ) / SIGMA
+ F                      V1MP ** 2
+ G  V1                  2.0 * V1MP / SIGMA
+ H  V1        V1        2.0 / SIGMA ** 2
+
+ T  PROD
+ A  TERM1               ( V1 - MU1 ) / SIGMA1
+ A  TERM2               ( V2 - MU2 ) / SIGMA2
+ A  RHO2                RHO + RHO
+ F                      RHO2 * TERM1 * TERM2
+ G  V1                  RHO2 * TERM2 / SIGMA1
+ G  V2                  RHO2 * TERM1 / SIGMA2
+ H  V1        V2        RHO2 / ( SIGMA1 * SIGMA2 )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        HS54
+
+TEMPORARIES
+
+ R  EXPHV
+ M  EXP
+
+INDIVIDUALS
+
+ T  NORMAL
+ A  EXPHV                EXP( - 0.5 * Q )
+ F                       - EXPHV
+ G                       5.0D-1 * EXPHV
+ H                       - 2.5D-1 * EXPHV
+
+ENDATA

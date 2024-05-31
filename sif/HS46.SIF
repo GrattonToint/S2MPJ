@@ -1,0 +1,177 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS46
+
+*   Problem :
+*   *********
+
+*   Source: problem 46 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Ph.L. Toint, October 1990.
+
+*   classification OOR2-AY-5-2
+
+*   some useful parameters, including N, the number of variables.
+
+ IE N                   5
+ IE 1                   1
+ RF ROOT2     SQRT      2.0
+ RM X01       ROOT2     0.5
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1
+ E  CON2      X2        1.0
+
+CONSTANTS
+
+    HS46      CON1      1.0
+    HS46      CON2      2.0
+
+BOUNDS
+
+ FR HS46      'DEFAULT'
+
+START POINT
+
+ XV HS46      'DEFAULT' 2.0
+ Z  HS46      X1                       X01
+    HS46      X2        1.75
+    HS46      X3        0.5
+
+ELEMENT TYPE
+
+ EV ISQ       V1                       V2
+ IV ISQ       U1
+
+ EV SPW       V1
+ EP SPW       POW
+
+ EV V2W       V1                       V2
+
+ EV ISIN      V1                       V2
+ IV ISIN      U1
+
+ EV V4W2      V1                       V2
+
+ELEMENT USES
+
+ T  E1        ISQ
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+ T  E2        SPW
+ V  E2        V1                       X3
+ P  E2        POW       2.0
+
+ T  E3        SPW
+ V  E3        V1                       X4
+ P  E3        POW       4.0
+
+ T  E4        SPW
+ V  E4        V1                       X5
+ P  E4        POW       6.0
+
+ T  E5        V2W
+ V  E5        V1                       X1
+ V  E5        V2                       X4
+
+ T  E6        ISIN
+ V  E6        V1                       X4
+ V  E6        V2                       X5
+
+ T  E7        V4W2
+ V  E7        V1                       X3
+ V  E7        V2                       X4
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+
+ E  CON1      E5                       E6
+ E  CON2      E7
+
+OBJECT BOUND
+
+ LO HS46                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS46
+
+TEMPORARIES
+
+ R  V1M1
+ R  S
+ R  V1SQ
+ R  V1FR
+ R  V2SQ
+ M  SIN
+ M  COS
+ I  IPOW
+
+INDIVIDUALS
+
+ T  ISQ
+ R  U1        V1        1.0            V2        -1.0
+ F                      U1 * U1
+ G  U1                  U1 + U1
+ H  U1        U1        2.0
+
+ T  SPW
+ A  V1M1                V1 - 1.0
+ A  IPOW                POW
+ F                      V1M1**IPOW
+ G  V1                  POW * V1M1**( IPOW - 1 )
+ H  V1        V1        POW * ( POW - 1.0 ) * V1M1**(IPOW - 2)
+
+ T  V2W
+ F                      V1 * V1 * V2
+ G  V1                  2.0 * V1 * V2
+ G  V2                  V1 * V1
+ H  V1        V1        V2 + V2
+ H  V1        V2        V1 + V1
+
+ T  ISIN
+ R  U1        V1        1.0            V2        -1.0
+ A  S                   SIN( U1 )
+ F                      S
+ G  U1                  COS( U1 )
+ H  U1        U1        -S
+
+ T  V4W2
+ A  V1SQ                V1 * V1
+ A  V1FR                V1SQ * V1SQ
+ A  V2SQ                V2 * V2
+ F                      V1FR * V2SQ
+ G  V1                  4.0 * V1 * V1SQ * V2SQ
+ G  V2                  2.0 * V1FR * V2
+ H  V1        V1        12.0 * V1SQ * V2SQ
+ H  V1        V2        8.0 * V1 * V1SQ * V2
+ H  V2        V2        2.0 * V1FR
+
+ENDATA

@@ -1,0 +1,138 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HUESmMOD
+
+*   Problem :
+*   *********
+
+*   Source: An inverse problem from astronomy,
+*   reformulated as a convex quadratic program by
+*   S. P. Hestis, SIAM Review 34 (1992) pp. 642-647.
+
+*   SIF input: Nick Gould, January 1993.
+*   improvements by: Ruediger Franke (Ruediger.Franke@RZ.TU-Ilmenau.DE)
+
+*   classification QLR2-MN-V-V
+
+*   Number of variables
+
+*IE K                   10             $-PARAMETER
+*IE K                   100            $-PARAMETER
+*IE K                   1000           $-PARAMETER    original value
+*IE K                   5000           $-PARAMETER
+ IE K                   10             $-PARAMETER     modified for S2X tests
+*IE K                   10000          $-PARAMETER
+
+*   Other useful parameters
+
+ IE 1                   1
+ RE RANGE               1.0
+ RE 3.0                 3.0
+ RE 5.0                 5.0
+ RI RK        K
+ R/ DELTAX    RANGE                    RK
+ R* DELTAX2   DELTAX                   DELTAX
+ R* DELTAX3   DELTAX2                  DELTAX
+ R* DELTAX5   DELTAX3                  DELTAX2
+ R/ DELTAX3/3 DELTAX3                  3.0
+ R/ DELTAX5/5 DELTAX5                  5.0
+
+VARIABLES
+
+ DO I         1                        K
+ X  M(I)
+ ND
+
+GROUPS
+
+*  The objective function is the sum of the squares of the M(i)
+
+ DO I         1                        K
+ XN OBJ(I)
+ ND
+
+*  There are two linear constraints (+ nonnegativities)
+
+*  e1 = sum M(i) integral from i-1 DELTAX to i DELTAX x**2 dx and
+*  e2 = sum M(i) integral from i-1 DELTAX to i DELTAX x**4 dx.
+
+ DO I         1                        K
+ IA I-1       I         -1
+
+ RI RI        I
+ R* RI2       RI                       RI
+ R* RI3       RI2                      RI
+ R* RI5       RI3                      RI2
+
+ RI RI-1      I-1
+ R* RI-12     RI-1                     RI-1
+ R* RI-13     RI-12                    RI-1
+ R* RI-15     RI-13                    RI-12
+
+ R- DIFF3     RI3                      RI-13
+ R- DIFF5     RI5                      RI-15
+ R* COEFF1    DIFF3                    DELTAX3/3
+ R* COEFF2    DIFF5                    DELTAX5/5
+
+ ZE E1        M(I)                     COEFF1
+ ZE E2        M(I)                     COEFF2
+
+ ND
+
+ RI RK        K
+ RD 1/RK      RK        1.0
+
+CONSTANTS
+
+    HUES-MOD  E1        1835.2
+    HUES-MOD  E2        909.8
+
+START POINT
+
+    HUES-MOD  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV SQ        U1
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ DO I         1                        K
+ ZV E(I)      U1                       M(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        K
+ ZE OBJ(I)    E(I)                     1/RK
+ ND
+
+OBJECT BOUND
+
+ LO HUES-MOD            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HUESmMOD
+
+INDIVIDUALS
+
+ T  SQ
+ F                      U1 * U1
+ G  U1                  U1 + U1
+ H  U1        U1        2.0
+
+ENDATA

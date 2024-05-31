@@ -1,0 +1,146 @@
+NAME          HS106
+
+*   Problem :
+*   *********
+
+*   A heat exchanger design problem.
+
+*   Source: problem 106 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: J-M COLLIN.
+
+*   classification LQR2-MN-8-6
+
+*   Number of variables
+
+ IE N                   8
+
+*  Parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 8                   8
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+* Objective function
+
+ N  OBJ       X1        1.0            X2        1.0
+ N  OBJ       X3        1.0
+
+*  Constraint function
+
+ G  C1        X4        -0.0025        X6        -0.0025
+ G  C2        X5        -0.0025        X7        -0.0025
+ G  C2        X4        0.0025
+ G  C3        X8        -0.01          X5        0.01
+ G  C4        X4        -833.33252     X1        -100.0
+ G  C5        X5        -1250.0        X4        1250.0
+ G  C6        X5        2500.0
+
+CONSTANTS
+
+    HS106     C1        -1.0
+    HS106     C2        -1.0
+    HS106     C3        -1.0
+    HS106     C4        -83333.333
+    HS106     C6        1250000.0
+
+BOUNDS
+
+ LO HS106     X1        100.0
+ UP HS106     X1        10000.0
+
+ DO I         2                        3
+ XL HS106     X(I)      1000.0
+ XU HS106     X(I)      10000.0
+ ND
+
+ DO I         4                        8
+ XL HS106     X(I)      10.0
+ XU HS106     X(I)      1000.0
+ ND
+
+START POINT
+
+    HS106     X1        5000.0         X2        5000.0
+    HS106     X3        5000.0         X4        200.0
+    HS106     X5        350.0          X6        150.0
+    HS106     X7        225.0          X8        425.0
+
+ELEMENT TYPE
+
+ EV PROD      X                        Y
+ EP PROD      W
+
+ELEMENT USES
+
+ T  E1        PROD
+ V  E1        X                        X1
+ V  E1        Y                        X6
+ P  E1        W         1.0
+
+ T  E2        PROD
+ V  E2        X                        X2
+ V  E2        Y                        X7
+ P  E2        W         1.0
+
+ T  E3        PROD
+ V  E3        X                        X2
+ V  E3        Y                        X4
+ P  E3        W         -1.0
+
+ T  E4        PROD
+ V  E4        X                        X3
+ V  E4        Y                        X8
+ P  E4        W         1.0
+
+ T  E5        PROD
+ V  E5        X                        X3
+ V  E5        Y                        X5
+ P  E5        W         -1.0
+
+
+GROUP USES
+
+ E  C4        E1
+ E  C5        E2                       E3
+ E  C6        E4                       E5
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               7049.330923
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS106
+
+INDIVIDUALS
+
+ T  PROD
+ F                      W * X * Y
+ G  X                   W * Y
+ G  Y                   W * X
+ H  X         Y         W
+
+ENDATA
+

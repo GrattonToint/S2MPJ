@@ -1,0 +1,281 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          HS117
+
+*   Problem :
+*   *********
+
+*   Source: problem 117 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+
+*   SIF input: Nick Gould, August 1991.
+
+*   classification OQR2-AN-15-5
+
+*   Number of constraints
+
+ IE N                   5
+
+*   Number of variables - constraints
+
+ IE M                   10
+ I+ M+N       M                        N
+
+*   Other useful parameters
+
+ IE 1                   1
+
+*   Problem data
+
+ RE E1                  -15.0
+ RE E2                  -27.0
+ RE E3                  -36.0
+ RE E4                  -18.0
+ RE E5                  -12.0
+
+ RE C1,1                30.0
+ RE C2,1                -20.0
+ RE C3,1                -10.0
+ RE C4,1                32.0
+ RE C5,1                -10.0
+ RE C1,2                -20.0
+ RE C2,2                39.0
+ RE C3,2                -6.0
+ RE C4,2                -31.0
+ RE C5,2                32.0
+ RE C1,3                -10.0
+ RE C2,3                -6.0
+ RE C3,3                10.0
+ RE C4,3                -6.0
+ RE C5,3                -10.0
+ RE C1,4                32.0
+ RE C2,4                -31.0
+ RE C3,4                -6.0
+ RE C4,4                39.0
+ RE C5,4                -20.0
+ RE C1,5                -10.0
+ RE C2,5                32.0
+ RE C3,5                -10.0
+ RE C4,5                -20.0
+ RE C5,5                30.0
+
+ RE D1                  4.0
+ RE D2                  8.0
+ RE D3                  10.0
+ RE D4                  6.0
+ RE D5                  2.0
+
+ RE A1,1                -16.0
+ RE A2,1                0.0
+ RE A3,1                -3.5
+ RE A4,1                0.0
+ RE A5,1                0.0
+ RE A6,1                2.0
+ RE A7,1                -1.0
+ RE A8,1                -1.0
+ RE A9,1                1.0
+ RE A10,1               1.0
+ RE A1,2                2.0
+ RE A2,2                -2.0
+ RE A3,2                0.0
+ RE A4,2                -2.0
+ RE A5,2                -9.0
+ RE A6,2                0.0
+ RE A7,2                -1.0
+ RE A8,2                -2.0
+ RE A9,2                2.0
+ RE A10,2               1.0
+ RE A1,3                0.0
+ RE A2,3                0.0
+ RE A3,3                2.0
+ RE A4,3                0.0
+ RE A5,3                -2.0
+ RE A6,3                -4.0
+ RE A7,3                -1.0
+ RE A8,3                -3.0
+ RE A9,3                3.0
+ RE A10,3               1.0
+ RE A1,4                1.0
+ RE A2,4                4.0
+ RE A3,4                0.0
+ RE A4,4                -4.0
+ RE A5,4                1.0
+ RE A6,4                0.0
+ RE A7,4                -1.0
+ RE A8,4                -2.0
+ RE A9,4                4.0
+ RE A10,4               1.0
+ RE A1,5                0.0
+ RE A2,5                2.0
+ RE A3,5                0.0
+ RE A4,5                -1.0
+ RE A5,5                -2.8
+ RE A6,5                0.0
+ RE A7,5                -1.0
+ RE A8,5                -1.0
+ RE A9,5                5.0
+ RE A10,5               1.0
+
+ RE B1                  -40.0
+ RE B2                  -2.0
+ RE B3                  -0.25
+ RE B4                  -4.0
+ RE B5                  -4.0
+ RE B6                  -1.0
+ RE B7                  -40.0
+ RE B8                  -60.0
+ RE B9                  5.0
+ RE B10                 1.0
+
+VARIABLES
+
+ DO I         1                        M+N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO J         1                        M
+ AM -BJ       B(J)      -1.0
+ ZN OBJ       X(J)                     -BJ
+ ND
+
+ DO J         1                        N
+
+ DO K         1                        N
+ I+ M+K       M                        K
+ AM 2CKJ      C(K,J)    2.0
+ ZG C(J)      X(M+K)                   2CKJ
+
+ OD K
+
+ DO K         1                        M
+ AM -AKJ      A(K,J)    -1.0
+ ZG C(J)      X(K)                     -AKJ
+ OD K
+
+ ND
+
+CONSTANTS
+
+ DO J         1                        N
+ AM -EJ       E(J)      -1.0
+ Z  HS117     C(J)                     -EJ
+ ND
+
+START POINT
+
+    HS117     'DEFAULT' 0.001
+    HS117     X7        60.0
+
+    SOLUTION  X1         0.00000D+00
+    SOLUTION  X2         0.00000D+00
+    SOLUTION  X3         5.17404D+00
+    SOLUTION  X4         0.00000D+00
+    SOLUTION  X5         3.06111D+00
+    SOLUTION  X6         1.18395D+01
+    SOLUTION  X7         0.00000D+00
+    SOLUTION  X8         0.00000D+00
+    SOLUTION  X9         1.03897D-01
+    SOLUTION  X10        0.00000D+00
+    SOLUTION  X11        3.00000D-01
+    SOLUTION  X12        3.33468D-01
+    SOLUTION  X13        4.00000D-01
+    SOLUTION  X14        4.28310D-01
+    SOLUTION  X15        2.23965D-01
+
+ELEMENT TYPE
+
+*   SQUARE
+
+ EV SQUARE    XJ
+
+*   CUBE
+
+ EV CUBE      XJ
+
+*   PROD
+
+ EV PROD      XI                       XJ
+
+ELEMENT USES
+
+ DO J         1                        N
+
+ I+ M+J       M                        J
+ XT 2D(J)     CUBE
+ ZV 2D(J)     XJ                       X(M+J)
+
+ XT 3D(J)     SQUARE
+ ZV 3D(J)     XJ                       X(M+J)
+
+ DO K         1                        N
+
+ I+ M+K       M                        K
+ XT C(K,J)    PROD
+ ZV C(K,J)    XI                       X(M+K)
+ ZV C(K,J)    XJ                       X(M+J)
+
+ ND
+
+GROUP USES
+
+ DO J         1                        N
+
+ AM 2DJ       D(J)      2.0
+ ZE OBJ       2D(J)                    2DJ
+
+ AM 3DJ       D(J)      3.0
+ ZE C(J)      3D(J)                    3DJ
+
+ DO K         1                        N
+
+ ZE OBJ       C(K,J)                   C(K,J)
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               32.34867897
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      HS117
+
+INDIVIDUALS
+
+*   Element type SQUARE
+
+ T  SQUARE
+ F                      XJ * XJ
+ G  XJ                  2.0D+0 * XJ
+ H  XJ        XJ        2.0D+0
+
+*   Element type CUBE
+
+ T  CUBE
+ F                      XJ * XJ * XJ
+ G  XJ                  3.0D+0 * XJ * XJ
+ H  XJ        XJ        6.0D+0 * XJ
+
+*   Element type PROD
+
+ T  PROD
+ F                      XI * XJ
+ G  XI                  XJ
+ G  XJ                  XI
+ H  XI        XJ        1.0D+0
+
+ENDATA

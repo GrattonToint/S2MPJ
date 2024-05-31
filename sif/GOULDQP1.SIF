@@ -1,0 +1,269 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          GOULDQP1
+
+*   Problem :
+*   *********
+
+*   Source: problem 118 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981, as modified by N.I.M. Gould in "An algorithm 
+*   for large-scale quadratic programming", IMA J. Num. Anal (1991),
+*   11, 299-324, problem class 1.
+
+*   SIF input: B Baudson, Jan 1990 modified by Nick Gould, Jan, 2011
+
+*   classification QLR2-AN-32-17
+
+*   Other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 4                   4
+ IE 5                   5
+ IE 8                   8
+ IE 12                  12
+ IE 15                  15
+ IE 17                  17
+
+VARIABLES
+
+ DO I         1                        15
+ X  X(I)
+ ND
+
+ DO K         1                        4
+ X  AS(K)
+ ND
+
+ DO K         1                        4
+ X  CS(K)
+ ND
+
+ DO K         1                        4
+ X  BS(K)
+ ND
+
+ DO K         1                        5
+ X  DS(K)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ DO K         0                        4
+ IM 3K        K         3
+ IA 3K+1      3K        1
+ IA 3K+2      3K        2
+ IA 3K+3      3K        3
+ XN OBJ       X(3K+1)   2.3            X(3K+2)   1.7
+ XN OBJ       X(3K+3)   2.2
+ ND
+
+*   Constraints
+
+ DO K         1                        4
+ IM 3K        K         3
+ IA 3K+1      3K        1
+ IA 3K+2      3K        2
+ IA 3K+3      3K        3
+ IA 3K-2      3K        -2
+ IA 3K-1      3K        -1
+ XE A(K)      X(3K+1)   1.0            X(3K-2)   -1.0
+ XE A(K)      AS(K)     -1.0
+ XE B(K)      X(3K+3)   1.0            X(3K)     -1.0
+ XE B(K)      BS(K)     -1.0
+ XE C(K)      X(3K+2)   1.0            X(3K-1)   -1.0
+ XE C(K)      CS(K)     -1.0
+ ND
+
+ E  D1        X1        1.0            X2        1.0
+ E  D1        X3        1.0            DS1       -1.0
+
+ E  D2        X4        1.0            X5        1.0
+ E  D2        X6        1.0            DS2       -1.0
+
+ E  D3        X7        1.0            X8        1.0
+ E  D3        X9        1.0            DS3       -1.0
+
+ E  D4        X10       1.0            X11       1.0
+ E  D4        X12       1.0            DS4       -1.0
+
+ E  D5        X13       1.0            X14       1.0
+ E  D5        X15       1.0            DS5       -1.0
+
+CONSTANTS
+
+ DO K         1                        4
+ X  GOULDQP1  A(K)      -7.0
+ X  GOULDQP1  B(K)      -7.0
+ X  GOULDQP1  C(K)      -7.0
+ ND
+
+    GOULDQP1  D1        60.0
+    GOULDQP1  D2        50.0
+    GOULDQP1  D3        70.0
+    GOULDQP1  D4        85.0
+    GOULDQP1  D5        100.0
+
+BOUNDS
+
+ LO GOULDQP1  X1        8.0
+ UP GOULDQP1  X1        21.0
+
+ LO GOULDQP1  X2        43.0
+ UP GOULDQP1  X2        57.0
+
+ LO GOULDQP1  X3        3.0
+ UP GOULDQP1  X3        16.0
+
+ DO K         1                        4
+ IM 3K        K         3
+ IA 3K+1      3K        1
+ IA 3K+2      3K        2
+ IA 3K+3      3K        3
+ XU GOULDQP1  X(3K+1)   90.0
+ XU GOULDQP1  X(3K+2)   120.0
+ XU GOULDQP1  X(3K+3)   60.0
+ ND
+
+ DO K         1                        4
+ XL GOULDQP1  AS(K)     0.0
+ XU GOULDQP1  AS(K)     13.0
+ XL GOULDQP1  BS(K)     0.0
+ XU GOULDQP1  BS(K)     13.0
+ XL GOULDQP1  CS(K)     0.0
+ XU GOULDQP1  CS(K)     14.0
+ ND
+
+ LO GOULDQP1  DS1       0.0
+ LO GOULDQP1  DS2       0.0
+ LO GOULDQP1  DS3       0.0
+ LO GOULDQP1  DS4       0.0
+ LO GOULDQP1  DS5       0.0
+
+ UP GOULDQP1  DS1       60.0
+ UP GOULDQP1  DS2       50.0
+ UP GOULDQP1  DS3       70.0
+ UP GOULDQP1  DS4       85.0
+ UP GOULDQP1  DS5       100.0
+
+START POINT
+
+ XV GOULDQP1  'DEFAULT' 20.0
+    GOULDQP1  X2        55.0
+    GOULDQP1  X3        15.0
+    GOULDQP1  X5        60.0
+    GOULDQP1  X8        60.0
+    GOULDQP1  X11       60.0
+    GOULDQP1  X14       60.0
+    GOULDQP1  AS1       7.0 
+    GOULDQP1  BS1       12.0
+    GOULDQP1  CS1       12.0
+    GOULDQP1  AS2       7.0 
+    GOULDQP1  BS2       7.0 
+    GOULDQP1  CS2       7.0 
+    GOULDQP1  AS3       7.0 
+    GOULDQP1  BS3       7.0 
+    GOULDQP1  CS3       7.0 
+    GOULDQP1  AS4       7.0 
+    GOULDQP1  BS4       7.0 
+    GOULDQP1  CS4       7.0 
+    GOULDQP1  DS1       30.0
+    GOULDQP1  DS2       50.0
+    GOULDQP1  DS3       30.0
+    GOULDQP1  DS4       15.0
+    GOULDQP1  DS5       0.0
+
+    SOLUTION  X1        2.1000E+01
+    SOLUTION  X2        4.3000E+01 
+    SOLUTION  X3        3.0000E+00 
+    SOLUTION  X4        2.7000E+01 
+    SOLUTION  X5        3.6000E+01 
+    SOLUTION  X6        4.5469E-07 
+    SOLUTION  X7        3.3000E+01 
+    SOLUTION  X8        3.7000E+01 
+    SOLUTION  X9        6.7853E-07 
+    SOLUTION  X10       3.9000E+01 
+    SOLUTION  X11       4.4000E+01 
+    SOLUTION  X12       2.0000E+00 
+    SOLUTION  X13       4.1000E+01 
+    SOLUTION  X14       5.1000E+01 
+    SOLUTION  X15       8.0000E+00 
+    SOLUTION  AS1        6.0000E+00
+    SOLUTION  BS1       -3.0000E+00
+    SOLUTION  CS1       -7.0000E+00
+    SOLUTION  AS2        6.0000E+00
+    SOLUTION  BS2        2.2384E-07
+    SOLUTION  CS2        1.0000E+00
+    SOLUTION  AS3        6.0000E+00
+    SOLUTION  BS3        2.0000E+00
+    SOLUTION  CS3        7.0000E+00
+    SOLUTION  AS4        2.0000E+00
+    SOLUTION  BS4        6.0000E+00
+    SOLUTION  CS4        7.0000E+00
+    SOLUTION  DS1        6.7000E+01
+    SOLUTION  DS2        6.3000E+01
+    SOLUTION  DS3        7.0000E+01
+    SOLUTION  DS4        8.5000E+01
+    SOLUTION  DS5        1.0000E+02
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ DO I         1                        15
+ XT E(I)      SQ
+ ZV E(I)      X                        X(I)
+ ND
+
+GROUP USES
+
+ XE OBJ       E1        -1.0
+ XE OBJ       E2        0.0001
+ XE OBJ       E3        0.00015
+ XE OBJ       E4        -0.0001
+ XE OBJ       E5        0.0001
+ XE OBJ       E6        10.0
+ XE OBJ       E7        -0.0001
+ XE OBJ       E8        0.0001
+ XE OBJ       E9        25.0
+ XE OBJ       E10       -2.5
+ XE OBJ       E11       0.0001
+ XE OBJ       E12       0.00015
+ XE OBJ       E13       -0.0001
+ XE OBJ       E14       0.0001
+ XE OBJ       E15       0.00015
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -3.485333E+3
+
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      GOULDQP1
+
+INDIVIDUALS
+
+ T  SQ
+
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

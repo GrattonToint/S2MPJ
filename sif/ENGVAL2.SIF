@@ -1,0 +1,158 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ENGVAL2
+
+*   Problem :
+*   *********
+*   The ENGVAL2 problem.
+
+*   Source: problem 15 in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-3-0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  G1
+ N  G2
+ N  G3        X1        1.0            X2        1.0
+ N  G3        X3        1.0
+ N  G4        X1        1.0            X2        1.0
+ N  G4        X3        -1.0
+ N  G5
+
+CONSTANTS
+
+    ENGVAL2   G1        1.0
+    ENGVAL2   G2        1.0
+    ENGVAL2   G3        1.0
+    ENGVAL2   G4        -1.0
+    ENGVAL2   G5        36.0
+
+BOUNDS
+
+ FR ENGVAL2   'DEFAULT'
+
+START POINT
+
+    ENGVAL2   X1        1.0
+    ENGVAL2   X2        2.0
+    ENGVAL2   X3        0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV SSQ       X
+ EP SSQ       S
+
+ EV ELT       X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQ
+
+ V  E1        X                        X1
+
+ V  E2        X                        X2
+
+ V  E3        X                        X3
+
+ V  E4        X                        X2
+
+ T  E5        ELT
+ V  E5        X                        X1
+ V  E5        Y                        X3
+
+ T  E6        SSQ
+ V  E6        X                        X3
+ P  E6        S         2.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ E  G1        E1                       E2
+ E  G1        E3
+
+ E  G2        E1                       E2
+ E  G2        E6
+
+ E  G5        E4        3.0            E5
+
+OBJECT BOUND
+
+ LO ENGVAL2             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ENGVAL2
+
+TEMPORARIES
+
+ R  TWOW
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  SSQ
+ F                      ( X - S )**2
+ G  X                   2.0 * ( X - S )
+ H  X         X         2.0
+
+ T  ELT
+ A  TWOW                5.0 * Y - X + 1.
+ F                      X**3 + TWOW * TWOW
+ G  X                   3.0 * X**2 - 2.0 * TWOW
+ G  Y                   10.0 * TWOW
+ H  X         X         6.0 * X + 2.0
+ H  X         Y         -10.0
+ H  Y         Y         50.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ENGVAL2
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
