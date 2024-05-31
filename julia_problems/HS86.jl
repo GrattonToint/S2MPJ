@@ -1,0 +1,332 @@
+function HS86(action,args...)
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# 
+# 
+#    Problem : HS86
+#    *********
+# 
+#    Source: problem 86 in
+#    W. Hock and K. Schittkowski,
+#    "Test examples for nonlinear programming codes",
+#    Lectures Notes in Economics and Mathematical Systems 187, Springer
+#    Verlag, Heidelberg, 1981.
+# 
+#    SIF input: Nick Gould, August 1991.
+# 
+#    classification = "OLR2-AN-5-10"
+# 
+#    Number of variables
+# 
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    name = "HS86"
+
+    if action == "setup"
+        pbm          = PBM(name)
+        pb           = PB(name)
+        pb.sifpbname = "HS86"
+        nargin       = length(args)
+        pbm.call     = eval( Meta.parse( name ) )
+
+        #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
+        v_  = Dict{String,Float64}();
+        ix_ = Dict{String,Int}();
+        ig_ = Dict{String,Int}();
+        v_["N"] = 5
+        v_["M"] = 10
+        v_["1"] = 1
+        v_["E1"] = -15.0
+        v_["E2"] = -27.0
+        v_["E3"] = -36.0
+        v_["E4"] = -18.0
+        v_["E5"] = -12.0
+        v_["C1,1"] = 30.0
+        v_["C2,1"] = -20.0
+        v_["C3,1"] = -10.0
+        v_["C4,1"] = 32.0
+        v_["C5,1"] = -10.0
+        v_["C1,2"] = -20.0
+        v_["C2,2"] = 39.0
+        v_["C3,2"] = -6.0
+        v_["C4,2"] = -31.0
+        v_["C5,2"] = 32.0
+        v_["C1,3"] = -10.0
+        v_["C2,3"] = -6.0
+        v_["C3,3"] = 10.0
+        v_["C4,3"] = -6.0
+        v_["C5,3"] = -10.0
+        v_["C1,4"] = 32.0
+        v_["C2,4"] = -31.0
+        v_["C3,4"] = -6.0
+        v_["C4,4"] = 39.0
+        v_["C5,4"] = -20.0
+        v_["C1,5"] = -10.0
+        v_["C2,5"] = 32.0
+        v_["C3,5"] = -10.0
+        v_["C4,5"] = -20.0
+        v_["C5,5"] = 30.0
+        v_["D1"] = 4.0
+        v_["D2"] = 8.0
+        v_["D3"] = 10.0
+        v_["D4"] = 6.0
+        v_["D5"] = 2.0
+        v_["A1,1"] = -16.0
+        v_["A2,1"] = 0.0
+        v_["A3,1"] = -3.5
+        v_["A4,1"] = 0.0
+        v_["A5,1"] = 0.0
+        v_["A6,1"] = 2.0
+        v_["A7,1"] = -1.0
+        v_["A8,1"] = -1.0
+        v_["A9,1"] = 1.0
+        v_["A10,1"] = 1.0
+        v_["A1,2"] = 2.0
+        v_["A2,2"] = -2.0
+        v_["A3,2"] = 0.0
+        v_["A4,2"] = -2.0
+        v_["A5,2"] = -9.0
+        v_["A6,2"] = 0.0
+        v_["A7,2"] = -1.0
+        v_["A8,2"] = -2.0
+        v_["A9,2"] = 2.0
+        v_["A10,2"] = 1.0
+        v_["A1,3"] = 0.0
+        v_["A2,3"] = 0.0
+        v_["A3,3"] = 2.0
+        v_["A4,3"] = 0.0
+        v_["A5,3"] = -2.0
+        v_["A6,3"] = -4.0
+        v_["A7,3"] = -1.0
+        v_["A8,3"] = -3.0
+        v_["A9,3"] = 3.0
+        v_["A10,3"] = 1.0
+        v_["A1,4"] = 1.0
+        v_["A2,4"] = 4.0
+        v_["A3,4"] = 0.0
+        v_["A4,4"] = -4.0
+        v_["A5,4"] = 1.0
+        v_["A6,4"] = 0.0
+        v_["A7,4"] = -1.0
+        v_["A8,4"] = -2.0
+        v_["A9,4"] = 4.0
+        v_["A10,4"] = 1.0
+        v_["A1,5"] = 0.0
+        v_["A2,5"] = 2.0
+        v_["A3,5"] = 0.0
+        v_["A4,5"] = -1.0
+        v_["A5,5"] = -2.8
+        v_["A6,5"] = 0.0
+        v_["A7,5"] = -1.0
+        v_["A8,5"] = -1.0
+        v_["A9,5"] = 5.0
+        v_["A10,5"] = 1.0
+        v_["B1"] = -40.0
+        v_["B2"] = -2.0
+        v_["B3"] = -0.25
+        v_["B4"] = -4.0
+        v_["B5"] = -4.0
+        v_["B6"] = -1.0
+        v_["B7"] = -40.0
+        v_["B8"] = -60.0
+        v_["B9"] = 5.0
+        v_["B10"] = 1.0
+        #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
+        xscale  = Float64[]
+        intvars = Int64[]
+        binvars = Int64[]
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            arrset(pb.xnames,iv,"X"*string(I))
+        end
+        #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
+        gtype    = String[]
+        for J = Int64(v_["1"]):Int64(v_["N"])
+            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            arrset(gtype,ig,"<>")
+            iv = ix_["X"*string(J)]
+            pbm.A[ig,iv] += Float64(v_["E"*string(J)])
+        end
+        for I = Int64(v_["1"]):Int64(v_["M"])
+            for J = Int64(v_["1"]):Int64(v_["N"])
+                ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+                arrset(gtype,ig,">=")
+                arrset(pb.cnames,ig,"C"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["A"*string(I)*","*string(J)])
+            end
+        end
+        #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
+        pb.n   = length(ix_)
+        ngrp   = length(ig_)
+        legrps = findall(x->x=="<=",gtype)
+        eqgrps = findall(x->x=="==",gtype)
+        gegrps = findall(x->x==">=",gtype)
+        pb.nle = length(legrps)
+        pb.neq = length(eqgrps)
+        pb.nge = length(gegrps)
+        pb.m   = pb.nle+pb.neq+pb.nge
+        pbm.congrps = findall(x->x!="<>",gtype)
+        pb.nob = ngrp-pb.m
+        pbm.objgrps = findall(x->x=="<>",gtype)
+        #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
+        pbm.gconst = zeros(Float64,ngrp)
+        for I = Int64(v_["1"]):Int64(v_["M"])
+            pbm.gconst[ig_["C"*string(I)]] = Float64(v_["B"*string(I)])
+        end
+        #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
+        pb.x0 = fill(Float64(0.0),pb.n)
+        pb.y0 = fill(Float64(0.0),pb.m)
+        if haskey(ix_,"X5")
+            pb.x0[ix_["X5"]] = Float64(1.0)
+        else
+            pb.y0[findfirst(x->x==ig_["X5"],pbm.congrps)] = Float64(1.0)
+        end
+        #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
+        iet_  = Dict{String,Int}()
+        elftv = Vector{Vector{String}}()
+        it,iet_,_ = s2x_ii( "eCUBE", iet_)
+        loaset(elftv,it,1,"XJ")
+        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        loaset(elftv,it,1,"XI")
+        loaset(elftv,it,2,"XJ")
+        #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
+        ie_      = Dict{String,Int}()
+        ielftype = Vector{Int64}()
+        for J = Int64(v_["1"]):Int64(v_["N"])
+            ename = "D"*string(J)
+            ie,ie_,_  = s2x_ii(ename,ie_)
+            arrset(pbm.elftype,ie,"eCUBE")
+            arrset(ielftype, ie, iet_["eCUBE"])
+            vname = "X"*string(J)
+            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
+            loaset(pbm.elvar,ie,posev,iv)
+            for I = Int64(v_["1"]):Int64(v_["N"])
+                ename = "C"*string(I)*","*string(J)
+                ie,ie_,_  = s2x_ii(ename,ie_)
+                arrset(pbm.elftype,ie,"ePROD")
+                arrset(ielftype, ie, iet_["ePROD"])
+                vname = "X"*string(I)
+                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                posev = findfirst(x->x=="XI",elftv[ielftype[ie]])
+                loaset(pbm.elvar,ie,posev,iv)
+                vname = "X"*string(J)
+                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
+                loaset(pbm.elvar,ie,posev,iv)
+            end
+        end
+        #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
+        for ig in 1:ngrp
+            arrset(pbm.grelt,ig,Int64[])
+        end
+        nlc = Int64[]
+        for J = Int64(v_["1"]):Int64(v_["N"])
+            ig = ig_["OBJ"]
+            posel = length(pbm.grelt[ig])+1
+            loaset(pbm.grelt,ig,posel,ie_["D"*string(J)])
+            arrset(nlc,length(nlc)+1,ig)
+            loaset(pbm.grelw,ig,posel,Float64(v_["D"*string(J)]))
+            for I = Int64(v_["1"]):Int64(v_["N"])
+                ig = ig_["OBJ"]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["C"*string(I)*","*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["C"*string(I)*","*string(J)]))
+            end
+        end
+        #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+        #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
+        pb.xlower = zeros(Float64,pb.n)
+        pb.xupper =    fill(Inf,pb.n)
+        #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
+        pb.clower = -1*fill(Inf,pb.m)
+        pb.cupper =    fill(Inf,pb.m)
+        pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)
+        pb.cupper[1:pb.nge] = fill(Inf,pb.nge)
+        Asave = pbm.A[1:ngrp, 1:pb.n]
+        pbm.A = Asave
+        pbm.H = spzeros(Float64,0,0)
+        #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
+        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.pbclass = "OLR2-AN-5-10"
+        return pb, pbm
+
+    #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
+
+    elseif action == "eCUBE"
+
+        EV_     = args[1]
+        iel_    = args[2]
+        nargout = args[3]
+        pbm     = args[4]
+        f_   = EV_[1]*EV_[1]*EV_[1]
+        if nargout>1
+            dim = try length(IV_) catch; length(EV_) end
+            g_  = zeros(Float64,dim)
+            g_[1] = 3.0e+0*EV_[1]*EV_[1]
+            if nargout>2
+                H_ = zeros(Float64,1,1)
+                H_[1,1] = 6.0e+0*EV_[1]
+            end
+        end
+        if nargout == 1
+            return f_
+        elseif nargout == 2
+            return f_,g_
+        elseif nargout == 3
+            return f_,g_,H_
+        end
+
+    elseif action == "ePROD"
+
+        EV_     = args[1]
+        iel_    = args[2]
+        nargout = args[3]
+        pbm     = args[4]
+        f_   = EV_[1]*EV_[2]
+        if nargout>1
+            dim = try length(IV_) catch; length(EV_) end
+            g_  = zeros(Float64,dim)
+            g_[1] = EV_[2]
+            g_[2] = EV_[1]
+            if nargout>2
+                H_ = zeros(Float64,2,2)
+                H_[1,2] = 1.0e+0
+                H_[2,1] = H_[1,2]
+            end
+        end
+        if nargout == 1
+            return f_
+        elseif nargout == 2
+            return f_,g_
+        elseif nargout == 3
+            return f_,g_,H_
+        end
+
+    #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
+
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+
+        pbm = args[1]
+        if pbm.name == name
+            pbm.has_globs = [0,0]
+            return s2x_eval(action,args...)
+        else
+            println("ERROR: please run "*name*" with action = setup")
+            return ntuple(i->undef,args[end])
+        end
+
+    else
+        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        return ntuple(i->undef,args[end])
+    end
+
+end
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
