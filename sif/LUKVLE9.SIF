@@ -1,0 +1,259 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLE9 
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.9, the modified Brown function with
+*   simplified seven-diagonal constraints, due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+
+ I/ N/2       N                        2
+ IA N-1       N         -1
+ IA N-2       N         -2
+ IA N-3       N         -3
+ IA N-4       N         -4
+ IA N-5       N         -5
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N/2
+ IM 2I        I         2
+ IA 2I-1      2I        -1       
+ XN OBJ1(I)   X(2I-1)   1.0
+ XN OBJ2      X(2I-1)   -1.0           X(2I)     1.0
+ XN OBJ3(I)   X(2I-1)   1.0            X(2I)     -1.0
+ ND
+
+ XE C(1)      X(1)      4.0            X(2)      1.0
+ XE C(1)      X(3)      1.0
+ XE C(2)      X(2)      6.0            X(3)      1.0
+ XE C(2)      X(4)      1.0
+ XE C(3)      X(3)      6.0            X(4)      1.0
+ XE C(3)      X(5)      1.0            X(1)      -1.0
+ XE C(4)      X(N-2)    6.0            X(N-1)    1.0
+ XE C(4)      X(N)      1.0            X(N-4)    -1.0
+ XE C(4)      X(N-5)    -1.0
+ XE C(5)      X(N-1)    6.0            X(N-3)    -1.0
+ XE C(5)      X(N)      1.0            X(N-4)    -1.0
+ XE C(6)      X(N)      2.0            X(N-3)    -1.0
+ XE C(6)      X(N-2)    -1.0
+
+CONSTANTS
+
+ X  RHS       C(2)      2.0
+ X  RHS       C(3)      2.0
+ X  RHS       C(4)      2.0
+ X  RHS       C(5)      2.0
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ XV LUKVLE9   X(I)      -1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV CUBEP     V                        W
+
+ELEMENT USES
+
+ XT C1(1)     SQR
+ ZV C1(1)     V                        X(2)
+ XT C2(1)     SQR
+ ZV C2(1)     V                        X(3)
+ XT C3(1)     SQR
+ ZV C3(1)     V                        X(4)
+
+ XT C1(2)     CUBEP
+ ZV C1(2)     V                        X(2)
+ ZV C1(2)     W                        X(1)
+ XT C2(2)     SQR
+ ZV C2(2)     V                        X(3)
+ XT C3(2)     SQR
+ ZV C3(2)     V                        X(1)
+ XT C4(2)     SQR
+ ZV C4(2)     V                        X(4)
+ XT C5(2)     SQR
+ ZV C5(2)     V                        X(5)
+
+ XT C1(3)     CUBEP
+ ZV C1(3)     V                        X(3)
+ ZV C1(3)     W                        X(2)
+ XT C2(3)     SQR
+ ZV C2(3)     V                        X(4)
+ XT C3(3)     SQR
+ ZV C3(3)     V                        X(2)
+ XT C4(3)     SQR
+ ZV C4(3)     V                        X(5)
+ XT C5(3)     SQR
+ ZV C5(3)     V                        X(1)
+ XT C6(3)     SQR
+ ZV C6(3)     V                        X(6)
+
+ XT C1(4)     CUBEP
+ ZV C1(4)     V                        X(N-2)
+ ZV C1(4)     W                        X(N-3)
+ XT C2(4)     SQR
+ ZV C2(4)     V                        X(N-1)
+ XT C3(4)     SQR
+ ZV C3(4)     V                        X(N-3)
+ XT C4(4)     SQR
+ ZV C4(4)     V                        X(N)
+ XT C5(4)     SQR
+ ZV C5(4)     V                        X(N-4)
+
+ XT C1(5)     CUBEP
+ ZV C1(5)     V                        X(N-1)
+ ZV C1(5)     W                        X(N-2)
+ XT C2(5)     SQR
+ ZV C2(5)     V                        X(N)
+ XT C3(5)     SQR
+ ZV C3(5)     V                        X(N-2)
+ XT C4(5)     SQR
+ ZV C4(5)     V                        X(N-3)
+
+ XT C1(6)     CUBEP
+ ZV C1(6)     V                        X(N)
+ ZV C1(6)     W                        X(N-1)
+ XT C2(6)     SQR
+ ZV C2(6)     V                        X(N-1)
+ XT C3(6)     SQR
+ ZV C3(6)     V                        X(N-2)
+
+GROUP TYPE
+
+ GV AL2       ALPHA
+ GV EXP20     ALPHA
+
+GROUP USES
+
+ DO I         1                        N/2
+ XT OBJ1(I)   AL2
+ XT OBJ3(I)   EXP20
+ ND
+
+ XE C(1)      C1(1)      -4.0
+ XE C(1)      C2(1)      -1.0
+ XE C(1)      C3(1)      -1.0
+ XE C(2)      C1(2)      8.0
+ XE C(2)      C2(2)      -4.0
+ XE C(2)      C3(2)      1.0
+ XE C(2)      C4(2)      -1.0
+ XE C(2)      C5(2)      -1.0
+ XE C(3)      C1(3)      8.0
+ XE C(3)      C2(3)      -4.0
+ XE C(3)      C3(3)      1.0
+ XE C(3)      C4(3)      -1.0
+ XE C(3)      C5(3)      1.0
+ XE C(3)      C6(3)      -1.0
+ XE C(4)      C1(4)      8.0
+ XE C(4)      C2(4)      -4.0
+ XE C(4)      C3(4)      1.0
+ XE C(4)      C4(4)      -1.0
+ XE C(4)      C5(4)      1.0
+ XE C(5)      C1(5)      8.0
+ XE C(5)      C2(5)      -4.0
+ XE C(5)      C3(5)      1.0
+ XE C(5)      C4(5)      1.0
+ XE C(6)      C1(6)      8.0
+ XE C(6)      C2(6)      1.0
+ XE C(6)      C3(6)      1.0
+
+OBJECT BOUND
+
+ LO LUKVLE9             0.0
+
+*   Solution
+
+*LO SOLTN               1.0111E+2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLE9 
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  CUBEP
+ F                      V ** 3 - V * W
+ G  V                   3.0 * V ** 2 - W
+ G  W                   - V
+ H  V         V         6.0 * V
+ H  V         W         - 1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLE9
+
+TEMPORARIES
+
+ M  EXP
+ R  EXP20A
+
+INDIVIDUALS
+
+ T  AL2
+ F                      0.001 * ALPHA * ALPHA
+ G                      0.002 * ALPHA
+ H                      0.002
+
+ T  EXP20
+ A  EXP20A              EXP( 20.0 * ALPHA )
+ F                      EXP20A
+ G                      20.0 * EXP20A
+ H                      400.0 * EXP20A
+
+ENDATA

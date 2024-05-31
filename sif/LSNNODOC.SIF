@@ -1,0 +1,160 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LSNNODOC
+
+*  Problem :
+*  *********
+
+*  A small network problem from the User's Guide to LSNNO (D. Tuyttens)
+
+*  Source:
+*  D. Tuyttens,
+*  "A User's Guide to LSNNO, a Fortran subroutine for large scale
+*  nonlinear optimization problems",
+*  Report 89/00, Department of Mathemetics, FUNDP, Namur (Belgium), 1989.
+
+*  SIF input: J-M COLLIN, July 1990.
+
+*  classification ONR2-AY-5-4
+
+*  Number of variables
+
+ IE N                   5
+
+*  Parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+* Objective function
+
+ N  OBJ
+
+*  Constraint function
+
+ E  C1        X1        1.0            X2        1.0
+ E  C2        X1        -1.0           X3        -1.0
+ E  C2        X4        1.0
+ E  C3        X2        -1.0           X3        1.0
+ E  C3        X5        1.0
+ E  C4        X4        -1.0           X5        -1.0
+
+
+CONSTANTS
+
+    LSNNODOC  C1        10.0
+    LSNNODOC  C4        -10.0
+
+BOUNDS
+
+ FR LSNNODOC  'DEFAULT'
+
+ LO LSNNODOC  X1        2.0
+ UP LSNNODOC  X1        4.0
+
+ LO LSNNODOC  X2        6.0
+ UP LSNNODOC  X2        8.0
+
+ LO LSNNODOC  X3        0.0
+ UP LSNNODOC  X3        5.0
+
+START POINT
+
+    LSNNODOC  X1        4.0            X2        6.0
+    LSNNODOC  X3        2.0            X4        6.0
+    LSNNODOC  X5        4.0
+
+ELEMENT TYPE
+
+ EV EXPO      X                        Z
+ EV EXPO      Y
+ IV EXPO      T                        TZ
+
+ EV SQ2       X                        Y
+
+ EV ISQ       X                        Y
+ IV ISQ       T
+
+ELEMENT USES
+
+ T  E1        EXPO
+ V  E1        X                        X1
+ V  E1        Z                        X2
+ V  E1        Y                        X3
+
+ T  E2        SQ2
+ V  E2        X                        X3
+ V  E2        Y                        X4
+
+ T  E3        ISQ
+ V  E3        X                        X3
+ V  E3        Y                        X5
+
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               123.11244
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LSNNODOC
+
+TEMPORARIES
+
+ R  TZEXPT
+ R  EXPT
+ R  XX
+ R  YY
+ M  EXP
+
+INDIVIDUALS
+
+ T  EXPO
+ R  T         X         1.0            Y         1.0
+ R  TZ        Z         1.0
+ A  EXPT                EXP( T )
+ A  TZEXPT              TZ * EXPT
+ F                      TZEXPT
+ G  T                   TZEXPT
+ G  TZ                  EXPT
+ H  T         T         TZEXPT
+ H  T         TZ        EXPT
+
+ T  SQ2
+ A  XX                  X * X
+ A  YY                  Y * Y
+ F                      XX * YY
+ G  X                   2.0 * X * YY
+ G  Y                   2.0 * XX * Y
+ H  X         X         YY + YY
+ H  X         Y         4.0 * X * Y
+ H  Y         Y         XX + XX
+
+ T  ISQ
+ R  T         X         1.0            Y         -1.0
+ F                      T * T
+ G  T                   T + T
+ H  T         T         2.0
+
+ENDATA

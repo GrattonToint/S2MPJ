@@ -1,0 +1,435 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LAKES
+
+*   Problem:
+*   ********
+
+*   A problem of water resource management in Canada, which may be 
+*   formulated as
+*
+*   Min  SUM   SUM  (T(i,j)- R(i,j))^2 + (O(i,j)-R(N+i,j))^2)
+*       i=1,N j=1,5 
+*
+*   subject to
+*
+*   T(i+1,1)-T(i,1)+O(i,1)        =  G(i,1)
+*   T(i+1,2)-T(i,2)-O(i,1)+O(i,2) =  G(i,2)
+*   T(i+1,3)-T(i,3)-O(i,2)+O(i,3) =  G(i,3)
+*   T(i+1,4)-T(i,4)-O(i,3)+O(i,4) =  G(i,4)
+*   T(i+1,5)-T(i,5)-O(i,4)+O(i,5) =  G(i,5) 
+*
+*   i=1,N and T(N+1,j) = T(1,j)  for j=1,5
+*
+*   O(i,2)-a*((T(i,2)/480.8+T(i,3)/4.6)/2-543.4)^2 * 
+*   (T(i,2)/480.8-T(i,3)/4.6)^.5=0
+*   O(i,3)-b*((T(i,3)/4.6-543.4)^2*(T(i,3)/4.6-T(i,4)/105.15)^0.5) = 0
+*   O(i,4)-c*(T(i,4)/105.15-550.11)^2.2 = 0
+*
+*   where T(i,j) and O(i,j) are variables, R(i,j) are given and
+*   a=.0841168  b=.1280849 and c=0.2605.
+*
+*   Extra variables 
+*   
+*   v(i,2) = T(i,2) / 961.6 + T(i,3) / 9.2 - 543.4
+*   w(i,2) = T(i,2) / 480.8 - T(i,3) / 4.6
+*   v(i,3) = T(i,3) / 4.6 - 543.4
+*   w(i,3) = T(i,3) / 4.6 - T(i,4) / 105.15
+*   v(i,4) = T(i,4) / 105.15 - 550.11
+*
+*   are introduced so that the nonlinear constraints may be rewritten as
+*
+*   O(i,2)-a*v(i,2)^2 * w(i,2)^0.5 = 0 ; w(i,2) > 0
+*   O(i,3)-b*v(i,3)^2 * w(i,3)^0.5 = 0 ; w(i,3) > 0
+*   O(i,4)-c*v(i,4)^2.2 = 0 ; v(i,4) > 0
+*
+*   Source:
+*   S Jafar Sadjadi
+*   Dept. of Systems Design Engineering
+*   University of Waterloo
+*   Ontario, N2L 3G1 Canada
+
+*   SIF input: Nick Gould and Jafar Sadjadi, November 1995
+
+*   classification QOR2-RN-90-78
+
+ IE N                   6
+ IA N-1       N         -1
+ IA N+1       N         1
+ IM NN        N         2
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+
+* Target value S_hat and O_hat
+
+ RE S1s1                202761.072
+ RE S1s2                277791.816
+ RE S1s3                2636.996
+ RE S1s4                59987.0235
+ RE S1s5                19490.4
+ RE S2s1                202703.646
+ RE S2s2                277849.512
+ RE S2s3                2638.1
+ RE S2s4                59998.59
+ RE S2s5                19555.2
+ RE S3s1                202720.536
+ RE S3s2                277955.288
+ RE S3s3                2639.894
+ RE S3s4                60046.959
+ RE S3s5                19597.6
+ RE S4s1                202808.364
+ RE S4s2                278104.336
+ RE S4s3                2640.906
+ RE S4s4                60074.298
+ RE S4s5                19652.8
+ RE S5s1                202916.46
+ RE S5s2                278224.536
+ RE S5s3                2641.458
+ RE S5s4                60091.122
+ RE S5s5                19708.8
+ RE S6s1                202953.618
+ RE S6s2                278277.424
+ RE S6s3                2641.458
+ RE S6s4                60082.71
+ RE S6s5                19706.4
+
+ RE O1o1                83.728
+ RE O1o2                174.665
+ RE O1o3                180.539
+ RE O1o4                211.558
+ RE O1o5                232.252
+ RE O2o1                83.789
+ RE O2o2                173.255
+ RE O2o3                179.917
+ RE O2o4                210.585
+ RE O2o5                215.254
+ RE O3o1                82.9160
+ RE O3o2                173.721
+ RE O3o3                182.676
+ RE O3o4                207.838
+ RE O3o5                203.855
+ RE O4o1                80.134
+ RE O4o2                178.654
+ RE O4o3                185.917
+ RE O4o4                206.416
+ RE O4o5                186.308
+ RE O5o1                65.345
+ RE O5o2                188.01
+ RE O5o3                192.568
+ RE O5o4                204.3
+ RE O5o5                201.1
+ RE O6o1                72.005
+ RE O6o2                193.833
+ RE O6o3                196.651
+ RE O6o4                204.25
+ RE O6o5                241.079
+
+* Defining the variables
+
+VARIABLES
+
+ DO I         1                        N
+ DO J         1                        5
+
+ X  T(I,J)
+ X  O(I,J)
+
+ OD J
+
+ X  V(I,2)
+ X  W(I,2)
+ X  V(I,3)
+ X  W(I,3)
+ X  V(I,4)
+
+ OD I
+
+*  Objective function groups
+
+GROUPS
+
+ DO i         1                        N
+ I+ n+i       N                        i
+ DO j         1                        5
+ XN R(i,j)    T(i,j)    1.0
+ XN R(n+i,j)  O(i,j)    1.0
+ ND
+
+* Linear Constraints
+
+ DO i         1                        N-1
+ IA k+1       i         1
+
+ DO j         1                        5
+ XE G(i,j)    T(k+1,j)  1.0            T(i,j)    -1.0
+ XE G(i,j)    O(i,j)    1.0
+ OD j
+
+ DO j         2                        5
+ IA j-1       j         -1
+ XE G(i,j)    O(i,j-1)  -1.0
+ ND
+
+ DO j         1                        5
+ XE G(N,j)    T(1,j)    1.0            T(N,j)    -1.0
+ XE G(N,j)    O(N,j)    1.0
+ ND
+
+ DO j         2                        5
+ IA j-1       j         -1
+ XE G(N,j)    O(N,j-1)  -1.0
+ ND
+
+ DO i         1                        N
+
+* Nonlinear constraints
+
+ XE A(i,1)    O(i,2)    -1.0
+ XE A(i,2)    O(i,3)    -1.0
+ XE A(i,3)    O(i,4)    -1.0
+
+* Artificial linear constraints
+
+ XE V(i,2)    V(i,2)    -1.0
+ RE C                   961.6
+ RD C         C         1.0
+ ZE V(i,2)    T(i,2)                   C
+ RE C                   9.2
+ RD C         C         1.0
+ ZE V(i,2)    T(i,3)                   C
+
+ XE W(i,2)    W(i,2)    -1.0
+ RE C                   480.8
+ RD C         C         1.0
+ ZE W(i,2)    T(i,2)                   C
+ RE C                   -4.6
+ RD C         C         1.0
+ ZE W(i,2)    T(i,3)                   C
+
+ XE V(i,3)    V(i,3)    -1.0
+ RE C                   4.6
+ RD C         C         1.0
+ ZE V(i,3)    T(i,3)                   C
+
+ XE W(i,3)    W(i,3)    -1.0
+ RE C                   4.6
+ RD C         C         1.0
+ ZE W(i,3)    T(i,3)                   C
+ RE C                   -105.15
+ RD C         C         1.0
+ ZE W(i,3)    T(i,4)                   C
+
+ XE V(i,4)    V(i,4)    -1.0
+ RE C                   105.15
+ RD C         C         1.0
+ ZE V(i,4)    T(i,4)                   C
+ ND
+
+CONSTANTS
+
+ Z  LAKES     R(1,1)                   S1s1
+ Z  LAKES     R(1,2)                   S1s2
+ Z  LAKES     R(1,3)                   S1s3
+ Z  LAKES     R(1,4)                   S1s4
+ Z  LAKES     R(1,5)                   S1s5
+ Z  LAKES     R(2,1)                   S2s1
+ Z  LAKES     R(2,2)                   S2s2
+ Z  LAKES     R(2,3)                   S2s3
+ Z  LAKES     R(2,4)                   S2s4
+ Z  LAKES     R(2,5)                   S2s5
+ Z  LAKES     R(3,1)                   S3s1
+ Z  LAKES     R(3,2)                   S3s2
+ Z  LAKES     R(3,3)                   S3s3
+ Z  LAKES     R(3,4)                   S3s4
+ Z  LAKES     R(3,5)                   S3s5
+ Z  LAKES     R(4,1)                   S4s1
+ Z  LAKES     R(4,2)                   S4s2
+ Z  LAKES     R(4,3)                   S4s3
+ Z  LAKES     R(4,4)                   S4s4
+ Z  LAKES     R(4,5)                   S4s5
+ Z  LAKES     R(5,1)                   S5s1
+ Z  LAKES     R(5,2)                   S5s2
+ Z  LAKES     R(5,3)                   S5s3
+ Z  LAKES     R(5,4)                   S5s4
+ Z  LAKES     R(5,5)                   S5s5
+ Z  LAKES     R(6,1)                   S6s1
+ Z  LAKES     R(6,2)                   S6s2
+ Z  LAKES     R(6,3)                   S6s3
+ Z  LAKES     R(6,4)                   S6s4
+ Z  LAKES     R(6,5)                   S6s5
+ Z  LAKES     R(7,1)                   O1o5
+ Z  LAKES     R(7,2)                   O1o2
+ Z  LAKES     R(7,3)                   O1o3
+ Z  LAKES     R(7,4)                   O1o4
+ Z  LAKES     R(7,5)                   O1o5
+ Z  LAKES     R(8,1)                   O2o1
+ Z  LAKES     R(8,2)                   O2o2
+ Z  LAKES     R(8,3)                   O2o3
+ Z  LAKES     R(8,4)                   O2o4
+ Z  LAKES     R(8,5)                   O2o5
+ Z  LAKES     R(9,1)                   O3o1
+ Z  LAKES     R(9,2)                   O3o2
+ Z  LAKES     R(9,3)                   O3o3
+ Z  LAKES     R(9,4)                   O3o4
+ Z  LAKES     R(9,5)                   O3o5
+ Z  LAKES     R(10,1)                  O4o1
+ Z  LAKES     R(10,2)                  O4o2
+ Z  LAKES     R(10,3)                  O4o3
+ Z  LAKES     R(10,4)                  O4o4
+ Z  LAKES     R(10,5)                  O4o5
+ Z  LAKES     R(11,1)                  O5o1
+ Z  LAKES     R(11,2)                  O5o2
+ Z  LAKES     R(11,3)                  O5o3
+ Z  LAKES     R(11,4)                  O5o4
+ Z  LAKES     R(11,5)                  O5o5
+ Z  LAKES     R(12,1)                  O6o1
+ Z  LAKES     R(12,2)                  O6o2
+ Z  LAKES     R(12,3)                  O6o3
+ Z  LAKES     R(12,4)                  O6o4
+ Z  LAKES     R(12,5)                  O6o5
+ X  LAKES     G(1,1)    -22.0
+ X  LAKES     G(1,2)    -1.0
+ X  LAKES     G(1,3)    3.0
+ X  LAKES     G(1,4)    -27.2
+ X  LAKES     G(1,5)    51.5
+ X  LAKES     G(2,1)    44.0
+ X  LAKES     G(2,2)    162.0
+ X  LAKES     G(2,3)    8.0
+ X  LAKES     G(2,4)    12.5
+ X  LAKES     G(2,5)    53.5
+ X  LAKES     G(3,1)    -11.0
+ X  LAKES     G(3,2)    60.0
+ X  LAKES     G(3,3)    10.0
+ X  LAKES     G(3,4)    18.0
+ X  LAKES     G(3,5)    39.0
+ X  LAKES     G(4,1)    124.0
+ X  LAKES     G(4,2)    246.0
+ X  LAKES     G(4,3)    6.0
+ X  LAKES     G(4,4)    9.7
+ X  LAKES     G(4,5)    17.2
+ X  LAKES     G(5,1)    127.0
+ X  LAKES     G(5,2)    175.0
+ X  LAKES     G(5,3)    3.0
+ X  LAKES     G(5,4)    10.0
+ X  LAKES     G(5,5)    30.2
+ X  LAKES     G(6,1)    78.0
+ X  LAKES     G(6,2)    156.0
+ X  LAKES     G(6,3)    3.0
+ X  LAKES     G(6,4)    14.0
+ X  LAKES     G(6,5)    23.2
+
+ DO i         1                        N
+ X  LAKES     V(i,2)    543.4
+ X  LAKES     W(i,2)    0.0
+ X  LAKES     V(i,3)    543.4
+ X  LAKES     W(i,3)    0.0 
+ X  LAKES     V(i,4)    550.11
+ ND
+
+BOUNDS
+
+ FR LAKES     'DEFAULT'
+ DO i         1                        N
+ XL LAKES     W(i,2)    0.0001
+ XL LAKES     W(i,3)    0.0001
+ XL LAKES     V(i,4)    0.0001
+ ND
+
+START POINT
+
+    LAKES     'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV 1VAR      V
+ EP 1VAR      P
+ EV 2VAR      V
+ EV 2VAR      W
+ EP 2VAR      P
+
+ELEMENT USES
+
+ DO i         1                        N
+ XT B(i,1)    2VAR
+ ZV B(i,1)    V                        V(i,2)
+ ZV B(i,1)    W                        W(i,2)
+ XP B(i,1)    P         0.0841168
+ XT B(i,2)    2VAR
+ ZV B(i,2)    V                        V(i,3)
+ ZV B(i,2)    W                        W(i,3)
+ XP B(i,2)    P         0.1280849
+ XT B(i,3)    1VAR
+ ZV B(i,3)    V                        V(i,4)
+ XP B(i,3)    P         0.2605
+ ND
+
+GROUP TYPE
+
+ GV L2        ALPHA
+
+GROUP USES
+
+ DO i         1                        N
+ XE A(i,1)    B(i,1)
+ XE A(i,2)    B(i,2)
+ XE A(i,3)    B(i,3)
+ ND
+
+ DO i         1                        N
+ I+ n+i       N                        i
+ DO j         1                        5
+ XT R(i,j)    L2
+ XT R(n+i,j)  L2
+ ND
+
+*LO SOLUTION            ??             ! Probably infeasible
+
+ENDATA
+
+ELEMENTS      LAKES
+
+TEMPORARIES
+
+INDIVIDUALS
+
+ T  1VAR
+ F                      P * V ** 2.2
+ G  V                   P * 2.2 * V ** 1.2
+ H  V         V         P * 2.64 * V ** 0.2
+
+ T  2VAR
+ F                      P * V ** 2 * W ** 0.5
+ G  V                   P * 2.0 * V * W ** 0.5
+ G  W                   P * 0.5 * V ** 2 / W ** 0.5
+ H  V         V         P * 2.0 * W ** 0.5
+ H  V         W         P * V / W ** 0.5
+ H  W         W         - P * 0.25 * V ** 2 / W ** 1.5
+
+ENDATA
+
+GROUPS        LAKES
+
+INDIVIDUALS
+
+ T  L2
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0
+
+ENDATA
+
+
+

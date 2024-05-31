@@ -1,0 +1,152 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKSAN21LS
+
+*   Problem :
+*   *********
+
+*   Problem 21 (modified discrete boundary value) in the paper
+
+*     L. Luksan
+*     Hybrid methods in large sparse nonlinear least squares
+*     J. Optimization Theory & Applications 89(3) 575-595 (1996)
+
+*   SIF input: Nick Gould, June 2017.
+
+*   least-squares version
+
+*   classification SUR2-AN-V-0
+
+*  number of unknowns
+
+ IE N                   100
+
+*  number of equations
+
+ I= M         N
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA M-1       M         -1
+ RE ONE                 1.0
+ RI RN        N
+ RA RN+1      RN        1
+ R/ H         ONE                      RN+1
+ R* H2        H                        H
+ RM H2/2      H2        0.5
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN E(1)      X(1)      2.0            X(2)      -1.0
+ DO I         2                        M-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ XN E(I)      X(I)      2.0            X(I-1)    -1.0
+ XN E(I)      X(I+1)    -1.0
+ ND
+ XN E(M)      X(N)      2.0            X(M-1)    -1.0
+
+CONSTANTS
+
+ DO I         1                        M
+ X  LUKSAN21  E(I)      -1.0
+ ND
+
+BOUNDS
+
+ FR LUKSAN21  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ RI RI        I
+ R* IH        RI                       H
+ RA IH-1      IH        -1.0
+ R* XS        IH                       IH-1
+ ZV LUKSAN21  X(I)                     XS
+ ND
+
+ELEMENT TYPE
+
+ EV CUBE      X
+ EP CUBE      HI
+
+ELEMENT USES
+
+ XT 'DEFAULT' CUBE
+
+ DO I         1                        N
+ RI RI        I
+ R* HI        RI                       H
+ ZV L(I)      X                        X(I)
+ ZP L(I)      HI                       HI
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        M
+ ZE E(I)      L(I)                     H2/2
+ ND
+
+OBJECT BOUND
+
+ LO LUKSAN21             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKSAN21LS
+
+TEMPORARIES
+
+ R  XHIP1
+
+INDIVIDUALS
+
+ T  CUBE
+ A  XHIP1               X + HI + 1.0D0
+ F                      XHIP1 ** 3
+ G  X                   3.0D0 * XHIP1 ** 2
+ H  X         X         6.0D0 * XHIP1
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKSAN21LS
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

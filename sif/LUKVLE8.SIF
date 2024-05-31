@@ -1,0 +1,277 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLE8 
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.8, the augmented Lagrangian function with 
+*   discrete boundard value constraints, due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   50             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+ RE LAMBDA1             -0.002008
+ RE LAMBDA2             -0.001900
+ RE LAMBDA3             -0.000261
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ RE ONE                 1.0
+
+ I/ N/5       N                        5
+ IA N-2       N         -2
+ IA N+1       N         1
+ RI N+1       N+1
+ R/ H         ONE                      N+1
+ R* H**2      H                        H
+ RM H**2/2    H**2      0.5
+
+ RA LAMBA1+10 LAMBDA1   10.0
+ RA LAMBA3-1  LAMBDA3   -1.0
+            
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N/5
+ XN O1(I)
+ XN O2(I)
+ XN O3(I)
+ XN O4(I)
+ ND
+
+ DO K         1                        N-2
+ IA K+1       K         1
+ IA K+2       K         2
+ XE C(K)      X(K+1)    2.0            X(K)      -1.0
+ XE C(K)      X(K+2)    -1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N/5
+ Z  RHS       O2(I)                    LAMBA1+10
+ Z  RHS       O3(I)                    LAMBDA2
+ Z  RHS       O4(I)                    LAMBA3-1
+ ND
+
+BOUNDS
+
+ FR LUKVLE8   'DEFAULT'
+
+START POINT
+
+*XV START     'DEFAULT' 1.0
+
+ DO I         1                        N
+ DI I         2
+ XV LUKVLE8   X(I)      -1.0
+ ND
+
+ DO I         2                        N
+ DI I         2
+ XV LUKVLE8   X(I)      2.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV SHIFTSQR  V
+ EP SHIFTSQR  P
+ EV CUBE      V
+ EV PROD      V                        W
+ EV 5PR       V1                       V2
+ EV 5PR       V3                       V4
+ EV 5PR       V5
+
+ELEMENT USES
+
+ DO I         1                        N/5
+ IM 5I        I         5
+ IA 5I-1      5I        -1
+ IA 5I-2      5I        -2
+ IA 5I-3      5I        -3
+ IA 5I-4      5I        -4
+ XT O1(I)     5PR
+ ZV O1(I)     V1                       X(5I)
+ ZV O1(I)     V2                       X(5I-1)
+ ZV O1(I)     V3                       X(5I-2)
+ ZV O1(I)     V4                       X(5I-3)
+ ZV O1(I)     V5                       X(5I-4)
+ XT O2A(I)    SQR
+ ZV O2A(I)    V                        X(5I)
+ XT O2B(I)    SQR
+ ZV O2B(I)    V                        X(5I-1)
+ XT O2C(I)    SQR
+ ZV O2C(I)    V                        X(5I-2)
+ XT O2D(I)    SQR
+ ZV O2D(I)    V                        X(5I-3)
+ XT O2E(I)    SQR
+ ZV O2E(I)    V                        X(5I-4)
+ XT O3A(I)    PROD
+ ZV O3A(I)    V                        X(5I-3)
+ ZV O3A(I)    W                        X(5I-2)
+ XT O3B(I)    PROD
+ ZV O3B(I)    V                        X(5I-1)
+ ZV O3B(I)    W                        X(5I)
+ XT O4A(I)    CUBE
+ ZV O4A(I)    V                        X(5I-4)
+ XT O4B(I)    CUBE
+ ZV O4B(I)    V                        X(5I-3)
+ ND
+
+ DO K         1                        N-2
+ IA K+1       K         1
+ RI K+1       K+1
+ R* H(K+1)    H                        K+1
+ RA H.K+1)+1  H(K+1)    1.0
+ XT C(K)      SHIFTSQR
+ ZV C(K)      V                        X(K+1)
+ ZP C(K)      P                        H.K+1)+1
+ ND
+
+GROUP TYPE
+
+ GV EXP       GVAR
+ GV 10L2      GVAR
+
+GROUP USES
+
+ DO I         1                        N/5
+ XT O1(I)     EXP
+ XE O1(I)     O1(I)
+ XT O2(I)     10L2
+ XE O2(I)     O2A(I)                   O2B(I)
+ XE O2(I)     O2C(I)                   O2D(I)
+ XE O2(I)     O2E(I)
+ XT O3(I)     10L2
+ XE O3(I)     O3A(I)    1.0            O3B(I)    -5.0
+ XT O4(I)     10L2
+ XE O4(I)     O4A(I)                   O4B(I)    
+ ND
+
+ DO K         1                        N-2
+ ZE C(K)      C(K)                     H**2/2
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLE8             0.0
+
+*   Solution
+
+*LO SOLTN               8.25936E+04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLE8 
+
+TEMPORARIES
+
+ R  FVAL
+ R  SECU
+ R  SECUSQ
+ R  TANU
+ M  EXP
+ M  TAN
+ M  COS
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  SHIFTSQR
+ F                      ( V + P ) ** 2
+ G  V                   2.0 * ( V + P )
+ H  V         V         2.0
+
+ T  CUBE
+ F                      V ** 3
+ G  V                   3.0 * V ** 2
+ H  V         V         6.0 * V
+
+ T  PROD
+ F                      V * W
+ G  V                   W
+ G  W                   V
+ H  V         W         1.0
+
+ T  5PR
+ F                      V1 * V2 * V3 * V4 * V5
+ G  V1                  V2 * V3 * V4 * V5
+ G  V2                  V1 * V3 * V4 * V5
+ G  V3                  V1 * V2 * V4 * V5
+ G  V4                  V1 * V2 * V3 * V5
+ G  V5                  V1 * V2 * V3 * V4
+ H  V1        V2        V3 * V4 * V5
+ H  V1        V3        V2 * V4 * V5
+ H  V1        V4        V2 * V3 * V5
+ H  V1        V5        V2 * V3 * V4
+ H  V2        V3        V1 * V4 * V5
+ H  V2        V4        V1 * V3 * V5
+ H  V2        V5        V1 * V3 * V4
+ H  V3        V4        V1 * V2 * V5
+ H  V3        V5        V1 * V2 * V4
+ H  V4        V5        V1 * V2 * V3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLE8 
+
+TEMPORARIES
+
+ M  EXP
+ R  EXPG
+
+INDIVIDUALS
+
+ T  EXP
+ A  EXPG                EXP( GVAR )
+ F                      EXPG
+ G                      EXPG
+ H                      EXPG
+
+ T  10L2
+ F                      10.0 * GVAR * GVAR
+ G                      20.0 * GVAR
+ H                      20.0
+
+ENDATA

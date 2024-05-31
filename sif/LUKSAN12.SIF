@@ -1,0 +1,209 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKSAN12
+
+*   Problem :
+*   *********
+
+*   Problem 12 (chained and modified HS47) in the paper
+
+*     L. Luksan
+*     Hybrid methods in large sparse nonlinear least squares
+*     J. Optimization Theory & Applications 89(3) 575-595 (1996)
+
+*   SIF input: Nick Gould, June 2017.
+
+*   classification NOR2-AN-V-V
+
+*  seed for dimensions
+
+ IE S                   32
+
+*  number of unknowns
+
+ IM N         S         3
+ IA N         N         2
+
+*  number of equations
+
+ IM M         S         6
+
+*   Define useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ IE I                   1
+ IE K                   1
+ DO J         1                        S
+ IA K+1       K         1
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ IA K+5       K         5
+ IA I+1       I         1
+ IA I+2       I         2
+ XE E(K)      X(I+1)    -10.0D0
+ XE E(K+1)    X(I+2)    1.0D0
+ XE E(K+2)
+ XE E(K+3)
+ XE E(K+4)
+ XE E(K+5)    X(I+1)    1.0D0
+ IA I         I         3
+ IA K         K         6
+ ND
+
+CONSTANTS
+
+ IE K                   1
+ DO J         1                        S
+ IA K+1       K         1
+ IA K+4       K         4
+ IA K+5       K         5
+ X  LUKSAN12  E(K+1)    1.0
+ X  LUKSAN12  E(K+4)    10.0
+ X  LUKSAN12  E(K+5)    20.0
+ IA K         K         6
+ ND
+
+BOUNDS
+
+ FR LUKSAN12  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ XV LUKSAN12  X(I)       -1.0
+ ND
+
+ELEMENT TYPE
+
+ EV E1        X0
+ EV E3        X3
+ EV E4        X4
+ EV E5        X0
+ EV E5        X3
+ EV F5        X3
+ EV F5        X4
+ IV F5        X
+ EV E6        X2
+ EV E6        X3
+
+ELEMENT USES
+
+ IE I                   1
+ IE K                   1
+ DO J         1                        S
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ IA K+5       K         5
+ IA I+2       I         2
+ IA I+3       I         3
+ IA I+4       I         4
+ XT E(K)      E1
+ ZV E(K)      X0                       X(I)
+ XT E(K+2)    E3
+ ZV E(K+2)    X3                       X(I+3)
+ XT E(K+3)    E4
+ ZV E(K+3)    X4                       X(I+4)
+ XT E(K+4)    E5
+ ZV E(K+4)    X0                       X(I)
+ ZV E(K+4)    X3                       X(I+3)
+ XT F(K+4)    F5
+ ZV F(K+4)    X3                       X(I+3)
+ ZV F(K+4)    X4                       X(I+4)
+ XT E(K+5)    E6
+ ZV E(K+5)    X2                       X(I+2)
+ ZV E(K+5)    X3                       X(I+3)
+ IA I         I         3
+ IA K         K         6
+ ND
+
+GROUP USES
+
+ IE K                   1
+ DO J         1                        S
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ IA K+5       K         5
+ XE E(K)      E(K)
+ XE E(K+2)    E(K+2)
+ XE E(K+3)    E(K+3)
+ XE E(K+4)    E(K+4)                   F(K+4)
+ XE E(K+5)    E(K+5)
+ IA K         K         6
+ ND
+
+OBJECT BOUND
+
+ LO LUKSAN12             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKSAN12
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  E1
+ F                      10.0D0 * X0 ** 2
+ G  X0                  20.0D0 * X0
+ H  X0        X0        20.0D0
+
+ T  E3
+ F                      ( X3 - 1.0D0 ) ** 2
+ G  X3                  2.0D0 * ( X3 - 1.0D0 )
+ H  X3        X3        2.0D0
+
+ T  E4
+ F                      ( X4 - 1.0D0 ) ** 3
+ G  X4                  3.0D0 * ( X4 - 1.0D0 ) ** 2
+ H  X4        X4        6.0D0 * ( X4 - 1.0D0 )
+
+ T  E5
+ F                      X3 * X0 * X0
+ G  X0                  2.0D0 * X3 * X0
+ G  X3                  X0 * X0
+ H  X0        X0        2.0D0 * X3
+ H  X0        X3        2.0D0 * X0
+
+ T  F5
+ R  X         X3        1.0            X4        -1.0
+ F                      SIN( X )
+ G  X                   COS( X )
+ H  X         X         - SIN( X )
+
+ T  E6
+ F                      ( X2 ** 4 ) * ( X3 ** 2 )
+ G  X2                  4.0D0 * ( X2 ** 3 ) * ( X3 ** 2 )
+ G  X3                  2.0D0 * ( X2 ** 4 ) * X3
+ H  X2        X2        12.0D0 * ( X2 ** 2 ) * ( X3 ** 2 )
+ H  X2        X3        8.0D0 * ( X2 ** 3 ) * X3
+ H  X3        X3        2.0D0 * ( X2 ** 4 )
+
+ENDATA
+

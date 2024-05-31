@@ -1,0 +1,99 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          KIWCRESC
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   K.C. Kiwiel,
+*   "Methods of Descent for Nondifferentiable Optimization"
+*   Lectures Notes in Mathematics 1133, Springer Verlag, 1985.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0           X2        1.0
+ XL F2        U         -1.0           X2        1.0
+
+CONSTANTS
+
+    KIWCRESC  F1        1.0
+    KIWCRESC  F2        -1.0
+
+BOUNDS
+
+*   All variables are free
+
+ FR KIWCRESC  'DEFAULT'
+
+START POINT
+
+    KIWCRESC  X1        -1.5
+    KIWCRESC  X2        2.0
+
+ELEMENT TYPE
+
+ EV SSQ       V
+ EP SSQ       S
+
+ELEMENT USES
+
+ T  X1SQ      SSQ
+ V  X1SQ      V                        X1
+ P  X1SQ      S         0.0
+
+ T  X2SQ      SSQ
+ V  X2SQ      V                        X2
+ P  X2SQ      S         1.0
+
+GROUP USES
+
+ E  F1        X1SQ      1.0            X2SQ      1.0
+ E  F2        X1SQ      -1.0           X2SQ      -1.0
+
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      KIWCRESC
+
+TEMPORARIES
+
+ R  VMS
+
+INDIVIDUALS
+
+ T  SSQ
+ A  VMS                 V - S
+ F                      VMS * VMS
+ G  V                   2.0 * VMS
+ H  V         V         2.0
+
+ENDATA
+

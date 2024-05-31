@@ -1,0 +1,703 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LAUNCH
+
+*   Problem:
+*   ********
+
+*   The objective function to be minimized represents the total cost of
+*   the development and launching of a 3 stages space launching vehicle.
+*   Constraints are imposed on physical interrelations between the variables
+*   and performance.
+
+*   The problem is highly non-convex. 
+
+*   Source:
+*   B. Rush, J. Bracken and G. McCormick,
+*   "A nonliner programming model for launch vehicle design and costing",
+*   Operations Research, pp. 185-210, 1967.
+
+*   SIF input: P. Driscoll, Virginia Tech., April 1993,
+*              corrected and simplified by Ph. L. Toint, May 1993.
+
+*   classification OOR2-MY-25-28
+
+VARIABLES
+
+    AW1                                $ stage 1 airframe weight   (Kpounds)
+    IW1                                $ stage 1 total inert weigh (Kpounds)
+    MF1                                $ stage 1 mass fraction
+    TT1                                $ stage 1 total thrust      (Kpounds)
+    PW1                                $ stage 1 propellant weight (Kpounds)
+    ET1                                $ stage 1 engine thrust     (Kpounds)
+    S1L                                $ stage 1 length            (feet)
+    AW2                                $ stage 2 airframe weight   (Kpounds)
+    IW2                                $ stage 2 total inert weigh (Kpounds)
+    MF2                                $ stage 2 mass fraction
+    TT2                                $ stage 2 total thrust      (Kpounds)
+    PW2                                $ stage 2 propellant weight (Kpounds)
+    ET2                                $ stage 2 engine thrust     (Kpounds)
+    S2L                                $ stage 2 length            (feet)
+    AW3                                $ stage 3 airframe weight   (Kpounds)
+    IW3                                $ stage 3 total inert weigh (Kpounds)
+    MF3                                $ stage 3 mass fraction
+    TT3                                $ stage 3 total thrust      (Kpounds)
+    PW3                                $ stage 3 propellant weight (Kpounds)
+    ET3                                $ stage 3 engine thrust     (Kpounds)
+    S3L                                $ stage 3 length            (feet)
+    INW                                $ instrument weight         (Kpounds)
+    BT1                                $ stage 1 burn time         (secs)
+    BT2                                $ stage 2 burn time         (secs)
+    BT3                                $ stage 3 burn time         (secs)
+
+GROUPS
+
+*   Cost of stage 1
+
+ XN STA1      ET1       0.0002587
+ XN STA1      'SCALE'   1.0D+8
+
+*   Cost of stage 2
+
+ XN STA2      ET2       0.0002587
+ XN STA2      'SCALE'   1.0D+8
+
+*   Cost of stage 3
+
+ XN STA3      ET3       0.001958
+ XN STA3      'SCALE'   1.0D+8
+
+*   Instrumentation cost
+
+ XN INST      INW       47.040096
+ XN INST      'SCALE'   1.0D+8
+
+*   Launch operating costs
+
+ XN LAUN      PW1       0.003          PW2       0.003
+ XN LAUN      PW3       0.003
+*XN LAUN      'SCALE'   0.039215686
+ XN LAUN      'SCALE'   39215686.0
+
+*   Relations between airframe weights and inert weights
+
+ XE SGTH1     AW1       2.0            IW1       -1.0
+ XE SGTH3     IW2       0.6            AW2       -1.0
+ XE SGTH5     IW3       0.7            AW3       -1.0
+
+*   Definition of stage mass fractions
+
+*   Relation between stage thrust and single engine thrust
+
+ XE SGTH2     ET1       5.0            TT1       -1.0
+ XE SGTH4     ET2       5.0            TT2       -1.0
+ XE SGTH6     TT3       1.0            ET3       -1.0
+
+*   Constraints on structural integrity (stage weight vs propellant weight)
+
+ XG SGSI1A    PW1       1.0            IW1       -12.0
+ XL SGSI1B    PW1       1.0            IW1       -17.0
+
+ XG SGSI2A    PW2       1.0            IW2       -10.0
+ XL SGSI2B    PW2       1.0            IW2       -13.0
+
+ XG SGSI3A    PW3       1.0            IW3       -7.0
+ XL SGSI3B    PW3       1.0            IW3       -10.0
+
+*   Constraints expression the ratio of thrust to initial weight for a given 
+*   payload
+
+ XG TTIW1A    TT1       1.0            IW1       -1.2
+ XG TTIW1A    PW1       -1.2           IW2       -1.2
+ XG TTIW1A    PW2       -1.2           IW3       -1.2
+ XG TTIW1A    PW3       -1.2           INW       -1.2
+
+ XL TTIW1B    TT1       1.0            IW1       -1.4
+ XL TTIW1B    PW1       -1.4           IW2       -1.4
+ XL TTIW1B    PW2       -1.4           IW3       -1.4
+ XL TTIW1B    PW3       -1.4           INW       -1.4
+
+ XG TTIW2A    TT2       1.0            IW2       -0.6
+ XG TTIW2A    PW2       -0.6           IW3       -0.6
+ XG TTIW2A    PW3       -0.6           INW       -0.6
+
+ XL TTIW2B    TT2       1.0            IW2       -0.75
+ XL TTIW2B    PW2       -0.75          IW3       -0.75
+ XL TTIW2B    PW3       -0.75          INW       -0.75
+
+ XG TTIW3A    TT3       1.0            IW3       -0.7
+ XG TTIW3A    PW3       -0.7           INW       -0.7
+
+ XL TTIW3B    TT3       1.0            IW3       -0.9
+ XL TTIW3B    PW3       -0.9           INW       -0.9
+
+*   Constraints on the stage mass fraction of the 3 stages
+
+ XE SMF1      MF1       20.0           IW1       -1.0
+ XE SMF1      IW2       -1.0           PW2       -1.0
+ XE SMF1      IW3       -1.0           PW3       -1.0
+ XE SMF1      INW       -1.0
+
+ XE SMF2      MF2       20.0           IW2       -1.0
+ XE SMF2      IW3       -1.0           PW3       -1.0
+ XE SMF2      INW       -1.0
+
+ XE SMF3      MF3       20.0           IW3       -1.0
+ XE SMF3      INW       -1.0
+
+*   Constraints on the specific impulse
+
+ XG SI1A      PW1       -240.0
+ XL SI1B      PW1       -290.0
+
+ XG SI2A      PW2       -240.0
+ XL SI2B      PW2       -290.0
+
+ XG SI3A      PW3       -340.0
+ XL SI3B      PW3       -375.0
+
+*   Total vehicle launch constraint
+
+ XG GLGCON
+
+CONSTANTS
+
+*   Objective function
+
+    LAUNCH    STA1      247.963        $ Stage 1
+    LAUNCH    STA2      247.963        $ Stage 2
+    LAUNCH    STA3      32.591         $ Stage 3
+    LAUNCH    INST      35.5           $ Instrumentation
+
+*   Constraints
+
+    LAUNCH    TTIW1A    24.0           $ thrust to initial weight 
+    LAUNCH    TTIW1B    28.0
+
+    LAUNCH    TTIW2A    12.0
+    LAUNCH    TTIW2B    15.0
+
+    LAUNCH    TTIW3A    14.0
+    LAUNCH    TTIW3B    18.0
+
+    LAUNCH    SMF1      20.0           $ stage mass fraction
+    LAUNCH    SMF2      20.0
+    LAUNCH    SMF3      20.0
+
+    LAUNCH    GLGCON    35000.0        $ total launch performance
+
+RANGES
+
+    LAUNCH    GLGCON    15000.0        $ total launch performance
+
+BOUNDS
+
+ XL LAUNCH    'DEFAULT' 1.0D-8
+ XU LAUNCH    'DEFAULT' 1.0D+4
+
+ XL LAUNCH    S1L       125.0          $ length of stage 1
+ XU LAUNCH    S1L       150.0
+
+ XL LAUNCH    S2L       75.0           $ length of stage 2
+ XU LAUNCH    S2L       100.0
+
+ XL LAUNCH    S3L       50.0           $ length of stage 3
+ XU LAUNCH    S3L       70.0
+
+ XL LAUNCH    MF1       0.25           $ good design constraints
+ XU LAUNCH    MF1       0.30
+
+ XL LAUNCH    MF2       0.24
+ XU LAUNCH    MF2       0.29
+
+ XL LAUNCH    MF3       0.16
+ XU LAUNCH    MF3       0.21
+
+ XL LAUNCH    INW       2.5            $ bound on intrument unit weight
+ XU LAUNCH    INW       4.0
+
+START POINT
+
+*   The starting point is very close to feasible
+
+ XV LAUNCH    AW1       68.0
+ XV LAUNCH    IW1       136.0
+ XV LAUNCH    MF1       0.29988744
+ XV LAUNCH    TT1       3733.0
+ XV LAUNCH    PW1       2177.0
+ XV LAUNCH    ET1       746.6
+ XV LAUNCH    S1L       125.0
+ XV LAUNCH    AW2       28.2
+ XV LAUNCH    IW2       47.0
+ XV LAUNCH    MF2       0.28939109
+ XV LAUNCH    TT2       480.0
+ XV LAUNCH    PW2       566.0
+ XV LAUNCH    ET2       96.0
+ XV LAUNCH    S2L       75.0
+ XV LAUNCH    AW3       11.2
+ XV LAUNCH    IW3       16.0
+ XV LAUNCH    MF3       0.20980926
+ XV LAUNCH    TT3       129.0
+ XV LAUNCH    PW3       145.0
+ XV LAUNCH    ET3       129.0
+ XV LAUNCH    S3L       50.0
+ XV LAUNCH    INW       2.5
+ XV LAUNCH    BT1       155.0
+ XV LAUNCH    BT2       314.0
+ XV LAUNCH    BT3       403.0
+
+ELEMENT TYPE
+
+ EV PROD1     VA                       VB
+ EV PROD1     VC                       VD
+ EV PROD1     VE
+
+ EV POWER     XX
+ EP POWER     PWR                      SC
+
+ EV PROD2     VA                       VB
+ EV PROD2     VC                       VD
+
+ EV X7Y       X                        Y1
+ EV X7Y       Y2                       Y3
+ EV X7Y       Y4                       Y5
+ EV X7Y       Y6                       Y7
+ IV X7Y       XX                       YY
+
+ EV X5Y       X                        Y1
+ EV X5Y       Y2                       Y3
+ EV X5Y       Y4                       Y5
+ IV X5Y       XX                       YY
+
+ EV X3Y       X                        Y1
+ EV X3Y       Y2                       Y3
+ IV X3Y       XX                       YY
+
+ EV 2PR       X                        Y
+
+ EV BIG1      LH                       TH
+ EV BIG1      LL                       V1
+
+
+ELEMENT USES
+
+*   Elements for stage 1 modelling
+*   a) airframe R&D
+
+ T  XPROD1    PROD1
+ V  XPROD1    VA                       AW1
+ V  XPROD1    VB                       IW1
+ V  XPROD1    VC                       MF1
+ V  XPROD1    VD                       TT1
+ V  XPROD1    VE                       PW1
+
+*   b) LOX/RP propulsion R&D
+
+ T  XPF       POWER
+ V  XPF       XX                       ET1
+ P  XPF       PWR       -0.146
+ P  XPF       SC        1000.0
+            
+ T  XPG       POWER
+ V  XPG       XX                       ET1
+ P  XPG       PWR       0.648
+ P  XPG       SC        1000.0
+
+*   c) airframe production unit
+
+ T  XPROD2    PROD2
+ V  XPROD2    VA                       AW1
+ V  XPROD2    VB                       MF1
+ V  XPROD2    VC                       PW1
+ V  XPROD2    VD                       S1L
+
+*   d) LOX/RP propulsion production of 5 engines
+
+ T  XPL       POWER
+ V  XPL       XX                       ET1
+ P  XPL       PWR       0.736
+ P  XPL       SC        1000.0
+
+ T  XPM       POWER
+ V  XPM       XX                       ET1
+ P  XPM       PWR       -0.229
+ P  XPM       SC        1000.0
+
+*   Elements for stage 2 modelling
+*   a) airframe R&D
+
+ T  XPROD3    PROD1
+ V  XPROD3    VA                       AW2
+ V  XPROD3    VB                       IW2
+ V  XPROD3    VC                       MF2
+ V  XPROD3    VD                       TT2
+ V  XPROD3    VE                       PW2
+
+*   b) LOX/RP propulsion R&D
+
+ T  X2PF      POWER
+ V  X2PF      XX                       ET2
+ P  X2PF      PWR       -0.146
+ P  X2PF      SC        1000.0
+
+ T  X2PG      POWER
+ V  X2PG      XX                       ET2
+ P  X2PG      PWR       0.648
+ P  X2PG      SC        1000.0
+
+*   c) airframe production unit
+
+ T  XPROD4    PROD2
+ V  XPROD4    VA                       AW2
+ V  XPROD4    VB                       MF2
+ V  XPROD4    VC                       PW2
+ V  XPROD4    VD                       S2L
+
+*   d) LOX/RP propulsion production of 5 engines
+
+ T  X2PL      POWER
+ V  X2PL      XX                       ET2
+ P  X2PL      PWR       0.736
+ P  X2PL      SC        1000.0
+
+ T  X2PM      POWER
+ V  X2PM      XX                       ET2
+ P  X2PM      PWR       -0.229
+ P  X2PM      SC        1000.0
+
+*   Elements for stage 3 modelling
+*   a) airframe R&D
+
+ T  XPROD5    PROD1
+ V  XPROD5    VA                       AW3
+ V  XPROD5    VB                       IW3
+ V  XPROD5    VC                       MF3
+ V  XPROD5    VD                       TT3
+ V  XPROD5    VE                       PW3
+
+*   b) LOX/RP propulsion R&D
+
+ T  XQF       POWER
+ V  XQF       XX                       ET3
+ P  XQF       PWR       0.539
+ P  XQF       SC        1000.0
+
+ T  XQG       POWER
+ V  XQG       XX                       ET3
+ P  XQG       PWR       0.772
+ P  XQG       SC        1000.0
+
+*   c) airframe production unit
+
+ T  XPROD6    PROD2
+ V  XPROD6    VA                       AW3
+ V  XPROD6    VB                       MF3
+ V  XPROD6    VC                       PW3
+ V  XPROD6    VD                       S3L
+
+*   d) LOX/RP propulsion production of 1 engine
+
+ T  XQL       POWER
+ V  XQL       XX                       ET3
+ P  XQL       PWR       -1.33
+ P  XQL       SC        100.0
+
+ T  XQM       POWER
+ V  XQM       XX                       ET3
+ P  XQM       PWR       0.498
+ P  XQM       SC        100.0
+
+*   Elements for constraints on the stage mass fraction
+
+ T  SMFE1     X7Y
+ V  SMFE1     X                        MF1
+ V  SMFE1     Y1                       IW1
+ V  SMFE1     Y2                       PW1
+ V  SMFE1     Y3                       IW2
+ V  SMFE1     Y4                       PW2
+ V  SMFE1     Y5                       IW3
+ V  SMFE1     Y6                       PW3
+ V  SMFE1     Y7                       INW
+
+ T  SMFE2     X5Y
+ V  SMFE2     X                        MF2
+ V  SMFE2     Y1                       IW2
+ V  SMFE2     Y2                       PW2
+ V  SMFE2     Y3                       IW3
+ V  SMFE2     Y4                       PW3
+ V  SMFE2     Y5                       INW
+
+ T  SMFE3     X3Y
+ V  SMFE3     X                        MF3
+ V  SMFE3     Y1                       IW3
+ V  SMFE3     Y2                       PW3
+ V  SMFE3     Y3                       INW
+
+*   Constraints on specific impulse
+
+ T  TT1BT1    2PR
+ V  TT1BT1    X                        TT1
+ V  TT1BT1    Y                        BT1
+
+ T  TT2BT2    2PR
+ V  TT2BT2    X                        TT2
+ V  TT2BT2    Y                        BT2
+
+ T  TT3BT3    2PR
+ V  TT3BT3    X                        TT3
+ V  TT3BT3    Y                        BT3
+
+*   Total launch constraint
+
+ T  XBIG11    BIG1
+ V  XBIG11    LH                       TT1
+ V  XBIG11    TH                       BT1
+ V  XBIG11    LL                       PW1
+ V  XBIG11    V1                       MF1
+
+ T  XBIG12    BIG1
+ V  XBIG12    LH                       TT2
+ V  XBIG12    TH                       BT2
+ V  XBIG12    LL                       PW2
+ V  XBIG12    V1                       MF2
+
+ T  XBIG13    BIG1
+ V  XBIG13    LH                       TT3
+ V  XBIG13    TH                       BT3
+ V  XBIG13    LL                       PW3
+ V  XBIG13    V1                       MF3
+
+GROUP TYPE
+
+ GV SUMM      TERMS
+
+GROUP USES
+
+ E  STA1      XPROD1    5272.77
+ E  STA1      XPF       160.909        XPG       282.874
+ E  STA1      XPROD2    0.64570846
+ E  STA1      XPL       31.136196      XPM       12.092112
+
+ E  STA2      XPROD3    5272.77
+ E  STA2      X2PF      160.909        X2PG      282.874
+ E  STA2      XPROD4    0.64570846
+ E  STA1      X2PL      31.136196      X2PM      12.092112
+
+ E  STA3      XPROD5    5272.77
+ E  STA3      XQF       181.806        XQG       232.57
+ E  STA3      XPROD6    0.49783215
+ E  STA3      XQL       -0.22424514    XQM       20.708238
+
+ T  LAUN      SUMM
+
+ E  SMF1      SMFE1
+ E  SMF2      SMFE2
+ E  SMF3      SMFE3
+
+ E  SI1A      TT1BT1
+ E  SI1B      TT1BT1
+
+ E  SI2A      TT2BT2
+ E  SI2B      TT2BT2
+
+ E  SI3A      TT3BT3
+ E  SI3B      TT3BT3
+
+ E  GLGCON    XBIG11    -32.0          XBIG12    -32.0
+ E  GLGCON    XBIG13    -32.0
+
+OBJECT BOUND
+
+ LO LAUNCH              0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LAUNCH
+
+TEMPORARIES
+
+ R  SCPWR
+ R  LG
+ M  LOG
+ R  EA 
+ R  VA0
+ R  VA1
+ R  VA2
+ R  EB 
+ R  VB0
+ R  VB1
+ R  VB2
+ R  EC 
+ R  VC0
+ R  VC1
+ R  VC2
+ R  ED 
+ R  VD0
+ R  VD1
+ R  VD2
+ R  EE 
+ R  VE0
+ R  VE1
+ R  VE2
+
+INDIVIDUALS
+
+ T  BIG1
+ A  LG                  LOG( V1 )
+ F                      (LH * TH * LG) / LL
+ G  V1                  (LH * TH ) / ( V1 * LL)
+ G  LH                  (TH * LG) / LL
+ G  TH                  (LH * LG) / LL
+ G  LL                  - ( LH * TH * LG ) / ( LL ** 2 )
+ H  V1        V1        - ( LH * TH ) / ( LL * V1 ** 2 )
+ H  V1        LH        TH / ( V1 * LL )
+ H  V1        TH        LH / ( V1 * LL )
+ H  V1        LL        - ( LH * TH ) / ( LL ** 2 * V1 )
+ H  LH        TH        LG / LL
+ H  LH        LL        - TH * LG / LL **2
+ H  TH        LL        - LH * LG / LL ** 2
+ H  LL        LL        2.0 * (LH * TH * LG) / (LL ** 3.0)
+
+ T  PROD1
+ A  EA                  1.2781
+ A  VA0                 VA ** EA
+ A  VA1                 EA * VA ** ( EA - 1.0 )
+ A  VA2                 EA * ( EA - 1.0 ) * VA ** ( EA - 2.0 )
+ A  EB                  -0.1959
+ A  VB0                 VB ** EB
+ A  VB1                 EB * VB ** ( EB - 1.0 )
+ A  VB2                 EB * ( EB - 1.0 ) * VB ** ( EB - 2.0 )
+ A  EC                  2.4242
+ A  VC0                 VC ** EC
+ A  VC1                 EC * VC ** ( EC - 1.0 )
+ A  VC2                 EC * ( EC - 1.0 ) * VC ** ( EC - 2.0 )
+ A  ED                  0.38745
+ A  VD0                 VD ** ED
+ A  VD1                 ED * VD ** ( ED - 1.0 )
+ A  VD2                 ED * ( ED - 1.0 ) * VD ** ( ED - 2.0 )
+ A  EE                  0.9904
+ A  VE0                 VE ** EE
+ A  VE1                 EE * VE ** ( EE - 1.0 )
+ A  VE2                 EE * ( EE - 1.0 ) * VE ** ( EE - 2.0 )
+ F                      VA0 * VB0 * VC0 * VD0 * VE0
+ G  VA                  VA1 * VB0 * VC0 * VD0 * VE0
+ G  VB                  VA0 * VB1 * VC0 * VD0 * VE0
+ G  VC                  VA0 * VB0 * VC1 * VD0 * VE0
+ G  VD                  VA0 * VB0 * VC0 * VD1 * VE0
+ G  VE                  VA0 * VB0 * VC0 * VD0 * VE1
+ H  VA        VA        VA2 * VB0 * VC0 * VD0 * VE0
+ H  VA        VB        VA1 * VB1 * VC0 * VD0 * VE0
+ H  VA        VC        VA1 * VB0 * VC1 * VD0 * VE0
+ H  VA        VD        VA1 * VB0 * VC0 * VD1 * VE0
+ H  VA        VE        VA1 * VB0 * VC0 * VD0 * VE1
+ H  VB        VB        VA0 * VB2 * VC0 * VD0 * VE0
+ H  VB        VC        VA0 * VB1 * VC1 * VD0 * VE0
+ H  VB        VD        VA0 * VB1 * VC0 * VD1 * VE0
+ H  VB        VE        VA0 * VB1 * VC0 * VD0 * VE1
+ H  VC        VC        VA0 * VB0 * VC2 * VD0 * VE0
+ H  VC        VD        VA0 * VB0 * VC1 * VD1 * VE0
+ H  VC        VE        VA0 * VB0 * VC1 * VD0 * VE1
+ H  VD        VD        VA0 * VB0 * VC0 * VD2 * VE0
+ H  VD        VE        VA0 * VB0 * VC0 * VD1 * VE1
+ H  VE        VE        VA0 * VB0 * VC0 * VD0 * VE2
+
+ T  PROD2
+ A  EA                  0.3322
+ A  VA0                 VA ** EA
+ A  VA1                 EA * VA ** ( EA - 1.0 )
+ A  VA2                 EA * ( EA - 1.0 ) * VA ** ( EA - 2.0 )
+ A  EB                  -1.5935
+ A  VB0                 VB ** EB
+ A  VB1                 EB * VB ** ( EB - 1. 0)
+ A  VB2                 EB * ( EB - 1.0 ) * VB ** ( EB - 2.0 )
+ A  EC                  0.2363
+ A  VC0                 VC ** EC
+ A  VC1                 EC * VC ** ( EC - 1.0 )
+ A  VC2                 EC * ( EC - 1.0 ) * VC ** ( EC - 2.0 )
+ A  ED                  0.1079
+ A  VD0                 VD ** ED
+ A  VD1                 ED * VD ** ( ED - 1.0 )
+ A  VD2                 ED * ( ED - 1.0 ) * VD ** ( ED - 2.0 )
+ F                      VA0 * VB0 * VC0 * VD0
+ G  VA                  VA1 * VB0 * VC0 * VD0
+ G  VB                  VA0 * VB1 * VC0 * VD0
+ G  VC                  VA0 * VB0 * VC1 * VD0
+ G  VD                  VA0 * VB0 * VC0 * VD1
+ H  VA        VA        VA2 * VB0 * VC0 * VD0
+ H  VA        VB        VA1 * VB1 * VC0 * VD0
+ H  VA        VC        VA1 * VB0 * VC1 * VD0
+ H  VA        VD        VA1 * VB0 * VC0 * VD1
+ H  VB        VB        VA0 * VB2 * VC0 * VD0
+ H  VB        VC        VA0 * VB1 * VC1 * VD0
+ H  VB        VD        VA0 * VB1 * VC0 * VD1
+ H  VC        VC        VA0 * VB0 * VC2 * VD0
+ H  VC        VD        VA0 * VB0 * VC1 * VD1
+ H  VD        VD        VA0 * VB0 * VC0 * VD2
+
+ T  POWER
+ A  SCPWR               PWR / ( SC ** PWR )
+ F                      (XX / SC) ** PWR
+ G  XX                  SCPWR * XX ** ( PWR - 1.0 )
+ H  XX        XX        SCPWR*( PWR - 1.0 )*XX**( PWR - 2.0 )
+
+ T  X7Y
+ R  XX        X         1.0       
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0            Y4        1.0
+ R  YY        Y5        1.0            Y6        1.0
+ R  YY        Y7        1.0
+ F                      XX * YY
+ G  XX                  YY
+ G  YY                  XX
+ H  XX        YY        1.0
+
+ T  X5Y
+ R  XX        X         1.0       
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0            Y4        1.0
+ R  YY        Y5        1.0
+ F                      XX * YY
+ G  XX                  YY
+ G  YY                  XX
+ H  XX        YY        1.0
+
+ T  X3Y
+ R  XX        X         1.0       
+ R  YY        Y1        1.0            Y2        1.0
+ R  YY        Y3        1.0
+ F                      XX * YY
+ G  XX                  YY
+ G  YY                  XX
+ H  XX        YY        1.0
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LAUNCH
+
+INDIVIDUALS
+
+ T  SUMM
+ F                      TERMS** 0.460
+ G                      0.460 * TERMS**(-0.540)
+ H                      -0.2484 * TERMS**(-1.540)
+
+ENDATA
+

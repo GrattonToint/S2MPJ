@@ -1,0 +1,214 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LISWET6 
+
+*   Problem :
+*   *********
+
+*   A k-convex approximation problem posed as a 
+*   convex quadratic problem, with variable dimensions.
+
+*   Formulation:
+*   -----------
+
+*                n+k             2
+*   minimize 1/2 sum ( x  - c  )
+*                i=1    i    i
+
+*   subject to
+
+*                 k              k-i
+*                sum ( k ) ( -1 )    x     > 0
+*                i=0 ( i )            j+i  = 
+
+*   where c  = g( t ) + small perturbation, t  = (i-1)/(n+k-1)
+*          i       i                         i 
+
+*   Case 6: g(t) = exp(-t)
+
+*   NB. Perturbations are not random as Li and Swetits's 
+*       random number generator is undefined.
+
+*   Source:
+*   W. Li and J. Swetits,
+*   "A Newton method for convex regression, data smoothing and
+*   quadratic programming with bounded constraints",
+*   SIAM J. Optimization 3 (3) pp 466-488, 1993.
+
+*   SIF input: Nick Gould, August 1994.
+
+*   classification QLR2-AN-V-V
+
+*IE N                   100            $-PARAMETER 103 variables original value 
+*IE K                   3              $-PARAMETER original value
+
+*IE N                   100            $-PARAMETER 104 variables    
+*IE K                   4              $-PARAMETER
+
+*IE N                   100            $-PARAMETER 105 variables    
+*IE K                   5              $-PARAMETER
+
+*IE N                   100            $-PARAMETER 106 variables    
+*IE K                   6              $-PARAMETER
+
+*IE N                   400            $-PARAMETER 402 variables    
+*IE K                   2              $-PARAMETER
+
+*IE N                   400            $-PARAMETER 403 variables    
+*IE K                   3              $-PARAMETER
+
+*IE N                   2000           $-PARAMETER 2001 variables    
+*IE K                   1              $-PARAMETER
+
+*IE N                   2000           $-PARAMETER 2002 variables    
+ IE N                   50             $-PARAMETER     modified for S2X tests
+*IE K                   2              $-PARAMETER
+ IE K                   3              $-PARAMETER     modified for S2X tests
+
+*IE N                   10000          $-PARAMETER 10001 variables    
+*IE K                   1              $-PARAMETER
+
+*IE N                   10000          $-PARAMETER 10002 variables    
+*IE K                   2              $-PARAMETER
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+ RE ONE                 1.0
+ RE HALF                0.5
+
+*   Set some useful parameters
+
+ I+ N+K       N                        K
+ IA N+K-1     N+K       -1
+ RI RN+K-1    N+K-1
+ RE CONST               0.0
+ 
+*   Binomial coefficients
+
+ A= B(0)      ONE
+ DO I         1                        K
+ IA I-1       I         -1
+ RI RI        I  
+ A* B(I)      B(I-1)                   RI
+ ND
+
+*   (-1)^K * Binomial coefficients
+
+ A= C(0)      ONE
+ R= PLUSMINUS ONE 
+ DO I         1                        K
+ I- K-I       K                        I
+ RM PLUSMINUS PLUSMINUS -1.0
+ A/ C(I)      B(K)                     B(I)
+ A/ C(I)      C(I)                     B(K-I)
+ A* C(I)      C(I)                     PLUSMINUS
+ ND
+
+VARIABLES
+
+ DO I         1                        N+K
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective linear coefficients
+
+ DO I         1                        N+K
+ IA I-1       I         -1
+ RI RI        I
+ RI RI-1      I-1
+ R/ TI        RI-1                     RN+K-1
+ RM -TI       TI        -1.0
+
+ R( GT        EXP                      -TI
+
+*  Perturb by 0.1 * sin( i )
+
+ R( RANDOM    SIN                      RI
+ RM RANDOM    RANDOM    0.1
+
+ R+ CI        GT                       RANDOM
+
+ RM -CI       CI        -1.0
+
+ R* -CI*CI    -CI                      CI
+ R+ CONST     CONST                    -CI*CI
+
+ ZN OBJ       X(I)                     -CI
+
+ ND
+
+*   Divided difference constraints
+
+ DO J         1                        N
+ I+ J+K       J                        K
+ DO I         0                        K
+ 
+ I- J+K-I     J+K                      I
+
+ ZG CON(J)    X(J+K-I)                 C(I)
+
+ OD I
+ OD J
+
+CONSTANTS
+
+ R* CONST     HALF                     CONST
+ Z  LISWET6   OBJ                      CONST
+
+BOUNDS
+
+ FR LISWET6   'DEFAULT' 
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+*   The elements corresponding to the squre variables
+
+ DO I         1                        N+K
+ XT XSQ(I)    SQ
+ ZV XSQ(I)    X                        X(I)
+ ND
+
+GROUP USES
+
+*   The diagonal elements
+
+ DO I         1                        N+K
+ XE OBJ       XSQ(I)
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LISWET6 
+
+INDIVIDUALS
+
+ T  SQ
+ F                      5.0D-1 * X * X
+ G  X                   X
+ H  X         X         1.0D+0
+
+ENDATA
+
+

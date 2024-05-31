@@ -1,0 +1,255 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LMINSURF
+
+*   Problem :
+*   *********
+
+*   The linear minimum surface problem.
+
+*   The problem comes from the discretization of the minimum surface
+*   problem on the unit square: given a set of boundary conditions on
+*   the four sides of the square, one must find the surface which
+*   meets these boundary conditions and is of minimum area.
+
+*   The unit square is discretized into (p-1)**2 little squares. The
+*   heights of the considered surface above the corners of these little
+*   squares are the problem variables,  There are p**2 of them.
+*   Given these heights, the area above a little square is
+*   approximated by the
+*     S(i,j) = sqrt( 1 + 0.5(p-1)**2 ( a(i,j)**2 + b(i,j)**2 ) ) / (p-1)**2
+*   where
+*     a(i,j) = x(i,j) - x(i+1,j+1)
+*   and
+*     b(i,j) = x(i+1,j) - x(i,j+1)
+
+*   In the Linear Mininum Surface, the boundary conditions are given
+*   as the heights of a given plane above the square boundaries.  This
+*   plane is specified by its height above the (0,0) point (H00 below),
+*   and its slopes along the first and second coordinate
+*   directions in the plane (these slopes are denoted SLOPEJ and SLOPEI below).
+
+*   Source:
+*   A Griewank and Ph. Toint,
+*   "Partitioned variable metric updates for large structured
+*   optimization problems",
+*   Numerische Mathematik 39:429-448, 1982.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OXR2-MY-V-0
+
+*   P is the number of points in one side of the unit square
+
+*IE P                   4              $-PARAMETER n = 16     original value
+*IE P                   7              $-PARAMETER n = 49
+*IE P                   8              $-PARAMETER n = 64
+*IE P                   11             $-PARAMETER n = 121
+*IE P                   31             $-PARAMETER n = 961
+*IE P                   32             $-PARAMETER n = 1024
+*IE P                   75             $-PARAMETER n = 5625
+ IE P                   4              $-PARAMETER     modified for S2X tests
+*IE P                   100            $-PARAMETER n = 10000
+*IE P                   125            $-PARAMETER n = 15625
+
+*   Define the plane giving the boundary conditions
+
+ RE H00                 1.0
+ RE SLOPEJ              4.0
+ RE SLOPEI              8.0
+
+*   Define a few helpful parameters
+
+ I+ TWOP      P                        P
+ IA P-1       P         -1
+ I* PP-1      P                        P-1
+ RI RP-1      P-1
+ RD INVP-1    RP-1      1.0
+ R* RP-1SQ    INVP-1                   INVP-1
+ RD SCALE     RP-1SQ    1.0
+ R* SQP-1     RP-1                     RP-1
+ RM PARAM     SQP-1     0.5
+
+ IE 1                   1
+ IE 2                   2
+
+ R* STON      INVP-1                   SLOPEI
+ R* WTOE      INVP-1                   SLOPEJ
+ R+ H01       H00                      SLOPEJ
+ R+ H10       H00                      SLOPEI
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit square
+
+ DO J         1                        P
+ DO I         1                        P
+ X  X(I,J)
+ ND
+
+GROUPS
+
+*   Define a group per little square
+
+ DO I         1                        P-1
+ DO J         1                        P-1
+ ZN S(I,J)    'SCALE'                  SCALE
+ ND
+
+CONSTANTS
+
+ X  LMINSURF  'DEFAULT' -1.0
+
+BOUNDS
+
+ FR LMINSURF  'DEFAULT'
+
+*   Fix the variables on the lower and upper edges of the unit square
+
+ DO J         1                        P
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* TH        RJ-1                     WTOE
+ R+ TL        TH                       H00
+ R+ TU        TH                       H10
+ ZX LMINSURF  X(1,J)                   TL
+ ZX LMINSURF  X(P,J)                   TU
+ ND
+
+*   Fix the variables on the left and right edges of the unit square
+
+ DO I         2                        P-1
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* TV        RI-1                     STON
+ R+ TR        TV                       H00
+ R+ TL        TV                       H01
+ ZX LMINSURF  X(I,P)                   TL
+ ZX LMINSURF  X(I,1)                   TR
+ ND
+
+START POINT
+
+*   All variables not on the boundary are set to 0.0
+
+ XV LMINSURF  'DEFAULT' 0.0
+
+*   Start from the boundary values on the lower and upper edges
+
+ DO J         1                        P
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* TH        RJ-1                     WTOE
+ R+ TL        TH                       H00
+ R+ TU        TH                       H10
+ Z  LMINSURF  X(1,J)                   TL
+ Z  LMINSURF  X(P,J)                   TU
+ ND
+
+*   Start from the boundary values on the left and right edges
+
+ DO I         2                        P-1
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* TV        RI-1                     STON
+ R+ TR        TV                       H00
+ R+ TL        TV                       H01
+ Z  LMINSURF  X(I,P)                   TL
+ Z  LMINSURF  X(I,1)                   TR
+ ND
+
+ELEMENT TYPE
+
+*   The only element type.
+
+ EV ISQ       V1                       V2
+ IV ISQ       U
+
+ELEMENT USES
+
+*   Each little square has two elements using diagonal and
+*   antidiagonal corner values
+
+ DO I         1                        P-1
+ IA I+1       I         1
+ DO J         1                        P-1
+ IA J+1       J         1
+ XT A(I,J)    ISQ
+ ZV A(I,J)    V1                       X(I,J)
+ ZV A(I,J)    V2                       X(I+1,J+1)
+ XT B(I,J)    ISQ
+ ZV B(I,J)    V1                       X(I+1,J)
+ ZV B(I,J)    V2                       X(I,J+1)
+ ND
+
+GROUP TYPE
+
+*   Groups are of the square root type
+
+ GV SQROOT    ALPHA
+
+GROUP USES
+
+*   All groups are of SQRT type.
+
+ DO I         1                        P-1
+ DO J         1                        P-1
+ XT S(I,J)    SQROOT
+ ZE S(I,J)    A(I,J)                   PARAM
+ ZE S(I,J)    B(I,J)                   PARAM
+ ND
+
+OBJECT BOUND
+
+ LO LMINSURF            0.0
+
+*   Solution
+
+*LO SOLTN               9.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LMINSURF
+
+INDIVIDUALS
+
+*   Difference squared
+
+ T  ISQ
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LMINSURF
+
+TEMPORARIES
+
+ M  SQRT
+ R  SQRAL
+
+INDIVIDUALS
+
+*   square root groups
+
+ T  SQROOT
+ A  SQRAL               SQRT(ALPHA)
+ F                      SQRAL
+ G                      0.5D0 / SQRAL
+ H                      -0.25D0 / ( SQRAL * ALPHA )
+
+ENDATA

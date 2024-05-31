@@ -1,0 +1,193 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          JUDGEB
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example Judge
+
+*   Fit: y  =  x_1 + a_i x_2 + b_i^2 x_2 + e
+
+*   version with box-constrained feasible region
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification SUR2-MN-2-0
+
+*   Number of data values
+
+ IE M                   20
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+*  Data values
+
+ RE A1                  0.286
+ RE A2                  0.973
+ RE A3                  0.384
+ RE A4                  0.276
+ RE A5                  0.973
+ RE A6                  0.543
+ RE A7                  0.957
+ RE A8                  0.948
+ RE A9                  0.543
+ RE A10                 0.797
+ RE A11                 0.936
+ RE A12                 0.889
+ RE A13                 0.006
+ RE A14                 0.828
+ RE A15                 0.399
+ RE A16                 0.617
+ RE A17                 0.939
+ RE A18                 0.784
+ RE A19                 0.072
+ RE A20                 0.889
+
+ RE B1                  0.645
+ RE B2                  0.585
+ RE B3                  0.310
+ RE B4                  0.058
+ RE B5                  0.455
+ RE B6                  0.779
+ RE B7                  0.259
+ RE B8                  0.202
+ RE B9                  0.028
+ RE B10                 0.099
+ RE B11                 0.142
+ RE B12                 0.296
+ RE B13                 0.175
+ RE B14                 0.180
+ RE B15                 0.842
+ RE B16                 0.039
+ RE B17                 0.103
+ RE B18                 0.620
+ RE B19                 0.158
+ RE B20                 0.704
+
+ RE Y1                  4.284
+ RE Y2                  4.149
+ RE Y3                  3.877
+ RE Y4                  0.533
+ RE Y5                  2.211
+ RE Y6                  2.389
+ RE Y7                  2.145
+ RE Y8                  3.231
+ RE Y9                  1.998
+ RE Y10                 1.379
+ RE Y11                 2.106
+ RE Y12                 1.428
+ RE Y13                 1.011
+ RE Y14                 2.179
+ RE Y15                 2.858
+ RE Y16                 1.388
+ RE Y17                 1.651
+ RE Y18                 1.593
+ RE Y19                 1.046
+ RE Y20                 2.152
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN F(I)      X1        1.0
+ ZN F(I)      X2                       A(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  JUDGE     F(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -10.0
+ UP BOUNDS    'DEFAULT' 10.0
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+ELEMENT TYPE
+
+ EV SQR       X
+
+ELEMENT USES
+
+ T  E         SQR
+ V  E         X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        M
+ ZE F(I)      E                        B(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO JUDGE               0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      JUDGEB
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        JUDGEB
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

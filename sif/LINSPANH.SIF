@@ -1,0 +1,316 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LINSPANH
+
+*   Problem :
+*   *********
+
+*   A linear network problem based on the spanish hydro-electric
+*   reservoir management problem SPANHYD
+
+*   Source:
+*   A partial specification of problem SPANHYD.
+
+*   SIF input: Ph. Toint, Sept 1990.
+
+*   classification LNR2-MN-97-33
+
+*   Number of arcs = 97
+*   Number of nodes
+
+ IE NODES               33
+
+*   Constants
+
+ IE 1                   1
+
+GROUPS
+
+*   Objective
+
+ N  OBJ
+
+*   Network constraints
+
+ DO I         1                        NODES
+ XE N(I)
+ ND
+
+VARIABLES
+
+    X1        OBJ       -1.0
+
+*   Network arcs
+
+    X1        N32       -1.0           N1        1.0
+    X2        N32       -1.0           N2        1.0
+    X3        N32       -1.0           N3        1.0
+    X4        N32       -1.0           N4        1.0
+    X5        N32       -1.0           N5        1.0
+    X6        N32       -1.0           N6        1.0
+    X7        N32       -1.0           N7        1.0
+    X8        N32       -1.0           N8        1.0
+    X9        N32       -1.0           N9        1.0
+    X10       N32       -1.0           N10       1.0
+    X11       N1        -1.0           N2        1.0
+    X12       N2        -1.0           N3        1.0
+    X13       N3        -1.0           N5        1.0
+    X14       N4        -1.0           N5        1.0
+    X15       N5        -1.0           N9        1.0
+    X16       N6        -1.0           N7        1.0
+    X17       N7        -1.0           N8        1.0
+    X18       N8        -1.0           N9        1.0
+    X19       N9        -1.0           N10       1.0
+    X20       N10       -1.0           N31       1.0
+    X21       N1        -1.0           N2        1.0
+    X22       N2        -1.0           N3        1.0
+    X23       N3        -1.0           N9        1.0
+    X24       N4        -1.0           N9        1.0
+    X25       N6        -1.0           N7        1.0
+    X26       N7        -1.0           N8        1.0
+    X27       N8        -1.0           N9        1.0
+    X28       N9        -1.0           N10       1.0
+    X29       N10       -1.0           N31       1.0
+    X30       N1        -1.0           N11       1.0
+    X31       N2        -1.0           N12       1.0
+    X32       N3        -1.0           N13       1.0
+    X33       N4        -1.0           N14       1.0
+    X34       N5        -1.0           N15       1.0
+    X35       N6        -1.0           N16       1.0
+    X36       N7        -1.0           N17       1.0
+    X37       N8        -1.0           N18       1.0
+    X38       N9        -1.0           N19       1.0
+    X39       N10       -1.0           N20       1.0
+    X40       N11       -1.0           N12       1.0
+    X41       N12       -1.0           N13       1.0
+    X42       N13       -1.0           N15       1.0
+    X43       N14       -1.0           N15       1.0
+    X44       N15       -1.0           N19       1.0
+    X45       N16       -1.0           N17       1.0
+    X46       N17       -1.0           N18       1.0
+    X47       N18       -1.0           N19       1.0
+    X48       N19       -1.0           N20       1.0
+    X49       N20       -1.0           N31       1.0
+    X50       N11       -1.0           N12       1.0
+    X51       N12       -1.0           N13       1.0
+    X52       N13       -1.0           N19       1.0
+    X53       N14       -1.0           N19       1.0
+    X54       N16       -1.0           N17       1.0
+    X55       N17       -1.0           N18       1.0
+    X56       N18       -1.0           N19       1.0
+    X57       N19       -1.0           N20       1.0
+    X58       N20       -1.0           N31       1.0
+    X59       N11       -1.0           N21       1.0
+    X60       N12       -1.0           N22       1.0
+    X61       N13       -1.0           N23       1.0
+    X62       N14       -1.0           N24       1.0
+    X63       N15       -1.0           N25       1.0
+    X64       N16       -1.0           N26       1.0
+    X65       N17       -1.0           N27       1.0
+    X66       N18       -1.0           N28       1.0
+    X67       N19       -1.0           N29       1.0
+    X68       N20       -1.0           N30       1.0
+    X69       N21       -1.0           N22       1.0
+    X70       N22       -1.0           N23       1.0
+    X71       N23       -1.0           N25       1.0
+    X72       N24       -1.0           N25       1.0
+    X73       N25       -1.0           N29       1.0
+    X74       N26       -1.0           N27       1.0
+    X75       N27       -1.0           N28       1.0
+    X76       N28       -1.0           N29       1.0
+    X77       N29       -1.0           N30       1.0
+    X78       N30       -1.0           N31       1.0
+    X79       N21       -1.0           N22       1.0
+    X80       N22       -1.0           N23       1.0
+    X81       N23       -1.0           N29       1.0
+    X82       N24       -1.0           N29       1.0
+    X83       N26       -1.0           N27       1.0
+    X84       N27       -1.0           N28       1.0
+    X85       N28       -1.0           N29       1.0
+    X86       N29       -1.0           N30       1.0
+    X87       N30       -1.0           N31       1.0
+    X88       N21       -1.0           N33       1.0
+    X89       N22       -1.0           N33       1.0
+    X90       N23       -1.0           N33       1.0
+    X91       N24       -1.0           N33       1.0
+    X92       N25       -1.0           N33       1.0
+    X93       N26       -1.0           N33       1.0
+    X94       N27       -1.0           N33       1.0
+    X95       N28       -1.0           N33       1.0
+    X96       N29       -1.0           N33       1.0
+    X97       N30       -1.0           N33       1.0
+
+CONSTANTS
+
+    LINSPANH  N1        -5.13800D+01   N2        -1.38400D+01
+    LINSPANH  N3        -2.58000D+00   N4        -2.19100D+01
+    LINSPANH  N6        -1.29700D+01   N8        -2.89000D+00
+    LINSPANH  N9        -2.08400D+01   N10       -1.71400D+01
+    LINSPANH  N11       -3.20600D+01   N12       -2.80000D-01
+    LINSPANH  N13       -4.20000D+00   N14       -4.83700D+01
+    LINSPANH  N16       -1.81300D+01   N18        1.61000D+00
+    LINSPANH  N19       -2.66000D+01   N20       -1.87600D+01
+    LINSPANH  N21       -1.81300D+01   N24       -1.81300D+01
+    LINSPANH  N26       -9.10000D+00   N28        5.81000D+00
+    LINSPANH  N29       -9.10000D+00   N30       -6.02000D+00
+    LINSPANH  N31        6.08350D+02   N32       -4.62634D+03
+    LINSPANH  N33        4.36300D+03
+
+BOUNDS
+
+ XU LINSPANH  'DEFAULT'  3.02400D+03
+
+ LO LINSPANH  X1         7.70000D+01
+ UP LINSPANH  X1         7.70100D+01
+ LO LINSPANH  X2         1.12452D+03
+ UP LINSPANH  X2         1.12453D+03
+ LO LINSPANH  X3         1.58000D+02
+ UP LINSPANH  X3         1.58010D+02
+ LO LINSPANH  X4         1.60000D+01
+ UP LINSPANH  X4         1.60100D+01
+ FX LINSPANH  X5         0.00000D+00
+ LO LINSPANH  X6         7.83650D+02
+ UP LINSPANH  X6         7.83660D+02
+ LO LINSPANH  X7         1.10000D+01
+ UP LINSPANH  X7         1.10100D+01
+ LO LINSPANH  X8         4.90000D+01
+ UP LINSPANH  X8         4.90100D+01
+ LO LINSPANH  X9         2.15517D+03
+ UP LINSPANH  X9         2.15518D+03
+ LO LINSPANH  X10        2.52000D+02
+ UP LINSPANH  X10        2.52010D+02
+ UP LINSPANH  X11        3.97840D+02
+ UP LINSPANH  X12        2.22320D+02
+ UP LINSPANH  X13        2.05630D+02
+ UP LINSPANH  X14        2.05630D+02
+ UP LINSPANH  X15        2.05630D+02
+ UP LINSPANH  X16        1.24830D+02
+ UP LINSPANH  X17        1.27010D+02
+ UP LINSPANH  X18        6.10800D+01
+ UP LINSPANH  X19        6.14840D+02
+ UP LINSPANH  X20        7.78080D+02
+ UP LINSPANH  X25        7.25760D+03
+ UP LINSPANH  X26        1.20960D+03
+ UP LINSPANH  X27        9.07200D+02
+ UP LINSPANH  X28        7.25760D+03
+ UP LINSPANH  X29        7.25760D+03
+ FX LINSPANH  X30        7.70000D+01
+ LO LINSPANH  X31        4.03400D+02
+ UP LINSPANH  X31        1.31200D+03
+ FX LINSPANH  X32        1.58000D+02
+ FX LINSPANH  X33        1.60000D+01
+ FX LINSPANH  X34        0.00000D+00
+ LO LINSPANH  X35        5.02000D+02
+ UP LINSPANH  X35        9.28460D+02
+ FX LINSPANH  X36        1.10000D+01
+ FX LINSPANH  X37        4.90000D+01
+ LO LINSPANH  X38        9.15300D+02
+ UP LINSPANH  X38        2.61160D+03
+ FX LINSPANH  X39        2.52000D+02
+ UP LINSPANH  X40        3.97840D+02
+ UP LINSPANH  X41        2.22320D+02
+ UP LINSPANH  X42        2.05630D+02
+ UP LINSPANH  X43        2.05630D+02
+ UP LINSPANH  X44        2.05630D+02
+ UP LINSPANH  X45        1.24830D+02
+ UP LINSPANH  X46        1.27010D+02
+ UP LINSPANH  X47        6.10800D+01
+ UP LINSPANH  X48        6.14840D+02
+ UP LINSPANH  X49        7.78080D+02
+ UP LINSPANH  X54        7.25760D+03
+ UP LINSPANH  X55        1.20960D+03
+ UP LINSPANH  X56        9.07200D+02
+ UP LINSPANH  X57        7.25760D+03
+ UP LINSPANH  X58        7.25760D+03
+ FX LINSPANH  X59        7.70000D+01
+ LO LINSPANH  X60        4.03400D+02
+ UP LINSPANH  X60        1.31200D+03
+ FX LINSPANH  X61        1.58000D+02
+ FX LINSPANH  X62        1.60000D+01
+ FX LINSPANH  X63        0.00000D+00
+ LO LINSPANH  X64        5.05640D+02
+ UP LINSPANH  X64        9.28460D+02
+ FX LINSPANH  X65        1.10000D+01
+ FX LINSPANH  X66        4.90000D+01
+ LO LINSPANH  X67        9.15300D+02
+ UP LINSPANH  X67        2.61160D+03
+ FX LINSPANH  X68        2.52000D+02
+ UP LINSPANH  X69        3.97840D+02
+ UP LINSPANH  X70        2.22320D+02
+ UP LINSPANH  X71        2.05630D+02
+ UP LINSPANH  X72        2.05630D+02
+ UP LINSPANH  X73        2.05630D+02
+ UP LINSPANH  X74        1.24830D+02
+ UP LINSPANH  X75        1.27010D+02
+ UP LINSPANH  X76        6.10800D+01
+ UP LINSPANH  X77        6.14840D+02
+ UP LINSPANH  X78        7.78080D+02
+ UP LINSPANH  X83        7.25760D+03
+ UP LINSPANH  X84        1.20960D+03
+ UP LINSPANH  X85        9.07200D+02
+ UP LINSPANH  X86        7.25760D+03
+ UP LINSPANH  X87        7.25760D+03
+ LO LINSPANH  X88        7.70000D+01
+ UP LINSPANH  X88        7.70100D+01
+ LO LINSPANH  X89        1.10000D+03
+ UP LINSPANH  X89        1.10001D+03
+ LO LINSPANH  X90        1.58000D+02
+ UP LINSPANH  X90        1.58010D+02
+ LO LINSPANH  X91        1.60000D+01
+ UP LINSPANH  X91        1.60100D+01
+ FX LINSPANH  X92        0.00000D+00
+ LO LINSPANH  X93        7.00000D+02
+ UP LINSPANH  X93        7.00010D+02
+ LO LINSPANH  X94        1.10000D+01
+ UP LINSPANH  X94        1.10100D+01
+ LO LINSPANH  X95        4.90000D+01
+ UP LINSPANH  X95        4.90100D+01
+ LO LINSPANH  X96        2.00000D+03
+ UP LINSPANH  X96        2.00001D+03
+ LO LINSPANH  X97        2.52000D+02
+ UP LINSPANH  X97        2.52010D+02
+
+START POINT
+
+ XV LINSPANH  'DEFAULT'  0.0
+
+    LINSPANH  X1         7.70000D+01   X2         1.12452D+03
+    LINSPANH  X3         1.58000D+02   X4         1.60000D+01
+    LINSPANH  X6         7.83650D+02   X7         1.10000D+01
+    LINSPANH  X8         4.90000D+01   X9         2.15517D+03
+    LINSPANH  X10        2.52000D+02   X11        5.13800D+01
+    LINSPANH  X12        1.40210D+02   X13        1.42790D+02
+    LINSPANH  X14        2.19100D+01   X15        1.64700D+02
+    LINSPANH  X16        5.81900D+01   X17        5.81900D+01
+    LINSPANH  X18        6.10800D+01   X19        5.66430D+02
+    LINSPANH  X20        5.83570D+02   X30        7.70000D+01
+    LINSPANH  X31        1.04953D+03   X32        1.58000D+02
+    LINSPANH  X33        1.60000D+01   X35        7.38430D+02
+    LINSPANH  X36        1.10000D+01   X37        4.90000D+01
+    LINSPANH  X38        1.83536D+03   X39        2.52000D+02
+    LINSPANH  X40        3.20600D+01   X42        4.20000D+00
+    LINSPANH  X43        4.83700D+01   X44        5.25700D+01
+    LINSPANH  X45        5.98500D+01   X46        5.98500D+01
+    LINSPANH  X47        5.82400D+01   X49        1.87600D+01
+    LINSPANH  X59        7.70000D+01   X60        1.08187D+03
+    LINSPANH  X61        1.58000D+02   X62        1.60000D+01
+    LINSPANH  X64        6.96710D+02   X65        1.10000D+01
+    LINSPANH  X66        4.90000D+01   X67        1.97277D+03
+    LINSPANH  X68        2.52000D+02   X69        1.81300D+01
+    LINSPANH  X72        1.81300D+01   X73        1.81300D+01
+    LINSPANH  X74        5.81000D+00   X75        5.81000D+00
+    LINSPANH  X78        6.02000D+00   X88        7.70000D+01
+    LINSPANH  X89        1.10000D+03   X90        1.58000D+02
+    LINSPANH  X91        1.60000D+01   X93        7.00000D+02
+    LINSPANH  X94        1.10000D+01   X95        4.90000D+01
+    LINSPANH  X96        2.00000D+03   X97        2.52000D+02
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                77.0
+
+ENDATA

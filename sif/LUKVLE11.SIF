@@ -1,0 +1,227 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLE11
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.11, the chained HS46 problem, 
+*   due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   98             $-PARAMETER
+*IE N                   998            $-PARAMETER
+*IE N                   9998           $-PARAMETER
+ IE N                   8              $-PARAMETER     modified for S2X tests
+*IE N                   99998          $-PARAMETER
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+
+ IA N-2       N         -2
+ I/ (N-2)/3   N-2                      3
+ I* NC        2                        (N-2)/3
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        (N-2)/3
+ IA I-1       I         -1
+ I* J         3                        I-1
+ IA J+1       J         1
+ IA J+2       J         2
+ IA J+3       J         3
+ IA J+4       J         4
+ IA J+5       J         5
+ XN OBJ1(I)   X(J+1)    1.0            X(J+2)    -1.0
+ XN OBJ2(I)   X(J+3)    1.0
+ XN OBJ3(I)   X(J+4)    1.0
+ XN OBJ4(I)   X(J+5)    1.0
+ ND
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ XE C(K)
+ XE C(K+1)    X(K+1)    1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        (N-2)/3
+ X  RHS       OBJ2(I)   1.0
+ X  RHS       OBJ3(I)   1.0
+ X  RHS       OBJ4(I)   1.0
+ ND
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ X  RHS       C(K)      1.0
+ X  RHS       C(K+1)    2.0
+ ND
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DI I         3
+ XV LUKVLE11  X(I)      2.0
+ ND
+
+ DO I         2                        N
+ DI I         3
+ XV LUKVLE11  X(I)      1.5
+ ND
+
+ DO I         3                        N
+ DI I         3
+ XV LUKVLE11  X(I)      0.5
+ ND
+
+ELEMENT TYPE
+
+ EV C21       V                        W
+ EV S         V                        W
+ IV S         D
+ EV C42       V                        W
+
+ELEMENT USES
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ XT EA(K)     C21
+ ZV EA(K)     V                        X(K)
+ ZV EA(K)     W                        X(K+3)
+ XT EB(K)     S
+ ZV EB(K)     V                        X(K+3)
+ ZV EB(K)     W                        X(K+4)
+ XT E(K+1)    C21
+ ZV E(K+1)    V                        X(K+2)
+ ZV E(K+1)    W                        X(K+3)
+ ND
+
+GROUP TYPE
+
+ GV L2        ALPHA
+ GV L4        ALPHA
+ GV L6        ALPHA
+
+GROUP USES
+
+ DO I         1                        (N-2)/3
+ XT OBJ1(I)   L2
+ XT OBJ2(I)   L2
+ XT OBJ3(I)   L4
+ XT OBJ4(I)   L6
+ ND
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ XE C(K)      EA(K)                    EB(K)
+ XE C(K+1)    E(K+1)
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLE11            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLE11
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+ R  SIND
+
+INDIVIDUALS
+
+ T  C21
+ F                      V * V * W
+ G  V                   2.0 * V * W
+ G  W                   V * V
+ H  V         V         2.0 * W
+ H  V         W         2.0 * V
+
+ T  S
+ R  D         V         1.0            W         -1.0
+ A  SIND                SIN( D )
+ F                      SIND
+ G  D                   COS( D )
+ H  D         D         - SIND
+
+ T  C42
+ F                      V ** 4 * W ** 2
+ G  V                   4.0 * V ** 3 * W ** 2
+ G  W                   2.0 * V ** 4 * W
+ H  V         V         12.0 * V ** 2 * W ** 2
+ H  V         W         8.0 * V ** 3 * W
+ H  W         W         2.0 * V ** 4
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLE11
+
+INDIVIDUALS
+
+ T  L2
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0
+
+ T  L4
+ F                      ALPHA ** 4
+ G                      4.0 * ALPHA ** 3
+ H                      12.0 * ALPHA ** 2
+
+ T  L6
+ F                      ALPHA ** 6
+ G                      6.0 * ALPHA ** 5
+ H                      30.0 * ALPHA ** 4
+
+ENDATA

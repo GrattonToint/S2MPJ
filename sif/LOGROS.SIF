@@ -1,0 +1,112 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LOGROS
+
+*   Problem :
+*   *********
+
+*   A logarithmic rescaled variant of the old Rosenbrock's function.
+
+*   Source: 
+*   Ph. Toint, private communication, 1991.
+
+*   SDIF input: Ph. Toint, June 1993.
+
+*   classification OBR2-AN-2-0
+
+VARIABLES
+
+    X
+    Y
+
+GROUPS
+
+ N  OBJ
+
+START POINT
+ 
+ V  LOGROS    X         -1.2
+ V  LOGROS    Y          1.0
+
+ELEMENT TYPE
+
+ EV ROS       X                        Y
+
+ELEMENT USES
+
+ T  F         ROS
+ V  F         X                        X
+ V  F         Y                        Y
+
+GROUP TYPE
+
+ GV LOG       GVAR
+
+GROUP USES
+
+ T  OBJ       LOG
+ E  OBJ       F
+
+OBJECT BOUND
+
+ LO LOGROS              0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LOGROS
+
+TEMPORARIES
+
+ R  W
+ R  P
+ R  T
+ R  S
+ R  PM1
+ R  PM2
+
+INDIVIDUALS
+
+ T  ROS
+ A  W                   10000.0
+ A  P                   2.0
+ A  T                   Y - X * X
+ A  PM1                 P - 1.0
+ A  PM2                 P - 2.0
+ A  S                   P * PM1
+ F                      W * T ** P + ( 1.0 - X ) ** 2
+ G  X                   - 2.0 * P * W * X * T ** PM1
+ G+                     - 2.0 * ( 1.0 - X )
+ G  Y                   P * W * T ** PM1
+ H  X         X         4.0 * S * W * X * X * T ** PM2
+ H+                      -2.0 * P * W * T ** PM1 + 2.0
+ H  X         Y          -2.0 * W * X * S * T ** PM2
+ H  Y         Y         S * W * T ** PM2
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LOGROS
+
+TEMPORARIES
+
+ M  LOG
+
+INDIVIDUALS
+
+ T  LOG
+ F                      LOG( 1.0 + GVAR )
+ G                      1.0 / ( 1.0 + GVAR )
+ H                      - 1.0 / ( 1.0 + GVAR )**2
+
+ENDATA

@@ -1,0 +1,202 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLI7 
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.7, A trigonometric tridiagonal function with 
+*   simplified five-diagonal constraints, due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   Equality constraints changed to inequalities
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+
+ IA N-1       N         -1
+ IA N-2       N         -2
+ IA N-3       N         -3
+
+ RI N         N
+ RM -N        N         -1.0
+ RA N+1       N         1.0
+ R* N.N+1     N                        N+1
+ RM -N.N+1/2  N.N+1     -0.5
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN OBJ
+
+ XL C(1)      X(1)      4.0            X(2)      1.0
+ XL C(2)      X(2)      6.0            X(3)      1.0
+ XL C(3)      X(N-1)    6.0            X(N-3)    -1.0
+ XL C(4)      X(N)      2.0            X(N-2)    -1.0
+
+CONSTANTS
+
+ Z  RHS       OBJ                      -N.N+1/2
+ X  RHS       C(2)      2.0
+ X  RHS       C(3)      2.0
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ XV LUKVLI7   X(I)      1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SIN       V
+ EV COS       V
+ EV SQR       V
+ EV CUBEP     V                        W
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT SI(I)     SIN
+ ZV SI(I)     V                        X(I)
+ XT CO(I)     COS
+ ZV CO(I)     V                        X(I)
+ ND
+
+ XT C1(1)     SQR
+ ZV C1(1)     V                        X(2)
+ XT C2(1)     SQR
+ ZV C2(1)     V                        X(3)
+
+ XT C1(2)     CUBEP
+ ZV C1(2)     V                        X(2)
+ ZV C1(2)     W                        X(1)
+ XT C2(2)     SQR
+ ZV C2(2)     V                        X(3)
+ XT C3(2)     SQR
+ ZV C3(2)     V                        X(4)
+
+ XT C1(3)     CUBEP
+ ZV C1(3)     V                        X(N-1)
+ ZV C1(3)     W                        X(N-2)
+ XT C2(3)     SQR
+ ZV C2(3)     V                        X(N)
+ XT C3(3)     SQR
+ ZV C3(3)     V                        X(N-2)
+
+ XT C1(4)     CUBEP
+ ZV C1(4)     V                        X(N)
+ ZV C1(4)     W                        X(N-1)
+ XT C2(4)     SQR
+ ZV C2(4)     V                        X(N-1)
+
+GROUP USES
+
+ XE OBJ       CO(1)      -1.0
+ XE OBJ       SI(2)      -1.0
+
+ DO I         2                        N-1
+ IA I+1       I          1
+ IA I-1       I          -1
+ RI I         I
+ RM -I        I          -1.0
+ ZE OBJ       CO(I)                    -I
+ ZE OBJ       SI(I-1)                  I
+ ZE OBJ       SI(I+1)                  -I
+ ND
+
+ ZE OBJ       CO(N)                    -N
+ ZE OBJ       SI(N-1)                  N
+
+ XE C(1)      C1(1)      -4.0
+ XE C(1)      C2(1)      -1.0
+ XE C(2)      C1(2)      8.0
+ XE C(2)      C2(2)      -4.0
+ XE C(2)      C3(2)      -1.0
+ XE C(3)      C1(3)      8.0
+ XE C(3)      C2(3)      -4.0
+ XE C(3)      C3(3)      1.0
+ XE C(4)      C1(4)      8.0
+ XE C(4)      C2(4)      1.0
+
+OBJECT BOUND
+
+ LO LUKVLI7             0.0
+
+*   Solution
+
+*LO SOLTN               -2.2754E+02
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLI7 
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+ R  SINV
+ R  COSV
+
+INDIVIDUALS
+
+ T  SIN
+ A  SINV                SIN( V )
+ F                      SINV
+ G  V                   COS( V )
+ H  V         V         - SINV
+
+ T  COS
+ A  COSV                COS( V )
+ F                      COSV
+ G  V                   - SIN( V )
+ H  V         V         - COSV
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  CUBEP
+ F                      V ** 3 - V * W
+ G  V                   3.0 * V ** 2 - W
+ G  W                   - V
+ H  V         V         6.0 * V
+ H  V         W         - 1.0
+
+ENDATA
+

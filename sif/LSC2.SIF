@@ -1,0 +1,144 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LSC2
+
+*   Problem :
+*   *********
+
+*   Fit a circle to a set of 2D points: case 2, data points in a small arc,
+*   given as an inconsistent set of nonlinear equations
+
+*   Source:  Problem from the SciPy cookbook
+*     http://scipy-cookbook.readthedocs.io/items/Least_Squares_Circle.html
+
+*   SIF input: Nick Gould, Nov 2016
+
+*   classification NOR2-MN-3-6
+
+*   Number of data values
+
+ IE M                   6
+
+*   Number of variables
+
+ IE N                   3
+
+*   Useful parameters
+
+ IE 1                   1
+
+*  Data values
+
+ RE X1                  36.0
+ RE X2                  36.0
+ RE X3                  19.0
+ RE X4                  18.0
+ RE X5                  33.0
+ RE X6                  26.0
+ RE Y1                  14.0
+ RE Y2                  10.0
+ RE Y3                  28.0
+ RE Y4                  31.0
+ RE Y5                  18.0
+ RE Y6                  26.0
+
+VARIABLES
+
+    X
+    Y
+    R
+
+GROUPS
+
+ DO I         1                        M
+ XE R(I)      R         -1.0
+ ND
+
+BOUNDS
+
+ FR EXAMPLEX  'DEFAULT'
+
+START POINT
+
+    START1    X         98.0
+    START1    Y         36.0
+    START1    R         270.0
+
+*  Alternative start point
+
+    START2    X         9.8
+    START2    Y         3.6
+    START2    R         27.0
+
+ELEMENT TYPE
+
+ EV S         X
+ EV S         Y
+ EP S         PX
+ EP S         PY
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT S(I)      S
+ ZV S(I)      X                        X
+ ZV S(I)      Y                        Y
+ ZP S(I)      PX                       X(I)
+ ZP S(I)      PY                       Y(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        M
+ XE R(I)      S(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO EXAMPLEX            0.0
+
+*   Solution
+
+*LO SOLTN
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LSC2
+
+TEMPORARIES
+
+ R  DX
+ R  DY
+ R  S
+ R  SS
+ R  S1
+ R  S2
+ M  SQRT
+
+INDIVIDUALS
+
+ T  S
+ A  DX                  X - PX
+ A  DY                  Y - PY
+ A  SS                  DX * DX + DY * DY
+ A  S                   SQRT(SS)
+ A  S1                  1.0D0 / S
+ A  S2                  - 1.0D0 / ( S * SS )
+ F                      S
+ G  X                   S1 * DX
+ G  Y                   S1 * DY
+ H  X         X         S2 * DX * DX + S1
+ H  X         Y         S2 * DX * DY
+ H  Y         Y         S2 * DY * DY + S1
+
+ENDATA
+

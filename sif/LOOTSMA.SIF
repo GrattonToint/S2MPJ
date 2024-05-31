@@ -1,0 +1,97 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LOOTSMA
+ 
+*   Problem:
+*   ********
+
+*   An example by F. A. Lootsma
+ 
+*   in ``Constrained optimization via penalty functions''
+*   Philips Res. Repts., Vol. 23, pp. 408-423, 1968.
+ 
+*   N.B. Many current methods fail to find a feasible point when 
+*   started from the given starting values
+
+*   Source:
+*   a contribution to fullfill the LANCELOT academic licence agreement.
+
+*   SIF input: Li-zhi Liao, Dept. of Mathematics, 
+*              Hong Kong Baptist College, May 1994.
+
+*   classification OQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ XN Object    X1        11.0           X3        1.0
+ XG Xc1
+ XG Xc2
+
+CONSTANTS
+
+ X  LOOTSMA   Xc2       4.0
+
+BOUNDS
+
+ XU LOOTSMA   X3        5.0
+
+START POINT
+
+ XV LOOTSMA   X1        1.0
+ XV LOOTSMA   X2        1.0
+ XV LOOTSMA   X3        -3.0
+
+ XV LOOTSMA2  X1        0.0
+ XV LOOTSMA2  X2        0.0
+ XV LOOTSMA2  X3        3.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV CB        Y
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+ T  X1CB      CB
+ ZV X1CB      Y                        X1
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+ T  X3SQ      SQ
+ ZV X3SQ      X                        X3
+
+GROUP USES
+
+ XE Object    X1CB                     X1SQ      -6.0
+ XE Xc1       X1SQ      -1.0           X2SQ      -1.0
+ XE Xc1       X3SQ
+ XE Xc2       X1SQ                     X2SQ
+ XE Xc2       X3SQ
+
+ENDATA
+
+ELEMENTS      LOOTSMA
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X*X
+ G  X                   2.0*X
+ H  X         X         2.0
+
+ T  CB
+ F                      Y*Y*Y
+ G  Y                   3.0*Y*Y 
+ H  Y         Y         6.0*Y
+
+ENDATA
+

@@ -1,0 +1,169 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLE10
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.10, the generalized Brown function with
+*   Broyden tridiagonal constraints, due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OQR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ I/ N/2       N                        2
+ IA N-2       N         -2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N/2
+ XN OBJ1(I)
+ XN OBJ2(I)
+ ND
+
+ DO K         1                        N-2
+ IA K+1       K         1
+ IA K+2       K         2
+ XE C(K)      X(K+1)    3.0            X(K)      -1.0
+ XE C(K)      X(K+2)    -2.0
+ ND
+
+CONSTANTS
+
+ DO K         1                        N-2
+ X  RHS       C(K)      -1.0
+ ND
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DI I         2
+ XV LUKVLE10  X(I)      -1.0
+ ND
+
+ DO I         2                        N
+ DI I         2
+ XV LUKVLE10  X(I)      1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV NASTY     X                        Y
+
+ELEMENT USES
+
+ DO I         1                        N/2
+ IM 2I        I         2
+ IA 2I-1      2I        -1       
+ XT OBJ1(I)   NASTY
+ ZV OBJ1(I)   X                        X(2I-1)
+ ZV OBJ1(I)   Y                        X(2I)
+ XT OBJ2(I)   NASTY
+ ZV OBJ2(I)   X                        X(2I)
+ ZV OBJ2(I)   Y                        X(2I-1)
+ ND
+
+ DO K         1                        N-2
+ IA K+1       K         1
+ XT C(K)      SQR
+ ZV C(K)      V                        X(K+1)
+ ND
+
+GROUP USES
+
+ DO I         1                        N/2
+ XE OBJ1(I)   OBJ1(I)
+ XE OBJ2(I)   OBJ2(I)
+ ND
+
+ DO K         1                        N-2
+ XE C(K)      C(K)      -2.0
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLE10            0.0
+
+*   Solution
+
+*LO SOLTN               3.52237E+02
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLE10
+
+TEMPORARIES
+
+ M  LOG
+ R  XX
+ R  YYP1
+ R  F
+ R  FX
+ R  FY
+ R  FXDOT
+ R  FYDOT
+ R  TERM
+ R  TLOGXX
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  NASTY
+ A  XX                  X * X
+ A  YYP1                Y * Y + 1.0
+ A  F                   XX ** YYP1
+ A  TLOGXX              2.0 * LOG( XX )
+ A  FX                  2.0 * YYP1 / X 
+ A  FY                  TLOGXX * Y
+ A  FXDOT               F * FX
+ A  FYDOT               F * FY
+ F                      F
+ G  X                   FXDOT
+ G  Y                   FYDOT
+ H  X         X         FXDOT * FX - 2.0 * F * YYP1 / XX
+ H  X         Y         FYDOT * FX + 4.0 * F * Y / X
+ H  Y         Y         FYDOT * FY + F * TLOGXX
+ H+                     
+
+ENDATA
+

@@ -1,0 +1,250 @@
+***************************                                           
+* SET UP THE INITIAL DATA *                                           
+***************************                                           
+                                                                      
+NAME          KISSING                                                 
+                                                                      
+*   Problem: KISSING NUMBER PROBLEM
+*                                                                   
+*   Source: This problem is associated to the family of Hard-Spheres 
+*   problem. It belongs to the family of sphere packing problems, a 
+*   class of challenging problems dating from the beginning of the 
+*   17th century which is related to practical problems in Chemistry, 
+*   Biology and Physics. It consists on maximizing the minimum pairwise 
+*   distance between NP points on a sphere in \R^{MDIM}. 
+*   This problem may be reduced to a nonconvex nonlinear optimization 
+*   problem with a potentially large number of (nonoptimal) points 
+*   satisfying optimality conditions. We have, thus, a class of problems 
+*   indexed by the parameters MDIM and NP, that provides a suitable 
+*   set of test problems for evaluating nonlinear programming codes.
+*   After some algebric manipulations, we can formulate this problem as
+*
+*                            Minimize z
+*
+*                            subject to
+*       
+*      z \geq <x_i, x_j> for all different pair of indices i, j
+*      
+*                            ||x_i||^2 = 1    for all i = 1,...,NP
+*
+*     The goal is to find an objective value less than 0.5 (This means
+*     that the NP points stored belong to the sphere and every distance
+*     between two of them is greater than 1.0).
+*
+*     Obs: the starting point is aleatorally chosen although each 
+*     variable belongs to [-1.,1.].
+*
+*     References:
+*     [1] "Validation of an Augmented Lagrangian algorithm with a 
+*          Gauss-Newton Hessian approximation using a set of 
+*          Hard-Spheres problems", N. Krejic, J. M. Martinez, M. Mello 
+*          and E. A. Pilotta, Tech. Report RP 29/98, IMECC-UNICAMP, 
+*          Campinas, 1998.
+*     [2] "Inexact-Restoration Algorithm for Constrained Optimization",
+*          J. M. Martinez and E. A. Pilotta, Tech. Report, IMECC-UNICAMP, 
+*          Campinas, 1998.
+*     [3]  "Sphere Packings, Lattices and Groups", J. H. Conway and 
+*           N. J. C. Sloane, Springer-Verlag, NY, 1988.
+*
+*
+*     SIF input: September 29, 1998
+*		 Jose Mario Martinez
+*                Elvio Angel Pilotta
+*
+
+*   classification LQR2-RN-V-V
+
+***********************************************************************
+
+*   Number of points: NP >= 12
+
+*IE NP                   12            $-PARAMETER
+*IE NP                   13            $-PARAMETER
+*IE NP                   14            $-PARAMETER
+*IE NP                   15            $-PARAMETER
+*IE NP                   22            $-PARAMETER
+*IE NP                   23            $-PARAMETER
+*IE NP                   24            $-PARAMETER
+*IE NP                   25            $-PARAMETER
+*IE NP                   26            $-PARAMETER
+*IE NP                   27            $-PARAMETER
+*IE NP	                 37            $-PARAMETER
+*IE NP                   38            $-PARAMETER
+*IE NP                   39            $-PARAMETER
+*IE NP                   40            $-PARAMETER
+*IE NP                   41            $-PARAMETER
+*IE NP                   42            $-PARAMETER
+ IE NP                  25             $-PARAMETER     modified for S2X tests
+
+*   Dimension: MDIM >= 3
+
+*IE MDIM                 3             $-PARAMETER
+ IE MDIM                3              $-PARAMETER     modified for S2X tests
+*IE MDIM                 4             $-PARAMETER
+*IE MDIM                 5             $-PARAMETER
+
+*   Other useful parameters.
+
+ IA N-        NP         -1 
+ IE 1                    1
+
+VARIABLES
+
+ DO I         1                        NP
+ DO J         1                        MDIM
+ X  X(I,J)
+ OD J
+ OD I
+ X  Z
+                                                             
+GROUPS
+
+ XN OBJ       Z          1.0
+
+*   Inequality constraints.
+
+ DO I         1                        N-
+ IA I+        I          1
+ DO J         I+                       NP
+ XL IC(I,J)   Z          -1.0
+ ND
+
+*   Equality constraints.
+
+ DO I         1                        NP
+ XE EC(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        NP
+ X  KISSING   EC(I)       1.0
+ ND
+
+BOUNDS
+
+ DO I         1                        NP
+ DO J         1                        MDIM
+ XR KISSING   X(I,J)
+ ND
+
+ XR KISSING   Z
+
+START POINT
+
+ XV KISSING   X1,1      -0.10890604
+ XV KISSING   X1,2       0.85395078
+ XV KISSING   X1,3      -0.45461680
+ XV KISSING   X2,1       0.49883922
+ XV KISSING   X2,2      -0.18439316
+ XV KISSING   X2,3      -0.04798594
+ XV KISSING   X3,1       0.28262888
+ XV KISSING   X3,2      -0.48054070
+ XV KISSING   X3,3       0.46715332
+ XV KISSING   X4,1      -0.00580106
+ XV KISSING   X4,2      -0.49987584
+ XV KISSING   X4,3      -0.44130302
+ XV KISSING   X5,1       0.81712540
+ XV KISSING   X5,2      -0.36874258
+ XV KISSING   X5,3      -0.68321896
+ XV KISSING   X6,1       0.29642426
+ XV KISSING   X6,2       0.82315508
+ XV KISSING   X6,3       0.35938150
+ XV KISSING   X7,1       0.09215152
+ XV KISSING   X7,2      -0.53564686
+ XV KISSING   X7,3       0.00191436
+ XV KISSING   X8,1       0.11700318
+ XV KISSING   X8,2       0.96722760
+ XV KISSING   X8,3      -0.14916438
+ XV KISSING   X9,1       0.01791524
+ XV KISSING   X9,2       0.17759446
+ XV KISSING   X9,3      -0.61875872
+ XV KISSING   X10,1     -0.63833630
+ XV KISSING   X10,2      0.80830972
+ XV KISSING   X10,3      0.45846734
+ XV KISSING   X11,1      0.28446456
+ XV KISSING   X11,2      0.45686938
+ XV KISSING   X11,3      0.16368980
+ XV KISSING   X12,1      0.76557382
+ XV KISSING   X12,2      0.16700944
+ XV KISSING   X12,3     -0.31647534
+
+ELEMENT TYPE 
+
+ EV PROD      X                        Y
+ EV QUA       V
+
+ELEMENT USES
+ 
+* Inequality constraints.
+
+ DO I         1                        N-
+ IA I+        I          1
+ DO J         I+                       NP
+ DO K         1                        MDIM
+ XT A(I,J,K)  PROD
+ ZV A(I,J,K)  X                        X(I,K)
+ ZV A(I,J,K)  Y                        X(J,K)
+ ND
+
+* Equality constraints.
+
+ DO I         1                        NP
+ DO K         1                        MDIM
+ XT B(I,K)    QUA
+ ZV B(I,K)    V                        X(I,K)
+ ND
+
+GROUP USES
+
+* Inequality constraints.
+
+ DO I         1                        N-
+ IA I+        I         1
+ DO J         I+                       NP
+ DO K         1                        MDIM
+ XE IC(I,J)   A(I,J,K)
+ ND
+
+* Equality constraints.
+
+ DO I         1                        NP
+ DO K         1                        MDIM
+ XE EC(I)     B(I,K)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*XL SOLUTION             4.47214D-01
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      KISSING
+
+INDIVIDUALS
+
+* Product of 2 elemental variables.
+
+ T  PROD
+
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+* Square of an elemental variables.
+
+ T  QUA
+
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ENDATA

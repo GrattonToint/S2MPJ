@@ -1,0 +1,326 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLE6 
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.6, Generalized Broyden banded function with 
+*   exponential constraints, due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   99             $-PARAMETER
+*IE N                   999            $-PARAMETER
+*IE N                   9999           $-PARAMETER
+ IE N                   9              $-PARAMETER     modified for S2X tests
+*IE N                   99999          $-PARAMETER
+
+*  other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+
+ I/ N/2       N                        2
+ IA N+1       N         1
+ IA N-4       N         -4
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ IA I+1       I         1
+ IA I-5       I         -5
+ XN OBJ(I)    X(I)      2.0
+
+* Now for the fun part: Find MAX(1,I-5) and MIN(I+1,N)
+
+ I= A         I-5
+ I= B         1
+*  this is how we find max(a,b) !!
+*  first add |a| + |b| to both
+ RI A         A  
+ R( ABSA      ABS                      A
+ IR ABSA      ABSA
+ RI B         B
+ R( ABSB      ABS                      B
+ IR ABSB      ABSB
+ I+ ABSA+B    ABSA                     ABSB
+ I+ A         A                        ABSA+B
+ I+ B         B                        ABSA+B
+* only one of [a/b] and [b/a] is nonzero (unless a=b)
+ I/ A/B       A                        B
+ I/ B/A       B                        A
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ I+ SUM       A/B                      B/A
+ I* A         A                        A/B
+ I* B         B                        B/A
+ I+ MAXA,B    A                        B
+ I/ MAXA,B    MAXA,B                   SUM
+* subtract |a| + |b| to find the required minimum
+ I- MAXA,B    MAXA,B                   ABSA+B
+ I= MAXI-5,1  MAXA,B
+
+ I= A         I+1
+ I= B         N
+*  this is how we find min(a,b) !!
+*  first set a <- - a and b <- - b
+ IM A         A         -1
+ IM B         B         -1
+*  now add |a| + |b| to both
+ RI A         A  
+ R( ABSA      ABS                      A
+ IR ABSA      ABSA
+ RI B         B
+ R( ABSB      ABS                      B
+ IR ABSB      ABSB
+ I+ ABSA+B    ABSA                     ABSB
+ I+ A         A                        ABSA+B
+ I+ B         B                        ABSA+B
+* only one of [a/b] and [b/a] is nonzero (unless a=b)
+ I/ A/B       A                        B
+ I/ B/A       B                        A
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ I+ SUM       A/B                      B/A
+ I* A         A                        A/B
+ I* B         B                        B/A
+ I+ MAXA,B    A                        B
+ I/ MAXA,B    MAXA,B                   SUM
+* subtract |a| + |b| and negate to find the required minimum
+ I- MINA,B    ABSA+B                   MAXA,B
+ I= MINI+1,N  MINA,B
+
+ DO J         MAXI-5,1                 MINI+1,N
+ XN OBJ(I)    X(J)      1.0
+ ND
+
+ DO K         1                        N/2
+ IM 2K        K         2
+ XE C(K)      X(2K)     4.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ X  RHS       OBJ(I)    -1.0
+ ND
+
+ DO K         1                        N/2
+ X  RHS       C(K)      3.0
+ ND
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ XV LUKVLE9   X(I)      3.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV CUBE      V
+ EV XEXP      VM                       VP
+ EV XEXP      V
+ IV XEXP      U                        W
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT S(I)      SQR
+ ZV S(I)      V                        X(I)
+ XT C(I)      CUBE
+ ZV C(I)      V                        X(I)
+ ND
+
+ DO K         1                        N/2
+ IM 2K        K         2
+ IA 2K-1      2K        -1
+ IA 2K+1      2K        1
+ XT P(K)      XEXP
+ ZV P(K)      VM                       X(2K-1)
+ ZV P(K)      V                        X(2K)
+ ZV P(K)      VP                       X(2K+1)
+ ND
+
+GROUP TYPE
+
+ GV L7/3      GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ IA I+1       I         1
+ IA I-5       I         -5
+ XT OBJ(I)    L7/3
+ XE OBJ(I)    C(I)      5.0
+
+* Once again, find MAX(1,I-5) and MIN(I+1,N)
+
+ I= A         I-5
+ I= B         1
+*  this is how we find max(a,b) !!
+*  first add |a| + |b| to both
+ RI A         A  
+ R( ABSA      ABS                      A
+ IR ABSA      ABSA
+ RI B         B
+ R( ABSB      ABS                      B
+ IR ABSB      ABSB
+ I+ ABSA+B    ABSA                     ABSB
+ I+ A         A                        ABSA+B
+ I+ B         B                        ABSA+B
+* only one of [a/b] and [b/a] is nonzero (unless a=b)
+ I/ A/B       A                        B
+ I/ B/A       B                        A
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ I+ SUM       A/B                      B/A
+ I* A         A                        A/B
+ I* B         B                        B/A
+ I+ MAXA,B    A                        B
+ I/ MAXA,B    MAXA,B                   SUM
+* subtract |a| + |b| to find the required minimum
+ I- MAXA,B    MAXA,B                   ABSA+B
+ I= MAXI-5,1  MAXA,B
+
+ I= A         I+1
+ I= B         N
+*  this is how we find min(a,b) !!
+*  first set a <- - a and b <- - b
+ IM A         A         -1
+ IM B         B         -1
+*  now add |a| + |b| to both
+ RI A         A  
+ R( ABSA      ABS                      A
+ IR ABSA      ABSA
+ RI B         B
+ R( ABSB      ABS                      B
+ IR ABSB      ABSB
+ I+ ABSA+B    ABSA                     ABSB
+ I+ A         A                        ABSA+B
+ I+ B         B                        ABSA+B
+* only one of [a/b] and [b/a] is nonzero (unless a=b)
+ I/ A/B       A                        B
+ I/ B/A       B                        A
+* form max(a,b) = (a.[a/b] + b.[b/a]) / ([a/b] + [b/a])
+ I+ SUM       A/B                      B/A
+ I* A         A                        A/B
+ I* B         B                        B/A
+ I+ MAXA,B    A                        B
+ I/ MAXA,B    MAXA,B                   SUM
+* subtract |a| + |b| and negate to find the required minimum
+ I- MINA,B    ABSA+B                   MAXA,B
+ I= MINI+1,N  MINA,B
+
+ DO J         MAXI-5,1                 MINI+1,N
+ XE OBJ(I)    S(J)       1.0
+ ND
+
+ DO K         1                        N/2
+ XE C(K)      P(K)       -1.0
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLE6             0.0
+
+*   Solution
+
+*LO SOLTN               6.26382E+04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLE6
+
+TEMPORARIES
+
+ R  EXPW
+ R  UEXPW
+ M  EXP
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  CUBE
+ F                      V ** 3
+ G  V                   3.0 * V ** 2
+ H  V         V         6.0 * V
+
+ T  XEXP
+ R  U         VM        1.0            VP        -1.0
+ R  W         VM        1.0            VP        -1.0
+ R  W         V         -1.0
+ A  EXPW                EXP( W )
+ A  UEXPW               U * EXPW
+ F                      UEXPW
+ G  U                   EXPW
+ G  W                   UEXPW
+ H  U         W         EXPW
+ H  W         W         UEXPW
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLE6 
+
+TEMPORARIES
+
+ R  Z
+
+ M  ABS
+ M  SIGN
+
+INDIVIDUALS
+
+ T  L7/3
+
+ A  Z                   ABS( GVAR )
+ F                      Z**(7.0/3.0)
+ G                      7.0 * SIGN( Z**(4.0/3.0), GVAR ) / 3.0
+ H                      28.0 * Z**(1.0/3.0) / 9.0
+
+ENDATA
+
+
+
+
+
+
+
+

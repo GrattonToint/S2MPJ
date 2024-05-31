@@ -1,0 +1,197 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLE14
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.14, the chained modified HS49 problem, 
+*   due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OQR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   98             $-PARAMETER
+*IE N                   998            $-PARAMETER
+*IE N                   9998           $-PARAMETER
+ IE N                   20             $-PARAMETER     modified for S2X tests
+*IE N                   99998          $-PARAMETER
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+
+ IA N-2       N         -2
+ I/ (N-2)/3   N-2                      3
+ I* NC        2                        (N-2)/3
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        (N-2)/3
+ IA I-1       I         -1
+ I* J         3                        I-1
+ IA J+1       J         1
+ IA J+2       J         2
+ IA J+3       J         3
+ IA J+4       J         4
+ IA J+5       J         5
+ XN OBJ1(I)   X(J+1)    1.0            X(J+2)    -1.0
+ XN OBJ2(I)   X(J+3)    1.0
+ XN OBJ3(I)   X(J+4)    1.0
+ XN OBJ4(I)   X(J+5)    1.0
+ ND
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ XE C(K)      X(K+1)    1.0            X(K+2)    1.0
+ XE C(K)      X(K+3)    4.0
+ XE C(K+1)    X(K+4)    -5.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        (N-2)/3
+ X  RHS       OBJ2(I)   1.0
+ X  RHS       OBJ3(I)   1.0
+ X  RHS       OBJ4(I)   1.0
+ ND
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ X  RHS       C(K)      7.0
+ X  RHS       C(K+1)    6.0
+ ND
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DI I         3
+ XV LUKVLE14  X(I)      10.0
+ ND
+
+ DO I         2                        N
+ DI I         3
+ XV LUKVLE14  X(I)      7.0
+ ND
+
+ DO I         3                        N
+ DI I         3
+ XV LUKVLE14  X(I)      -3.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+
+ELEMENT USES
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ XT E(K)      SQR
+ ZV E(K)      V                        X(K)
+ XT E(K+1)    SQR
+ ZV E(K+1)    V                        X(K+2)
+ ND
+
+GROUP TYPE
+
+ GV L2        ALPHA
+ GV L4        ALPHA
+ GV L6        ALPHA
+
+GROUP USES
+
+ DO I         1                        (N-2)/3
+ XT OBJ1(I)   L2
+ XT OBJ2(I)   L2
+ XT OBJ3(I)   L4
+ XT OBJ4(I)   L6
+ ND
+
+ DO K         1                        NC
+ DI K         2
+ IA K+1       K         1
+ XE C(K)      E(K)
+ XE C(K+1)    E(K+1)
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLE14            0.0
+
+*   Solution
+
+*LO SOLTN               3.08941E+07
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLE14
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLE14
+
+INDIVIDUALS
+
+ T  L2
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0
+
+ T  L4
+ F                      ALPHA ** 4
+ G                      4.0 * ALPHA ** 3
+ H                      12.0 * ALPHA ** 2
+
+ T  L6
+ F                      ALPHA ** 6
+ G                      6.0 * ALPHA ** 5
+ H                      30.0 * ALPHA ** 4
+
+ENDATA

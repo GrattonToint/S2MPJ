@@ -1,0 +1,204 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKSAN17LS
+
+*   Problem :
+*   *********
+
+*   Problem 17 (sparse trigonometric) in the paper
+
+*     L. Luksan
+*     Hybrid methods in large sparse nonlinear least squares
+*     J. Optimization Theory & Applications 89(3) 575-595 (1996)
+
+*   SIF input: Nick Gould, June 2017.
+
+*   least-squares version
+
+*   classification SUR2-AN-V-0
+
+*  seed for dimensions
+
+ IE S                   49
+
+*  number of unknowns
+
+ IM N         S         2
+ IA N         N         2
+
+*  number of equations
+
+ IM M         S         4
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ RE ONE                 1.0
+
+*  data values
+
+ RE Y1                  30.6
+ RE Y2                  72.2
+ RE Y3                  124.4
+ RE Y4                  187.4
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN E(I)
+ ND
+
+CONSTANTS
+
+ IE K                   1
+ DO J         1                        S
+ Z  LUKSAN17  E(K)                     Y1
+ IA K         K         1
+ Z  LUKSAN17  E(K)                     Y2
+ IA K         K         1
+ Z  LUKSAN17  E(K)                     Y3
+ IA K         K         1
+ Z  LUKSAN17  E(K)                     Y4
+ IA K         K         1
+ ND
+
+BOUNDS
+
+ FR LUKSAN17  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DI I         4
+ XV LUKSAN16  X(I)       -0.8
+ ND
+
+ DO I         2                        N
+ DI I         4
+ XV LUKSAN16  X(I)       1.2
+ ND
+
+ DO I         3                        N
+ DI I         4
+ XV LUKSAN16  X(I)       -1.2
+ ND
+
+ DO I         4                        N
+ DI I         4
+ XV LUKSAN16  X(I)       0.8
+ ND
+
+ELEMENT TYPE
+
+ EV ACOSX     X
+ EP ACOSX     A
+
+ EV ASINX     X
+ EP ASINX     A
+
+ELEMENT USES
+
+ DO Q         1                        4
+ RI RQ        Q
+ R* RQ2       RQ                       RQ
+ IE K                   1
+ IE I                   0
+ DO J         1                        S
+ I+ I+Q       I                        Q
+ DO L         1                        4
+ RI RL        L
+ R* RL2       RL                       RL
+ R* A         RL                       RQ2
+ RM A         A         -1.0
+ XT S(K,Q)    ASINX
+ ZV S(K,Q)    X                        X(I+Q)
+ ZP S(K,Q)    A                        A
+ R* A         RL2                      RQ
+ XT C(K,Q)    ACOSX
+ ZV C(K,Q)    X                        X(I+Q)
+ ZP C(K,Q)    A                        A
+ IA K         K         1
+ OD L
+ IA I         I         2
+ OD J
+ OD Q
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO K         1                        M
+ DO Q         1                        4
+ XE E(K)      S(K,Q)                   C(K,Q)
+ ND
+
+OBJECT BOUND
+
+ LO LUKSAN17             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKSAN17LS
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+ R  ASINX
+ R  ACOSX
+
+INDIVIDUALS
+
+ T  ASINX
+ A  ASINX               A * SIN( X )
+ F                      ASINX
+ G  X                   A * COS( X )
+ H  X         X         - ASINX
+
+ T  ACOSX
+ A  ACOSX               A * COS( X )
+ F                      ACOSX
+ G  X                   - A * SIN( X )
+ H  X         X         - ACOSX
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKSAN17LS
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,156 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKSAN22
+
+*   Problem :
+*   *********
+
+*   Problem 22 (attracting-repelling) in the paper
+
+*     L. Luksan
+*     Hybrid methods in large sparse nonlinear least squares
+*     J. Optimization Theory & Applications 89(3) 575-595 (1996)
+
+*   SIF input: Nick Gould, June 2017.
+
+*   classification NOR2-AN-V-V
+
+*  number of unknowns
+
+ IE N                   100
+
+*  number of equations
+
+ IM M         N         2
+ IA M         M         -2
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N-2       N         -2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ E  E1        X1        1.0
+ IE K                   2
+ DO I         1                        N-2
+ IA I+1       I         1
+ IA K+1       K         1
+ XE E(K)      X(I+1)    -10.0
+ XE E(K+1)
+ IA K         K         2
+ ND
+ XE E(K)      X(N)    -10.0
+
+CONSTANTS
+
+ X  LUKSAN22  E1        1.0
+
+BOUNDS
+
+ FR LUKSAN22  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DI I         2
+ IA I+1       I         1
+ XV LUKSAN22  X(I)       -1.2
+ XV LUKSAN22  X(I+1)     1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       X
+ EV EXPDA     X1
+ EV EXPDA     X2
+ IV EXPDA     X
+ EV EXPDB     X1
+ EV EXPDB     X2
+ IV EXPDB     X
+
+ELEMENT USES
+
+ IE K                   2
+ DO I         1                        N-2
+ IA I+1       I         1
+ IA I+2       I         2
+ IA K+1       K         1
+ XT E(K)      SQR
+ ZV E(K)      X                        X(I)
+ XT E(K+1)    EXPDA
+ ZV E(K+1)    X1                       X(I)
+ ZV E(K+1)    X2                       X(I+1)
+ XT F(K+1)    EXPDB
+ ZV F(K+1)    X1                       X(I+1)
+ ZV F(K+1)    X2                       X(I+2)
+ IA K         K         2
+ ND
+ XT E(K)      SQR
+ ZV E(K)      X                        X(N-1)
+
+GROUP USES
+
+ IE K                   2
+ DO I         1                        N-2
+ IA K+1       K         1
+ XE E(K)      E(K)      10.0
+ XE E(K+1)    E(K+1)                   F(K+1)
+ IA K         K         2
+ ND
+ XE E(K)      E(K)      10.0
+
+OBJECT BOUND
+
+ LO LUKSAN22             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKSAN22
+
+TEMPORARIES
+
+ I  EXP
+ R  EXPARG
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0D0
+
+ T  EXPDA
+ R  X         X1        1.0            X2        -1.0
+ A  EXPARG              2.0D0 * EXP( - X * X )
+ F                      EXPARG
+ G  X                   - 2.0D0 * X * EXPARG
+ H  X         X         ( 4.0D0 * X * X - 2.0D0 ) * EXPARG
+
+ T  EXPDB
+ R  X         X1        1.0            X2        -1.0
+ A  EXPARG              EXP( - 2.0D0 * X * X )
+ F                      EXPARG
+ G  X                   - 4.0D0 * X * EXPARG
+ H  X         X         ( 16.0D0 * X * X - 4.0D0 ) * EXPARG
+
+ENDATA

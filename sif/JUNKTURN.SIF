@@ -1,0 +1,303 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          JUNKTURN
+
+*   Problem :
+*   *********
+
+*   The spacecraft orientation problem by Junkins and Turner. This is a
+*   nonlinear optimal control problem.
+
+*   The problem is not convex.
+
+*   Source:
+*   A.I Tyatushkin, A.I. Zholudev and N. M. Erinchek,
+*   "The gradient method for solving optimal control problems with phase
+*   constraints", 
+*   in "System Modelling and Optimization", P. Kall, ed., pp. 456--464,
+*   Springer Verlag, Lecture Notes in Control and Information Sciences 180, 1992.
+*   This reference itself refers to:
+*   I.L. Junkins and I.D. Turner,
+*   "Optimal continuous torque attitude maneuvers",
+*   AIAA/AAS Astrodynamics Conference, Palo Alto, 1978.
+
+*   SIF input: Ph. Toint, February 1994.
+
+*   classification QQR2-MN-V-V
+
+*   Number of discretized points in [0,100] - 1.
+*   The number of variables is    10 * ( N + 1 )
+*   The number of constraints is  7 * N
+*   N should be large enough to ensure feasibility.
+ 
+*IE N                   50             $-PARAMETER n =     510, m =    350
+*IE N                   100            $-PARAMETER n =    1010, m =    700
+*IE N                   500            $-PARAMETER n =    5010, m =   3500
+*IE N                   1000           $-PARAMETER n =   10010, m =   7000
+ IE N                   5              $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER n =  100010, m =  70000
+*IE N                   20000          $-PARAMETER n =  200010, m = 140000
+*IE N                   100000         $-PARAMETER n = 1000010, m = 700000
+
+*   Mesh
+
+ IA N-1       N         -1
+ RI RN        N
+ RD H         RN        100.0
+ RM H/2       H         0.5
+ RM 6H/5      H         1.2
+ RM SH        H         1.0909
+ RM S1H       H         -0.08333
+ RM S2H       H         0.18182
+ RM -H/2      H         -0.5
+ RM -H        H         -1.0
+ RM -H/10     H         -0.1
+ RM H/4       H         0.25
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+
+VARIABLES
+
+*   State variables
+
+ DO I         1                        7
+ DO T         0                        N
+ X  X(I,T)
+ OD T
+ OD I
+
+*   Control variables
+
+ DO I         1                        3
+ DO T         0                        N
+ X  U(I,T)
+ OD T
+ OD I
+
+GROUPS
+
+*   Objective function
+
+ XN OBJ
+
+*   State constraints
+
+ DO T         1                        N
+ IA T-1       T         -1
+ DO I         1                        7
+ XE C(I,T)    X(I,T)    -1.0           X(I,T-1)  1.0
+ OD I 
+ ZE C(5,T)    U(1,T)                   H
+ ZE C(6,T)    U(2,T)                   6H/5
+ ZE C(7,T)    U(3,T)                   SH
+ ND
+
+BOUNDS
+
+ FR JUNKTURN  'DEFAULT'
+
+ XX JUNKTURN  X(1,0)    1.0
+ XX JUNKTURN  X(2,0)    0.0
+ XX JUNKTURN  X(3,0)    0.0
+ XX JUNKTURN  X(4,0)    0.0
+ XX JUNKTURN  X(5,0)    0.01
+ XX JUNKTURN  X(6,0)    0.005
+ XX JUNKTURN  X(7,0)    0.001
+
+ XX JUNKTURN  X(1,N)    0.43047
+ XX JUNKTURN  X(2,N)    0.70106
+ XX JUNKTURN  X(3,N)    0.0923
+ XX JUNKTURN  X(4,N)    0.56098
+ XX JUNKTURN  X(5,N)    0.0
+ XX JUNKTURN  X(6,N)    0.0
+ XX JUNKTURN  X(7,N)    0.0
+
+START POINT
+
+ XV JUNKTURN  'DEFAULT' 1.0
+
+ XV JUNKTURN  X(1,0)    1.0
+ XV JUNKTURN  X(5,0)    0.01
+ XV JUNKTURN  X(6,0)    0.005
+ XV JUNKTURN  X(7,0)    0.001
+
+ XV JUNKTURN  X(1,N)    0.43047
+ XV JUNKTURN  X(2,N)    0.70106
+ XV JUNKTURN  X(3,N)    0.0923
+ XV JUNKTURN  X(4,N)    0.56098
+
+ELEMENT TYPE
+
+ EV 2PR       V                        W
+ EV SQ        V
+
+ELEMENT USES
+
+*   Objective function elements
+
+ DO T         0                        N
+
+ XT U1S(T)    SQ
+ ZV U1S(T)    V                        U(1,T)
+
+ XT U2S(T)    SQ
+ ZV U2S(T)    V                        U(2,T)
+
+ XT U3S(T)    SQ
+ ZV U3S(T)    V                        U(3,T)
+
+ OD T
+
+*   State constraints elements
+
+ DO T         1                        N
+
+ XT P15(T)    2PR
+ ZV P15(T)    V                        X(1,T)
+ ZV P15(T)    W                        X(5,T)
+
+ XT P16(T)    2PR
+ ZV P16(T)    V                        X(1,T)
+ ZV P16(T)    W                        X(6,T)
+
+ XT P17(T)    2PR
+ ZV P17(T)    V                        X(1,T)
+ ZV P17(T)    W                        X(7,T)
+
+ XT P25(T)    2PR
+ ZV P25(T)    V                        X(2,T)
+ ZV P25(T)    W                        X(5,T)
+
+ XT P26(T)    2PR
+ ZV P26(T)    V                        X(2,T)
+ ZV P26(T)    W                        X(6,T)
+
+ XT P27(T)    2PR
+ ZV P27(T)    V                        X(2,T)
+ ZV P27(T)    W                        X(7,T)
+
+ XT P35(T)    2PR
+ ZV P35(T)    V                        X(3,T)
+ ZV P35(T)    W                        X(5,T)
+
+ XT P36(T)    2PR
+ ZV P36(T)    V                        X(3,T)
+ ZV P36(T)    W                        X(6,T)
+
+ XT P37(T)    2PR
+ ZV P37(T)    V                        X(3,T)
+ ZV P37(T)    W                        X(7,T)
+
+ XT P45(T)    2PR
+ ZV P45(T)    V                        X(4,T)
+ ZV P45(T)    W                        X(5,T)
+
+ XT P46(T)    2PR
+ ZV P46(T)    V                        X(4,T)
+ ZV P46(T)    W                        X(6,T)
+
+ XT P47(T)    2PR
+ ZV P47(T)    V                        X(4,T)
+ ZV P47(T)    W                        X(7,T)
+
+ XT P56(T)    2PR
+ ZV P56(T)    V                        X(5,T)
+ ZV P56(T)    W                        X(6,T)
+
+ XT P57(T)    2PR
+ ZV P57(T)    V                        X(5,T)
+ ZV P57(T)    W                        X(7,T)
+
+ XT P67(T)    2PR
+ ZV P67(T)    V                        X(6,T)
+ ZV P67(T)    W                        X(7,T)
+
+ OD T
+
+GROUP USES
+
+*   Objective function
+
+ ZE OBJ       U1S(0)                   H/4
+
+ DO T         1                        N-1
+
+ ZE OBJ       U1S(T)                   H/2
+ ZE OBJ       U2S(T)                   H/2
+ ZE OBJ       U3S(T)                   H/2
+
+ OD T
+
+ ZE OBJ       U1S(N)                   H/4
+
+*   State constraints
+
+ DO T         1                        N
+
+ ZE C(1,T)    P25(T)                   -H/2
+ ZE C(1,T)    P36(T)                   -H/2
+ ZE C(1,T)    P47(T)                   -H/2
+
+ ZE C(2,T)    P15(T)                   H/2
+ ZE C(2,T)    P37(T)                   H/2
+ ZE C(2,T)    P46(T)                   -H/2
+
+ ZE C(3,T)    P16(T)                   H/2
+ ZE C(3,T)    P27(T)                   -H/2
+ ZE C(3,T)    P45(T)                   H/2
+
+ ZE C(4,T)    P17(T)                   H/2
+ ZE C(4,T)    P26(T)                   H/2
+ ZE C(4,T)    P35(T)                   -H/2
+
+ ZE C(5,T)    P67(T)                   S1H
+
+ ZE C(6,T)    P57(T)                   -H/10
+
+ ZE C(7,T)    P56(T)                   S2H
+
+ OD T
+
+OBJECT BOUND
+
+ LO JUNKTURN            0.0
+
+*   Solution
+
+*LO SOLTN(500)          7.417771100D-5
+*LO SOLTN(1000)         1.224842784D-5
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+ELEMENTS      JUNKTURN
+
+INDIVIDUALS
+
+ T  2PR
+ F                      V * W
+ G  V                   W
+ G  W                   V
+ H  V         W         1.0
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0 
+
+ENDATA

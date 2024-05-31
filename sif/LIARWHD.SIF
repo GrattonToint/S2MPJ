@@ -1,0 +1,129 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LIARWHD
+
+*   Problem :
+*   *********
+
+*   Source:
+*   G. Li,
+*   "The secant/finite difference algorithm for solving sparse
+*   nonlinear systems of equations",
+*   SIAM Journal on Optimization, (to appear), 1990.
+
+*   SIF input: Ph. Toint, Aug 1990.
+
+*   classification SUR2-AN-V-0
+
+*   This is a simplified version of problem NONDIA.
+
+*   Number of variables (at least 2)
+
+*IE N                   36             $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   Constants
+
+ IE 1                   1
+
+*   Computed parameters
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN A(I)      X(1)      -1.0
+ XN A(I)      'SCALE'   0.25
+ XN B(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ X  LIARWHD   B(I)      1.0
+ ND
+
+BOUNDS
+
+ FR LIARWHD   'DEFAULT'
+
+START POINT
+
+ V  LIARWHD   'DEFAULT' 4.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT E(I)      SQ
+ ZV E(I)      X                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        N
+ XE A(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+ LO LIARWHD             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LIARWHD
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LIARWHD
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

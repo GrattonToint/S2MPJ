@@ -1,0 +1,81 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LSQFIT
+
+*   Problem :
+*   *********
+*   An elementary constrained linear least-squares fit
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "The LANCELOT User's Manual",
+*   Dept of Maths, FUNDP, 1991.
+
+*   SIF input: Ph. Toint, Jan 1991.
+
+*   classification SLR2-AN-2-1
+
+*   Data points
+ RE X1                  0.1
+ RE X2                  0.3
+ RE X3                  0.5
+ RE X4                  0.7
+ RE X5                  0.9
+*   Observed values
+ RE Y1                  0.25
+ RE Y2                  0.3
+ RE Y3                  0.625
+ RE Y4                  0.701
+ RE Y5                  1.0
+*   Upper bound at 1.0
+ RE C                   0.85
+VARIABLES
+    a
+    b
+GROUPS
+*   Objective function groups
+ ZN Obj1      a                        X1
+ XN Obj1      b         1.0
+ XN Obj1      'SCALE'   2.0
+ ZN Obj2      a                        X2
+ XN Obj2      b         1.0
+ XN Obj2      'SCALE'   2.0
+ ZN Obj3      a                        X3
+ XN Obj3      b         1.0
+ XN Obj3      'SCALE'   2.0
+ ZN Obj4      a                        X4
+ XN Obj4      b         1.0
+ XN Obj4      'SCALE'   2.0
+ ZN Obj5      a                        X5
+ XN Obj5      b         1.0
+ XN Obj5      'SCALE'   2.0
+*   Constraint group
+ XL Cons      a         1.0            b         1.0
+CONSTANTS
+ Z  LSQFIT    Obj1                     Y1
+ Z  LSQFIT    Obj2                     Y2
+ Z  LSQFIT    Obj3                     Y3
+ Z  LSQFIT    Obj4                     Y4
+ Z  LSQFIT    Obj5                     Y5
+ Z  LSQFIT    Cons                     C
+BOUNDS
+ XR LSQFIT    b
+GROUP TYPE
+ GV SQUARE    ALPHA
+GROUP USES
+ XT Obj1      SQUARE
+ XT Obj2      SQUARE
+ XT Obj3      SQUARE
+ XT Obj4      SQUARE
+ XT Obj5      SQUARE
+ENDATA
+
+GROUPS        LSQFIT
+INDIVIDUALS
+ T  SQUARE
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0
+ENDATA

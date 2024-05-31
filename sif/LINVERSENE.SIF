@@ -1,0 +1,262 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LINVERSENE
+*   Problem :
+*   *********
+
+*   The problem is to find the positive definite lower bidiagonal
+*   matrix L such that the matrix L(inv)L(inv-transp) best approximates,
+*   in the Frobenius norm, a given symmetric target matrix T.
+*   More precisely, one is  interested in the positive definite lower
+*   bidiagonal L such that
+
+*        || L T L(transp) - I ||     is minimum.
+*                               F
+
+*   The positive definite character of L is imposed by requiring
+*   that all its diagonal entries to be at least equal to EPSILON,
+*   a strictly positive real number.
+
+*   Many variants of the problem can be obtained by varying the target
+*   matrix T and the scalar EPSILON.  In the present problem,
+*   a) T is chosen to be pentadiagonal with T(i,j) = sin(i)cos(j) (j .leq. i)
+*   b) EPSILON = 1.D-8
+
+*   Source:
+*   Ph. Toint, private communication, 1991.
+
+*   SIF input: Ph. Toint, March 1991.
+*   Bound-constrained nonlinear equations version: Nick Gould, June 2019.
+
+*   classification NOR2-AN-V-V
+
+*   Dimension of the matrix
+
+*IE N                   10             $-PARAMETER  n = 19    original value
+*IE N                   100            $-PARAMETER  n = 199
+*IE N                   500            $-PARAMETER  n = 999
+*IE N                   1000           $-PARAMETER  n = 1999
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   4000           $-PARAMETER  n = 1999
+*IE N                   10000          $-PARAMETER  n = 19999
+
+*   Positive definiteness treshold
+
+ RE EPSILON             1.0D-8
+ RF ROOTP5    SQRT      0.5
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+
+ IA N-1       N         -1
+ IA N-2       N         -2
+
+*   Target matrix
+
+ DO J         1                        N-2
+ IA J+2       J         2
+ RI RJ        J
+ R( COSJ      COS                      RJ
+ DO I         J                        J+2
+ RI RI        I
+ R( SINI      SIN                      RI
+ A* T(I,J)    SINI                     COSJ
+ ND
+
+ RI RN-1      N-1
+ R( SINI      SIN                      RN-1
+ R( COSJ      COS                      RN-1
+ A* T(N-1,N-1)SINI                     COSJ
+ RI RN        N
+ R( SINI      SIN                      RN
+ A* T(N,N-1)  SINI                     COSJ
+
+ R( COSJ      COS                      RN
+ A* T(N,N)    SINI                     COSJ
+
+VARIABLES
+
+ DO I         1                        N-1
+ X  A(I)
+ X  B(I)
+ ND
+
+ X  A(N)
+
+GROUPS
+
+ DO J         1                        N-2
+ IA J+1       J         1
+ IA J+2       J         2
+ XE O(J,J)
+ ZE O(J+1,J)  'SCALE'                  ROOTP5
+ ZE O(J+2,J)  'SCALE'                  ROOTP5
+ ND
+
+ XE O(N-1,N-1)
+ ZE O(N,N-1)  'SCALE'                  ROOTP5
+
+ XE O(N,N)
+
+CONSTANTS
+
+ DO I         1                        N
+ X  LINVERSE  O(I,I)    1.0
+ ND
+
+BOUNDS
+
+ FR LINVERSE  'DEFAULT'
+
+ DO I         1                        N
+ ZL LINVERSE  A(I)                     EPSILON
+ ND
+
+START POINT
+
+ XV LINVERSE  'DEFAULT' -1.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+
+ ZV S(1,1)    X                        A(1)
+ ZV S(1,1)    Y                        A(1)
+
+ ZV S(2,1)    X                        A(2)
+ ZV S(2,1)    Y                        A(1)
+ ZV V(2,1)    X                        B(1)
+ ZV V(2,1)    Y                        A(1)
+
+ ZV S(3,1)    X                        A(3)
+ ZV S(3,1)    Y                        A(1)
+ ZV V(3,1)    X                        B(2)
+ ZV V(3,1)    Y                        A(1)
+
+ ZV S(2,2)    X                        A(2)
+ ZV S(2,2)    Y                        A(2)
+ ZV U(2,2)    X                        A(2)
+ ZV U(2,2)    Y                        B(1)
+ ZV V(2,2)    X                        A(2)
+ ZV V(2,2)    Y                        B(1)
+ ZV W(2,2)    X                        B(1)
+ ZV W(2,2)    Y                        B(1)
+
+ ZV S(3,2)    X                        A(3)
+ ZV S(3,2)    Y                        A(2)
+ ZV U(3,2)    X                        A(3)
+ ZV U(3,2)    Y                        B(1)
+ ZV V(3,2)    X                        A(2)
+ ZV V(3,2)    Y                        B(2)
+ ZV W(3,2)    X                        B(2)
+ ZV W(3,2)    Y                        B(1)
+
+ ZV S(3,3)    X                        A(3)
+ ZV S(3,3)    Y                        A(3)
+ ZV U(3,3)    X                        A(3)
+ ZV U(3,3)    Y                        B(2)
+ ZV V(3,3)    X                        A(3)
+ ZV V(3,3)    Y                        B(2)
+ ZV W(3,3)    X                        B(2)
+ ZV W(3,3)    Y                        B(2)
+
+ DO I         4                        N
+ IA I-1       I         -1
+ IA I-2       I         -2
+ ZV S(I,I-2)  X                        A(I)
+ ZV S(I,I-2)  Y                        A(I-2)
+ ZV V(I,I-2)  X                        B(I-1)
+ ZV V(I,I-2)  Y                        A(I-2)
+
+ DO J         I-1                      I
+ IA J-1       J         -1
+ ZV S(I,J)    X                        A(I)
+ ZV S(I,J)    Y                        A(J)
+ ZV U(I,J)    X                        A(I)
+ ZV U(I,J)    Y                        B(J-1)
+ ZV V(I,J)    X                        B(I-1)
+ ZV V(I,J)    Y                        A(J)
+ ZV W(I,J)    X                        B(I-1)
+ ZV W(I,J)    Y                        B(J-1)
+ ND
+
+GROUP USES
+
+ ZE O(1,1)    S(1,1)                   T(1,1)
+
+ ZE O(2,1)    S(2,1)                   T(2,1)
+ ZE O(2,1)    V(2,1)                   T(1,1)
+
+ ZE O(3,1)    S(3,1)                   T(3,1)
+ ZE O(3,1)    V(3,1)                   T(2,1)
+
+ ZE O(2,2)    S(2,2)                   T(2,2)
+ ZE O(2,2)    U(2,2)                   T(2,1)
+ ZE O(2,2)    V(2,2)                   T(2,1)
+ ZE O(2,2)    W(2,2)                   T(1,1)
+
+ ZE O(3,2)    S(3,2)                   T(3,2)
+ ZE O(3,2)    U(3,2)                   T(3,1)
+ ZE O(3,2)    V(3,2)                   T(2,2)
+ ZE O(3,2)    W(3,2)                   T(2,1)
+
+ ZE O(3,3)    S(3,3)                   T(3,3)
+ ZE O(3,3)    U(3,3)                   T(3,2)
+ ZE O(3,3)    V(3,3)                   T(3,2)
+ ZE O(3,3)    W(3,3)                   T(2,2)
+
+ DO I         4                        N
+ IA I-1       I         -1
+ IA I-2       I         -2
+ ZE O(I,I-2)  S(I,I-2)                 T(I,I-2)
+ ZE O(I,I-2)  V(I,I-2)                 T(I-1,I-2)
+
+ ZE O(I,I-1)  S(I,I-1)                 T(I,I-1)
+ ZE O(I,I-1)  U(I,I-1)                 T(I,I-2)
+ ZE O(I,I-1)  V(I,I-1)                 T(I-1,I-1)
+ ZE O(I,I-1)  W(I,I-1)                 T(I-1,I-2)
+
+ ZE O(I,I)    S(I,I)                   T(I,I)
+ ZE O(I,I)    U(I,I)                   T(I,I-1)
+ ZE O(I,I)    V(I,I)                   T(I,I-1)
+ ZE O(I,I)    W(I,I)                   T(I-1,I-1)
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)           6.00000000
+*LO SOLTN(100)          68.0000000
+*LO SOLTN(500)          340.000000
+*LO SOLTN(1000)         ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LINVERSENE
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

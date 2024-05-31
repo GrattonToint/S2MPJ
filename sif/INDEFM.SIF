@@ -1,0 +1,141 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          INDEFM
+
+*   Problem :
+*   *********
+
+*   Variant of INDEF, a nonconvex problem which has an indefinite Hessian 
+*   at the starting point, by Luksan et al
+
+*   Source: problem 37 in
+*   L. Luksan, C. Matonoha and J. Vlcek  
+*   Modified CUTE problems for sparse unconstraoined optimization
+*   Technical Report 1081
+*   Institute of Computer Science
+*   Academy of Science of the Czech Republic
+
+*   based on the original problem by N. Gould
+
+*   SIF input: Nick Gould, June, 2013
+
+*   classification OUR2-AN-V-0
+
+*   The number of variables is N.
+
+*IE N                   10             $-PARAMETER     
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+
+*   The parameter ALPHA controls the indefiniteness.
+*   Larger values of ALPHA give more indefiniteness.
+
+ RE ALPHA               0.5            $-PARAMETER     indefiniteness
+*RE ALPHA               1.0            $-PARAMETER
+*RE ALPHA               10.0           $-PARAMETER
+*RE ALPHA               100.0          $-PARAMETER
+*RE ALPHA               1000.0         $-PARAMETER
+
+*   Other parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N+1       N         1
+ RI RN+1      N+1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN SIN(I)    X(I)      1.0
+ ND
+
+ DO I         2                        N-1
+ XN COS(I)    X(I)      2.0            X(N)      -1.0
+ XN COS(I)    X(1)      -1.0
+ ND
+
+BOUNDS
+
+ FR INDEFM    'DEFAULT' 
+
+START POINT
+
+*  start with X(I) = I/N+1.
+
+ DO I         1                        N
+
+ RI RI        I            
+ R/ T         RI                       RN+1
+ ZV INDEF1    X(I)                     T
+
+ ND
+
+ V  INDEF2    'DEFAULT' 1000.0
+
+GROUP TYPE
+
+ GV COS       GVAR
+ GP COS       ALPHA
+ GV SIN       GVAR
+
+GROUP USES
+
+ DO I         2                        N-1
+ XT COS(I)    COS
+ ZP COS(I)    ALPHA                    ALPHA
+ ND
+
+ DO I         1                        N
+ XT SIN(I)    SIN
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               ??
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        INDEFM
+
+TEMPORARIES
+ 
+ M  COS
+ M  SIN
+
+INDIVIDUALS
+
+ T  COS
+
+ F                      ALPHA * COS( GVAR )
+ G                      - ALPHA * SIN( GVAR )
+ H                      - ALPHA * COS( GVAR )
+
+ T  SIN
+
+ F                      100.0 * SIN( 0.01 * GVAR )
+ G                      COS( 0.01 * GVAR )
+ H                      - 0.01 * SIN( 0.01 * GVAR )
+
+ENDATA
+

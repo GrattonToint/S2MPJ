@@ -1,0 +1,413 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LOADBAL
+
+*   Problem:
+*   ********
+
+*   The problem arises in the field of computer networks and parallel
+*   computation.  It deals with the static load balancing in a tree
+*   computer network with two-way traffic.  A set of heterogeneous host
+*   computers are interconnected, in which each node processes jobs (the 
+*   jobs arriving at each node according to a time invariant Poisson process) 
+*   locally or sends it to a remote node,.  In the latter case, there is a
+*   communication delay of forwarding the job and getting a response back.
+*   The problem is then to minimize the mean response time of a job.
+
+*   The example considered here features 11 computers arranged as follows:
+
+*         1      6      9
+*          \     |     /
+*           \    |    /
+*        2---4---5---8---10
+*           /    |    \
+*          /     |     \
+*         3      7      11
+
+*   Source:
+*   J. Li and H. Kameda,
+*   "Optimal load balancing in tree network with two-way traffic",
+*   Computer networks and ISDN systems, vol. 25, pp. 1335-1348, 1993.
+
+*   SIF input: Masha Sosonkina, Virginia Tech., 1995.
+
+*   classification OLR2-MN-31-31
+
+* Parameter assignment.
+
+ IE 1                   1
+ IE P1                  3
+
+* Problem dimentions
+
+ IE N                   11
+ IE NLINK               20
+ IE NLINK-3             17
+ IE NLINK-4             16
+ IE 4C                  4
+ IE 5C                  5
+ IE 6C                  6
+ IE 7C                  7
+ IE 8C                  8
+
+* FI = SUM(arrival rate for a node)
+
+ RE FI                  514.0
+ R  CIJE
+ RM 0.2*FI    FI        0.2
+ RM 0.0125*FI FI        0.0125 
+ RM 0.05*FI   FI        0.05
+
+GROUPS
+
+* Objective function
+
+ DO I         1                        N
+ XN F(I)
+ ZN F(I)      'SCALE'                  0.2*FI
+ ND 
+ DO I         1                        NLINK
+ XL CNST(I)
+ XN GA(I)
+ ZN GA(I)     'SCALE'                  0.0125*FI
+ XN GB(I)
+ ZN GB(I)     'SCALE'                  0.05*FI
+ OD I
+
+* Constrains
+
+ DO I         1                        N
+ XE N(I)
+ OD I
+ 
+* Comm. constrains
+  
+VARIABLES
+
+* XIJ --Link flow rate.
+
+    X4,1      N1        1.00           N4        -1.00 
+    X1,4      N1        -1.00          N4        1.00
+    X4,2      N2        1.00           N4        -1.00
+    X2,4      N2        -1.00          N4        1.00
+    X4,3      N3        1.00           N4        -1.00
+    X3,4      N3        -1.00          N4        1.00
+    X4,5      N5        1.00           N4        -1.00
+    X5,4      N5        -1.00          N4        1.00
+    X5,6      N6        1.00           N5        -1.00
+    X6,5      N6        -1.00          N5        1.00
+    X5,7      N7        1.00           N5        -1.00
+    X7,5      N7        -1.00          N5        1.00
+    X5,8      N8        1.00           N5        -1.00
+    X8,5      N8        -1.00          N5        1.00
+    X8,9      N9        1.00           N8        -1.00
+    X9,8      N9        -1.00          N8        1.00
+    X8,10     N10       1.00           N8        -1.00
+    X10,8     N10       -1.00          N8        1.00
+    X8,11     N11       1.00           N8        -1.00
+    X11,8     N11       -1.00          N8        1.00
+    X4,1      CNST1     20.0           CNST2     80.00
+    X1,4      CNST1     80.00          CNST2     20.00
+    X4,2      CNST3     20.0           CNST4     80.00
+    X2,4      CNST3     80.00          CNST4     20.0
+    X4,3      CNST5     20.0           CNST6     80.00
+    X3,4      CNST5     80.00          CNST6     20.00
+    X5,6      CNST7     20.0           CNST8     80.00
+    X6,5      CNST7     80.00          CNST8     20.0
+    X5,7      CNST9     20.0           CNST10    80.00
+    X7,5      CNST9     80.00          CNST10    20.0
+    X8,9      CNST11    20.0           CNST12    80.00
+    X9,8      CNST11    80.00          CNST12    20.0
+    X8,10     CNST13    20.0           CNST14    80.00
+    X10,8     CNST13    80.00          CNST14    20.0
+    X8,11     CNST15    20.0           CNST16    80.00
+    X11,8     CNST15    80.0           CNST16    20.00
+    X4,5      CNST17    20.00          CNST18    80.0
+    X5,4      CNST17    80.0           CNST18    20.00
+    X5,8      CNST19    20.00          CNST20    80.0
+    X8,5      CNST19    80.0           CNST20    20.00
+
+
+* BI is a mean processing time of node i. (beta(i) in the paper)
+
+ DO I         1                        N
+ X  B(I)      N(I)      -1.0
+ OD I
+
+CONSTANTS
+
+    LOADBAL   N1        -95.0
+    LOADBAL   N2        -95.0
+    LOADBAL   N3        -19.0
+    LOADBAL   N4        -70.0
+    LOADBAL   N5        -70.0
+    LOADBAL   N6        -19.0
+    LOADBAL   N7        -19.0
+    LOADBAL   N8        -70.0
+    LOADBAL   N9        -19.0
+    LOADBAL   N10       -19.0
+    LOADBAL   N11       -19.0
+
+ RE CIJE                999.99 
+ DO I         1                        NLINK-4   
+ Z  LOADBAL   CNST(I)                  CIJE
+ OD I
+ RE CIJE                9999.99
+ DO I         NLINK-3                  NLINK
+ Z  LOADBAL   CNST(I)                  CIJE
+ OD I
+
+BOUNDS
+
+ XU LOADBAL   B1        99.99 
+ XU LOADBAL   B2        99.99
+ XU LOADBAL   B4        99.99
+ XU LOADBAL   B5        99.99
+ XU LOADBAL   B8        99.99
+ XU LOADBAL   B3        19.99
+ XU LOADBAL   B6        19.99
+ XU LOADBAL   B7        19.99
+ XU LOADBAL   B9        19.99
+ XU LOADBAL   B10       19.99
+ XU LOADBAL   B11       19.99
+ 
+START POINT
+
+    LOADBAL   X1,4      00.0
+    LOADBAL   X4,1      0.0
+    LOADBAL   B1        95.0
+    LOADBAL   X2,4      0.00
+    LOADBAL   X4,2      0.00
+    LOADBAL   B2        95.0
+    LOADBAL   X3,4      0.00
+    LOADBAL   X4,3      0.0
+    LOADBAL   B3        19.0
+    LOADBAL   B4        70.0
+    LOADBAL   X5,4      0.0
+    LOADBAL   X4,5      00.0
+    LOADBAL   X6,5      0.0
+    LOADBAL   X5,6      0.0
+    LOADBAL   X7,5      0.0
+    LOADBAL   X5,7      0.0
+    LOADBAL   B5        70.0
+    LOADBAL   B6        19.0
+    LOADBAL   B7        19.0
+    LOADBAL   X8,5      0.0
+    LOADBAL   X5,8      0.0
+    LOADBAL   X9,8      0.0
+    LOADBAL   X8,9      0.0
+    LOADBAL   X10,8     0.0
+    LOADBAL   X8,10     0.0
+    LOADBAL   X11,8     0.0
+    LOADBAL   X8,11     0.0
+    LOADBAL   B8        70.0
+    LOADBAL   B9        19.0
+    LOADBAL   B10       19.0
+    LOADBAL   B11       19.0
+
+ELEMENT TYPE
+
+ EV BETA1     V
+ EV BETA2     V
+ EV COMA1     V                        W             
+ EV COMA2     V                        W             
+ EV COMB1     V                        W             
+ EV COMB2     V                        W             
+
+ELEMENT USES
+
+ T  EB1       BETA1
+ V  EB1       V                        B1
+ T  EB2       BETA1
+ V  EB2       V                        B2
+ T  EB3       BETA2
+ V  EB3       V                        B3
+ T  EB4       BETA1
+ V  EB4       V                        B4
+ T  EB5       BETA1
+ V  EB5       V                        B5
+ T  EB6       BETA2
+ V  EB6       V                        B6
+ T  EB7       BETA2
+ V  EB7       V                        B7
+ T  EB8       BETA1
+ V  EB8       V                        B8
+ T  EB9       BETA2
+ V  EB9       V                        B9
+ T  EB10      BETA2
+ V  EB10      V                        B10
+ T  EB11      BETA2
+ V  EB11      V                        B11
+
+ DO I         1                        P1
+ XT EGA(I)    COMA1
+ ZV EGA(I)    V                        X(4C,I)
+ ZV EGA(I)    W                        X(I,4C)
+ XT EGB(I)    COMB1 
+ ZV EGB(I)    V                        X(4C,I)
+ ZV EGB(I)    W                        X(I,4C)
+ IA I+3       I         3              
+ XT EGA(I+3)  COMA1
+ ZV EGA(I+3)  V                        X(I,4C)
+ ZV EGA(I+3)  W                        X(4C,I)
+ XT EGB(I+3)  COMB1
+ ZV EGB(I+3)  V                        X(I,4C)
+ ZV EGB(I+3)  W                        X(4C,I)
+ IA I+6       I         6
+ IA I+8       I         8
+ XT EGA(I+6)  COMA1
+ ZV EGA(I+6)  V                        X(8C,I+8)
+ ZV EGA(I+6)  W                        X(I+8,8C)
+ XT EGB(I+6)  COMB1
+ ZV EGB(I+6)  V                        X(8C,I+8)
+ ZV EGB(I+6)  W                        X(I+8,8C)
+ IA I+9       I         9
+ XT EGA(I+9)  COMA1
+ ZV EGA(I+9)  V                        X(I+8,8C)
+ ZV EGA(I+9)  W                        X(8C,I+8)
+ XT EGB(I+9)  COMB1
+ ZV EGB(I+9)  V                        X(I+8,8C)
+ ZV EGB(I+9)  W                        X(8C,I+8)
+ OD I
+
+ DO I         6C                       7C
+ IM I2        I         2
+ IA I2+1      I2        1
+ XT EGA(I2+1) COMA1
+ ZV EGA(I2+1) V                        X(5C,I)
+ ZV EGA(I2+1) W                        X(I,5C)
+ XT EGB(I2+1) COMB1
+ ZV EGB(I2+1) V                        X(5C,I)
+ ZV EGB(I2+1) W                        X(I,5C)
+ IA I2+2      I2        2
+ XT EGA(I2+2) COMA1
+ ZV EGA(I2+2) V                        X(I,5C)
+ ZV EGA(I2+2) W                        X(5C,I)
+ XT EGB(I2+2) COMB1
+ ZV EGB(I2+2) V                        X(I,5C)
+ ZV EGB(I2+2) W                        X(5C,I)
+ OD I
+
+ XT EGA17     COMA2
+ ZV EGA17     V                        X5,4
+ ZV EGA17     W                        X4,5
+ XT EGB17     COMB2
+ ZV EGB17     V                        X5,4
+ ZV EGB17     W                        X4,5
+ XT EGA18     COMA2
+ ZV EGA18     V                        X4,5
+ ZV EGA18     W                        X5,4
+ XT EGB18     COMB2
+ ZV EGB18     V                        X4,5
+ ZV EGB18     W                        X5,4
+ XT EGA19     COMA2
+ ZV EGA19     V                        X5,8
+ ZV EGA19     W                        X8,5
+ XT EGB19     COMB2
+ ZV EGB19     V                        X5,8
+ ZV EGB19     W                        X8,5
+ XT EGA20     COMA2
+ ZV EGA20     V                        X8,5
+ ZV EGA20     W                        X5,8
+ XT EGB20     COMB2
+ ZV EGB20     V                        X8,5
+ ZV EGB20     W                        X5,8
+
+GROUP USES
+ 
+ DO I         1                        N
+ XE F(I)      EB(I)          
+ OD I
+ DO I         1                        NLINK
+ XE GB(I)     EGB(I)    
+ XE GA(I)     EGA(I)
+ OD I 
+
+OBJECT BOUND
+
+ LO LOADBAL             0.0
+
+ENDATA
+
+***********************
+* SET UP THE ELEMENTS *
+* ROUTINE             *
+***********************
+
+ELEMENTS      LOADBAL
+
+TEMPORARIES
+
+ R  CB  
+ R  CIJ
+ R  A
+ R  B
+
+GLOBALS
+
+ A  A                   80.0
+ A  B                   20.0
+
+INDIVIDUALS
+ 
+** Beta types.
+
+* nodes 3,6,7,9,10,11
+
+ T  BETA2 
+ A  CB                  20.0
+ F                      V/(CB-V)
+ G  V                   CB/((CB-V)**2) 
+ H  V         V         2*CB/((CB-V)**3)
+
+* nodes 1,2,4,5,8
+
+ T  BETA1
+ A  CB                  100.0
+ F                      V/(CB-V)
+ G  V                   CB/((CB-V)**2)
+ H  V         V         2*CB/((CB-V)**3)
+
+** Com types.
+
+* nodes .not. 4<->5<->8
+
+ T  COMA1
+ A  CIJ                 1000.0
+ F                      V/(CIJ-(A*V+B*W))
+ G  V                   (CIJ-B*W)/(CIJ-(A*V+B*W))**2 
+ G  W                   V*B/(CIJ-(A*V+B*W))**2
+ H  V         V         2*A*(CIJ-B*W)/(CIJ-(A*V+B*W))**3
+ H  V         W         B*(CIJ+A*V-B*W)/(CIJ-(A*V+B*W))**3
+ H  W         W         2*B*B*V/(CIJ-(A*V+B*W))**3
+
+ T  COMB1
+ A  CIJ                 1000.0
+ F                      V/(CIJ-(B*V+A*W))
+ G  V                   (CIJ-A*W)/(CIJ-(B*V+A*W))**2
+ G  W                   V*A/(CIJ-(B*V+A*W))**2
+ H  V         V         2*B*(CIJ-A*W)/(CIJ-(B*V+A*W))**3
+ H  V         W         A*(CIJ+B*V-A*W)/(CIJ-(B*V+A*W))**3
+ H  W         W         2*A*A*V/(CIJ-(B*V+A*W))**3
+
+ T  COMA2
+ A  CIJ                 10000.0
+ F                      V/(CIJ-(A*V+B*W))
+ G  V                   (CIJ-B*W)/(CIJ-(A*V+B*W))**2
+ G  W                   V*B/(CIJ-(A*V+B*W))**2
+ H  V         V         2*A*(CIJ-B*W)/(CIJ-(A*V+B*W))**3
+ H  V         W         B*(CIJ+A*V-B*W)/(CIJ-(A*V+B*W))**3
+ H  W         W         2*B*B*V/(CIJ-(A*V+B*W))**3
+
+ T  COMB2
+ A  CIJ                 10000.0
+ F                      V/(CIJ-(B*V+A*W))
+ G  V                   (CIJ-A*W)/(CIJ-(B*V+A*W))**2
+ G  W                   V*A/(CIJ-(B*V+A*W))**2
+ H  V         V         2*B*(CIJ-A*W)/(CIJ-(B*V+A*W))**3
+ H  V         W         A*(CIJ+B*V-A*W)/(CIJ-(B*V+A*W))**3
+ H  W         W         2*A*A*V/(CIJ-(B*V+A*W))**3
+
+ENDATA

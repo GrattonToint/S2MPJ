@@ -1,0 +1,1196 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LEAKNET
+
+*   Problem :
+*   *********
+
+*   The British Gas leaknet problem.
+
+*   The problem is to minimize the gas leakage in a natural gas network
+*   by adjusting the gauge pressures (the P variables), the pipe flows
+*   (the Q variables) and the source flows (the S variables).  There are a
+*   set of nonlinear constraints corresponding to each pipe (the PIP
+*   constraints); These relate the pressures at the start and end of the
+*   pipe to the leakage from the pipe. There are also conservation
+*   equations (the linear N constraints) at each node (flow in = flow
+*   out). Finally, the pressures and source flows are restricted.
+
+*   Source:
+*   British Gas, private communication.
+
+*   SIF input: Nick Gould, 25th June 1990.
+
+*   classification LOR2-RN-156-153
+
+*   network data
+
+ IE NODES               73
+ IE PIPES               80
+
+*   other data
+
+ IE 1                   1
+
+ROWS
+
+ N  OBJ
+ E  N      1
+ E  N      2
+ E  N      3
+ E  N      4
+ E  N      5
+ E  N      6
+ E  N      9
+ E  N     10
+ E  N     12
+ E  N     13
+ E  N     14
+ E  N     15
+ E  N     16
+ E  N     17
+ E  N     18
+ E  N     19
+ E  N     20
+ E  N     21
+ E  N     22
+ E  N     23
+ E  N     26
+ E  N     27
+ E  N    101
+ E  N    102
+ E  N    103
+ E  N    104
+ E  N    105
+ E  N    106
+ E  N    107
+ E  N    108
+ E  N    109
+ E  N    110
+ E  N    111
+ E  N    112
+ E  N    201
+ E  N    202
+ E  N    203
+ E  N    204
+ E  N    205
+ E  N    206
+ E  N    207
+ E  N    208
+ E  N    209
+ E  N    210
+ E  N    211
+ E  N    212
+ E  N    301
+ E  N    302
+ E  N    303
+ E  N    304
+ E  N    305
+ E  N    306
+ E  N    307
+ E  N    308
+ E  N    309
+ E  N    401
+ E  N    402
+ E  N    403
+ E  N    404
+ E  N    405
+ E  N    406
+ E  N    407
+ E  N    501
+ E  N    502
+ E  N    503
+ E  N    504
+ E  N    505
+ E  N    506
+ E  N    507
+ E  N    508
+ E  N    509
+ E  N    510
+ E  N    511
+
+ E  PIP    1
+ E  PIP    2
+ E  PIP    3
+ E  PIP    4
+ E  PIP    5
+ E  PIP    6
+ E  PIP    7
+ E  PIP    8
+ E  PIP    9
+ E  PIP   10
+ E  PIP   11
+ E  PIP   12
+ E  PIP   13
+ E  PIP   14
+ E  PIP   15
+ E  PIP   16
+ E  PIP   17
+ E  PIP   18
+ E  PIP   19
+ E  PIP   20
+ E  PIP   21
+ E  PIP   22
+ E  PIP   23
+ E  PIP   24
+ E  PIP   25
+ E  PIP   26
+ E  PIP   27
+ E  PIP   28
+ E  PIP   29
+ E  PIP   30
+ E  PIP   31
+ E  PIP   32
+ E  PIP   33
+ E  PIP   34
+ E  PIP   35
+ E  PIP   36
+ E  PIP   37
+ E  PIP   38
+ E  PIP   39
+ E  PIP   40
+ E  PIP   41
+ E  PIP   42
+ E  PIP   43
+ E  PIP   44
+ E  PIP   45
+ E  PIP   46
+ E  PIP   47
+ E  PIP   48
+ E  PIP   49
+ E  PIP   50
+ E  PIP   51
+ E  PIP   52
+ E  PIP   53
+ E  PIP   54
+ E  PIP   55
+ E  PIP   56
+ E  PIP   57
+ E  PIP   58
+ E  PIP   59
+ E  PIP   60
+ E  PIP   61
+ E  PIP   62
+ E  PIP   63
+ E  PIP   64
+ E  PIP   65
+ E  PIP   66
+ E  PIP   67
+ E  PIP   68
+ E  PIP   69
+ E  PIP   70
+ E  PIP   71
+ E  PIP   72
+ E  PIP   73
+ E  PIP   74
+ E  PIP   75
+ E  PIP   76
+ E  PIP   77
+ E  PIP   78
+ E  PIP   79
+ E  PIP   80
+
+COLUMNS
+
+    P1        OBJ       1.12000D-03
+    P2        OBJ       1.12000D-03
+    P2        OBJ       1.12000D-03
+    P3        OBJ       1.12000D-03
+    P3        OBJ       8.00000D-04
+    P4        OBJ       8.00000D-04
+    P4        OBJ       4.56000D-03
+    P5        OBJ       4.56000D-03
+    P5        OBJ       5.60000D-04
+    P6        OBJ       5.60000D-04
+    P5        OBJ       3.68000D-03
+    P26       OBJ       3.68000D-03
+    P6        OBJ       3.60000D-03
+    P9        OBJ       3.60000D-03
+    P6        OBJ       7.84000D-03
+    P304      OBJ       7.84000D-03
+    P9        OBJ       1.60000D-03
+    P10       OBJ       1.60000D-03
+    P10       OBJ       6.08000D-03
+    P12       OBJ       6.08000D-03
+    P10       OBJ       4.00000D-03
+    P27       OBJ       4.00000D-03
+    P12       OBJ       1.40000D-04
+    P13       OBJ       1.40000D-04
+    P13       OBJ       1.86000D-03
+    P14       OBJ       1.86000D-03
+    P13       OBJ       1.32000D-03
+    P19       OBJ       1.32000D-03
+    P14       OBJ       1.34000D-03
+    P15       OBJ       1.34000D-03
+    P16       OBJ       9.40000D-04
+    P17       OBJ       9.40000D-04
+    P16       OBJ       1.60000D-04
+    P18       OBJ       1.60000D-04
+    P16       OBJ       4.80000D-03
+    P26       OBJ       4.80000D-03
+    P18       OBJ       1.12000D-03
+    P19       OBJ       1.12000D-03
+    P19       OBJ       5.60000D-04
+    P20       OBJ       5.60000D-04
+    P20       OBJ       2.88000D-03
+    P21       OBJ       2.88000D-03
+    P22       OBJ       1.60000D-04
+    P404      OBJ       1.60000D-04
+    P23       OBJ       1.20000D-03
+    P404      OBJ       1.20000D-03
+    P27       OBJ       5.28000D-03
+    P404      OBJ       5.28000D-03
+    P101      OBJ       1.76000D-03
+    P102      OBJ       1.76000D-03
+    P102      OBJ       1.28000D-03
+    P103      OBJ       1.28000D-03
+    P103      OBJ       1.40000D-03
+    P104      OBJ       1.40000D-03
+    P103      OBJ       1.05000D-03
+    P111      OBJ       1.05000D-03
+    P104      OBJ       2.48000D-03
+    P105      OBJ       2.48000D-03
+    P104      OBJ       2.45000D-03
+    P110      OBJ       2.45000D-03
+    P105      OBJ       1.40000D-03
+    P106      OBJ       1.40000D-03
+    P105      OBJ       1.10000D-03
+    P112      OBJ       1.10000D-03
+    P106      OBJ       9.60000D-04
+    P107      OBJ       9.60000D-04
+    P106      OBJ       2.02000D-03
+    P109      OBJ       2.02000D-03
+    P107      OBJ       1.48000D-03
+    P201      OBJ       1.48000D-03
+    P108      OBJ       4.90000D-04
+    P109      OBJ       4.90000D-04
+    P108      OBJ       1.20000D-03
+    P210      OBJ       1.20000D-03
+    P112      OBJ       4.90000D-04
+    P509      OBJ       4.90000D-04
+    P201      OBJ       1.40000D-03
+    P202      OBJ       1.40000D-03
+    P201      OBJ       1.96000D-03
+    P510      OBJ       1.96000D-03
+    P202      OBJ       3.16000D-03
+    P203      OBJ       3.16000D-03
+    P202      OBJ       4.48000D-03
+    P211      OBJ       4.48000D-03
+    P203      OBJ       1.72000D-03
+    P204      OBJ       1.72000D-03
+    P203      OBJ       2.96000D-03
+    P502      OBJ       2.96000D-03
+    P204      OBJ       6.00000D-04
+    P205      OBJ       6.00000D-04
+    P204      OBJ       8.50000D-04
+    P208      OBJ       8.50000D-04
+    P205      OBJ       5.20000D-04
+    P206      OBJ       5.20000D-04
+    P205      OBJ       6.70000D-04
+    P207      OBJ       6.70000D-04
+    P206      OBJ       2.88000D-03
+    P301      OBJ       2.88000D-03
+    P208      OBJ       7.00000D-04
+    P209      OBJ       7.00000D-04
+    P208      OBJ       5.48000D-03
+    P210      OBJ       5.48000D-03
+    P210      OBJ       1.88000D-03
+    P211      OBJ       1.88000D-03
+    P211      OBJ       6.40000D-04
+    P212      OBJ       6.40000D-04
+    P301      OBJ       4.68000D-03
+    P302      OBJ       4.68000D-03
+    P301      OBJ       3.80000D-03
+    P304      OBJ       3.80000D-03
+    P302      OBJ       2.40000D-03
+    P303      OBJ       2.40000D-03
+    P302      OBJ       5.32000D-03
+    P305      OBJ       5.32000D-03
+    P303      OBJ       1.08000D-03
+    P401      OBJ       1.08000D-03
+    P305      OBJ       1.68000D-03
+    P306      OBJ       1.68000D-03
+    P305      OBJ       7.90000D-04
+    P309      OBJ       7.90000D-04
+    P306      OBJ       4.70000D-04
+    P307      OBJ       4.70000D-04
+    P306      OBJ       5.20000D-04
+    P308      OBJ       5.20000D-04
+    P307      OBJ       3.50000D-04
+    P503      OBJ       3.50000D-04
+    P401      OBJ       7.20000D-04
+    P402      OBJ       7.20000D-04
+    P401      OBJ       5.44000D-03
+    P403      OBJ       5.44000D-03
+    P403      OBJ       3.40000D-03
+    P404      OBJ       3.40000D-03
+    P403      OBJ       5.80000D-03
+    P405      OBJ       5.80000D-03
+    P405      OBJ       7.90000D-04
+    P406      OBJ       7.90000D-04
+    P405      OBJ       3.88000D-03
+    P407      OBJ       3.88000D-03
+    P407      OBJ       6.40000D-04
+    P501      OBJ       6.40000D-04
+    P501      OBJ       1.10000D-03
+    P502      OBJ       1.10000D-03
+    P501      OBJ       4.20000D-04
+    P505      OBJ       4.20000D-04
+    P502      OBJ       3.70000D-04
+    P503      OBJ       3.70000D-04
+    P503      OBJ       3.50000D-04
+    P504      OBJ       3.50000D-04
+    P505      OBJ       6.20000D-04
+    P506      OBJ       6.20000D-04
+    P506      OBJ       7.20000D-04
+    P507      OBJ       7.20000D-04
+    P506      OBJ       9.20000D-04
+    P508      OBJ       9.20000D-04
+    P508      OBJ       9.00000D-04
+    P509      OBJ       9.00000D-04
+    P508      OBJ       3.88000D-03
+    P510      OBJ       3.88000D-03
+    P510      OBJ       9.90000D-04
+    P511      OBJ       9.90000D-04
+    Q1        N      1  -1.0           N      2  1.0
+    Q2        N      2  -1.0           N      3  1.0
+    Q3        N      3  -1.0           N      4  1.0
+    Q4        N      4  -1.0           N      5  1.0
+    Q5        N      5  -1.0           N      6  1.0
+    Q6        N      5  -1.0           N     26  1.0
+    Q7        N      6  -1.0           N      9  1.0
+    Q8        N      6  -1.0           N    304  1.0
+    Q9        N      9  -1.0           N     10  1.0
+    Q10       N     10  -1.0           N     12  1.0
+    Q11       N     10  -1.0           N     27  1.0
+    Q12       N     12  -1.0           N     13  1.0
+    Q13       N     13  -1.0           N     14  1.0
+    Q14       N     13  -1.0           N     19  1.0
+    Q15       N     14  -1.0           N     15  1.0
+    Q16       N     16  -1.0           N     17  1.0
+    Q17       N     16  -1.0           N     18  1.0
+    Q18       N     16  -1.0           N     26  1.0
+    Q19       N     18  -1.0           N     19  1.0
+    Q20       N     19  -1.0           N     20  1.0
+    Q21       N     20  -1.0           N     21  1.0
+    Q22       N     22  -1.0           N    404  1.0
+    Q23       N     23  -1.0           N    404  1.0
+    Q24       N     27  -1.0           N    404  1.0
+    Q25       N    101  -1.0           N    102  1.0
+    Q26       N    102  -1.0           N    103  1.0
+    Q27       N    103  -1.0           N    104  1.0
+    Q28       N    103  -1.0           N    111  1.0
+    Q29       N    104  -1.0           N    105  1.0
+    Q30       N    104  -1.0           N    110  1.0
+    Q31       N    105  -1.0           N    106  1.0
+    Q32       N    105  -1.0           N    112  1.0
+    Q33       N    106  -1.0           N    107  1.0
+    Q34       N    106  -1.0           N    109  1.0
+    Q35       N    107  -1.0           N    201  1.0
+    Q36       N    108  -1.0           N    109  1.0
+    Q37       N    108  -1.0           N    210  1.0
+    Q38       N    112  -1.0           N    509  1.0
+    Q39       N    201  -1.0           N    202  1.0
+    Q40       N    201  -1.0           N    510  1.0
+    Q41       N    202  -1.0           N    203  1.0
+    Q42       N    202  -1.0           N    211  1.0
+    Q43       N    203  -1.0           N    204  1.0
+    Q44       N    203  -1.0           N    502  1.0
+    Q45       N    204  -1.0           N    205  1.0
+    Q46       N    204  -1.0           N    208  1.0
+    Q47       N    205  -1.0           N    206  1.0
+    Q48       N    205  -1.0           N    207  1.0
+    Q49       N    206  -1.0           N    301  1.0
+    Q50       N    208  -1.0           N    209  1.0
+    Q51       N    208  -1.0           N    210  1.0
+    Q52       N    210  -1.0           N    211  1.0
+    Q53       N    211  -1.0           N    212  1.0
+    Q54       N    301  -1.0           N    302  1.0
+    Q55       N    301  -1.0           N    304  1.0
+    Q56       N    302  -1.0           N    303  1.0
+    Q57       N    302  -1.0           N    305  1.0
+    Q58       N    303  -1.0           N    401  1.0
+    Q59       N    305  -1.0           N    306  1.0
+    Q60       N    305  -1.0           N    309  1.0
+    Q61       N    306  -1.0           N    307  1.0
+    Q62       N    306  -1.0           N    308  1.0
+    Q63       N    307  -1.0           N    503  1.0
+    Q64       N    401  -1.0           N    402  1.0
+    Q65       N    401  -1.0           N    403  1.0
+    Q66       N    403  -1.0           N    404  1.0
+    Q67       N    403  -1.0           N    405  1.0
+    Q68       N    405  -1.0           N    406  1.0
+    Q69       N    405  -1.0           N    407  1.0
+    Q70       N    407  -1.0           N    501  1.0
+    Q71       N    501  -1.0           N    502  1.0
+    Q72       N    501  -1.0           N    505  1.0
+    Q73       N    502  -1.0           N    503  1.0
+    Q74       N    503  -1.0           N    504  1.0
+    Q75       N    505  -1.0           N    506  1.0
+    Q76       N    506  -1.0           N    507  1.0
+    Q77       N    506  -1.0           N    508  1.0
+    Q78       N    508  -1.0           N    509  1.0
+    Q79       N    508  -1.0           N    510  1.0
+    Q80       N    510  -1.0           N    511  1.0
+    S1        N      1  1.0
+    S23       N     23  1.0
+    S101      N    101  1.0
+
+RHS
+
+    LEAKNET   N      2    7.3070
+    LEAKNET   N      3    2.4360
+    LEAKNET   N      4    3.6530
+    LEAKNET   N      5    4.8710
+    LEAKNET   N      6    7.3070
+    LEAKNET   N      9    12.178
+    LEAKNET   N     10    14.613
+    LEAKNET   N     12    6.0890
+    LEAKNET   N     13    9.7420
+    LEAKNET   N     14    13.395
+    LEAKNET   N     15    28.008
+    LEAKNET   N     16    4.8710
+    LEAKNET   N     17    19.484
+    LEAKNET   N     18    9.7420
+    LEAKNET   N     19    6.0890
+    LEAKNET   N     20    6.0890
+    LEAKNET   N     21    26.971
+    LEAKNET   N     22    14.613
+    LEAKNET   N     26    4.8710
+    LEAKNET   N     27    8.5240
+    LEAKNET   N    102    7.0000
+    LEAKNET   N    103    35.000
+    LEAKNET   N    104    62.000
+    LEAKNET   N    105    41.000
+    LEAKNET   N    106    44.000
+    LEAKNET   N    107    12.000
+    LEAKNET   N    108    28.000
+    LEAKNET   N    109    53.000
+    LEAKNET   N    110    56.000
+    LEAKNET   N    111    21.000
+    LEAKNET   N    112    28.000
+    LEAKNET   N    201    21.000
+    LEAKNET   N    202    41.000
+    LEAKNET   N    203    39.000
+    LEAKNET   N    204    42.000
+    LEAKNET   N    205    30.000
+    LEAKNET   N    206    26.000
+    LEAKNET   N    207    16.000
+    LEAKNET   N    208    44.000
+    LEAKNET   N    209    21.000
+    LEAKNET   N    210    55.000
+    LEAKNET   N    211    35.000
+    LEAKNET   N    212    19.000
+    LEAKNET   N    301    60.000
+    LEAKNET   N    302    78.000
+    LEAKNET   N    303    25.000
+    LEAKNET   N    304    15.831
+    LEAKNET   N    305    60.000
+    LEAKNET   N    306    35.000
+    LEAKNET   N    307    19.000
+    LEAKNET   N    308    21.000
+    LEAKNET   N    309    21.000
+    LEAKNET   N    401    53.000
+    LEAKNET   N    402    32.000
+    LEAKNET   N    403    94.000
+    LEAKNET   N    404    7.3070
+    LEAKNET   N    405    88.000
+    LEAKNET   N    406    21.000
+    LEAKNET   N    407    37.000
+    LEAKNET   N    501    35.000
+    LEAKNET   N    502    32.000
+    LEAKNET   N    503    14.000
+    LEAKNET   N    504    7.0000
+    LEAKNET   N    505    18.000
+    LEAKNET   N    506    30.000
+    LEAKNET   N    507    14.000
+    LEAKNET   N    508    46.000
+    LEAKNET   N    509    30.000
+    LEAKNET   N    510    34.000
+    LEAKNET   N    511    23.000
+
+BOUNDS
+
+ LO LEAKNET   P1        21.999956
+ LO LEAKNET   P2        21.999956
+ LO LEAKNET   P3        21.999956
+ LO LEAKNET   P4        21.999956
+ LO LEAKNET   P5        21.999956
+ LO LEAKNET   P6        21.999956
+ LO LEAKNET   P9        21.999956
+ LO LEAKNET   P10       21.999956
+ LO LEAKNET   P12       21.999956
+ LO LEAKNET   P13       21.999956
+ LO LEAKNET   P14       21.999956
+ LO LEAKNET   P15       21.999956
+ LO LEAKNET   P16       21.999956
+ LO LEAKNET   P17       21.999956
+ LO LEAKNET   P18       21.999956
+ LO LEAKNET   P19       21.999956
+ LO LEAKNET   P20       21.999956
+ LO LEAKNET   P21       21.999956
+ LO LEAKNET   P22       21.999956
+ LO LEAKNET   P23       21.999956
+ LO LEAKNET   P26       21.999956
+ LO LEAKNET   P27       21.999956
+ LO LEAKNET   P101      21.999956
+ LO LEAKNET   P102      21.999956
+ LO LEAKNET   P103      21.999956
+ LO LEAKNET   P104      21.999956
+ LO LEAKNET   P105      21.999956
+ LO LEAKNET   P106      21.999956
+ LO LEAKNET   P107      21.999956
+ LO LEAKNET   P108      21.999956
+ LO LEAKNET   P109      21.999956
+ LO LEAKNET   P110      21.999956
+ LO LEAKNET   P111      21.999956
+ LO LEAKNET   P112      21.999956
+ LO LEAKNET   P201      21.999956
+ LO LEAKNET   P202      21.999956
+ LO LEAKNET   P203      21.999956
+ LO LEAKNET   P204      21.999956
+ LO LEAKNET   P205      21.999956
+ LO LEAKNET   P206      21.999956
+ LO LEAKNET   P207      21.999956
+ LO LEAKNET   P208      21.999956
+ LO LEAKNET   P209      21.999956
+ LO LEAKNET   P210      21.999956
+ LO LEAKNET   P211      21.999956
+ LO LEAKNET   P212      21.999956
+ LO LEAKNET   P301      21.999956
+ LO LEAKNET   P302      21.999956
+ LO LEAKNET   P303      21.999956
+ LO LEAKNET   P304      21.999956
+ LO LEAKNET   P305      21.999956
+ LO LEAKNET   P306      21.999956
+ LO LEAKNET   P307      21.999956
+ LO LEAKNET   P308      21.999956
+ LO LEAKNET   P309      21.999956
+ LO LEAKNET   P401      21.999956
+ LO LEAKNET   P402      21.999956
+ LO LEAKNET   P403      21.999956
+ LO LEAKNET   P404      21.999956
+ LO LEAKNET   P405      21.999956
+ LO LEAKNET   P406      21.999956
+ LO LEAKNET   P407      21.999956
+ LO LEAKNET   P501      21.999956
+ LO LEAKNET   P502      21.999956
+ LO LEAKNET   P503      21.999956
+ LO LEAKNET   P504      21.999956
+ LO LEAKNET   P505      21.999956
+ LO LEAKNET   P506      21.999956
+ LO LEAKNET   P507      21.999956
+ LO LEAKNET   P508      21.999956
+ LO LEAKNET   P509      21.999956
+ LO LEAKNET   P510      21.999956
+ LO LEAKNET   P511      21.999956
+ UP LEAKNET   P1        50.000000
+ UP LEAKNET   P23       50.000000
+ UP LEAKNET   P101      50.000000
+ LO LEAKNET   S1        0.00000E+00
+ UP LEAKNET   S1        0.10000E+08
+ LO LEAKNET   S23       0.00000E+00
+ UP LEAKNET   S23       0.10000E+08
+ LO LEAKNET   S101      0.00000E+00
+ UP LEAKNET   S101      0.10000E+08
+
+ DO I         1                        PIPES
+ XR LEAKNET   Q(I)
+ ND
+
+START POINT
+
+    LEAKNET   P1          49.9999542
+    LEAKNET   P2          49.9235382
+    LEAKNET   P3          49.8521347
+    LEAKNET   P4          49.8023033
+    LEAKNET   P5          49.5280037
+    LEAKNET   P6          49.4430084
+    LEAKNET   P9          49.4192848
+    LEAKNET   P10         48.9165802
+    LEAKNET   P12         48.4542847
+    LEAKNET   P13         48.0059395
+    LEAKNET   P14         45.8674431
+    LEAKNET   P15         45.0843582
+    LEAKNET   P16         49.2248535
+    LEAKNET   P17         47.6257820
+    LEAKNET   P18         48.7873573
+    LEAKNET   P19         47.4473228
+    LEAKNET   P20         47.0119705
+    LEAKNET   P21         45.4362640
+    LEAKNET   P22         49.6542473
+    LEAKNET   P23         49.9999542
+    LEAKNET   P26         49.3843575
+    LEAKNET   P27         49.2706299
+    LEAKNET   P101        49.9999542
+    LEAKNET   P102        49.7797737
+    LEAKNET   P103        49.6217003
+    LEAKNET   P104        49.3556252
+    LEAKNET   P105        48.9891777
+    LEAKNET   P106        48.8152504
+    LEAKNET   P107        48.7247696
+    LEAKNET   P108        44.6206322
+    LEAKNET   P109        44.6906090
+    LEAKNET   P110        44.5836792
+    LEAKNET   P111        47.5885887
+    LEAKNET   P112        44.7669029
+    LEAKNET   P201        48.5901833
+    LEAKNET   P202        48.2493629
+    LEAKNET   P203        47.5757141
+    LEAKNET   P204        46.9474792
+    LEAKNET   P205        47.2141495
+    LEAKNET   P206        48.1905937
+    LEAKNET   P207        46.4013824
+    LEAKNET   P208        47.0579872
+    LEAKNET   P209        45.6997147
+    LEAKNET   P210        47.4423180
+    LEAKNET   P211        47.8950729
+    LEAKNET   P212        46.8515167
+    LEAKNET   P301        48.4113693
+    LEAKNET   P302        48.6494293
+    LEAKNET   P303        49.0014572
+    LEAKNET   P304        48.6789932
+    LEAKNET   P305        47.3707924
+    LEAKNET   P306        47.2600479
+    LEAKNET   P307        46.5539703
+    LEAKNET   P308        46.2514153
+    LEAKNET   P309        45.8382378
+    LEAKNET   P401        49.1842041
+    LEAKNET   P402        46.2833633
+    LEAKNET   P403        49.4383583
+    LEAKNET   P404        49.8198280
+    LEAKNET   P405        47.8698006
+    LEAKNET   P406        46.3379631
+    LEAKNET   P407        47.7081528
+    LEAKNET   P501        46.5787659
+    LEAKNET   P502        47.3301430
+    LEAKNET   P503        46.5575447
+    LEAKNET   P504        46.4538345
+    LEAKNET   P505        46.0914383
+    LEAKNET   P506        46.1212387
+    LEAKNET   P507        45.4262505
+    LEAKNET   P508        47.4120369
+    LEAKNET   P509        44.7292328
+    LEAKNET   P510        47.9998589
+    LEAKNET   P511        45.7520485
+    LEAKNET   Q1        0.192685E+03
+    LEAKNET   Q2        0.185378E+03
+    LEAKNET   Q3        0.182942E+03
+    LEAKNET   Q4        0.179289E+03
+    LEAKNET   Q5        0.119560E+03
+    LEAKNET   Q6        0.548582E+02
+    LEAKNET   Q7        0.194484E+02
+    LEAKNET   Q8        0.928046E+02
+    LEAKNET   Q9        0.727037E+01
+    LEAKNET   Q10       0.804928E+02
+    LEAKNET   Q11       -.878354E+02
+    LEAKNET   Q12       0.744038E+02
+    LEAKNET   Q13       0.414030E+02
+    LEAKNET   Q14       0.232588E+02
+    LEAKNET   Q15       0.280080E+02
+    LEAKNET   Q16       0.194840E+02
+    LEAKNET   Q17       0.256322E+02
+    LEAKNET   Q18       -.499872E+02
+    LEAKNET   Q19       0.158902E+02
+    LEAKNET   Q20       0.330600E+02
+    LEAKNET   Q21       0.269710E+02
+    LEAKNET   Q22       -.146130E+02
+    LEAKNET   Q23       0.785198E+03
+    LEAKNET   Q24       -.963594E+02
+    LEAKNET   Q25       0.959108E+03
+    LEAKNET   Q26       0.952108E+03
+    LEAKNET   Q27       0.896108E+03
+    LEAKNET   Q28       0.210000E+02
+    LEAKNET   Q29       0.778108E+03
+    LEAKNET   Q30       0.560000E+02
+    LEAKNET   Q31       0.705999E+03
+    LEAKNET   Q32       0.311093E+02
+    LEAKNET   Q33       0.604474E+03
+    LEAKNET   Q34       0.575246E+02
+    LEAKNET   Q35       0.592474E+03
+    LEAKNET   Q36       -.452460E+01
+    LEAKNET   Q37       -.234754E+02
+    LEAKNET   Q38       0.310933E+01
+    LEAKNET   Q39       0.395173E+03
+    LEAKNET   Q40       0.176301E+03
+    LEAKNET   Q41       0.144907E+03
+    LEAKNET   Q42       0.209265E+03
+    LEAKNET   Q43       0.213451E+02
+    LEAKNET   Q44       0.845622E+02
+    LEAKNET   Q45       -.886488E+01
+    LEAKNET   Q46       -.117900E+02
+    LEAKNET   Q47       -.548649E+02
+    LEAKNET   Q48       0.160000E+02
+    LEAKNET   Q49       -.808649E+02
+    LEAKNET   Q50       0.210000E+02
+    LEAKNET   Q51       -.767900E+02
+    LEAKNET   Q52       -.155265E+03
+    LEAKNET   Q53       0.190000E+02
+    LEAKNET   Q54       -.638913E+02
+    LEAKNET   Q55       -.769736E+02
+    LEAKNET   Q56       -.297006E+03
+    LEAKNET   Q57       0.155115E+03
+    LEAKNET   Q58       -.322006E+03
+    LEAKNET   Q59       0.741150E+02
+    LEAKNET   Q60       0.210000E+02
+    LEAKNET   Q61       0.181150E+02
+    LEAKNET   Q62       0.210000E+02
+    LEAKNET   Q63       -.884952E+00
+    LEAKNET   Q64       0.320000E+02
+    LEAKNET   Q65       -.407006E+03
+    LEAKNET   Q66       -.666918E+03
+    LEAKNET   Q67       0.165912E+03
+    LEAKNET   Q68       0.210000E+02
+    LEAKNET   Q69       0.569121E+02
+    LEAKNET   Q70       0.199121E+02
+    LEAKNET   Q71       -.306772E+02
+    LEAKNET   Q72       0.155893E+02
+    LEAKNET   Q73       0.218850E+02
+    LEAKNET   Q74       0.700000E+01
+    LEAKNET   Q75       -.241070E+01
+    LEAKNET   Q76       0.140000E+02
+    LEAKNET   Q77       -.464107E+02
+    LEAKNET   Q78       0.268907E+02
+    LEAKNET   Q79       -.119301E+03
+    LEAKNET   Q80       0.230000E+02
+    LEAKNET   S1        0.192685E+03
+    LEAKNET   S23       0.785198E+03
+    LEAKNET   S101      0.959108E+03
+
+ELEMENT TYPE
+
+ EV SQUARE    P
+ EV PANHAN    Q
+ EP PANHAN    A1                       A2
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQUARE
+*  node elements
+
+ V  PSQR1     P                        P1
+ V  PSQR2     P                        P2
+ V  PSQR3     P                        P3
+ V  PSQR4     P                        P4
+ V  PSQR5     P                        P5
+ V  PSQR6     P                        P6
+ V  PSQR9     P                        P9
+ V  PSQR10    P                        P10
+ V  PSQR12    P                        P12
+ V  PSQR13    P                        P13
+ V  PSQR14    P                        P14
+ V  PSQR15    P                        P15
+ V  PSQR16    P                        P16
+ V  PSQR17    P                        P17
+ V  PSQR18    P                        P18
+ V  PSQR19    P                        P19
+ V  PSQR20    P                        P20
+ V  PSQR21    P                        P21
+ V  PSQR22    P                        P22
+ V  PSQR23    P                        P23
+ V  PSQR26    P                        P26
+ V  PSQR27    P                        P27
+ V  PSQR101   P                        P101
+ V  PSQR102   P                        P102
+ V  PSQR103   P                        P103
+ V  PSQR104   P                        P104
+ V  PSQR105   P                        P105
+ V  PSQR106   P                        P106
+ V  PSQR107   P                        P107
+ V  PSQR108   P                        P108
+ V  PSQR109   P                        P109
+ V  PSQR110   P                        P110
+ V  PSQR111   P                        P111
+ V  PSQR112   P                        P112
+ V  PSQR201   P                        P201
+ V  PSQR202   P                        P202
+ V  PSQR203   P                        P203
+ V  PSQR204   P                        P204
+ V  PSQR205   P                        P205
+ V  PSQR206   P                        P206
+ V  PSQR207   P                        P207
+ V  PSQR208   P                        P208
+ V  PSQR209   P                        P209
+ V  PSQR210   P                        P210
+ V  PSQR211   P                        P211
+ V  PSQR212   P                        P212
+ V  PSQR301   P                        P301
+ V  PSQR302   P                        P302
+ V  PSQR303   P                        P303
+ V  PSQR304   P                        P304
+ V  PSQR305   P                        P305
+ V  PSQR306   P                        P306
+ V  PSQR307   P                        P307
+ V  PSQR308   P                        P308
+ V  PSQR309   P                        P309
+ V  PSQR401   P                        P401
+ V  PSQR402   P                        P402
+ V  PSQR403   P                        P403
+ V  PSQR404   P                        P404
+ V  PSQR405   P                        P405
+ V  PSQR406   P                        P406
+ V  PSQR407   P                        P407
+ V  PSQR501   P                        P501
+ V  PSQR502   P                        P502
+ V  PSQR503   P                        P503
+ V  PSQR504   P                        P504
+ V  PSQR505   P                        P505
+ V  PSQR506   P                        P506
+ V  PSQR507   P                        P507
+ V  PSQR508   P                        P508
+ V  PSQR509   P                        P509
+ V  PSQR510   P                        P510
+ V  PSQR511   P                        P511
+
+*  pipe elements
+
+ DO I         1                        PIPES
+ XT PANH(I)   PANHAN
+ ZV PANH(I)   Q                        Q(I)
+ ND
+
+ P  PANH1     A1        -7.07259D-07   A2         1.37621D+02
+ P  PANH2     A1        -7.07259D-07   A2         1.37621D+02
+ P  PANH3     A1        -5.05185D-07   A2         1.37621D+02
+ P  PANH4     A1        -2.87955D-06   A2         1.37621D+02
+ P  PANH5     A1        -1.97677D-06   A2         1.94163D+02
+ P  PANH6     A1        -1.29902D-05   A2         1.94163D+02
+ P  PANH7     A1        -1.27078D-05   A2         1.94163D+02
+ P  PANH8     A1        -2.76748D-05   A2         1.94163D+02
+ P  PANH9     A1        -1.89567D-03   A2         4.92083D+02
+ P  PANH10    A1        -2.14621D-05   A2         1.94163D+02
+ P  PANH11    A1        -1.41198D-05   A2         1.94163D+02
+ P  PANH12    A1        -2.75247D-05   A2         3.43580D+02
+ P  PANH13    A1        -3.65685D-04   A2         3.43580D+02
+ P  PANH14    A1        -2.59518D-04   A2         3.43580D+02
+ P  PANH15    A1        -2.63450D-04   A2         3.43580D+02
+ P  PANH16    A1        -1.11371D-03   A2         4.92083D+02
+ P  PANH17    A1        -1.89567D-04   A2         4.92083D+02
+ P  PANH18    A1        -1.69438D-05   A2         1.94163D+02
+ P  PANH19    A1        -1.32697D-03   A2         4.92083D+02
+ P  PANH20    A1        -1.10099D-04   A2         3.43580D+02
+ P  PANH21    A1        -5.66222D-04   A2         3.43580D+02
+ P  PANH22    A1        -1.89567D-04   A2         4.92083D+02
+ P  PANH23    A1        -1.27360D-07   A2         9.63346D+01
+ P  PANH24    A1        -1.86381D-05   A2         1.94163D+02
+ P  PANH25    A1        -1.06357D-07   A2         8.60722D+01
+ P  PANH26    A1        -7.73503D-08   A2         8.60722D+01
+ P  PANH27    A1        -1.48586D-07   A2         9.63346D+01
+ P  PANH28    A1        -1.24403D-03   A2         4.92083D+02
+ P  PANH29    A1        -2.63210D-07   A2         9.63346D+01
+ P  PANH30    A1        -4.81682D-04   A2         3.43580D+02
+ P  PANH31    A1        -1.48586D-07   A2         9.63346D+01
+ P  PANH32    A1        -1.30327D-03   A2         4.92083D+02
+ P  PANH33    A1        -1.01888D-07   A2         9.63346D+01
+ P  PANH34    A1        -3.97142D-04   A2         3.43580D+02
+ P  PANH35    A1        -1.57077D-07   A2         9.63346D+01
+ P  PANH36    A1        -5.80549D-04   A2         4.92083D+02
+ P  PANH37    A1        -1.42175D-03   A2         4.92083D+02
+ P  PANH38    A1        -5.80549D-04   A2         4.92083D+02
+ P  PANH39    A1        -8.84073D-07   A2         1.37621D+02
+ P  PANH40    A1        -6.91870D-06   A2         1.94163D+02
+ P  PANH41    A1        -1.11546D-05   A2         1.94163D+02
+ P  PANH42    A1        -2.82903D-06   A2         1.37621D+02
+ P  PANH43    A1        -3.38160D-04   A2         3.43580D+02
+ P  PANH44    A1        -1.04487D-05   A2         1.94163D+02
+ P  PANH45    A1        -7.10876D-04   A2         4.92083D+02
+ P  PANH46    A1        -1.67114D-04   A2         3.43580D+02
+ P  PANH47    A1        -1.02234D-04   A2         3.43580D+02
+ P  PANH48    A1        -7.93812D-04   A2         4.92083D+02
+ P  PANH49    A1        -1.01663D-05   A2         1.94163D+02
+ P  PANH50    A1        -8.29355D-04   A2         4.92083D+02
+ P  PANH51    A1        -1.93441D-05   A2         1.94163D+02
+ P  PANH52    A1        -6.63631D-06   A2         1.94163D+02
+ P  PANH53    A1        -7.58268D-04   A2         4.92083D+02
+ P  PANH54    A1        -1.65202D-05   A2         1.94163D+02
+ P  PANH55    A1        -1.34138D-05   A2         1.94163D+02
+ P  PANH56    A1        -1.51555D-06   A2         1.37621D+02
+ P  PANH57    A1        -1.87793D-05   A2         1.94163D+02
+ P  PANH58    A1        -6.81999D-07   A2         1.37621D+02
+ P  PANH59    A1        -5.93032D-06   A2         1.94163D+02
+ P  PANH60    A1        -9.35987D-04   A2         4.92083D+02
+ P  PANH61    A1        -5.56853D-04   A2         4.92083D+02
+ P  PANH62    A1        -6.16093D-04   A2         4.92083D+02
+ P  PANH63    A1        -4.14678D-04   A2         4.92083D+02
+ P  PANH64    A1        -8.53051D-04   A2         4.92083D+02
+ P  PANH65    A1        -5.77363D-07   A2         9.63346D+01
+ P  PANH66    A1        -3.60852D-07   A2         9.63346D+01
+ P  PANH67    A1        -2.04737D-05   A2         1.94163D+02
+ P  PANH68    A1        -9.35987D-04   A2         4.92083D+02
+ P  PANH69    A1        -1.36962D-05   A2         1.94163D+02
+ P  PANH70    A1        -7.58268D-04   A2         4.92083D+02
+ P  PANH71    A1        -2.16265D-04   A2         3.43580D+02
+ P  PANH72    A1        -4.97613D-04   A2         4.92083D+02
+ P  PANH73    A1        -4.38374D-04   A2         4.92083D+02
+ P  PANH74    A1        -4.14678D-04   A2         4.92083D+02
+ P  PANH75    A1        -7.34572D-04   A2         4.92083D+02
+ P  PANH76    A1        -8.53051D-04   A2         4.92083D+02
+ P  PANH77    A1        -1.80876D-04   A2         3.43580D+02
+ P  PANH78    A1        -1.06631D-03   A2         4.92083D+02
+ P  PANH79    A1        -1.36962D-05   A2         1.94163D+02
+ P  PANH80    A1        -1.17295D-03   A2         4.92083D+02
+
+GROUP USES
+
+ E  PIP    1  PSQR1     1.0            PSQR2     -1.0
+ E  PIP    1  PANH1
+ E  PIP    2  PSQR2     1.0            PSQR3     -1.0
+ E  PIP    2  PANH2
+ E  PIP    3  PSQR3     1.0            PSQR4     -1.0
+ E  PIP    3  PANH3
+ E  PIP    4  PSQR4     1.0            PSQR5     -1.0
+ E  PIP    4  PANH4
+ E  PIP    5  PSQR5     1.0            PSQR6     -1.0
+ E  PIP    5  PANH5
+ E  PIP    6  PSQR5     1.0            PSQR26    -1.0
+ E  PIP    6  PANH6
+ E  PIP    7  PSQR6     1.0            PSQR9     -1.0
+ E  PIP    7  PANH7
+ E  PIP    8  PSQR6     1.0            PSQR304   -1.0
+ E  PIP    8  PANH8
+ E  PIP    9  PSQR9     1.0            PSQR10    -1.0
+ E  PIP    9  PANH9
+ E  PIP   10  PSQR10    1.0            PSQR12    -1.0
+ E  PIP   10  PANH10
+ E  PIP   11  PSQR10    1.0            PSQR27    -1.0
+ E  PIP   11  PANH11
+ E  PIP   12  PSQR12    1.0            PSQR13    -1.0
+ E  PIP   12  PANH12
+ E  PIP   13  PSQR13    1.0            PSQR14    -1.0
+ E  PIP   13  PANH13
+ E  PIP   14  PSQR13    1.0            PSQR19    -1.0
+ E  PIP   14  PANH14
+ E  PIP   15  PSQR14    1.0            PSQR15    -1.0
+ E  PIP   15  PANH15
+ E  PIP   16  PSQR16    1.0            PSQR17    -1.0
+ E  PIP   16  PANH16
+ E  PIP   17  PSQR16    1.0            PSQR18    -1.0
+ E  PIP   17  PANH17
+ E  PIP   18  PSQR16    1.0            PSQR26    -1.0
+ E  PIP   18  PANH18
+ E  PIP   19  PSQR18    1.0            PSQR19    -1.0
+ E  PIP   19  PANH19
+ E  PIP   20  PSQR19    1.0            PSQR20    -1.0
+ E  PIP   20  PANH20
+ E  PIP   21  PSQR20    1.0            PSQR21    -1.0
+ E  PIP   21  PANH21
+ E  PIP   22  PSQR22    1.0            PSQR404   -1.0
+ E  PIP   22  PANH22
+ E  PIP   23  PSQR23    1.0            PSQR404   -1.0
+ E  PIP   23  PANH23
+ E  PIP   24  PSQR27    1.0            PSQR404   -1.0
+ E  PIP   24  PANH24
+ E  PIP   25  PSQR101   1.0            PSQR102   -1.0
+ E  PIP   25  PANH25
+ E  PIP   26  PSQR102   1.0            PSQR103   -1.0
+ E  PIP   26  PANH26
+ E  PIP   27  PSQR103   1.0            PSQR104   -1.0
+ E  PIP   27  PANH27
+ E  PIP   28  PSQR103   1.0            PSQR111   -1.0
+ E  PIP   28  PANH28
+ E  PIP   29  PSQR104   1.0            PSQR105   -1.0
+ E  PIP   29  PANH29
+ E  PIP   30  PSQR104   1.0            PSQR110   -1.0
+ E  PIP   30  PANH30
+ E  PIP   31  PSQR105   1.0            PSQR106   -1.0
+ E  PIP   31  PANH31
+ E  PIP   32  PSQR105   1.0            PSQR112   -1.0
+ E  PIP   32  PANH32
+ E  PIP   33  PSQR106   1.0            PSQR107   -1.0
+ E  PIP   33  PANH33
+ E  PIP   34  PSQR106   1.0            PSQR109   -1.0
+ E  PIP   34  PANH34
+ E  PIP   35  PSQR107   1.0            PSQR201   -1.0
+ E  PIP   35  PANH35
+ E  PIP   36  PSQR108   1.0            PSQR109   -1.0
+ E  PIP   36  PANH36
+ E  PIP   37  PSQR108   1.0            PSQR210   -1.0
+ E  PIP   37  PANH37
+ E  PIP   38  PSQR112   1.0            PSQR509   -1.0
+ E  PIP   38  PANH38
+ E  PIP   39  PSQR201   1.0            PSQR202   -1.0
+ E  PIP   39  PANH39
+ E  PIP   40  PSQR201   1.0            PSQR510   -1.0
+ E  PIP   40  PANH40
+ E  PIP   41  PSQR202   1.0            PSQR203   -1.0
+ E  PIP   41  PANH41
+ E  PIP   42  PSQR202   1.0            PSQR211   -1.0
+ E  PIP   42  PANH42
+ E  PIP   43  PSQR203   1.0            PSQR204   -1.0
+ E  PIP   43  PANH43
+ E  PIP   44  PSQR203   1.0            PSQR502   -1.0
+ E  PIP   44  PANH44
+ E  PIP   45  PSQR204   1.0            PSQR205   -1.0
+ E  PIP   45  PANH45
+ E  PIP   46  PSQR204   1.0            PSQR208   -1.0
+ E  PIP   46  PANH46
+ E  PIP   47  PSQR205   1.0            PSQR206   -1.0
+ E  PIP   47  PANH47
+ E  PIP   48  PSQR205   1.0            PSQR207   -1.0
+ E  PIP   48  PANH48
+ E  PIP   49  PSQR206   1.0            PSQR301   -1.0
+ E  PIP   49  PANH49
+ E  PIP   50  PSQR208   1.0            PSQR209   -1.0
+ E  PIP   50  PANH50
+ E  PIP   51  PSQR208   1.0            PSQR210   -1.0
+ E  PIP   51  PANH51
+ E  PIP   52  PSQR210   1.0            PSQR211   -1.0
+ E  PIP   52  PANH52
+ E  PIP   53  PSQR211   1.0            PSQR212   -1.0
+ E  PIP   53  PANH53
+ E  PIP   54  PSQR301   1.0            PSQR302   -1.0
+ E  PIP   54  PANH54
+ E  PIP   55  PSQR301   1.0            PSQR304   -1.0
+ E  PIP   55  PANH55
+ E  PIP   56  PSQR302   1.0            PSQR303   -1.0
+ E  PIP   56  PANH56
+ E  PIP   57  PSQR302   1.0            PSQR305   -1.0
+ E  PIP   57  PANH57
+ E  PIP   58  PSQR303   1.0            PSQR401   -1.0
+ E  PIP   58  PANH58
+ E  PIP   59  PSQR305   1.0            PSQR306   -1.0
+ E  PIP   59  PANH59
+ E  PIP   60  PSQR305   1.0            PSQR309   -1.0
+ E  PIP   60  PANH60
+ E  PIP   61  PSQR306   1.0            PSQR307   -1.0
+ E  PIP   61  PANH61
+ E  PIP   62  PSQR306   1.0            PSQR308   -1.0
+ E  PIP   62  PANH62
+ E  PIP   63  PSQR307   1.0            PSQR503   -1.0
+ E  PIP   63  PANH63
+ E  PIP   64  PSQR401   1.0            PSQR402   -1.0
+ E  PIP   64  PANH64
+ E  PIP   65  PSQR401   1.0            PSQR403   -1.0
+ E  PIP   65  PANH65
+ E  PIP   66  PSQR403   1.0            PSQR404   -1.0
+ E  PIP   66  PANH66
+ E  PIP   67  PSQR403   1.0            PSQR405   -1.0
+ E  PIP   67  PANH67
+ E  PIP   68  PSQR405   1.0            PSQR406   -1.0
+ E  PIP   68  PANH68
+ E  PIP   69  PSQR405   1.0            PSQR407   -1.0
+ E  PIP   69  PANH69
+ E  PIP   70  PSQR407   1.0            PSQR501   -1.0
+ E  PIP   70  PANH70
+ E  PIP   71  PSQR501   1.0            PSQR502   -1.0
+ E  PIP   71  PANH71
+ E  PIP   72  PSQR501   1.0            PSQR505   -1.0
+ E  PIP   72  PANH72
+ E  PIP   73  PSQR502   1.0            PSQR503   -1.0
+ E  PIP   73  PANH73
+ E  PIP   74  PSQR503   1.0            PSQR504   -1.0
+ E  PIP   74  PANH74
+ E  PIP   75  PSQR505   1.0            PSQR506   -1.0
+ E  PIP   75  PANH75
+ E  PIP   76  PSQR506   1.0            PSQR507   -1.0
+ E  PIP   76  PANH76
+ E  PIP   77  PSQR506   1.0            PSQR508   -1.0
+ E  PIP   77  PANH77
+ E  PIP   78  PSQR508   1.0            PSQR509   -1.0
+ E  PIP   78  PANH78
+ E  PIP   79  PSQR508   1.0            PSQR510   -1.0
+ E  PIP   79  PANH79
+ E  PIP   80  PSQR510   1.0            PSQR511   -1.0
+ E  PIP   80  PANH80
+
+OBJECT BOUND
+
+ LO LEAKNET              0.0
+
+*   Solution
+
+*LO SOLUTN               8.00028D+00
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LEAKNET
+
+TEMPORARIES
+
+ R  A3
+ R  A4
+ R  A5
+ R  QHAT
+ R  QRATIO
+ L  QLE
+ L  QGE
+ L  QELSE
+ R  H
+ R  H1
+ R  H2
+ R  X
+ R  X1
+ R  X2
+ R  F
+ R  F1
+ R  F2
+ R  CONV
+ R  FROOT
+ R  DERIV
+ R  ARGLOG
+ R  UPRESS
+ R  ATMOS
+ M  ABS
+ M  LOG10
+ M  EXP
+
+GLOBALS
+
+ A  UPRESS              1.0D-3
+ A  ATMOS               1.01325
+ A  A3                  3.62D-2
+ A  A4                  3.5657D+0
+ A  A5                  1.47519D+1
+ A  QHAT                1.0D-1
+ A  CONV                LOG10( EXP( 1.0D+0 ) )
+
+INDIVIDUALS
+
+*   square of p
+
+ T  SQUARE
+ F                      ( UPRESS * P + ATMOS ) ** 2
+ G  P                   2.0D+0 * UPRESS * ( UPRESS * P + ATMOS )
+ H  P         P         2.0D+0 * UPRESS * UPRESS
+
+*   panhandle term
+
+ T  PANHAN
+ A  QGE                 Q .GE. QHAT
+ A  QLE                 Q .LE. - QHAT
+ A  QELSE               .NOT. ( QGE .OR. QLE )
+ I  QELSE     QRATIO    Q / QHAT
+ I  QGE       H         Q
+ I  QLE       H         - Q
+ I  QELSE     H         QHAT * ( 3.75D-1 + 7.5D-1 * QRATIO ** 2
+ I+                     - 1.25D-1 * QRATIO ** 4 )
+ I  QGE       H1        1.0D+0
+ I  QLE       H1        - 1.0D+0
+ I  QELSE     H1        1.5D+0 * QRATIO - 5.0D-1 * QRATIO ** 3
+ I  QGE       H2        0.0D+0
+ I  QLE       H2        0.0D+0
+ I  QELSE     H2        ( 1.5D+0 - 1.5D+0 * QRATIO ** 2 ) / QHAT
+ A  ARGLOG              A2 * H
+ A  X                   LOG10( ARGLOG ) - 5.0D+0
+ A  X1                  CONV * H1 / H
+ A  X2                  CONV * ( H2 / H - ( H1 / H ) ** 2 )
+ A  FROOT               1.0 / ( ( A3 * X + A4 ) * X + A5 )
+ A  DERIV               2.0 * A3 * X + A4
+ A  F                   FROOT * FROOT
+ A  F1                  - 2.0 * DERIV * X1 * FROOT ** 3
+ A  F2                  - 2.0 * FROOT ** 3 * ( DERIV * X2 +
+ A+                     2.0 * A3 * X1 ** 2 - 0.75 * F1 ** 2
+ A+                     / FROOT ** 5 )
+ F                      A1 * F * Q * H
+ G  Q                   A1 * ( F * H + Q * ( F1 * H + F * H1 ) )
+ H  Q         Q         A1 * ( 2.0 * ( F1 * H + F * H1 ) + Q *
+ H+                     ( F2 * H + 2.0 * F1 * H1 + F * H2 ) )
+
+ENDATA

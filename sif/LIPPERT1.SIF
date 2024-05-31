@@ -1,0 +1,199 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LIPPERT1
+
+*   Problem :
+*   *********
+
+*   A discrete approximation to a continuum optimal flow problem
+*   in the unit square. The continuum problem requires that the
+*   divergence of a given flow should be given everywhere in the
+*   region of interest, with the restriction that the capacity of
+*   the flow is bounded. The aim is then to maximize the given flow.
+
+*   The discrete problem (primal formulation 1) in the unit square is to 
+*     maximize   t
+*     subject to dx( u_ij - ui-1j ) + dx( v_ij - vij-1 ) = t s_ij
+*                u_ij^2 + v_ij^2 <= 1
+*                u_i-1j^2 + v_ij^2 <= 1
+*                u_ij^2 + v_ij-1^2 <= 1
+*                u_i-1j^2 + v_ij-1^2 <= 1
+*     where 1 <= i <= nx, 1 <= j <= ny
+*     and        t >= 0
+
+*   Source: R. A. Lippert
+*     "Discrete approximations to continuum optimal flow problems"
+*     Tech. Report, Dept of Maths, M.I.T., 2006
+*   following a suggestion by Gil Strang
+
+*   SIF input: Nick Gould, September 2006
+
+*   classification LQR2-MN-V-V
+
+*   Number of nodes in x direction
+
+*IE NX                  2              $-PARAMETER
+*IE NX                  3              $-PARAMETER
+*IE NX                  10             $-PARAMETER
+*IE NX                  40             $-PARAMETER
+*IE NX                  100            $-PARAMETER
+ IE NX                  3              $-PARAMETER     modified for S2X tests
+
+*   Number of nodes in y direction
+
+*IE NY                  2              $-PARAMETER
+*IE NY                  3              $-PARAMETER
+*IE NY                  10             $-PARAMETER 
+*IE NY                  40             $-PARAMETER
+*IE NY                  100            $-PARAMETER
+ IE NY                  10             $-PARAMETER     modified for S2X tests
+
+*   Other useful parameters
+
+ IA X+        NX        1
+ IA X-        NX        -1
+ IA Y+        NY        1
+ IA Y-        NY        -1
+ IE 1                   1
+ IE 0                   0
+ RE ONE                 1.0
+ RE -ONE                -1.0
+
+*  Source value
+
+ RE S                   1.0
+ R* -S        S                        -ONE
+
+* Discretization intervals
+
+ RI RX        NX
+ R/ DX        ONE                      RX
+ R/ -DX       -ONE                     RX
+ RI RY        NY
+ R/ DY        ONE                      RY
+ R/ -DY       -ONE                     RY
+
+VARIABLES
+
+    T
+
+ DO I         0                        NX
+ DO J         1                        NY
+ X  U(I,J)
+ ND
+
+ DO I         1                        NX
+ DO J         0                        NY
+ X  V(I,J)
+ ND
+
+GROUPS
+
+* objective function (maximize)
+
+ N  OBJ       T         -1.0
+
+* conservation constraints
+
+ DO I         1                        NX
+ IA I-1       I         -1
+ DO J         1                        NY
+ IA J-1       J         -1
+ ZE O(I,J)    'SCALE'                  DX
+ ZE O(I,J)    U(I,J)                   DX
+ ZE O(I,J)    U(I-1,J)                 -DX
+ ZE O(I,J)    V(I,J)                   DY
+ ZE O(I,J)    V(I,J-1)                 -DY
+ ZE O(I,J)    T                        -S
+ ND
+
+* capacity constraints
+
+ DO I         1                        NX
+ DO J         1                        NY
+ XL A(I,J)
+ XL B(I,J)
+ XL C(I,J)
+ XL D(I,J)
+ ND
+
+RHS
+
+ DO I         1                        NX
+ DO J         1                        NY
+ X  LIPPERT1  A(I,J)    1.0
+ X  LIPPERT1  B(I,J)    1.0
+ X  LIPPERT1  C(I,J)    1.0
+ X  LIPPERT1  D(I,J)    1.0
+ ND
+
+BOUNDS
+
+ FR LIPPERT1  'DEFAULT'
+ LO LIPPERT1  T         0.01
+
+START POINT
+
+*   LIPPERT1  'DEFAULT' 1.0
+ 
+ELEMENT TYPE
+
+ EV SQR       ALPHA
+
+ELEMENT USES
+
+ T  'DEFAULT' SQR
+
+ DO I         0                        NX
+ DO J         1                        NY
+ ZV P(I,J)    ALPHA                    U(I,J)
+ ND
+
+ DO I         1                        NX
+ DO J         0                        NY
+ ZV Q(I,J)    ALPHA                    V(I,J)
+ ND
+
+GROUP USES
+
+ DO I         1                        NX
+ IA I-1       I         -1
+ DO J         1                        NY
+ IA J-1       J         -1
+ XE A(I,J)    P(I,J)
+ XE A(I,J)    Q(I,J)
+ XE B(I,J)    P(I-1,J)
+ XE B(I,J)    Q(I,J)
+ XE C(I,J)    P(I,J)
+ XE C(I,J)    Q(I,J-1)
+ XE D(I,J)    P(I-1,J)
+ XE D(I,J)    Q(I,J-1)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -3.77245385
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LIPPERT1
+
+INDIVIDUALS
+
+*  square of x
+
+ T  SQR
+ F                      ALPHA * ALPHA
+ G  ALPHA               ALPHA + ALPHA
+ H  ALPHA     ALPHA     2.0
+
+ENDATA

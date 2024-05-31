@@ -1,0 +1,163 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LEWISPOL
+
+*   Problem:
+*   ********
+
+*   Adrian Lewis Polynomial Problem,
+*   The problem is a transformation of a number theory integer
+*   programming problem.
+
+*   Source:
+*   A. Lewis, private communication.
+
+*   SIF input: A.R. Conn and Ph. Toint, March 1990.
+
+*   classification QOR2-AN-6-9
+
+*   Number of variables
+
+ IE N                   6
+
+*   Problem parameters
+
+ IE DEG                 3
+
+*   Penalty for integrality constraints
+
+ RE PEN                 1.0D4
+
+*   Internal parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+ IA DEG-1     DEG       -1
+ IA N-1       N         -1
+ IA N+1       N         1
+
+VARIABLES
+
+ DO J         0                        N-1
+ X  A(J)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ
+
+*   Constraints functions
+
+ DO J         0                        N-1
+ AE C(0,J)              1.0
+ ZE D0        A(J)                     C(0,J)
+ ND
+
+ DO I         1                        DEG-1
+ IA I-1       I         -1
+
+ DO J         I                        N-1
+ RI RJ        J
+ A* C(I,J)    C(I-1,J)                 RJ
+ ZE D(I)      A(J)                     C(I,J)
+
+ ND
+
+ DO J         0                        N-1
+ XE INT(J)    A(J)      -1.0
+ ZE INT(J)    'SCALE'                  PEN
+ ND
+
+CONSTANTS
+
+ AE CT(0)               -1.0
+
+ Z  LEWIS     D0                       CT(0)
+
+ DO I         1                        DEG-1
+ IA I-1       I         -1
+ IM -I        I         -1
+ I+ N+1-I     N+1                      -I
+ RI VAL       N+1-I
+ A* CT(I)     CT(I-1)                  VAL
+ Z  LEWIS     D(I)                     CT(I)
+ ND
+
+BOUNDS
+
+ XL LEWISPOL  'DEFAULT' -10.0
+ XU LEWISPOL  'DEFAULT' 10.0
+
+START POINT
+
+    LEWISPOL  A0        -1.0
+    LEWISPOL  A1        1.0
+    LEWISPOL  A2        1.0
+    LEWISPOL  A3        0.0
+    LEWISPOL  A4        1.0
+    LEWISPOL  A5        -1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV CB        X
+
+ELEMENT USES
+
+ DO J         0                        N-1
+
+ XT O(J)      SQ
+ ZV O(J)      X                        A(J)
+
+ XT E(J)      CB
+ ZV E(J)      X                        A(J)
+
+ ND
+
+GROUP USES
+
+ DO J         0                        N-1
+ XE OBJ       O(J)
+ XE INT(J)    E(J)
+ ND
+
+OBJECT BOUND
+
+ LO LEWISPOL            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LEWISPOL
+
+INDIVIDUALS
+
+*  Square
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*  Cube
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+ENDATA

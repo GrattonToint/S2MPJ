@@ -1,0 +1,193 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLI5 
+
+*   Problem :
+*   *********
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.5, Generalized Broyden tridiagonal function with 
+*   five-diagonal constraints, due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   Equality constraints changed to inequalities
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+
+ IA N+1       N         1
+ IA N-4       N         -4
+
+VARIABLES
+
+ DO I         0                        N+1
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ IA I+1       I         1
+ IA I-1       I         -1
+ XN OBJ(I)    X(I)      3.0            X(I+1)    -1.0
+ XN OBJ(I)    X(I-1)    -1.0
+ ND
+
+ DO K         1                        N-4
+ IA K+1       K         1
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ XG C(K)      X(K+2)    6.0            X(K)      -1.0
+ XG C(K)      X(K+3)    1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ X  RHS       OBJ(I)    -1.0
+ ND
+
+ DO K         1                        N-4
+ X  RHS       C(K)      2.0
+ ND
+
+BOUNDS
+
+ FR BND       'DEFAULT'
+ XX BND       X(0)      0.0
+ XX BND       X(N+1)    0.0
+
+START POINT
+
+ DO I         1                        N
+ XV LUKVLI9   X(I)      -1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV CUBEP     V                        W
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT OBJ(I)    SQR
+ ZV OBJ(I)    V                        X(I)
+ ND
+
+ DO K         1                        N-4
+ IA K+1       K         1
+ IA K+2       K         2
+ IA K+3       K         3
+ IA K+4       K         4
+ XT CA(K)     CUBEP
+ ZV CA(K)     V                        X(K+2)
+ ZV CA(K)     W                        X(K+1)
+ XT CB(K)     SQR
+ ZV CB(K)     V                        X(K+3)
+ XT CC(K)     SQR
+ ZV CC(K)     V                        X(K+1)
+ XT CD(K)     SQR
+ ZV CD(K)     V                        X(K+4)
+ ND
+
+GROUP TYPE
+
+ GV L7/3      GVAR
+
+GROUP USES
+
+ DO I         1                        N
+ XT OBJ(I)    L7/3
+ XE OBJ(I)    OBJ(I)     -2.0
+ ND
+
+ DO K         1                        N-4
+ XE C(K)      CA(K)      8.0           CB(K)      -4.0
+ XE C(K)      CC(K)      1.0           CD(K)      -1.0
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLI5             0.0
+
+*   Solution
+
+*LO SOLTN               5.26762E-01
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLI5
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  CUBEP
+ F                      V ** 3 - V * W
+ G  V                   3.0 * V ** 2 - W
+ G  W                   - V
+ H  V         V         6.0 * V
+ H  V         W         - 1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLI5 
+
+TEMPORARIES
+
+ R  Z
+
+ M  ABS
+ M  SIGN
+
+INDIVIDUALS
+
+ T  L7/3
+
+ A  Z                   ABS( GVAR )
+ F                      Z**(7.0/3.0)
+ G                      7.0 * SIGN( Z**(4.0/3.0), GVAR ) / 3.0
+ H                      28.0 * Z**(1.0/3.0) / 9.0
+
+ENDATA

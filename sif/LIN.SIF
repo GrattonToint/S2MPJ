@@ -1,0 +1,368 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LIN    
+
+*   Problem :
+*   *********
+
+*   A non-convex global optimization chemical equilibrium problem from the 
+*   thesis of W.J. Lin.
+*   It has a nonlinear objective and linear constraints.
+
+*   Source: illustrative example (section 4.6) in
+*   C.M. McDonald and C.A. Floudas, "Global optimization for the phase 
+*   and chemical equilibrium problem: application to the NRTL equation",
+*   Computers & Chemical Engineering, (submitted), 1994.
+
+*   SIF input: Marcel Mongeau, 9 February 1994.
+
+*   classification OLR2-AY-4-2
+
+*   PARAMETERS likely to be changed for different problems:
+
+*   Number of variable sets (# of phases)
+
+ IE P                   2
+
+*   Number of components
+
+ IE C                   2
+
+ IE 1                   1
+ IE 2                   2
+
+*   Constants
+*   (A for array, i.e. indexed names)
+
+ AE TAU(1,2)            3.00498
+ AE TAU(2,1)            4.69071
+ AE ALF(1,2)            0.391965
+ AE ALF(2,1)            0.391965
+
+*   Initial quantities of each component
+
+ AE INIT(1)             0.5
+ AE INIT(2)             0.5
+
+VARIABLES
+
+ DO I         1                        C
+ DO K         1                        P
+ X  X(I,K)
+ ND
+
+GROUPS
+
+*   Linearities (none here) in the objective function:
+
+ N  OBJ
+
+*   Mass-balance constraints
+*   (X or Z when using parametrized (indexed) names:
+*    X for numerical value; Z when assigning a named parameter)
+
+ DO I         1                        C
+ DO K         1                        P
+ XE MB(I)     X(I,K)    1.0
+ ND
+
+CONSTANTS
+
+*   Right-hand side of constraints
+
+ DO I         1                        C
+ Z  LIN       MB(I)                    INIT(I)
+ OD I
+
+*   Other parameters:
+*   (A for arrays)
+
+ RE ZERO                0.0
+ RE ONE                 1.0
+
+ DO I         1                        C
+ A= ALF(I,I)  ZERO
+ A= TAU(I,I)  ZERO
+ OD I
+
+ DO I         1                        C
+ DO J         1                        C
+ AM MALF      ALF(I,J)  -1.0
+ A* PROD      MALF                     TAU(I,J)
+ A( G(I,J)    EXP                      PROD
+ ND
+
+ DO I         1                        C
+ A= G(I,I)    ONE
+ OD I
+
+ DO I         1                        C
+ DO J         1                        C
+ A* M(I,J)    G(I,J)                   TAU(I,J)
+ ND
+
+BOUNDS
+
+ XL LIN       'DEFAULT' 1.D-12
+ ZU LIN       X(1,1)                   INIT1
+ ZU LIN       X(1,2)                   INIT1
+ ZU LIN       X(2,1)                   INIT2
+ ZU LIN       X(2,2)                   INIT2
+
+START POINT
+
+ XV LIN       X(1,1)    0.5
+ XV LIN       X(1,2)    0.0
+ XV LIN       X(2,1)    0.0
+ XV LIN       X(2,2)    0.5
+
+ELEMENT TYPE
+
+*   With dependent elemental- and internal-variables
+*   (No indexed names allowed in sections TYPE)
+*   (P for parametrizing the definition of a type)
+
+ EV XTAUG1    Y1                       Y2  
+ EP XTAUG1    G11                      G12
+ EP XTAUG1    G21                      G22
+ EP XTAUG1    M11                      M12
+ EP XTAUG1    M21                      M22
+
+ EV XTAUG2    Y1                       Y2  
+ EP XTAUG2    G11                      G12
+ EP XTAUG2    G21                      G22
+ EP XTAUG2    M11                      M12
+ EP XTAUG2    M21                      M22
+
+ EV XLOGX     X
+
+ EV XLOGXC    X
+ EV XLOGXC    Y1                       Y2  
+ IV XLOGXC    XX                       YY
+
+
+ELEMENT USES
+
+*   Assign an element type to each element fct and define the particular 
+*   problem variables that will be assigned to the above elemental variables
+
+ DO K         1                        P
+ XT A(1,K)    XTAUG1
+ ZV A(1,K)    Y1                       X(1,K)
+ ZV A(1,K)    Y2                       X(2,K)
+ ZP A(1,K)    G11                      G(1,1)
+ ZP A(1,K)    G12                      G(1,2)
+ ZP A(1,K)    G21                      G(2,1)
+ ZP A(1,K)    G22                      G(2,2)
+ ZP A(1,K)    M11                      M(1,1)
+ ZP A(1,K)    M12                      M(1,2)
+ ZP A(1,K)    M21                      M(2,1)
+ ZP A(1,K)    M22                      M(2,2)
+
+ XT A(2,K)    XTAUG2
+ ZV A(2,K)    Y1                       X(1,K)
+ ZV A(2,K)    Y2                       X(2,K)
+ ZP A(2,K)    G11                      G(1,1)
+ ZP A(2,K)    G12                      G(1,2)
+ ZP A(2,K)    G21                      G(2,1)
+ ZP A(2,K)    G22                      G(2,2)
+ ZP A(2,K)    M11                      M(1,1)
+ ZP A(2,K)    M12                      M(1,2)
+ ZP A(2,K)    M21                      M(2,1)
+ ZP A(2,K)    M22                      M(2,2)
+ ND
+
+ DO K         1                        P
+ DO I         1                        C
+ XT B(I,K)    XLOGX
+ ZV B(I,K)    X                        X(I,K)
+ ND
+
+ DO K         1                        P
+ DO I         1                        C
+ XT C(I,K)    XLOGXC
+ ZV C(I,K)    X                        X(I,K)
+ ZV C(I,K)    Y1                       X(1,K)
+ ZV C(I,K)    Y2                       X(2,K)
+ ND
+
+
+GROUP USES
+
+*   Assign element functions to groups
+
+ DO K         1                        P
+ XE OBJ       A(1,K)                   A(2,K)
+ DO I         1                        C
+ XE OBJ       B(I,K)
+ XE OBJ       C(I,K)    -1.0
+ ND
+
+
+OBJECT BOUND
+
+*   Solution
+
+*Global minimum:        -0.02020 : 
+* XV LIN       X(1,1)    0.00071
+* XV LIN       X(1,2)    0.49929
+* XV LIN       X(2,1)    0.15588
+* XV LIN       X(2,2)    0.34412
+
+*local minimum:         -0.01961 :
+* XV LIN       X(1,1)    0.00213
+* XV LIN       X(1,2)    0.49787
+* XV LIN       X(2,1)    0.46547
+* XV LIN       X(2,2)    0.03453
+
+*local maximum:         -0.01730 :
+* XV LIN       X(1,1)    0.00173
+* XV LIN       X(1,2)    0.49827
+* XV LIN       X(2,1)    0.37544
+* XV LIN       X(2,2)    0.12456
+
+*LO SOLTN               -0.02020
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LIN
+
+TEMPORARIES
+
+*   Declare temporary variables and intrinsic (Machine) and external fct needed:
+
+ R  INSUM1
+ R  INSUM2
+ R  SUM
+ R  RATIO1
+ R  RATIO2
+ R  TERM1
+ R  TERM2
+ R  SQ1
+ R  SQ2
+ R  SQ11
+ R  SQ12
+ R  SQ21
+ R  SQ22
+ R  TRI1
+ R  TRI2
+ R  CUB1
+ R  CUB2
+ R  CUB11
+ R  CUB12
+ R  CUBM21
+ R  CUBM22
+ R  CUB21
+ R  CUB22
+ R  H1
+ R  H2
+ R  H3
+ R  H4
+ R  H5
+
+ R  LOGX
+ M  LOG
+
+INDIVIDUALS
+
+*   Define the (linear) Relations that define each internal variable in terms
+*   of the elemental variables.  Specify the actual nonlinear behaviour of the
+*   element types.
+
+ T  XTAUG1
+ A  INSUM1              Y1*G11 + Y2*G21
+ A  INSUM2              Y1*G12 + Y2*G22
+ A  RATIO1              M11/INSUM1
+ A  RATIO2              M12/INSUM2
+ A  TERM1               Y1*RATIO1
+ A  TERM2               Y2*RATIO2
+ A  SUM                 TERM1 + TERM2
+ A  SQ1                 TERM1/INSUM1
+ A  SQ2                 TERM2/INSUM2
+ A  SQ11                SQ1*G11
+ A  SQ12                SQ2*G12
+ A  SQ21                SQ1*G21
+ A  SQ22                SQ2*G22
+ A  TRI1                RATIO1 - SQ11 - SQ12
+ A  TRI2                RATIO2 - SQ21 - SQ22
+ A  CUB1                SQ11/INSUM1
+ A  CUB2                SQ12/INSUM2
+ A  CUB11               CUB1*G11
+ A  CUB12               CUB2*G12
+ A  CUBM21              CUB1*G21
+ A  CUBM22              CUB2*G22
+ A  CUB21               SQ21*G21/INSUM1
+ A  CUB22               SQ22*G22/INSUM2
+ A  H1                  RATIO2-SQ22-2*SQ21
+ A  H2                  M12*G12/INSUM2**2
+ A  H3                  SQ1*G21**2/INSUM1
+ A  H4                  M12*G22/INSUM2**2
+ A  H5                  SQ2*G22**2/INSUM2
+ F                      Y1 * SUM
+ G  Y1                  SUM + Y1*TRI1
+ G  Y2                  Y1*TRI2
+ H  Y1        Y1        2*(TRI1 + Y1*(-SQ11+CUB11+CUB12))
+ H  Y1        Y2        H1 + Y1*(-H2 + 2*(CUBM21+CUBM22))
+ H  Y2        Y2        2*Y1*(H3 - H4 + H5)
+
+ T  XTAUG2
+ A  INSUM1              Y1*G11 + Y2*G21
+ A  INSUM2              Y1*G12 + Y2*G22
+ A  RATIO1              M21/INSUM1
+ A  RATIO2              M22/INSUM2
+ A  TERM1               Y1*RATIO1
+ A  TERM2               Y2*RATIO2
+ A  SUM                 TERM1 + TERM2
+ A  SQ1                 TERM1/INSUM1
+ A  SQ2                 TERM2/INSUM2
+ A  SQ11                SQ1*G11
+ A  SQ12                SQ2*G12
+ A  SQ21                SQ1*G21
+ A  SQ22                SQ2*G22
+ A  TRI1                RATIO1 - SQ11 - SQ12
+ A  TRI2                RATIO2 - SQ21 - SQ22
+ A  CUB1                SQ11/INSUM1
+ A  CUB2                SQ12/INSUM2
+ A  CUB11               CUB1*G11
+ A  CUB12               CUB2*G12
+ A  CUBM21              CUB1*G21
+ A  CUBM22              CUB2*G22
+ A  CUB21               SQ21*G21/INSUM1
+ A  CUB22               SQ22*G22/INSUM2
+ A  H1                  RATIO1-SQ11-2*SQ12
+ A  H2                  M21*G21/INSUM1**2
+ A  H3                  SQ1*G11**2/INSUM1
+ A  H4                  M21*G11/INSUM1**2
+ A  H5                  SQ2*G12**2/INSUM2
+ F                      Y2 * SUM
+ G  Y1                  Y2*TRI1
+ G  Y2                  SUM + Y2*TRI2
+ H  Y1        Y1        2*Y2*(H3 - H4 + H5)
+ H  Y1        Y2        H1 + Y2*(-H2 +2*(CUBM21+CUBM22))
+ H  Y2        Y2        2*(TRI2 + Y2*(-SQ22+CUB21+CUB22))
+
+ T  XLOGX
+ A  LOGX                LOG( X )
+ F                      X * LOGX
+ G  X                   LOGX + 1.0
+ H  X         X         1.0 / X
+
+ T  XLOGXC
+ R  YY        Y1        1.0            Y2        1.0
+ R  XX        X         1.0
+ A  LOGX                LOG( YY )
+ F                      XX * LOGX
+ G  XX                  LOGX
+ G  YY                  XX / YY
+ H  XX        YY        1.0 / YY
+ H  YY        YY        - XX / YY**2
+
+ENDATA

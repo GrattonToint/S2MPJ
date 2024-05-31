@@ -1,0 +1,210 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKVLI1
+
+*   Problem :
+*   *********
+
+*   Source: Problem 5.1, the chained Rosenbrock function with 
+*   simplified trigonometric exponential constraints, 
+*   due to L. Luksan and J. Vlcek,
+*   "Sparse and partially separable test problems for 
+*   unconstrained and equality constrained optimization",
+*   Technical Report 767, Inst. Computer Science, Academy of Sciences
+*   of the Czech Republic, 182 07 Prague, Czech Republic, 1999
+
+*   Equality constraints changed to inequalities
+
+*   SIF input: Nick Gould, April 2001
+
+*   classification OOR2-AY-V-V
+
+*   some useful parameters, including N, the number of variables.
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  other useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N-2       N         -2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XN Q(I)      'SCALE'   0.01
+ XN Q(I)      X(I+1)    -1.0
+ XN L(I)      X(I)      1.0
+ ND
+
+ DO K         1                        N-2 
+ IA K+1       K         1
+ IA K+2       K         2
+ XL C(K)      X(K+2)    2.0            X(K+1)    4.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N-1
+ X  RHS       L(I)      1.0
+ ND
+
+ DO K         1                        N-2 
+ X  RHS       C(K)      8.0
+ ND
+
+BOUNDS
+
+ FR LUKVLI1   'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DI I         2
+ XV LUKVLI1   X(I)      -1.2
+ ND
+
+ DO I         2                        N
+ DI I         2
+ XV LUKVLI1   X(I)      1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV CUBE      V
+ EV XEXP      X1                       X2
+ EV SINASINB  X1                       X2
+
+ELEMENT USES
+
+ DO I         1                        N-1
+ XT Q(I)      SQR
+ ZV Q(I)      V                        X(I)
+ ND
+
+ DO K         1                        N-2 
+ IA K+1       K         1
+ IA K+2       K         2
+ XT CA(K)     CUBE
+ ZV CA(K)     V                        X(K+1)
+ XT CB(K)     SINASINB
+ ZV CB(K)     X1                       X(K+1)
+ ZV CB(K)     X2                       X(K+2)
+ XT CC(K)     XEXP
+ ZV CC(K)     X1                       X(K)
+ ZV CC(K)     X2                       X(K+1)
+ ND
+
+
+GROUP TYPE
+
+ GV L2        GVAR 
+
+GROUP USES
+
+ DO I         1                        N-1
+ XT Q(I)      L2
+ XE Q(I)      Q(I)
+ XT L(I)      L2
+ ND
+
+ DO K         1                        N-2 
+ XE C(K)      CA(K)     3.0            CB(K)
+ XE C(K)      CC(K)     -1.0
+ ND
+
+OBJECT BOUND
+
+ LO LUKVLI1             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKVLI1 
+
+TEMPORARIES
+
+ R  EXPX
+ R  XEXPX
+ R  SINA
+ R  SINB
+ R  COSA
+ R  COSB
+ M  EXP
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V ** 2
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  XEXP
+ A  EXPX                EXP( X1 - X2 )
+ A  XEXPX               X1 * EXPX
+ F                      XEXPX
+ G  X1                  EXPX + XEXPX
+ G  X2                  - XEXPX
+ H  X1        X1        2.0 * EXPX + XEXPX
+ H  X1        X2        - EXPX - XEXPX
+ H  X2        X2        XEXPX
+
+ T  SINASINB
+ A  SINA                SIN( X1 - X2 )
+ A  SINB                SIN( X1 + X2 )
+ A  COSA                COS( X1 - X2 )
+ A  COSB                COS( X1 + X2 )
+ F                      SINA * SINB
+ G  X1                  SINA * COSB + COSA * SINB
+ G  X2                  SINA * COSB - COSA * SINB
+ H  X1        X1        2.0 * ( COSA * COSB - SINA * SINB )
+ H  X2        X2        - 2.0 * ( COSA * COSB + SINA * SINB )
+
+ T  CUBE
+ F                      V ** 3
+ G  V                   3.0 * V ** 2
+ H  V         V         6.0 * V
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LUKVLI1 
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+

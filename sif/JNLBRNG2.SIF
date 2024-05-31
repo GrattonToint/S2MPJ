@@ -1,0 +1,332 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          JNLBRNG2
+
+*   Problem :
+*   *********
+
+*   The quadratic journal bearing problem (with excentricity = 0.5)
+*   This is a variant of the problem stated in the report quoted below.
+*   It corresponds to the problem as distributed in MINPACK-2.
+
+*   Source:
+*   J. More' and G. Toraldo,
+*   "On the Solution of Large Quadratic-Programming Problems with Bound
+*   Constraints", 
+*   SIAM J. on Optimization, vol 1(1), pp. 93-113, 1991.
+
+*   SIF input: Ph. Toint, Dec 1989.
+*   modified by Peihuang Chen, according to MINPACK-2, Apr 1992
+
+*   classification QBR2-AY-V-0
+
+*   The rectangle is discretized into (pt-1)(py-1) little rectangles. The
+*   heights of the considered surface above the corners of these little
+*   rectangles are the problem variables,  There are px*py of them.
+
+*   PT is the number of points along the T (\theta) side of the rectangle
+*   PY is the number of points along the Y side of the rectangle
+
+*IE PT                  4              $-PARAMETER  n=16
+*IE PY                  4              $-PARAMETER
+
+*IE PT                  10             $-PARAMETER  n=100
+*IE PY                  10             $-PARAMETER
+
+*IE PT                  23             $-PARAMETER  n=529
+*IE PY                  23             $-PARAMETER
+
+*IE PT                  32             $-PARAMETER  n=1024
+*IE PY                  32             $-PARAMETER
+
+*IE PT                  34             $-PARAMETER  n=1156
+*IE PY                  34             $-PARAMETER
+
+*IE PT                  75             $-PARAMETER  n=5625   original value
+*IE PY                  75             $-PARAMETER           original value
+
+*IE PT                  100            $-PARAMETER  n=10000
+ IE PT                  5              $-PARAMETER     modified for S2X tests
+*IE PY                  100            $-PARAMETER
+ IE PY                  5              $-PARAMETER     modified for S2X tests
+
+*IE PT                  125            $-PARAMETER  n=15625
+*IE PY                  125            $-PARAMETER
+
+*   The excentricity
+
+ RE EX                  0.5            $-PARAMETER  the excentricity
+
+*   The domain is the rectangle [0,LT]x[0,LY]
+
+ RF PI/4      ARCTAN    1.
+ RM LT        PI/4      8.
+ RE LY                  20.0
+*
+ RE SIX                 6.0
+
+*   Compute the step in the \theta direction and its inverse
+
+ IA PT-1      PT        -1
+ RI RPT-1     PT-1
+ RD HT1       RPT-1     1.0
+ R* HT        HT1                      LT
+ RD 1/HT      HT        1.0
+
+*   Compute the step in the y direction and its inverse
+
+ IA PY-1      PY        -1
+ RI RPY-1     PY-1
+ RD HY1       RPY-1     1.0
+ R* HY        HY1                      LY
+ RD 1/HY      HY        1.0
+
+*   Compute their ratio and product
+
+ R* HTHY      HT                       HY
+ R* HT/HY     HT                       1/HY
+ R* HY/HT     HY                       1/HT
+
+*   Compute the common coefficient for the linear term
+
+ R* EXHTHY    HTHY                     EX
+ RM CLINC     EXHTHY    -1.0
+
+*   Useful constants
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit square
+
+ DO I         1                        PT
+ DO J         1                        PY
+ X  X(I,J)
+ ND
+
+GROUPS
+
+*   Group of the linear terms
+
+ DO I         2                        PT-1
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* XI1       RI-1                     HT
+ R( SXI1      SIN                      XI1
+ R* COEFF     SXI1                     CLINC
+ DO J         2                        PY-1
+ ZN G         X(I,J)                   COEFF
+ ND
+
+* TRIANGLES at the right upper side of node(i,j)
+
+ DO I         1                        PT-1
+ DO J         1                        PY-1
+ ZN GR(I,J)
+ XN GR(I,J)   'SCALE'   2.0
+ ND
+
+* TRIANGLES at the left lower side of node(i,j)
+
+ DO I         2                        PT
+ DO J         2                        PY
+ ZN GL(I,J)
+ XN GL(I,J)   'SCALE'   2.0
+ ND
+
+BOUNDS
+
+*   Fix the variables on the lower and upper edges of the domain
+
+ DO J         1                        PY
+ XX JNLBRNG2  X(1,J)    0.0
+ XX JNLBRNG2  X(PT,J)   0.0
+ ND
+
+*   Fix the variables on the left and right edges of the domain
+
+ DO I         2                        PT-1
+ XX JNLBRNG2  X(I,PY)   0.0
+ XX JNLBRNG2  X(I,1)    0.0
+ ND
+
+*   Other variables are positive
+
+START POINT
+
+ DO I         2                        PT-1
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* XI1       RI-1                     HT
+ R( SXI1      SIN                      XI1
+ DO J         2                        PY-1
+ ZV JNLBRNG2  X(I,J)                   SXI1
+ ND
+
+
+ELEMENT TYPE
+
+*   The only element type.
+*   The parameter will care for the factors involving HX and HY, MU
+*   and LA(mbda).
+
+ EV ISQ       V1                       V2
+ IV ISQ       U
+
+ELEMENT USES
+
+*   Each node has four elements
+
+ DO I         1                        PT-1
+ IA I+1       I         1
+ DO J         1                        PY-1
+ IA J+1       J         1
+
+ XT A(I,J)    ISQ
+ ZV A(I,J)    V1                       X(I+1,J)
+ ZV A(I,J)    V2                       X(I,J)
+
+ XT B(I,J)    ISQ
+ ZV B(I,J)    V1                       X(I,J+1)
+ ZV B(I,J)    V2                       X(I,J)
+
+ ND
+
+ DO I         2                        PT
+ IA I-1       I         -1
+ DO J         2                        PY
+ IA J-1       J         -1
+
+ XT C(I,J)    ISQ
+ ZV C(I,J)    V1                       X(I-1,J)
+ ZV C(I,J)    V2                       X(I,J)
+
+ XT D(I,J)    ISQ
+ ZV D(I,J)    V1                       X(I,J-1)
+ ZV D(I,J)    V2                       X(I,J)
+
+ ND
+
+GROUP USES
+
+*   All groups are TRIVIAL
+
+* GROUPS OF ALL THE TRIANGLES AT THE RIGHT OF A NODE
+
+ DO I         1                        PT-1
+
+*   Compute w_q(z_{i,j}) = w_q(z_{i+1,j}) = w_q(z_{i-1,j})
+*   (independent of J, that is of \xi_2)
+
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* XI1       RI-1                     HT
+ R( CXI1      COS                      XI1
+ R* ECX       CXI1                     EX
+ RA ECX1      ECX       1.0
+ R* E12       ECX1                     ECX1
+ R* WI        ECX1                     E12
+ R+ 2WI       WI                       WI
+
+*   Compute w_q(z_{i+1,j})  (independent of J, that is of \xi_2)
+
+ R+ XI+1      XI1                      HT
+ R( CXI+1     COS                      XI+1
+ R* E+CX0     CXI+1                    EX
+ RA E+CX1     E+CX0     1.0
+ R* E22       E+CX1                    E+CX1
+ R* WI+1      E+CX1                    E22
+
+
+*   Compute \LAMBDA_{i,j}/ h_t^2  and \LAMBDA_{i,j} / h_y^2
+*   (independent of J, that is of \xi_2)
+
+ R+ PM0       2WI                      WI+1
+ R/ PM1       PM0                      SIX
+ R* LA/HY2    PM1                      HT/HY
+ R* LA/HT2    PM1                      HY/HT
+
+ DO J         1                        PY-1
+
+ ZE GR(I,J)   A(I,J)                   LA/HT2
+ ZE GR(I,J)   B(I,J)                   LA/HY2
+
+ ND
+
+* GROUPS OF ALL THE TRIANGLES AT THE LEFT OF A NODE
+
+ DO I         2                        PT
+
+*   Compute w_q(z_{i,j}) = w_q(z_{i+1,j}) = w_q(z_{i-1,j})
+*   (independent of J, that is of \xi_2)
+
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* XI1       RI-1                     HT
+ R( CXI1      COS                      XI1
+ R* ECX       CXI1                     EX
+ RA ECX1      ECX       1.0
+ R* E12       ECX1                     ECX1
+ R* WI        ECX1                     E12
+ R+ 2WI       WI                       WI
+
+*   Compute w_q(z_{i-1,j})  (independent of J, that is of \xi_2)
+
+ R- XI-1      XI1                      HT
+ R( CXI-1     COS                      XI-1
+ R* E-CX0     CXI-1                    EX
+ RA E-CX1     E-CX0     1.0
+ R* E32       E-CX1                    E-CX1
+ R* WI-1      E-CX1                    E32
+
+*   Compute \MU_{i,j} / h_y^2 and \MU_{i,j} / h_t^2
+*   (independent of J, that is of \xi_2)
+
+ R+ PL0       2WI                      WI-1
+ R/ PL1       PL0                      SIX
+ R* MU/HY2    PL1                      HT/HY
+ R* MU/HT2    PL1                      HY/HT
+
+ DO J         2                        PY
+
+ ZE GL(I,J)   C(I,J)                   MU/HT2
+ ZE GL(I,J)   D(I,J)                   MU/HY2
+
+ ND
+
+OBJECT BOUND
+
+ LO JNLBRNG2            0.0
+
+*   Solution
+
+*LO SOLTN(4)            -0.4764000 
+*LO SOLTN(10)           -0.3952800
+*LO SOLTN(23)           -0.4102400
+*LO SOLTN(32)           -0.4124900
+*LO SOLTN(75)           -0.4146600
+*LO SOLTN(100)          -0.4148700
+*LO SOLTN(125)          -0.4149600
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      JNLBRNG2
+
+INDIVIDUALS
+
+ T  ISQ
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA

@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LUKSAN11
+
+*   Problem :
+*   *********
+
+*   Problem 11 (chained serpentine) in the paper
+
+*     L. Luksan
+*     Hybrid methods in large sparse nonlinear least squares
+*     J. Optimization Theory & Applications 89(3) 575-595 (1996)
+
+*   SIF input: Nick Gould, June 2017.
+
+*   classification NOR2-AN-V-V
+
+*  seed for dimensions
+
+ IE S                   99
+
+*  number of unknowns
+
+ I= N         S
+ IA N         N         1
+
+*  number of equations
+
+ IM M         S         2
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ IE K                   1
+ DO I         1                        S
+ IA I+1       I         1
+ XE E(K)      X(I+1)    -10.0
+ IA K         K         1
+ XE E(K)      X(I)      1.0
+ IA K         K         1
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ DI I         2
+ IA I+1       I         1
+ X  LUKSAN11  E(I+1)    1.0
+ ND
+
+BOUNDS
+
+ FR LUKSAN11  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ XV LUKSAN11  X(I)      -0.8
+ ND
+
+ELEMENT TYPE
+
+ EV L1        V
+
+ELEMENT USES
+
+ XT 'DEFAULT' L1
+
+ IE K                   1
+ DO I         1                        S
+ ZV L(K)      V                        X(I)
+ IA K         K         2
+ ND
+
+
+GROUP USES
+
+ IE K                   1
+ DO I         1                        S
+ XE E(K)      L(K)
+ IA K         K         2
+ ND
+
+OBJECT BOUND
+
+ LO LUKSAN11             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      LUKSAN11
+
+TEMPORARIES
+
+ R  D
+
+INDIVIDUALS
+
+ T  L1
+ A  D                   1.0D0 + V * V
+ F                      2.0D1 * V / D
+ G  V                   2.0D1 * ( 1.0D0 - V * V ) / D ** 2
+ H  V         V         - 4.0D1 * V * ( 3.0D0 - V * V ) / D ** 3
+
+ENDATA

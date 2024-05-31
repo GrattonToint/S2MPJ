@@ -1,0 +1,124 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          LOTSCHD
+
+*   Problem:
+*   ********
+
+*   A simple quadratic program inspired by the economic lot scheduling
+*   problem.
+
+*   Source:
+*   an exercize for L. Watson course on LANCELOT in the Spring 1993.
+
+*   SIF input: T. Kuan, Virginia Tech., Spring 1993.
+
+*   classification QLR2-AN-12-7
+
+ RE X1                  1.502
+ RE X2                  1.126 
+ RE X3                  0.815
+ RE X4                  1.268
+ RE X5                  1.502
+ RE X6                  0.740
+
+ RE A1                  1.8
+ RE A2                  3.2
+ RE A3                  6.1
+ RE A4                  3.2
+ RE A5                  1.8
+ RE A6                  7.4
+
+ RE C1                  11.0
+ RE C2                  3.0
+ RE C3                  20.0
+ RE C4                  17.0
+ RE C5                  9.0
+ RE C6                  20.0
+ RE C7                  126.1
+
+ IE 1                   1
+ IE 2                   2
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+
+VARIABLES
+
+ DO I         1                        6
+ X  T(I)
+ X  U(I)
+ OD I
+
+GROUPS
+
+ DO I         1                        6
+ ZN OBJ(I)    T(I)                     X(I)
+ XE CONS7     T(I)      1.0            U(I)      1.0  
+ ZE CONS(I)   T(I)                     A(I)
+ XE CONS(I)   U(I)      -1.0
+ OD I
+
+ DO I         2                        4
+ XE CONS(I)   T(I)      -1.0           U(I)      -1.0
+ OD I
+
+ XE CONS2     T3        -1.0           U3        -1.0
+
+ DO I         1                        2
+ XE CONS3     T(I)      -1.0           U(I)      -1.0
+ OD I
+
+ DO I         4                        6
+ XE CONS3     T(I)      -1.0           U(I)      -1.0
+ OD I
+
+ XE CONS4     T1        -1.0           U1        -1.0
+
+ DO I         5                        6
+ XE CONS4     T(I)      -1.0           U(I)      -1.0
+ OD I
+
+ XE CONS5     T1        -1.0           U1        -1.0
+
+ DO I         1                        5
+ XE CONS6     T(I)      -1.0           U(I)      -1.0
+ OD I
+
+CONSTANTS
+
+ DO I         1                        7
+ Z  LOTSCHD   CONS(I)                  C(I)
+ OD I
+
+GROUP TYPE
+
+ GV SQUARE    ALPHA
+
+GROUP USES
+
+ DO I         1                        6
+ XT OBJ(I)    SQUARE
+ OD I
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        LOTSCHD
+
+INDIVIDUALS
+
+ T  SQUARE
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0
+
+ENDATA
+
