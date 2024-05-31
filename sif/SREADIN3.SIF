@@ -1,0 +1,192 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SREADIN3
+
+*   Problem :
+*   *********
+
+*   A nonlinear optimal control problem from Nancy Nichols
+*   with a periodic boundary condition and special scaling.
+*   This problem arises in tide modelling.
+
+*   SIF input: Nick Gould, July 1991.
+
+*   classification OOR2-MN-V-V
+
+*   Number of discretized points in [0,1]
+
+*IE N                   2              $-PARAMETER n=6, m=3
+*IE N                   5              $-PARAMETER n=12, m=6
+*IE N                   50             $-PARAMETER n=102, m=51
+*IE N                   100            $-PARAMETER n=202, m=101   original value
+*IE N                   500            $-PARAMETER n=1002, m=501
+*IE N                   1000           $-PARAMETER n=2002, m=1001
+*IE N                   2000           $-PARAMETER n=4002, m=2001
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER n=10002, m=5001
+
+*    Other useful constants
+
+ RE PI                  3.141592653589
+ RM 2PI       PI        2.0
+
+*RE 1/A                 12.96
+ RE A                   0.07716
+ RD 1/A       A         1.0
+ RM 1/2A      1/A       0.5
+ RM 2A        A         2.0
+ RM -2A       2A        -1.0
+ RD -1/2A     -2A       1.0
+
+*   Mesh
+
+ IA N-1       N         -1
+
+ RI RN        N
+ RD H         RN        1.0
+ RM 2/H       RN        2.0
+ RM H/2       H         0.5
+
+ RM 1/H       RN        1.0
+ RM -1/H      RN        -1.0
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ Z  U(I)      'SCALE'                  RN
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN I(I)
+ ND
+
+ DO I         1                        N
+ RI RI        I
+ R* TI        RI                       H
+ R* 2PITI     2PI                      TI
+ R( CTI       COS                      2PITI
+ R* CCTI      CTI                      -1/2A
+
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* TI-1      RI-1                     H
+ R* 2PITI-1   2PI                      TI-1
+ R( CTI-1     COS                      2PITI-1
+ R* CCTI-1    CTI-1                    -1/2A
+
+ ZE C(I)      X(I)                     1/H
+ ZE C(I)      X(I-1)                   -1/H
+ ZE C(I)      U(I)                     CCTI
+ ZE C(I)      U(I-1)                   CCTI-1
+ ND
+
+ XE PERIOD    X(0)      1.0            X(N)      -1.0
+ ZE PERIOD    'SCALE'                  H
+
+BOUNDS
+
+ DO I         0                        N
+ XL SREADIN3  X(I)      -0.5
+ XU SREADIN3  X(I)      0.5
+ ND
+
+ DO I         0                        N
+ XL SREADIN3  U(I)      0.0
+ XU SREADIN3  U(I)      1.0
+ ND
+
+START POINT
+
+ V  SREADIN3  'DEFAULT' 0.25
+
+ELEMENT TYPE
+
+ EV PROD      U
+ EV PROD      X
+ EP PROD      P
+
+ EV ENERGY    U
+ EV ENERGY    X
+ EP ENERGY    T
+ EP ENERGY    HOVER2
+
+ELEMENT USES
+
+ DO I         0                        N
+ RI RI        I
+ R* TI        RI                       H
+ XT I(I)      ENERGY
+ ZV I(I)      X                        X(I)
+ ZV I(I)      U                        U(I)
+ ZP I(I)      T                        TI
+ ZP I(I)      HOVER2                   H/2
+ ND
+
+ DO I         0                        N
+
+ XT NC(I)     PROD
+ ZV NC(I)     X                        X(I)
+ ZV NC(I)     U                        U(I)
+ ZP NC(I)     P                        1/2A
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ IA I-1       I         -1
+ XE I(I)      I(I)      -1.0
+ XE I(I)      I(I-1)    -1.0
+ ND
+
+ DO I         1                        N
+ IA I-1       I         -1
+ XE C(I)      NC(I)                    NC(I-1)
+ ND
+
+OBJECT BOUND
+
+ LO SREADIN3            0.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+ELEMENTS      SREADIN3
+
+*   Least-square groups
+
+TEMPORARIES
+
+ R  C2PIT
+ M  COS
+
+INDIVIDUALS
+
+ T  PROD
+ F                      P * U * X
+ G  U                   P * X
+ G  X                   P * U
+ H  X         U         P
+
+ T  ENERGY
+ A  C2PIT               COS(2.0*3.141592653589*T)
+ F                      HOVER2 * U * ( X - C2PIT ) ** 2
+ G  U                   HOVER2 * ( X - C2PIT ) ** 2
+ G  X                   HOVER2 * 2.0 * U * ( X - C2PIT )
+ H  X         U         HOVER2 * 2.0 * ( X - C2PIT )
+ H  X         X         HOVER2 * 2.0 * U
+
+ENDATA

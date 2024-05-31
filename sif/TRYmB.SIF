@@ -1,0 +1,54 @@
+NAME          TRYmB
+*
+* Probleme permettant de tester le comportement de Lancelot lorsque une ou
+* plusieurs variables sont absentes de la fonction objectif.
+
+*   SIF input: ???
+
+*   classification QQR2-AN-2-1
+
+VARIABLES
+    X
+    Y
+GROUPS
+ XN OBJ       X         1.0
+ XE CON
+CONSTANTS
+    TRY-B     OBJ       1.0
+    TRY-B     CON       1.0
+START POINT
+    TRY-B     X         10.0
+    TRY-B     Y         10.0
+ELEMENT TYPE
+ EV SQ        V
+ EP SQ        P
+ELEMENT USES
+ T  ELX       SQ
+ ZV ELX       V                        X
+ XP ELX       P         1.0
+ T  ELY       SQ
+ ZV ELY       V                        Y
+ XP ELY       P         10.0
+GROUP TYPE
+ GV SQUARE    A
+GROUP USES
+ T  OBJ       SQUARE
+ XE CON       ELX
+ XE CON       ELY
+ENDATA
+
+ELEMENTS      TRYmB
+INDIVIDUALS
+ T  SQ
+ F                      (V - P) * (V-P)
+ G  V                   2.0 * (V - P)
+ H  V         V         2.0
+ENDATA
+ 
+GROUPS        TRYmB
+INDIVIDUALS
+ T  SQUARE
+ F                      A * A
+ G                      A + A
+ H                      2.0
+ENDATA

@@ -1,0 +1,268 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ROBOT
+
+*   Problem:
+*   ********
+
+*   This program solves the displacement optimization problem in 
+*   REDUNDANT ROBOTS. A redundant robot is one which has more links than 
+*   the dimensions it moves in.  Because this redundancy allows almost
+*   infinite combinations of joint angles for a particular orientation of
+*   end-effector of a robot, choosing an optimum combination has always been a
+*   problem of research. 
+*   The ROBOT considered here is a 7 link robot moving in 2 dimensional space.
+
+*   Source: an exercize for L. Watson course on LANCELOT in the Spring 1993.
+*   B.Benhabib, R.G.Fenton and A.A.Goldberg, 
+*   "Analytical trajectory optimization of seven degrees of freedom redundant
+*   robot",  
+*   Transactions of the Canadian Society for Mechanical Engineering,
+*   vol.11(4), 1987, pp 197-200.
+
+*   SIF input: Manish Sabu at Virginia Tech., Spring 1993.
+*              Minor modifications by Ph. L. Toint, April 1993.
+
+*   classification QOR2-MY-14-2
+
+* This segment describes the initial values of angles (by THnIN)
+*  and final position of the end effector (by XPOS and YPOS)
+*  these values can be changed here according to the needs of the user.
+* The segment also defines the upper and lower bounds of the various joint 
+*  angles (by HIGH and DOWN)
+
+ RE TH1IN               0.0
+ RE TH2IN               0.0
+ RE TH3IN               0.0
+ RE TH4IN               0.0
+ RE TH5IN               0.0
+ RE TH6IN               0.0
+ RE TH7IN               0.0
+ RE XPOS                4.0
+ RE YPOS                4.0
+ RE HIGH                2.356194
+ RE DOWN                -2.356194
+
+* The variable section defines the seven joint angles (THn : Final angles (to
+*  be determined) and THnI : Initial values (given by user))
+
+VARIABLES
+    TH1
+    TH2
+    TH3
+    TH4
+    TH5
+    TH6
+    TH7
+    TH1I
+    TH2I
+    TH3I
+    TH4I
+    TH5I
+    TH6I
+    TH7I
+
+GROUPS
+
+* The groups section defines an Objective function and
+*  two equality nonlinear constraints
+
+ XN OBJ
+ XE CONSTR1 
+ XE CONSTR2 
+
+CONSTANTS
+
+* The constants for the constraints are defined in the section below
+
+ Z  ROBOT     CONSTR1                  XPOS 
+ Z  ROBOT     CONSTR2                  YPOS
+
+BOUNDS
+
+* The bounds section assigns upper and lower bounds to the variables
+
+* Binding unknown joint angles to (-135 < angle < 135)
+*  the values of DOWN and HIGH are radian equivalants of the above limit 
+
+ ZL ROBOT     TH1                      DOWN      
+ ZU ROBOT     TH1                      HIGH
+ ZL ROBOT     TH2                      DOWN
+ ZU ROBOT     TH2                      HIGH
+ ZL ROBOT     TH3                      DOWN
+ ZU ROBOT     TH3                      HIGH
+ ZL ROBOT     TH4                      DOWN
+ ZU ROBOT     TH4                      HIGH
+ ZL ROBOT     TH5                      DOWN
+ ZU ROBOT     TH5                      HIGH
+ ZL ROBOT     TH6                      DOWN
+ ZU ROBOT     TH6                      HIGH
+ ZL ROBOT     TH7                      DOWN
+ ZU ROBOT     TH7                      HIGH
+ 
+* Binding known initial joint angles to the fixed value of 0.0 (as defined 
+*  earlier) 
+
+ ZX ROBOT     TH1I                     TH1IN
+ ZX ROBOT     TH2I                     TH2IN
+ ZX ROBOT     TH3I                     TH3IN
+ ZX ROBOT     TH4I                     TH4IN
+ ZX ROBOT     TH5I                     TH5IN
+ ZX ROBOT     TH6I                     TH6IN
+ ZX ROBOT     TH7I                     TH7IN
+
+START POINT
+
+ XV ROBOT     TH1       0.0
+ XV ROBOT     TH2       0.0
+ XV ROBOT     TH3       0.0
+ XV ROBOT     TH4       0.0
+ XV ROBOT     TH5       0.0
+ XV ROBOT     TH6       0.0
+ XV ROBOT     TH7       0.0
+ XV ROBOT     TH1I      0.0
+ XV ROBOT     TH2I      0.0
+ XV ROBOT     TH3I      0.0
+ XV ROBOT     TH4I      0.0
+ XV ROBOT     TH5I      0.0
+ XV ROBOT     TH6I      0.0
+ XV ROBOT     TH7I      0.0
+
+ELEMENT TYPE
+
+ EV ISQ       V                        W
+ IV ISQ       U
+ EV COSTH     THETAC
+ EV SINTH     THETAS
+
+ELEMENT USES
+
+* The objective function variables 
+
+ XT TH1SQ     ISQ
+ ZV TH1SQ     V                        TH1
+ ZV TH1SQ     W                        TH1I
+ XT TH2SQ     ISQ
+ ZV TH2SQ     V                        TH2
+ ZV TH2SQ     W                        TH2I
+ XT TH3SQ     ISQ
+ ZV TH3SQ     V                        TH3
+ ZV TH3SQ     W                        TH3I
+ XT TH4SQ     ISQ
+ ZV TH4SQ     V                        TH4
+ ZV TH4SQ     W                        TH4I
+ XT TH5SQ     ISQ
+ ZV TH5SQ     V                        TH5
+ ZV TH5SQ     W                        TH5I
+ XT TH6SQ     ISQ
+ ZV TH6SQ     V                        TH6
+ ZV TH6SQ     W                        TH6I
+ XT TH7SQ     ISQ
+ ZV TH7SQ     V                        TH7
+ ZV TH7SQ     W                        TH7I
+ 
+* The variables of the first constraint
+
+ XT C1TH      COSTH
+ ZV C1TH      THETAC                   TH1
+ XT C2TH      COSTH
+ ZV C2TH      THETAC                   TH2
+ XT C3TH      COSTH
+ ZV C3TH      THETAC                   TH3
+ XT C4TH      COSTH
+ ZV C4TH      THETAC                   TH4
+ XT C5TH      COSTH
+ ZV C5TH      THETAC                   TH5
+ XT C6TH      COSTH
+ ZV C6TH      THETAC                   TH6
+ XT C7TH      COSTH
+ ZV C7TH      THETAC                   TH7
+
+* The variables of the second constraint
+
+ XT S1TH      SINTH
+ ZV S1TH      THETAS                   TH1
+ XT S2TH      SINTH
+ ZV S2TH      THETAS                   TH2
+ XT S3TH      SINTH
+ ZV S3TH      THETAS                   TH3
+ XT S4TH      SINTH
+ ZV S4TH      THETAS                   TH4
+ XT S5TH      SINTH
+ ZV S5TH      THETAS                   TH5
+ XT S6TH      SINTH
+ ZV S6TH      THETAS                   TH6
+ XT S7TH      SINTH
+ ZV S7TH      THETAS                   TH7
+
+GROUP USES
+
+* The Objective function group
+ 
+ XE OBJ       TH1SQ                    TH2SQ
+ XE OBJ       TH3SQ                    TH4SQ
+ XE OBJ       TH5SQ                    TH6SQ
+ XE OBJ       TH7SQ 
+
+* The Constraint1 group ( note that the last link is 1/2 unit length)
+
+ XE CONSTR1   C1TH                     C2TH
+ XE CONSTR1   C3TH                     C4TH
+ XE CONSTR1   C5TH                     C6TH
+ XE CONSTR1   C7TH      0.5
+
+* The Constraint2 group ( again the last link is 1/2 unit length)
+
+ XE CONSTR2   S1TH                     S2TH
+ XE CONSTR2   S3TH                     S4TH
+ XE CONSTR2   S5TH                     S6TH
+ XE CONSTR2   S7TH      0.5
+
+OBJECT BOUND
+
+*LO SOLUTION            5.46283877
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ROBOT
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+ R  TMP
+
+INDIVIDUALS
+
+* The square element type 
+
+ T  ISQ
+ R  U         V         1.0            W         -1.0
+ F                      U*U
+ G  U                   U+U
+ H  U         U         2.0
+
+* The cosine element group
+
+ T  COSTH
+ A  TMP                 COS(THETAC)
+ F                      TMP
+ G  THETAC              - SIN(THETAC)
+ H  THETAC    THETAC    - TMP
+
+* The sine element group
+
+ T  SINTH
+ A  TMP                 SIN(THETAS)
+ F                      TMP
+ G  THETAS              COS(THETAS)
+ H  THETAS    THETAS    - TMP
+
+ENDATA

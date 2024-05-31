@@ -1,0 +1,169 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SIPOW3 
+
+*   Problem :
+*   *********
+
+*   This is a discretization of a one sided approximation problem of
+*   approximating the function xi * xi * eta by a linear polynomial
+*   on the boundary of the unit square [0,1]x[0,1].
+
+*   Source: problem 3 in
+*   M. J. D. Powell,
+*   "Log barrier methods for semi-infinite programming calculations"
+*   Numerical Analysis Report DAMTP 1992/NA11, U. of Cambridge, UK.
+
+*   SIF input: A. R. Conn and Nick Gould, August 1993
+
+*   classification LLR2-AN-4-V
+
+*   Problem variants: they are identified by the values of M (even)
+
+*IE M                   20 
+*IE M                   100 
+*IE M                   500 
+ IE M                   2000 
+*IE M                   10000 
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ RI RM        M
+ RM RM/8      RM        0.125
+ RM RM/4      RM        0.25
+ RM 3RM/8     RM        0.375
+ 
+ IR M/8       RM/8
+ IR M/4       RM/4
+ IR 3M/8      3RM/8
+
+ IA M/8+1     M/8       1
+ IA M/4+1     M/4       1
+ IA 3M/8+1    3M/8      1
+
+ I/ M/2       M                        2
+ IA M/2+1     M/2       1
+
+ RI RM        M
+
+*  Set up uniform spacings on the square. 
+
+ RD STEP      RM        8.0
+
+ DO J         1                        M/2
+ IA I         J         -1
+
+ RI RI        I
+ A* XI(J)     RI                       STEP
+
+ ND
+
+*  Consider segment [0,0]x[0,1]
+
+ DO J         1                        M/8
+ RI RJ        J
+ 
+ A= ETA(J)    XI(J)
+ AE XI(J)               0.0        
+
+ ND
+
+*  Consider segment [0,1]x[1,1]
+
+ DO J         M/8+1                    M/4
+ RI RJ        J
+ 
+ AA XI(J)     XI(J)      -1.0
+ AE ETA(J)               1.0        
+
+ ND
+
+*  Consider segment [1,1]x[1,0]
+
+ DO J         M/4+1                    3M/8
+ RI RJ        J
+ 
+ AA ETA(J)    XI(J)     -2.0
+ AE XI(J)               1.0        
+
+ ND
+
+*  Consider segment [1,0]x[0,0]
+
+ DO J         3M/8+1                   M/2
+ RI RJ        J
+ 
+ AA XI(J)     XI(J)      -3.0
+ AE ETA(J)               0.0        
+
+ ND
+
+VARIABLES
+
+    X1
+    X2 
+    X3 
+    X4 
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X4        1.0
+
+*   Constraints
+
+ DO J         1                        M/2
+
+ XG C(J)      X1        1.0            X4        1.0
+ ZG C(J)      X2                       XI(J)
+ ZG C(J)      X3                       ETA(J)
+
+ ND
+
+ DO J         1                        M/2
+ I+ J+        M/2                      J
+
+ XL C(J+)     X1        1.0
+ ZL C(J+)     X2                       XI(J)
+ ZL C(J+)     X3                       ETA(J)
+
+ ND
+
+CONSTANTS
+
+ DO J         1                        M/2
+ I+ J+        M/2                      J
+
+ A* XIXI      XI(J)                    XI(J)
+ A* XIXIETA   XIXI                     ETA(J)
+
+ Z  SIPOW3    C(J)                     XIXIETA
+ Z  SIPOW3    C(J+)                    XIXIETA
+
+ ND
+
+BOUNDS
+
+ FR SIPOW3    'DEFAULT'
+
+START POINT
+
+    SIPOW3    X1        -0.1
+    SIPOW3    X2        0.0
+    SIPOW3    X3        0.0
+    SIPOW3    X4        1.2
+
+OBJECT BOUND
+
+*LO SOLUTION            3.0315716D-1 ! m = 20
+*LO SOLUTION            5.0397238D-1 ! m = 100
+*LO SOLUTION            5.3016386D-1 ! m = 500
+*LO SOLUTION            5.3465470D-1 ! m = 2000
+*LO SOLUTION            5.3564207D-1 ! m = 10000
+
+ENDATA

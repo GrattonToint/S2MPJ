@@ -1,0 +1,89 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SSINE
+
+*   Problem :
+*   *********
+
+*   A contrived infeaible pair of cubic equations
+
+*   SIF input: Nick Gould, Nov 2016
+
+*   classification NOR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ E  C1
+ E  C2        X3        1.0
+
+CONSTANTS
+
+    SSINE     C1        4.0
+
+BOUNDS
+
+ FR SSINE     'DEFAULT'
+
+START POINT
+
+    SSINE     'DEFAULT'  1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV PROD      V1
+ EV PROD      V2
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X2
+ T  E2        PROD
+ V  E2        V1                       X1
+ V  E2        V2                       X3
+
+GROUP USES
+
+ XE C1        E2         1.0
+ XE C2        E1         1.0
+
+OBJECT BOUND
+
+ LO SSINE                0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SSINE
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  PROD
+ F                      V1 * V1 * V2
+ G  V1                  2.0 * V1 * V2
+ G  V2                  V1 * V1
+ H  V1        V1        2.0 * V2
+ H  V2        V1        2.0 * V1
+
+ENDATA

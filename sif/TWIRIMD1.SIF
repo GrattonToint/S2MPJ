@@ -1,0 +1,2564 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TWIRIMD1
+
+*   Problem:
+*   ********
+
+*   A relaxation of an nonlinear integer programming problem for finding
+*   optimal nuclear reactor core reload patterns (medium size version)
+
+*   Source:
+*   A.J. Quist, E. de Klerk, C. Roos, T. Terlaky, R. van Geemert,
+*   J.E. Hoogenboom, T.Illes,
+*   "Finding Optimal Nuclear Reactor Core Reload Patterns Using Nonlinear
+*   Optimization and Search Heuristics",
+*   Delft University, January 1998.
+
+*   classification LOI2-RN-1247-544
+
+*   SIF input: Arie Quist, Delft, 1998.
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+* Some useful constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+
+* Sizes
+
+ IE Nnod                31
+ IE Nred                28
+ IE Ndia                3
+ IE Ntim                6
+ IE Nage                4
+ RE D1,1                1
+ RE D2,1                18
+ RE D3,1                28
+ RE D1,2                10
+ RE D2,2                24
+ RE D3,2                31
+
+* Physical Data
+
+ RE -G1,1                 -0.677
+ RE -G2,1                  -0.11
+ RE -G3,1                 -0.015
+ RE -G4,1                      0
+ RE -G5,1                      0
+ RE -G6,1                      0
+ RE -G7,1                      0
+ RE -G8,1                      0
+ RE -G9,1                      0
+ RE -G10,1                 -0.05
+ RE -G11,1                 -0.01
+ RE -G12,1                     0
+ RE -G13,1                     0
+ RE -G14,1                     0
+ RE -G15,1                     0
+ RE -G16,1                     0
+ RE -G17,1                     0
+ RE -G18,1                -0.003
+ RE -G19,1                     0
+ RE -G20,1                     0
+ RE -G21,1                     0
+ RE -G22,1                     0
+ RE -G23,1                     0
+ RE -G24,1                     0
+ RE -G25,1                     0
+ RE -G26,1                     0
+ RE -G27,1                     0
+ RE -G28,1                     0
+ RE -G29,1                     0
+ RE -G30,1                     0
+ RE -G31,1                     0
+ RE -G1,2                  -0.22
+ RE -G2,2                 -0.632
+ RE -G3,2                 -0.105
+ RE -G4,2                 -0.015
+ RE -G5,2                      0
+ RE -G6,2                      0
+ RE -G7,2                      0
+ RE -G8,2                      0
+ RE -G9,2                      0
+ RE -G10,2                 -0.14
+ RE -G11,2                -0.048
+ RE -G12,2                 -0.01
+ RE -G13,2                     0
+ RE -G14,2                     0
+ RE -G15,2                     0
+ RE -G16,2                     0
+ RE -G17,2                     0
+ RE -G18,2                -0.014
+ RE -G19,2                -0.003
+ RE -G20,2                     0
+ RE -G21,2                     0
+ RE -G22,2                     0
+ RE -G23,2                     0
+ RE -G24,2                     0
+ RE -G25,2                     0
+ RE -G26,2                     0
+ RE -G27,2                     0
+ RE -G28,2                     0
+ RE -G29,2                     0
+ RE -G30,2                     0
+ RE -G31,2                     0
+ RE -G1,3                  -0.03
+ RE -G2,3                 -0.105
+ RE -G3,3                 -0.585
+ RE -G4,3                 -0.095
+ RE -G5,3                 -0.015
+ RE -G6,3                      0
+ RE -G7,3                      0
+ RE -G8,3                      0
+ RE -G9,3                      0
+ RE -G10,3                 -0.08
+ RE -G11,3                -0.077
+ RE -G12,3                 -0.04
+ RE -G13,3                 -0.01
+ RE -G14,3                     0
+ RE -G15,3                     0
+ RE -G16,3                     0
+ RE -G17,3                     0
+ RE -G18,3                -0.016
+ RE -G19,3                -0.007
+ RE -G20,3                -0.003
+ RE -G21,3                     0
+ RE -G22,3                     0
+ RE -G23,3                     0
+ RE -G24,3                     0
+ RE -G25,3                     0
+ RE -G26,3                     0
+ RE -G27,3                     0
+ RE -G28,3                     0
+ RE -G29,3                     0
+ RE -G30,3                     0
+ RE -G31,3                     0
+ RE -G1,4                      0
+ RE -G2,4                 -0.015
+ RE -G3,4                 -0.095
+ RE -G4,4                 -0.582
+ RE -G5,4                 -0.095
+ RE -G6,4                 -0.015
+ RE -G7,4                      0
+ RE -G8,4                      0
+ RE -G9,4                      0
+ RE -G10,4                 -0.02
+ RE -G11,4                -0.043
+ RE -G12,4                 -0.07
+ RE -G13,4                 -0.04
+ RE -G14,4                 -0.01
+ RE -G15,4                     0
+ RE -G16,4                     0
+ RE -G17,4                     0
+ RE -G18,4                -0.014
+ RE -G19,4                -0.008
+ RE -G20,4                -0.007
+ RE -G21,4                -0.003
+ RE -G22,4                     0
+ RE -G23,4                     0
+ RE -G24,4                     0
+ RE -G25,4                     0
+ RE -G26,4                     0
+ RE -G27,4                     0
+ RE -G28,4                     0
+ RE -G29,4                     0
+ RE -G30,4                     0
+ RE -G31,4                     0
+ RE -G1,5                      0
+ RE -G2,5                      0
+ RE -G3,5                 -0.015
+ RE -G4,5                 -0.095
+ RE -G5,5                 -0.582
+ RE -G6,5                 -0.095
+ RE -G7,5                 -0.015
+ RE -G8,5                      0
+ RE -G9,5                      0
+ RE -G10,5                     0
+ RE -G11,5                 -0.01
+ RE -G12,5                 -0.04
+ RE -G13,5                 -0.07
+ RE -G14,5                 -0.04
+ RE -G15,5                 -0.01
+ RE -G16,5                     0
+ RE -G17,5                     0
+ RE -G18,5                -0.006
+ RE -G19,5                -0.007
+ RE -G20,5                -0.008
+ RE -G21,5                -0.007
+ RE -G22,5                -0.003
+ RE -G23,5                     0
+ RE -G24,5                     0
+ RE -G25,5                     0
+ RE -G26,5                     0
+ RE -G27,5                     0
+ RE -G28,5                     0
+ RE -G29,5                     0
+ RE -G30,5                     0
+ RE -G31,5                     0
+ RE -G1,6                      0
+ RE -G2,6                      0
+ RE -G3,6                      0
+ RE -G4,6                 -0.015
+ RE -G5,6                 -0.095
+ RE -G6,6                 -0.582
+ RE -G7,6                 -0.095
+ RE -G8,6                 -0.015
+ RE -G9,6                      0
+ RE -G10,6                     0
+ RE -G11,6                     0
+ RE -G12,6                 -0.01
+ RE -G13,6                 -0.04
+ RE -G14,6                 -0.07
+ RE -G15,6                 -0.04
+ RE -G16,6                 -0.01
+ RE -G17,6                     0
+ RE -G18,6                     0
+ RE -G19,6                -0.003
+ RE -G20,6                -0.007
+ RE -G21,6                -0.008
+ RE -G22,6                -0.007
+ RE -G23,6                -0.003
+ RE -G24,6                     0
+ RE -G25,6                     0
+ RE -G26,6                     0
+ RE -G27,6                     0
+ RE -G28,6                     0
+ RE -G29,6                     0
+ RE -G30,6                     0
+ RE -G31,6                     0
+ RE -G1,7                      0
+ RE -G2,7                      0
+ RE -G3,7                      0
+ RE -G4,7                      0
+ RE -G5,7                 -0.015
+ RE -G6,7                 -0.095
+ RE -G7,7                 -0.582
+ RE -G8,7                 -0.095
+ RE -G9,7                 -0.015
+ RE -G10,7                     0
+ RE -G11,7                     0
+ RE -G12,7                     0
+ RE -G13,7                 -0.01
+ RE -G14,7                 -0.04
+ RE -G15,7                 -0.07
+ RE -G16,7                 -0.04
+ RE -G17,7                 -0.01
+ RE -G18,7                     0
+ RE -G19,7                     0
+ RE -G20,7                -0.003
+ RE -G21,7                -0.007
+ RE -G22,7                -0.008
+ RE -G23,7                -0.007
+ RE -G24,7                     0
+ RE -G25,7                     0
+ RE -G26,7                     0
+ RE -G27,7                     0
+ RE -G28,7                     0
+ RE -G29,7                     0
+ RE -G30,7                     0
+ RE -G31,7                     0
+ RE -G1,8                      0
+ RE -G2,8                      0
+ RE -G3,8                      0
+ RE -G4,8                      0
+ RE -G5,8                      0
+ RE -G6,8                 -0.015
+ RE -G7,8                 -0.095
+ RE -G8,8                 -0.582
+ RE -G9,8                 -0.095
+ RE -G10,8                     0
+ RE -G11,8                     0
+ RE -G12,8                     0
+ RE -G13,8                     0
+ RE -G14,8                 -0.01
+ RE -G15,8                 -0.04
+ RE -G16,8                 -0.07
+ RE -G17,8                 -0.04
+ RE -G18,8                     0
+ RE -G19,8                     0
+ RE -G20,8                     0
+ RE -G21,8                -0.003
+ RE -G22,8                -0.007
+ RE -G23,8                -0.008
+ RE -G24,8                     0
+ RE -G25,8                     0
+ RE -G26,8                     0
+ RE -G27,8                     0
+ RE -G28,8                     0
+ RE -G29,8                     0
+ RE -G30,8                     0
+ RE -G31,8                     0
+ RE -G1,9                      0
+ RE -G2,9                      0
+ RE -G3,9                      0
+ RE -G4,9                      0
+ RE -G5,9                      0
+ RE -G6,9                      0
+ RE -G7,9                 -0.015
+ RE -G8,9                 -0.095
+ RE -G9,9                 -0.582
+ RE -G10,9                     0
+ RE -G11,9                     0
+ RE -G12,9                     0
+ RE -G13,9                     0
+ RE -G14,9                     0
+ RE -G15,9                 -0.01
+ RE -G16,9                 -0.04
+ RE -G17,9                 -0.07
+ RE -G18,9                     0
+ RE -G19,9                     0
+ RE -G20,9                     0
+ RE -G21,9                     0
+ RE -G22,9                -0.003
+ RE -G23,9                -0.007
+ RE -G24,9                     0
+ RE -G25,9                     0
+ RE -G26,9                     0
+ RE -G27,9                     0
+ RE -G28,9                     0
+ RE -G29,9                     0
+ RE -G30,9                     0
+ RE -G31,9                     0
+ RE -G1,10                 -0.05
+ RE -G2,10                 -0.07
+ RE -G3,10                 -0.04
+ RE -G4,10                 -0.01
+ RE -G5,10                     0
+ RE -G6,10                     0
+ RE -G7,10                     0
+ RE -G8,10                     0
+ RE -G9,10                     0
+ RE -G10,10                -0.52
+ RE -G11,10               -0.062
+ RE -G12,10               -0.008
+ RE -G13,10                    0
+ RE -G14,10                    0
+ RE -G15,10                    0
+ RE -G16,10                    0
+ RE -G17,10                    0
+ RE -G18,10               -0.033
+ RE -G19,10               -0.007
+ RE -G20,10                    0
+ RE -G21,10                    0
+ RE -G22,10                    0
+ RE -G23,10                    0
+ RE -G24,10               -0.003
+ RE -G25,10                    0
+ RE -G26,10                    0
+ RE -G27,10                    0
+ RE -G28,10                    0
+ RE -G29,10                    0
+ RE -G30,10                    0
+ RE -G31,10                    0
+ RE -G1,11                 -0.02
+ RE -G2,11                -0.048
+ RE -G3,11                -0.077
+ RE -G4,11                -0.043
+ RE -G5,11                 -0.01
+ RE -G6,11                     0
+ RE -G7,11                     0
+ RE -G8,11                     0
+ RE -G9,11                     0
+ RE -G10,11               -0.124
+ RE -G11,11               -0.553
+ RE -G12,11               -0.069
+ RE -G13,11               -0.008
+ RE -G14,11                    0
+ RE -G15,11                    0
+ RE -G16,11                    0
+ RE -G17,11                    0
+ RE -G18,11               -0.124
+ RE -G19,11               -0.041
+ RE -G20,11               -0.007
+ RE -G21,11                    0
+ RE -G22,11                    0
+ RE -G23,11                    0
+ RE -G24,11               -0.014
+ RE -G25,11               -0.003
+ RE -G26,11                    0
+ RE -G27,11                    0
+ RE -G28,11                    0
+ RE -G29,11                    0
+ RE -G30,11                    0
+ RE -G31,11                    0
+ RE -G1,12                     0
+ RE -G2,12                 -0.01
+ RE -G3,12                 -0.04
+ RE -G4,12                 -0.07
+ RE -G5,12                 -0.04
+ RE -G6,12                 -0.01
+ RE -G7,12                     0
+ RE -G8,12                     0
+ RE -G9,12                     0
+ RE -G10,12               -0.016
+ RE -G11,12               -0.069
+ RE -G12,12               -0.523
+ RE -G13,12               -0.062
+ RE -G14,12               -0.008
+ RE -G15,12                    0
+ RE -G16,12                    0
+ RE -G17,12                    0
+ RE -G18,12               -0.066
+ RE -G19,12               -0.069
+ RE -G20,12               -0.033
+ RE -G21,12               -0.007
+ RE -G22,12                    0
+ RE -G23,12                    0
+ RE -G24,12               -0.016
+ RE -G25,12               -0.007
+ RE -G26,12               -0.003
+ RE -G27,12                    0
+ RE -G28,12                    0
+ RE -G29,12                    0
+ RE -G30,12                    0
+ RE -G31,12                    0
+ RE -G1,13                     0
+ RE -G2,13                     0
+ RE -G3,13                 -0.01
+ RE -G4,13                 -0.04
+ RE -G5,13                 -0.07
+ RE -G6,13                 -0.04
+ RE -G7,13                 -0.01
+ RE -G8,13                     0
+ RE -G9,13                     0
+ RE -G10,13                    0
+ RE -G11,13               -0.008
+ RE -G12,13               -0.062
+ RE -G13,13                -0.52
+ RE -G14,13               -0.062
+ RE -G15,13               -0.008
+ RE -G16,13                    0
+ RE -G17,13                    0
+ RE -G18,13               -0.014
+ RE -G19,13               -0.036
+ RE -G20,13               -0.062
+ RE -G21,13               -0.033
+ RE -G22,13               -0.007
+ RE -G23,13                    0
+ RE -G24,13               -0.014
+ RE -G25,13               -0.008
+ RE -G26,13               -0.007
+ RE -G27,13               -0.003
+ RE -G28,13                    0
+ RE -G29,13                    0
+ RE -G30,13                    0
+ RE -G31,13                    0
+ RE -G1,14                     0
+ RE -G2,14                     0
+ RE -G3,14                     0
+ RE -G4,14                 -0.01
+ RE -G5,14                 -0.04
+ RE -G6,14                 -0.07
+ RE -G7,14                 -0.04
+ RE -G8,14                 -0.01
+ RE -G9,14                     0
+ RE -G10,14                    0
+ RE -G11,14                    0
+ RE -G12,14               -0.008
+ RE -G13,14               -0.062
+ RE -G14,14                -0.52
+ RE -G15,14               -0.062
+ RE -G16,14               -0.008
+ RE -G17,14                    0
+ RE -G18,14                    0
+ RE -G19,14               -0.007
+ RE -G20,14               -0.033
+ RE -G21,14               -0.062
+ RE -G22,14               -0.033
+ RE -G23,14               -0.007
+ RE -G24,14               -0.006
+ RE -G25,14               -0.007
+ RE -G26,14               -0.008
+ RE -G27,14               -0.007
+ RE -G28,14                    0
+ RE -G29,14                    0
+ RE -G30,14                    0
+ RE -G31,14                    0
+ RE -G1,15                     0
+ RE -G2,15                     0
+ RE -G3,15                     0
+ RE -G4,15                     0
+ RE -G5,15                 -0.01
+ RE -G6,15                 -0.04
+ RE -G7,15                 -0.07
+ RE -G8,15                 -0.04
+ RE -G9,15                 -0.01
+ RE -G10,15                    0
+ RE -G11,15                    0
+ RE -G12,15                    0
+ RE -G13,15               -0.008
+ RE -G14,15               -0.062
+ RE -G15,15                -0.52
+ RE -G16,15               -0.062
+ RE -G17,15               -0.008
+ RE -G18,15                    0
+ RE -G19,15                    0
+ RE -G20,15               -0.007
+ RE -G21,15               -0.033
+ RE -G22,15               -0.062
+ RE -G23,15               -0.033
+ RE -G24,15                    0
+ RE -G25,15               -0.003
+ RE -G26,15               -0.007
+ RE -G27,15               -0.008
+ RE -G28,15                    0
+ RE -G29,15                    0
+ RE -G30,15                    0
+ RE -G31,15                    0
+ RE -G1,16                     0
+ RE -G2,16                     0
+ RE -G3,16                     0
+ RE -G4,16                     0
+ RE -G5,16                     0
+ RE -G6,16                 -0.01
+ RE -G7,16                 -0.04
+ RE -G8,16                 -0.07
+ RE -G9,16                 -0.04
+ RE -G10,16                    0
+ RE -G11,16                    0
+ RE -G12,16                    0
+ RE -G13,16                    0
+ RE -G14,16               -0.008
+ RE -G15,16               -0.062
+ RE -G16,16                -0.52
+ RE -G17,16               -0.062
+ RE -G18,16                    0
+ RE -G19,16                    0
+ RE -G20,16                    0
+ RE -G21,16               -0.007
+ RE -G22,16               -0.033
+ RE -G23,16               -0.062
+ RE -G24,16                    0
+ RE -G25,16                    0
+ RE -G26,16               -0.003
+ RE -G27,16               -0.007
+ RE -G28,16                    0
+ RE -G29,16                    0
+ RE -G30,16                    0
+ RE -G31,16                    0
+ RE -G1,17                     0
+ RE -G2,17                     0
+ RE -G3,17                     0
+ RE -G4,17                     0
+ RE -G5,17                     0
+ RE -G6,17                     0
+ RE -G7,17                 -0.01
+ RE -G8,17                 -0.04
+ RE -G9,17                 -0.07
+ RE -G10,17                    0
+ RE -G11,17                    0
+ RE -G12,17                    0
+ RE -G13,17                    0
+ RE -G14,17                    0
+ RE -G15,17               -0.008
+ RE -G16,17               -0.062
+ RE -G17,17                -0.52
+ RE -G18,17                    0
+ RE -G19,17                    0
+ RE -G20,17                    0
+ RE -G21,17                    0
+ RE -G22,17               -0.007
+ RE -G23,17               -0.033
+ RE -G24,17                    0
+ RE -G25,17                    0
+ RE -G26,17                    0
+ RE -G27,17               -0.003
+ RE -G28,17                    0
+ RE -G29,17                    0
+ RE -G30,17                    0
+ RE -G31,17                    0
+ RE -G1,18                -0.003
+ RE -G2,18                -0.007
+ RE -G3,18                -0.008
+ RE -G4,18                -0.007
+ RE -G5,18                -0.003
+ RE -G6,18                     0
+ RE -G7,18                     0
+ RE -G8,18                     0
+ RE -G9,18                     0
+ RE -G10,18               -0.033
+ RE -G11,18               -0.062
+ RE -G12,18               -0.033
+ RE -G13,18               -0.007
+ RE -G14,18                    0
+ RE -G15,18                    0
+ RE -G16,18                    0
+ RE -G17,18                    0
+ RE -G18,18                -0.52
+ RE -G19,18               -0.062
+ RE -G20,18               -0.008
+ RE -G21,18                    0
+ RE -G22,18                    0
+ RE -G23,18                    0
+ RE -G24,18               -0.033
+ RE -G25,18               -0.007
+ RE -G26,18                    0
+ RE -G27,18                    0
+ RE -G28,18               -0.003
+ RE -G29,18                    0
+ RE -G30,18                    0
+ RE -G31,18                    0
+ RE -G1,19                     0
+ RE -G2,19                -0.003
+ RE -G3,19                -0.007
+ RE -G4,19                -0.008
+ RE -G5,19                -0.007
+ RE -G6,19                -0.003
+ RE -G7,19                     0
+ RE -G8,19                     0
+ RE -G9,19                     0
+ RE -G10,19               -0.014
+ RE -G11,19               -0.041
+ RE -G12,19               -0.069
+ RE -G13,19               -0.036
+ RE -G14,19               -0.007
+ RE -G15,19                    0
+ RE -G16,19                    0
+ RE -G17,19                    0
+ RE -G18,19               -0.124
+ RE -G19,19               -0.553
+ RE -G20,19               -0.069
+ RE -G21,19               -0.008
+ RE -G22,19                    0
+ RE -G23,19                    0
+ RE -G24,19               -0.124
+ RE -G25,19               -0.041
+ RE -G26,19               -0.007
+ RE -G27,19                    0
+ RE -G28,19               -0.014
+ RE -G29,19               -0.003
+ RE -G30,19                    0
+ RE -G31,19                    0
+ RE -G1,20                     0
+ RE -G2,20                     0
+ RE -G3,20                -0.003
+ RE -G4,20                -0.007
+ RE -G5,20                -0.008
+ RE -G6,20                -0.007
+ RE -G7,20                -0.003
+ RE -G8,20                     0
+ RE -G9,20                     0
+ RE -G10,20                    0
+ RE -G11,20               -0.007
+ RE -G12,20               -0.033
+ RE -G13,20               -0.062
+ RE -G14,20               -0.033
+ RE -G15,20               -0.007
+ RE -G16,20                    0
+ RE -G17,20                    0
+ RE -G18,20               -0.016
+ RE -G19,20               -0.069
+ RE -G20,20               -0.523
+ RE -G21,20               -0.062
+ RE -G22,20               -0.008
+ RE -G23,20                    0
+ RE -G24,20               -0.066
+ RE -G25,20               -0.069
+ RE -G26,20               -0.033
+ RE -G27,20               -0.007
+ RE -G28,20               -0.016
+ RE -G29,20               -0.007
+ RE -G30,20               -0.003
+ RE -G31,20                    0
+ RE -G1,21                     0
+ RE -G2,21                     0
+ RE -G3,21                     0
+ RE -G4,21                -0.003
+ RE -G5,21                -0.007
+ RE -G6,21                -0.008
+ RE -G7,21                -0.007
+ RE -G8,21                -0.003
+ RE -G9,21                     0
+ RE -G10,21                    0
+ RE -G11,21                    0
+ RE -G12,21               -0.007
+ RE -G13,21               -0.033
+ RE -G14,21               -0.062
+ RE -G15,21               -0.033
+ RE -G16,21               -0.007
+ RE -G17,21                    0
+ RE -G18,21                    0
+ RE -G19,21               -0.008
+ RE -G20,21               -0.062
+ RE -G21,21                -0.52
+ RE -G22,21               -0.062
+ RE -G23,21               -0.008
+ RE -G24,21               -0.014
+ RE -G25,21               -0.036
+ RE -G26,21               -0.062
+ RE -G27,21               -0.033
+ RE -G28,21               -0.014
+ RE -G29,21               -0.008
+ RE -G30,21               -0.007
+ RE -G31,21                    0
+ RE -G1,22                     0
+ RE -G2,22                     0
+ RE -G3,22                     0
+ RE -G4,22                     0
+ RE -G5,22                -0.003
+ RE -G6,22                -0.007
+ RE -G7,22                -0.008
+ RE -G8,22                -0.007
+ RE -G9,22                -0.003
+ RE -G10,22                    0
+ RE -G11,22                    0
+ RE -G12,22                    0
+ RE -G13,22               -0.007
+ RE -G14,22               -0.033
+ RE -G15,22               -0.062
+ RE -G16,22               -0.033
+ RE -G17,22               -0.007
+ RE -G18,22                    0
+ RE -G19,22                    0
+ RE -G20,22               -0.008
+ RE -G21,22               -0.062
+ RE -G22,22                -0.52
+ RE -G23,22               -0.062
+ RE -G24,22                    0
+ RE -G25,22               -0.007
+ RE -G26,22               -0.033
+ RE -G27,22               -0.062
+ RE -G28,22               -0.006
+ RE -G29,22               -0.007
+ RE -G30,22               -0.008
+ RE -G31,22                    0
+ RE -G1,23                     0
+ RE -G2,23                     0
+ RE -G3,23                     0
+ RE -G4,23                     0
+ RE -G5,23                     0
+ RE -G6,23                -0.003
+ RE -G7,23                -0.007
+ RE -G8,23                -0.008
+ RE -G9,23                -0.007
+ RE -G10,23                    0
+ RE -G11,23                    0
+ RE -G12,23                    0
+ RE -G13,23                    0
+ RE -G14,23               -0.007
+ RE -G15,23               -0.033
+ RE -G16,23               -0.062
+ RE -G17,23               -0.033
+ RE -G18,23                    0
+ RE -G19,23                    0
+ RE -G20,23                    0
+ RE -G21,23               -0.008
+ RE -G22,23               -0.062
+ RE -G23,23                -0.52
+ RE -G24,23                    0
+ RE -G25,23                    0
+ RE -G26,23               -0.007
+ RE -G27,23               -0.033
+ RE -G28,23                    0
+ RE -G29,23               -0.003
+ RE -G30,23               -0.007
+ RE -G31,23                    0
+ RE -G1,24                     0
+ RE -G2,24                     0
+ RE -G3,24                     0
+ RE -G4,24                     0
+ RE -G5,24                     0
+ RE -G6,24                     0
+ RE -G7,24                     0
+ RE -G8,24                     0
+ RE -G9,24                     0
+ RE -G10,24               -0.003
+ RE -G11,24               -0.007
+ RE -G12,24               -0.008
+ RE -G13,24               -0.007
+ RE -G14,24               -0.003
+ RE -G15,24                    0
+ RE -G16,24                    0
+ RE -G17,24                    0
+ RE -G18,24               -0.033
+ RE -G19,24               -0.062
+ RE -G20,24               -0.033
+ RE -G21,24               -0.007
+ RE -G22,24                    0
+ RE -G23,24                    0
+ RE -G24,24                -0.52
+ RE -G25,24               -0.062
+ RE -G26,24               -0.008
+ RE -G27,24                    0
+ RE -G28,24               -0.033
+ RE -G29,24               -0.007
+ RE -G30,24                    0
+ RE -G31,24               -0.003
+ RE -G1,25                     0
+ RE -G2,25                     0
+ RE -G3,25                     0
+ RE -G4,25                     0
+ RE -G5,25                     0
+ RE -G6,25                     0
+ RE -G7,25                     0
+ RE -G8,25                     0
+ RE -G9,25                     0
+ RE -G10,25                    0
+ RE -G11,25               -0.003
+ RE -G12,25               -0.007
+ RE -G13,25               -0.008
+ RE -G14,25               -0.007
+ RE -G15,25               -0.003
+ RE -G16,25                    0
+ RE -G17,25                    0
+ RE -G18,25               -0.014
+ RE -G19,25               -0.041
+ RE -G20,25               -0.069
+ RE -G21,25               -0.036
+ RE -G22,25               -0.007
+ RE -G23,25                    0
+ RE -G24,25               -0.124
+ RE -G25,25               -0.553
+ RE -G26,25               -0.069
+ RE -G27,25               -0.008
+ RE -G28,25               -0.124
+ RE -G29,25               -0.041
+ RE -G30,25               -0.007
+ RE -G31,25               -0.014
+ RE -G1,26                     0
+ RE -G2,26                     0
+ RE -G3,26                     0
+ RE -G4,26                     0
+ RE -G5,26                     0
+ RE -G6,26                     0
+ RE -G7,26                     0
+ RE -G8,26                     0
+ RE -G9,26                     0
+ RE -G10,26                    0
+ RE -G11,26                    0
+ RE -G12,26               -0.003
+ RE -G13,26               -0.007
+ RE -G14,26               -0.008
+ RE -G15,26               -0.007
+ RE -G16,26               -0.003
+ RE -G17,26                    0
+ RE -G18,26                    0
+ RE -G19,26               -0.007
+ RE -G20,26               -0.033
+ RE -G21,26               -0.062
+ RE -G22,26               -0.033
+ RE -G23,26               -0.007
+ RE -G24,26               -0.016
+ RE -G25,26               -0.069
+ RE -G26,26               -0.523
+ RE -G27,26               -0.062
+ RE -G28,26               -0.066
+ RE -G29,26               -0.069
+ RE -G30,26               -0.033
+ RE -G31,26               -0.016
+ RE -G1,27                     0
+ RE -G2,27                     0
+ RE -G3,27                     0
+ RE -G4,27                     0
+ RE -G5,27                     0
+ RE -G6,27                     0
+ RE -G7,27                     0
+ RE -G8,27                     0
+ RE -G9,27                     0
+ RE -G10,27                    0
+ RE -G11,27                    0
+ RE -G12,27                    0
+ RE -G13,27               -0.003
+ RE -G14,27               -0.007
+ RE -G15,27               -0.008
+ RE -G16,27               -0.007
+ RE -G17,27               -0.003
+ RE -G18,27                    0
+ RE -G19,27                    0
+ RE -G20,27               -0.007
+ RE -G21,27               -0.033
+ RE -G22,27               -0.062
+ RE -G23,27               -0.033
+ RE -G24,27                    0
+ RE -G25,27               -0.008
+ RE -G26,27               -0.062
+ RE -G27,27                -0.52
+ RE -G28,27               -0.014
+ RE -G29,27               -0.036
+ RE -G30,27               -0.062
+ RE -G31,27               -0.014
+ RE -G1,28                     0
+ RE -G2,28                     0
+ RE -G3,28                     0
+ RE -G4,28                     0
+ RE -G5,28                     0
+ RE -G6,28                     0
+ RE -G7,28                     0
+ RE -G8,28                     0
+ RE -G9,28                     0
+ RE -G10,28                    0
+ RE -G11,28                    0
+ RE -G12,28                    0
+ RE -G13,28                    0
+ RE -G14,28                    0
+ RE -G15,28                    0
+ RE -G16,28                    0
+ RE -G17,28                    0
+ RE -G18,28               -0.003
+ RE -G19,28               -0.007
+ RE -G20,28               -0.008
+ RE -G21,28               -0.007
+ RE -G22,28               -0.003
+ RE -G23,28                    0
+ RE -G24,28               -0.033
+ RE -G25,28               -0.062
+ RE -G26,28               -0.033
+ RE -G27,28               -0.007
+ RE -G28,28                -0.52
+ RE -G29,28               -0.062
+ RE -G30,28               -0.008
+ RE -G31,28               -0.033
+ RE -G1,29                     0
+ RE -G2,29                     0
+ RE -G3,29                     0
+ RE -G4,29                     0
+ RE -G5,29                     0
+ RE -G6,29                     0
+ RE -G7,29                     0
+ RE -G8,29                     0
+ RE -G9,29                     0
+ RE -G10,29                    0
+ RE -G11,29                    0
+ RE -G12,29                    0
+ RE -G13,29                    0
+ RE -G14,29                    0
+ RE -G15,29                    0
+ RE -G16,29                    0
+ RE -G17,29                    0
+ RE -G18,29                    0
+ RE -G19,29               -0.003
+ RE -G20,29               -0.007
+ RE -G21,29               -0.008
+ RE -G22,29               -0.007
+ RE -G23,29               -0.003
+ RE -G24,29               -0.014
+ RE -G25,29               -0.041
+ RE -G26,29               -0.069
+ RE -G27,29               -0.036
+ RE -G28,29               -0.124
+ RE -G29,29               -0.553
+ RE -G30,29               -0.069
+ RE -G31,29               -0.124
+ RE -G1,30                     0
+ RE -G2,30                     0
+ RE -G3,30                     0
+ RE -G4,30                     0
+ RE -G5,30                     0
+ RE -G6,30                     0
+ RE -G7,30                     0
+ RE -G8,30                     0
+ RE -G9,30                     0
+ RE -G10,30                    0
+ RE -G11,30                    0
+ RE -G12,30                    0
+ RE -G13,30                    0
+ RE -G14,30                    0
+ RE -G15,30                    0
+ RE -G16,30                    0
+ RE -G17,30                    0
+ RE -G18,30                    0
+ RE -G19,30                    0
+ RE -G20,30               -0.003
+ RE -G21,30               -0.007
+ RE -G22,30               -0.008
+ RE -G23,30               -0.007
+ RE -G24,30                    0
+ RE -G25,30               -0.007
+ RE -G26,30               -0.033
+ RE -G27,30               -0.062
+ RE -G28,30               -0.016
+ RE -G29,30               -0.069
+ RE -G30,30               -0.523
+ RE -G31,30               -0.066
+ RE -G1,31                     0
+ RE -G2,31                     0
+ RE -G3,31                     0
+ RE -G4,31                     0
+ RE -G5,31                     0
+ RE -G6,31                     0
+ RE -G7,31                     0
+ RE -G8,31                     0
+ RE -G9,31                     0
+ RE -G10,31                    0
+ RE -G11,31                    0
+ RE -G12,31                    0
+ RE -G13,31                    0
+ RE -G14,31                    0
+ RE -G15,31                    0
+ RE -G16,31                    0
+ RE -G17,31                    0
+ RE -G18,31                    0
+ RE -G19,31                    0
+ RE -G20,31                    0
+ RE -G21,31                    0
+ RE -G22,31                    0
+ RE -G23,31                    0
+ RE -G24,31               -0.003
+ RE -G25,31               -0.007
+ RE -G26,31               -0.008
+ RE -G27,31               -0.007
+ RE -G28,31               -0.033
+ RE -G29,31               -0.062
+ RE -G30,31               -0.033
+ RE -G31,31                -0.52
+ RE alpha               6e-06
+ RE Pc                  1200
+ RE CycLen              350
+ RE Kfresh              1.3
+ RE Flim                1.75
+ RE w1                  1
+ RE V1                  0.5
+ RE V2                  1
+ RE V3                  1
+ RE V4                  1
+ RE V5                  1
+ RE V6                  1
+ RE V7                  1
+ RE V8                  1
+ RE V9                  1
+ RE V10                 0.5
+ RE V11                 1
+ RE V12                 1
+ RE V13                 1
+ RE V14                 1
+ RE V15                 1
+ RE V16                 1
+ RE V17                 1
+ RE V18                 0.5
+ RE V19                 1
+ RE V20                 1
+ RE V21                 1
+ RE V22                 1
+ RE V23                 1
+ RE V24                 0.5
+ RE V25                 1
+ RE V26                 1
+ RE V27                 1
+ RE V28                 0.5
+ RE V29                 1
+ RE V30                 1
+ RE V31                 0.5
+
+ DO i         1                        Nnod
+ AM -V(i)     V(i)      -1.0
+ ND
+
+ RI RNnod     Nnod
+ RI RNtim     Ntim
+ RI RNred     Nred
+ RA RNtim-1   RNtim     -1.0
+ R/ Fl_Nred   Flim                     RNred
+ RM -Fl_Nred  Fl_Nred   -1.0
+ IA Ntim-1    Ntim      -1
+ R/ Dt        CycLen                   RNtim-1
+ R* alp_Pc    alpha                    Pc
+ R* alp_Pc_Dt alp_Pc                   Dt
+ RM -Kfresh   Kfresh    -1.0
+ I/ Ntra      Nred                     Nage
+
+VARIABLES
+ DO i         1                        Nnod
+ DO l         1                        Nage
+ DO m         1                        Ntra
+ X  x(i,l,m)
+ ND
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ X  k(i,t)
+ X  phi(i,t)
+ ND
+
+ DO t         1                        Ntim
+ X  keff(t)
+ ND
+
+    epsilon
+
+GROUPS
+* Objective
+ IM t         Ntim      1
+ XN Object    keff(t)   -1.0
+ ZN Object    epsilon                  w1
+
+* Sumi(l,m) and sumlm(i)
+ DO l         1                        Nage
+ DO m         1                        Ntra
+ DO i         1                        Nnod
+ ZE sumi(l,m) x(i,l,m)                 V(i)
+ XE sumlm(i)  x(i,l,m)  1.0
+ ND
+
+* Kern, peak and norm contain no linear elements.
+* Burn contains two
+* Kern, burn, norm: See section 3.1
+* Peak: See section 3.4 AND 4.4.3
+
+ DO t         1                        Ntim
+ XE Norm(t)
+ ND
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ XE Kern(i,t)
+ ZL Peak(i,t) epsilon                  -Fl_Nred
+ ND
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim-1
+ IA t+1       t         1
+ XE Burn(i,t) k(i,t+1)  1.0            k(i,t)    -1.0
+ ND
+
+* Plac contains k(i,1) and -sum_m x(i,1,m)*kfresh (Section 3.3)
+ DO i         1                        Nnod
+ XE Plac(i)   k(i,1)    1.0
+ DO m         1                        Ntra
+ ZE Plac(i)   x(i,1,m)                 -Kfresh
+ ND
+
+* Kefford contains two linear terms.
+* This constraint is in section 4.4.2 of the paper
+ DO t         1                        Ntim-1
+ IA t+1       t         1
+ XL Kefford(t)keff(t+1) 1.0            keff(t)   -1.0
+ ND
+
+* Two adjacent diagonal positions contain the same fuel.
+* See section 3.6, although it is not explicitly stated.
+ DO d         1                        Ndia
+ AA d1        D(d,1)    0
+ AA d2        D(d,2)    0
+ IR d1        d1
+ IR d2        d2
+ DO l         1                        Nage
+ DO m         1                        Ntra
+ XE Dia(d,l,m)x(d1,l,m) 1.0            x(d2,l,m)  -1.0
+ ND
+
+CONSTANTS
+* Rhs of sum-constraints = 1
+ DO i         1                        Nnod
+ X            sumlm(i)  1.0
+ ND
+ DO l         1                        Nage
+ DO m         1                        Ntra
+ X            sumi(l,m) 1.0
+ ND
+
+* Rhs of Norm-constraints = 1
+ DO t         1                        Ntim
+ X            Norm(t)   1.0
+ ND
+
+* Rhs of peak constraints = Flim/Nnod
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ Z            Peak(i,t)                Fl_Nred
+ ND
+
+BOUNDS
+* X(i,l,m) variables between 0 en 1
+* k(i,t) en keff(t) between 0 en kfresh
+* phi(i,t) between 0.0001 (bijv?) en 1.0(bijv?)
+* Epsilon between 0 en 0.01. Currently between 0 and 100
+
+ DO i         1                        Nnod
+ DO l         1                        Nage
+ DO m         1                        Ntra
+ XU           x(i,l,m)  1.0
+* XL           x(i,l,m)  0.08333333
+* XU           x(i,l,m)  0.08333334
+ ND
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ ZU           k(i,t)                   Kfresh
+ XL           phi(i,t)  0.0001
+ XU           phi(i,t)  1.0
+ ND
+
+ DO t         1                        Ntim
+ ZU           keff(t)                  Kfresh
+ ND
+ XU           epsilon   100
+
+START POINT
+* See Section 4.4.1
+ X            phi1,1    0.0283
+ X            phi1,2    0.0302
+ X            phi1,3    0.0320
+ X            phi1,4    0.0338
+ X            phi1,5    0.0355
+ X            phi1,6    0.0370
+ X            phi2,1    0.0308
+ X            phi2,2    0.0325
+ X            phi2,3    0.0341
+ X            phi2,4    0.0356
+ X            phi2,5    0.0371
+ X            phi2,6    0.0384
+ X            phi3,1    0.0339
+ X            phi3,2    0.0350
+ X            phi3,3    0.0361
+ X            phi3,4    0.0371
+ X            phi3,5    0.0381
+ X            phi3,6    0.0390
+ X            phi4,1    0.0407
+ X            phi4,2    0.0411
+ X            phi4,3    0.0415
+ X            phi4,4    0.0419
+ X            phi4,5    0.0423
+ X            phi4,6    0.0427
+ X            phi5,1    0.0548
+ X            phi5,2    0.0545
+ X            phi5,3    0.0542
+ X            phi5,4    0.0540
+ X            phi5,5    0.0538
+ X            phi5,6    0.0537
+ X            phi6,1    0.0458
+ X            phi6,2    0.0459
+ X            phi6,3    0.0461
+ X            phi6,4    0.0463
+ X            phi6,5    0.0466
+ X            phi6,6    0.0469
+ X            phi7,1    0.0454
+ X            phi7,2    0.0462
+ X            phi7,3    0.0469
+ X            phi7,4    0.0477
+ X            phi7,5    0.0485
+ X            phi7,6    0.0493
+ X            phi8,1    0.0269
+ X            phi8,2    0.0280
+ X            phi8,3    0.0292
+ X            phi8,4    0.0304
+ X            phi8,5    0.0317
+ X            phi8,6    0.0330
+ X            phi9,1    0.0107
+ X            phi9,2    0.0114
+ X            phi9,3    0.0122
+ X            phi9,4    0.0130
+ X            phi9,5    0.0139
+ X            phi9,6    0.0148
+ X            phi10,1   0.0321
+ X            phi10,2   0.0335
+ X            phi10,3   0.0348
+ X            phi10,4   0.0361
+ X            phi10,5   0.0373
+ X            phi10,6   0.0384
+ X            phi11,1   0.0366
+ X            phi11,2   0.0375
+ X            phi11,3   0.0385
+ X            phi11,4   0.0393
+ X            phi11,5   0.0402
+ X            phi11,6   0.0409
+ X            phi12,1   0.0401
+ X            phi12,2   0.0405
+ X            phi12,3   0.0409
+ X            phi12,4   0.0413
+ X            phi12,5   0.0417
+ X            phi12,6   0.0421
+ X            phi13,1   0.0448
+ X            phi13,2   0.0449
+ X            phi13,3   0.0451
+ X            phi13,4   0.0452
+ X            phi13,5   0.0454
+ X            phi13,6   0.0457
+ X            phi14,1   0.0450
+ X            phi14,2   0.0454
+ X            phi14,3   0.0458
+ X            phi14,4   0.0462
+ X            phi14,5   0.0466
+ X            phi14,6   0.0471
+ X            phi15,1   0.0366
+ X            phi15,2   0.0374
+ X            phi15,3   0.0383
+ X            phi15,4   0.0393
+ X            phi15,5   0.0403
+ X            phi15,6   0.0413
+ X            phi16,1   0.0190
+ X            phi16,2   0.0199
+ X            phi16,3   0.0208
+ X            phi16,4   0.0218
+ X            phi16,5   0.0229
+ X            phi16,6   0.0240
+ X            phi17,1   0.0079
+ X            phi17,2   0.0084
+ X            phi17,3   0.0090
+ X            phi17,4   0.0096
+ X            phi17,5   0.0103
+ X            phi17,6   0.0111
+ X            phi18,1   0.0398
+ X            phi18,2   0.0405
+ X            phi18,3   0.0411
+ X            phi18,4   0.0416
+ X            phi18,5   0.0422
+ X            phi18,6   0.0427
+ X            phi19,1   0.0481
+ X            phi19,2   0.0484
+ X            phi19,3   0.0486
+ X            phi19,4   0.0489
+ X            phi19,5   0.0492
+ X            phi19,6   0.0494
+ X            phi20,1   0.0486
+ X            phi20,2   0.0489
+ X            phi20,3   0.0492
+ X            phi20,4   0.0495
+ X            phi20,5   0.0498
+ X            phi20,6   0.0501
+ X            phi21,1   0.0408
+ X            phi21,2   0.0415
+ X            phi21,3   0.0422
+ X            phi21,4   0.0429
+ X            phi21,5   0.0437
+ X            phi21,6   0.0444
+ X            phi22,1   0.0238
+ X            phi22,2   0.0247
+ X            phi22,3   0.0255
+ X            phi22,4   0.0265
+ X            phi22,5   0.0274
+ X            phi22,6   0.0285
+ X            phi23,1   0.0116
+ X            phi23,2   0.0122
+ X            phi23,3   0.0129
+ X            phi23,4   0.0136
+ X            phi23,5   0.0143
+ X            phi23,6   0.0152
+ X            phi24,1   0.0443
+ X            phi24,2   0.0447
+ X            phi24,3   0.0450
+ X            phi24,4   0.0454
+ X            phi24,5   0.0457
+ X            phi24,6   0.0461
+ X            phi25,1   0.0462
+ X            phi25,2   0.0468
+ X            phi25,3   0.0473
+ X            phi25,4   0.0479
+ X            phi25,5   0.0485
+ X            phi25,6   0.0491
+ X            phi26,1   0.0308
+ X            phi26,2   0.0317
+ X            phi26,3   0.0326
+ X            phi26,4   0.0336
+ X            phi26,5   0.0346
+ X            phi26,6   0.0356
+ X            phi27,1   0.0151
+ X            phi27,2   0.0159
+ X            phi27,3   0.0166
+ X            phi27,4   0.0174
+ X            phi27,5   0.0183
+ X            phi27,6   0.0192
+ X            phi28,1   0.0287
+ X            phi28,2   0.0295
+ X            phi28,3   0.0303
+ X            phi28,4   0.0312
+ X            phi28,5   0.0321
+ X            phi28,6   0.0330
+ X            phi29,1   0.0175
+ X            phi29,2   0.0183
+ X            phi29,3   0.0191
+ X            phi29,4   0.0200
+ X            phi29,5   0.0209
+ X            phi29,6   0.0219
+ X            phi30,1   0.0085
+ X            phi30,2   0.0090
+ X            phi30,3   0.0095
+ X            phi30,4   0.0101
+ X            phi30,5   0.0108
+ X            phi30,6   0.0115
+ X            phi31,1   0.0092
+ X            phi31,2   0.0098
+ X            phi31,3   0.0104
+ X            phi31,4   0.0110
+ X            phi31,5   0.0117
+ X            phi31,6   0.0125
+ X            k1,1      1.0392
+ X            k1,2      1.0244
+ X            k1,3      1.0088
+ X            k1,4      0.9925
+ X            k1,5      0.9756
+ X            k1,6      0.9582
+ X            k2,1      1.0723
+ X            k2,2      1.0557
+ X            k2,3      1.0384
+ X            k2,4      1.0206
+ X            k2,5      1.0023
+ X            k2,6      0.9835
+ X            k3,1      1.0392
+ X            k3,2      1.0215
+ X            k3,3      1.0034
+ X            k3,4      0.9852
+ X            k3,5      0.9667
+ X            k3,6      0.9482
+ X            k4,1      1.0392
+ X            k4,2      1.0179
+ X            k4,3      0.9968
+ X            k4,4      0.9760
+ X            k4,5      0.9554
+ X            k4,6      0.9350
+ X            k5,1      1.2727
+ X            k5,2      1.2375
+ X            k5,3      1.2035
+ X            k5,4      1.1707
+ X            k5,5      1.1388
+ X            k5,6      1.1079
+ X            k6,1      1.0392
+ X            k6,2      1.0152
+ X            k6,3      0.9917
+ X            k6,4      0.9687
+ X            k6,5      0.9460
+ X            k6,6      0.9238
+ X            k7,1      1.2727
+ X            k7,2      1.2436
+ X            k7,3      1.2146
+ X            k7,4      1.1859
+ X            k7,5      1.1574
+ X            k7,6      1.1292
+ X            k8,1      1.1384
+ X            k8,2      1.1230
+ X            k8,3      1.1071
+ X            k8,4      1.0909
+ X            k8,5      1.0742
+ X            k8,6      1.0570
+ X            k9,1      0.9658
+ X            k9,2      0.9606
+ X            k9,3      0.9550
+ X            k9,4      0.9492
+ X            k9,5      0.9430
+ X            k9,6      0.9364
+ X            k10,1     1.0392
+ X            k10,2     1.0224
+ X            k10,3     1.0052
+ X            k10,4     0.9876
+ X            k10,5     0.9696
+ X            k10,6     0.9514
+ X            k11,1     1.0723
+ X            k11,2     1.0526
+ X            k11,3     1.0327
+ X            k11,4     1.0126
+ X            k11,5     0.9926
+ X            k11,6     0.9725
+ X            k12,1     0.9996
+ X            k12,2     0.9794
+ X            k12,3     0.9594
+ X            k12,4     0.9396
+ X            k12,5     0.9200
+ X            k12,6     0.9007
+ X            k13,1     1.0392
+ X            k13,2     1.0158
+ X            k13,3     0.9928
+ X            k13,4     0.9703
+ X            k13,5     0.9481
+ X            k13,6     0.9264
+ X            k14,1     1.1384
+ X            k14,2     1.1126
+ X            k14,3     1.0872
+ X            k14,4     1.0621
+ X            k14,5     1.0374
+ X            k14,6     1.0130
+ X            k15,1     1.1912
+ X            k15,2     1.1693
+ X            k15,3     1.1472
+ X            k15,4     1.1251
+ X            k15,5     1.1028
+ X            k15,6     1.0804
+ X            k16,1     0.9861
+ X            k16,2     0.9766
+ X            k16,3     0.9668
+ X            k16,4     0.9566
+ X            k16,5     0.9461
+ X            k16,6     0.9352
+ X            k17,1     0.9658
+ X            k17,2     0.9620
+ X            k17,3     0.9579
+ X            k17,4     0.9535
+ X            k17,5     0.9489
+ X            k17,6     0.9440
+ X            k18,1     1.0392
+ X            k18,2     1.0184
+ X            k18,3     0.9976
+ X            k18,4     0.9769
+ X            k18,5     0.9564
+ X            k18,6     0.9361
+ X            k19,1     1.1912
+ X            k19,2     1.1624
+ X            k19,3     1.1340
+ X            k19,4     1.1062
+ X            k19,5     1.0789
+ X            k19,6     1.0522
+ X            k20,1     1.1912
+ X            k20,2     1.1620
+ X            k20,3     1.1334
+ X            k20,4     1.1053
+ X            k20,5     1.0777
+ X            k20,6     1.0507
+ X            k21,1     1.1912
+ X            k21,2     1.1667
+ X            k21,3     1.1423
+ X            k21,4     1.1180
+ X            k21,5     1.0938
+ X            k21,6     1.0697
+ X            k22,1     0.9996
+ X            k22,2     0.9876
+ X            k22,3     0.9753
+ X            k22,4     0.9627
+ X            k22,5     0.9499
+ X            k22,6     0.9368
+ X            k23,1     0.9658
+ X            k23,2     0.9602
+ X            k23,3     0.9543
+ X            k23,4     0.9481
+ X            k23,5     0.9416
+ X            k23,6     0.9348
+ X            k24,1     1.0392
+ X            k24,2     1.0160
+ X            k24,3     0.9932
+ X            k24,4     0.9706
+ X            k24,5     0.9484
+ X            k24,6     0.9266
+ X            k25,1     1.2727
+ X            k25,2     1.2431
+ X            k25,3     1.2138
+ X            k25,4     1.1848
+ X            k25,5     1.1562
+ X            k25,6     1.1280
+ X            k26,1     1.1384
+ X            k26,2     1.1208
+ X            k26,3     1.1029
+ X            k26,4     1.0847
+ X            k26,5     1.0664
+ X            k26,6     1.0478
+ X            k27,1     0.9658
+ X            k27,2     0.9584
+ X            k27,3     0.9508
+ X            k27,4     0.9428
+ X            k27,5     0.9345
+ X            k27,6     0.9259
+ X            k28,1     0.9861
+ X            k28,2     0.9718
+ X            k28,3     0.9573
+ X            k28,4     0.9427
+ X            k28,5     0.9279
+ X            k28,6     0.9129
+ X            k29,1     0.9658
+ X            k29,2     0.9573
+ X            k29,3     0.9484
+ X            k29,4     0.9393
+ X            k29,5     0.9298
+ X            k29,6     0.9200
+ X            k30,1     0.9658
+ X            k30,2     0.9617
+ X            k30,3     0.9573
+ X            k30,4     0.9527
+ X            k30,5     0.9478
+ X            k30,6     0.9427
+ X            k31,1     0.9861
+ X            k31,2     0.9815
+ X            k31,3     0.9766
+ X            k31,4     0.9715
+ X            k31,5     0.9661
+ X            k31,6     0.9604
+ X            keff1     1.0886
+ X            keff2     1.0657
+ X            keff3     1.0431
+ X            keff4     1.0209
+ X            keff5     0.9990
+ X            keff6     0.9773
+ X            x2,1,1    0.0053
+ X            x2,1,2    0.0053
+ X            x2,1,3    0.0053
+ X            x2,1,4    0.0053
+ X            x2,1,5    0.0053
+ X            x2,1,6    0.0053
+ X            x2,1,7    0.0053
+ X            x2,2,1    0.1286
+ X            x2,2,2    0.1286
+ X            x2,2,3    0.1286
+ X            x2,2,4    0.1286
+ X            x2,2,5    0.1286
+ X            x2,2,6    0.1286
+ X            x2,2,7    0.1286
+ X            x2,3,1    0.0072
+ X            x2,3,2    0.0072
+ X            x2,3,3    0.0072
+ X            x2,3,4    0.0072
+ X            x2,3,5    0.0072
+ X            x2,3,6    0.0072
+ X            x2,3,7    0.0072
+ X            x2,4,1    0.0018
+ X            x2,4,2    0.0018
+ X            x2,4,3    0.0018
+ X            x2,4,4    0.0018
+ X            x2,4,5    0.0018
+ X            x2,4,6    0.0018
+ X            x2,4,7    0.0018
+ X            x3,1,1    0.0089
+ X            x3,1,2    0.0089
+ X            x3,1,3    0.0089
+ X            x3,1,4    0.0089
+ X            x3,1,5    0.0089
+ X            x3,1,6    0.0089
+ X            x3,1,7    0.0089
+ X            x3,2,1    0.0609
+ X            x3,2,2    0.0609
+ X            x3,2,3    0.0609
+ X            x3,2,4    0.0609
+ X            x3,2,5    0.0609
+ X            x3,2,6    0.0609
+ X            x3,2,7    0.0609
+ X            x3,3,1    0.0677
+ X            x3,3,2    0.0677
+ X            x3,3,3    0.0677
+ X            x3,3,4    0.0677
+ X            x3,3,5    0.0677
+ X            x3,3,6    0.0677
+ X            x3,3,7    0.0677
+ X            x3,4,1    0.0054
+ X            x3,4,2    0.0054
+ X            x3,4,3    0.0054
+ X            x3,4,4    0.0054
+ X            x3,4,5    0.0054
+ X            x3,4,6    0.0054
+ X            x3,4,7    0.0054
+ X            x4,1,1    0.0089
+ X            x4,1,2    0.0089
+ X            x4,1,3    0.0089
+ X            x4,1,4    0.0089
+ X            x4,1,5    0.0089
+ X            x4,1,6    0.0089
+ X            x4,1,7    0.0089
+ X            x4,2,1    0.0609
+ X            x4,2,2    0.0609
+ X            x4,2,3    0.0609
+ X            x4,2,4    0.0609
+ X            x4,2,5    0.0609
+ X            x4,2,6    0.0609
+ X            x4,2,7    0.0609
+ X            x4,3,1    0.0677
+ X            x4,3,2    0.0677
+ X            x4,3,3    0.0677
+ X            x4,3,4    0.0677
+ X            x4,3,5    0.0677
+ X            x4,3,6    0.0677
+ X            x4,3,7    0.0677
+ X            x4,4,1    0.0054
+ X            x4,4,2    0.0054
+ X            x4,4,3    0.0054
+ X            x4,4,4    0.0054
+ X            x4,4,5    0.0054
+ X            x4,4,6    0.0054
+ X            x4,4,7    0.0054
+ X            x5,1,1    0.1286
+ X            x5,1,2    0.1286
+ X            x5,1,3    0.1286
+ X            x5,1,4    0.1286
+ X            x5,1,5    0.1286
+ X            x5,1,6    0.1286
+ X            x5,1,7    0.1286
+ X            x5,2,1    0.0079
+ X            x5,2,2    0.0079
+ X            x5,2,3    0.0079
+ X            x5,2,4    0.0079
+ X            x5,2,5    0.0079
+ X            x5,2,6    0.0079
+ X            x5,2,7    0.0079
+ X            x5,3,1    0.0059
+ X            x5,3,2    0.0059
+ X            x5,3,3    0.0059
+ X            x5,3,4    0.0059
+ X            x5,3,5    0.0059
+ X            x5,3,6    0.0059
+ X            x5,3,7    0.0059
+ X            x5,4,1    0.0004
+ X            x5,4,2    0.0004
+ X            x5,4,3    0.0004
+ X            x5,4,4    0.0004
+ X            x5,4,5    0.0004
+ X            x5,4,6    0.0004
+ X            x5,4,7    0.0004
+ X            x6,1,1    0.0089
+ X            x6,1,2    0.0089
+ X            x6,1,3    0.0089
+ X            x6,1,4    0.0089
+ X            x6,1,5    0.0089
+ X            x6,1,6    0.0089
+ X            x6,1,7    0.0089
+ X            x6,2,1    0.0609
+ X            x6,2,2    0.0609
+ X            x6,2,3    0.0609
+ X            x6,2,4    0.0609
+ X            x6,2,5    0.0609
+ X            x6,2,6    0.0609
+ X            x6,2,7    0.0609
+ X            x6,3,1    0.0677
+ X            x6,3,2    0.0677
+ X            x6,3,3    0.0677
+ X            x6,3,4    0.0677
+ X            x6,3,5    0.0677
+ X            x6,3,6    0.0677
+ X            x6,3,7    0.0677
+ X            x6,4,1    0.0054
+ X            x6,4,2    0.0054
+ X            x6,4,3    0.0054
+ X            x6,4,4    0.0054
+ X            x6,4,5    0.0054
+ X            x6,4,6    0.0054
+ X            x6,4,7    0.0054
+ X            x7,1,1    0.1286
+ X            x7,1,2    0.1286
+ X            x7,1,3    0.1286
+ X            x7,1,4    0.1286
+ X            x7,1,5    0.1286
+ X            x7,1,6    0.1286
+ X            x7,1,7    0.1286
+ X            x7,2,1    0.0079
+ X            x7,2,2    0.0079
+ X            x7,2,3    0.0079
+ X            x7,2,4    0.0079
+ X            x7,2,5    0.0079
+ X            x7,2,6    0.0079
+ X            x7,2,7    0.0079
+ X            x7,3,1    0.0059
+ X            x7,3,2    0.0059
+ X            x7,3,3    0.0059
+ X            x7,3,4    0.0059
+ X            x7,3,5    0.0059
+ X            x7,3,6    0.0059
+ X            x7,3,7    0.0059
+ X            x7,4,1    0.0004
+ X            x7,4,2    0.0004
+ X            x7,4,3    0.0004
+ X            x7,4,4    0.0004
+ X            x7,4,5    0.0004
+ X            x7,4,6    0.0004
+ X            x7,4,7    0.0004
+ X            x8,1,1    0.0632
+ X            x8,1,2    0.0632
+ X            x8,1,3    0.0632
+ X            x8,1,4    0.0632
+ X            x8,1,5    0.0632
+ X            x8,1,6    0.0632
+ X            x8,1,7    0.0632
+ X            x8,2,1    0.0293
+ X            x8,2,2    0.0293
+ X            x8,2,3    0.0293
+ X            x8,2,4    0.0293
+ X            x8,2,5    0.0293
+ X            x8,2,6    0.0293
+ X            x8,2,7    0.0293
+ X            x8,3,1    0.0361
+ X            x8,3,2    0.0361
+ X            x8,3,3    0.0361
+ X            x8,3,4    0.0361
+ X            x8,3,5    0.0361
+ X            x8,3,6    0.0361
+ X            x8,3,7    0.0361
+ X            x8,4,1    0.0143
+ X            x8,4,2    0.0143
+ X            x8,4,3    0.0143
+ X            x8,4,4    0.0143
+ X            x8,4,5    0.0143
+ X            x8,4,6    0.0143
+ X            x8,4,7    0.0143
+ X            x9,1,1    0.0028
+ X            x9,1,2    0.0028
+ X            x9,1,3    0.0028
+ X            x9,1,4    0.0028
+ X            x9,1,5    0.0028
+ X            x9,1,6    0.0028
+ X            x9,1,7    0.0028
+ X            x9,2,1    0.0068
+ X            x9,2,2    0.0068
+ X            x9,2,3    0.0068
+ X            x9,2,4    0.0068
+ X            x9,2,5    0.0068
+ X            x9,2,6    0.0068
+ X            x9,2,7    0.0068
+ X            x9,3,1    0.0047
+ X            x9,3,2    0.0047
+ X            x9,3,3    0.0047
+ X            x9,3,4    0.0047
+ X            x9,3,5    0.0047
+ X            x9,3,6    0.0047
+ X            x9,3,7    0.0047
+ X            x9,4,1    0.1286
+ X            x9,4,2    0.1286
+ X            x9,4,3    0.1286
+ X            x9,4,4    0.1286
+ X            x9,4,5    0.1286
+ X            x9,4,6    0.1286
+ X            x9,4,7    0.1286
+ X            x11,1,1   0.0053
+ X            x11,1,2   0.0053
+ X            x11,1,3   0.0053
+ X            x11,1,4   0.0053
+ X            x11,1,5   0.0053
+ X            x11,1,6   0.0053
+ X            x11,1,7   0.0053
+ X            x11,2,1   0.1286
+ X            x11,2,2   0.1286
+ X            x11,2,3   0.1286
+ X            x11,2,4   0.1286
+ X            x11,2,5   0.1286
+ X            x11,2,6   0.1286
+ X            x11,2,7   0.1286
+ X            x11,3,1   0.0072
+ X            x11,3,2   0.0072
+ X            x11,3,3   0.0072
+ X            x11,3,4   0.0072
+ X            x11,3,5   0.0072
+ X            x11,3,6   0.0072
+ X            x11,3,7   0.0072
+ X            x11,4,1   0.0018
+ X            x11,4,2   0.0018
+ X            x11,4,3   0.0018
+ X            x11,4,4   0.0018
+ X            x11,4,5   0.0018
+ X            x11,4,6   0.0018
+ X            x11,4,7   0.0018
+ X            x12,1,1   0.0046
+ X            x12,1,2   0.0046
+ X            x12,1,3   0.0046
+ X            x12,1,4   0.0046
+ X            x12,1,5   0.0046
+ X            x12,1,6   0.0046
+ X            x12,1,7   0.0046
+ X            x12,2,1   0.0086
+ X            x12,2,2   0.0086
+ X            x12,2,3   0.0086
+ X            x12,2,4   0.0086
+ X            x12,2,5   0.0086
+ X            x12,2,6   0.0086
+ X            x12,2,7   0.0086
+ X            x12,3,1   0.1286
+ X            x12,3,2   0.1286
+ X            x12,3,3   0.1286
+ X            x12,3,4   0.1286
+ X            x12,3,5   0.1286
+ X            x12,3,6   0.1286
+ X            x12,3,7   0.1286
+ X            x12,4,1   0.0011
+ X            x12,4,2   0.0011
+ X            x12,4,3   0.0011
+ X            x12,4,4   0.0011
+ X            x12,4,5   0.0011
+ X            x12,4,6   0.0011
+ X            x12,4,7   0.0011
+ X            x13,1,1   0.0089
+ X            x13,1,2   0.0089
+ X            x13,1,3   0.0089
+ X            x13,1,4   0.0089
+ X            x13,1,5   0.0089
+ X            x13,1,6   0.0089
+ X            x13,1,7   0.0089
+ X            x13,2,1   0.0609
+ X            x13,2,2   0.0609
+ X            x13,2,3   0.0609
+ X            x13,2,4   0.0609
+ X            x13,2,5   0.0609
+ X            x13,2,6   0.0609
+ X            x13,2,7   0.0609
+ X            x13,3,1   0.0677
+ X            x13,3,2   0.0677
+ X            x13,3,3   0.0677
+ X            x13,3,4   0.0677
+ X            x13,3,5   0.0677
+ X            x13,3,6   0.0677
+ X            x13,3,7   0.0677
+ X            x13,4,1   0.0054
+ X            x13,4,2   0.0054
+ X            x13,4,3   0.0054
+ X            x13,4,4   0.0054
+ X            x13,4,5   0.0054
+ X            x13,4,6   0.0054
+ X            x13,4,7   0.0054
+ X            x14,1,1   0.0632
+ X            x14,1,2   0.0632
+ X            x14,1,3   0.0632
+ X            x14,1,4   0.0632
+ X            x14,1,5   0.0632
+ X            x14,1,6   0.0632
+ X            x14,1,7   0.0632
+ X            x14,2,1   0.0293
+ X            x14,2,2   0.0293
+ X            x14,2,3   0.0293
+ X            x14,2,4   0.0293
+ X            x14,2,5   0.0293
+ X            x14,2,6   0.0293
+ X            x14,2,7   0.0293
+ X            x14,3,1   0.0361
+ X            x14,3,2   0.0361
+ X            x14,3,3   0.0361
+ X            x14,3,4   0.0361
+ X            x14,3,5   0.0361
+ X            x14,3,6   0.0361
+ X            x14,3,7   0.0361
+ X            x14,4,1   0.0143
+ X            x14,4,2   0.0143
+ X            x14,4,3   0.0143
+ X            x14,4,4   0.0143
+ X            x14,4,5   0.0143
+ X            x14,4,6   0.0143
+ X            x14,4,7   0.0143
+ X            x15,1,1   0.0812
+ X            x15,1,2   0.0812
+ X            x15,1,3   0.0812
+ X            x15,1,4   0.0812
+ X            x15,1,5   0.0812
+ X            x15,1,6   0.0812
+ X            x15,1,7   0.0812
+ X            x15,2,1   0.0474
+ X            x15,2,2   0.0474
+ X            x15,2,3   0.0474
+ X            x15,2,4   0.0474
+ X            x15,2,5   0.0474
+ X            x15,2,6   0.0474
+ X            x15,2,7   0.0474
+ X            x15,3,1   0.0099
+ X            x15,3,2   0.0099
+ X            x15,3,3   0.0099
+ X            x15,3,4   0.0099
+ X            x15,3,5   0.0099
+ X            x15,3,6   0.0099
+ X            x15,3,7   0.0099
+ X            x15,4,1   0.0044
+ X            x15,4,2   0.0044
+ X            x15,4,3   0.0044
+ X            x15,4,4   0.0044
+ X            x15,4,5   0.0044
+ X            x15,4,6   0.0044
+ X            x15,4,7   0.0044
+ X            x16,1,1   0.0051
+ X            x16,1,2   0.0051
+ X            x16,1,3   0.0051
+ X            x16,1,4   0.0051
+ X            x16,1,5   0.0051
+ X            x16,1,6   0.0051
+ X            x16,1,7   0.0051
+ X            x16,2,1   0.0091
+ X            x16,2,2   0.0091
+ X            x16,2,3   0.0091
+ X            x16,2,4   0.0091
+ X            x16,2,5   0.0091
+ X            x16,2,6   0.0091
+ X            x16,2,7   0.0091
+ X            x16,3,1   0.0643
+ X            x16,3,2   0.0643
+ X            x16,3,3   0.0643
+ X            x16,3,4   0.0643
+ X            x16,3,5   0.0643
+ X            x16,3,6   0.0643
+ X            x16,3,7   0.0643
+ X            x16,4,1   0.0643
+ X            x16,4,2   0.0643
+ X            x16,4,3   0.0643
+ X            x16,4,4   0.0643
+ X            x16,4,5   0.0643
+ X            x16,4,6   0.0643
+ X            x16,4,7   0.0643
+ X            x17,1,1   0.0028
+ X            x17,1,2   0.0028
+ X            x17,1,3   0.0028
+ X            x17,1,4   0.0028
+ X            x17,1,5   0.0028
+ X            x17,1,6   0.0028
+ X            x17,1,7   0.0028
+ X            x17,2,1   0.0068
+ X            x17,2,2   0.0068
+ X            x17,2,3   0.0068
+ X            x17,2,4   0.0068
+ X            x17,2,5   0.0068
+ X            x17,2,6   0.0068
+ X            x17,2,7   0.0068
+ X            x17,3,1   0.0047
+ X            x17,3,2   0.0047
+ X            x17,3,3   0.0047
+ X            x17,3,4   0.0047
+ X            x17,3,5   0.0047
+ X            x17,3,6   0.0047
+ X            x17,3,7   0.0047
+ X            x17,4,1   0.1286
+ X            x17,4,2   0.1286
+ X            x17,4,3   0.1286
+ X            x17,4,4   0.1286
+ X            x17,4,5   0.1286
+ X            x17,4,6   0.1286
+ X            x17,4,7   0.1286
+ X            x19,1,1   0.0812
+ X            x19,1,2   0.0812
+ X            x19,1,3   0.0812
+ X            x19,1,4   0.0812
+ X            x19,1,5   0.0812
+ X            x19,1,6   0.0812
+ X            x19,1,7   0.0812
+ X            x19,2,1   0.0474
+ X            x19,2,2   0.0474
+ X            x19,2,3   0.0474
+ X            x19,2,4   0.0474
+ X            x19,2,5   0.0474
+ X            x19,2,6   0.0474
+ X            x19,2,7   0.0474
+ X            x19,3,1   0.0099
+ X            x19,3,2   0.0099
+ X            x19,3,3   0.0099
+ X            x19,3,4   0.0099
+ X            x19,3,5   0.0099
+ X            x19,3,6   0.0099
+ X            x19,3,7   0.0099
+ X            x19,4,1   0.0044
+ X            x19,4,2   0.0044
+ X            x19,4,3   0.0044
+ X            x19,4,4   0.0044
+ X            x19,4,5   0.0044
+ X            x19,4,6   0.0044
+ X            x19,4,7   0.0044
+ X            x20,1,1   0.0812
+ X            x20,1,2   0.0812
+ X            x20,1,3   0.0812
+ X            x20,1,4   0.0812
+ X            x20,1,5   0.0812
+ X            x20,1,6   0.0812
+ X            x20,1,7   0.0812
+ X            x20,2,1   0.0474
+ X            x20,2,2   0.0474
+ X            x20,2,3   0.0474
+ X            x20,2,4   0.0474
+ X            x20,2,5   0.0474
+ X            x20,2,6   0.0474
+ X            x20,2,7   0.0474
+ X            x20,3,1   0.0099
+ X            x20,3,2   0.0099
+ X            x20,3,3   0.0099
+ X            x20,3,4   0.0099
+ X            x20,3,5   0.0099
+ X            x20,3,6   0.0099
+ X            x20,3,7   0.0099
+ X            x20,4,1   0.0044
+ X            x20,4,2   0.0044
+ X            x20,4,3   0.0044
+ X            x20,4,4   0.0044
+ X            x20,4,5   0.0044
+ X            x20,4,6   0.0044
+ X            x20,4,7   0.0044
+ X            x21,1,1   0.0812
+ X            x21,1,2   0.0812
+ X            x21,1,3   0.0812
+ X            x21,1,4   0.0812
+ X            x21,1,5   0.0812
+ X            x21,1,6   0.0812
+ X            x21,1,7   0.0812
+ X            x21,2,1   0.0474
+ X            x21,2,2   0.0474
+ X            x21,2,3   0.0474
+ X            x21,2,4   0.0474
+ X            x21,2,5   0.0474
+ X            x21,2,6   0.0474
+ X            x21,2,7   0.0474
+ X            x21,3,1   0.0099
+ X            x21,3,2   0.0099
+ X            x21,3,3   0.0099
+ X            x21,3,4   0.0099
+ X            x21,3,5   0.0099
+ X            x21,3,6   0.0099
+ X            x21,3,7   0.0099
+ X            x21,4,1   0.0044
+ X            x21,4,2   0.0044
+ X            x21,4,3   0.0044
+ X            x21,4,4   0.0044
+ X            x21,4,5   0.0044
+ X            x21,4,6   0.0044
+ X            x21,4,7   0.0044
+ X            x22,1,1   0.0046
+ X            x22,1,2   0.0046
+ X            x22,1,3   0.0046
+ X            x22,1,4   0.0046
+ X            x22,1,5   0.0046
+ X            x22,1,6   0.0046
+ X            x22,1,7   0.0046
+ X            x22,2,1   0.0086
+ X            x22,2,2   0.0086
+ X            x22,2,3   0.0086
+ X            x22,2,4   0.0086
+ X            x22,2,5   0.0086
+ X            x22,2,6   0.0086
+ X            x22,2,7   0.0086
+ X            x22,3,1   0.1286
+ X            x22,3,2   0.1286
+ X            x22,3,3   0.1286
+ X            x22,3,4   0.1286
+ X            x22,3,5   0.1286
+ X            x22,3,6   0.1286
+ X            x22,3,7   0.1286
+ X            x22,4,1   0.0011
+ X            x22,4,2   0.0011
+ X            x22,4,3   0.0011
+ X            x22,4,4   0.0011
+ X            x22,4,5   0.0011
+ X            x22,4,6   0.0011
+ X            x22,4,7   0.0011
+ X            x23,1,1   0.0028
+ X            x23,1,2   0.0028
+ X            x23,1,3   0.0028
+ X            x23,1,4   0.0028
+ X            x23,1,5   0.0028
+ X            x23,1,6   0.0028
+ X            x23,1,7   0.0028
+ X            x23,2,1   0.0068
+ X            x23,2,2   0.0068
+ X            x23,2,3   0.0068
+ X            x23,2,4   0.0068
+ X            x23,2,5   0.0068
+ X            x23,2,6   0.0068
+ X            x23,2,7   0.0068
+ X            x23,3,1   0.0047
+ X            x23,3,2   0.0047
+ X            x23,3,3   0.0047
+ X            x23,3,4   0.0047
+ X            x23,3,5   0.0047
+ X            x23,3,6   0.0047
+ X            x23,3,7   0.0047
+ X            x23,4,1   0.1286
+ X            x23,4,2   0.1286
+ X            x23,4,3   0.1286
+ X            x23,4,4   0.1286
+ X            x23,4,5   0.1286
+ X            x23,4,6   0.1286
+ X            x23,4,7   0.1286
+ X            x25,1,1   0.1286
+ X            x25,1,2   0.1286
+ X            x25,1,3   0.1286
+ X            x25,1,4   0.1286
+ X            x25,1,5   0.1286
+ X            x25,1,6   0.1286
+ X            x25,1,7   0.1286
+ X            x25,2,1   0.0079
+ X            x25,2,2   0.0079
+ X            x25,2,3   0.0079
+ X            x25,2,4   0.0079
+ X            x25,2,5   0.0079
+ X            x25,2,6   0.0079
+ X            x25,2,7   0.0079
+ X            x25,3,1   0.0059
+ X            x25,3,2   0.0059
+ X            x25,3,3   0.0059
+ X            x25,3,4   0.0059
+ X            x25,3,5   0.0059
+ X            x25,3,6   0.0059
+ X            x25,3,7   0.0059
+ X            x25,4,1   0.0004
+ X            x25,4,2   0.0004
+ X            x25,4,3   0.0004
+ X            x25,4,4   0.0004
+ X            x25,4,5   0.0004
+ X            x25,4,6   0.0004
+ X            x25,4,7   0.0004
+ X            x26,1,1   0.0632
+ X            x26,1,2   0.0632
+ X            x26,1,3   0.0632
+ X            x26,1,4   0.0632
+ X            x26,1,5   0.0632
+ X            x26,1,6   0.0632
+ X            x26,1,7   0.0632
+ X            x26,2,1   0.0293
+ X            x26,2,2   0.0293
+ X            x26,2,3   0.0293
+ X            x26,2,4   0.0293
+ X            x26,2,5   0.0293
+ X            x26,2,6   0.0293
+ X            x26,2,7   0.0293
+ X            x26,3,1   0.0361
+ X            x26,3,2   0.0361
+ X            x26,3,3   0.0361
+ X            x26,3,4   0.0361
+ X            x26,3,5   0.0361
+ X            x26,3,6   0.0361
+ X            x26,3,7   0.0361
+ X            x26,4,1   0.0143
+ X            x26,4,2   0.0143
+ X            x26,4,3   0.0143
+ X            x26,4,4   0.0143
+ X            x26,4,5   0.0143
+ X            x26,4,6   0.0143
+ X            x26,4,7   0.0143
+ X            x27,1,1   0.0028
+ X            x27,1,2   0.0028
+ X            x27,1,3   0.0028
+ X            x27,1,4   0.0028
+ X            x27,1,5   0.0028
+ X            x27,1,6   0.0028
+ X            x27,1,7   0.0028
+ X            x27,2,1   0.0068
+ X            x27,2,2   0.0068
+ X            x27,2,3   0.0068
+ X            x27,2,4   0.0068
+ X            x27,2,5   0.0068
+ X            x27,2,6   0.0068
+ X            x27,2,7   0.0068
+ X            x27,3,1   0.0047
+ X            x27,3,2   0.0047
+ X            x27,3,3   0.0047
+ X            x27,3,4   0.0047
+ X            x27,3,5   0.0047
+ X            x27,3,6   0.0047
+ X            x27,3,7   0.0047
+ X            x27,4,1   0.1286
+ X            x27,4,2   0.1286
+ X            x27,4,3   0.1286
+ X            x27,4,4   0.1286
+ X            x27,4,5   0.1286
+ X            x27,4,6   0.1286
+ X            x27,4,7   0.1286
+ X            x29,1,1   0.0028
+ X            x29,1,2   0.0028
+ X            x29,1,3   0.0028
+ X            x29,1,4   0.0028
+ X            x29,1,5   0.0028
+ X            x29,1,6   0.0028
+ X            x29,1,7   0.0028
+ X            x29,2,1   0.0068
+ X            x29,2,2   0.0068
+ X            x29,2,3   0.0068
+ X            x29,2,4   0.0068
+ X            x29,2,5   0.0068
+ X            x29,2,6   0.0068
+ X            x29,2,7   0.0068
+ X            x29,3,1   0.0047
+ X            x29,3,2   0.0047
+ X            x29,3,3   0.0047
+ X            x29,3,4   0.0047
+ X            x29,3,5   0.0047
+ X            x29,3,6   0.0047
+ X            x29,3,7   0.0047
+ X            x29,4,1   0.1286
+ X            x29,4,2   0.1286
+ X            x29,4,3   0.1286
+ X            x29,4,4   0.1286
+ X            x29,4,5   0.1286
+ X            x29,4,6   0.1286
+ X            x29,4,7   0.1286
+ X            x30,1,1   0.0028
+ X            x30,1,2   0.0028
+ X            x30,1,3   0.0028
+ X            x30,1,4   0.0028
+ X            x30,1,5   0.0028
+ X            x30,1,6   0.0028
+ X            x30,1,7   0.0028
+ X            x30,2,1   0.0068
+ X            x30,2,2   0.0068
+ X            x30,2,3   0.0068
+ X            x30,2,4   0.0068
+ X            x30,2,5   0.0068
+ X            x30,2,6   0.0068
+ X            x30,2,7   0.0068
+ X            x30,3,1   0.0047
+ X            x30,3,2   0.0047
+ X            x30,3,3   0.0047
+ X            x30,3,4   0.0047
+ X            x30,3,5   0.0047
+ X            x30,3,6   0.0047
+ X            x30,3,7   0.0047
+ X            x30,4,1   0.1286
+ X            x30,4,2   0.1286
+ X            x30,4,3   0.1286
+ X            x30,4,4   0.1286
+ X            x30,4,5   0.1286
+ X            x30,4,6   0.1286
+ X            x30,4,7   0.1286
+ X            x1,1,1    0.0089
+ X            x10,1,1   0.0089
+ X            x1,1,2    0.0089
+ X            x10,1,2   0.0089
+ X            x1,1,3    0.0089
+ X            x10,1,3   0.0089
+ X            x1,1,4    0.0089
+ X            x10,1,4   0.0089
+ X            x1,1,5    0.0089
+ X            x10,1,5   0.0089
+ X            x1,1,6    0.0089
+ X            x10,1,6   0.0089
+ X            x1,1,7    0.0089
+ X            x10,1,7   0.0089
+ X            x1,2,1    0.0609
+ X            x10,2,1   0.0609
+ X            x1,2,2    0.0609
+ X            x10,2,2   0.0609
+ X            x1,2,3    0.0609
+ X            x10,2,3   0.0609
+ X            x1,2,4    0.0609
+ X            x10,2,4   0.0609
+ X            x1,2,5    0.0609
+ X            x10,2,5   0.0609
+ X            x1,2,6    0.0609
+ X            x10,2,6   0.0609
+ X            x1,2,7    0.0609
+ X            x10,2,7   0.0609
+ X            x1,3,1    0.0677
+ X            x10,3,1   0.0677
+ X            x1,3,2    0.0677
+ X            x10,3,2   0.0677
+ X            x1,3,3    0.0677
+ X            x10,3,3   0.0677
+ X            x1,3,4    0.0677
+ X            x10,3,4   0.0677
+ X            x1,3,5    0.0677
+ X            x10,3,5   0.0677
+ X            x1,3,6    0.0677
+ X            x10,3,6   0.0677
+ X            x1,3,7    0.0677
+ X            x10,3,7   0.0677
+ X            x1,4,1    0.0054
+ X            x10,4,1   0.0054
+ X            x1,4,2    0.0054
+ X            x10,4,2   0.0054
+ X            x1,4,3    0.0054
+ X            x10,4,3   0.0054
+ X            x1,4,4    0.0054
+ X            x10,4,4   0.0054
+ X            x1,4,5    0.0054
+ X            x10,4,5   0.0054
+ X            x1,4,6    0.0054
+ X            x10,4,6   0.0054
+ X            x1,4,7    0.0054
+ X            x10,4,7   0.0054
+ X            x18,1,1   0.0089
+ X            x24,1,1   0.0089
+ X            x18,1,2   0.0089
+ X            x24,1,2   0.0089
+ X            x18,1,3   0.0089
+ X            x24,1,3   0.0089
+ X            x18,1,4   0.0089
+ X            x24,1,4   0.0089
+ X            x18,1,5   0.0089
+ X            x24,1,5   0.0089
+ X            x18,1,6   0.0089
+ X            x24,1,6   0.0089
+ X            x18,1,7   0.0089
+ X            x24,1,7   0.0089
+ X            x18,2,1   0.0609
+ X            x24,2,1   0.0609
+ X            x18,2,2   0.0609
+ X            x24,2,2   0.0609
+ X            x18,2,3   0.0609
+ X            x24,2,3   0.0609
+ X            x18,2,4   0.0609
+ X            x24,2,4   0.0609
+ X            x18,2,5   0.0609
+ X            x24,2,5   0.0609
+ X            x18,2,6   0.0609
+ X            x24,2,6   0.0609
+ X            x18,2,7   0.0609
+ X            x24,2,7   0.0609
+ X            x18,3,1   0.0677
+ X            x24,3,1   0.0677
+ X            x18,3,2   0.0677
+ X            x24,3,2   0.0677
+ X            x18,3,3   0.0677
+ X            x24,3,3   0.0677
+ X            x18,3,4   0.0677
+ X            x24,3,4   0.0677
+ X            x18,3,5   0.0677
+ X            x24,3,5   0.0677
+ X            x18,3,6   0.0677
+ X            x24,3,6   0.0677
+ X            x18,3,7   0.0677
+ X            x24,3,7   0.0677
+ X            x18,4,1   0.0054
+ X            x24,4,1   0.0054
+ X            x18,4,2   0.0054
+ X            x24,4,2   0.0054
+ X            x18,4,3   0.0054
+ X            x24,4,3   0.0054
+ X            x18,4,4   0.0054
+ X            x24,4,4   0.0054
+ X            x18,4,5   0.0054
+ X            x24,4,5   0.0054
+ X            x18,4,6   0.0054
+ X            x24,4,6   0.0054
+ X            x18,4,7   0.0054
+ X            x24,4,7   0.0054
+ X            x28,1,1   0.0051
+ X            x31,1,1   0.0051
+ X            x28,1,2   0.0051
+ X            x31,1,2   0.0051
+ X            x28,1,3   0.0051
+ X            x31,1,3   0.0051
+ X            x28,1,4   0.0051
+ X            x31,1,4   0.0051
+ X            x28,1,5   0.0051
+ X            x31,1,5   0.0051
+ X            x28,1,6   0.0051
+ X            x31,1,6   0.0051
+ X            x28,1,7   0.0051
+ X            x31,1,7   0.0051
+ X            x28,2,1   0.0091
+ X            x31,2,1   0.0091
+ X            x28,2,2   0.0091
+ X            x31,2,2   0.0091
+ X            x28,2,3   0.0091
+ X            x31,2,3   0.0091
+ X            x28,2,4   0.0091
+ X            x31,2,4   0.0091
+ X            x28,2,5   0.0091
+ X            x31,2,5   0.0091
+ X            x28,2,6   0.0091
+ X            x31,2,6   0.0091
+ X            x28,2,7   0.0091
+ X            x31,2,7   0.0091
+ X            x28,3,1   0.0643
+ X            x31,3,1   0.0643
+ X            x28,3,2   0.0643
+ X            x31,3,2   0.0643
+ X            x28,3,3   0.0643
+ X            x31,3,3   0.0643
+ X            x28,3,4   0.0643
+ X            x31,3,4   0.0643
+ X            x28,3,5   0.0643
+ X            x31,3,5   0.0643
+ X            x28,3,6   0.0643
+ X            x31,3,6   0.0643
+ X            x28,3,7   0.0643
+ X            x31,3,7   0.0643
+ X            x28,4,1   0.0643
+ X            x31,4,1   0.0643
+ X            x28,4,2   0.0643
+ X            x31,4,2   0.0643
+ X            x28,4,3   0.0643
+ X            x31,4,3   0.0643
+ X            x28,4,4   0.0643
+ X            x31,4,4   0.0643
+ X            x28,4,5   0.0643
+ X            x31,4,5   0.0643
+ X            x28,4,6   0.0643
+ X            x31,4,6   0.0643
+ X            x28,4,7   0.0643
+ X            x31,4,7   0.0643
+ X            epsilon   0.01
+
+
+ELEMENT TYPE
+
+ EV BILIN     u                        v
+ EV TRILIN    u                        v
+ EV TRILIN    w
+
+ELEMENT USES
+
+* Elements k(i,t)*phi(i,t)
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ XT kphi(i,t) BILIN
+ ZV kphi(i,t) u                        k(i,t)
+ ZV kphi(i,t) v                        phi(i,t)
+ ND
+
+* Elements keff(t)*phi(i,t)
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ XT kefph(i,t)BILIN
+ ZV kefph(i,t)u                        keff(t)
+ ZV kefph(i,t)v                        phi(i,t)
+ ND
+
+* Elements x(i,l,m)*x(j,l-1,m)*k(j,EoC)
+
+ IM t         Ntim      1
+ DO i         1                        Nnod
+ DO j         1                        Nnod
+ DO m         1                        Ntra
+ XT xa(i,j,m) TRILIN
+ ZV xa(i,j,m) u                        x(i,2,m)
+ ZV xa(i,j,m) v                        x(j,1,m)
+ ZV xa(i,j,m) w                        k(j,t)
+
+ XT xb(i,j,m) TRILIN
+ ZV xb(i,j,m) u                        x(i,3,m)
+ ZV xb(i,j,m) v                        x(j,2,m)
+ ZV xb(i,j,m) w                        k(j,t)
+
+ XT xc(i,j,m) TRILIN
+ ZV xc(i,j,m) u                        x(i,4,m)
+ ZV xc(i,j,m) v                        x(j,3,m)
+ ZV xc(i,j,m) w                        k(j,t)
+
+ ND
+
+GROUP USES
+
+* Kern(i,t) contains groups kefph(i,t)  and  kphi(j,t) * -G(i,j)
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ XE Kern(i,t) kefph(i,t) 1.0
+ DO j         1                        Nnod
+ AA myg       -G(i,j)    -0.999
+ IR myintg    myg
+ IM myintg    myintg     -1
+ I* maxt      Ntim                     myintg
+ ZE Kern(i,t) kphi(j,t)                -G(i,j)
+ ND
+
+* Norm(t) contains groups kphi(i,t) with factor v(i)
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ ZE Norm(t)   kphi(i,t)                V(i)
+ ND
+
+* Burn(i,t) contains alpha*Pc*delta_t *kphi(i,t)
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim-1
+ ZE Burn(i,t) kphi(i,t)                alp_Pc_Dt
+ ND
+
+* Peak(i,t) contains kphi(i,t)
+
+ DO i         1                        Nnod
+ DO t         1                        Ntim
+ XE Peak(i,t) kphi(i,t) 1.0
+ ND
+
+* Plac(i) contains xk2(i,j,m) ... xk4(i,j,m) with factor v(j)
+
+ DO i         1                        Nnod
+ DO j         1                        Nnod
+ DO m         1                        Ntra
+ ZE Plac(i)   xa(i,j,m)                -V(j)
+ ZE Plac(i)   xb(i,j,m)                -V(j)
+ ZE Plac(i)   xc(i,j,m)                -V(j)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TWIRIMD1
+
+INDIVIDUALS
+
+ T  BILIN
+ F                      u*v
+ G  u                   v
+ G  v                   u
+ H  u         v         1.0
+
+ T  TRILIN
+ F                      u*v*w
+ G  u                   v*w
+ G  v                   u*w
+ G  w                   u*v
+ H  u         v         w
+ H  u         w         v
+ H  v         w         u
+
+ENDATA
+

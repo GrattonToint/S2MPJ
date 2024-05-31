@@ -1,0 +1,218 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SYNTHES3
+
+*   Problem :
+*   *********
+
+*   Source: Test problem 3 (Synthesis of processing system) in 
+*   M. Duran & I.E. Grossmann,
+*   "An outer approximation algorithm for a class of mixed integer nonlinear
+*    programs", Mathematical Programming 36, pp. 307-339, 1986.
+
+*   SIF input: S. Leyffer, October 1997
+
+*   classification OOR2-AN-17-19
+
+ IE 1                   1
+ IE 8                   8
+ IE 9                   9
+
+VARIABLES
+
+ DO I         1                        9
+ X  X(I)      
+ ND
+ DO I         1                        8
+ X  Y(I)      INTEGER
+ ND
+
+GROUPS
+
+ N  OBJ       Y1        5.0            Y2        8.0
+ N  OBJ       Y3        6.0            Y4        10.0
+ N  OBJ       Y5        6.0            Y6        7.0
+ N  OBJ       Y7        4.0            Y8        5.0
+ N  OBJ       X1        -10.0          X2        -15.0
+ N  OBJ       X3        15.0           X4        80.0
+ N  OBJ       X5        25.0           X6        35.0
+ N  OBJ       X7        -40.0          X8        15.0
+ N  OBJ       X9        -35.0
+
+ L  N1        X8        -1.0
+ L  N2       
+ L  N3        Y1        -10.0
+ L  N4        Y2        -10.0 
+
+ L  L1        X1        -1.0           X2        -1.0 
+ L  L1        X3        1.0            X4        2.0  
+ L  L1        X5        0.8            X6        0.8   
+ L  L1        X7        -0.5           X8        -1.0 
+ L  L1        X9        -2.0           
+
+ L  L2        X1        -1.0           X2        -1.0
+ L  L2        X4        2.0            X5        0.8
+ L  L2        X6        0.8            X7        -2.0
+ L  L2        X8        -1.0           X9        -2.0
+
+ L  L3        X4        -2.0           X5        -0.8
+ L  L3        X6        -0.8           X7        2.0
+ L  L3        X8        1.0            X9        2.0
+
+ L  L4        X5        -0.8           X6        -0.8
+ L  L4        X8        1.0
+
+ L  L5        X4        -1.0           X7        1.0
+ L  L5        X9        1.0
+
+ L  L6        X5        -0.4           X6        -0.4
+ L  L6        X8        1.5
+
+ L  L7        X5        0.16           X6        0.16
+ L  L7        X8        -1.2
+
+ L  L8        X3        1.0            X4        -0.8
+
+ L  L9        X3        -1.0           X4        0.4 
+
+ L  L10       X7        1.0            Y3        -10.0
+
+ L  L11       X5        0.8 
+ L  L11       X6        0.8            Y4        -10.0
+
+ L  L12       X4        2.0            X7        -2.0
+ L  L12       X9        -2.0           Y5        -10.0
+
+ L  L13       X5        1.0            Y6        -10.0
+
+ L  L14       X6        1.0            Y7        -10.0
+
+ L  L15       X3        1.0 
+ L  L15       X4        1.0            Y8        -10.0
+
+
+ E  L16       Y1        1.0            Y2        1.0
+
+ L  L17       Y4        1.0            Y5        1.0
+
+ E  L18       Y4        -1.0           Y6        1.0
+ E  L18       Y7        1.0
+
+ L  L19       Y3        1.0            Y8        -1.0
+
+CONSTANTS
+
+ X  SYNTHES3  OBJ       -120.0
+ X  SYNTHES3  N3        1.0
+ X  SYNTHES3  N4        1.0
+ X  SYNTHES3  L16       1.0
+ X  SYNTHES3  L17       1.0
+
+BOUNDS
+
+ XU SYNTHES3  X1        2.0
+ XU SYNTHES3  X2        2.0
+ XU SYNTHES3  X3        1.0
+ XU SYNTHES3  X4        2.0
+ XU SYNTHES3  X5        2.0
+ XU SYNTHES3  X6        2.0
+ XU SYNTHES3  X7        2.0
+ XU SYNTHES3  X8        1.0
+ XU SYNTHES3  X9        3.0
+ DO I         1                        8
+ XU SYNTHES3  Y(I)      1.0
+ ND
+
+ELEMENT TYPE
+
+ EV LOGSUM    X                        Y
+
+ EV LOGXP1    X
+
+ EV EXPA      X                        
+ EP EXPA      A
+
+ELEMENT USES
+
+ T  LOGX3X4   LOGSUM    
+ V  LOGX3X4   X                        X3
+ V  LOGX3X4   Y                        X4
+
+ T  LOGX5P1   LOGXP1
+ V  LOGX5P1   X                        X5
+
+ T  LOGX6P1   LOGXP1
+ V  LOGX6P1   X                        X6
+
+ T  EXPX1     EXPA 
+ V  EXPX1     X                        X1
+ P  EXPX1     A         1.0         
+
+ T  EXPX2     EXPA 
+ V  EXPX2     X                        X2
+ P  EXPX2     A         1.2         
+
+GROUP USES
+
+ E  OBJ       EXPX1     1.0            EXPX2     1.0
+ E  OBJ       LOGX3X4   -65.0          LOGX5P1   -90.0
+ E  OBJ       LOGX6P1   -80.0
+
+ E  N1        LOGX5P1   -1.5           LOGX6P1   -1.0
+
+ E  N2        LOGX3X4   -1.0
+
+ E  N3        EXPX1     1.0 
+
+ E  N4        EXPX2     1.0 
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SYNTHES3
+
+ EV LOGSUM    X                        Y
+ EV LOGXP1    X
+ EV EXPA      X
+ EP EXPA      A
+
+TEMPORARIES
+
+ R  DX
+ R  DXDX
+ R  EXPXA
+
+INDIVIDUALS
+
+ T  LOGSUM
+ F                      LOG( X + Y + 1.0 )
+ A  DX                  1.0 / ( X + Y + 1.0 )
+ G  X                   DX
+ G  Y                   DX
+ A  DXDX                -1.0 / ( X + Y + 1.0 )**2
+ H  X         X         DXDX
+ H  X         Y         DXDX
+ H  Y         Y         DXDX
+
+ T  LOGXP1
+ F                      LOG( X + 1.0 )
+ G  X                   1.0 / ( X + 1.0 )
+ H  X         X         -1.0 / ( X + 1.0 )**2
+
+ T  EXPA
+ A  EXPXA               EXP( X / A )
+ F                      EXPXA
+ G  X                   EXPXA / A
+ H  X         X         EXPXA / A / A
+
+ENDATA

@@ -1,0 +1,47 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SIMPLLPB
+
+*   Problem:
+*   ********
+
+*   A simple linear programming problem in 2 variables.
+
+*   Source:
+*   N. Gould, private communication.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification LLR2-AN-2-3
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        1.5            X2        1.0
+ G  CONSTR1   X1        1.0            X2        1.0
+ G  CONSTR2   X1        1.0            X2        2.0
+ G  CONSTR3   X1        2.0            X2        1.0
+
+CONSTANTS
+
+    SIMPLLPB  CONSTR1   1.0
+    SIMPLLPB  CONSTR2   1.2
+    SIMPLLPB  CONSTR3   1.2
+
+START POINT
+
+ XV SIMPLLPB  'DEFAULT' 0.1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.1
+
+ENDATA

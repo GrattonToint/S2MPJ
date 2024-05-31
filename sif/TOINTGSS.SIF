@@ -1,0 +1,151 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TOINTGSS
+
+*   Problem :
+*   *********
+
+*   Toint's Gaussian problem.
+
+*   This problem has N-2 trivial groups, all of which have 1 nonlinear
+*   element
+
+*   Source: problem 21 in
+*   Ph.L. Toint,
+*   "Test problems for partially separable optimization and results
+*   for the routine PSPMIN",
+*   Report 83/4, Department of Mathematics, FUNDP (Namur, B), 1983.
+
+*   SIF input: Ph. Toint, Dec 1989, corrected Nick Gould, July 1993.
+
+*   classification OUR2-AY-V-0
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   Other parameters
+
+ IE 1                   1
+ IA N-2       N         -2
+ RI T0        N-2
+ RD 10/N-2    T0        10.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-2
+ XN G(I)
+ ND
+
+BOUNDS
+
+ FR TOINTGSS  'DEFAULT'
+
+START POINT
+
+ XV TOINTGSS  'DEFAULT' 3.0
+
+ELEMENT TYPE
+
+ EV TG        V1                       V2
+ EV TG        V3
+ IV TG        U1                       U2
+ EP TG        AP
+
+ELEMENT USES
+
+ DO I         1                        N-2
+ IA I+1       I         1
+ IA I+2       I         2
+ XT E(I)      TG
+ ZV E(I)      V1                       X(I)
+ ZV E(I)      V2                       X(I+1)
+ ZV E(I)      V3                       X(I+2)
+ ZP E(I)      AP                       10/N-2
+ ND
+
+GROUP USES
+
+ DO I         1                        N-2
+ XE G(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+ LO TOINTGSS            0.0
+
+*   Solution
+
+*LO SOLTN               ???
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TOINTGSS
+
+TEMPORARIES
+
+ R  ALPHA
+ R  U1SQ
+ R  U2SQ
+ R  T
+ R  T2
+ R  EXPA
+ R  AU2SQ
+ R  TMEXPA
+ R  EXPA1
+ R  EXPA2
+ R  EXPA11
+ R  EXPA12
+ R  EXPA22
+ M  EXP
+
+INDIVIDUALS
+
+ T  TG
+ R  U1        V1        1.0            V2        -1.0
+ R  U2        V3        1.0
+ A  ALPHA               0.1
+ A  U1SQ                U1 * U1
+ A  U2SQ                U2 * U2
+ A  T                   ALPHA + U2SQ
+ A  T2                  T * T
+ A  AU2SQ               AP + U2SQ
+ A  EXPA                EXP( - U1SQ / T )
+ A  EXPA1               - 2.0 * U1 * EXPA / T
+ A  EXPA2               2.0 * U1SQ * U2 * EXPA / T2
+ A  EXPA11              - 2.0 * ( EXPA + U1 * EXPA1 ) / T 
+ A  EXPA12              2.0 * U1 * 
+ A+                     ( 2.0 * U2 * EXPA / T - EXPA2 ) / T 
+ A  EXPA22              2.0 * U1SQ * ( U2 * EXPA2 +
+ A+                     EXPA * ( 1.0 - 4.0 * U2SQ / T ) ) / T2
+ A  TMEXPA              2.0 - EXPA
+
+ F                      AU2SQ * TMEXPA
+ G  U1                  - AU2SQ * EXPA1
+ G  U2                  - AU2SQ * EXPA2 + 2.0 * U2 * TMEXPA
+ H  U1        U1        - AU2SQ * EXPA11
+ H  U1        U2        - AU2SQ * EXPA12 - 2.0 * U2 * EXPA1
+ H  U2        U2        - AU2SQ * EXPA22 - 4.0 * U2 * EXPA2 + 
+ H+                     2.0 * TMEXPA
+
+ENDATA
+

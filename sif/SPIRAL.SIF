@@ -1,0 +1,208 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SPIRAL
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   E. Polak, J.E. Higgins and D. Mayne,
+*   "A barrier function for minmax problems",
+*   Mathematical Programming, vol.54(2), pp. 155-176, 1992.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification LOR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XG C1        U         1.0
+ XG C2        U         1.0
+
+BOUNDS
+
+ FR SPIRAL    'DEFAULT'
+
+START POINT
+
+ XV SPIRAL    X1        1.41831
+ XV SPIRAL    X2        -4.79462
+ XV SPIRAL    U         1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV BADCOS    X                        Y
+ EV BADSIN    X                        Y
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+ T  BC        BADCOS
+ ZV BC        X                        X1
+ ZV BC        Y                        X2
+
+ T  BS        BADSIN
+ ZV BS        X                        X1
+ ZV BS        Y                        X2
+
+GROUP USES
+
+ E  C1        BC        -1.0
+ E  C1        X1SQ      -0.005         X2SQ      -0.005
+
+ E  C2        BS        -1.0
+ E  C2        X1SQ      -0.005         X2SQ      -0.005
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN              0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SPIRAL
+
+TEMPORARIES
+
+ R  XX
+ R  YY
+ R  R
+ R  DRDX
+ R  DRDY
+ R  D2RDXX
+ R  D2RDYY
+ R  D2RDXY
+ R  C
+ R  DCDX
+ R  DCDY
+ R  D2CDXX
+ R  D2CDYY
+ R  D2CDXY
+ R  S
+ R  DSDX
+ R  DSDY
+ R  D2SDXX
+ R  D2SDYY
+ R  D2SDXY
+ R  Z
+ R  DZDX
+ R  DZDY
+ R  D2ZDXX
+ R  D2ZDYY
+ R  D2ZDXY
+ R  R3
+ M  SIN
+ M  SQRT
+ M  COS
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  BADCOS
+ A  XX                   X * X
+ A  YY                   Y * Y
+ A  R                    SQRT( XX + YY )
+ A  DRDX                 X / R
+ A  DRDY                 Y / R
+ A  R3                   R**3
+ A  D2RDXX               1.0 / R - XX / R3
+ A  D2RDYY               1.0 / R - YY / R3
+ A  D2RDXY               - X * Y / R3
+ A  C                    COS( R )
+ A  S                    SIN( R )
+ A  DCDX                 - S * DRDX
+ A  DCDY                 - S * DRDY
+ A  D2CDXX               - C * DRDX * DRDX - S * D2RDXX
+ A  D2CDYY               - C * DRDY * DRDY - S * D2RDYY
+ A  D2CDXY               - C * DRDX * DRDY - S * D2RDXY
+ A  DSDX                 C * DRDX
+ A  DSDY                 C * DRDY
+ A  D2SDXX               - S * DRDX * DRDX + C * D2RDXX
+ A  D2SDYY               - S * DRDY * DRDY + C * D2RDYY
+ A  D2SDXY               - S * DRDX * DRDY + C * D2RDXY
+ A  Z                    X - R * C
+ A  DZDX                 1.0 - DRDX * C - R * DCDX
+ A  DZDY                 - DRDY * C - R * DCDY
+ A  D2ZDXX               - D2RDXX * C - 2.0 * DRDX * DCDX
+ A+                      - R * D2CDXX
+ A  D2ZDYY               - D2RDYY * C - 2.0 * DRDY * DCDY
+ A+                      - R * D2CDYY
+ A  D2ZDXY               - D2RDXY * C - DRDX * DCDY
+ A+                      - DRDY * DCDX - R * D2CDXY
+ F                       Z * Z
+ G  X                    2.0 * DZDX *  Z
+ G  Y                    2.0 * DZDY *  Z
+ H  X         X          2.0 * ( D2ZDXX * Z + DZDX * DZDX )
+ H  X         Y          2.0 * ( D2ZDXY * Z + DZDX * DZDY )
+ H  Y         Y          2.0 * ( D2ZDYY * Z + DZDY * DZDY )
+
+
+ T  BADSIN
+ A  XX                   X * X
+ A  YY                   Y * Y
+ A  R                    SQRT( XX + YY )
+ A  DRDX                 X / R
+ A  DRDY                 Y / R
+ A  R3                   R**3
+ A  D2RDXX               1.0 / R - XX / R3
+ A  D2RDYY               1.0 / R - YY / R3
+ A  D2RDXY               - X * Y / R3
+ A  C                    COS( R )
+ A  S                    SIN( R )
+ A  DCDX                 - S * DRDX
+ A  DCDY                 - S * DRDY
+ A  D2CDXX               - C * DRDX * DRDX - S * D2RDXX
+ A  D2CDYY               - C * DRDY * DRDY - S * D2RDYY
+ A  D2CDXY               - C * DRDX * DRDY - S * D2RDXY
+ A  DSDX                 C * DRDX
+ A  DSDY                 C * DRDY
+ A  D2SDXX               - S * DRDX * DRDX + C * D2RDXX
+ A  D2SDYY               - S * DRDY * DRDY + C * D2RDYY
+ A  D2SDXY               - S * DRDX * DRDY + C * D2RDXY
+ A  Z                    Y - R * S
+ A  DZDX                 - DRDX * S - R * DSDX
+ A  DZDY                 1.0 - DRDY * S - R * DSDY
+ A  D2ZDXX               - D2RDXX * S - 2.0 * DRDX * DSDX
+ A+                      - R * D2SDXX
+ A  D2ZDYY               - D2RDYY * S - 2.0 * DRDY * DSDY
+ A+                      - R * D2SDYY
+ A  D2ZDXY               - D2RDXY * S - DRDX * DSDY
+ A+                      - DRDY * DSDX - R * D2SDXY
+ F                       Z * Z
+ G  X                    2.0 * DZDX *  Z
+ G  Y                    2.0 * DZDY *  Z
+ H  X         X          2.0 * ( D2ZDXX * Z + DZDX * DZDX )
+ H  X         Y          2.0 * ( D2ZDXY * Z + DZDX * DZDY )
+ H  Y         Y          2.0 * ( D2ZDYY * Z + DZDY * DZDY )
+
+ENDATA
+

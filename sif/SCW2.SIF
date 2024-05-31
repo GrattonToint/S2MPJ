@@ -1,0 +1,197 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SCW2
+
+*   Problem :
+*   *********
+
+*   Source: a discretization of an infinite-demsional problem proposed 
+*   by Simon Chandler-Wilde (U. Reading):
+
+*   Given a function u in C[0,2 pi] with ||u||_infty <= 1, find the 
+*   supremum of c^2(u) + s^2(u), where
+*     c(u) = int_0^2 pi cos(t)u(t) dt and
+*     s(u) = int_0^2 pi sin(t)u(t) dt      
+
+*   The discretized version ignores the required continuity, and 
+*   posits a piecewise constant solution that varies anywhere between
+*   plus and minus one. The anticipated solution is -16.
+
+*   SIF input: Nick Gould, July 2020
+
+*   classification SLR2-MN-V-V
+
+*   Number of internal knots
+
+*IE K                   1              $-PARAMETER
+*IE K                   10             $-PARAMETER
+*IE K                   100            $-PARAMETER
+*IE K                   1000           $-PARAMETER     original value
+ IE K                   10             $-PARAMETER     modified for S2X tests
+
+*   Other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ RE ONE                 1.0
+ IA K+1       K         1
+ RI RK        K
+ RI RK+1      K+1
+ RF PI/4      ARCTAN    1.0
+ RM PI        PI/4      4.0
+ RM 2PI       PI        2.0
+ R/ 2PI/K+1   2PI                      RK+1
+ R/ 1/K       ONE                      RK
+
+VARIABLES
+
+ DO I         0                        K+1
+ X  T(I)
+ ND
+
+ DO I         0                        K
+ X  U(I)
+ ND
+
+GROUPS
+
+ N  S
+ N  C
+ DO I         0                        K
+ IA I+1       I         1
+ XG CON(I)    T(I+1)    1.0            T(I)      -1.0
+ ND
+
+BOUNDS
+
+ XX SCW       T(0)      0.0
+ DO I         1                        K
+ XL SCW       T(I)      0.0
+ ZU SCW       T(I)                     2PI
+ ND
+ ZX SCW       T(K+1)                   2PI
+
+ DO I         0                        K
+ XL SCW       U(I)      -1.0
+ XU SCW       U(I)      1.0
+ ND
+
+START POINT
+
+ X  SCW       T(1)      1.0
+ DO I         2                        K
+ RI RI        I
+ R* START     RI                       2PI/K+1
+*Z  SCW       T(I)                     START
+ X  SCW       T(I)      0.0
+ ND
+
+ DO I         0                        K
+ RI RI        I
+ R* START     RI                       1/K
+ Z  SCW       U(I)                     START
+ ND
+
+ELEMENT TYPE
+
+ EV USINT     T
+ EV USINT     U
+ EV UCOST     T
+ EV UCOST     U
+
+ELEMENT USES
+
+ DO I         0                        K
+ IA I+1       I         1
+ XT US(I)     USINT
+ ZV US(I)     T                        T(I)
+ ZV US(I)     U                        U(I)
+ XT USP(I)    USINT
+ ZV USP(I)    T                        T(I+1)
+ ZV USP(I)    U                        U(I)
+ XT UC(I)     UCOST
+ ZV UC(I)     T                        T(I)
+ ZV UC(I)     U                        U(I)
+ XT UCP(I)    UCOST
+ ZV UCP(I)    T                        T(I+1)
+ ZV UCP(I)    U                        U(I)
+ ND
+
+GROUP TYPE
+
+ GV MAXSQ     ALPHA
+
+GROUP USES
+
+ XT C         MAXSQ
+ DO I         0                        K
+ XE C         USP(I)    1.0            US(I)     -1.0
+ ND
+
+ XT S         MAXSQ
+ DO I         0                        K
+ XE S         UCP(I)    -1.0           UC(I)     1.0
+ ND
+
+OBJECT BOUND
+
+*LO SCW                 0.0
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SCW2
+
+TEMPORARIES
+
+ R  S
+ R  C
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  USINT
+ A  S                   SIN( T )
+ A  C                   COS( T )
+ F                      U * S
+ G  T                   U * C
+ G  U                   S
+ H  T         T         - U * S
+ H  T         U         C
+
+ T  UCOST
+ A  S                   SIN( T )
+ A  C                   COS( T )
+ F                      U * C
+ G  T                   - U * S
+ G  U                   C
+ H  T         T         - U * C
+ H  T         U         - S
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+GROUPS        SCW2
+
+INDIVIDUALS
+
+ T  MAXSQ
+ F                      - ALPHA * ALPHA
+ G                      - ALPHA - ALPHA
+ H                      - 2.0D+0
+
+ENDATA

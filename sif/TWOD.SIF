@@ -1,0 +1,251 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TWOD
+
+*   Problem :
+*   *********
+
+*   The twod_0 & _00.mod AMPL models from Hans Mittelmann (mittelmann@asu.edu)
+*   See: http://plato.asu.edu/ftp/barrier/
+
+*   SIF input: Nick Gould, April 25th 2012
+
+*   classification QLR2-AN-V-V
+
+*   the x-y discretization 
+
+*IE N                    2             $-PARAMETER
+*IE N                   40             $-PARAMETER
+ IE N                   2              $-PARAMETER     modified for S2X tests
+*IE N                   79             $-PARAMETER     twod_000.mod value
+*IE N                   99             $-PARAMETER     twod_0.mod value
+
+ I= M         N
+
+*   Other useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+ RE ONE                 1.0
+ RE HALF                0.5
+ RE -HALF               -0.5
+
+ RE A                   0.001
+ RE UA                  2.0
+
+ IA N1        N         -1
+ IA N2        N         -2
+ IA M1        M         -1
+
+ RI RN        N
+ RI RM        M
+
+ R/ DX        ONE                      RN
+ R/ DY        ONE                      RM
+
+ R= T         ONE
+ R/ DT        T                        RM
+
+ R* H2        DX                       DX
+ R* DXDY      DX                       DY
+ RM .5DXDY    DXDY      0.5
+ RM .25DXDY   DXDY      0.25
+ RM .125DXDY  DXDY      0.125
+
+ R* DTDX      DT                       DX
+ R* ADTDX     A                        DTDX
+ RM .5ADTDX   ADTDX     0.5
+ RM .25ADTDX  ADTDX     0.5
+
+ R/ 1/2DX     HALF                     DX
+ RM 3/2DX     1/2DX     3.0
+ RM -2/DX     1/2DX     -4.0
+ RA 3/2DX+1   3/2DX     1.0
+
+ R/ 1/2DY     HALF                     DY
+ RM 3/2DY     1/2DY     3.0
+ RM -2/DY     1/2DY     -4.0
+ RA 3/2DY+1   3/2DY     1.0
+
+ R/ 1/DT      ONE                      DT
+ RM -1/DT     1/DT      -1.0
+
+ R/ -.1/2H2   -HALF                    H2
+ RM 2/H2      -.1/2H2   -4.0
+
+ R+ 1/DT+2/H2 1/DT                     2/H2
+ R+ -1/DT+2/H2-1/DT                    2/H2
+
+VARIABLES
+
+ DO I         0                        N
+ DO J         0                        N
+ DO K         0                        M
+ X  Y(K,I,J)
+ ND
+
+ DO I         1                        M
+ DO J         0                        N1
+ X  U(I,J)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        N1
+ IA I+        I         1
+ IA I-        I         -1
+ DO J         1                        N1
+ IA J+        J         1
+ IA J-        J         -1
+ DO K         0                        M1
+ IA K+        K         1
+ ZE P(K,I,J)  Y(K+,I,J)                1/DT+2/H2
+ ZE P(K,I,J)  Y(K,I,J)                 -1/DT+2/H2
+ ZE P(K,I,J)  Y(K,I,J-)                -.1/2H2
+ ZE P(K,I,J)  Y(K,I,J+)                -.1/2H2
+ ZE P(K,I,J)  Y(K,I-,J)                -.1/2H2
+ ZE P(K,I,J)  Y(K,I+,J)                -.1/2H2
+ ZE P(K,I,J)  Y(K+,I-,J)               -.1/2H2
+ ZE P(K,I,J)  Y(K+,I+,J)               -.1/2H2
+ ZE P(K,I,J)  Y(K+,I,J-)               -.1/2H2
+ ZE P(K,I,J)  Y(K+,I,J+)               -.1/2H2
+ ND
+
+ DO I         1                        N1
+ DO K         1                        M
+ ZE B1(K,I)   Y(K,I,N2)                1/2DY
+ ZE B1(K,I)   Y(K,I,N1)                -2/DY
+ ZE B1(K,I)   Y(K,I,N)                 3/2DY+1
+ XE B1(K,I)   U(K,I)    -1.0
+
+ ZE B2(K,I)   Y(K,I,2)                 1/2DY
+ ZE B2(K,I)   Y(K,I,1)                 -2/DY
+ ZE B2(K,I)   Y(K,I,0)                 3/2DY+1
+ ND
+
+ DO J         1                        N1
+ DO K         1                        M
+ ZE B3(K,J)   Y(K,2,J)                 1/2DX
+ ZE B3(K,J)   Y(K,1,J)                 -2/DX
+ ZE B3(K,J)   Y(K,0,J)                 3/2DX+1
+ ZE B4(K,J)   Y(K,N2,J)                1/2DX
+ ZE B4(K,J)   Y(K,N1,J)                -2/DX
+ ZE B4(K,J)   Y(K,N,J)                 3/2DX+1
+ ND
+
+BOUNDS
+ 
+ DO I         0                        N
+ DO J         0                        N
+ XX TWOD-00   Y(0,I,J)  0.0
+ ND
+
+ DO I         0                        N
+ DO J         0                        N
+ DO K         1                        M
+ XL TWOD-00   Y(K,I,J)  0.0
+ XU TWOD-00   Y(K,I,J)  0.8
+ ND
+
+ DO I         1                        M
+ DO J         0                        N1
+ XL TWOD-00   U(I,J)    0.0
+ ZU TWOD-00   U(I,J)                   UA
+ ND
+
+START POINT
+
+    TWOD-00   'DEFAULT' 0.0
+
+ DO I         1                        M
+ DO J         0                        N1
+ Z  TWOD-00   U(I,J)                   UA
+ ND
+
+ELEMENT TYPE
+
+ EV SQ        U
+ EV SQD       Y
+ EP SQD       YP
+
+ELEMENT USES
+
+ DO I         0                        N
+ RI RI        I
+ R* .5DXDYI   .5DXDY                   RI
+ DO J         0                        N
+ RI RJ        J
+ R* .5DXDYIJ  .5DXDYI                  RJ
+ RA YP        .5DXDYIJ  0.25
+ XT E(M,I,J)  SQD
+ ZV E(M,I,J)  Y                        Y(M,I,J)
+ ZP E(M,I,J)  YP                       YP
+ ND
+
+ DO K         1                        M
+ DO I         1                        N1
+ XT E(K,I)    SQ
+ ZV E(K,I)    U                        U(K,I)
+ ND
+
+GROUP USES
+
+ ZE OBJ       E(M,0,0)                 .125DXDY
+ ZE OBJ       E(M,0,N)                 .125DXDY
+ ZE OBJ       E(M,N,0)                 .125DXDY
+ ZE OBJ       E(M,N,N)                 .125DXDY
+
+
+ DO J         1                        N1
+ ZE OBJ       E(M,0,J)                 .25DXDY
+ ZE OBJ       E(M,N,J)                 .25DXDY
+ ZE OBJ       E(M,J,0)                 .25DXDY
+ ZE OBJ       E(M,N,N)                 .25DXDY
+ ND
+
+ DO I         1                        N1
+ DO J         1                        N1
+ ZE OBJ       E(M,I,J)                 .5DXDY
+ ND
+
+ DO K         1                        M1
+ DO I         1                        N1
+ ZE OBJ       E(K,I)                   .5ADTDX
+ ND
+
+ DO I         1                        N1
+ ZE OBJ       E(M,I)                   .25ADTDX
+ ND
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TWOD
+
+INDIVIDUALS
+
+ T  SQ
+ F                      U * U
+ G  U                   2.0 * U
+ H  U         U         2.0
+
+ T  SQD
+ F                      ( Y - YP ) ** 2
+ G  Y                   2.0 * ( Y - YP )
+ H  Y         Y         2.0
+
+ENDATA

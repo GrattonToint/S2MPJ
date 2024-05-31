@@ -1,0 +1,438 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SSEBNLN
+
+*   Problem :
+*   *********
+*   The Power Generation problem for the SSGB.
+
+*   Source:
+*   N. Gould, private communication.
+
+*   SIF input: Nick Gould, 23 October 1989
+
+*   classification LQR2-RN-194-96
+
+*   period is the number of time periods
+
+ IE HOURS               24
+ IE DAYS                1
+ I* PERIOD    HOURS                    DAYS
+
+*   Define a few helpful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+*   set the influx z (MW) and demands d (MW)
+
+*   day 1
+
+ RE Z1                  517.0
+ RE D1,1                578.0
+ RE D1,2                517.0
+ RE D1,3                461.0
+ RE D1,4                369.0
+ RE D1,5                299.0
+ RE D1,6                269.0
+ RE D1,7                370.0
+ RE D1,8                559.0
+ RE D1,9                689.0
+ RE D1,10               728.0
+ RE D1,11               683.0
+ RE D1,12               626.0
+ RE D1,13               619.0
+ RE D1,14               586.0
+ RE D1,15               582.0
+ RE D1,16               625.0
+ RE D1,17               821.0
+ RE D1,18               883.0
+ RE D1,19               768.0
+ RE D1,20               711.0
+ RE D1,21               677.0
+ RE D1,22               630.0
+ RE D1,23               545.0
+ RE D1,24               565.0
+
+*   day 2
+
+ RE Z2                  400.0
+ RE D2,1                631.0
+ RE D2,2                574.0
+ RE D2,3                521.0
+ RE D2,4                446.0
+ RE D2,5                359.0
+ RE D2,6                336.0
+ RE D2,7                420.0
+ RE D2,8                588.0
+ RE D2,9                697.0
+ RE D2,10               732.0
+ RE D2,11               713.0
+ RE D2,12               682.0
+ RE D2,13               695.0
+ RE D2,14               651.0
+ RE D2,15               645.0
+ RE D2,16               664.0
+ RE D2,17               816.0
+ RE D2,18               858.0
+ RE D2,19               760.0
+ RE D2,20               700.0
+ RE D2,21               659.0
+ RE D2,22               623.0
+ RE D2,23               517.0
+ RE D2,24               542.0
+
+*   day 3
+
+ RE Z3                  1017.0
+ RE D3,1                582.0
+ RE D3,2                501.0
+ RE D3,3                443.0
+ RE D3,4                367.0
+ RE D3,5                288.0
+ RE D3,6                265.0
+ RE D3,7                349.0
+ RE D3,8                503.0
+ RE D3,9                663.0
+ RE D3,10               651.0
+ RE D3,11               625.0
+ RE D3,12               596.0
+ RE D3,13               608.0
+ RE D3,14               566.0
+ RE D3,15               555.0
+ RE D3,16               584.0
+ RE D3,17               763.0
+ RE D3,18               803.0
+ RE D3,19               710.0
+ RE D3,20               648.0
+ RE D3,21               626.0
+ RE D3,22               590.0
+ RE D3,23               486.0
+ RE D3,24               540.0
+
+*   day 4
+
+ RE Z4                  667.0
+ RE D4,1                602.0
+ RE D4,2                533.0
+ RE D4,3                450.0
+ RE D4,4                378.0
+ RE D4,5                298.0
+ RE D4,6                272.0
+ RE D4,7                369.0
+ RE D4,8                539.0
+ RE D4,9                647.0
+ RE D4,10               652.0
+ RE D4,11               607.0
+ RE D4,12               585.0
+ RE D4,13               587.0
+ RE D4,14               549.0
+ RE D4,15               535.0
+ RE D4,16               564.0
+ RE D4,17               748.0
+ RE D4,18               808.0
+ RE D4,19               710.0
+ RE D4,20               646.0
+ RE D4,21               620.0
+ RE D4,22               581.0
+ RE D4,23               483.0
+ RE D4,24               514.0
+
+*   day 5
+
+ RE Z5                  600.0
+ RE D5,1                579.0
+ RE D5,2                518.0
+ RE D5,3                447.0
+ RE D5,4                355.0
+ RE D5,5                284.0
+ RE D5,6                261.0
+ RE D5,7                348.0
+ RE D5,8                530.0
+ RE D5,9                644.0
+ RE D5,10               648.0
+ RE D5,11               607.0
+ RE D5,12               570.0
+ RE D5,13               577.0
+ RE D5,14               536.0
+ RE D5,15               544.0
+ RE D5,16               554.0
+ RE D5,17               716.0
+ RE D5,18               765.0
+ RE D5,19               676.0
+ RE D5,20               631.0
+ RE D5,21               576.0
+ RE D5,22               528.0
+ RE D5,23               445.0
+ RE D5,24               520.0
+
+*   day 6
+
+ RE Z6                  421.0
+ RE D6,1                618.0
+ RE D6,2                547.0
+ RE D6,3                430.0
+ RE D6,4                327.0
+ RE D6,5                249.0
+ RE D6,6                211.0
+ RE D6,7                227.0
+ RE D6,8                258.0
+ RE D6,9                347.0
+ RE D6,10               491.0
+ RE D6,11               524.0
+ RE D6,12               492.0
+ RE D6,13               467.0
+ RE D6,14               418.0
+ RE D6,15               358.0
+ RE D6,16               378.0
+ RE D6,17               544.0
+ RE D6,18               666.0
+ RE D6,19               589.0
+ RE D6,20               533.0
+ RE D6,21               494.0
+ RE D6,22               460.0
+ RE D6,23               404.0
+ RE D6,24               512.0
+
+*   day 7
+
+ RE Z7                  425.0
+ RE D7,1                615.0
+ RE D7,2                587.0
+ RE D7,3                450.0
+ RE D7,4                320.0
+ RE D7,5                235.0
+ RE D7,6                198.0
+ RE D7,7                195.0
+ RE D7,8                173.0
+ RE D7,9                197.0
+ RE D7,10               349.0
+ RE D7,11               441.0
+ RE D7,12               459.0
+ RE D7,13               485.0
+ RE D7,14               445.0
+ RE D7,15               410.0
+ RE D7,16               421.0
+ RE D7,17               568.0
+ RE D7,18               643.0
+ RE D7,19               596.0
+ RE D7,20               566.0
+ RE D7,21               541.0
+ RE D7,22               532.0
+ RE D7,23               454.0
+ RE D7,24               511.0
+
+VARIABLES
+
+*   Define the problem variables
+
+ X  V(0,HOURS)
+ X  R(0,HOURS)
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+
+*  power output oil (MW)
+ X  P1(ID,IH)
+
+*  power output coal (MW)
+ X  P2(ID,IH)
+
+*  power generated  (MW)
+ X  QH(ID,IH)
+
+*  spillage  (MW)
+ X  S(ID,IH)
+
+*  Flow per unit time from pump storage - generating (MW)
+ X  QG(ID,IH)
+
+*  Flow per unit time from pump storage - pumping (MW)
+ X  QP(ID,IH)
+
+*  Volume of hydro power (MWh)
+ X  V(ID,IH)
+
+*  Volume of pump-storage power (MWh)
+ X  R(ID,IH)
+ ND
+
+GROUPS
+
+*   Define objective function group, cost of generation (MW)
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ XN OBJ       P1(ID,IH) 1000.0         P2(ID,IH) 1500.0
+ XN OBJ       QH(ID,IH) 1200.0         S(ID,IH)  1200.0
+ XN OBJ       QG(ID,IH) 1200.0         QP(ID,IH) -1200.0
+ ND
+
+*   Define the hydro-power constraints
+
+ DO ID        1                        DAYS
+ IA P         ID        -1
+ XE H(ID,1)   V(ID,1)   1.0            V(P,HOURS)-1.0
+ XE H(ID,1)   S(ID,1)   1.0            QH(ID,1)  1.0
+ ND
+
+ DO ID        1                        DAYS
+ DO IH        2                        HOURS
+ IA IH-1      IH        -1
+ XE H(ID,IH)  V(ID,IH)  1.0            V(ID,IH-1)-1.0
+ XE H(ID,IH)  S(ID,IH)  1.0            QH(ID,IH) 1.0
+ ND
+
+*   Define the power-storage reservoir constraints
+
+ DO ID        1                        DAYS
+ IA P         ID        -1
+ XE R(ID,1)   R(ID,1)   1.0            R(P,HOURS)-1.0
+ XE R(ID,1)   QG(ID,1)  1.0            QP(ID,1)  -1.0
+ ND
+
+ DO ID        1                        DAYS
+ DO IH        2                        HOURS
+ IA IH-1      IH        -1
+ XE R(ID,IH)  R(ID,IH)  1.0            R(ID,IH-1)-1.0
+ XE R(ID,IH)  QG(ID,IH) 1.0            QP(ID,IH) -1.0
+ ND
+
+*   Define the demand constraints
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ XG D(ID,IH)  P1(ID,IH) 1.0            P2(ID,IH) 1.0
+ XG D(ID,IH)  QH(ID,IH) 1.0            QG(ID,IH) 1.0
+ XG D(ID,IH)  QP(ID,IH) -1.33
+ ND
+
+* Nonlinear constraints
+
+ DO D         1                        DAYS
+ DO H         1                        HOURS
+ XE QG*QP(D,H)
+ ND
+
+CONSTANTS
+
+*   The constant for the hydro-power constraints are nonzero.
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ Z  SSEBNLN   H(ID,IH)                 Z(ID)
+ ND
+
+*   The constant for the reservoir constraints are nonzero.
+
+ DO ID        1                        DAYS
+ AM 0.01Z     Z(ID)     0.01
+ DO IH        1                        HOURS
+ Z  SSEBNLN   R(ID,IH)                 0.01Z
+ ND
+
+*   The constant for all the demand constraints are nonzero.
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ Z  SSEBNLN   D(ID,IH)                 D(ID,IH)
+ ND
+
+BOUNDS
+
+ XX SSEBNLN   V(0,HOURS)240000.0
+ XX SSEBNLN   R(0,HOURS)3500.0
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ XL SSEBNLN   P1(ID,IH) 70.0
+ XL SSEBNLN   P2(ID,IH) 90.0
+ XL SSEBNLN   QH(ID,IH) 25.0
+ XL SSEBNLN   V(ID,IH)  180000.0
+ XU SSEBNLN   P1(ID,IH) 325.0
+ XU SSEBNLN   P2(ID,IH) 290.0
+ XU SSEBNLN   QH(ID,IH) 500.0
+ XU SSEBNLN   QP(ID,IH) 225.0
+ XU SSEBNLN   QG(ID,IH) 300.0
+ XU SSEBNLN   V(ID,IH)  280000.0
+ XU SSEBNLN   R(ID,IH)  6000.0
+ ND
+
+START POINT
+
+ X  SSEBNLN   V(0,HOURS)240000.0
+ X  SSEBNLN   R(0,HOURS)3500.0
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ X  SSEBNLN   P1(ID,IH) 70.0
+ X  SSEBNLN   P2(ID,IH) 90.0
+ X  SSEBNLN   QH(ID,IH) 25.0
+ X  SSEBNLN   QP(ID,IH) 225.0
+ X  SSEBNLN   V(ID,IH)  240000.0
+ X  SSEBNLN   R(ID,IH)  3500
+ ND
+
+ X  START2    V(0,HOURS)240000.0
+ X  START2    R(0,HOURS)3500.0
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ X  START2    P1(ID,IH) 325.0
+ X  START2    P2(ID,IH) 200.0
+ X  START2    QH(ID,IH) 500.0
+ X  START2    V(ID,IH)  240000.0
+ X  START2    R(ID,IH)  3500
+ ND
+
+ELEMENT TYPE
+
+ EV PROD      QP                       QG
+
+ELEMENT USES
+
+ DO ID        1                        DAYS
+ DO IH        1                        HOURS
+ XT P(ID,IH)  PROD
+ ZV P(ID,IH)  QP                       QP(ID,IH)
+ ZV P(ID,IH)  QG                       QG(ID,IH)
+ ND
+
+GROUP USES
+
+* Nonlinear constraints
+
+ DO D         1                        DAYS
+ DO H         1                        HOURS
+ XE QG*QP(D,H)P(D,H)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.617060D+07
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SSEBNLN
+
+*   product of two variables element
+
+INDIVIDUALS
+
+ T  PROD
+ F                      QG * QP
+ G  QG                  QP
+ G  QP                  QG
+ H  QG        QP        1.0D+0
+
+ENDATA

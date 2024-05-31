@@ -1,0 +1,476 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SANTA
+
+*   Problem :
+*   --------
+
+*   The Santa problem as suggested in a Christmas competition
+*   by Jens Jensen (Scientific Computing, STFC). To quote Jens,
+
+*   Santa and His Elves
+
+*   SCD Christmas programming challenge 2016
+
+*   Christmas has come to the Santa Claus Department – or rather, the SCD
+*   is coming to Christmas. Santa is flying around the world, presently
+*   presenting presents. Ho, ho, ho! No striking air crew on Santa’s sleigh!
+*   No airport strikes on the North Pole.
+
+*   For the purpose of this exercise, the Earth is round as a perfect ball,
+*   with radius precisely 6,371,000 metres. However, everything is at the
+*   same longitude and latitude as the “real” Earth. So for example, the
+*   Greenwich observatory is at 51°28'40"N 0°00'04"W both on the “real”
+*   Earth and on Santa’s Earth. (Also ignore rotation of the Earth and
+*   anything practical like that.)
+
+*   Santa sets off from the North Pole along 2°6'57.6" E bearing south
+*   (obviously), and also bearing presents (obviously). Whenever Santa
+*   leaves a location, he leaves an elf behind, in order to help unwrapping
+*   presents; the elf does this and then flies out independently to meet up
+*   with Santa at the next location - this means that Santa only needs two
+*   Elves. Here’s how:
+
+*   1. Santa leaves the North Pole, setting out for location A. Elf 1 is
+*   left behind (in this particular case, not to unwrap presents, but to
+*   turn the lights off, and ensure the oven is off – it's elf'n'safety,
+*   you know.)
+
+*   2. Santa arrives in location A and hands them their present. Now Elf 2
+*   is with Santa; Elf 1 is still at the NP.
+
+*   3. Santa leaves location A, leaving behind Elf 2. Santa flies on to
+*   location B; Elf 1, who remained at the North Pole, also flies to B and
+*   meets Santa there; Elf 2 is left behind at A.
+
+*   4. Santa arrives at location B along with Elf 1, and hands out
+*   presents. Santa then leaves location B to fly to C, leaving behind Elf 1
+*   at location B. Meanwhile Elf 2, having finished helping at location A,
+*   leaves location A to fly on to C, to meet Santa there.
+
+*   5. Santa arrives from B at location C; Elf 2 also arrives into C from
+*   location A. Elf 1 remains at B until Santa flies onward to location D.
+
+*   6. At the last hop, Santa needs a rest and flies to 31°46'42.4" S
+*   144°46'12.9" W.  The Elves also fly to this location - maps show no land
+*   here but it is hidden. Either that or we got the coordinates wrong.
+*   In either case Santa and elves do fly to this location.
+
+*   The following table shows the distance of Santa's hops, as well as those
+*   of the elves, with the distance given in metres:
+
+*   Who     Hop  Distance travelled
+*   Santa   1    5405238
+*           2    623852
+*           3    1005461
+*           4    7470967
+*           5    3632559
+*           6    10206818
+*           7    7967212
+*           8    5896361
+*           9    8337266
+*           10   13019505
+*           11   8690818
+*           12   8971302
+*   Elf1    1    4866724
+*           2    6833740
+*           3    13489586
+*           4    9195575
+*           5    9704793
+*           6    12498127
+*   Elf2    1    1375828
+*           2    4917407
+*           3    10617953
+*           4    10996150
+*           5    7901038
+*           6    8971302
+
+*   What is Santa’s route?  What sort of presents is he carrying?
+
+*   Bonus question: did you really need to know the starting direction?
+
+*   Added by Nick: the problem has many local minimizers of the sum of squares
+*   of infeasibility, but it is only the solution with zero residuals
+*   that is of interest.
+
+*   SIF input: Nick Gould, Dec 2016.
+
+*   classification NOR2-AN-21-23
+
+*   Number of stops on Santa's path (path goes from index 0 to 12)
+
+ IE S                   12
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ RE 180.0               180.0
+ IA S-1       S         -1
+ RI RS        S
+
+*   approximation of pi
+
+ RF PI/4      ARCTAN    1.0
+ RM PI        PI/4      4.0
+ R/ PI/180    PI                       180.0
+
+*  initial and final latitude and longitude on Santa's path
+
+ RE PHI0                90.0
+ RE LAM0                0.0
+ RE PHI12               -31.77844444
+ RE LAM12               -144.77025
+
+*  Santa's initial direction
+
+ RE LAM1                2.116
+
+*  conversion to radians
+
+ R* PHI0      PHI0                     PI/180
+ R* LAM0      LAM0                     PI/180
+ R* PHI12     PHI12                    PI/180
+ R* LAM12     LAM12                    PI/180
+ R* LAM1      LAM1                     PI/180
+
+ R- DPHI      PHI12                    PHI0
+ R- DLAM      LAM12                    LAM0
+ R/ DPHI/S    DPHI                     RS
+ R/ DLAM/S    DLAM                     RS
+
+*  radius of earth (in metres)
+
+ RE RADIUS              6371000.0
+
+*  path lengths between nodes
+
+ RE D0,1                5405238.0
+ RE D0,2                4866724.0
+ RE D1,2                623852.0
+ RE D1,3                1375828.0
+ RE D2,3                1005461.0
+ RE D2,4                6833740.0
+ RE D3,4                7470967.0
+ RE D3,5                4917407.0
+ RE D4,5                3632559.0
+ RE D4,6                13489586.0
+ RE D5,6                10206818.0
+ RE D5,7                10617953.0
+ RE D6,7                7967212.0
+ RE D6,8                9195575.0
+ RE D7,8                5896361.0
+ RE D7,9                10996150.0
+ RE D8,9                8337266.0
+ RE D8,10               9704793.0
+ RE D9,10               13019505.0
+ RE D9,11               7901038.0
+ RE D10,11              8690818.0
+ RE D10,12              12498127.0
+ RE D11,12              8971302.0
+
+VARIABLES
+
+*  unknowns are the spherical polar coordinates (phi,lam) for each point
+
+ X  PHI1
+ DO I         2                        S-1
+ X  PHI(I)
+ X  LAM(I)
+ ND
+
+GROUPS
+
+*  constraints are given by the spherical law of cosines, i.e., that
+*    sin phi_1 sin phi_2 + cos phi_1 cos phi_2 cos(lam_1 - lam_2) = cos(d/r)
+*  for pairs of points for which the distances are given
+
+ E  R0,1
+ DO I         2                        S
+ IA I1        I         -1
+ IA I2        I         -2
+ XE R(I2,I)
+ XE R(I1,I)
+ ND
+
+CONSTANTS
+
+ R/ D/RAD     D0,1                     RADIUS
+ R( CD/RAD    COS                      D/RAD
+ Z  SANTA     R0,1                     CD/RAD
+
+ DO I         2                        S
+ IA I2        I         -2
+ A/ D/RAD     D(I2,I)                  RADIUS
+ R( CD/RAD    COS                      D/RAD
+ Z  SANTA     R(I2,I)                  CD/RAD
+ IA I1        I         -1
+ A/ D/RAD     D(I1,I)                  RADIUS
+ R( CD/RAD    COS                      D/RAD
+ Z  SANTA     R(I1,I)                  CD/RAD
+ ND
+
+BOUNDS
+
+*FR SANTA     'DEFAULT'
+ LO SANTA     'DEFAULT'  -1000.0
+ UP SANTA     'DEFAULT'  1000.0
+
+START POINT
+
+ XV SANTA     PHI1      0.7223835215
+ XV SANTA     PHI2      0.8069093428
+ XV SANTA     LAM2      -0.031657133
+ XV SANTA     PHI3      0.9310164154
+ XV SANTA     LAM3      0.1199353230
+ XV SANTA     PHI4      6.6067392710
+ XV SANTA     LAM4      -1.214314477
+ XV SANTA     PHI5      -3.530946794
+ XV SANTA     LAM5      2.5329493980
+ XV SANTA     PHI6      -9.798251905
+ XV SANTA     LAM6      4.3021328700
+ XV SANTA     PHI7      14.632267534
+ XV SANTA     LAM7      -12.96253311
+ XV SANTA     PHI8      2.0349445303
+ XV SANTA     LAM8      -4.050000443
+ XV SANTA     PHI9      -28.45607804
+ XV SANTA     LAM9      22.430117198
+ XV SANTA     PHI10     16.034035489
+ XV SANTA     LAM10     -17.28050167
+ XV SANTA     PHI11     0.8717052037
+ XV SANTA     LAM11     -0.833052840
+
+ R= PHIS      DPHI/S
+ R+ START     PHI0                     PHIS
+ ZV SANTAS    PHI1                     START
+
+ DO I         2                        S-1
+ RI RI        I
+ R* PHIS      DPHI/S                   RI
+ R+ START     PHI0                     PHIS
+ ZV SANTAS    PHI(I)                   START
+ R* LAMS      DLAM/S                   RI
+ R+ START     LAM0                     LAMS
+ ZV SANTAS    LAM(I)                   START
+ ND
+
+ XV SANTA2    PHI1      0.7223835215
+ XV SANTA2    PHI2      46.316980461
+ XV SANTA2    LAM2      -3.036073083
+ XV SANTA2    PHI3      0.9310163879
+ XV SANTA2    LAM3      0.1199353671
+ XV SANTA2    PHI4      2.8180387202
+ XV SANTA2    LAM4      1.9272782569
+ XV SANTA2    PHI5      0.3149094447
+ XV SANTA2    LAM5      -0.481178395
+
+ELEMENT TYPE
+
+ EV E         PHI1
+ EV E         PHI2
+ EV E         LAM1
+ EV E         LAM2
+
+ EV E3        PHI1
+ EV E3        PHI2
+ EV E3        LAM1
+ EP E3        LAMF
+
+ EV E2        PHI1
+ EV E2        LAM1
+ EP E2        PHIF
+ EP E2        LAMF
+
+ EV E1        PHI1
+ EP E1        PHIF
+ EP E1        LAMF
+ EP E1        LAMS
+
+ELEMENT USES
+
+ XT E0,1      E1
+ ZV E0,1      PHI1                     PHI1
+ ZP E0,1      PHIF                     PHI0
+ ZP E0,1      LAMF                     LAM0
+ ZP E0,1      LAMS                     LAM1
+
+ XT E0,2      E2
+ ZV E0,2      PHI1                     PHI2
+ ZV E0,2      LAM1                     LAM2
+ ZP E0,2      PHIF                     PHI0
+ ZP E0,2      LAMF                     LAM0
+
+ XT E1,2      E3
+ ZV E1,2      PHI1                     PHI1
+ ZV E1,2      PHI2                     PHI2
+ ZV E1,2      LAM1                     LAM2
+ ZP E1,2      LAMF                     LAM1
+
+ XT E1,3      E3
+ ZV E1,3      PHI1                     PHI1
+ ZV E1,3      PHI2                     PHI3
+ ZV E1,3      LAM1                     LAM3
+ ZP E1,3      LAMF                     LAM1
+
+ XT E2,3      E
+ ZV E2,3      PHI1                     PHI2
+ ZV E2,3      PHI2                     PHI3
+ ZV E2,3      LAM1                     LAM2
+ ZV E2,3      LAM2                     LAM3
+
+ DO I         4                        S-1
+ IA I2        I         -2
+ XT E(I2,I)   E
+ ZV E(I2,I)   PHI1                     PHI(I2)
+ ZV E(I2,I)   PHI2                     PHI(I)
+ ZV E(I2,I)   LAM1                     LAM(I2)
+ ZV E(I2,I)   LAM2                     LAM(I)
+
+ IA I1        I         -1
+ XT E(I1,I)   E
+ ZV E(I1,I)   PHI1                     PHI(I1)
+ ZV E(I1,I)   PHI2                     PHI(I)
+ ZV E(I1,I)   LAM1                     LAM(I1)
+ ZV E(I1,I)   LAM2                     LAM(I)
+ ND
+
+ XT E10,12    E2
+ ZV E10,12    PHI1                     PHI10
+ ZV E10,12    LAM1                     LAM10
+ ZP E10,12    PHIF                     PHI12
+ ZP E10,12    LAMF                     LAM12
+
+ XT E11,12    E2
+ ZV E11,12    PHI1                     PHI11
+ ZV E11,12    LAM1                     LAM11
+ ZP E11,12    PHIF                     PHI12
+ ZP E11,12    LAMF                     LAM12
+
+GROUP USES
+
+ E  R0,1      E0,1
+ DO I         2                        S
+ IA I2        I         -2
+ XE R(I2,I)   E(I2,I)
+ IA I1        I         -1
+ XE R(I1,I)   E(I1,I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SANTA               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SANTA
+
+TEMPORARIES
+
+ R  S1
+ R  S2
+ R  SF
+ R  C1
+ R  C2
+ R  CF
+ R  S
+ R  C
+ R  C1C2S
+ R  C1C2C
+ R  C1S2S
+ R  S1C2S
+ M  COS
+ M  SIN
+
+INDIVIDUALS
+
+ T  E
+
+ A  S1                    SIN(PHI1)
+ A  S2                    SIN(PHI2)
+ A  C1                    COS(PHI1)
+ A  C2                    COS(PHI2)
+ A  C                     COS(LAM1-LAM2)
+ A  S                     SIN(LAM1-LAM2)
+ A  C1C2S                 C1 * C2 * S
+ A  C1C2C                 C1 * C2 * C
+ A  C1S2S                 C1 * S2 * S
+ A  S1C2S                 S1 * C2 * S
+
+ F                        S1 * S2 + C1 * C2 * C
+ G  PHI1                  C1 * S2 - S1 * C2 * C
+ G  PHI2                  S1 * C2 - C1 * S2 * C
+ G  LAM1                  - C1C2S
+ G  LAM2                  C1C2S
+ H  PHI1      PHI1        - S1 * S2 - C1 * C2 * C
+ H  PHI2      PHI1        C1 * C2 + S1 * S2 * C
+ H  PHI2      PHI2        - S1 * S2 - C1 * C2 * C
+ H  LAM1      PHI1        S1C2S
+ H  LAM1      PHI2        C1S2S
+ H  LAM1      LAM1        - C1C2C
+ H  PHI1      LAM2        - S1C2S
+ H  PHI2      LAM2        - C1S2S
+ H  LAM1      LAM2        C1C2C
+ H  LAM2      LAM2        - C1C2C
+
+ T  E3
+
+ A  S1                    SIN(PHI1)
+ A  S2                    SIN(PHI2)
+ A  C1                    COS(PHI1)
+ A  C2                    COS(PHI2)
+ A  C                     COS(LAM1-LAMF)
+ A  S                     SIN(LAM1-LAMF)
+
+ F                        S1 * S2 + C1 * C2 * C
+ G  PHI1                  C1 * S2 - S1 * C2 * C
+ G  PHI2                  S1 * C2 - C1 * S2 * C
+ G  LAM1                  - C1 * C2 * S
+ H  PHI1      PHI1        - S1 * S2 - C1 * C2 * C
+ H  PHI2      PHI1        C1 * C2 + S1 * S2 * C
+ H  PHI2      PHI2        - S1 * S2 - C1 * C2 * C
+ H  LAM1      PHI1        S1 * C2 * S
+ H  LAM1      PHI2        C1 * S2 * S
+ H  LAM1      LAM1        - C1 * C2 * C
+
+ T  E2
+
+ A  S1                    SIN(PHI1)
+ A  SF                    SIN(PHIF)
+ A  C1                    COS(PHI1)
+ A  CF                    COS(PHIF)
+ A  C                     COS(LAM1-LAMF)
+ A  S                     SIN(LAM1-LAMF)
+
+ F                        S1 * SF + C1 * CF * C
+ G  PHI1                  C1 * SF - S1 * CF * C
+ G  LAM1                  - C1 * CF * S
+ H  PHI1      PHI1        - S1 * SF - C1 * CF * C
+ H  LAM1      PHI1        S1 * CF * S
+ H  LAM1      LAM1        - C1 * CF * C
+
+ T  E1
+
+ A  S1                    SIN(PHI1)
+ A  SF                    SIN(PHIF)
+ A  C1                    COS(PHI1)
+ A  CF                    COS(PHIF)
+ A  C                     COS(LAMS-LAMF)
+ A  S                     SIN(LAMS-LAMF)
+
+ F                        S1 * SF + C1 * CF * C
+ G  PHI1                  C1 * SF - S1 * CF * C
+ H  PHI1      PHI1        - S1 * SF - C1 * CF * C
+
+ENDATA

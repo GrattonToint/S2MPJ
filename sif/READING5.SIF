@@ -1,0 +1,170 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+ 
+NAME          READING5
+ 
+*   Problem :
+*   *********
+ 
+*   A nonlinear optimal control problem from Nancy Nichols
+*   with a given initial condition.
+*   This problem arises in tide modelling.
+ 
+*   Source: a variant upon a problem in
+*   S. Lyle and N.K. Nichols,
+*   "Numerical Methods for Optimal Control Problems with State Constraints",
+*   Numerical Analysis Report 8/91, Dept of Mathematics, 
+*   University of Reading, UK.
+
+*   SIF input: Ph. Toint, Aug 1992
+ 
+*   classification OOR2-MN-V-V
+
+*   Number of discretized points in [0,1]
+ 
+*IE N                   2              $-PARAMETER  n =    3, m =    2
+*IE N                   50             $-PARAMETER  n =   51, m =   50
+*IE N                   100            $-PARAMETER  n =  101, m =  100
+*IE N                   500            $-PARAMETER  n =  501, m =  500
+*IE N                   1000           $-PARAMETER  n = 1001, m = 1000
+*IE N                   5000           $-PARAMETER  n = 5001, m = 5000
+ IE N                   5              $-PARAMETER     modified for S2X tests
+ 
+*   Mesh
+ 
+ IA N-1       N         -1
+ 
+ RI RN        N
+ RD H         RN        1.0
+ RM 2/H       RN        2.0
+ RM H/2       H         0.5
+ 
+ RM 1/H       RN        1.0
+ RM -1/H      RN        -1.0
+ 
+*   Constants
+ 
+ RE PI                  3.141592653589
+ RM 2PI       PI        2.0
+ 
+ RE A                   0.07716
+ RD 1/A       A         1.0
+ RM 1/2A      1/A       0.5
+ RM 2A        A         2.0
+ 
+ R* H/2A      H                        1/2A
+ RD 2A/H      H/2A      1.0
+ 
+*   Constants
+ 
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ 
+VARIABLES
+ 
+ X  X(0)
+ 
+ DO I         1                        N
+ X  X(I)
+ ND
+ 
+GROUPS
+ 
+ ZN J         'SCALE'                  1/A
+ 
+ DO I         1                        N
+ ZE U(I)
+ ND
+ 
+BOUNDS
+ 
+ XX READING5  X(0)      0.25
+ 
+ DO I         1                        N
+ XL READING5  X(I)      -0.5
+ XU READING5  X(I)      0.5
+ ND
+ 
+ELEMENT TYPE
+ 
+ EV UC        X
+ EV UC        XP
+ EP UC        T
+ 
+ EV ENERGY    X
+ EV ENERGY    XP
+ EP ENERGY    T
+ 
+ELEMENT USES
+ 
+ DO I         1                        N
+ 
+ RI RI        I
+ R* TI        RI                       H
+ IA I-1       I         -1
+ 
+ XT I(I)      ENERGY
+ ZV I(I)      X                        X(I)
+ ZV I(I)      XP                       X(I-1)
+ ZP I(I)      T                        TI
+ 
+ XT UC(I)     UC
+ ZV UC(I)     X                        X(I)
+ ZV UC(I)     XP                       X(I-1)
+ ZP UC(I)     T                        TI
+ 
+ ND
+ 
+GROUP USES
+ 
+ XE J         I(1)      -1.0
+ DO I         2                        N-1
+ XE J         I(I)      -2.0
+ ND
+ XE J         I(N)      -1.0
+ 
+ DO I         1                        N
+ ZE U(I)      UC(I)                    2A/H
+ ND
+ 
+ENDATA
+ 
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+ 
+ELEMENTS      READING5
+ 
+*   Least-square groups
+ 
+TEMPORARIES
+ 
+ R  F
+ R  C
+ R  D
+ M  COS
+ 
+INDIVIDUALS
+ 
+ T  ENERGY
+ A  F                   COS(2.0*3.141592653589*T)
+ F                      ( F - X ) * ( X - XP )
+ G  X                   - 2.0 * X + XP + F
+ G  XP                  - ( F - X )
+ H  X         X         -2.0
+ H  X         XP        1.0
+ 
+ T  UC
+ A  F                   COS(2.0*3.141592653589*T)
+ A  C                   ( X - XP ) / ( F - X )
+ A  D                   ( 1.0 + C ) / ( F - X )
+ F                      C
+ G  X                   D
+ G  XP                  - 1.0 / ( F - X )
+ H  X         X         2.0 * D / ( F - X )
+ H  X         XP        -1.0 / ( F - X )**2
+ 
+ENDATA

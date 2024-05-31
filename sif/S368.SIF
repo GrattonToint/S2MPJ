@@ -1,0 +1,139 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          S368
+
+*   Problem :
+*   *********
+
+*   Wolfe's problem.
+
+*   Source:
+*   P. Wolfe,
+*   "Explicit solution of an optimization problem",
+*   Mathematical Programming 2, 258-260, 1972.
+
+*   SIF input: Nick Gould, Oct 1992.
+
+*   See also Schittkowski #368 (for N = 8)
+
+*   classification OBR2-MN-V-0
+
+*   The number of variables is N.
+
+*IE N                   8              $-PARAMETER Schittkowski #368
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+
+*   Other parameters
+
+ IE 1                   1
+ IA N+1       N         1
+ RI RN+1      N+1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO J         1                        N
+ DO I         1                        N
+ XN M(I,J)
+ XN P(I,J)
+ ND
+
+BOUNDS
+
+*   defaults = bounded between zero and one.
+
+ UP S368      'DEFAULT' 1.0
+
+START POINT
+
+*  start with X(I) = I/N+1.
+
+ DO I         1                        N
+
+ RI RI        I
+ R/ T         RI                       RN+1
+ ZV S368      X(I)                     T
+
+ ND
+
+ELEMENT TYPE
+
+ EV PRODM     X                        Y
+ EV PRODP     X                        Y
+
+ELEMENT USES
+
+ DO J         1                        N
+ DO I         1                        N
+
+ XT M(I,J)    PRODM
+ ZV M(I,J)    X                        X(I)
+ ZV M(I,J)    Y                        X(J)
+
+ XT P(I,J)    PRODP
+ ZV P(I,J)    X                        X(I)
+ ZV P(I,J)    Y                        X(J)
+
+ ND
+
+GROUP TYPE
+
+GROUP USES
+
+ DO J         1                        N
+ DO I         1                        N
+
+ XE M(I,J)    M(I,J)
+ XE P(I,J)    P(I,J)
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               ??
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      S368
+
+INDIVIDUALS
+
+*  - X**2 * Y**4
+
+ T  PRODM
+ F                      -          X**2 * Y**4
+ G  X                   - 2.0D+0 * X    * Y**4
+ G  Y                   - 4.0D+0 * X**2 * Y**3
+ H  X         X         - 2.0D+0 *        Y**4
+ H  Y         X         - 8.0D+0 * X    * Y**3
+ H  Y         Y         - 1.2D+1 * X**2 * Y**2
+
+*  X**3 * Y**3
+
+ T  PRODP
+ F                                 X**3 * Y**3
+ G  X                     3.0D+0 * X**2 * Y**3
+ G  Y                     3.0D+0 * X**3 * Y**2
+ H  X         X           6.0D+0 * X    * Y**3
+ H  Y         X           9.0D+0 * X**2 * Y**2
+ H  Y         Y           6.0D+0 * X**3 * Y
+
+ENDATA
+

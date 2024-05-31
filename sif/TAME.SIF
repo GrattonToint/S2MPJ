@@ -1,0 +1,40 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TAME
+
+*   Problem :
+*   *********
+*   A simple constrained linear least-squares problem
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "The LANCELOT User's Manual",
+*   Dept of Maths, FUNDP, 1991.
+
+*   SIF input: Ph. Toint, Jan 1991.
+
+*   classification QLR2-AN-2-1
+
+VARIABLES
+    x
+    y
+GROUPS
+ XN Object    x         1.0            y         -1.0
+ XE Constr    x         1.0            y         1.0
+CONSTANTS
+ X  TAME      Constr    1.0
+GROUP TYPE
+ GV SQUARE    ALPHA
+GROUP USES
+ XT Object    SQUARE
+ENDATA
+
+GROUPS        TAME
+INDIVIDUALS
+ T  SQUARE
+ F                      ALPHA**2
+ G                      2.0 * ALPHA
+ H                      2.0
+ENDATA

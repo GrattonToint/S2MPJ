@@ -1,0 +1,172 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TRIGON2B
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example Trigonometric02
+
+*   Fit: y = (0,sqrt(8)sin(7(x_i-0.9)^2),sqrt(6)sin(14(x_i-0.9)^2),x_i) + e
+
+*   version with box-constrained feasible region
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification SBR2-MN-V-0
+
+*   Number of variables
+
+*IE N                   10             $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+
+*   Number of data values
+
+ IM ME        N         3
+ IA M         ME        1
+
+*   Useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ RI RN        N        
+ RF ROOT6     SQRT      6.0
+ RF ROOT8     SQRT      8.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN FA
+ DO I         1                        N
+ XN FB(I)
+ XN FC(I)
+ XN FD(I)     X(I)      1.0
+ ND
+
+CONSTANTS
+
+    TRIGON2   FA        1.0
+ DO I         1                        N
+ X  TRIGON2   FD(I)     0.9
+ ND
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -500.0
+ UP BOUNDS    'DEFAULT' 500.0
+
+ LO BOUNDS2   'DEFAULT' 0.0
+ UP BOUNDS2   'DEFAULT' 1.0
+
+START POINT
+
+ DO I         1                        N
+ RI RI        I
+ R/ START     RI                       RN
+ Z  START     X(I)                     START
+ ND
+
+ELEMENT TYPE
+
+ EV SINF      X
+ EP SINF      P
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT EB(I)     SINF
+ ZV EB(I)     X                        X(I)
+ XP EB(I)     P         7.0
+ XT EC(I)     SINF
+ ZV EC(I)     X                        X(I)
+ XP EC(I)     P         14.0
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        N
+ ZE FB(I)     EB(I)                    ROOT8
+ ZE FB(I)     EC(I)                    ROOT6
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO TRIGON2             0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TRIGON2B
+
+TEMPORARIES
+
+ R  D
+ R  Y
+ R  YX
+ R  YXX
+ R  S
+ R  C
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+* sin(P(X-0.9)^2
+
+ T  SINF
+ A  D                   X - 0.9
+ A  Y                   D * D
+ A  YX                  D + D
+ A  YXX                 2.0
+ A  S                   SIN( P * Y )
+ A  C                   COS( P * Y )
+ F                      S
+ G  X                   P * C * YX
+ H  X         X         - P * P * S * YX * YX + P * C * YXX
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        TRIGON2B
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TFI1
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem, using a discretization.
+*   The problem is
+*
+*       min  f(x)
+*       s.t. max  g(x,t) <= 0
+*           [0,1]
+*
+*   A brutal approach to semi-infinite programming is taken and the problem
+*   is reexpressed as
+*
+*       min   f(x)
+*       s.t.  g(x,ih) <= 0   i = 0, ..., M
+*
+*   In this problem, x has dimension 3.
+
+*   Source:
+*   Y. Tanaka, M. Fukushima, T. Ibaraki,
+*   "A comparative study of several semi-infinite nonlinear programming
+*   algorithms",
+*   EJOR, vol. 36, pp. 92-100, 1988.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification QOR2-AN-3-V
+
+*   Discretization
+
+*IE M                   10
+*IE M                   50
+ IE M                   100
+*IE M                   500
+*IE M                   1000
+*IE M                   5000
+*IE M                   10000
+
+*   Define constants
+
+ IE 0                   0
+
+ RI RM        M
+ RD H         RM        1.0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ XN OBJ
+
+ DO I         0                        M
+ XL CG(I)     X1        1.0
+ OD I
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* T         RI                       H
+ R+ 2T        T                        T
+ R+ 4T        2T                       2T
+ R( E2T       EXP                      2T
+ R( S4T       SIN                      4T
+ R+ 2S4T      S4T                      S4T
+ R- C         2S4T                     E2T
+ Z  TFI1      CG(I)                    C
+ OD I
+
+BOUNDS
+
+ FR TFI1      'DEFAULT'
+
+START POINT
+
+ XV TFI1      X1        1.0
+ XV TFI1      X2        1.0
+ XV TFI1      X3        1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV XEYT      X                        Y
+ EP XEYT      TT
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ ZV X3SQ      X                        X3
+
+ DO I         0                        M
+ XT E(I)      XEYT
+ ZV E(I)      X                        X2
+ ZV E(I)      Y                        X3
+ RI RI        I
+ R* T         RI                       H
+ ZP E(I)      TT                       T
+ OD I
+
+GROUP USES
+
+ E  OBJ       X1SQ                     X2SQ
+ E  OBJ       X3SQ
+
+ DO I         0                        M
+ XE CG(I)     E(I)
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN              5.3346872D+00
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TFI1
+
+TEMPORARIES
+
+ R  EYT
+ M  EXP
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  XEYT
+ A  EYT                 EXP( Y * TT )
+ F                      X * EYT
+ G  X                   EYT
+ G  Y                   X * TT * EYT
+ H  X         Y         TT * EYT
+ H  Y         Y         X * TT * TT * EYT
+
+ENDATA
+

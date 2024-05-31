@@ -1,0 +1,67 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SIMPLEU
+
+*   Problem :
+*   --------
+
+
+*   classification SUR2-AN-V-0
+
+*   Number of variables
+
+ IE N                   5              $-PARAMETER     original value
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJF
+
+START POINT
+
+ XV SIMPLEU  'DEFAULT'  0.0
+
+ELEMENT TYPE
+
+ EV ETYPE     V1
+ EV ETYPE     V2
+ 
+ELEMENT USES
+
+ XT 'DEFAULT' ETYPE
+
+ DO I         1                        N
+ XV OBJELT    V(I)                     X(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SIMPLEU
+
+INDIVIDUALS
+
+ T  ETYPE
+ F                      SIMPLE(V)
+ G  V1                  GRAD(V,1)
+ G  V2                  GRAD(V,2)
+ H  V1        V1        HESS(V,1,1)
+ H  V1        V2        HESS(V,1,2)
+ H  V2        V2        HESS(V,2,2)
+
+ENDATA
+

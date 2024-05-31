@@ -1,0 +1,244 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TRUSPYR1
+
+*   Problem:
+*   ********
+
+*   This is a structural optimization problem.
+*   The problem is to minimize the weight of a given
+*   8-bar truss structure formed as a pyramid for a given external load.
+*   There are upper bounds on the strain energy and lower bounds
+*   on the cross-sectional areas of the bars.
+
+*   Source:
+*   K. Svanberg, 
+*   "Local and global optima",
+*   Proceedings of the NATO/DFG ASI on Optimization of large structural
+*   systems, 
+*   G. I. N. Rozvany, ed., Kluwer, 1993, pp. 579-588.
+
+*   SIF input: A. Forsgren, Royal Institute of Technology, December 1993.
+
+*   classification LQR2-MN-11-4
+
+*   Number of bars
+
+ IE NBAR                8
+
+*   Three-dimensional problem
+
+ IE NDIM                3
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ I/ NBAR/2    NBAR                     2
+
+ RE 8.0                 8.0
+
+ RF SQRT17    SQRT      17.0
+ RF SQRT18    SQRT      18.0
+ RF SQRT105   SQRT      105.0
+
+*   External load
+
+ RE P1                  40.0
+ RE P2                  20.0
+ RE P3                  200.0
+
+*   Strain energy bound data
+
+ RD Q1        SQRT105   2.0
+ RD Q2        SQRT105   1.0
+ RD Q3        SQRT105   10.0
+
+ RE ALPHA               0.3291726437
+
+*   Truss lengths
+
+ DO J         1                        NBAR/2
+ A/ L(J)      SQRT17                   8.0              
+ I+ J+4       J                        NBAR/2 
+ A/ L(J+4)    SQRT18                   8.0
+ OD J
+
+*   Modulus of elasticity
+
+ RE E                   21.0
+
+*   Directions of bars
+
+ RE R1,1                0.250
+ RE R2,1                0.250
+ RE R3,1                0.375
+ RE R1,2                0.250
+ RE R2,2                -0.250
+ RE R3,2                0.375
+ RE R1,3                -0.250
+ RE R2,3                -0.250
+ RE R3,3                0.375
+ RE R1,4                -0.250
+ RE R2,4                0.250
+ RE R3,4                0.375
+ RE R1,5                0.375
+ RE R2,5                0.000
+ RE R3,5                0.375
+ RE R1,6                0.000
+ RE R2,6                -0.375
+ RE R3,6                0.375
+ RE R1,7                -0.375
+ RE R2,7                0.000
+ RE R3,7                0.375
+ RE R1,8                0.000
+ RE R2,8                0.375
+ RE R3,8                0.375
+
+*   Bar weights W
+*   Upper bound on the strain energy STRUP
+*   Coefficients in RR are for the nonlinear constraints
+
+ DO J         1                        NBAR
+ A* L2(J)     L(J)                     L(J)
+ A* L3(J)     L2(J)                    L(J)
+ A/ GAMMA(J)  E                        L3(J)
+ A/ DL2(J)    L2(J)                    E
+ AM W(J)      L(J)      0.78
+ AM STRUP(J)  DL2(J)    10.0
+ DO I         1                        NDIM
+ A* RG(I,J)   GAMMA(J)                 R(I,J)
+ DO K         1                        NDIM
+ A* RR(I,J,K) RG(I,J)                  R(K,J)
+ OD K
+ OD I
+ OD J
+
+VARIABLES
+
+* Cross-section areas of the bars
+
+ DO J         1                        NBAR
+ X  XAREA(J)
+ OD J
+
+* Displacement of the free node
+
+ DO I         1                        NDIM
+ X  DISPL(I)
+ OD I
+
+GROUPS
+
+*   Truss weight
+
+ DO J         1                        NBAR
+ ZN WEIGHT    XAREA(J)                 W(J)
+ OD J
+
+* Equilibrium
+
+ DO K         1                        NDIM
+ XE EQUIL(K)
+ OD K
+
+* Strain energy constraint
+
+ DO I         1                        NDIM
+ ZL STREN     DISPL(I)                 Q(I)
+ OD I
+
+CONSTANTS
+
+* External load
+
+ DO K         1                        NDIM
+ Z  TRUSPYR1  EQUIL(K)                 P(K)
+ OD K
+
+* Upper bound on strain energy
+
+ Z  TRUSPYR1  STREN                    ALPHA
+
+BOUNDS
+
+* Lower bound on cross-sectional area
+
+ DO J         1                        NBAR
+ XL TRUSPYR1  XAREA(J)  1.0
+ OD J
+
+* Displacements unconstrained
+
+ DO I         1                        NDIM
+ XR TRUSPYR1  DISPL(I)
+ OD I
+
+* (Nonunique) global minimizer
+
+* START POINT
+
+*  XV TRUSPYR1  XAREA1    7.1846584384
+*  XV TRUSPYR1  XAREA2    8.8464625649
+*  XV TRUSPYR1  XAREA3    1.0000000000
+*  XV TRUSPYR1  XAREA4    6.7849097521
+*  XV TRUSPYR1  XAREA5    1.0000000000
+*  XV TRUSPYR1  XAREA6    1.0000000000
+*  XV TRUSPYR1  XAREA7    1.0000000000
+*  XV TRUSPYR1  XAREA8    1.0000000000
+*  XV TRUSPYR1  DISPL1    0.0000000000
+*  XV TRUSPYR1  DISPL2    0.0000000000
+*  XV TRUSPYR1  DISPL3    0.3373015873
+
+ELEMENT TYPE
+
+* Cross-section area times displacement
+
+ EV 2PR       U                        X
+
+ELEMENT USES
+
+ DO I         1                        NDIM
+ DO J         1                        NBAR
+ XT UX(I,J)   2PR
+ ZV UX(I,J)   U                        DISPL(I)
+ ZV UX(I,J)   X                        XAREA(J)
+ OD J
+ OD I
+
+GROUP USES
+
+ DO I         1                        NDIM
+ DO J         1                        NBAR
+ DO K         1                        NDIM
+ ZE EQUIL(K)  UX(I,J)                  RR(I,J,K)
+ OD K
+ OD J
+ OD I
+
+OBJECT BOUND
+
+*   Objective function value corresponding to the global minimizer above
+
+ LO SOLTN(8)           11.2287408808
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TRUSPYR1
+
+INDIVIDUALS
+
+ T  2PR
+ F                      U*X
+ G  U                   X
+ G  X                   U
+ H  U         X         1.0
+
+ENDATA

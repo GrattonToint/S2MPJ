@@ -1,0 +1,94 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SIPOW2 
+
+*   Problem :
+*   *********
+
+*   This is a discretization of a semi-infinite programming problem, of
+*   minimizing the variable x_2 within a circle of radius 1. The circle
+*   is replaced by a discrete set of equally-spaced supporting tangents.   
+*   The symmetry in SIPOW1.SIF is imposed by replacing those constraints
+*   by an alternative set.
+
+*   Source: problem 2 in
+*   M. J. D. Powell,
+*   "Log barrier methods for semi-infinite programming calculations"
+*   Numerical Analysis Report DAMTP 1992/NA11, U. of Cambridge, UK.
+
+*   SIF input: A. R. Conn and Nick Gould, August 1993
+
+*   classification LLR2-AN-2-V
+
+*   Problem variants: they are identified by the values of M (even)
+
+*IE M                   20 
+*IE M                   100 
+*IE M                   500 
+ IE M                   2000 
+*IE M                   10000 
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ I/ M/2       M                        2
+ IA M/2+1     M/2       1
+ RI RM        M
+ RD 1/RM      RM        1.0
+ RE ONE                 1.0
+ R( PI/4      ARCTAN                   ONE
+ RM 4PI       PI/4      16.0
+ R* 4PI/M     4PI                      1/RM
+
+VARIABLES
+
+    X1
+    X2 
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X2        1.0
+
+*   Constraints
+
+ DO J         1                        M/2
+
+ RI RJ        J
+ R* 4PIJ/M    4PI/M                    RJ
+ R( COS       COS                      4PIJ/M 
+ R( SIN       SIN                      4PIJ/M 
+ 
+ ZG C(J)      X1                       COS
+ ZG C(J)      X2                       SIN
+
+ ND
+
+ DO J         M/2+1                    M
+ XG C(J)      X1        1.0
+ ND
+
+CONSTANTS
+
+ DO J         1                        M
+ X  SIPOW2    C(J)      -1.0
+ ND
+
+BOUNDS
+
+ FR SIPOW2    'DEFAULT'
+
+START POINT
+
+    SIPOW2    X1        0.8
+    SIPOW2    X2        0.5
+
+OBJECT BOUND
+
+*LO SOLUTION            -1.0
+ 
+ENDATA

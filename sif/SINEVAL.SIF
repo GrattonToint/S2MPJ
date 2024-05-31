@@ -1,0 +1,112 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SINEVAL
+
+*   Problem :
+*   *********
+
+*   A trigonometric variant of the 2 variables Rosenbrock "banana valley" problem
+
+*   Source:  problem 4.2 in
+*   Y. Xiao and F. Zhou,
+*   "Non-monotone trust region methods with curvilinear path
+*   in unconstrained optimization",
+*   Computing, vol. 48, pp. 303-317, 1992.
+
+*   SIF input: F Facchinei, M. Roma and Ph. Toint, June 1994
+
+*   classification SUR2-AN-2-0
+
+*   Problem parameter
+
+ RE C                   10.0D-4
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X2        1.0
+ ZN G1        'SCALE'                  C
+ N  G2        X1        1.0
+ N  G2        'SCALE'   4.0
+
+BOUNDS
+
+ FR SINEVAL   'DEFAULT'
+
+START POINT
+
+    SINEVAL   X1        4.712389
+    SINEVAL   X2        -1.0
+
+ELEMENT TYPE
+
+ EV SINE      V1
+
+ELEMENT USES
+
+ T  E1        SINE
+ V  E1        V1                       X1
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+ XE G1        E1         -1.0
+
+OBJECT BOUND
+
+ LO SINEVAL              0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SINEVAL
+
+TEMPORARIES
+
+ R  SV1
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SINE
+ A  SV1                 SIN( V1 )
+ F                      SV1
+ G  V1                  COS( V1 )
+ H  V1        V1        - SV1
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        SINEVAL
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

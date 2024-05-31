@@ -1,0 +1,509 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          RDW2D52U
+
+*   Problem :
+*   *********
+
+*   A finite-element approximation to the distributed optimal control problem
+
+*      min 1/2||u-v||_L2^2 + beta ||f||_L2^2
+ 
+*   subject to - nabla^2 u = f
+
+*   where v is given on and within the boundary of a unit [0,1] box in 
+*   2 dimensions, and u = v on its boundary. The discretization uses 
+*   quadrilateral elememts.
+
+*   The problem is stated as a quadratic program
+
+*   Source:  example 5.2 in 
+*    T. Rees, H. S. Dollar and A. J. Wathen
+*    "Optimal solvers for PDE-constrained optimization"
+*    SIAM J. Sci. Comp. (to appear) 2009
+
+*   SIF input: Nick Gould, May 2009
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification QLR2-AN-V-V
+
+*   Number of nodes in each direction (a power of 2)
+
+*IE N                   2             $-PARAMETER
+*IE N                   4             $-PARAMETER
+*IE N                   8             $-PARAMETER
+*IE N                   16            $-PARAMETER
+*IE N                   32            $-PARAMETER
+*IE N                   64            $-PARAMETER
+*IE N                   128           $-PARAMETER
+*IE N                   256           $-PARAMETER
+ IE N                   4             $-PARAMETER     modified for S2X tests
+*IE N                   512           $-PARAMETER
+*IE N                   1024          $-PARAMETER
+*IE N                   2048          $-PARAMETER
+*IE N                   4096          $-PARAMETER
+*IE N                   8192          $-PARAMETER
+*IE N                   16384         $-PARAMETER
+
+*   Regularisation
+
+ RE BETA                0.005         $-PARAMETER
+
+
+*   Other useful parameters
+
+ RE ZERO                0.0
+ RE ONE                 1.0
+ RE SIX                 6.0
+ RE THIRTYSIX           36.0
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IA N-        N         -1
+ IA N-1       N         -1
+ IA N-2       N         -2
+ I/ N/2       N                        2
+ I+ N/2+1     N/2                      1
+ RI RN        N
+ R/ H         ONE                      RN
+ R* H**2      H                        H
+ R/ H**2/36   H**2                     THIRTYSIX
+ RM -H**2/36  H**2/36   -1.0
+ RM 2BETA     BETA      2.0
+ R* 2BH**2/36 2BETA                    H**2/36
+ R/ 1/6       ONE                      SIX    
+
+* target data
+
+ DO I         0                        N
+ RI RI        I
+ R* X         RI                       H
+ RA X-        X         -0.5
+ R* X-**2     X-                       X-
+ DO J         0                        N
+ RI RJ        J
+ R* Y         RJ                       H
+ RA Y-        Y         -0.5
+ R* Y-**2     Y-                       Y-
+ R+ SS        X-**2                    Y-**2
+ RM -64SS     SS        -64.0
+ R( V         EXP                      -64SS
+ A= V(I,J)    V
+ ND
+
+VARIABLES
+
+ DO I         0                        N
+ DO J         0                        N
+ X  F(I,J)
+ ND
+
+ DO I         0                        N
+ DO J         0                        N
+ X  U(I,J)
+ ND
+
+*X  B(0,0)
+*X  B(N,0)
+*X  B(0,N)
+*X  B(N,N) 
+*DO I         1                        N-1
+*X  B(0,I)
+*X  B(N,I)
+*X  B(I,0)
+*X  B(I,N)
+*ND
+
+GROUPS
+
+* objective function
+
+ N  OBJ
+
+* constraints
+
+ DO I         1                        N-1
+ DO J         1                        N-1
+ XE L(I,J)
+ ND
+
+BOUNDS
+
+ XR RDW2D52U  'DEFAULT'
+
+ ZX RDW2D52U  U(0,0)                   V(0,0)
+ ZX RDW2D52U  U(N,0)                   V(N,0)
+ ZX RDW2D52U  U(0,N)                   V(0,N)
+ ZX RDW2D52U  U(N,N)                   V(N,N)
+ DO I         1                        N-1
+ ZX RDW2D52U  U(0,I)                   V(0,I)
+ ZX RDW2D52U  U(N,I)                   V(N,I)
+ ZX RDW2D52U  U(I,0)                   V(I,0)
+ ZX RDW2D52U  U(I,N)                   V(I,N)
+ ND
+
+ XX RDW2D52U  F(0,0)    0.0
+ XX RDW2D52U  F(N,0)    0.0
+ XX RDW2D52U  F(0,N)    0.0
+ XX RDW2D52U  F(N,N)    0.0 
+ DO I         1                        N-1
+ XX RDW2D52U  F(0,I)    0.0 
+ XX RDW2D52U  F(N,I)    0.0 
+ XX RDW2D52U  F(I,0)    0.0 
+ XX RDW2D52U  F(I,N)    0.0 
+ ND
+
+START POINT
+
+ DO I         0                        N
+ DO J         0                        N
+ I+ I+J       I                        J
+ RI RI+J      I+J 
+ R/ RI+J/N    RI+J                     RN       
+*Z  RDW2D52U  U(I,J)                   RI+J/N
+ ND
+
+ELEMENT TYPE
+
+*   1/2 (u-v)^T M (u-v) term
+
+ EV M         U1                       U2
+ EV M         U3                       U4
+ EP M         V1                       V2
+ EP M         V3                       V4
+
+*   1/2 f^T M f term
+
+ EV M0        F1                       F2
+ EV M0        F3                       F4
+
+*   linear terms
+
+ EV A         U1                       U2
+ EV A         U3                       U4
+
+ EV B         U1                       U2
+ EV B         U3                       U4
+
+ EV C         U1                       U2
+ EV C         U3                       U4
+
+ EV D         U1                       U2
+ EV D         U3                       U4
+
+ EV P         F1                       F2
+ EV P         F3                       F4
+
+ EV Q         F1                       F2
+ EV Q         F3                       F4
+
+ EV R         F1                       F2
+ EV R         F3                       F4
+
+ EV S         F1                       F2
+ EV S         F3                       F4
+
+ELEMENT USES
+
+ DO I         0                        N-1
+ I+ I+        I                        1
+ DO J         0                        N-1
+ I+ J+        J                        1
+ XT E(I,J)    M
+ ZV E(I,J)    U1                       U(I,J)
+ ZV E(I,J)    U2                       U(I,J+)
+ ZV E(I,J)    U3                       U(I+,J)
+ ZV E(I,J)    U4                       U(I+,J+)
+ ZP E(I,J)    V1                       V(I,J)
+ ZP E(I,J)    V2                       V(I,J+)
+ ZP E(I,J)    V3                       V(I+,J)
+ ZP E(I,J)    V4                       V(I+,J+)
+ ND
+
+ DO I         0                        N-1
+ I+ I+        I                        1
+ DO J         0                        N-1
+ I+ J+        J                        1
+ XT F(I,J)    M0
+ ZV F(I,J)    F1                       F(I,J)
+ ZV F(I,J)    F2                       F(I,J+)
+ ZV F(I,J)    F3                       F(I+,J)
+ ZV F(I,J)    F4                       F(I+,J+)
+ ND
+
+ DO I         0                        N-1
+ I+ I+        I                        1
+ DO J         0                        N-1
+ I+ J+        J                        1
+ XT A(I,J)    A
+ ZV A(I,J)    U1                       U(I,J)
+ ZV A(I,J)    U2                       U(I,J+)
+ ZV A(I,J)    U3                       U(I+,J)
+ ZV A(I,J)    U4                       U(I+,J+)
+ XT B(I,J)    B
+ ZV B(I,J)    U1                       U(I,J)
+ ZV B(I,J)    U2                       U(I,J+)
+ ZV B(I,J)    U3                       U(I+,J)
+ ZV B(I,J)    U4                       U(I+,J+)
+ XT C(I,J)    C
+ ZV C(I,J)    U1                       U(I,J)
+ ZV C(I,J)    U2                       U(I,J+)
+ ZV C(I,J)    U3                       U(I+,J)
+ ZV C(I,J)    U4                       U(I+,J+)
+ XT D(I,J)    D
+ ZV D(I,J)    U1                       U(I,J)
+ ZV D(I,J)    U2                       U(I,J+)
+ ZV D(I,J)    U3                       U(I+,J)
+ ZV D(I,J)    U4                       U(I+,J+)
+ ND
+
+ DO I         0                        N-1
+ I+ I+        I                        1
+ DO J         0                        N-1
+ I+ J+        J                        1
+ XT P(I,J)    P
+ ZV P(I,J)    F1                       F(I,J)
+ ZV P(I,J)    F2                       F(I,J+)
+ ZV P(I,J)    F3                       F(I+,J)
+ ZV P(I,J)    F4                       F(I+,J+)
+ XT Q(I,J)    Q
+ ZV Q(I,J)    F1                       F(I,J)
+ ZV Q(I,J)    F2                       F(I,J+)
+ ZV Q(I,J)    F3                       F(I+,J)
+ ZV Q(I,J)    F4                       F(I+,J+)
+ XT R(I,J)    R
+ ZV R(I,J)    F1                       F(I,J)
+ ZV R(I,J)    F2                       F(I,J+)
+ ZV R(I,J)    F3                       F(I+,J)
+ ZV R(I,J)    F4                       F(I+,J+)
+ XT S(I,J)    S
+ ZV S(I,J)    F1                       F(I,J)
+ ZV S(I,J)    F2                       F(I,J+)
+ ZV S(I,J)    F3                       F(I+,J)
+ ZV S(I,J)    F4                       F(I+,J+)
+ ND
+
+
+GROUP USES
+
+ DO I         0                        N-1
+ DO J         0                        N-1
+ ZE OBJ       E(I,J)                   H**2/36
+ ZE OBJ       F(I,J)                   2BH**2/36
+ ND
+
+ DO I         1                        N-2
+ I+ I+        I                        1
+ DO J         1                        N-2
+ I+ J+        J                        1
+ ZE L(I,J)    A(I,J)                   1/6
+ ZE L(I,J+)   B(I,J)                   1/6
+ ZE L(I+,J)   C(I,J)                   1/6
+ ZE L(I+,J+)  D(I,J)                   1/6
+ ZE L(I,J)    P(I,J)                   -H**2/36
+ ZE L(I,J+)   Q(I,J)                   -H**2/36
+ ZE L(I+,J)   R(I,J)                   -H**2/36
+ ZE L(I+,J+)  S(I,J)                   -H**2/36
+ ND
+
+ DO I         1                        N-2
+ I+ I+        I                        1
+ ZE L(I,N-)   A(I,N-)                  1/6
+ ZE L(I,1)    B(I,0)                   1/6
+ ZE L(I+,N-)  C(I,N-)                  1/6
+ ZE L(I+,1)   D(I,0)                   1/6
+ ZE L(I,N-)   P(I,N-)                  -H**2/36
+ ZE L(I,1)    Q(I,0)                   -H**2/36
+ ZE L(I+,N-)  R(I,N-)                  -H**2/36
+ ZE L(I+,1)   S(I,0)                   -H**2/36
+ ND
+
+ DO J         1                        N-2
+ I+ J+        J                        1
+ ZE L(N-,J)   A(N-,J)                  1/6
+ ZE L(N-,J+)  B(N-,J)                  1/6
+ ZE L(1,J)    C(0,J)                   1/6
+ ZE L(1,J+)   D(0,J)                   1/6
+ ZE L(N-,J)   P(N-,J)                  -H**2/36
+ ZE L(N-,J+)  Q(N-,J)                  -H**2/36
+ ZE L(1,J)    R(0,J)                   -H**2/36
+ ZE L(1,J+)   S(0,J)                   -H**2/36
+ ND
+
+ ZE L(N-,N-)  A(N-,N-)                 1/6
+ ZE L(N-,1)   B(N-,0)                  1/6
+ ZE L(1,N-)   C(0,N-)                  1/6
+ ZE L(1,1)    D(0,0)                   1/6
+ ZE L(N-,N-)  P(N-,N-)                 -H**2/36
+ ZE L(N-,1)   Q(N-,0)                  -H**2/36
+ ZE L(1,N-)   R(0,N-)                  -H**2/36
+ ZE L(1,1)    S(0,0)                   -H**2/36
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      RDW2D52U
+
+TEMPORARIES
+
+ R  UV1
+ R  UV2
+ R  UV3
+ R  UV4
+ R  C1
+ R  C2
+ R  C3
+ R  C4
+
+
+INDIVIDUALS
+
+ T  M
+ A  UV1                 U1 - V1
+ A  UV2                 U2 - V2
+ A  UV3                 U3 - V3
+ A  UV4                 U4 - V4
+ F                      2.0 * UV1 ** 2 + 2.0 * UV2 ** 2 +
+ F+                     2.0 * UV3 ** 2 + 2.0 * UV4 ** 2 +
+ F+                     2.0 * UV1*UV2 +  2.0 * UV1*UV3 +
+ F+                           UV1*UV4 +       UV2*UV3 +
+ F+                     2.0 * UV2*UV4 + 2.0 * UV3*UV4
+ G  U1                  4.0 * UV1 + 2.0 * UV2 + 2.0 * UV3 + UV4
+ G  U2                  2.0 * UV1 + 4.0 * UV2 + UV3 + 2.0 * UV4
+ G  U3                  2.0 * UV1 + UV2 + 4.0 * UV3 + 2.0 * UV4
+ G  U4                  UV1 + 2.0 * UV2 + 2.0 * UV3 + 4.0 * UV4
+ H  U1        U1        4.0
+ H  U1        U2        2.0
+ H  U1        U3        2.0
+ H  U1        U4        1.0
+ H  U2        U2        4.0
+ H  U2        U3        1.0
+ H  U2        U4        2.0
+ H  U3        U3        4.0
+ H  U3        U4        2.0
+ H  U4        U4        4.0
+
+ T  M0
+ F                      2.0 * F1 ** 2 + 2.0 * F2 ** 2 +
+ F+                     2.0 * F3 ** 2 + 2.0 * F4 ** 2 +
+ F+                     2.0 * F1*F2 +  2.0 * F1*F3 +
+ F+                           F1*F4 +       F2*F3 +
+ F+                     2.0 * F2*F4 + 2.0 * F3*F4
+ G  F1                  4.0 * F1 + 2.0 * F2 + 2.0 * F3 + F4
+ G  F2                  2.0 * F1 + 4.0 * F2 + F3 + 2.0 * F4
+ G  F3                  2.0 * F1 + F2 + 4.0 * F3 + 2.0 * F4
+ G  F4                  F1 + 2.0 * F2 + 2.0 * F3 + 4.0 * F4
+ H  F1        F1        4.0
+ H  F1        F2        2.0
+ H  F1        F3        2.0
+ H  F1        F4        1.0
+ H  F2        F2        4.0
+ H  F2        F3        1.0
+ H  F2        F4        2.0
+ H  F3        F3        4.0
+ H  F3        F4        2.0
+ H  F4        F4        4.0
+
+ T  A
+ A  C1                  4.0
+ A  C2                  -1.0
+ A  C3                  -1.0
+ A  C4                  -2.0
+ F                      C1 * U1 + C2 * U2 + C3 * U3 + C4 * U4
+ G  U1                  C1
+ G  U2                  C2
+ G  U3                  C3
+ G  U4                  C4
+ H  U1        U1        0.0
+
+ T  B
+ A  C1                  -1.0
+ A  C2                  4.0
+ A  C3                  -2.0
+ A  C4                  -1.0
+ F                      C1 * U1 + C2 * U2 + C3 * U3 + C4 * U4
+ G  U1                  C1
+ G  U2                  C2
+ G  U3                  C3
+ G  U4                  C4
+ H  U1        U1        0.0
+
+ T  C
+ A  C1                  -1.0
+ A  C2                  -2.0
+ A  C3                  4.0
+ A  C4                  -1.0
+ F                      C1 * U1 + C2 * U2 + C3 * U3 + C4 * U4
+ G  U1                  C1
+ G  U2                  C2
+ G  U3                  C3
+ G  U4                  C4
+ H  U1        U1        0.0
+
+ T  D
+ A  C1                  -2.0
+ A  C2                  -1.0
+ A  C3                  -1.0
+ A  C4                  4.0
+ F                      C1 * U1 + C2 * U2 + C3 * U3 + C4 * U4
+ G  U1                  C1
+ G  U2                  C2
+ G  U3                  C3
+ G  U4                  C4
+ H  U1        U1        0.0
+
+ T  P
+ A  C1                  4.0
+ A  C2                  2.0
+ A  C3                  2.0
+ A  C4                  1.0
+ F                      C1 * F1 + C2 * F2 + C3 * F3 + C4 * F4
+ G  F1                  C1
+ G  F2                  C2
+ G  F3                  C3
+ G  F4                  C4
+ H  F1        F1        0.0
+
+ T  Q
+ A  C1                  2.0
+ A  C2                  4.0
+ A  C3                  1.0
+ A  C4                  2.0
+ F                      C1 * F1 + C2 * F2 + C3 * F3 + C4 * F4
+ G  F1                  C1
+ G  F2                  C2
+ G  F3                  C3
+ G  F4                  C4
+ H  F1        F1        0.0
+
+ T  R
+ A  C1                  2.0
+ A  C2                  1.0
+ A  C3                  4.0
+ A  C4                  2.0
+ F                      C1 * F1 + C2 * F2 + C3 * F3 + C4 * F4
+ G  F1                  C1
+ G  F2                  C2
+ G  F3                  C3
+ G  F4                  C4
+ H  F1        F1        0.0
+
+ T  S
+ A  C1                  1.0
+ A  C2                  2.0
+ A  C3                  2.0
+ A  C4                  4.0
+ F                      C1 * F1 + C2 * F2 + C3 * F3 + C4 * F4
+ G  F1                  C1
+ G  F2                  C2
+ G  F3                  C3
+ G  F4                  C4
+ H  F1        F1        0.0
+
+ENDATA

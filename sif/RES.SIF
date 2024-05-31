@@ -1,0 +1,286 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          RES
+
+*   Problem :
+*   *********
+*
+
+*
+*   Dassault France ressort (spring) problem
+
+*   SIF input:  A. R. Conn, June 1993.
+
+*   classification NLR2-MN-20-14
+
+
+
+
+VARIABLES
+
+    L0
+    N
+    F
+    K
+    LB
+    L
+    DE
+    DI
+    TO
+    TOB
+    NU
+    D
+    P
+    E
+    P0
+    G
+    DM
+    FR
+    TOLIM
+    TOBLIM
+
+GROUPS
+
+ XE E1        F         -1.0
+ XE E2        K         -1.0
+ XE E3        DE        1.0            D         -1.0
+ XE E3        DM        -1.0
+ XE E4        DI        1.0            D          1.0
+ XE E4        DM        -1.0
+ XE E5        D         1.0            P         -1.0
+ XE E5        E         1.0
+ XE E6        NU        1.0            N         -1.0
+ XE E7        D         1.5            L0        -1.0
+ XE E8        L         1.0            LB        -1.0
+ XE E8        FR        -1.0
+ XE E9        LB        1.0
+ XE E10       L         1.0            L0        -1.0
+ XE E10       F         1.0
+ XE E11       TO        1.0
+ XE E12       TOB       1.0
+
+ XL E13       TO        1.0            TOLIM     -1.0
+ XL E14       TOB       1.0            TOBLIM    -1.0
+
+CONSTANTS
+
+ X  RES       E6        -2.0
+
+
+BOUNDS
+
+ UP RES       L0        100.0
+ UP RES       N         100.0
+ UP RES       F         30.0
+ UP RES       K         100.0
+ UP RES       LB        50.0
+ UP RES       L         50.0
+ UP RES       DE        30.0
+ UP RES       DI        30.0
+ UP RES       TO        800.0
+ UP RES       TOB       800.0
+ UP RES       NU        50.0
+ LO RES       NU        0.5
+ UP RES       D         10.0
+ LO RES       D         0.1
+ UP RES       P         20.0
+ UP RES       E         10.0
+ UP RES       P0        1000.0
+ LO RES       P0        1.0
+ UP RES       G         80000.0
+ LO RES       G         40000.0
+ UP RES       DM        30.0
+ LO RES       DM        0.1
+ UP RES       FR        50.0
+ UP RES       TOLIM     1000.0
+ LO RES       TOLIM     100.0
+ UP RES       TOBLIM    1000.0
+ LO RES       TOBLIM    100.0
+
+START POINT
+
+*XV RES       'DEFAULT' 10.0
+
+*XV RES       N         2.4079443D+1
+*XV RES       L0        5.9698291D+1
+*XV RES       F         9.6982919D+0
+*XV RES       K         1.0000000D+2
+*XV RES       LB        4.6500000D+1
+*XV RES       L         5.0000000D+1
+*XV RES       DE        8.8143647D+0
+*XV RES       DI        4.0688922D+0
+*XV RES       TO        3.0000000D+2
+*XV RES       TOB       4.5000000D+2
+*XV RES       NU        2.2079443D+1
+*XV RES       D         2.8143647D+0
+*XV RES       P         3.2496365D+0
+*XV RES       E         6.5886796D-1
+*XV RES       P0        6.5886796D+2
+*XV RES       G         6.5886796D+4
+*XV RES       FR        2.5886796D+1
+*XV RES       TOLIM     2.5886796D+2
+*XV RES       TOBLIM    2.5886796D+2
+*XV RES       DM        1.5886796D+1
+
+ XV RES       L0        1.5000D-01
+ XV RES       N         2.4079D+01
+ XV RES       F         9.2459D-15
+ XV RES       K         0.0000D+00
+ XV RES       LB        0.0000D+00
+ XV RES       L         1.5000D-01
+ XV RES       DE        6.8120D+00
+ XV RES       DI        6.6120D+00
+ XV RES       TO        0.0000D+00
+ XV RES       TOB       0.0000D+00
+ XV RES       NU        2.2079D+01
+ XV RES       D         1.0000D-01
+ XV RES       P         6.5268D-01
+ XV RES       E         5.5268D-01
+ XV RES       P0        6.5887D+02
+ XV RES       G         6.5887D+04
+ XV RES       DM        6.7120D+00
+ XV RES       FR        1.5000D-01
+ XV RES       TOLIM     1.0000D+02
+ XV RES       TOBLIM    1.0000D+02
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+ EV 311/14    V                        W
+ EV 311/14    X                        Y
+ EV 311/14    Z
+ EV 14/31     W                        X
+ EV 14/31     Y                        Z
+ EV 11/3      X                        Y
+ EV 11/3      Z
+ EV 111/2     W                        X
+ EV 111/2     Y                        Z
+
+ELEMENT USES
+
+ T  EL1       311/14
+ V  EL1       V                        DM
+ V  EL1       W                        NU
+ V  EL1       X                        P0
+ V  EL1       Y                        G
+ V  EL1       Z                        D
+
+ T  EL2       14/31
+ V  EL2       W                        G
+ V  EL2       X                        D
+ V  EL2       Y                        DM
+ V  EL2       Z                        NU
+
+ T  EL3       2PR
+ V  EL3       X                        NU
+ V  EL3       Y                        P
+
+ T  EL4       11/3
+ V  EL4       X                        P0
+ V  EL4       Y                        DM
+ V  EL4       Z                        D
+
+ T  EL5       111/2
+ V  EL5       W                        G
+ V  EL5       X                        D
+ V  EL5       Y                        E
+ V  EL5       Z                        DM
+
+ENDATA
+
+************************
+* SET UP THE FUNCTIONS *
+************************
+
+ELEMENTS      RES
+
+TEMPORARIES
+
+ R  V3WX
+ R  YZ4
+ R  WX4
+ R  Y3Z
+ R  PI
+
+GLOBALS
+
+ A  PI                  3.1415926535
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  311/14
+ A  V3WX                V**3 * W * X
+ A  YZ4                 Y * Z**4
+ F                      V3WX/YZ4
+ G  V                   (3.0 * V**2 * W * X) / YZ4
+ G  W                   (V**3 * X) / YZ4
+ G  X                   (V**3 * W) / YZ4
+ G  Y                   -V3WX/(Y * YZ4)
+ G  Z                   -(4.0 * V3WX) / (Z * YZ4)
+ H  V         V         (6.0 * V * W * X) / YZ4
+ H  V         W         (3.0 * V**2  * X) / YZ4
+ H  V         X         (3.0 * V**2  * W) / YZ4
+ H  V         Y         -(3.0 * V**2  * W) / (YZ4*Y)
+ H  V         Z         -(12.0 * V**2  * W * X) / (YZ4*Z)
+ H  W         X         V**3 / YZ4
+ H  W         Y         -(V**3 * X) / (YZ4 * Y)
+ H  W         Z         -(4.0 * V**3 * X) / (YZ4 * Z)
+ H  X         Y         -(V**3 * W) / (YZ4 * Y)
+ H  X         Z         -(4.0 * V**3 * W) / (YZ4 * Z)
+ H  Y         Y         -(2.0 * V3WX) / (Y**2 * YZ4)
+ H  Y         Z         (4.0 * V3WX) / (Y * Z * YZ4)
+ H  Z         Z         (20.0 * V3WX) / (Z**2 * YZ4)
+
+ T  14/31
+ A  WX4                 W * X**4
+ A  Y3Z                 Y**3 * Z
+ F                      WX4 / Y3Z
+ G  W                   X**4 / Y3Z
+ G  X                   (4.0 * W * X**3) / Y3Z
+ G  Y                   -(3.0 * WX4) / (Y * Y3Z)
+ G  Z                   -WX4 / (Z * Y3Z)
+ H  W         X         (4.0 * X**3) / Y3Z
+ H  W         Y         -(3.0 * X**4) / (Y * Y3Z)
+ H  W         Z         -X**4 / (Z * Y3Z)
+ H  X         X         (12.0 * W * X**2) / Y3Z
+ H  X         Y         -(12.0 * W * X**3) / (Y * Y3Z)
+ H  X         Z         -(4.0 * W * X**3) / (Z * Y3Z)
+ H  Y         Y         (12.0 * WX4) / (Y**2 * Y3Z)
+ H  Y         Z         (3.0 * WX4) / (Z * Y * Y3Z)
+ H  Z         Z         (2.0 * WX4) / (Z**2 * Y3Z)
+
+ T  11/3
+ F                      (X * Y) / ( PI * Z**3 )
+ G  X                   Y / ( PI * Z**3 )
+ G  Y                   X / ( PI * Z**3 )
+ G  Z                   -(3.0 * X * Y) / ( PI * Z**4 )
+ H  X         Y         1.0 / ( PI * Z**3 )
+ H  X         Z         -(3.0 * Y) / ( PI * Z**4 )
+ H  Y         Z         -(3.0 * X) / ( PI * Z**4 )
+ H  Z         Z         (12.0 * X * Y) / ( PI * Z**5 )
+
+ T  111/2
+ F                      (W * X * Y) / ( PI * Z**2 )
+ G  W                   (X * Y) / ( PI * Z**2 )
+ G  X                   (W * Y) / ( PI * Z**2 )
+ G  Y                   (W * X) / ( PI * Z**2 )
+ G  Z                   -(2.0 * W * X * Y) / ( PI * Z**3 )
+ H  W         X         Y / ( PI * Z**2 )
+ H  W         Y         X / ( PI * Z**2 )
+ H  W         Z         -(2.0 * X * Y) / ( PI * Z**3 )
+ H  X         Y         W / ( PI * Z**2 )
+ H  X         Z         -(2.0 * W * Y) / ( PI * Z**3 )
+ H  Y         Z         -(2.0 * W * X) / ( PI * Z**3 )
+ H  Z         Z         (6.0 * W * X * Y) / ( PI * Z**4 )
+
+ENDATA
+
+

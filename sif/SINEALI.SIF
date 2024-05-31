@@ -1,0 +1,150 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SINEALI 
+
+*   Problem :
+*   --------
+
+*   A variation on the extended Rosenbrock function in which
+*   the squares are replaced by sines. Bounds are imposed on the
+*   variables to avoid multiple minima.
+
+*   Source: an original idea by
+*   Ali Bouriacha, private communication.
+
+*   SIF input: Nick Gould and Ph. Toint, October, 1993.
+
+*   classification OBR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   4              $-PARAMETER
+*IE N                   10             $-PARAMETER     original value
+*IE N                   20             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   other parameter definitions
+
+ RE PI                  3.1415926535
+ RM PI/2      PI        0.5
+ RM 2PI       PI        2.0
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  SQ1       X1        1.0
+
+ DO I         2                        N
+ XN SQ(I)     X(I)      1.0
+ XN SQ(I)     'SCALE'   0.01
+ ND
+
+CONSTANTS
+
+    SINEALI   SQ1       1.0
+
+BOUNDS
+
+ RM UB        PI        0.5
+
+ ZU SINEALI   X1                       UB
+ R- LB        UB                       2PI
+ ZL SINEALI   X1                       LB
+
+ DO I         2                        N
+ R+ UB1       UB                       PI/2
+ R( UB        SQRT                     UB1
+ ZU SINEALI   X(I)                     UB
+ R- LB        UB                       2PI       
+ ZL SINEALI   X(I)                     LB       
+ OD I
+
+START POINT
+
+ XV SINEALI   'DEFAULT'  0.0
+
+ELEMENT TYPE
+
+ EV ETYPE     V1
+
+ELEMENT USES
+
+ XT 'DEFAULT' ETYPE
+
+ DO I         1                        N-1
+ ZV XSQ(I)    V1                       X(I)
+ ND
+
+GROUP TYPE
+
+ GV SIN       GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' SIN
+
+ DO I         2                        N
+ IA I-1       I         -1
+ XE SQ(I)     XSQ(I-1)  -1.0
+ ND
+
+OBJECT BOUND
+
+*   Solution = - 100 * ( N - 1 ) - 1
+
+*LO SOLTN(4)            -301.0
+*LO SOLTN(10)           -901.0
+*LO SOLTN(20)           -1901.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SINEALI 
+
+INDIVIDUALS
+
+ T  ETYPE
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        SINEALI 
+
+TEMPORARIES
+
+ R  SING
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SIN
+ A  SING                SIN( GVAR )
+ F                      SING  
+ G                      COS( GVAR )
+ H                      - SING
+
+ENDATA

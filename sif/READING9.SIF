@@ -1,0 +1,171 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          READING9
+
+*   Problem :
+*   *********
+
+*   A nonlinear optimal control problem from Nancy Nichols
+*   with a given initial condition.
+*   This problem arises in tide modelling.
+
+*   Source: a variant upon a problem in
+*   S. Lyle and N.K. Nichols,
+*   "Numerical Methods for Optimal Control Problems with State Constraints",
+*   Numerical Analysis Report 8/91, Dept of Mathematics, 
+*   University of Reading, UK.
+
+*   SIF input: Nick Gould and Ph. Toint, March 1995
+
+*   classification OOR2-MN-V-V
+
+*   Number of discretized points in [0,1] - 1
+
+*IE N+1                 3              $-PARAMETER n=6, m=2
+*IE N+1                 51             $-PARAMETER n=102, m=50
+*IE N+1                 101            $-PARAMETER n=202, m=100
+*IE N+1                 201            $-PARAMETER n=402, m=200
+*IE N+1                 501            $-PARAMETER n=1002, m=500  original value
+*IE N+1                 1001           $-PARAMETER n=2002, m=1000
+*IE N+1                 5001           $-PARAMETER n=10002, m= 5000
+ IE N+1                 3              $-PARAMETER     modified for S2X tests
+
+*   Mesh
+
+ IA N         N+1       -1
+ IA N-1       N         -1
+
+ RI RN        N
+ RD H         RN        1.0
+ RM -H/2      H         -0.5
+
+*   Constants
+
+ RE K1                  0.07716
+ RE K2                  0.07716
+ R* K1H       K1                       H
+ RA K1H+1     K1H       1.0
+ RM -K1H-1    K1H+1     -1.0
+ R* K2H       K2                       H
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         0                        N
+ X  P(I)
+ ND
+
+ DO I         0                        N
+ X  U(I)
+ ND
+
+GROUPS
+
+ ZN OBJ
+
+ DO I         0                        N-1
+ IA I+1       I         1
+ XE S(I)      P(I+1)    1.0
+ ZE S(I)      P(I)                     -K1H-1
+ ND
+
+CONSTANTS
+
+ DO I         0                        N-1
+ RI RI        I
+ R* T         RI                       H
+ R( SINT      SIN                      T
+ R* HSINT     H                        SINT
+ Z  READING9  S(I)                     HSINT
+ ND
+
+BOUNDS
+
+ DO I         0                        N
+ XU READING9  U(I)      1.0
+ XR READING9  P(I)
+ ND
+
+ XX READING9  P(0)      0.0
+
+START POINT
+
+ V  READING9  'DEFAULT' 0.2
+
+ELEMENT TYPE
+
+ EV PROD      U
+ EV PROD      P
+
+ EV PROD2     U
+ EV PROD2     P
+
+ELEMENT USES
+
+ DO I         0                        N
+
+ XT OE(I)     PROD2
+ ZV OE(I)     P                        P(I)
+ ZV OE(I)     U                        U(I)
+
+ ND
+
+ DO I         0                        N-1
+ XT CE(I)     PROD
+ ZV CE(I)     P                        P(I)
+ ZV CE(I)     U                        U(I)
+
+ ND
+
+GROUP USES
+
+ DO I         0                        N-1
+
+ IA I+1       I         1
+ ZE OBJ       OE(I)                    -H/2
+ ZE OBJ       OE(I+1)                  -H/2
+
+ ZE S(I)      CE(I)                    K2H
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*XL SOLUTION            -4.41677D-02   $ (n=500)
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+ELEMENTS      READING9
+
+INDIVIDUALS
+
+ T  PROD
+ F                      U * P
+ G  U                   P
+ G  P                   U
+ H  U         P         1.0
+
+ T  PROD2
+ F                      ( U * P ) ** 2
+ G  U                   2.0 * U * P ** 2
+ G  P                   2.0 * P * U ** 2
+ H  U         U         2.0 * P ** 2
+ H  U         P         4.0 * U * P
+ H  P         P         2.0 * U ** 2
+
+ENDATA
+

@@ -1,0 +1,300 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TRAINH  
+
+*   Problem :
+*   *********
+
+*   The problem is to minimize the energy spent to move a train 
+*   from the beginning of a track to its end in a given time.  The train
+*   is slowed down by some drag (assumed to be quadratic in the the velocity).
+*   The track follows the slope of a hill.  The track geometry is given
+*   by the equation
+
+*          1                    1  ns-1                          x - z_i
+*   g(x) = - ( a_1 + a_{ns} ) + -- SUM ( s_{i+1} - s_i ) arctan( ------- )
+*          2                    pi  1                              eps
+
+*   where the z_i are the breakpoints between sections of the track, and where 
+*   the s_i are the "slopes" on these sections (eps is a regularization
+*   parameter). Here we have a track of the overall shape
+
+*                     ______
+*                    /      \      z0 = 0, z1 = 2, z2 = 4, z3 = 6
+*                   /        \     s1 = 2, s2 = 0, s3 = -2
+*                  /          \    eps = 0.05
+
+*   The control variables are the acceleration force (UA) and the braking
+*   force (UB) applied on the train.
+
+*   Source: adapted from
+*   J. Kautsky and N. K. Nichols,
+*   "OTEP-2: Optimal Train Energy Programme, mark 2",
+*   Numerical Analysis Report NA/4/83,
+*   Department of Mathematics, University of Reading, 1983.
+
+*   SIF input: N. Nichols and Ph. Toint, April 1993
+
+*   classification QOR2-MN-V-V
+
+*   Number of discretized points in the interval
+
+*IE N                   11             $-PARAMETER n=48, m=22
+*IE N                   51             $-PARAMETER n=208, m=102
+*IE N                   101            $-PARAMETER n=408, m=202  original value
+*IE N                   201            $-PARAMETER n=808, m=402
+*IE N                   501            $-PARAMETER n=2008, m=1002 
+*IE N                   1001           $-PARAMETER n=4008, m=2002
+ IE N                   11             $-PARAMETER     modified for S2X tests
+*IE N                   5001           $-PARAMETER n=20008, m=10002
+
+*   Problem characteristics
+
+ RE TIME                4.8            $-PARAMETER travel time
+ RE LENGTH              6.0            $-PARAMETER length of track
+
+*   Track geometry
+
+ IE NS                  3              $-PARAMETER number of track sections
+
+ RE Z1                  2.0            $-PARAMETER breakpoint 1
+ RE Z2                  4.0            $-PARAMETER breakpoint 2
+
+ RE S1                  2.0            $-PARAMETER slope on section 1
+ RE S2                  0.0            $-PARAMETER slope on section 2
+ RE S3                  -2.0           $-PARAMETER slope on section 3
+
+*   Mesh
+
+ IA N-1       N         -1
+ RI RN        N
+ R/ H         TIME                     RN        
+ RM H/2       H         0.5
+ RM -H        H         -1.0
+ RM -H/2      H/2       -1.0
+
+*   Acceleration bounds
+
+ RE UAMAX               10.0           $ maximum acceleration
+ RE UBMIN               -2.0           $ maximum braking
+
+*   Speed bounds
+
+ RE VMAX                10.0           $ maximum train speed
+
+*   Drag coefficients
+
+ RE A                   0.3            $ constant term
+ RE B                   0.14           $ linear term
+ RE C                   0.16           $ quadratic term
+
+*   Track geometry regularization parameter
+
+ RE EPS                 0.05
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+ RE PI                  3.1415926535
+
+ IA NS-1      NS        -1
+ R* BH/2      B                        H/2
+ RA 1+BH/2    BH/2      1.0
+ RA BH/2-1    BH/2      -1.0
+ R* -AH       A                        -H
+ R/ LENGTH/N  LENGTH                   RN
+ R* CH/2      C                        H/2
+ A+ SUMS      S(1)                     S(NS)
+ RM -AVS      SUMS      -0.5
+ R* -AVSH     -AVS                     H
+ R+ CNST      -AH                      -AVSH
+ R/ H/2PI     H/2                      PI
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ OD I
+
+ DO I         0                        N
+ X  V(I)
+ OD I
+
+ DO I         0                        N
+ X  UA(I)
+ OD I
+
+ DO I         0                        N
+ X  UB(I)
+ OD I
+
+GROUPS
+
+ XN ENERGY
+
+ DO I         0                        N-1
+ IA I+1       I         1
+
+*   Velocity = derivative of position
+
+ XE XEQ(I)    X(I+1)    1.0            X(I)      -1.0
+ ZE XEQ(I)    V(I+1)                   -H/2
+ ZE XEQ(I)    V(I)                     -H/2
+
+*   Acceleration = derivative of velocity
+
+ ZE VEQ(I)    V(I+1)                   1+BH/2   
+ ZE VEQ(I)    V(I)                     BH/2-1
+ ZE VEQ(I)    UA(I+1)                  -H/2
+ ZE VEQ(I)    UA(I)                    -H/2
+ ZE VEQ(I)    UB(I+1)                  -H/2
+ ZE VEQ(I)    UB(I)                    -H/2
+ ND
+
+CONSTANTS
+
+ DO I         0                        N-1
+ Z  TRAINH    VEQ(I)                   CNST
+ OD I
+
+BOUNDS
+
+ XX TRAINH    X(0)      0.0
+ XX TRAINH    V(0)      0.0
+ ZX TRAINH    UA(0)                    UAMAX
+ XX TRAINH    UB(0)     0.0
+
+ DO I         1                        N-1
+ XR TRAINH    X(I)
+ XR TRAINH    V(I)
+ XL TRAINH    UA(I)     0.0
+ ZU TRAINH    UA(I)                    UAMAX
+ ZL TRAINH    UB(I)                    UBMIN
+ XU TRAINH    UB(I)     0.0 
+ ND
+
+ ZX TRAINH    X(N)                     LENGTH
+ XX TRAINH    V(N)      0.0
+ XX TRAINH    UA(N)     0.0
+ ZX TRAINH    UB(N)                    UBMIN
+
+START POINT
+
+ XV TRAINH    X(0)      0.0
+ XV TRAINH    V(0)      0.0
+ ZV TRAINH    UA(0)                    UAMAX
+ XV TRAINH    UB(0)     0.0
+
+ DO I         1                        N-1
+ RI RI        I
+ R* PI        LENGTH/N                 RI
+ ZV TRAINH    X(I)                     PI
+ ZV TRAINH    V(I)                     LENGTH/N
+ XV TRAINH    UA(I)     0.0     
+ XV TRAINH    UB(I)     0.0     
+ OD I
+
+ ZV TRAINH    X(N)                     LENGTH
+ XV TRAINH    V(N)      0.0
+ XV TRAINH    UA(N)     0.0
+ ZV TRAINH    UB(N)                    UBMIN
+
+ELEMENT TYPE
+
+ EV PROD      UU
+ EV PROD      VV
+
+ EV SQ        VVV
+
+ EV ATAN      XX
+ EP ATAN      ZZ                       E
+
+ELEMENT USES
+
+ DO I         0                        N
+ IA I+1       I         1
+ XT VISQ(I)   SQ
+ ZV VISQ(I)   VVV                      V(I)
+ DO J         1                        NS-1
+ XT A(I,J)    ATAN
+ ZV A(I,J)    XX                       X(I)
+ ZP A(I,J)    ZZ                       Z(J)
+ ZP A(I,J)    E                        EPS
+ OD J
+ OD I
+
+ DO I         1                        N-1
+ XT UV(I)     PROD
+ ZV UV(I)     UU                       UA(I)
+ ZV UV(I)     VV                       V(I)
+ OD I
+
+GROUP USES
+
+ DO I         0                        N-1
+ IA I+1       I         1
+ ZE VEQ(I)    VISQ(I)                  CH/2
+ ZE VEQ(I)    VISQ(I+1)                CH/2
+ DO J         1                        NS-1
+ IA J+1       J         1
+ A- DS        S(J+1)                   S(J)
+ R* WJ        DS                       H/2PI
+ ZE VEQ(I)    A(I,J)                   WJ
+ ZE VEQ(I)    A(I+1,J)                 WJ
+ OD J
+ OD I
+
+ DO I         1                        N-1
+ ZE ENERGY    UV(I)                    H
+ OD I
+
+OBJECT BOUND
+
+ LO TRAINH              0.0
+
+*LO SOLUTION(11)        12.423025536
+*LO SOLUTION(51)        12.295777964
+*LO SOLUTION(101)       12.306399739
+*LO SOLUTION(201)       12.309848614
+*LO SOLUTION(1001)      12.307801327
+*LO SOLUTION(5001)      12.221148056
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+ELEMENTS      TRAINH
+
+TEMPORARIES
+
+ R  DX
+ R  E2
+ M  ATAN
+
+INDIVIDUALS
+
+ T  SQ
+ F                      VVV * VVV
+ G  VVV                 VVV + VVV
+ H  VVV       VVV       2.0
+
+ T  PROD
+ F                      UU * VV
+ G  UU                  VV
+ G  VV                  UU
+ H  UU        VV        1.0
+
+ T  ATAN
+ A  DX                  XX - ZZ
+ A  E2                  E * E
+ F                      ATAN( DX / E )
+ G  XX                  E / ( E2 + DX * DX )
+ H  XX        XX        - 2.0 * DX * E / ( E2 + DX * DX )**2
+
+ENDATA

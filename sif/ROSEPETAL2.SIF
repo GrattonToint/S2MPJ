@@ -1,0 +1,113 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ROSEPETAL2
+
+*   Problem :
+*   --------
+
+*   A reformulation of ROSEPETAL, via
+*     minimize sum_i i x_i 
+*              subject to sum_i x_i^2 - s = 0
+*              and        s +/- 2 x_j <= r^2 - 1 (1<=j<=n)
+*   where r >= 1
+
+*   SIF input: Nick Gould, Feb 2014
+
+*   classification LQR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   2              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100000         $-PARAMETER
+
+*  Constraint radius >= 1
+
+*RE R                   1.0            $-PARAMETER
+ RE R                   2.0            $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ RI RN        N
+ R* R2        R                        R
+ R* NR2       RN                       R2
+ RA R2-1      R2        -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+ X  S
+
+GROUPS
+
+ DO I         1                        N
+ RI RI        I
+ ZN OBJ       X(I)                     RI
+ XL M(I)      X(I)      -2.0           S         1.0
+ XL P(I)      X(I)      2.0            S         1.0
+ ND
+ XE SUM       S         -1.0
+
+CONSTANTS
+
+ DO I         1                        N
+ Z  ROSEPETAL M(I)                     R2-1
+ Z  ROSEPETAL P(I)                     R2-1
+ ND
+
+BOUNDS
+
+ FR ROSEPETAL 'DEFAULT'
+
+START POINT
+
+*  start with x = r^2
+
+ ZV ROSEPETAL 'DEFAULT'                R2
+ ZV ROSEPETAL S                        NR2
+
+ELEMENT TYPE
+
+ EV SQR       V
+
+ELEMENT USES
+
+ XT 'DEFAULT' SQR
+
+ DO I         1                        N
+ ZV Q(I)      V                        X(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE SUM       Q(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ROSEPETAL2
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V ** 2
+ G  V                   2.0D+0 * V
+ H  V         V         2.0D+0
+
+ENDATA
+

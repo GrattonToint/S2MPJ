@@ -1,0 +1,230 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          RAYBENDL
+
+*   Problem:
+*   ********
+
+*   A ray bending problem.  A ray across a inhomogeneous 2D medium is
+*   represented by a piecewise linear curve whose knots can be chosen.  
+*   The problem is then to optimize the positions of these knots in order 
+*   to obtain a ray path corresponding to the minimum travel time from 
+*   source to receiver,  according to Fermat principle.
+
+*   The problem becomes harder and harder when the dimesnion increases
+*   because the knots are getting closer and closer and the objective
+*   has a nondifferentiable kink when two knots coincide.  The difficulty
+*   is less apparent when exact second derivatives are not used.
+
+*   Source: a test example in
+*   T.J. Moser, G. Nolet and R. Snieder,
+*   "Ray bending revisited",
+*   Bulletin of the Seism. Society of America 21(1).
+
+*   SIF input: Ph Toint, Dec 1991.
+
+*   classification OXR2-MY-V-0
+
+*   number of  knots  ( >= 4 )
+*   ( n = 2( NKNOTS - 1 ) ) 
+
+*IE NKNOTS              4              $-PARAMETER n = 6
+*IE NKNOTS              11             $-PARAMETER n = 20
+*IE NKNOTS              21             $-PARAMETER n = 40     original value
+*IE NKNOTS              32             $-PARAMETER n = 62
+*IE NKNOTS              64             $-PARAMETER n = 126
+*IE NKNOTS              512            $-PARAMETER n = 1022
+*IE NKNOTS              1024           $-PARAMETER n = 2046
+ IE NKNOTS              4              $-PARAMETER     modified for S2X tests
+
+*   source position
+
+ RE XSRC                0.0
+ RE ZSRC                0.0
+
+*   receiver position
+
+ RE XRCV                100.0
+ RE ZRCV                100.0
+
+*   derived from the number of knots
+
+ IA NK-1      NKNOTS    -1
+ IA NK-2      NKNOTS    -2
+
+*   useful constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+
+VARIABLES
+
+*   the unknowns are the two coordinates of the spline knots
+
+ DO I         0                        NKNOTS
+ X  X(I)
+ X  Z(I)
+ OD I
+
+GROUPS
+
+*   The objective is the travel time along the currently defined ray
+*   One group is defined for the time spent on each spline segment.
+
+ DO I         1                        NKNOTS
+ XN TIME(I)   
+ XN TIME(I)   'SCALE'   2.0
+ OD I
+
+BOUNDS
+
+ FR RAYBENDL  'DEFAULT'
+
+*   The extreme knots coincide with the source and receiver
+
+ ZX RAYBENDL  X(0)                     XSRC
+ ZX RAYBENDL  Z(0)                     ZSRC
+ ZX RAYBENDL  X(NKNOTS)                XRCV
+ ZX RAYBENDL  Z(NKNOTS)                ZRCV
+
+START POINT
+
+*   The initial knots are chosen as equidistant points on the straight
+*   line joining the source and receiver.
+
+ R- XRANGE    XRCV                     XSRC
+ R- ZRANGE    ZRCV                     ZSRC
+ RI RKNOTS    NKNOTS
+ DO I         0                        NKNOTS
+ RI REALI     I
+ R/ FRAC      REALI                    RKNOTS
+ R* XINCR     FRAC                     XRANGE
+ R* ZINCR     FRAC                     ZRANGE
+ R+ XC        XSRC                     XINCR
+ R+ ZC        ZSRC                     ZINCR
+ ZV RAYBENDL  X(I)                     XC
+ ZV RAYBENDL  Z(I)                     ZC
+ OD I
+
+ELEMENT TYPE
+
+ EV TT        X1                       X2
+ EV TT        Z1                       Z2
+ IV TT        ZZ0                      ZZ1
+ IV TT        DX
+
+ELEMENT USES
+
+ XT 'DEFAULT' TT
+
+ DO I         1                        NKNOTS
+ IA I-1       I         -1
+ ZV T(I)      X1                       X(I-1)
+ ZV T(I)      X2                       X(I)
+ ZV T(I)      Z1                       Z(I-1)
+ ZV T(I)      Z2                       Z(I)
+ OD I
+
+GROUP USES
+
+ DO I         1                        NKNOTS
+ XE TIME(I)   T(I)
+ OD I
+
+OBJECT BOUND
+
+*  Solution of the continuous problem
+
+*LO RAYBENDL            96.2424
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      RAYBENDL
+
+TEMPORARIES
+
+ R  CZ
+ R  C0
+ R  C1
+ R  DCDZ
+ R  V
+ R  VDZ0
+ R  VDZ1
+ R  VDZ0Z0
+ R  VDZ1Z1
+ R  DX1
+ R  DZ1
+ R  R
+ R  RDZ0
+ R  RDZ1
+ R  RDX
+ R  RDXDX
+ R  RDXZ1
+ R  RDXZ0
+ R  RDZ1Z1              
+ R  RDZ0Z0              
+ R  RDZ0Z1              
+ M  SQRT
+
+GLOBALS
+
+ A  CZ                  0.01
+
+INDIVIDUALS
+
+ T  TT
+
+ R  DX        X1        -1.0           X2        1.0
+ R  ZZ0       Z1        1.0
+ R  ZZ1       Z2        1.0
+
+ A  C0                  1.0 + CZ * ZZ0 
+ A  C1                  1.0 + CZ * ZZ1 
+ A  DCDZ                CZ
+ 
+ A  V                   1.0 / C1 + 1.0 / C0
+ A  VDZ0                - DCDZ / ( C0 * C0 )
+ A  VDZ1                - DCDZ / ( C1 * C1 )
+ A  VDZ0Z0              2.0 * DCDZ * DCDZ / C0**3
+ A  VDZ1Z1              2.0 * DCDZ * DCDZ / C1**3
+
+ A  DZ1                 ZZ1 - ZZ0
+ A  R                   SQRT( DX * DX + DZ1 * DZ1 )
+ A  RDX                 DX / R
+ A  RDZ1                DZ1 / R
+ A  RDZ0                - RDZ1
+ A  RDXDX               ( 1.0 - DX * DX / ( R * R ) ) / R
+ A  RDXZ1               - DX * DZ1 / R**3
+ A  RDXZ0               - RDXZ1
+ A  RDZ1Z1              ( 1.0 - DZ1 * DZ1 / ( R * R ) ) / R
+ A  RDZ0Z0              RDZ1Z1
+ A  RDZ0Z1              - RDZ1Z1
+
+ F                      V * R
+ G  DX                  V * RDX
+ G  ZZ0                 V * RDZ0 + VDZ0 * R
+ G  ZZ1                 V * RDZ1 + VDZ1 * R
+ H  DX        DX        V * RDXDX
+ H  DX        ZZ0       VDZ0 * RDX + V * RDXZ0
+ H  DX        ZZ1       VDZ1 * RDX + V * RDXZ1
+ H  ZZ0       ZZ0       V * RDZ0Z0 + VDZ0Z0 * R
+ H+                                   + 2.0 * VDZ0 * RDZ0
+ H  ZZ0       ZZ1       V * RDZ0Z1 + VDZ1 * RDZ0
+ H+                                   + VDZ0 * RDZ1
+ H  ZZ1       ZZ1       V * RDZ1Z1 + VDZ1Z1 * R
+ H+                                   + 2.0 * VDZ1 * RDZ1
+
+ENDATA
+
+
+
+

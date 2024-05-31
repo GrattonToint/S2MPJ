@@ -1,0 +1,143 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TFI3
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem, using a discretization.
+*   The problem is
+*
+*       min  f(x)
+*       s.t. max  g(x,t) <= 0
+*           [0,1]
+*
+*   A brutal approach to semi-infinite programming is taken and the problem
+*   is reexpressed as
+*
+*       min   f(x)
+*       s.t.  g(x,ih) <= 0   i = 0, ..., M
+*
+*   In this problem, x has dimension 3.
+
+*   Source:
+*   Y. Tanaka, M. Fukushima, T. Ibaraki,
+*   "A comparative study of several semi-infinite nonlinear programming
+*   algorithms",
+*   EJOR, vol. 36, pp. 92-100, 1988.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification OLR2-AN-3-V
+
+*   Discretization
+
+*IE M                   10
+*IE M                   50
+ IE M                   100
+*IE M                   500
+*IE M                   1000
+*IE M                   5000
+*IE M                   10000
+
+*   Define constants
+
+ IE 0                   0
+
+ RI RM        M
+ RD H         RM        1.0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ XN OBJ
+
+ DO I         0                        M
+ RI RI        I
+ R* T         RI                       H
+ R* TT        T                        T
+ RM -T        T         -1.0
+ RM -TT       TT        -1.0
+ XL CG(I)     X1        -1.0
+ ZL CG(I)     X2                       -T
+ ZL CG(I)     X3                       -TT
+ OD I
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* T         RI                       H
+ R* TT        T                        T
+ RA 1+TT      TT        1.0
+ RD -1/1+TT   1+TT      -1.0
+ Z  TFI3      CG(I)                    -1/1+TT
+ OD I
+
+BOUNDS
+
+ FR TFI3      'DEFAULT'
+
+START POINT
+
+ XV TFI3      X1        1.0
+ XV TFI3      X2        0.5
+ XV TFI3      X3        0.0
+
+ELEMENT TYPE
+
+ EV EX        X
+
+ELEMENT USES
+
+ T  EX1       EX
+ ZV EX1       X                        X1
+
+ T  EX2       EX
+ ZV EX2       X                        X2
+
+ T  EX3       EX
+ ZV EX3       X                        X3
+
+GROUP USES
+
+ E  OBJ       EX1                      EX2
+ E  OBJ       EX3
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN              4.3011837737
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TFI3
+
+TEMPORARIES
+
+ R  EX
+ M  EXP
+
+INDIVIDUALS
+
+ T  EX
+ A  EX                  EXP( X )
+ F                      EX
+ G  X                   EX
+ H  X         X         EX
+
+ENDATA
+

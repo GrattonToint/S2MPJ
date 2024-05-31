@@ -1,0 +1,97 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TFI2
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem, using a discretization.
+*   The problem is
+*
+*       min  f(x)
+*       s.t. max  g(x,t) <= 0
+*           [0,1]
+*
+*   A brutal approach to semi-infinite programming is taken and the problem
+*   is reexpressed as
+*
+*       min   f(x)
+*       s.t.  g(x,ih) <= 0   i = 0, ..., M
+*
+*   In this problem, x has dimension 3.
+
+*   Source:
+*   Y. Tanaka, M. Fukushima, T. Ibaraki,
+*   "A comparative study of several semi-infinite nonlinear programming
+*   algorithms",
+*   EJOR, vol. 36, pp. 92-100, 1988.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification LLR2-AN-3-V
+
+*   Discretization
+
+*IE M                   10
+*IE M                   50
+ IE M                   100
+*IE M                   500
+*IE M                   1000
+*IE M                   5000
+*IE M                   10000
+
+*   Define constants
+
+ IE 0                   0
+ RE 3                   3.0
+ RD 1/3       3         1.0
+
+ RI RM        M
+ RD H         RM        1.0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ XN OBJ       X1        1.0            X2        0.5
+ ZN OBJ       X3                       1/3
+
+ DO I         0                        M
+ RI RI        I
+ R* T         RI                       H
+ R* TT        T                        T
+ RM -T        T         -1.0
+ RM -TT       TT        -1.0
+ XL CG(I)     X1        -1.0
+ ZL CG(I)     X2                       -T
+ ZL CG(I)     X3                       -TT
+ OD I
+
+CONSTANTS
+
+ DO I         0                        M
+ RI RI        I
+ R* T         RI                       H
+ R( TANT      TAN                      T
+ RM -TANT     TANT      -1.0
+ Z  TFI2      CG(I)                    -TANT
+ OD I
+
+BOUNDS
+
+ FR TFI2      'DEFAULT'
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.64903110696
+
+ENDATA
+

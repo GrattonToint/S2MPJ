@@ -1,0 +1,101 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          RECIPE
+
+*   Problem :
+*   *********
+
+*   Source:  problem 155 (p. 88) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NOR2-AY-3-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ E  G1        X1        1.0
+ E  G2
+ E  G3
+
+CONSTANTS
+
+    RECIPE    G1        5.0
+
+BOUNDS
+
+ FR RECIPE    'DEFAULT'
+
+START POINT
+
+    RECIPE    X1        2.0
+    RECIPE    X2        5.0
+    RECIPE    X3        1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV XOVERU    X                        Y
+ EV XOVERU    Z
+ IV XOVERU    V                        U
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        X                        X2
+
+ T  E2        XOVERU
+ V  E2        X                        X3
+ V  E2        Y                        X2
+ V  E2        Z                        X1
+
+GROUP USES
+
+ E  G2        E1
+ E  G3        E2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      RECIPE
+
+TEMPORARIES
+
+ R  U2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*   Ratio
+
+ T  XOVERU
+ R  V         X         1.0
+ R  U         Y         1.0            Z         -1.0
+ A  U2                  U * U
+ F                      V / U
+ G  V                   1.0 / U
+ G  U                   - V / U2
+ H  V         U         - 1.0 / U2
+ H  U         U         2.0 * V / ( U2 * U )
+
+ENDATA

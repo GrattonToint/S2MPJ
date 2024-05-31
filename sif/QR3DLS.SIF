@@ -1,0 +1,256 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          QR3DLS 
+
+*   Problem :
+*   *********
+
+*   Find the QR factorization of a tridiagonal matrix A.
+*   The problem is formulated as a system of quadratic equations
+*   whose unknowns are the elements of the orthogonal matrix Q and of
+*   the upper triangular matrix R.  In this version of the problem,
+*   the banded structure of R is not imposed as a constraint. See problem
+*   QR3DBD for the case where this structure is explicitly used.
+
+*   The problem is non-convex.
+
+*   This is a least-squares variant of problem QR3D.
+
+*   Source:
+*   Ph. Toint, private communication.
+
+*   SIF input: Ph. Toint, March 1994.
+
+*   classification  SBR2-AN-V-V
+
+*   Define the matrix order M  ( M >= 3 ).
+*   There are M * ( 3M + 1) / 2 variables and equations.
+
+*IE M                   5              $-PARAMETER  n =  40
+*IE M                   10             $-PARAMETER  n = 155  original value
+*IE M                   20             $-PARAMETER  n = 610
+ IE M                   5              $-PARAMETER     modified for S2X tests
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ IA M-1       M         -1
+ RI RM        M
+
+*   Define the matrix A to factorize
+*   a(i,i-1)=a(i,i+1)= (1-i)/m, a(i,i) = 2i/m
+
+ RD 2/M       RM        2.0
+ A= A(1,1)    2/M
+ AE A(1,2)              0.0
+
+ DO I         2                        M-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ IM 1-I       I-1       -1
+ RI R1-I      1-I
+ R/ 1-I/M     R1-I                     RM
+ IM 2I        I         2
+ RI R2I       2I 
+ R/ 2I/M      R2I                      RM
+ A= A(I,I-1)  1-I/M
+ A= A(I,I)    2I/M
+ A= A(I,I+1)  1-I/M
+ OD I
+
+ RI RM-1      M-1
+ RM 1-M       RM-1      -1.0
+ R/ 1-M/M     1-M                      RM
+ RM 2M        RM        2.0
+ A= A(M,M-1)  1-M/M
+ A= A(M,M)    2M 
+
+VARIABLES
+
+*   The orthogonal matrix Q
+
+ DO I         1                        M
+ DO J         1                        M
+ X  Q(I,J)
+ OD J
+ OD I
+
+*   The upper triangular matrix R
+
+ DO I         1                        M
+ DO J         I                        M
+ X  R(I,J)
+ OD J
+ OD I
+
+GROUPS
+
+*    Orthogonality of the Q matrix
+
+ DO I         1                        M
+ DO J         I                        M
+ XN O(I,J)
+ OD J
+ OD I
+
+*   Factorization equations A= QR
+
+ DO I         1                        M
+ DO J         1                        M
+ XN F(I,J)
+ OD J
+ OD I
+
+CONSTANTS
+
+*   Orthogonality constraints
+
+ DO I         1                        M
+ X  QR3DLS    O(I,I)    1.0
+ OD J
+
+*   Factorization constraints
+
+ Z  QR3DLS    F(1,1)                   A(1,1)
+ Z  QR3DLS    F(1,2)                   A(1,2)
+
+ DO I         2                        M-1
+ IA I-1       I          -1
+ IA I+1       I          1
+ Z  QR3DLS    F(I,I-1)                 A(I,I-1)
+ Z  QR3DLS    F(I,I)                   A(I,I)
+ Z  QR3DLS    F(I,I+1)                 A(I,I+1)
+ OD I
+
+ Z  QR3DLS    F(M,M-1)                 A(M,M-1)
+ Z  QR3DLS    F(M,M)                   A(M,M)
+
+BOUNDS
+
+*   All variables are free, except the diagonals of R 
+*   which are nonnegative
+
+ FR QR3DLS    'DEFAULT'
+
+ DO I         1                        M
+ XL QR3DLS    R(I,I)    0.0
+ OD I
+
+START POINT
+
+*   Initialize Q to the identity
+
+ DO I         1                        M
+ XV QR3DLS    Q(I,I)    1.0
+ OD I
+
+*   Initialize R to the upper triangular part of A
+
+ DO I         1                        M-1
+ IA I+1       I         1
+ ZV QR3DLS    R(I,I)                   A(I,I)
+ ZV QR3DLS    R(I,I+1)                 A(I,I+1)
+ OD I
+
+ ZV QR3DLS    R(M,M)                   A(M,M)
+
+ELEMENT TYPE
+
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+
+ DO I         1                        M
+ DO J         I                        M
+ DO K         1                        M
+ ZV C(I,J,K)  V1                       Q(I,K)
+ ZV C(I,J,K)  V2                       Q(J,K)
+ OD K
+ OD J
+ OD I
+
+ DO I         1                        M
+ DO J         1                        M
+ DO K         1                        J
+ ZV B(I,J,K)  V1                       Q(I,K)
+ ZV B(I,J,K)  V2                       R(K,J)
+ OD K
+ OD J
+ OD I
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+*   Orthogonality constraints
+
+ DO I         1                        M
+ DO J         I                        M
+ DO K         1                        M
+ XE O(I,J)    C(I,J,K)
+ OD K
+ OD J
+ OD I
+
+*   Factorization constraints
+
+ DO I         1                        M
+ DO J         1                        M
+ DO K         1                        J
+ XE F(I,J)    B(I,J,K)
+ OD K
+ OD J
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      QR3DLS
+
+INDIVIDUALS
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        QR3DLS
+
+INDIVIDUALS
+
+*   Least-square groups
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

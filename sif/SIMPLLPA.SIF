@@ -1,0 +1,45 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SIMPLLPA
+
+*   Problem:
+*   ********
+
+*   A simple linear programming problem in 2 variables.
+
+*   Source:
+*   N. Gould, private communication.
+
+*   SIF input: N. Gould, Dec 1989.
+
+*   classification LLR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        2.0            X2        1.0
+ G  CONSTR1   X1        1.0            X2        1.0
+ G  CONSTR2   X1        1.0            X2        2.0
+
+CONSTANTS
+
+    SIMPLLPA  CONSTR1   1.0
+    SIMPLLPA  CONSTR2   1.5
+
+START POINT
+
+ XV SIMPLLPA  'DEFAULT' 0.1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA

@@ -1,0 +1,132 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          READING2
+
+*   Problem :
+*   *********
+
+*   A linear optimal control problem from Nancy Nichols
+*   with a given initial condition.
+*   This problem arises in tide modelling.
+
+*   Source:
+*   S. Lyle and N.K. Nichols,
+*   "Numerical Methods for Optimal Control Problems with State Constraints",
+*   Numerical Analysis Report 8/91, Dept of Mathematics, 
+*   University of Reading, UK.
+
+*   SIF input: Nick Gould, July 1991.
+
+*   classification LLR2-MN-V-V
+
+*   Number of discretized points in [0,1]
+
+*IE N                   2              $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER     original value
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   2000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER
+
+ RE PI                  3.141592653589
+ RM 2PI       PI        2.0
+ R* PI**2     PI                       PI
+
+ RM 8PI**2    PI**2     8.0
+ RD 1/8PI**2  8PI**2    1.0
+
+ RE A                   0.07716
+ RD 1/A       A         1.0
+ RM 1/2A      1/A       2.0
+ RM 2A        A         2.0
+ RM -2A       2A        -1.0
+ RD -1/2A     -2A       1.0
+
+*   Mesh
+
+ IA N-1       N         -1
+
+ RI RN        N
+ RD H         RN        1.0
+ RM 2/H       RN        2.0
+ RM H/2       H         0.5
+ RM -H/2      H/2       -1.0
+
+ RM 1/H       RN        1.0
+ RM -1/H      RN        -1.0
+ R* H/8PI**2  1/8PI**2                 H
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+VARIABLES
+
+ DO I         0                        N
+ X  X1_(I)
+ X  X2_(I)
+ X  U(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+
+ RI RI        I
+ R* TI        RI                       H
+ R* 2PITI     2PI                      TI
+ R( CTI       COS                      2PITI
+ R* -CCTI     CTI                      -H/2
+
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* TI-1      RI-1                     H
+ R* 2PITI-1   2PI                      TI-1
+ R( CTI-1     COS                      2PITI-1
+ R* -CCTI-1   CTI-1                    -H/2
+
+ ZN COST      X1_(I)                   -CCTI
+ ZN COST      X1_(I-1)                 -CCTI-1
+ ZN COST      U(I)                     H/8PI**2
+ ZN COST      U(I-1)                   H/8PI**2
+
+ ND
+
+ DO I         1                        N
+
+ IA I-1       I         -1
+ ZE C1_(I)    X1_(I)                   1/H
+ ZE C1_(I)    X1_(I-1)                 -1/H
+ XE C1_(I)    X2_(I)     -0.5
+ XE C1_(I)    X2_(I-1)   -0.5
+
+ ZE C2_(I)    X2_(I)                   1/H
+ ZE C2_(I)    X2_(I-1)                 -1/H
+ XE C2_(I)    U(I)       -0.5
+ XE C2_(I)    U(I-1)     -0.5
+
+ ND
+
+BOUNDS
+
+ XX READING2  X1_(0)     0.0
+ XX READING2  X2_(0)     0.0
+
+ DO I         1                        N
+ XR READING2  X1_(I)
+ XL READING2  X2_(I)     -0.125
+ XU READING2  X2_(I)     0.125
+ ND
+
+ DO I         0                        N
+ XL READING2  U(I)      -1.0
+ XU READING2  U(I)      1.0
+ ND
+
+ENDATA
+

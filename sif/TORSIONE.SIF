@@ -1,0 +1,361 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TORSIONE
+
+*   Problem :
+*   *********
+
+*   The quadratic elastic torsion problem
+
+*   The problem comes from the obstacle problem on a square.
+
+*   The square is discretized into (px-1)(py-1) little squares. The
+*   heights of the considered surface above the corners of these little
+*   squares are the problem variables,  There are px**2 of them.
+
+*   The dimension of the problem is specified by Q, which is half the
+*   number discretization points along one of the coordinate
+*   direction.
+*   Since the number of variables is P**2, it is given by 4Q**2
+
+*   This is a variant of the problem stated in the report quoted below.
+*   It corresponds to the problem as distributed in MINPACK-2.
+
+*   Source: problem (c=20, starting point U = upper bound) in
+*   J. More' and G. Toraldo,
+*   "On the Solution of Large Quadratic-Programming Problems with Bound
+*   Constraints", 
+*   SIAM J. on Optimization, vol 1(1), pp. 93-113, 1991.
+
+*   SIF input: Ph. Toint, Dec 1989.
+*   modified by Peihuang Chen, according to MINPACK-2, Apr 1992.
+
+*   classification QBR2-MY-V-0
+
+*   Q is half the number of discretized points along the X axis
+
+*IE Q                   2              $-PARAMETER n= 16      original value
+*IE Q                   5              $-PARAMETER n= 100
+*IE Q                   11             $-PARAMETER n= 484
+*IE Q                   16             $-PARAMETER n= 1024
+*IE Q                   37             $-PARAMETER n= 5476
+ IE Q                   2              $-PARAMETER     modified for S2X tests
+*IE Q                   50             $-PARAMETER n= 10000
+*IE Q                   61             $-PARAMETER n= 14884
+
+*   The force constant
+
+ RE C                   20.0           $-PARAMETER force connstant
+
+*   Define a few helpful parameters
+
+ IA Q+1       Q         1
+ I+ P         Q                        Q
+ IA P-1       P         -1
+ RI 1/H       P-1
+ RD H         1/H       1.0
+ R* H2        H                        H
+ R* C0        H2                       C
+ RM LC        C0        -1.0
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit square
+
+ DO J         1                        P
+ DO I         1                        P
+ X  X(I,J)
+ ND
+
+GROUPS
+
+
+ DO I         2                        P
+ DO J         2                        P
+ ZN GL(I,J)
+ ND
+*
+ DO I         1                        P-1
+ DO J         1                        P-1
+ ZN GR(I,J)
+ ND
+*
+ DO I         2                        P-1
+ DO J         2                        P-1
+ ZN G         X(I,J)                   LC
+ ND
+
+
+BOUNDS
+
+*   Fix the variables on the lower and upper edges of the unit square
+
+ DO J         1                        P
+ XX TORSIONE  X(1,J)    0.0
+ XX TORSIONE  X(P,J)    0.0
+ ND
+
+*   Fix the variables on the left and right edges of the unit square
+
+ DO I         2                        P-1
+ XX TORSIONE  X(I,P)    0.0
+ XX TORSIONE  X(I,1)    0.0
+ ND
+
+*   Define the upper and lower bounds from the distance to the
+*   boundary
+
+*   Lower half of the square
+
+ DO I         2                        Q
+
+ DO J         2                        I
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* UPPL      RJ-1                     H
+ RM LOWL      UPPL      -1.0
+ ZL TORSIONE  X(I,J)                   LOWL
+ ZU TORSIONE  X(I,J)                   UPPL
+ OD J
+
+ IM MI        I         -1
+ I+ P-I       P                        MI
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* UPPM      RI-1                     H
+ RM LOWM      UPPM      -1.0
+ IA P-I+1     P-I       1
+
+ DO J         I                        P-I+1
+ ZL TORSIONE  X(I,J)                   LOWM
+ ZU TORSIONE  X(I,J)                   UPPM
+ OD J
+
+ DO J         P-I+1                    P-1
+ IM MJ        J         -1
+ I+ P-J       P                        MJ
+ RI RP-J      P-J
+ R* UPPR      RP-J                     H
+ RM LOWR      UPPR      -1.0
+ ZL TORSIONE  X(I,J)                   LOWR
+ ZU TORSIONE  X(I,J)                   UPPR
+
+ ND
+
+*   Upper half of the square
+
+ DO I         Q+1                      P-1
+
+ IM MI        I         -1
+ I+ P-I       P                        MI
+ IA P-I+1     P-I       1
+
+ DO J         2                        P-I+1
+
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* UPPL      RJ-1                     H
+ RM LOWL      UPPL      -1.0
+
+ ZL TORSIONE  X(I,J)                   LOWL
+ ZU TORSIONE  X(I,J)                   UPPL
+
+ OD J
+
+ RI RP-I      P-I
+ R* UPPM      RP-I                     H
+ RM LOWM      UPPM      -1.0
+
+ DO J         P-I+1                    I
+
+ ZL TORSIONE  X(I,J)                   LOWM
+ ZU TORSIONE  X(I,J)                   UPPM
+
+ OD J
+
+ DO J         I                        P-1
+
+ IM MJ        J         -1
+ I+ P-J       P                        MJ
+ RI RP-J      P-J
+ R* UPPR      RP-J                     H
+ RM LOWR      UPPR      -1.0
+
+ ZL TORSIONE  X(I,J)                   LOWR
+ ZU TORSIONE  X(I,J)                   UPPR
+
+ ND
+
+START POINT
+
+*   Start from the boundary values on the lower and upper edges
+
+ DO J         1                        P
+ X  TORSIONE  X(1,J)    0.0
+ X  TORSIONE  X(P,J)    0.0
+ ND
+
+*   Start from the boundary values on the left and right edges
+
+ DO I         2                        P-1
+ X  TORSIONE  X(I,P)    0.0
+ X  TORSIONE  X(I,1)    0.0
+ ND
+
+*   Start from the upper bounds (starting point U)
+
+*   Lower half of the square
+
+ DO I         2                        Q
+
+ DO J         2                        I
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* UPPL      RJ-1                     H
+ Z  TORSIONE  X(I,J)                   UPPL
+ OD J
+
+ IM MI        I         -1
+ I+ P-I       P                        MI
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R* UPPM      RI-1                     H
+ IA P-I+1     P-I       1
+
+ DO J         I                        P-I+1
+ Z  TORSIONE  X(I,J)                   UPPM
+ OD J
+
+ DO J         P-I+1                    P-1
+ IM MJ        J         -1
+ I+ P-J       P                        MJ
+ RI RP-J      P-J
+ R* UPPR      RP-J                     H
+ Z  TORSIONE  X(I,J)                   UPPR
+
+ ND
+
+*   Upper half of the square
+
+ DO I         Q+1                      P-1
+
+ IM MI        I         -1
+ I+ P-I       P                        MI
+ IA P-I+1     P-I       1
+
+ DO J         2                        P-I+1
+ IA J-1       J         -1
+ RI RJ-1      J-1
+ R* UPPL      RJ-1                     H
+ Z  TORSIONE  X(I,J)                   UPPL
+ OD J
+
+ RI RP-I      P-I
+ R* UPPM      RP-I                     H
+
+ DO J         P-I+1                    I
+ Z  TORSIONE  X(I,J)                   UPPM
+ OD J
+
+ DO J         I                        P-1
+ IM MJ        J         -1
+ I+ P-J       P                        MJ
+ RI RP-J      P-J
+ R* UPPR      RP-J                     H
+ Z  TORSIONE  X(I,J)                   UPPR
+
+ ND
+
+ELEMENT TYPE
+
+ EV ISQ       V1                       V2
+ IV ISQ       U
+
+ELEMENT USES
+
+
+
+ DO I         1                        P-1
+
+ IA I+1       I         1
+
+ DO J         1                        P-1
+
+ IA J+1       J         1
+
+ XT A(I,J)    ISQ
+ ZV A(I,J)    V1                       X(I+1,J)
+ ZV A(I,J)    V2                       X(I,J)
+
+ XT B(I,J)    ISQ
+ ZV B(I,J)    V1                       X(I,J+1)
+ ZV B(I,J)    V2                       X(I,J)
+
+ ND
+
+ DO I         2                        P
+
+ IA I-1       I         -1
+
+ DO J         2                        P
+
+ IA J-1       J         -1
+
+ XT C(I,J)    ISQ
+ ZV C(I,J)    V1                       X(I-1,J)
+ ZV C(I,J)    V2                       X(I,J)
+
+ XT D(I,J)    ISQ
+ ZV D(I,J)    V1                       X(I,J-1)
+ ZV D(I,J)    V2                       X(I,J)
+
+ ND
+
+GROUP USES
+
+ DO I         1                        P-1
+ DO J         1                        P-1
+ XE GR(I,J)   A(I,J)    0.25           B(I,J)    0.25
+ ND
+*
+ DO I         2                        P
+ DO J         2                        P
+ XE GL(I,J)   C(I,J)    0.25           D(I,J)    0.25
+ ND
+
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(2)            -2.518500
+*LO SOLTN(5)            -2.798400
+*LO SOLTN(11)           -2.840600
+*LO SOLTN(16)           -2.846100
+*LO SOLTN(37)           -2.850200
+*LO SOLTN(50)           -2.850700
+*LO SOLTN(61)           -2.850800
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TORSIONE
+
+INDIVIDUALS
+
+ T  ISQ
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA

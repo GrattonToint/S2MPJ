@@ -1,0 +1,102 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          STANCMIN
+
+*   Problem:
+*   ********
+
+*   A simple fractional programming problem.
+
+*   Source:
+*   I.M. Stancu-Minasian
+*   Private communication, 1992.
+
+*   SDIF input: Ph. Toint, October 1992.
+
+*   classification OLI2-AY-3-2
+
+VARIABLES
+
+ X  X1
+ X  X2
+ X  X3
+
+GROUPS
+
+ XN OBJ
+
+ XL C1        X1        3.0            X2        4.0
+ XL C1        X3        1.0
+
+ XL C2        X1        1.0            X2        4.0
+ XL C2        X3        1.0
+
+CONSTANTS
+
+ X  STANCMIN  C1        2.0
+ X  STANCMIN  C2        1.0
+
+START POINT
+
+ XV STANCMIN  'DEFAULT' 50.0
+
+ELEMENT TYPE
+
+ EV RATIO     XA                       XB
+ EV RATIO     XC
+ IV RATIO     N                        D
+
+ELEMENT USES
+
+ T  E         RATIO
+ ZV E         XA                       X1
+ ZV E         XB                       X2
+ ZV E         XC                       X3
+
+GROUP USES
+
+ XE OBJ       E
+
+OBJECT BOUND
+
+ LO STANCMIN            5.0
+
+*   Solution
+
+*LO SOLTN               4.25
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      STANCMIN
+
+TEMPORARIES
+
+ R  N
+ R  D
+ R  D2
+ R  D3
+
+INDIVIDUALS
+
+ T  RATIO
+
+ R  N         XB        6.0            XA        3.0
+ R  N         XC        2.0
+ R  D         XA        1.0            XB        4.0
+ R  D         XC        1.0
+
+ F                      - ( N - 11.0 ) / ( D + 1.0 )
+ G  N                   - 1.0 / ( D + 1.0 )
+ G  D                   ( N - 11.0 ) / ( D + 1.0 )**2
+ H  N         D         1.0 / ( D + 1.0 )**2
+ H  D         D         - 2.0 * ( N - 11.0 ) / ( D + 1.0 )**3
+
+ENDATA
+

@@ -1,0 +1,195 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SEMICON1
+
+*   Problem :
+*   *********
+
+*   The semiconductor problem by Rheinboldt, using a finite difference
+*   approximation.
+
+*   Source: problem 10 in
+*   J.J. More',
+*   "A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NOR2-AN-V-V
+
+*   N  = Number of discretized point inside the interval [a, b]
+*   LN = Index of the last negative discretization point
+*        (the interest is in the negative part)
+
+*IE N                   10             $-PARAMETER     original value
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE LN                  9              $-PARAMETER     original value
+ IE LN                  9              $-PARAMETER     modified for S2X tests
+
+*IE N                   50             $-PARAMETER
+*IE LN                  45             $-PARAMETER
+
+*IE N                   100            $-PARAMETER
+*IE LN                  90             $-PARAMETER
+
+*IE N                   500            $-PARAMETER
+*IE LN                  450            $-PARAMETER
+
+*IE N                   1000           $-PARAMETER
+*IE LN                  900            $-PARAMETER
+
+*IE N                   5000           $-PARAMETER
+*IE LN                  4500           $-PARAMETER
+
+*   Continuation parameter
+*   Interesting values: 0.0 (the solution is a straight line)
+*                       0.2
+*                       1.0 (the true semiconductor equation)
+
+ RE LAMBDA              1.0            $-PARAMETER continuation parameter
+
+*   The bounds of the interval [a, b] = [ X(0), X(N+1)] which should
+*   contain zero
+
+ RE A                   -0.00009
+ RE B                   0.00001
+
+*   Boundary values
+
+ RE UA                  0.0
+ RE UB                  700.0
+
+*   Problem's constants
+
+ RE CA                  1.0D12
+ RE CB                  1.0D13
+ RE BETA                40.0
+
+*   Other parameter definitions
+
+ IA LN+1      LN        1
+ IA N+1       N         1
+ RM -A        A         -1.0
+ R+ B-A       B                        -A
+ RI RN+1      N+1
+ RD TMP       RN+1      1.0
+ R* H         B-A                      TMP
+ R* H2        H                        H
+ R* LB        LAMBDA                   BETA
+ R* H2CA      H2                       CA
+ R* H2CB      H2                       CB
+ R* LH2CA     LAMBDA                   H2CA
+ R* LH2CB     LAMBDA                   H2CB
+ R* LUA       LAMBDA                   UA
+ R* LUB       LAMBDA                   UB
+ RA ULW       LUA       -5.0
+ RA UUP       LUB       5.0 
+ RM -LB       LB        -1.0
+ RM -LUB      LUB       -1.0
+ RM -LH2CB    LH2CB     -1.0
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+VARIABLES
+
+ DO I         0                        N+1
+ X  U(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ IA I+1       I         1
+ IA I-1       I         -1
+ XE G(I)      U(I-1)    1.0
+ XE G(I)      U(I)      -2.0
+ XE G(I)      U(I+1)    1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        LN
+ Z  SEMICON1  G(I)                     LH2CA
+ ND
+
+ DO I         LN+1                     N
+ Z  SEMICON1  G(I)                     -LH2CB
+ ND
+
+BOUNDS
+
+ ZU SEMICON1  'DEFAULT'                UUP
+ ZL SEMICON1  'DEFAULT'                ULW
+
+*   Fix the boundary conditions
+
+ ZX SEMICON1  U(0)                     LUA
+ ZX SEMICON1  U(N+1)                   LUB
+
+
+START POINT
+
+ XV SEMICON1  'DEFAULT' 0.0
+ ZV SEMICON1  U(0)                     LUA
+ ZV SEMICON1  U(N+1)                   LUB
+
+ELEMENT TYPE
+
+ EV WE1       X
+ EP WE1       LAC                      LAB
+ EP WE1       LU
+
+ELEMENT USES
+
+ DO I         1                        N
+
+ XT EA(I)     WE1
+ ZV EA(I)     X                        U(I)
+ ZP EA(I)     LAC                      LH2CA
+ ZP EA(I)     LAB                      -LB
+ ZP EA(I)     LU                       LUA
+
+ XT EB(I)     WE1
+ ZV EB(I)     X                        U(I)
+ ZP EB(I)     LAC                      -LH2CB
+ ZP EB(I)     LAB                      LB
+ ZP EB(I)     LU                       LUB
+
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE G(I)      EA(I)                    EB(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SEMICON1
+
+TEMPORARIES
+
+ R  FVAL
+ M  EXP
+
+INDIVIDUALS
+
+ T  WE1
+ A  FVAL                LAC * EXP( LAB * ( X - LU ) )
+ F                      FVAL
+ G  X                   LAB * FVAL
+ H  X         X         LAB * LAB * FVAL
+
+ENDATA

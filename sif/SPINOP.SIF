@@ -1,0 +1,283 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SPINOP  
+
+*   Problem :
+*   *********
+
+*   Given n particles z_j = x_j + i * y_j in the complex plane, 
+*   determine their positions so that the equations
+
+*     z'_j = lambda z_j, 
+
+*   where z_j = sum_k \j i / conj( z_j - z_k ) and i = sqrt(-1)
+*   for some lamda = mu + i * omega
+
+*   Pick the solution for which sum_i sum_k\i |z_i -z_j|^2 is smllest
+
+*   A problem posed by Nick Trefethen
+
+*   SIF input: Nick Gould, June 2009
+
+*   classification QOR2-AN-V-V
+
+*   Number of particles n
+
+*IE N                   2              $-PARAMETER matrix dimension
+*IE N                   3              $-PARAMETER matrix dimension
+*IE N                   5              $-PARAMETER matrix dimension
+*IE N                   10             $-PARAMETER matrix dimension
+*IE N                   15             $-PARAMETER matrix dimension
+*IE N                   20             $-PARAMETER matrix dimension
+*IE N                   25             $-PARAMETER matrix dimension
+*IE N                   30             $-PARAMETER matrix dimension
+*IE N                   35             $-PARAMETER matrix dimension
+*IE N                   40             $-PARAMETER matrix dimension
+*IE N                   45             $-PARAMETER matrix dimension
+*IE N                   50             $-PARAMETER matrix dimension
+ IE N                   2              $-PARAMETER     modified for S2X tests
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ RI RN        N
+
+* approximation of pi
+
+ RF PI/4      ARCTAN    1.0
+ RM 2PI       PI/4      8.0
+ R/ 2PI/N     2PI                      RN
+
+VARIABLES
+
+ X  MU
+ X  OMEGA 
+
+ DO I         1                        N
+ X  X(I)
+ X  Y(I)
+ ND
+
+ DO I         2                        N
+ IA I-1       I          -1
+ DO J         1                        I-1
+ X  V(I,J)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+*  constraints r_j = - mu * x_j + omega * y_j + sum_k\j (y_j - y_k ) / v_jk^2 = 0
+
+ DO I         1                        N
+ XE R(I)
+ ND
+
+*  constraints i_j = - mu * y_j - omega * x_j - sum_k\j (x_j - x_k ) / v_jk^2 = 0
+
+ DO I         1                        N
+ XE I(I)
+ ND
+
+*  constraints m_ij = -v_ij^2 + (x_i - x_j)^2 + (y_i - y_j)^2 = 0
+
+ DO I         2                        N
+ IA I-1       I          -1
+ DO J         1                        I-1
+ XE M(I,J)
+ ND
+
+BOUNDS
+
+ FR SPINOP    'DEFAULT'
+* FX SPINOP    X1         1.0
+* FX SPINOP    Y1         0.0
+
+START POINT
+
+*   default value for starting point component
+
+ V  SPINOP    'DEFAULT'   1.0
+ DO I         1                        N
+ RI RI        I
+ R* 2PII/N    2PI/N                    RI
+ R( C         COS                      2PII/N
+ R( S         SIN                      2PII/N
+ ZV SPINOP    X(I)                     C
+ ZV SPINOP    Y(I)                     S
+ ND
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+ EV RATIO     Y                        Z
+ EV RATIO     V                        
+ IV RATIO     X                        U
+ EV SQR       X
+ EV SQR2      Y                        Z
+ IV SQR2      X
+
+ELEMENT USES
+
+*  elements mx_j = mu * x_j 
+
+ DO I         1                        N
+ XT MX(I)     2PR
+ ZV MX(I)     X                        X(I)
+ ZV MX(I)     Y                        MU
+
+*  elements my_j = mu * y_j 
+
+ XT MY(I)     2PR
+ ZV MY(I)     X                        Y(I)
+ ZV MY(I)     Y                        MU
+
+*  elements ox_j = omega * x_j
+
+ XT OX(I)     2PR
+ ZV OX(I)     X                        X(I)
+ ZV OX(I)     Y                        OMEGA
+
+*  elements oy_j = omega * y_j
+
+ XT OY(I)     2PR
+ ZV OY(I)     X                        Y(I)
+ ZV OY(I)     Y                        OMEGA
+ ND
+
+*  elements rx_ij = (x_i - x_j ) / v_ij^2
+
+ DO I         2                        N
+ IA I-1       I          -1
+ DO J         1                        I-1
+ XT RX(I,J)   RATIO
+ ZV RX(I,J)   Y                        X(I)
+ ZV RX(I,J)   Z                        X(J)
+ ZV RX(I,J)   V                        V(I,J)
+
+*  elements ry_ij = (y_i - y_j ) / v_ij^2
+
+ XT RY(I,J)   RATIO
+ ZV RY(I,J)   Y                        Y(I)
+ ZV RY(I,J)   Z                        Y(J)
+ ZV RY(I,J)   V                        V(I,J)
+ ND
+
+*  elements v_ij = v_ij^2
+
+ DO I         2                        N
+ IA I-1       I          -1
+ DO J         1                        I-1
+ XT V(I,J)    SQR
+ ZV V(I,J)    X                        V(I,J)
+
+*  elements x_ij = (x_i-x_j)^2
+
+ XT X(I,J)    SQR2
+ ZV X(I,J)    Y                        X(I)
+ ZV X(I,J)    Z                        X(J)
+
+*  elements y_ij = (y_i-y_j)^2
+
+ XT Y(I,J)    SQR2
+ ZV Y(I,J)    Y                        Y(I)
+ ZV Y(I,J)    Z                        Y(J)
+ ND
+
+GROUP USES
+
+*  objective = - v_ij^2
+
+ DO I         2                        N
+ IA I-1       I          -1
+ DO J         1                        I-1
+ XE OBJ       V(I,J)     1.0
+ ND
+
+*  constraints r_j = - mu * x_j + omega * y_j + sum_k\j (y_j - y_k ) / v_jk^2 = 0
+
+ DO I         1                        N
+ IA I-1       I          -1
+ IA I+1       I          1
+ XE R(I)      MX(I)      -1.0
+ XE R(I)      OY(I)      1.0
+ DO J         1                        I-1
+ XE R(I)      RY(I,J)    1.0
+ OD J
+ DO J         I+1                      N
+ XE R(I)      RY(J,I)    -1.0
+ OD J
+
+*  constraints i_j = - mu * y_j - omega * x_j - sum_k\j (x_j - x_k ) / v_jk^2 = 0
+
+ XE I(I)      MY(I)      -1.0
+ XE I(I)      OX(I)      -1.0
+ DO J         1                        I-1
+ XE I(I)      RX(I,J)    -1.0
+ OD J
+ DO J         I+1                      N
+ XE I(I)      RX(J,I)    1.0
+ OD J
+
+ OD I
+
+*  constraints m_ij = -v_ij^2 + (x_i - x_j)^2 + (y_i - y_j)^2 = 0
+
+ DO I         2                        N
+ IA I-1       I          -1
+ DO J         1                        I-1
+ XE M(I,J)    V(I,J)     -1.0
+ XE M(I,J)    X(I,J)     1.0
+ XE M(I,J)    Y(I,J)     1.0
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SPINOP  
+
+INDIVIDUALS
+
+*  square of x
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*  square of x = y - z
+
+ T  SQR2
+ R  X         Y         1.0            Z         -1.0
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*   product of two variables x and y
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+*   ratio of x = y - z and the square of u = v
+
+ T  RATIO
+ R  X         Y         1.0            Z         -1.0
+ R  U         V         1.0
+ F                      X / U ** 2
+ G  X                   1.0 / U ** 2
+ G  U                   - 2.0 * X / U ** 3
+ H  X         U         - 2.0 / U ** 3
+ H  U         U         6.0 * X / U ** 4
+
+ENDATA

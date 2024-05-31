@@ -1,0 +1,255 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          RK23
+
+*   Problem :
+*   *********
+
+*   Find coefficients for an embedded pair of explicit 2nd
+*   and 3rd order Runge Kutta Method such that the leading
+*   term in the local truncation error is minimized.
+
+*   Source:
+*   Similar ideas for 4th and 5th order pairs are discussed in:
+*   Hairer, Norsett and Wanner, Solving Ordinary Differential
+*   Equations I, Springer 1980, page 158 ff.
+
+*   SIF input: S. Leyffer, January 1997.
+
+*   classification LOR2-RN-17-11
+
+
+*   ... COMPUTED PARAMETERS
+ RE ONE                 1.0
+ RE THREE               3.0
+ RE FOUR                4.0
+ RE SIX                 6.0
+ R/ ONETHIRD  ONE                      THREE
+ R/ ONESIXTH  ONE                      SIX
+ R/ FOURSIXTH FOUR                     SIX
+
+VARIABLES
+
+*   ... the Butcher array of the embedded pair 
+    C2
+    A21
+    C3
+    A31
+    A32
+    B1
+    B2
+    B3
+*   ... the next 3 variables are the b-values of the 3rd order methods
+    BB1
+    BB2
+    BB3
+*   ... artificial variables that model |ti| = TPi + TMi, ti = TPi - TMi
+    TP1    
+    TM1    
+    TP2    
+    TM2    
+    TP3    
+    TM3    
+
+
+GROUPS
+
+*   ... objective is linear
+ N  OBJ       TP1       1.0            TM1        1.0
+ N  OBJ       TP2       1.0            TM2        1.0
+ N  OBJ       TP3       1.0            TM3        1.0
+*   ... row sum condition (LINEAR)
+ E  ROWS1     A21       1.0            C2         -1.0
+ E  ROWS2     A31       1.0            A32        1.0
+ E  ROWS2     C3        -1.0
+*   ... first order conditions (LINEAR)
+ E  FIRST2    B1        1.0            B2         1.0
+ E  FIRST2    B3        1.0
+ E  FIRST3    BB1       1.0            BB2        1.0
+ E  FIRST3    BB3       1.0
+*   ... second order conditions (NONLINEAR)
+ E  SECND2
+ E  SECND3
+*   ... third order conditions (NONLINEAR)
+ E  THIRD31
+ E  THIRD32
+*   ... artificial constraints (NONLINEAR)
+ E  ART1      TP1       1.0            TM2        -1.0
+ E  ART2      TP2       1.0            TM2        -1.0
+ E  ART3      TP3       1.0            TM3        -1.0
+
+CONSTANTS
+
+    RK23      ROWS1     0.0
+    RK23      ROWS2     0.0
+    RK23      FIRST2    1.0
+    RK23      FIRST3    1.0
+    RK23      SECND2    0.5
+    RK23      SECND3    0.5
+ Z  RK23      THIRD31                  ONETHIRD
+ Z  RK23      THIRD32                  ONESIXTH
+    RK23      ART1      1.0
+    RK23      ART2      1.0
+    RK23      ART3      1.0
+
+BOUNDS
+
+ FR RK23      'DEFAULT'
+ LO RK23      TP1       0.0
+ LO RK23      TM1       0.0
+ LO RK23      TP2       0.0
+ LO RK23      TM2       0.0
+ LO RK23      TP3       0.0
+ LO RK23      TM3       0.0
+
+START POINT
+
+*   ... uncomment following card to start with variables = 0
+*   RK23      'DEFAULT'
+*   ... uncomment following cards to start at classical RK23 (feasible)
+    RK23      C2        1.0
+    RK23      A21       1.0
+    RK23      C3        0.5
+    RK23      A31       0.25
+    RK23      A32       0.25
+    RK23      B1        0.5
+    RK23      B2        0.5
+    RK23      B3        0.0
+ ZV RK23      BB1                      ONESIXTH
+ ZV RK23      BB2                      ONESIXTH
+ ZV RK23      BB3                      FOURSIXTH
+
+ELEMENT TYPE
+
+ EV PROD      V1                       V2
+ EV PRODS     W1                       W2
+ EV PRODQ     X1                       X2
+ EV TPROD     Y1                       Y2
+ EV TPROD     Y3
+ EV QPROD     Z1                       Z2
+ EV QPROD     Z3                       Z4
+ EV TPRODS    U1                       U2
+ EV TPRODS    U3                     
+  
+ELEMENT USES
+
+ T  E1        PROD
+ V  E1        V1                       B2
+ V  E1        V2                       C2
+ T  E2        PROD
+ V  E2        V1                       B3
+ V  E2        V2                       C3
+
+ T  E3        PROD
+ V  E3        V1                       BB2
+ V  E3        V2                       C2
+ T  E4        PROD
+ V  E4        V1                       BB3
+ V  E4        V2                       C3
+
+ T  E5        PRODS 
+ V  E5        W1                       BB2
+ V  E5        W2                       C2
+ T  E6        PRODS 
+ V  E6        W1                       BB3
+ V  E6        W2                       C3
+ 
+ T  E7        TPROD
+ V  E7        Y1                       BB3
+ V  E7        Y2                       A32
+ V  E7        Y3                       C2
+
+ T  E8        PRODQ
+ V  E8        X1                       BB2
+ V  E8        X2                       C2
+ T  E9        PRODQ
+ V  E9        X1                       BB3
+ V  E9        X2                       C3
+
+ T  E10       QPROD
+ V  E10       Z1                       BB3
+ V  E10       Z2                       C3
+ V  E10       Z3                       A32
+ V  E10       Z4                       C2
+
+ T  E11       TPRODS       
+ V  E11       U1                       BB3
+ V  E11       U2                       A32
+ V  E11       U3                       C2
+
+GROUP USES
+
+ E  SECND2    E1                       E2
+ E  SECND3    E3                       E4
+ E  THIRD31   E5                       E6
+ E  THIRD32   E7
+ E  ART1      E8        4.0            E9         4.0
+ E  ART2      E10       8.0
+ E  ART3      E11       12.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      RK23
+
+INDIVIDUALS
+
+ T  PROD 
+ F                      V1*V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  PRODS     
+ F                      W1*(W2**2.0)
+ G  W1                  W2**2
+ G  W2                  W1*2.0*W2
+ H  W1        W2        2.0*W2
+ H  W2        W2        2.0*W1
+
+ T  PRODQ     
+ F                      X1*(X2**3.0)
+ G  X1                  X2**3.0
+ G  X2                  X1*3.0*(X2**2.0)
+ H  X1        X2        3.0*(X2**2.0)
+ H  X2        X2        X1*6.0*X2
+
+ T  TPROD       
+ F                      Y1*Y2*Y3
+ G  Y1                  Y2*Y3
+ G  Y2                  Y1*Y3
+ G  Y3                  Y1*Y2
+ H  Y1        Y2        Y3
+ H  Y1        Y3        Y2
+ H  Y2        Y3        Y1
+
+ T  QPROD
+ F                      Z1*Z2*Z3*Z4
+ G  Z1                  Z2*Z3*Z4
+ G  Z2                  Z1*Z3*Z4
+ G  Z3                  Z1*Z2*Z4
+ G  Z4                  Z1*Z2*Z3
+ H  Z1        Z2        Z3*Z4
+ H  Z1        Z3        Z2*Z4
+ H  Z1        Z4        Z2*Z3
+ H  Z2        Z3        Z1*Z4
+ H  Z2        Z4        Z1*Z3
+ H  Z3        Z4        Z1*Z2
+
+ T  TPRODS    
+ F                      U1*U2*(U3**2.0)
+ G  U1                  U2*(U3**2.0)
+ G  U2                  U1*(U3**2.0)
+ G  U3                  U1*U2*2.0*U3
+ H  U1        U2        U3**2.0
+ H  U1        U3        U2*2.0*U3
+ H  U2        U3        U1*2.0*U3
+ H  U3        U3        U1*U2*2.0
+
+ENDATA

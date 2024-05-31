@@ -1,0 +1,114 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TQUARTICNE
+
+*   Problem :
+*   *********
+
+*   A quartic function with nontrivial groups and repetitious elements.
+*   This is a nonlinear equation variant of TQUARTIC
+
+*   Source:
+*   Ph. Toint, private communication.
+
+*   SIF input: Ph. Toint, Dec 1989.
+*              Nick Gould (nonlinear equation version), Jan 2019
+
+*   classification NOR2-AN-V-V
+
+*   number of variables
+
+*IE N                   5              $-PARAMETER     original value
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  objective function (1st group)
+
+ E  G1        X1        1.0
+
+*  objective function (remaining groups)
+
+ DO I         2                        N
+ XE G(I)
+ ND
+
+CONSTANTS
+
+    TQUARTIC  G1        1.0
+
+BOUNDS
+
+ FR TQUARTIC  'DEFAULT'
+
+START POINT
+
+ XV TQUARTIC  'DEFAULT' 0.1
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ ZV E1        V1                       X1
+
+ DO I         2                        N
+ XT E(I)      SQ
+ ZV E(I)      V1                       X(I)
+ ND
+
+GROUP USES
+
+ DO I         2                        N
+ XE G(I)      E(I)      -1.0           E(1)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO TQUARTIC            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TQUARTICNE
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

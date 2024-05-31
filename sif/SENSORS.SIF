@@ -1,0 +1,145 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SENSORS
+
+*   Problem :
+*   *********
+
+*   A problem arising from two-dimensional optimal sensor placement
+
+*   Source:
+*   H. Zhang and X. Wang,
+*   "Optimal sensor placement",
+*   SIAM Review, vol. 35, p. 641, 1993.
+
+*   SIF input: Nick Gould, June 1994
+
+*   classification OUR2-AN-V-0
+
+*   Number of unknowns
+
+*IE N                   2              $-PARAMETER
+*IE N                   3              $-PARAMETER
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+ IE N                   5              $-PARAMETER     modified for S2X tests
+*IE N                   1000           $-PARAMETER
+
+*   Other useful parameters
+
+ IE 1                   1
+ RI RN        N
+
+VARIABLES
+
+ DO I         1                        N
+ X  THETA(I)
+ ND
+
+GROUPS
+
+ DO J         1                        N
+ DO I         1                        N
+ XN S(I,J)
+ ND
+
+BOUNDS
+
+ FR SENSORS   'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ RI RI        I
+ R/ I/N       RI                       RN
+ ZV SENSORS   THETA(I)                 I/N
+ ND
+
+ELEMENT TYPE
+
+ EV SINFUN    THETAI                   THETAJ
+
+ELEMENT USES
+
+ T  'DEFAULT' SINFUN
+
+ DO J         1                        N
+ DO I         1                        N
+ ZV S(I,J)    THETAI                   THETA(I)
+ ZV S(I,J)    THETAJ                   THETA(J)
+ ND
+
+GROUP TYPE
+
+ GV -L2       GVAR
+
+GROUP USES
+
+ T  'DEFAULT' -L2
+
+ DO J         1                        N
+ DO I         1                        N
+ XE S(I,J)    S(I,J)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SENSORS
+
+TEMPORARIES
+
+ R  TIMJ
+ R  SI
+ R  SJ
+ R  SIMJ
+ R  CI
+ R  CJ
+ R  CIMJ
+ R  CJSIMJ
+ R  CJCIMJ
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SINFUN
+ A  TIMJ                THETAI - THETAJ
+ A  SI                  SIN( THETAI )
+ A  SJ                  SIN( THETAJ )
+ A  SIMJ                SIN( TIMJ )
+ A  CI                  COS( THETAI )
+ A  CJ                  COS( THETAJ )
+ A  CIMJ                COS( TIMJ )
+ A  CJSIMJ              CJ * SIMJ - SJ * CIMJ
+ A  CJCIMJ              CJ * CIMJ + SJ * SIMJ
+ F                      SI * SJ * SIMJ
+ G  THETAI              SJ * ( CI * SIMJ + SI * CIMJ )
+ G  THETAJ              SI * CJSIMJ
+ H  THETAI    THETAI    2.0 * SJ * ( CI * CIMJ - SI * SIMJ )
+ H  THETAI    THETAJ    CI * CJSIMJ + SI * CJCIMJ
+ H  THETAJ    THETAJ    - 2.0 * SI * CJCIMJ
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        SENSORS
+
+INDIVIDUALS
+
+ T  -L2
+ F                      - GVAR * GVAR
+ G                      - GVAR - GVAR
+ H                      - 2.0
+
+ENDATA

@@ -1,0 +1,97 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SNAKE
+
+*   Problem :
+*   *********
+
+*   This bivariate problem features a very nonconvex feasible region 
+*   limited by two nearly parallel sine curves. The solution lies at 
+*   the origin where these curves intersect.  The angle at which they 
+*   intersect (and thus the conditioning of the constraint's Jacobian) 
+*   is controlled by the positive parameter TIP.
+
+*   The problem is not convex.
+
+*   Source: 
+*   a problem designed by Ph. Toint for experimenting with feasibility
+*   issues in barrier approaches to nonlinear inequality constraints.
+
+*   SIF input: Ph.L. Toint, September 93.
+
+*   classification LOR2-AN-2-2
+
+ RE TIP                 0.0001
+
+VARIABLES
+
+    X
+    Y
+
+GROUPS
+
+ N  OBJ       X         1.0
+
+ L  CON1      Y         -1.0
+
+ G  CON2      Y         -1.0
+ ZG CON2      X                        TIP
+
+BOUNDS
+
+ FR SNAKE     'DEFAULT'
+
+START POINT
+
+    SNAKE     X         1.0
+    SNAKE     Y         5.0
+
+ELEMENT TYPE
+
+ EV SINE      V
+
+ELEMENT USES
+
+ T  SINX      SINE
+ V  SINX      V                        X
+
+GROUP USES
+
+ E  CON1      SINX
+ E  CON2      SINX
+
+OBJECT BOUND
+
+ LO SNAKE               0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SNAKE
+
+TEMPORARIES
+
+ R  SV
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SINE
+ A  SV                  SIN( V )
+ F                      SV
+ G  V                   COS( V )
+ H  V         V         - SV
+
+ENDATA
+

@@ -1,0 +1,208 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          S365MOD
+
+*   Problem :
+*   *********
+
+*   A problem by Walukiewicz.
+*   The original problem has been modified by the introduction of
+*   the parameter NEARZERO (which is equal to 0.0 in the original
+*   formulation).  The modified problem merely has very large gradient
+*   components at the solution, instead of infinite.
+
+*   Source: a modification (Ph. Toint) of problem 365 in
+*   K. Schittkowski,
+*   " More Test Problems for Nonlinear Programming Codes",
+*   Springer Verlag, Berlin, 1987.
+
+*   SIF input: Ph. Toint, March 1991.
+
+*   classification QOR2-AY-7-5
+
+*   Problem parameter
+
+ RE NEARZERO            0.5
+
+*   Constants
+
+ IE 1                   1
+ IE 7                   7
+
+VARIABLES
+
+ DO I         1                        7
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+ G  C1
+ G  C2
+ G  C3
+ G  C4
+ G  C5
+
+CONSTANTS
+
+    S365MOD   C1        4.0
+
+BOUNDS
+
+ FR S365MOD   'DEFAULT'
+
+ ZL S365MOD   X1                       NEARZERO
+ ZL S365MOD   X3                       NEARZERO
+ XL S365MOD   X5        1.0
+ XL S365MOD   X7        1.0
+
+START POINT
+
+    S365MOD   X1        3.0
+    S365MOD   X2        0.0
+    S365MOD   X3        2.0
+    S365MOD   X4        -1.5
+    S365MOD   X5        1.5
+    S365MOD   X6        5.0
+    S365MOD   X7        0.0
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ EV ISQ       X                        Y
+ IV ISQ       U
+
+ EV PX        X                        Y
+
+ EV QX        X                        Y
+ EV QX        Z
+ IV QX        U                        V
+
+ELEMENT USES
+
+ T  X1X3      2PR
+ V  X1X3      X                        X1
+ V  X1X3      Y                        X3
+
+ T  E2        ISQ
+ V  E2        X                        X4
+ V  E2        Y                        X6
+
+ T  E3        ISQ
+ V  E3        X                        X5
+ V  E3        Y                        X7
+
+ T  X3X4      2PR
+ V  X3X4      X                        X3
+ V  X3X4      Y                        X4
+
+ T  X2X5      2PR
+ V  X2X5      X                        X2
+ V  X2X5      Y                        X5
+
+ T  X3X6      2PR
+ V  X3X6      X                        X3
+ V  X3X6      Y                        X6
+
+ T  X2X7      2PR
+ V  X2X7      X                        X2
+ V  X2X7      Y                        X7
+
+ T  X1X5      2PR
+ V  X1X5      X                        X1
+ V  X1X5      Y                        X5
+
+ T  X1X7      2PR
+ V  X1X7      X                        X1
+ V  X1X7      Y                        X7
+
+ T  EP        PX
+ V  EP        X                        X2
+ V  EP        Y                        X3
+
+ T  EQ        QX
+ V  EQ        X                        X3
+ V  EQ        Y                        X2
+ V  EQ        Z                        X1
+
+GROUP USES
+
+ E  OBJ       X1X3
+
+ E  C1        E2                       E3
+
+ E  C2        X3X4                     X2X5      -1.0
+ E  C2        EP        -1.0
+
+ E  C3        X3X6                     X2X7      -1.0
+ E  C3        EP        -1.0
+
+ E  C4        X1X3                     X2X5
+ E  C4        X1X5      -1.0           X3X4      -1.0
+ E  C4        EQ        -1.0
+
+ E  C5        X1X3                     X2X7
+ E  C5        X1X7      -1.0           X3X6      -1.0
+ E  C5        EQ        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      S365MOD
+
+TEMPORARIES
+
+ R  X2
+ R  ROOT
+ M  SQRT
+
+INDIVIDUALS
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  ISQ
+ R  U         X         1.0            Y         -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  PX
+ A  X2                  X * X
+ A  ROOT                SQRT( X2 )
+ F                      ROOT + Y * Y
+ G  X                   X / ROOT
+ G  Y                   Y + Y
+ H  X         X         ( 1.0 - X * X / X2 ) / ROOT
+ H  Y         Y         2.0
+
+ T  QX
+ R  U         X         1.0
+ R  V         Y         1.0            Z         -1.0
+ A  X2                  U * U
+ A  ROOT                SQRT( X2 )
+ F                      ROOT + V * V
+ G  U                   U / ROOT
+ G  V                   V + V
+ H  U         U         ( 1.0 - U * U / X2 ) / ROOT
+ H  V         V         2.0
+
+
+ENDATA

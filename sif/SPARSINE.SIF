@@ -1,0 +1,160 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SPARSINE
+
+*   Problem :
+*   *********
+
+*   A sparse problem involving sine functions
+
+*   SIF input: Nick Gould, November 1995
+
+*   classification OUR2-AN-V-0
+
+*   The number of variables 
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*  Other useful values.
+
+ IE 1                   1
+ IE 2                   2
+ IE 4                   4
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  Objective function groups:
+
+ DO I         1                        N
+ XN OBJ(I)
+ ND
+
+BOUNDS
+
+ FR SPARSINE  'DEFAULT' 
+
+START POINT
+
+ XV SPARSINE  'DEFAULT' 0.5
+
+ELEMENT TYPE
+
+ EV SINE      X
+
+ELEMENT USES
+
+* n positive rank-one terms
+
+ DO I         1                        N
+ XT S(I)      SINE
+ ZV S(I)      X                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV SQR       ALPHA
+ GP SQR       P
+
+GROUP USES
+
+* n positive rank-one terms
+
+ DO I         1                        N
+ XT OBJ(I)    SQR
+ RI RI        I
+ ZP OBJ(I)    P                        RI
+
+*  the i-th group has nonzeros in positions 
+*  i, mod( 2i - 1, n ) + 1, mod( 3i - 1, n ) + 1,
+*  mod( 5i - 1, n ) + 1 and mod( 7i - 1, n ) + 1 and mod( 11i - 1, n ) + 1
+
+ XE OBJ(I)    S(I)      1.0
+ IM J         I         2
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE OBJ(I)    S(J)      1.0
+ IM J         I         3
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE OBJ(I)    S(J)      1.0
+ IM J         I         5
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE OBJ(I)    S(J)      1.0
+ IM J         I         7
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE OBJ(I)    S(J)      1.0
+ IM J         I         11
+ IA J         J         -1
+ I/ K         J                        N
+ I* K         K                        N
+ I- J         J                        K 
+ IA J         J         1
+ XE OBJ(I)    S(J)      1.0
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SPARSINE
+
+INDIVIDUALS
+
+ T  SINE
+ F                      SIN(X)
+ G  X                   COS(X)
+ H  X         X         -SIN(X)
+ENDATA
+
+GROUPS        SPARSINE
+
+INDIVIDUALS
+
+ T  SQR
+ F                      0.5 * P * ALPHA * ALPHA
+ G                      P * ALPHA 
+ H                      P
+
+ENDATA
+
+
+
+
+

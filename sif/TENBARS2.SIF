@@ -1,0 +1,275 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TENBARS2
+
+*   Problem :
+*   *********
+*   The "ten bar truss" structural optimization problem,
+*   version P2.
+
+*   The problem is to minimize the cross section areas of the bars
+*   in the structure
+
+*     /|
+*     /|>o------o------o
+*     /|  \    /|\    /|
+*          \  / | \  / |
+*           \/  |  \/  |
+*           /\  |  /\  |
+*          /  \ | /  \ |
+*     /|  /    \|/    \|
+*     /|>o------o------o
+*     /|
+
+*   submitted to vertical forces of equal magnitude (P0) applied at
+*   the two free lower nodes, subject to limits of nodal displacements.
+
+*   Source:
+*   K. Svanberg,
+*   private communication,  August 1990.
+*   See also
+*   K. Svanberg,
+*   "On local and global minima in structural optimization",
+*   in "New directions in optimum structural design" (Atrek, Ragsdell
+*   and Zienkiwewicz, eds.), Wiley, 1984.
+
+*   SIF input: Ph. Toint, August 1990.
+
+*   classification LOR2-MY-18-8
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 8                   8
+ IE 10                  10
+
+ RF SQ2       SQRT      2.0
+ RF SQ8       SQRT      8.0
+ RD 1/SQ8     SQ8       1.0
+ RM -1/SQ8    1/SQ8     -1.0
+
+*   Problem parameters
+
+ RE C0                  2.53106
+ RE -P0                 -589.884
+
+*   Useful numbers
+
+ R* C0SQ2     C0                       SQ2
+
+
+VARIABLES
+
+*   Nodal displacements
+
+ DO I         1                        8
+ X  U(I)
+ ND
+
+*   Bar cross sections
+
+ DO I         1                        10
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective
+
+ ZN OBJ       X1                       C0
+ ZN OBJ       X2                       C0SQ2
+ ZN OBJ       X3                       C0SQ2
+ ZN OBJ       X4                       C0
+ ZN OBJ       X5                       C0
+ ZN OBJ       X6                       C0
+ ZN OBJ       X7                       C0SQ2
+ ZN OBJ       X8                       C0SQ2
+ ZN OBJ       X9                       C0
+ ZN OBJ       X10                      C0
+
+*   Equilibrium conditions
+
+ DO I         1                        8
+ XE C(I)
+ ND
+
+CONSTANTS
+
+ Z  TENBARS2  C4                       -P0
+ Z  TENBARS2  C8                       -P0
+
+BOUNDS
+
+ FR TENBARS2  'DEFAULT'
+
+*   Bounds on the cross section areas
+
+ DO I         1                        10
+ XL TENBARS2  X(I)      0.645
+ ND
+
+*   Bounds on the displacements of the nodes
+
+ DO I         2                        8
+ DI I         2
+ XL TENBARS2  U(I)      -50.8
+ ND
+
+START POINT
+
+ XV TENBARS2  'DEFAULT' 0.0
+
+ELEMENT TYPE
+
+ EV XU        X                        U
+
+ EV XUPV      X
+ EV XUPV      U                        V
+ IV XUPV      RU
+ IV XUPV      XX
+
+ EV XUMV      X
+ EV XUMV      U                        V
+ IV XUMV      RU
+ IV XUMV      XX
+
+ EV XBIG      X
+ EV XBIG      U                        V
+ EV XBIG      W                        Z
+ IV XBIG      RU
+ IV XBIG      XX
+
+ELEMENT USES
+
+ XT 'DEFAULT' XUMV
+
+ T  EA        XU
+ V  EA        X                        X1
+ V  EA        U                        U1
+
+ T  EB        XUPV
+ V  EB        X                        X3
+ V  EB        U                        U1
+ V  EB        V                        U2
+
+ V  EC        X                        X6
+ V  EC        U                        U1
+ V  EC        V                        U5
+
+ T  ED        XBIG
+ V  ED        X                        X7
+ V  ED        U                        U1
+ V  ED        V                        U8
+ V  ED        W                        U2
+ V  ED        Z                        U7
+
+ V  EE        X                        X5
+ V  EE        U                        U2
+ V  EE        V                        U4
+
+ V  EF        X                        X2
+ V  EF        U                        U3
+ V  EF        V                        U4
+
+ T  EG        XU
+ V  EG        X                        X4
+ V  EG        U                        U3
+
+ T  EH        XBIG
+ V  EH        X                        X8
+ V  EH        U                        U3
+ V  EH        V                        U4
+ V  EH        W                        U5
+ V  EH        Z                        U6
+
+ V  EI        X                        X9
+ V  EI        U                        U3
+ V  EI        V                        U7
+
+ V  EJ        X                        X10
+ V  EJ        U                        U6
+ V  EJ        V                        U8
+
+GROUP USES
+
+ E  C1        EA                       EC
+ ZE C1        EB                       1/SQ8
+ ZE C1        ED                       1/SQ8
+
+ ZE C2        EB                       1/SQ8
+ E  C2        EE
+ ZE C2        ED                       -1/SQ8
+
+ ZE C3        EF                       1/SQ8
+ ZE C3        EH                       1/SQ8
+ E  C3        EI                       EG
+
+ ZE C4        EF                       -1/SQ8
+ ZE C4        EH                       1/SQ8
+ E  C4        EE        -1.0
+
+ ZE C5        EH                       -1/SQ8
+ E  C5        EC        -1.0
+
+ ZE C6        EH                       -1/SQ8
+ E  C6        EJ
+
+ ZE C7        ED                       -1/SQ8
+ E  C7        EI        -1.0
+
+ ZE C8        ED                       1/SQ8
+ E  C8        EJ        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN-A             2302.55
+*LO SOLTN-B             2277.9458
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TENBARS2
+
+INDIVIDUALS
+
+ T  XU
+ F                      X * U
+ G  X                   U
+ G  U                   X
+ H  X         U         1.0
+
+ T  XUPV
+ R  RU        U         1.0            V         1.0
+ R  XX        X         1.0
+ F                      XX * RU
+ G  XX                  RU
+ G  RU                  XX
+ H  XX        RU        1.0
+
+ T  XUMV
+ R  RU        U         1.0            V         -1.0
+ R  XX        X         1.0
+ F                      XX * RU
+ G  XX                  RU
+ G  RU                  XX
+ H  XX        RU        1.0
+
+ T  XBIG
+ R  RU        U         1.0            V         1.0
+ R  RU        W         -1.0           Z         -1.0
+ R  XX        X         1.0
+ F                      XX * RU
+ G  XX                  RU
+ G  RU                  XX
+ H  XX        RU        1.0
+
+ENDATA

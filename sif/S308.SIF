@@ -1,0 +1,132 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          S308
+
+*   Problem :
+*   *********
+
+*   Source: problem 308 in
+*   K. Schittkowski,
+*   " More Test Problems for Nonlinear Programming Codes",
+*   Springer Verlag, Berlin, 1987.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification SUR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  O1
+ N  O2
+ N  O3
+
+BOUNDS
+
+ FR S308      'DEFAULT'
+
+START POINT
+
+ XV S308      X1        3.0
+ XV S308      X2        0.1
+
+ELEMENT TYPE
+
+ EV QUAD      X                        Y
+ EV SINE      X
+ EV COSN      X
+
+ELEMENT USES
+
+ T  EQ        QUAD
+ ZV EQ        X                        X1
+ ZV EQ        Y                        X2
+
+ T  ES        SINE
+ ZV ES        X                        X1
+
+ T  EC        COSN
+ ZV EC        X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ E  O1        EQ
+ E  O2        ES
+ E  O3        EC
+
+OBJECT BOUND
+
+ LO S308                0.0
+
+*   Solution
+
+*LO SOLTN               0.773199
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      S308
+
+TEMPORARIES
+
+ R  COSX
+ R  SINX
+ M  COS
+ M  SIN
+
+INDIVIDUALS
+
+ T  QUAD
+ F                      X * X + X * Y + Y * Y
+ G  X                   2.0 * X + Y
+ G  Y                   2.0 * Y + X
+ H  X         X         2.0
+ H  X         Y         1.0
+ H  Y         Y         2.0
+
+ T  SINE
+ A  SINX                SIN(X)
+ F                      SINX
+ G  X                   COS(X)
+ H  X         X         - SINX
+
+ T  COSN
+ A  COSX                COS(X)
+ F                      COSX
+ G  X                   - SIN(X)
+ H  X         X         - COSX
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        S308
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,873 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SPANHYD
+
+*   Problem :
+*   *********
+
+*   The spanish hydro-electric reservoir management problem
+*   The problem is also named "HYD33" in some references.
+*   This is a nonlinear network problem
+
+*   Source:
+*   J.L. de la Fuente,
+*   "Programacion no-lineal: applicationes en analisis, gestion y
+*   planificacion de sistemas electricos",
+*   Hidroelectrica Espanola, private communication, 1986.
+
+*   SIF input: Ph. Toint, Sept 1990.
+
+*   classification ONR2-RN-97-33
+
+*   Number of arcs    = 97
+*   Number of nodes
+
+ IE NODES               33
+
+*   Constants
+
+ IE 1                   1
+
+*   Problem parameters
+
+ RE P1A                 85.459510678
+ RE P2A                 -6.255270637
+ RE P3A                 1.0862222572
+ RE P1B                 81.978824852
+ RE P2B                 -6.021899007
+ RE P3B                 8.4278676858
+ RE P1C                 83.420024838
+ RE P2C                 -6.089102950
+ RE P3C                 8.9209611766
+
+GROUPS
+
+*   Objective
+
+ N  OBJ
+
+*   Network constraints
+
+ DO I         1                        NODES
+ XE N(I)
+ ND
+
+VARIABLES
+
+*   Network arcs
+
+    X1        N32       -1.0           N1        1.0
+    X2        N32       -1.0           N2        1.0
+    X3        N32       -1.0           N3        1.0
+    X4        N32       -1.0           N4        1.0
+    X5        N32       -1.0           N5        1.0
+    X6        N32       -1.0           N6        1.0
+    X7        N32       -1.0           N7        1.0
+    X8        N32       -1.0           N8        1.0
+    X9        N32       -1.0           N9        1.0
+    X10       N32       -1.0           N10       1.0
+    X11       N1        -1.0           N2        1.0
+    X12       N2        -1.0           N3        1.0
+    X13       N3        -1.0           N5        1.0
+    X14       N4        -1.0           N5        1.0
+    X15       N5        -1.0           N9        1.0
+    X16       N6        -1.0           N7        1.0
+    X17       N7        -1.0           N8        1.0
+    X18       N8        -1.0           N9        1.0
+    X19       N9        -1.0           N10       1.0
+    X20       N10       -1.0           N31       1.0
+    X21       N1        -1.0           N2        1.0
+    X22       N2        -1.0           N3        1.0
+    X23       N3        -1.0           N9        1.0
+    X24       N4        -1.0           N9        1.0
+    X25       N6        -1.0           N7        1.0
+    X26       N7        -1.0           N8        1.0
+    X27       N8        -1.0           N9        1.0
+    X28       N9        -1.0           N10       1.0
+    X29       N10       -1.0           N31       1.0
+    X30       N1        -1.0           N11       1.0
+    X31       N2        -1.0           N12       1.0
+    X32       N3        -1.0           N13       1.0
+    X33       N4        -1.0           N14       1.0
+    X34       N5        -1.0           N15       1.0
+    X35       N6        -1.0           N16       1.0
+    X36       N7        -1.0           N17       1.0
+    X37       N8        -1.0           N18       1.0
+    X38       N9        -1.0           N19       1.0
+    X39       N10       -1.0           N20       1.0
+    X40       N11       -1.0           N12       1.0
+    X41       N12       -1.0           N13       1.0
+    X42       N13       -1.0           N15       1.0
+    X43       N14       -1.0           N15       1.0
+    X44       N15       -1.0           N19       1.0
+    X45       N16       -1.0           N17       1.0
+    X46       N17       -1.0           N18       1.0
+    X47       N18       -1.0           N19       1.0
+    X48       N19       -1.0           N20       1.0
+    X49       N20       -1.0           N31       1.0
+    X50       N11       -1.0           N12       1.0
+    X51       N12       -1.0           N13       1.0
+    X52       N13       -1.0           N19       1.0
+    X53       N14       -1.0           N19       1.0
+    X54       N16       -1.0           N17       1.0
+    X55       N17       -1.0           N18       1.0
+    X56       N18       -1.0           N19       1.0
+    X57       N19       -1.0           N20       1.0
+    X58       N20       -1.0           N31       1.0
+    X59       N11       -1.0           N21       1.0
+    X60       N12       -1.0           N22       1.0
+    X61       N13       -1.0           N23       1.0
+    X62       N14       -1.0           N24       1.0
+    X63       N15       -1.0           N25       1.0
+    X64       N16       -1.0           N26       1.0
+    X65       N17       -1.0           N27       1.0
+    X66       N18       -1.0           N28       1.0
+    X67       N19       -1.0           N29       1.0
+    X68       N20       -1.0           N30       1.0
+    X69       N21       -1.0           N22       1.0
+    X70       N22       -1.0           N23       1.0
+    X71       N23       -1.0           N25       1.0
+    X72       N24       -1.0           N25       1.0
+    X73       N25       -1.0           N29       1.0
+    X74       N26       -1.0           N27       1.0
+    X75       N27       -1.0           N28       1.0
+    X76       N28       -1.0           N29       1.0
+    X77       N29       -1.0           N30       1.0
+    X78       N30       -1.0           N31       1.0
+    X79       N21       -1.0           N22       1.0
+    X80       N22       -1.0           N23       1.0
+    X81       N23       -1.0           N29       1.0
+    X82       N24       -1.0           N29       1.0
+    X83       N26       -1.0           N27       1.0
+    X84       N27       -1.0           N28       1.0
+    X85       N28       -1.0           N29       1.0
+    X86       N29       -1.0           N30       1.0
+    X87       N30       -1.0           N31       1.0
+    X88       N21       -1.0           N33       1.0
+    X89       N22       -1.0           N33       1.0
+    X90       N23       -1.0           N33       1.0
+    X91       N24       -1.0           N33       1.0
+    X92       N25       -1.0           N33       1.0
+    X93       N26       -1.0           N33       1.0
+    X94       N27       -1.0           N33       1.0
+    X95       N28       -1.0           N33       1.0
+    X96       N29       -1.0           N33       1.0
+    X97       N30       -1.0           N33       1.0
+
+CONSTANTS
+
+    SPANHYD   N1        -5.13800D+01   N2        -1.38400D+01
+    SPANHYD   N3        -2.58000D+00   N4        -2.19100D+01
+    SPANHYD   N6        -1.29700D+01   N8        -2.89000D+00
+    SPANHYD   N9        -2.08400D+01   N10       -1.71400D+01
+    SPANHYD   N11       -3.20600D+01   N12       -2.80000D-01
+    SPANHYD   N13       -4.20000D+00   N14       -4.83700D+01
+    SPANHYD   N16       -1.81300D+01   N18        1.61000D+00
+    SPANHYD   N19       -2.66000D+01   N20       -1.87600D+01
+    SPANHYD   N21       -1.81300D+01   N24       -1.81300D+01
+    SPANHYD   N26       -9.10000D+00   N28        5.81000D+00
+    SPANHYD   N29       -9.10000D+00   N30       -6.02000D+00
+    SPANHYD   N31        6.08350D+02   N32       -4.62634D+03
+    SPANHYD   N33        4.36300D+03
+
+BOUNDS
+
+ XU SPANHYD   'DEFAULT'  3.02400D+03
+
+ LO SPANHYD   X1         7.70000D+01
+ UP SPANHYD   X1         7.70100D+01
+ LO SPANHYD   X2         1.12452D+03
+ UP SPANHYD   X2         1.12453D+03
+ LO SPANHYD   X3         1.58000D+02
+ UP SPANHYD   X3         1.58010D+02
+ LO SPANHYD   X4         1.60000D+01
+ UP SPANHYD   X4         1.60100D+01
+ FX SPANHYD   X5         0.00000D+00
+ LO SPANHYD   X6         7.83650D+02
+ UP SPANHYD   X6         7.83660D+02
+ LO SPANHYD   X7         1.10000D+01
+ UP SPANHYD   X7         1.10100D+01
+ LO SPANHYD   X8         4.90000D+01
+ UP SPANHYD   X8         4.90100D+01
+ LO SPANHYD   X9         2.15517D+03
+ UP SPANHYD   X9         2.15518D+03
+ LO SPANHYD   X10        2.52000D+02
+ UP SPANHYD   X10        2.52010D+02
+ UP SPANHYD   X11        3.97840D+02
+ UP SPANHYD   X12        2.22320D+02
+ UP SPANHYD   X13        2.05630D+02
+ UP SPANHYD   X14        2.05630D+02
+ UP SPANHYD   X15        2.05630D+02
+ UP SPANHYD   X16        1.24830D+02
+ UP SPANHYD   X17        1.27010D+02
+ UP SPANHYD   X18        6.10800D+01
+ UP SPANHYD   X19        6.14840D+02
+ UP SPANHYD   X20        7.78080D+02
+ UP SPANHYD   X25        7.25760D+03
+ UP SPANHYD   X26        1.20960D+03
+ UP SPANHYD   X27        9.07200D+02
+ UP SPANHYD   X28        7.25760D+03
+ UP SPANHYD   X29        7.25760D+03
+ FX SPANHYD   X30        7.70000D+01
+ LO SPANHYD   X31        4.03400D+02
+ UP SPANHYD   X31        1.31200D+03
+ FX SPANHYD   X32        1.58000D+02
+ FX SPANHYD   X33        1.60000D+01
+ FX SPANHYD   X34        0.00000D+00
+ LO SPANHYD   X35        5.02000D+02
+ UP SPANHYD   X35        9.28460D+02
+ FX SPANHYD   X36        1.10000D+01
+ FX SPANHYD   X37        4.90000D+01
+ LO SPANHYD   X38        9.15300D+02
+ UP SPANHYD   X38        2.61160D+03
+ FX SPANHYD   X39        2.52000D+02
+ UP SPANHYD   X40        3.97840D+02
+ UP SPANHYD   X41        2.22320D+02
+ UP SPANHYD   X42        2.05630D+02
+ UP SPANHYD   X43        2.05630D+02
+ UP SPANHYD   X44        2.05630D+02
+ UP SPANHYD   X45        1.24830D+02
+ UP SPANHYD   X46        1.27010D+02
+ UP SPANHYD   X47        6.10800D+01
+ UP SPANHYD   X48        6.14840D+02
+ UP SPANHYD   X49        7.78080D+02
+ UP SPANHYD   X54        7.25760D+03
+ UP SPANHYD   X55        1.20960D+03
+ UP SPANHYD   X56        9.07200D+02
+ UP SPANHYD   X57        7.25760D+03
+ UP SPANHYD   X58        7.25760D+03
+ FX SPANHYD   X59        7.70000D+01
+ LO SPANHYD   X60        4.03400D+02
+ UP SPANHYD   X60        1.31200D+03
+ FX SPANHYD   X61        1.58000D+02
+ FX SPANHYD   X62        1.60000D+01
+ FX SPANHYD   X63        0.00000D+00
+ LO SPANHYD   X64        5.05640D+02
+ UP SPANHYD   X64        9.28460D+02
+ FX SPANHYD   X65        1.10000D+01
+ FX SPANHYD   X66        4.90000D+01
+ LO SPANHYD   X67        9.15300D+02
+ UP SPANHYD   X67        2.61160D+03
+ FX SPANHYD   X68        2.52000D+02
+ UP SPANHYD   X69        3.97840D+02
+ UP SPANHYD   X70        2.22320D+02
+ UP SPANHYD   X71        2.05630D+02
+ UP SPANHYD   X72        2.05630D+02
+ UP SPANHYD   X73        2.05630D+02
+ UP SPANHYD   X74        1.24830D+02
+ UP SPANHYD   X75        1.27010D+02
+ UP SPANHYD   X76        6.10800D+01
+ UP SPANHYD   X77        6.14840D+02
+ UP SPANHYD   X78        7.78080D+02
+ UP SPANHYD   X83        7.25760D+03
+ UP SPANHYD   X84        1.20960D+03
+ UP SPANHYD   X85        9.07200D+02
+ UP SPANHYD   X86        7.25760D+03
+ UP SPANHYD   X87        7.25760D+03
+ LO SPANHYD   X88        7.70000D+01
+ UP SPANHYD   X88        7.70100D+01
+ LO SPANHYD   X89        1.10000D+03
+ UP SPANHYD   X89        1.10001D+03
+ LO SPANHYD   X90        1.58000D+02
+ UP SPANHYD   X90        1.58010D+02
+ LO SPANHYD   X91        1.60000D+01
+ UP SPANHYD   X91        1.60100D+01
+ FX SPANHYD   X92        0.00000D+00
+ LO SPANHYD   X93        7.00000D+02
+ UP SPANHYD   X93        7.00010D+02
+ LO SPANHYD   X94        1.10000D+01
+ UP SPANHYD   X94        1.10100D+01
+ LO SPANHYD   X95        4.90000D+01
+ UP SPANHYD   X95        4.90100D+01
+ LO SPANHYD   X96        2.00000D+03
+ UP SPANHYD   X96        2.00001D+03
+ LO SPANHYD   X97        2.52000D+02
+ UP SPANHYD   X97        2.52010D+02
+
+START POINT
+
+ XV SPANHYD   'DEFAULT'  0.0
+
+    SPANHYD   X1         7.70000D+01   X2         1.12452D+03
+    SPANHYD   X3         1.58000D+02   X4         1.60000D+01
+    SPANHYD   X6         7.83650D+02   X7         1.10000D+01
+    SPANHYD   X8         4.90000D+01   X9         2.15517D+03
+    SPANHYD   X10        2.52000D+02   X11        5.13800D+01
+    SPANHYD   X12        1.40210D+02   X13        1.42790D+02
+    SPANHYD   X14        2.19100D+01   X15        1.64700D+02
+    SPANHYD   X16        5.81900D+01   X17        5.81900D+01
+    SPANHYD   X18        6.10800D+01   X19        5.66430D+02
+    SPANHYD   X20        5.83570D+02   X30        7.70000D+01
+    SPANHYD   X31        1.04953D+03   X32        1.58000D+02
+    SPANHYD   X33        1.60000D+01   X35        7.38430D+02
+    SPANHYD   X36        1.10000D+01   X37        4.90000D+01
+    SPANHYD   X38        1.83536D+03   X39        2.52000D+02
+    SPANHYD   X40        3.20600D+01   X42        4.20000D+00
+    SPANHYD   X43        4.83700D+01   X44        5.25700D+01
+    SPANHYD   X45        5.98500D+01   X46        5.98500D+01
+    SPANHYD   X47        5.82400D+01   X49        1.87600D+01
+    SPANHYD   X59        7.70000D+01   X60        1.08187D+03
+    SPANHYD   X61        1.58000D+02   X62        1.60000D+01
+    SPANHYD   X64        6.96710D+02   X65        1.10000D+01
+    SPANHYD   X66        4.90000D+01   X67        1.97277D+03
+    SPANHYD   X68        2.52000D+02   X69        1.81300D+01
+    SPANHYD   X72        1.81300D+01   X73        1.81300D+01
+    SPANHYD   X74        5.81000D+00   X75        5.81000D+00
+    SPANHYD   X78        6.02000D+00   X88        7.70000D+01
+    SPANHYD   X89        1.10000D+03   X90        1.58000D+02
+    SPANHYD   X91        1.60000D+01   X93        7.00000D+02
+    SPANHYD   X94        1.10000D+01   X95        4.90000D+01
+    SPANHYD   X96        2.00000D+03   X97        2.52000D+02
+
+ELEMENT TYPE
+
+ EV SPHYD     V1                       V2
+ EV SPHYD     V3                       V4
+ EV SPHYD     V6                       V16
+ EV SPHYD     V7                       V8
+ EV SPHYD     V9                       V10
+ EV SPHYD     V11                      V12
+ EV SPHYD     V13                      V14
+ EV SPHYD     V17                      V18
+ EV SPHYD     V19                      V20
+ EP SPHYD     P1                       P2
+ EP SPHYD     P3
+
+ELEMENT USES
+
+ XT 'DEFAULT' SPHYD
+
+ V  EA        V1                       X1
+ V  EA        V2                       X2
+ V  EA        V3                       X3
+ V  EA        V4                       X4
+ V  EA        V6                       X6
+ V  EA        V7                       X7
+ V  EA        V8                       X8
+ V  EA        V9                       X9
+ V  EA        V10                      X10
+ V  EA        V11                      X11
+ V  EA        V12                      X12
+ V  EA        V13                      X13
+ V  EA        V14                      X14
+ V  EA        V16                      X16
+ V  EA        V17                      X17
+ V  EA        V18                      X18
+ V  EA        V19                      X19
+ V  EA        V20                      X20
+ ZP EA        P1                       P1A
+ ZP EA        P2                       P2A
+ ZP EA        P3                       P3A
+
+ V  EB        V1                       X30
+ V  EB        V2                       X31
+ V  EB        V3                       X32
+ V  EB        V4                       X33
+ V  EB        V6                       X35
+ V  EB        V7                       X36
+ V  EB        V8                       X37
+ V  EB        V9                       X38
+ V  EB        V10                      X39
+ V  EB        V11                      X40
+ V  EB        V12                      X41
+ V  EB        V13                      X42
+ V  EB        V14                      X43
+ V  EB        V16                      X45
+ V  EB        V17                      X46
+ V  EB        V18                      X47
+ V  EB        V19                      X48
+ V  EB        V20                      X49
+ ZP EB        P1                       P1B
+ ZP EB        P2                       P2B
+ ZP EB        P3                       P3B
+
+ V  EC        V1                       X59
+ V  EC        V2                       X60
+ V  EC        V3                       X61
+ V  EC        V4                       X62
+ V  EC        V6                       X64
+ V  EC        V7                       X65
+ V  EC        V8                       X66
+ V  EC        V9                       X67
+ V  EC        V10                      X68
+ V  EC        V11                      X69
+ V  EC        V12                      X70
+ V  EC        V13                      X71
+ V  EC        V14                      X72
+ V  EC        V16                      X74
+ V  EC        V17                      X75
+ V  EC        V18                      X76
+ V  EC        V19                      X77
+ V  EC        V20                      X78
+ ZP EC        P1                       P1C
+ ZP EC        P2                       P2C
+ ZP EC        P3                       P3C
+
+GROUP USES
+
+ E  OBJ       EA                       EB
+ E  OBJ       EC
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               239.738001
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SPANHYD
+
+TEMPORARIES
+
+ R  A01
+ R  A02
+ R  A03
+ R  A04
+ R  A06
+ R  A07
+ R  A08
+ R  A09
+ R  A0T
+ R  A11
+ R  A12
+ R  A13
+ R  A14
+ R  A16
+ R  A17
+ R  A18
+ R  A19
+ R  A1T
+ R  B01
+ R  B02
+ R  B03
+ R  B04
+ R  B06
+ R  B07
+ R  B08
+ R  B09
+ R  B0T
+ R  B11
+ R  B12
+ R  B13
+ R  B14
+ R  B16
+ R  B17
+ R  B18
+ R  B19
+ R  B1T
+ R  B21
+ R  B22
+ R  B23
+ R  B24
+ R  B26
+ R  B27
+ R  B28
+ R  B29
+ R  B2T
+ R  Z1
+ R  Z2
+ R  Z3
+ R  Z4
+ R  Z6
+ R  Z7
+ R  Z8
+ R  Z9
+ R  ZT
+ R  E1
+ R  E2
+ R  E3
+ R  E4
+ R  E6
+ R  E7
+ R  E8
+ R  E9
+ R  ET
+ R  PS
+ R  DZ1
+ R  DZ2
+ R  DZ3
+ R  DZ4
+ R  DZ6
+ R  DZ7
+ R  DZ8
+ R  DZ9
+ R  DZT
+ R  DE11
+ R  DE22
+ R  DE23
+ R  DE33
+ R  DE39
+ R  DE44
+ R  DE49
+ R  DE66
+ R  DE67
+ R  DE77
+ R  DE78
+ R  DE88
+ R  DE99
+ R  DETT
+ R  DP1
+ R  DP2
+ R  DP3
+ R  DP4
+ R  DP6
+ R  DP7
+ R  DP8
+ R  DP9
+ R  DPT
+ R  DFPS
+ R  HFPS
+ R  HE111
+ R  HE222
+ R  HE233
+ R  HE333
+ R  HE399
+ R  HE444
+ R  HE499
+ R  HE666
+ R  HE677
+ R  HE777
+ R  HE788
+ R  HE888
+ R  HE999
+ R  HETTT
+ R  HP11
+ R  HP22
+ R  HP33
+ R  HP44
+ R  HP66
+ R  HP77
+ R  HP88
+ R  HP99
+ R  HPTT
+
+GLOBALS
+
+ A  A01                 -637.993
+ A  A02                 -15.4452
+ A  A03                 -6.2597
+ A  A04                 -2.8699
+ A  A06                 -8.6773
+ A  A07                 -8.9261
+ A  A08                 -672.26
+ A  A09                 -334.117
+ A  A0T                 -205.321
+ A  A11                 2.02
+ A  A12                 2.57
+ A  A13                 2.2146
+ A  A14                 2.5128
+ A  A16                 2.5707
+ A  A17                 2.7601
+ A  A18                 2.5402
+ A  A19                 2.711
+ A  A1T                 2.6673
+
+ A  B01                 344.904
+ A  B02                 283.67
+ A  B03                 188.597
+ A  B04                 212.864
+ A  B06                 353.204
+ A  B07                 316.895
+ A  B08                 295.055
+ A  B09                 163.013
+ A  B0T                 107.338
+ A  B11                 0.1265
+ A  B12                 0.031
+ A  B13                 0.558
+ A  B14                 0.7584
+ A  B16                 0.0541
+ A  B17                 0.9038
+ A  B18                 0.1557
+ A  B19                 0.0262
+ A  B1T                 -0.3111
+ A  B21                 -2.5225D-4
+ A  B22                 -7.2D-6
+ A  B23                 -1.4052D-3
+ A  B24                 -1.4353D-2
+ A  B26                 -2.01D-5
+ A  B27                 1.4139D-3
+ A  B28                 1.7195D-3
+ A  B29                 -2.4D-6
+ A  B2T                 2.372D-4
+
+INDIVIDUALS
+
+ T  SPHYD
+ A  Z1                  B01 + B11 * V1 + B21 * V1 * V1
+ A  Z2                  B02 + B12 * V2 + B22 * V2 * V2
+ A  Z3                  B03 + B13 * V3 + B23 * V3 * V3
+ A  Z4                  B04 + B14 * V4 + B24 * V4 * V4
+ A  Z6                  B06 + B16 * V6 + B26 * V6 * V6
+ A  Z7                  B07 + B17 * V7 + B27 * V7 * V7
+ A  Z8                  B08 + B18 * V8 + B28 * V8 * V8
+ A  Z9                  B09 + B19 * V9 + B29 * V9 * V9
+ A  ZT                  B0T + B1T * V10 + B2T * V10 * V10
+ A  DZ1                 B11 + 2.0 * B21 * V1
+ A  DZ2                 B12 + 2.0 * B22 * V2
+ A  DZ3                 B13 + 2.0 * B23 * V3
+ A  DZ4                 B14 + 2.0 * B24 * V4
+ A  DZ6                 B16 + 2.0 * B26 * V6
+ A  DZ7                 B17 + 2.0 * B27 * V7
+ A  DZ8                 B18 + 2.0 * B28 * V8
+ A  DZ9                 B19 + 2.0 * B29 * V9
+ A  DZT                 B1T + 2.0 * B2T * V10
+ A  E1                  A01 + A11 * Z1
+ A  E2                  A02 + A12 * ( Z2 - Z3 )
+ A  E3                  A03 + A13 * ( Z3 - Z9 )
+ A  E4                  A04 + A14 * ( Z4 - Z9 )
+ A  E6                  A06 + A16 * ( Z6 - Z7 )
+ A  E7                  A07 + A17 * ( Z7 - Z8 )
+ A  E8                  A08 + A18 *  Z8
+ A  E9                  A09 + A19 *  Z9
+ A  ET                  A0T + A1T *  ZT
+ A  DE11                A11 * DZ1
+ A  DE22                A12 * DZ2
+ A  DE23                -A12 * DZ3
+ A  DE33                A13 * DZ3
+ A  DE39                -A13 * DZ9
+ A  DE44                A14 * DZ4
+ A  DE49                -A14 * DZ9
+ A  DE66                A16 * DZ6
+ A  DE67                -A16 * DZ7
+ A  DE77                A17 * DZ7
+ A  DE78                -A17 * DZ8
+ A  DE88                A18 * DZ8
+ A  DE99                A19 * DZ9
+ A  DETT                A1T * DZT
+ A  HE111               2.0 * A11 * B21
+ A  HE222               2.0 * A12 * B22
+ A  HE233               - 2.0 * A12 * B23
+ A  HE333               2.0 * A13 * B23
+ A  HE399               - 2.0 * A13 * B29
+ A  HE444               2.0 * A14 * B24
+ A  HE499               - 2.0 * A14 * B29
+ A  HE666               2.0 * A16 * B26
+ A  HE677               - 2.0 * A16 * B27
+ A  HE777               2.0 * A17 * B27
+ A  HE788               - 2.0 * A17 * B28
+ A  HE888               2.0 * A18 * B28
+ A  HE999               2.0 * A19 * B29
+ A  HETTT               2.0 * A1T * B2T
+ A  PS                  V11 * E1 + V12 * E2 + V13 * E3
+ A+                     + V14 * E4 + V16 * E6 + V17 * E7
+ A+                     + V18 * E8 + V19 * E9 + V20 * ET
+ A  DP1                 V11 * DE11
+ A  DP2                 V12 * DE22
+ A  DP3                 V13 * DE33 + V12 * DE23
+ A  DP4                 V14 * DE44
+ A  DP6                 V16 * DE66
+ A  DP7                 V17 * DE77 + V16 * DE67
+ A  DP8                 V18 * DE88 + V17 * DE78
+ A  DP9                 V19 * DE99 + V13 * DE39 + V14 * DE49
+ A  DPT                 V20 * DETT
+ A  HP11                V11 * HE111
+ A  HP22                V12 * HE222
+ A  HP33                V13 * HE333 + V12 * HE233
+ A  HP44                V14 * HE444
+ A  HP66                V16 * HE666
+ A  HP77                V17 * HE777 + V16 * HE677
+ A  HP88                V18 * HE888 + V17 * HE788
+ A  HP99                V19 * HE999 + V13 * HE399 + V14 * HE499
+ A  HPTT                V20 * HETTT
+ A  HFPS                P3 + P3
+ A  DFPS                P2 + HFPS * PS
+ F                      P1 + P2 * PS + P3 * PS * PS
+ G  V1                  DP1 * DFPS
+ G  V2                  DP2 * DFPS
+ G  V3                  DP3 * DFPS
+ G  V4                  DP4 * DFPS
+ G  V6                  DP6 * DFPS
+ G  V7                  DP7 * DFPS
+ G  V8                  DP8 * DFPS
+ G  V9                  DP9 * DFPS
+ G  V10                 DPT * DFPS
+ G  V11                 E1 * DFPS
+ G  V12                 E2 * DFPS
+ G  V13                 E3 * DFPS
+ G  V14                 E4 * DFPS
+ G  V16                 E6 * DFPS
+ G  V17                 E7 * DFPS
+ G  V18                 E8 * DFPS
+ G  V19                 E9 * DFPS
+ G  V20                 ET * DFPS
+ H  V1        V1        HFPS * DP1 * DP1 + DFPS * HP11
+ H  V1        V2        HFPS * DP1 * DP2
+ H  V1        V3        HFPS * DP1 * DP3
+ H  V1        V4        HFPS * DP1 * DP4
+ H  V1        V6        HFPS * DP1 * DP6
+ H  V1        V7        HFPS * DP1 * DP7
+ H  V1        V8        HFPS * DP1 * DP8
+ H  V1        V9        HFPS * DP1 * DP9
+ H  V1        V10       HFPS * DP1 * DPT
+ H  V1        V11       HFPS * DP1 * E1 + DFPS * DE11
+ H  V1        V12       HFPS * DP1 * E2
+ H  V1        V13       HFPS * DP1 * E3
+ H  V1        V14       HFPS * DP1 * E4
+ H  V1        V16       HFPS * DP1 * E6
+ H  V1        V17       HFPS * DP1 * E7
+ H  V1        V18       HFPS * DP1 * E8
+ H  V1        V19       HFPS * DP1 * E9
+ H  V1        V20       HFPS * DP1 * ET
+ H  V2        V2        HFPS * DP2 * DP2 + DFPS * HP22
+ H  V2        V3        HFPS * DP2 * DP3
+ H  V2        V4        HFPS * DP2 * DP4
+ H  V2        V6        HFPS * DP2 * DP6
+ H  V2        V7        HFPS * DP2 * DP7
+ H  V2        V8        HFPS * DP2 * DP8
+ H  V2        V9        HFPS * DP2 * DP9
+ H  V2        V10       HFPS * DP2 * DPT
+ H  V2        V11       HFPS * DP2 * E1
+ H  V2        V12       HFPS * DP2 * E2 + DFPS * DE22
+ H  V2        V13       HFPS * DP2 * E3
+ H  V2        V14       HFPS * DP2 * E4
+ H  V2        V16       HFPS * DP2 * E6
+ H  V2        V17       HFPS * DP2 * E7
+ H  V2        V18       HFPS * DP2 * E8
+ H  V2        V19       HFPS * DP2 * E9
+ H  V2        V20       HFPS * DP2 * ET
+ H  V3        V3        HFPS * DP3 * DP3 + DFPS * HP33
+ H  V3        V4        HFPS * DP3 * DP4
+ H  V3        V6        HFPS * DP3 * DP6
+ H  V3        V7        HFPS * DP3 * DP7
+ H  V3        V8        HFPS * DP3 * DP8
+ H  V3        V9        HFPS * DP3 * DP9
+ H  V3        V10       HFPS * DP3 * DPT
+ H  V3        V11       HFPS * DP3 * E1
+ H  V3        V12       HFPS * DP3 * E2 + DFPS * DE23
+ H  V3        V13       HFPS * DP3 * E3 + DFPS * DE33
+ H  V3        V14       HFPS * DP3 * E4
+ H  V3        V16       HFPS * DP3 * E6
+ H  V3        V17       HFPS * DP3 * E7
+ H  V3        V18       HFPS * DP3 * E8
+ H  V3        V19       HFPS * DP3 * E9
+ H  V3        V20       HFPS * DP3 * ET
+ H  V4        V4        HFPS * DP4 * DP4 + DFPS * HP44
+ H  V4        V6        HFPS * DP4 * DP6
+ H  V4        V7        HFPS * DP4 * DP7
+ H  V4        V8        HFPS * DP4 * DP8
+ H  V4        V9        HFPS * DP4 * DP9
+ H  V4        V10       HFPS * DP4 * DPT
+ H  V4        V11       HFPS * DP4 * E1
+ H  V4        V12       HFPS * DP4 * E2
+ H  V4        V13       HFPS * DP4 * E3
+ H  V4        V14       HFPS * DP4 * E4 + DFPS * DE44
+ H  V4        V16       HFPS * DP4 * E6
+ H  V4        V17       HFPS * DP4 * E7
+ H  V4        V18       HFPS * DP4 * E8
+ H  V4        V19       HFPS * DP4 * E9
+ H  V4        V20       HFPS * DP4 * ET
+ H  V6        V6        HFPS * DP6 * DP6 + DFPS * HP66
+ H  V6        V7        HFPS * DP6 * DP7
+ H  V6        V8        HFPS * DP6 * DP8
+ H  V6        V9        HFPS * DP6 * DP9
+ H  V6        V10       HFPS * DP6 * DPT
+ H  V6        V11       HFPS * DP6 * E1
+ H  V6        V12       HFPS * DP6 * E2
+ H  V6        V13       HFPS * DP6 * E3
+ H  V6        V14       HFPS * DP6 * E4
+ H  V6        V16       HFPS * DP6 * E6 + DFPS * DE66
+ H  V6        V17       HFPS * DP6 * E7
+ H  V6        V18       HFPS * DP6 * E8
+ H  V6        V19       HFPS * DP6 * E9
+ H  V6        V20       HFPS * DP6 * ET
+ H  V7        V7        HFPS * DP7 * DP7 + DFPS * HP77
+ H  V7        V8        HFPS * DP7 * DP8
+ H  V7        V9        HFPS * DP7 * DP9
+ H  V7        V10       HFPS * DP7 * DPT
+ H  V7        V11       HFPS * DP7 * E1
+ H  V7        V12       HFPS * DP7 * E2
+ H  V7        V13       HFPS * DP7 * E3
+ H  V7        V14       HFPS * DP7 * E4
+ H  V7        V16       HFPS * DP7 * E6 + DFPS * DE67
+ H  V7        V17       HFPS * DP7 * E7 + DFPS * DE77
+ H  V7        V18       HFPS * DP7 * E8
+ H  V7        V19       HFPS * DP7 * E9
+ H  V7        V20       HFPS * DP7 * ET
+ H  V8        V8        HFPS * DP8 * DP8 + DFPS * HP88
+ H  V8        V9        HFPS * DP8 * DP9
+ H  V8        V10       HFPS * DP8 * DPT
+ H  V8        V11       HFPS * DP8 * E1
+ H  V8        V12       HFPS * DP8 * E2
+ H  V8        V13       HFPS * DP8 * E3
+ H  V8        V14       HFPS * DP8 * E4
+ H  V8        V16       HFPS * DP8 * E6
+ H  V8        V17       HFPS * DP8 * E7 + DFPS * DE78
+ H  V8        V18       HFPS * DP8 * E8 + DFPS * DE88
+ H  V8        V19       HFPS * DP8 * E9
+ H  V8        V20       HFPS * DP8 * ET
+ H  V9        V9        HFPS * DP9 * DP9 + DFPS * HP99
+ H  V9        V10       HFPS * DP9 * DPT
+ H  V9        V11       HFPS * DP9 * E1
+ H  V9        V12       HFPS * DP9 * E2
+ H  V9        V13       HFPS * DP9 * E3 + DFPS * DE39
+ H  V9        V14       HFPS * DP9 * E4 + DFPS * DE49
+ H  V9        V16       HFPS * DP9 * E6
+ H  V9        V17       HFPS * DP9 * E7
+ H  V9        V18       HFPS * DP9 * E8
+ H  V9        V19       HFPS * DP9 * E9 + DFPS * DE99
+ H  V9        V20       HFPS * DP9 * ET
+ H  V10       V10       HFPS * DPT * DPT + DFPS * HPTT
+ H  V10       V11       HFPS * DPT * E1
+ H  V10       V12       HFPS * DPT * E2
+ H  V10       V13       HFPS * DPT * E3
+ H  V10       V14       HFPS * DPT * E4
+ H  V10       V16       HFPS * DPT * E6
+ H  V10       V17       HFPS * DPT * E7
+ H  V10       V18       HFPS * DPT * E8
+ H  V10       V19       HFPS * DPT * E9
+ H  V10       V20       HFPS * DPT * ET + DFPS * DETT
+ H  V11       V11       HFPS * E1 * E1
+ H  V11       V12       HFPS * E1 * E2
+ H  V11       V13       HFPS * E1 * E3
+ H  V11       V14       HFPS * E1 * E4
+ H  V11       V16       HFPS * E1 * E6
+ H  V11       V17       HFPS * E1 * E7
+ H  V11       V18       HFPS * E1 * E8
+ H  V11       V19       HFPS * E1 * E9
+ H  V11       V20       HFPS * E1 * ET
+ H  V12       V12       HFPS * E2 * E2
+ H  V12       V13       HFPS * E2 * E3
+ H  V12       V14       HFPS * E2 * E4
+ H  V12       V16       HFPS * E2 * E6
+ H  V12       V17       HFPS * E2 * E7
+ H  V12       V18       HFPS * E2 * E8
+ H  V12       V19       HFPS * E2 * E9
+ H  V12       V20       HFPS * E2 * ET
+ H  V13       V13       HFPS * E3 * E3
+ H  V13       V14       HFPS * E3 * E4
+ H  V13       V16       HFPS * E3 * E6
+ H  V13       V17       HFPS * E3 * E7
+ H  V13       V18       HFPS * E3 * E8
+ H  V13       V19       HFPS * E3 * E9
+ H  V13       V20       HFPS * E3 * ET
+ H  V14       V14       HFPS * E4 * E4
+ H  V14       V16       HFPS * E4 * E6
+ H  V14       V17       HFPS * E4 * E7
+ H  V14       V18       HFPS * E4 * E8
+ H  V14       V19       HFPS * E4 * E9
+ H  V14       V20       HFPS * E4 * ET
+ H  V16       V16       HFPS * E6 * E6
+ H  V16       V17       HFPS * E6 * E7
+ H  V16       V18       HFPS * E6 * E8
+ H  V16       V19       HFPS * E6 * E9
+ H  V16       V20       HFPS * E6 * ET
+ H  V17       V17       HFPS * E7 * E7
+ H  V17       V18       HFPS * E7 * E8
+ H  V17       V19       HFPS * E7 * E9
+ H  V17       V20       HFPS * E7 * ET
+ H  V18       V18       HFPS * E8 * E8
+ H  V18       V19       HFPS * E8 * E9
+ H  V18       V20       HFPS * E8 * ET
+ H  V19       V19       HFPS * E9 * E9
+ H  V19       V20       HFPS * E9 * ET
+ H  V20       V20       HFPS * ET * ET
+
+ENDATA

@@ -1,0 +1,140 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          QRTQUAD
+
+*   Problem :
+*   *********
+
+*   An unconstrained problem involving elements with different degree of
+*   nonlinearity (quartics and quadratics).  It contains N elements the first
+*   M of which are quartic.  The Hessian is tridiagonal for the first M
+*   elements and arrow-head for the remaining ones.  The first M variables
+*   have lower and upper bounds.
+
+*   SIF input: Ph. Toint, June 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification OBR2-MN-V-0
+
+*IE N                   12             $-PARAMETER
+*IE N                   120            $-PARAMETER     original value
+*IE N                   1200           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   12             $-PARAMETER     modified for S2X tests
+*IE M                   6              $-PARAMETER
+*IE M                   10             $-PARAMETER     original value
+*IE M                   100            $-PARAMETER
+ IE M                   1100           $-PARAMETER
+
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IA M+1       M         1
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ RI RI        I
+ RM C         RI         - 10.0
+ ZN OBJ       X(I)                     C
+ ND
+
+CONSTANTS
+
+BOUNDS
+
+ XR QRTQUAD   'DEFAULT'
+ DO I         1                        N
+ XL QRTQUAD   X(I)       0.0
+ XU QRTQUAD   X(I)       10.0
+ OD I
+ 
+START POINT
+
+ELEMENT TYPE
+
+ EV QUART     X                        Y
+ EP QUART     P
+ EV QUAD      X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' QUAD
+
+ RI RM        M
+ DO I         1                        M
+ RI RI        I
+ R/ C         RI                       RM
+ I+ I+1       I                        1
+ XT E(I)      QUART
+ ZV E(I)      X                        X(I)
+ ZV E(I)      Y                        X(I+1)
+ ZP E(I)      P                        C
+ OD I
+
+ DO I         M+1                      N-1
+ ZV E(I)      X                        X(I)
+ ZV E(I)      Y                        X(N)
+ OD I 
+
+GROUP USES
+ DO I         1                        N-1
+ XE OBJ       E(I)
+ OD I
+
+OBJECT BOUND
+
+ LO QRTQUAD             0.0
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      QRTQUAD
+
+TEMPORARIES
+
+ R  XY        
+
+INDIVIDUALS
+
+*   Exponential of the product of X and Y divided by 10
+
+ T  QUART
+
+ A  XY                  X*Y
+ F                      P*XY**4
+ G  X                   P*Y*4.0*XY**3
+ G  Y                   P*X*4.0*XY**3
+ H  X         X         12.0*P*(Y**2)*(XY**2)
+ H  Y         Y         12.0*P*(X**2)*(XY**2)
+ H  X         Y         4.0*P*(XY**3) + 12.0*P*Y*X*(XY**2)
+
+ T  QUAD
+ F                      4.0 * X * X + 2.0 * Y * Y + X * Y
+ G  X                   8.0 * X + Y
+ G  Y                   4.0 * Y + X
+ H  X         X         8.0
+ H  X         Y         1.0
+ H  Y         Y         4.0
+      
+ENDATA

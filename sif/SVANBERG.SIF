@@ -1,0 +1,267 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SVANBERG
+
+*   Problem :
+*   *********
+
+*   A subproblem of the type arising in structural optimization
+
+*   Source:
+*   Svanberg K.,
+*   "Method of moving asymptots - a new method for structural optimization",
+*   Int.J. Num. Meth. Eng, 24, pp. 359--373, 1987
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification OOR2-MN-V-V
+
+*   Number of variables (must be even and >= 10)
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   20             $-PARAMETER
+*IE N                   30             $-PARAMETER
+*IE N                   40             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   60             $-PARAMETER
+*IE N                   70             $-PARAMETER
+*IE N                   80             $-PARAMETER
+*IE N                   90             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+
+*   Computed parameters
+
+ IA N-1       N         -1
+ IA N-2       N         -2
+ IA N-3       N         -3
+ IA N-4       N         -4
+ IA N-5       N         -5
+ IA N-6       N         -6
+ IA N-7       N         -7
+
+ RI RN        N
+ RD 1/N       RN        1.0
+ RD 2/N       RN        2.0
+ RD -3/N      RN        -3.0
+ RD 5/N       RN        5.0
+
+*   Right hand sides
+
+ DO I         1                        N
+ RI RI        I
+ A* B(I)      RI                       5/N
+ AA B(I)      B(I)      10.0
+ ND
+
+*   Objective coefficients
+
+ DO I         1                        N-1
+ DI I         2
+ RI RI        I
+
+ A* A(I)      RI                       2/N
+ AA A(I)      A(I)      1.0
+
+ IA I+1       I         1
+ RI RI+1      I+1
+ A* A(I+1)    RI+1                     -3/N
+ AA A(I+1)    A(I+1)    5.0
+
+ ND
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN O(I)
+ XL C(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ Z  SVANBERG  C(I)                     B(I)
+ ND
+
+BOUNDS
+
+ XL SVANBERG  'DEFAULT' -0.8
+ XU SVANBERG  'DEFAULT' 0.8
+
+ELEMENT TYPE
+
+ EV EP        X
+ EV EM        X
+
+ELEMENT USES
+
+ DO I         1                        N
+
+ XT Q(I)      EP
+ ZV Q(I)      X                        X(I)
+
+ XT P(I)      EM
+ ZV P(I)      X                        X(I)
+
+ ND
+
+GROUP USES
+
+*   Objective
+
+ DO I         1                        N-1
+ DI I         2
+ IA I+1       I         1
+ ZE O(I)      Q(I)                     A(I)
+ ZE O(I+1)    P(I+1)                   A(I+1)
+ ND
+
+*   Constraints
+
+ XE C(1)      P(1)                     P(2)
+ XE C(1)      Q(3)                     P(4)
+ XE C(1)      Q(5)
+ XE C(1)      Q(N-3)                   P(N-2)
+ XE C(1)      P(N-1)                   Q(N)
+
+ XE C(2)      P(1)                     Q(2)
+ XE C(2)      Q(3)                     P(4)
+ XE C(2)      Q(5)                     P(6)
+ XE C(2)      P(N-2)                   Q(N-1)
+ XE C(2)      Q(N)
+
+ XE C(3)      P(1)                     Q(2)
+ XE C(3)      P(3)                     P(4)
+ XE C(3)      Q(5)                     P(6)
+ XE C(3)      Q(7)
+ XE C(3)      Q(N-1)                   P(N)
+
+ XE C(4)      Q(1)                     Q(2)
+ XE C(4)      P(3)                     Q(4)
+ XE C(4)      Q(5)                     P(6)
+ XE C(4)      Q(7)                     P(8)
+ XE C(4)      P(N)
+
+ DO I         5                        N-5
+ DI I         2
+
+ IA I-4       I         -4
+ IA I-3       I         -3
+ IA I-2       I         -2
+ IA I-1       I         -1
+ IA I+1       I         1
+ IA I+2       I         2
+ IA I+3       I         3
+ IA I+4       I         4
+ IA I+5       I         5
+
+ XE C(I)      Q(I-4)                   P(I-3)
+ XE C(I)      P(I-2)                   Q(I-1)
+ XE C(I)      P(I)                     P(I+1)
+ XE C(I)      Q(I+2)                   P(I+3)
+ XE C(I)      Q(I+4)
+
+ XE C(I+1)    P(I-3)                   Q(I-2)
+ XE C(I+1)    Q(I-1)                   P(I)
+ XE C(I+1)    Q(I+1)                   Q(I+2)
+ XE C(I+1)    P(I+3)                   Q(I+4)
+ XE C(I+1)    P(I+5)
+
+ ND
+
+ XE C(N-3)    Q(1)
+ XE C(N-3)    Q(N-7)                   P(N-6)
+ XE C(N-3)    P(N-5)                   Q(N-4)
+ XE C(N-3)    P(N-3)                   P(N-2)
+ XE C(N-3)    Q(N-1)                   P(N)
+
+ XE C(N-2)    Q(1)                     P(2)
+ XE C(N-2)    P(N-6)                   Q(N-5)
+ XE C(N-2)    Q(N-4)                   P(N-3)
+ XE C(N-2)    Q(N-2)                   Q(N-1)
+ XE C(N-2)    P(N)
+
+ XE C(N-1)    Q(1)                     P(2)
+ XE C(N-1)    Q(3)
+ XE C(N-1)    Q(N-5)                   P(N-4)
+ XE C(N-1)    P(N-3)                   Q(N-2)
+ XE C(N-1)    P(N-1)                   P(N)
+
+ XE C(N)      Q(1)                     P(2)
+ XE C(N)      Q(3)                     P(4)
+ XE C(N)      P(N-4)                   Q(N-3)
+ XE C(N)      Q(N-2)                   P(N-1)
+ XE C(N)      Q(N)
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)           15.7315
+*LO SOLTN(20)           32.4279
+*LO SOLTN(30)           49.1425
+*LO SOLTN(40)           65.8611
+*LO SOLTN(50)           82.5819
+*LO SOLTN(60)           99.3039
+*LO SOLTN(70)           116.0266
+*LO SOLTN(80)           132.7498
+*LO SOLTN(90)           149.4734
+*LO SOLTN(100)          166.1972
+*LO SOLTN(500)          ???
+*LO SOLTN(1000)         ???
+*LO SOLTN(5000)         ???
+*LO SOLTN(10000)        ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SVANBERG
+
+TEMPORARIES
+
+ R  D
+ R  DSQ
+
+INDIVIDUALS
+
+ T  EP
+ A  D                   1.0 / ( 1.0 + X )
+ A  DSQ                 D * D
+ F                      D
+ G  X                   - DSQ
+ H  X         X         2.0 * D * DSQ
+
+ T  EM
+ A  D                   1.0 / ( 1.0 - X )
+ A  DSQ                 D * D
+ F                      D
+ G  X                   DSQ
+ H  X         X         2.0 * D * DSQ
+
+ENDATA

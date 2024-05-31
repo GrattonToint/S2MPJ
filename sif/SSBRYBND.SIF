@@ -1,0 +1,299 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SSBRYBND
+
+*   Problem :
+*   *********
+*   Broyden banded system of nonlinear equations, considered in the
+*   least square sense.
+*   NB: scaled version of BRYBND with scaling proposed by Luksan et al.
+
+*   Source: problem 48 in
+*   L. Luksan, C. Matonoha and J. Vlcek  
+*   Modified CUTE problems for sparse unconstraoined optimization
+*   Technical Report 1081
+*   Institute of Computer Science
+*   Academy of Science of the Czech Republic
+
+*   that is a scaled variant of problem 31 in
+
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#73 (p. 41) and Toint#18
+
+*   SIF input: Ph. Toint and Nick Gould, Nov 1997.
+*              this version Nick Gould, June, 2013
+
+*   classification SUR2-AN-V-0
+
+*   N is the number of equations and variables (variable).
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Define some problem's parameters (see Buckley)
+*   Restriction: LB + 1 + UB .le. N
+
+ RE ONE                 1.0
+ RE KAPPA1              2.0
+ RE KAPPA2              5.0
+ RE KAPPA3              1.0
+ IE LB                  5
+ IE UB                  1
+ RI RN        N
+ RA RN-1      RN        -1
+
+*  ratio of smallest to largest scale factors will be exp(scal)
+
+ RE SCAL                6.0
+
+*   Define useful parameters
+
+ IE 1                   1
+ IM MLB       LB        -1
+ IM MUB       UB        -1
+ IA LB+1      LB        1
+ I+ N-UB      N                        MUB
+ IA N-UB-1    N-UB      -1
+ RM -KAPPA3   KAPPA3    -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R/ RAT       RI-1                     RN-1
+ R* ARG       RAT                      SCAL
+ A( SCALE(I)  EXP                      ARG
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Upper left corner
+
+ DO I         1                        LB
+
+ IA I-1       I         -1
+ IA I+1       I         1
+ I+ I+UB      I                        UB
+
+ DO J         1                        I-1
+ A* KAP       -KAPPA3                  SCALE(J)
+ ZN G(I)      X(J)                     KAP
+ OD J
+
+ A* KAP       KAPPA1                   SCALE(I)
+ ZN G(I)      X(I)                     KAP
+
+ DO J         I+1                      I+UB
+ A* KAP       -KAPPA3                  SCALE(J)
+ ZN G(I)      X(J)                     KAP
+
+ ND
+
+*   Main (middle) part
+
+ DO I         LB+1                     N-UB-1
+
+ I+ I-LB      I                        MLB
+ IA I-1       I         -1
+ IA I+1       I         1
+ I+ I+UB      I                        UB
+
+ DO J         I-LB                     I-1
+ A* KAP       -KAPPA3                  SCALE(J)
+ ZN G(I)      X(J)                     KAP
+ OD J
+
+ A* KAP       KAPPA1                   SCALE(I)
+ ZN G(I)      X(I)                     KAP
+
+ DO J         I+1                      I+UB
+ A* KAP       -KAPPA3                  SCALE(J)
+ ZN G(I)      X(J)                     KAP
+
+ ND
+
+*   Lower right corner
+
+ DO I         N-UB                     N
+
+ I+ I-LB      I                        MLB
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ DO J         I-LB                     I-1
+ A* KAP       -KAPPA3                  SCALE(J)
+ ZN G(I)      X(J)                     KAP
+ OD J
+
+ A* KAP       KAPPA1                   SCALE(I)
+ ZN G(I)      X(I)                     KAP
+
+ DO J         I+1                      N
+ A* KAP       -KAPPA3                  SCALE(J)
+ ZN G(I)      X(J)                     KAP
+
+ ND
+
+BOUNDS
+
+ FR SSBRYBND  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ A/ DIV       ONE                      SCALE(I)
+ ZV SSBRYBND  X(I)                     DIV
+ ND
+
+ELEMENT TYPE
+
+ EV SQ        V
+ EP SQ        P
+ EV CB        V
+ EP CB        P
+
+ELEMENT USES
+
+ XT 'DEFAULT' CB
+
+ DO I         1                        N
+ XT E(I)      SQ
+ ZV E(I)      V                        X(I)
+ ZP E(I)      P                        SCALE(I)
+ XT Q(I)      CB
+ ZV Q(I)      V                        X(I)
+ ZP Q(I)      P                        SCALE(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+*   Upper left corner
+
+ DO I         1                        LB
+
+ IA I-1       I         -1
+ IA I+1       I         1
+ I+ I+UB      I                        UB
+
+ DO J         1                        I-1
+ ZE G(I)      E(J)                     -KAPPA3
+ OD J
+
+ ZE G(I)      Q(I)                     KAPPA2
+
+ DO J         I+1                      I+UB
+ ZE G(I)      E(J)                     -KAPPA3
+
+ ND
+
+*   Main (middle) part
+
+ DO I         LB+1                     N-UB-1
+
+ I+ I-LB      I                        MLB
+ IA I-1       I         -1
+ IA I+1       I         1
+ I+ I+UB      I                        UB
+
+ DO J         I-LB                     I-1
+ ZE G(I)      Q(J)                     -KAPPA3
+ OD J
+
+ ZE G(I)      E(I)                     KAPPA2
+
+ DO J         I+1                      I+UB
+ ZE G(I)      E(J)                     -KAPPA3
+
+ ND
+
+*   Lower right corner
+
+ DO I         N-UB                     N
+
+ I+ I-LB      I                        MLB
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ DO J         I-LB                     I-1
+ ZE G(I)      E(J)                     -KAPPA3
+ OD J
+
+ ZE G(I)      Q(I)                     KAPPA2
+
+ DO J         I+1                      N
+ ZE G(I)      E(J)                     -KAPPA3
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SSBRYBND
+
+TEMPORARIES
+
+ R  PP
+
+INDIVIDUALS
+
+ T  SQ
+ A  PP                  P * P
+ F                      PP * V * V
+ G  V                   PP * ( V + V )
+ H  V         V         2.0 * PP
+
+ T  CB
+ A  PP                  P * P * P
+ F                      PP * V * V * V
+ G  V                   3.0 * PP * V * V
+ H  V         V         6.0 * PP * V
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        SSBRYBND
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+
+
+

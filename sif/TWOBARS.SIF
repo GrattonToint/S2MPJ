@@ -1,0 +1,175 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TWOBARS
+
+*   Problem:
+*   ********
+
+*   Structureal analysis of the simplest two bar scheme.  The structure has
+*   the following simple symmetric shape
+
+*                                *
+*                               / \
+*                              /   \
+*                             /     \
+*                           """     """
+
+*   and a force is applied at the top node.  The unknown are the distance
+*   of the left and right feet wrt to the projection of the top node and the
+*   weight of the bars.
+
+*   Source:
+*   an example in a talk by W.K. Zhang and C. Fleury, LLN, 1994.
+
+*   SIF input: Ph. Toint, November 1994
+
+*   classification OOR2-MN-2-2
+
+VARIABLES
+
+    X1                                 $ bar weight
+    X2                                 $ spread
+
+GROUPS
+
+ XN OBJ
+
+ XL CONS1
+ XL CONS2
+
+CONSTANTS
+
+ X  TWOBARS   CONS1     1.0
+ X  TWOBARS   CONS2     1.0
+
+BOUNDS
+
+ XL TWOBARS   X1        0.2
+ XU TWOBARS   X1        4.0
+ 
+ XL TWOBARS   X2        0.1
+ XU TWOBARS   X2        1.6
+
+START POINT
+
+ XV TWOBARS   'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV OE        XX                       YY
+ EV CE1       XX                       YY
+ EV CE2       XX                       YY
+
+ELEMENT USES
+
+ XT OBEL      OE
+ ZV OBEL      XX                       X1
+ ZV OBEL      YY                       X2
+
+ XT COEL1     CE1
+ ZV COEL1     XX                       X1
+ ZV COEL1     YY                       X2
+
+ XT COEL2     CE2
+ ZV COEL2     XX                       X1
+ ZV COEL2     YY                       X2
+
+GROUP USES
+
+ XE OBJ       OBEL
+ 
+ XE CONS1     COEL1     0.124
+ XE CONS2     COEL2     0.124
+
+OBJECT BOUND
+
+ LO TWOBARS             0.0
+
+*   Solution
+
+*LO SOLTN               1.5086379655
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TWOBARS
+
+TEMPORARIES
+
+ R  A
+ R  RA
+ R  B
+ R  DB
+ R  D2B
+ R  C
+ R  DCDX
+ R  DCDY
+ R  D2CDXX
+ R  D2CDXY
+ R  D2CDYY
+ R  BC
+ M  SQRT
+
+INDIVIDUALS
+
+ T  OE
+ A  A                   1.0 + YY * YY
+ A  RA                  SQRT( A )
+ F                      XX * RA
+ G  XX                  RA
+ G  YY                  XX * YY / RA 
+ H  XX        YY        YY / RA
+ H  YY        YY        XX / ( A * RA )
+
+ T  CE1
+ A  A                   1.0 + YY * YY
+ A  RA                  SQRT( A )
+ A  B                   8.0 / XX
+ A  DB                  - 8.0 / XX**2
+ A  D2B                 16.0 / XX**3
+ A  C                   1.0 / ( XX * YY )
+ A  DCDX                - 1.0 / ( XX**2 * YY )
+ A  DCDY                - 1.0 / ( YY**2 * XX )
+ A  D2CDXX              2.0 / ( XX**3 * YY )
+ A  D2CDXY              1.0 / ( XX * YY )**2
+ A  D2CDYY              2.0 / ( XX * YY**3 )
+ A  BC                  B + C
+ F                      RA * BC
+ G  XX                  RA * ( DB + DCDX )
+
+ G  YY                  YY * BC / RA + RA * DCDY
+
+ H  XX        XX        RA * ( D2B + D2CDXX )
+ H  XX        YY        RA * D2CDXY + YY * ( DB + DCDX ) / RA
+ H  YY        YY        ( BC + 2.0*YY*DCDY - YY*YY*BC/A ) / RA 
+ H+                     + RA * D2CDYY
+
+ T  CE2
+ A  A                   1.0 + YY * YY
+ A  RA                  SQRT( A )
+ A  B                   8.0 / XX
+ A  DB                  - 8.0 / XX**2
+ A  D2B                 16.0 / XX**3
+ A  C                   1.0 / ( XX * YY )
+ A  DCDX                - 1.0 / ( XX**2 * YY )
+ A  DCDY                - 1.0 / ( YY**2 * XX )
+ A  D2CDXX              2.0 / ( XX**3 * YY )
+ A  D2CDXY              1.0 / ( XX * YY )**2
+ A  D2CDYY              2.0 / ( XX * YY**3 )
+ A  BC                  B - C
+ F                      RA * BC
+ G  XX                  RA * ( DB - DCDX )
+ G  YY                  YY * BC / RA - RA * DCDY
+ H  XX        XX        RA * ( D2B - D2CDXX )
+ H  XX        YY        -RA * D2CDXY + YY * ( DB - DCDX ) / RA
+ H  YY        YY        ( BC - 2.0*YY*DCDY - YY*YY*BC/A ) / RA 
+ H+                     - RA * D2CDYY
+
+ENDATA
+

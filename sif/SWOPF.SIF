@@ -1,0 +1,947 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SWOPF
+
+*   Problem:
+*   ********
+
+*   An optimal electrical powerflow system design problem from Switzerland.
+
+*   Source:
+*   a contribution to fullfill the LANCELOT academic licence agreement.
+
+*   SIF input: R. Bacher, Dept of Electrical Engineering, ETH Zurich, 
+*              November 1994.
+
+*   classification LQR2-RN-83-92
+
+*   Number of nodes       =   7
+*   Number of branches    =   7
+*   Number of generators  =   3
+
+ IE FIRST                          1
+ IE NOBRANCHES                     7
+ IE NOSHUNTS                       0
+ IE NOTRAFOS                       3
+ IE NOBUSSES                       7
+ IE NOGEN                          3
+ IE NOGENBK                        3
+ IE NOAREAS                        0
+
+VARIABLES
+
+*   Bus oriented data
+                    
+ X  VE0001
+ X  VF0001
+ X  V20001
+ X  VE0002
+ X  VF0002
+ X  V20002
+ X  VE0003
+ X  VF0003
+ X  V20003
+ X  VE0004
+ X  VF0004
+ X  V20004
+ X  VE0005
+ X  VF0005
+ X  V20005
+ X  VE0006
+ X  VF0006
+ X  V20006
+ X  VE0007
+ X  VF0007
+ X  V20007
+
+*   Branch oriented data (including transformers)
+
+ X  EI0001
+ X  FI0001
+ X  EJ0001
+ X  FJ0001
+ X  PI0001
+ X  QI0001
+ X  PJ0001
+ X  QJ0001
+ X  EI0002
+ X  FI0002
+ X  EJ0002
+ X  FJ0002
+ X  PI0002
+ X  QI0002
+ X  PJ0002
+ X  QJ0002
+ X  EI0003
+ X  FI0003
+ X  EJ0003
+ X  FJ0003
+ X  PI0003
+ X  QI0003
+ X  PJ0003
+ X  QJ0003
+ X  EI0004
+ X  FI0004
+ X  EJ0004
+ X  FJ0004
+ X  PI0004
+ X  QI0004
+ X  PJ0004
+ X  QJ0004
+ X  EI0005
+ X  FI0005
+ X  EJ0005
+ X  FJ0005
+ X  PI0005
+ X  QI0005
+ X  PJ0005
+ X  QJ0005
+ X  EI0006
+ X  FI0006
+ X  EJ0006
+ X  FJ0006
+ X  PI0006
+ X  QI0006
+ X  PJ0006
+ X  QJ0006
+ X  EI0007
+ X  FI0007
+ X  EJ0007
+ X  FJ0007
+ X  PI0007
+ X  QI0007
+ X  PJ0007
+ X  QJ0007
+
+*   Generator oriented data
+
+ X  PG0001
+ X  PG0002
+ X  PG0003
+
+*   Individual generator oriented data
+
+ X  QG0001
+ X  QG0002
+ X  QG0003
+
+GROUPS
+
+* Bus oriented data
+                     
+ XE  GV20001  V20001           1.000
+ XE  SLF0000  VF0001           1.000
+ XE  GV20002  V20002           1.000
+ XE  GV20003  V20003           1.000
+ XE  GV20004  V20004           1.000
+ XE  GV20005  V20005           1.000
+ XE  GV20006  V20006           1.000
+ XE  GV20007  V20007           1.000
+
+*   Branch oriented data (including transformers)
+
+ XN LOSS0000  PI0001           1.000
+ XN LOSS0000  PJ0001           1.000
+ XE  GEI0001  EI0001           1.000
+ XE  GFI0001  FI0001           1.000
+ XE  GEJ0001  EJ0001           1.000
+ XE  GFJ0001  FJ0001           1.000
+ XE  GEI0001  VE0001          -5.299
+ XE  GEI0001  VF0001         -66.243
+ XE  GEI0001  VE0002           5.299
+ XE  GEI0001  VF0002          66.243
+ XE  GFI0001  VE0001          66.243
+ XE  GFI0001  VF0001          -5.299
+ XE  GFI0001  VE0002         -66.243
+ XE  GFI0001  VF0002           5.299
+ XE  GEJ0001  VE0002          -5.299
+ XE  GEJ0001  VF0002         -66.243
+ XE  GFJ0001  VE0002          66.243
+ XE  GFJ0001  VF0002          -5.299
+ XE  GEJ0001  VE0001           5.299
+ XE  GEJ0001  VF0001          66.243
+ XE  GFJ0001  VE0001         -66.243
+ XE  GFJ0001  VF0001           5.299
+ XE  GPI0001  PI0001           1.000
+ XE  GQI0001  QI0001           1.000
+ XE  GPJ0001  PJ0001           1.000
+ XE  GQJ0001  QJ0001           1.000
+ XE GPNI0001  PI0001          -1.000
+ XE GPNI0002  PJ0001          -1.000
+ XE GQNI0001  QI0001          -1.000
+ XE GQNI0002  QJ0001          -1.000
+ XL GMXI0001
+ XL GMXJ0001
+ XN LOSS0000  PI0002           1.000
+ XN LOSS0000  PJ0002           1.000
+ XE  GEI0002  EI0002           1.000
+ XE  GFI0002  FI0002           1.000
+ XE  GEJ0002  EJ0002           1.000
+ XE  GFJ0002  FJ0002           1.000
+ XE  GEI0002  VE0002          -1.175
+ XE  GEI0002  VF0002          -6.915
+ XE  GEI0002  VE0006           1.175
+ XE  GEI0002  VF0006           7.051
+ XE  GFI0002  VE0002           6.915
+ XE  GFI0002  VF0002          -1.175
+ XE  GFI0002  VE0006          -7.051
+ XE  GFI0002  VF0006           1.175
+ XE  GEJ0002  VE0006          -1.175
+ XE  GEJ0002  VF0006          -6.915
+ XE  GFJ0002  VE0006           6.915
+ XE  GFJ0002  VF0006          -1.175
+ XE  GEJ0002  VE0002           1.175
+ XE  GEJ0002  VF0002           7.051
+ XE  GFJ0002  VE0002          -7.051
+ XE  GFJ0002  VF0002           1.175
+ XE  GPI0002  PI0002           1.000
+ XE  GQI0002  QI0002           1.000
+ XE  GPJ0002  PJ0002           1.000
+ XE  GQJ0002  QJ0002           1.000
+ XE GPNI0002  PI0002          -1.000
+ XE GPNI0006  PJ0002          -1.000
+ XE GQNI0002  QI0002          -1.000
+ XE GQNI0006  QJ0002          -1.000
+ XL GMXI0002
+ XL GMXJ0002
+ XN LOSS0000  PI0003           1.000
+ XN LOSS0000  PJ0003           1.000
+ XE  GEI0003  EI0003           1.000
+ XE  GFI0003  FI0003           1.000
+ XE  GEJ0003  EJ0003           1.000
+ XE  GFJ0003  FJ0003           1.000
+ XE  GEI0003  VE0002          -1.726
+ XE  GEI0003  VF0002         -10.498
+ XE  GEI0003  VE0004           1.726
+ XE  GEI0003  VF0004          10.588
+ XE  GFI0003  VE0002          10.498
+ XE  GFI0003  VF0002          -1.726
+ XE  GFI0003  VE0004         -10.588
+ XE  GFI0003  VF0004           1.726
+ XE  GEJ0003  VE0004          -1.726
+ XE  GEJ0003  VF0004         -10.498
+ XE  GFJ0003  VE0004          10.498
+ XE  GFJ0003  VF0004          -1.726
+ XE  GEJ0003  VE0002           1.726
+ XE  GEJ0003  VF0002          10.588
+ XE  GFJ0003  VE0002         -10.588
+ XE  GFJ0003  VF0002           1.726
+ XE  GPI0003  PI0003           1.000
+ XE  GQI0003  QI0003           1.000
+ XE  GPJ0003  PJ0003           1.000
+ XE  GQJ0003  QJ0003           1.000
+ XE GPNI0002  PI0003          -1.000
+ XE GPNI0004  PJ0003          -1.000
+ XE GQNI0002  QI0003          -1.000
+ XE GQNI0004  QJ0003          -1.000
+ XL GMXI0003
+ XL GMXJ0003
+ XN LOSS0000  PI0004           1.000
+ XN LOSS0000  PJ0004           1.000
+ XE  GEI0004  EI0004           1.000
+ XE  GFI0004  FI0004           1.000
+ XE  GEJ0004  EJ0004           1.000
+ XE  GFJ0004  FJ0004           1.000
+ XE  GEI0004  VE0003          -6.897
+ XE  GEI0004  VF0003         -82.759
+ XE  GEI0004  VE0004           6.897
+ XE  GEI0004  VF0004          82.759
+ XE  GFI0004  VE0003          82.759
+ XE  GFI0004  VF0003          -6.897
+ XE  GFI0004  VE0004         -82.759
+ XE  GFI0004  VF0004           6.897
+ XE  GEJ0004  VE0004          -6.897
+ XE  GEJ0004  VF0004         -82.759
+ XE  GFJ0004  VE0004          82.759
+ XE  GFJ0004  VF0004          -6.897
+ XE  GEJ0004  VE0003           6.897
+ XE  GEJ0004  VF0003          82.759
+ XE  GFJ0004  VE0003         -82.759
+ XE  GFJ0004  VF0003           6.897
+ XE  GPI0004  PI0004           1.000
+ XE  GQI0004  QI0004           1.000
+ XE  GPJ0004  PJ0004           1.000
+ XE  GQJ0004  QJ0004           1.000
+ XE GPNI0003  PI0004          -1.000
+ XE GPNI0004  PJ0004          -1.000
+ XE GQNI0003  QI0004          -1.000
+ XE GQNI0004  QJ0004          -1.000
+ XL GMXI0004
+ XL GMXJ0004
+ XN LOSS0000  PI0005           1.000
+ XN LOSS0000  PJ0005           1.000
+ XE  GEI0005  EI0005           1.000
+ XE  GFI0005  FI0005           1.000
+ XE  GEJ0005  EJ0005           1.000
+ XE  GFJ0005  FJ0005           1.000
+ XE  GEI0005  VE0004          -1.175
+ XE  GEI0005  VF0004          -6.915
+ XE  GEI0005  VE0007           1.175
+ XE  GEI0005  VF0007           7.051
+ XE  GFI0005  VE0004           6.915
+ XE  GFI0005  VF0004          -1.175
+ XE  GFI0005  VE0007          -7.051
+ XE  GFI0005  VF0007           1.175
+ XE  GEJ0005  VE0007          -1.175
+ XE  GEJ0005  VF0007          -6.915
+ XE  GFJ0005  VE0007           6.915
+ XE  GFJ0005  VF0007          -1.175
+ XE  GEJ0005  VE0004           1.175
+ XE  GEJ0005  VF0004           7.051
+ XE  GFJ0005  VE0004          -7.051
+ XE  GFJ0005  VF0004           1.175
+ XE  GPI0005  PI0005           1.000
+ XE  GQI0005  QI0005           1.000
+ XE  GPJ0005  PJ0005           1.000
+ XE  GQJ0005  QJ0005           1.000
+ XE GPNI0004  PI0005          -1.000
+ XE GPNI0007  PJ0005          -1.000
+ XE GQNI0004  QI0005          -1.000
+ XE GQNI0007  QJ0005          -1.000
+ XL GMXI0005
+ XL GMXJ0005
+ XN LOSS0000  PI0006           1.000
+ XN LOSS0000  PJ0006           1.000
+ XE  GEI0006  EI0006           1.000
+ XE  GFI0006  FI0006           1.000
+ XE  GEJ0006  EJ0006           1.000
+ XE  GFJ0006  FJ0006           1.000
+ XE  GEI0006  VE0005          -3.448
+ XE  GEI0006  VF0005         -41.379
+ XE  GEI0006  VE0006           3.448
+ XE  GEI0006  VF0006          41.379
+ XE  GFI0006  VE0005          41.379
+ XE  GFI0006  VF0005          -3.448
+ XE  GFI0006  VE0006         -41.379
+ XE  GFI0006  VF0006           3.448
+ XE  GEJ0006  VE0006          -3.448
+ XE  GEJ0006  VF0006         -41.379
+ XE  GFJ0006  VE0006          41.379
+ XE  GFJ0006  VF0006          -3.448
+ XE  GEJ0006  VE0005           3.448
+ XE  GEJ0006  VF0005          41.379
+ XE  GFJ0006  VE0005         -41.379
+ XE  GFJ0006  VF0005           3.448
+ XE  GPI0006  PI0006           1.000
+ XE  GQI0006  QI0006           1.000
+ XE  GPJ0006  PJ0006           1.000
+ XE  GQJ0006  QJ0006           1.000
+ XE GPNI0005  PI0006          -1.000
+ XE GPNI0006  PJ0006          -1.000
+ XE GQNI0005  QI0006          -1.000
+ XE GQNI0006  QJ0006          -1.000
+ XL GMXI0006
+ XL GMXJ0006
+ XN LOSS0000  PI0007           1.000
+ XN LOSS0000  PJ0007           1.000
+ XE  GEI0007  EI0007           1.000
+ XE  GFI0007  FI0007           1.000
+ XE  GEJ0007  EJ0007           1.000
+ XE  GFJ0007  FJ0007           1.000
+ XE  GEI0007  VE0006          -1.726
+ XE  GEI0007  VF0006         -10.498
+ XE  GEI0007  VE0007           1.726
+ XE  GEI0007  VF0007          10.588
+ XE  GFI0007  VE0006          10.498
+ XE  GFI0007  VF0006          -1.726
+ XE  GFI0007  VE0007         -10.588
+ XE  GFI0007  VF0007           1.726
+ XE  GEJ0007  VE0007          -1.726
+ XE  GEJ0007  VF0007         -10.498
+ XE  GFJ0007  VE0007          10.498
+ XE  GFJ0007  VF0007          -1.726
+ XE  GEJ0007  VE0006           1.726
+ XE  GEJ0007  VF0006          10.588
+ XE  GFJ0007  VE0006         -10.588
+ XE  GFJ0007  VF0006           1.726
+ XE  GPI0007  PI0007           1.000
+ XE  GQI0007  QI0007           1.000
+ XE  GPJ0007  PJ0007           1.000
+ XE  GQJ0007  QJ0007           1.000
+ XE GPNI0006  PI0007          -1.000
+ XE GPNI0007  PJ0007          -1.000
+ XE GQNI0006  QI0007          -1.000
+ XE GQNI0007  QJ0007          -1.000
+ XL GMXI0007
+ XL GMXJ0007
+
+* Generator oriented data
+      
+ XE GPNI0001  PG0001           1.000
+ XE GPNI0003  PG0002           1.000
+ XE GPNI0005  PG0003           1.000
+
+* Individual generator oriented data
+
+ XE GQNI0001  QG0001           1.000
+ XE GQNI0003  QG0002           1.000
+ XE GQNI0005  QG0003           1.000
+
+CONSTANTS
+
+*   Bus oriented data
+
+ X  SWOPF     GPNI0001         0.000
+ X  SWOPF     GQNI0001         0.000
+ X  SWOPF      SLF0000         0.000
+ X  SWOPF     GPNI0002         2.000
+ X  SWOPF     GQNI0002         3.000
+ X  SWOPF     GPNI0003         0.600
+ X  SWOPF     GQNI0003         0.080
+ X  SWOPF     GPNI0004         2.000
+ X  SWOPF     GQNI0004         0.200
+ X  SWOPF     GPNI0005         0.500
+ X  SWOPF     GQNI0005         0.050
+ X  SWOPF     GPNI0006         1.000
+ X  SWOPF     GQNI0006         0.300
+ X  SWOPF     GPNI0007         2.000
+ X  SWOPF     GQNI0007         1.000
+
+*   Branch oriented data (including transformers)
+
+ X  SWOPF     GMXI0001        16.000
+ X  SWOPF     GMXJ0001        16.000
+ X  SWOPF     GMXI0002         4.000
+ X  SWOPF     GMXJ0002         4.000
+ X  SWOPF     GMXI0003         4.000
+ X  SWOPF     GMXJ0003         4.000
+ X  SWOPF     GMXI0004        25.000
+ X  SWOPF     GMXJ0004        25.000
+ X  SWOPF     GMXI0005         4.000
+ X  SWOPF     GMXJ0005         4.000
+ X  SWOPF     GMXI0006         6.250
+ X  SWOPF     GMXJ0006         6.250
+ X  SWOPF     GMXI0007         4.000
+ X  SWOPF     GMXJ0007         4.000
+
+BOUNDS
+
+ FR SWOPF     'DEFAULT'
+
+*   Bus oriented data
+
+ XL SWOPF     V20001           0.810
+ XU SWOPF     V20001           1.210
+ XL SWOPF     V20002           0.810
+ XU SWOPF     V20002           1.210
+ XL SWOPF     V20003           0.941
+ XU SWOPF     V20003           1.210
+ XL SWOPF     V20004           0.941
+ XU SWOPF     V20004           1.210
+ XL SWOPF     V20005           0.941
+ XU SWOPF     V20005           1.210
+ XL SWOPF     V20006           0.941
+ XU SWOPF     V20006           1.210
+ XL SWOPF     V20007           0.941
+ XU SWOPF     V20007           1.210
+
+*   Generator oriented data
+
+ XL SWOPF     PG0001           0.500
+ XU SWOPF     PG0001          10.000
+ XL SWOPF     PG0002           0.500
+ XU SWOPF     PG0002          10.000
+ XL SWOPF     PG0003           0.200
+ XU SWOPF     PG0003           4.000
+
+START POINT
+
+*   Bus oriented data
+
+ XV SWOPF     VE0001           1.000
+ XV SWOPF     VF0001           0.000
+ XV SWOPF     V20001           1.000
+ XV SWOPF     VE0002           1.001
+ XV SWOPF     VF0002           0.000
+ XV SWOPF     V20002           1.002
+ XV SWOPF     VE0003           1.050
+ XV SWOPF     VF0003           0.000
+ XV SWOPF     V20003           1.102
+ XV SWOPF     VE0004           1.001
+ XV SWOPF     VF0004           0.000
+ XV SWOPF     V20004           1.002
+ XV SWOPF     VE0005           1.050
+ XV SWOPF     VF0005           0.000
+ XV SWOPF     V20005           1.102
+ XV SWOPF     VE0006           1.001
+ XV SWOPF     VF0006           0.000
+ XV SWOPF     V20006           1.002
+ XV SWOPF     VE0007           1.001
+ XV SWOPF     VF0007           0.000
+ XV SWOPF     V20007           1.002
+
+*   Branch oriented data (including transformers)
+
+ XV SWOPF     EI0001          -0.005
+ XV SWOPF     FI0001           0.066
+ XV SWOPF     EJ0001           0.005
+ XV SWOPF     FJ0001          -0.066
+ XV SWOPF     PI0001          -0.005
+ XV SWOPF     QI0001          -0.066
+ XV SWOPF     PJ0001           0.005
+ XV SWOPF     QJ0001           0.066
+ XV SWOPF     EI0002           0.000
+ XV SWOPF     FI0002           0.136
+ XV SWOPF     EJ0002           0.000
+ XV SWOPF     FJ0002           0.136
+ XV SWOPF     PI0002           0.000
+ XV SWOPF     QI0002          -0.136
+ XV SWOPF     PJ0002           0.000
+ XV SWOPF     QJ0002          -0.136
+ XV SWOPF     EI0003           0.000
+ XV SWOPF     FI0003           0.091
+ XV SWOPF     EJ0003           0.000
+ XV SWOPF     FJ0003           0.091
+ XV SWOPF     PI0003           0.000
+ XV SWOPF     QI0003          -0.091
+ XV SWOPF     PJ0003           0.000
+ XV SWOPF     QJ0003          -0.091
+ XV SWOPF     EI0004           0.338
+ XV SWOPF     FI0004          -4.055
+ XV SWOPF     EJ0004          -0.338
+ XV SWOPF     FJ0004           4.055
+ XV SWOPF     PI0004           0.355
+ XV SWOPF     QI0004           4.258
+ XV SWOPF     PJ0004          -0.338
+ XV SWOPF     QJ0004          -4.059
+ XV SWOPF     EI0005           0.000
+ XV SWOPF     FI0005           0.136
+ XV SWOPF     EJ0005           0.000
+ XV SWOPF     FJ0005           0.136
+ XV SWOPF     PI0005           0.000
+ XV SWOPF     QI0005          -0.136
+ XV SWOPF     PJ0005           0.000
+ XV SWOPF     QJ0005          -0.136
+ XV SWOPF     EI0006           0.169
+ XV SWOPF     FI0006          -2.028
+ XV SWOPF     EJ0006          -0.169
+ XV SWOPF     FJ0006           2.028
+ XV SWOPF     PI0006           0.177
+ XV SWOPF     QI0006           2.129
+ XV SWOPF     PJ0006          -0.169
+ XV SWOPF     QJ0006          -2.030
+ XV SWOPF     EI0007           0.000
+ XV SWOPF     FI0007           0.091
+ XV SWOPF     EJ0007           0.000
+ XV SWOPF     FJ0007           0.091
+ XV SWOPF     PI0007           0.000
+ XV SWOPF     QI0007          -0.091
+ XV SWOPF     PJ0007           0.000
+ XV SWOPF     QJ0007          -0.091
+
+*   Generator oriented data
+
+ XV SWOPF     PG0001           3.000
+ XV SWOPF     PG0002           5.000
+ XV SWOPF     PG0003           2.000
+
+*   Individual generator oriented data
+
+ XV SWOPF     QG0001           0.000
+ XV SWOPF     QG0002           0.000
+ XV SWOPF     QG0003           0.000
+
+ELEMENT TYPE
+
+ EV XTIMESY   X
+ EV XTIMESY   Y
+ EV XSQUARE   X
+
+ELEMENT USES
+
+*    Bus oriented data
+
+ XT   E20001  XSQUARE 
+ ZV   E20001  X                        VE0001
+ XT   F20001  XSQUARE 
+ ZV   F20001  X                        VF0001
+ XT   E20002  XSQUARE 
+ ZV   E20002  X                        VE0002
+ XT   F20002  XSQUARE 
+ ZV   F20002  X                        VF0002
+ XT   E20003  XSQUARE 
+ ZV   E20003  X                        VE0003
+ XT   F20003  XSQUARE 
+ ZV   F20003  X                        VF0003
+ XT   E20004  XSQUARE 
+ ZV   E20004  X                        VE0004
+ XT   F20004  XSQUARE 
+ ZV   F20004  X                        VF0004
+ XT   E20005  XSQUARE 
+ ZV   E20005  X                        VE0005
+ XT   F20005  XSQUARE 
+ ZV   F20005  X                        VF0005
+ XT   E20006  XSQUARE 
+ ZV   E20006  X                        VE0006
+ XT   F20006  XSQUARE 
+ ZV   F20006  X                        VF0006
+ XT   E20007  XSQUARE 
+ ZV   E20007  X                        VE0007
+ XT   F20007  XSQUARE 
+ ZV   F20007  X                        VF0007
+
+*   Branch oriented data (including transformers)
+
+ XT EIEI0001  XTIMESY 
+ ZV EIEI0001  X                        EI0001
+ ZV EIEI0001  Y                        VE0001
+ XT FIFI0001  XTIMESY 
+ ZV FIFI0001  X                        FI0001
+ ZV FIFI0001  Y                        VF0001
+ XT EIFI0001  XTIMESY 
+ ZV EIFI0001  X                        EI0001
+ ZV EIFI0001  Y                        VF0001
+ XT FIEI0001  XTIMESY 
+ ZV FIEI0001  X                        FI0001
+ ZV FIEI0001  Y                        VE0001
+ XT EJEJ0001  XTIMESY 
+ ZV EJEJ0001  X                        EJ0001
+ ZV EJEJ0001  Y                        VE0002
+ XT FJFJ0001  XTIMESY 
+ ZV FJFJ0001  X                        FJ0001
+ ZV FJFJ0001  Y                        VF0002
+ XT EJFJ0001  XTIMESY 
+ ZV EJFJ0001  X                        EJ0001
+ ZV EJFJ0001  Y                        VF0002
+ XT FJEJ0001  XTIMESY 
+ ZV FJEJ0001  X                        FJ0001
+ ZV FJEJ0001  Y                        VE0002
+ XT  PI20001  XSQUARE 
+ ZV  PI20001  X                        PI0001
+ XT  QI20001  XSQUARE 
+ ZV  QI20001  X                        QI0001
+ XT  PJ20001  XSQUARE 
+ ZV  PJ20001  X                        PJ0001
+ XT  QJ20001  XSQUARE 
+ ZV  QJ20001  X                        QJ0001
+ XT EIEI0002  XTIMESY 
+ ZV EIEI0002  X                        EI0002
+ ZV EIEI0002  Y                        VE0002
+ XT FIFI0002  XTIMESY 
+ ZV FIFI0002  X                        FI0002
+ ZV FIFI0002  Y                        VF0002
+ XT EIFI0002  XTIMESY 
+ ZV EIFI0002  X                        EI0002
+ ZV EIFI0002  Y                        VF0002
+ XT FIEI0002  XTIMESY 
+ ZV FIEI0002  X                        FI0002
+ ZV FIEI0002  Y                        VE0002
+ XT EJEJ0002  XTIMESY 
+ ZV EJEJ0002  X                        EJ0002
+ ZV EJEJ0002  Y                        VE0006
+ XT FJFJ0002  XTIMESY 
+ ZV FJFJ0002  X                        FJ0002
+ ZV FJFJ0002  Y                        VF0006
+ XT EJFJ0002  XTIMESY 
+ ZV EJFJ0002  X                        EJ0002
+ ZV EJFJ0002  Y                        VF0006
+ XT FJEJ0002  XTIMESY 
+ ZV FJEJ0002  X                        FJ0002
+ ZV FJEJ0002  Y                        VE0006
+ XT  PI20002  XSQUARE 
+ ZV  PI20002  X                        PI0002
+ XT  QI20002  XSQUARE 
+ ZV  QI20002  X                        QI0002
+ XT  PJ20002  XSQUARE 
+ ZV  PJ20002  X                        PJ0002
+ XT  QJ20002  XSQUARE 
+ ZV  QJ20002  X                        QJ0002
+ XT EIEI0003  XTIMESY 
+ ZV EIEI0003  X                        EI0003
+ ZV EIEI0003  Y                        VE0002
+ XT FIFI0003  XTIMESY 
+ ZV FIFI0003  X                        FI0003
+ ZV FIFI0003  Y                        VF0002
+ XT EIFI0003  XTIMESY 
+ ZV EIFI0003  X                        EI0003
+ ZV EIFI0003  Y                        VF0002
+ XT FIEI0003  XTIMESY 
+ ZV FIEI0003  X                        FI0003
+ ZV FIEI0003  Y                        VE0002
+ XT EJEJ0003  XTIMESY 
+ ZV EJEJ0003  X                        EJ0003
+ ZV EJEJ0003  Y                        VE0004
+ XT FJFJ0003  XTIMESY 
+ ZV FJFJ0003  X                        FJ0003
+ ZV FJFJ0003  Y                        VF0004
+ XT EJFJ0003  XTIMESY 
+ ZV EJFJ0003  X                        EJ0003
+ ZV EJFJ0003  Y                        VF0004
+ XT FJEJ0003  XTIMESY 
+ ZV FJEJ0003  X                        FJ0003
+ ZV FJEJ0003  Y                        VE0004
+ XT  PI20003  XSQUARE 
+ ZV  PI20003  X                        PI0003
+ XT  QI20003  XSQUARE 
+ ZV  QI20003  X                        QI0003
+ XT  PJ20003  XSQUARE 
+ ZV  PJ20003  X                        PJ0003
+ XT  QJ20003  XSQUARE 
+ ZV  QJ20003  X                        QJ0003
+ XT EIEI0004  XTIMESY 
+ ZV EIEI0004  X                        EI0004
+ ZV EIEI0004  Y                        VE0003
+ XT FIFI0004  XTIMESY 
+ ZV FIFI0004  X                        FI0004
+ ZV FIFI0004  Y                        VF0003
+ XT EIFI0004  XTIMESY 
+ ZV EIFI0004  X                        EI0004
+ ZV EIFI0004  Y                        VF0003
+ XT FIEI0004  XTIMESY 
+ ZV FIEI0004  X                        FI0004
+ ZV FIEI0004  Y                        VE0003
+ XT EJEJ0004  XTIMESY 
+ ZV EJEJ0004  X                        EJ0004
+ ZV EJEJ0004  Y                        VE0004
+ XT FJFJ0004  XTIMESY 
+ ZV FJFJ0004  X                        FJ0004
+ ZV FJFJ0004  Y                        VF0004
+ XT EJFJ0004  XTIMESY 
+ ZV EJFJ0004  X                        EJ0004
+ ZV EJFJ0004  Y                        VF0004
+ XT FJEJ0004  XTIMESY 
+ ZV FJEJ0004  X                        FJ0004
+ ZV FJEJ0004  Y                        VE0004
+ XT  PI20004  XSQUARE 
+ ZV  PI20004  X                        PI0004
+ XT  QI20004  XSQUARE 
+ ZV  QI20004  X                        QI0004
+ XT  PJ20004  XSQUARE 
+ ZV  PJ20004  X                        PJ0004
+ XT  QJ20004  XSQUARE 
+ ZV  QJ20004  X                        QJ0004
+ XT EIEI0005  XTIMESY 
+ ZV EIEI0005  X                        EI0005
+ ZV EIEI0005  Y                        VE0004
+ XT FIFI0005  XTIMESY 
+ ZV FIFI0005  X                        FI0005
+ ZV FIFI0005  Y                        VF0004
+ XT EIFI0005  XTIMESY 
+ ZV EIFI0005  X                        EI0005
+ ZV EIFI0005  Y                        VF0004
+ XT FIEI0005  XTIMESY 
+ ZV FIEI0005  X                        FI0005
+ ZV FIEI0005  Y                        VE0004
+ XT EJEJ0005  XTIMESY 
+ ZV EJEJ0005  X                        EJ0005
+ ZV EJEJ0005  Y                        VE0007
+ XT FJFJ0005  XTIMESY 
+ ZV FJFJ0005  X                        FJ0005
+ ZV FJFJ0005  Y                        VF0007
+ XT EJFJ0005  XTIMESY 
+ ZV EJFJ0005  X                        EJ0005
+ ZV EJFJ0005  Y                        VF0007
+ XT FJEJ0005  XTIMESY 
+ ZV FJEJ0005  X                        FJ0005
+ ZV FJEJ0005  Y                        VE0007
+ XT  PI20005  XSQUARE 
+ ZV  PI20005  X                        PI0005
+ XT  QI20005  XSQUARE 
+ ZV  QI20005  X                        QI0005
+ XT  PJ20005  XSQUARE 
+ ZV  PJ20005  X                        PJ0005
+ XT  QJ20005  XSQUARE 
+ ZV  QJ20005  X                        QJ0005
+ XT EIEI0006  XTIMESY 
+ ZV EIEI0006  X                        EI0006
+ ZV EIEI0006  Y                        VE0005
+ XT FIFI0006  XTIMESY 
+ ZV FIFI0006  X                        FI0006
+ ZV FIFI0006  Y                        VF0005
+ XT EIFI0006  XTIMESY 
+ ZV EIFI0006  X                        EI0006
+ ZV EIFI0006  Y                        VF0005
+ XT FIEI0006  XTIMESY 
+ ZV FIEI0006  X                        FI0006
+ ZV FIEI0006  Y                        VE0005
+ XT EJEJ0006  XTIMESY 
+ ZV EJEJ0006  X                        EJ0006
+ ZV EJEJ0006  Y                        VE0006
+ XT FJFJ0006  XTIMESY 
+ ZV FJFJ0006  X                        FJ0006
+ ZV FJFJ0006  Y                        VF0006
+ XT EJFJ0006  XTIMESY 
+ ZV EJFJ0006  X                        EJ0006
+ ZV EJFJ0006  Y                        VF0006
+ XT FJEJ0006  XTIMESY 
+ ZV FJEJ0006  X                        FJ0006
+ ZV FJEJ0006  Y                        VE0006
+ XT  PI20006  XSQUARE 
+ ZV  PI20006  X                        PI0006
+ XT  QI20006  XSQUARE 
+ ZV  QI20006  X                        QI0006
+ XT  PJ20006  XSQUARE 
+ ZV  PJ20006  X                        PJ0006
+ XT  QJ20006  XSQUARE 
+ ZV  QJ20006  X                        QJ0006
+ XT EIEI0007  XTIMESY 
+ ZV EIEI0007  X                        EI0007
+ ZV EIEI0007  Y                        VE0006
+ XT FIFI0007  XTIMESY 
+ ZV FIFI0007  X                        FI0007
+ ZV FIFI0007  Y                        VF0006
+ XT EIFI0007  XTIMESY 
+ ZV EIFI0007  X                        EI0007
+ ZV EIFI0007  Y                        VF0006
+ XT FIEI0007  XTIMESY 
+ ZV FIEI0007  X                        FI0007
+ ZV FIEI0007  Y                        VE0006
+ XT EJEJ0007  XTIMESY 
+ ZV EJEJ0007  X                        EJ0007
+ ZV EJEJ0007  Y                        VE0007
+ XT FJFJ0007  XTIMESY 
+ ZV FJFJ0007  X                        FJ0007
+ ZV FJFJ0007  Y                        VF0007
+ XT EJFJ0007  XTIMESY 
+ ZV EJFJ0007  X                        EJ0007
+ ZV EJFJ0007  Y                        VF0007
+ XT FJEJ0007  XTIMESY 
+ ZV FJEJ0007  X                        FJ0007
+ ZV FJEJ0007  Y                        VE0007
+ XT  PI20007  XSQUARE 
+ ZV  PI20007  X                        PI0007
+ XT  QI20007  XSQUARE 
+ ZV  QI20007  X                        QI0007
+ XT  PJ20007  XSQUARE 
+ ZV  PJ20007  X                        PJ0007
+ XT  QJ20007  XSQUARE 
+ ZV  QJ20007  X                        QJ0007
+
+GROUP USES
+
+*   Bus oriented data
+
+ XE  GV20001    E20001        -1.000
+ XE  GV20001    F20001        -1.000
+ XE  GV20002    E20002        -1.000
+ XE  GV20002    F20002        -1.000
+ XE  GV20003    E20003        -1.000
+ XE  GV20003    F20003        -1.000
+ XE  GV20004    E20004        -1.000
+ XE  GV20004    F20004        -1.000
+ XE  GV20005    E20005        -1.000
+ XE  GV20005    F20005        -1.000
+ XE  GV20006    E20006        -1.000
+ XE  GV20006    F20006        -1.000
+ XE  GV20007    E20007        -1.000
+ XE  GV20007    F20007        -1.000
+
+*   Branch oriented data (including transformers)
+
+ XE  GPI0001  EIEI0001        -1.000
+ XE  GPI0001  FIFI0001        -1.000
+ XE  GQI0001  EIFI0001        -1.000
+ XE  GQI0001  FIEI0001         1.000
+ XE  GPJ0001  EJEJ0001        -1.000
+ XE  GPJ0001  FJFJ0001        -1.000
+ XE  GQJ0001  EJFJ0001        -1.000
+ XE  GQJ0001  FJEJ0001         1.000
+ XE GMXI0001   PI20001         1.000
+ XE GMXI0001   QI20001         1.000
+ XE GMXJ0001   PJ20001         1.000
+ XE GMXJ0001   QJ20001         1.000
+ XE  GPI0002  EIEI0002        -1.000
+ XE  GPI0002  FIFI0002        -1.000
+ XE  GQI0002  EIFI0002        -1.000
+ XE  GQI0002  FIEI0002         1.000
+ XE  GPJ0002  EJEJ0002        -1.000
+ XE  GPJ0002  FJFJ0002        -1.000
+ XE  GQJ0002  EJFJ0002        -1.000
+ XE  GQJ0002  FJEJ0002         1.000
+ XE GMXI0002   PI20002         1.000
+ XE GMXI0002   QI20002         1.000
+ XE GMXJ0002   PJ20002         1.000
+ XE GMXJ0002   QJ20002         1.000
+ XE  GPI0003  EIEI0003        -1.000
+ XE  GPI0003  FIFI0003        -1.000
+ XE  GQI0003  EIFI0003        -1.000
+ XE  GQI0003  FIEI0003         1.000
+ XE  GPJ0003  EJEJ0003        -1.000
+ XE  GPJ0003  FJFJ0003        -1.000
+ XE  GQJ0003  EJFJ0003        -1.000
+ XE  GQJ0003  FJEJ0003         1.000
+ XE GMXI0003   PI20003         1.000
+ XE GMXI0003   QI20003         1.000
+ XE GMXJ0003   PJ20003         1.000
+ XE GMXJ0003   QJ20003         1.000
+ XE  GPI0004  EIEI0004        -1.000
+ XE  GPI0004  FIFI0004        -1.000
+ XE  GQI0004  EIFI0004        -1.000
+ XE  GQI0004  FIEI0004         1.000
+ XE  GPJ0004  EJEJ0004        -1.000
+ XE  GPJ0004  FJFJ0004        -1.000
+ XE  GQJ0004  EJFJ0004        -1.000
+ XE  GQJ0004  FJEJ0004         1.000
+ XE GMXI0004   PI20004         1.000
+ XE GMXI0004   QI20004         1.000
+ XE GMXJ0004   PJ20004         1.000
+ XE GMXJ0004   QJ20004         1.000
+ XE  GPI0005  EIEI0005        -1.000
+ XE  GPI0005  FIFI0005        -1.000
+ XE  GQI0005  EIFI0005        -1.000
+ XE  GQI0005  FIEI0005         1.000
+ XE  GPJ0005  EJEJ0005        -1.000
+ XE  GPJ0005  FJFJ0005        -1.000
+ XE  GQJ0005  EJFJ0005        -1.000
+ XE  GQJ0005  FJEJ0005         1.000
+ XE GMXI0005   PI20005         1.000
+ XE GMXI0005   QI20005         1.000
+ XE GMXJ0005   PJ20005         1.000
+ XE GMXJ0005   QJ20005         1.000
+ XE  GPI0006  EIEI0006        -1.000
+ XE  GPI0006  FIFI0006        -1.000
+ XE  GQI0006  EIFI0006        -1.000
+ XE  GQI0006  FIEI0006         1.000
+ XE  GPJ0006  EJEJ0006        -1.000
+ XE  GPJ0006  FJFJ0006        -1.000
+ XE  GQJ0006  EJFJ0006        -1.000
+ XE  GQJ0006  FJEJ0006         1.000
+ XE GMXI0006   PI20006         1.000
+ XE GMXI0006   QI20006         1.000
+ XE GMXJ0006   PJ20006         1.000
+ XE GMXJ0006   QJ20006         1.000
+ XE  GPI0007  EIEI0007        -1.000
+ XE  GPI0007  FIFI0007        -1.000
+ XE  GQI0007  EIFI0007        -1.000
+ XE  GQI0007  FIEI0007         1.000
+ XE  GPJ0007  EJEJ0007        -1.000
+ XE  GPJ0007  FJFJ0007        -1.000
+ XE  GQJ0007  EJFJ0007        -1.000
+ XE  GQJ0007  FJEJ0007         1.000
+ XE GMXI0007   PI20007         1.000
+ XE GMXI0007   QI20007         1.000
+ XE GMXJ0007   PJ20007         1.000
+ XE GMXJ0007   QJ20007         1.000
+
+OBJECT BOUND
+
+*   Solutions
+
+*LO SOLTN               6.78605619D-2
+*LO SOLTN               6.78422730D-2
+
+ENDATA
+ 
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SWOPF
+
+INDIVIDUALS
+
+ T  XTIMESY
+ F                      X * Y     
+ G  X                   Y       
+ G  Y                   X       
+ H  X         Y         1.0     
+ 
+ T  XSQUARE
+ F                      X * X     
+ G  X                   X + X     
+ H  X         X         2.0   
+  
+ENDATA

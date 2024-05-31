@@ -1,0 +1,33 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SUPERSIM
+
+*   Problem :
+*   *********
+*   A super simple linear program (version 2).
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "The LANCELOT User's Manual",
+*   Dept of Maths, FUNDP, 1991.
+
+*   SIF input: Ph. Toint, Jan 1991.
+
+*   classification LLR2-AN-2-2
+
+VARIABLES
+    x
+    y
+GROUPS
+ XN Object    x         1.0 
+ XE Cautious  x         1.0            y         2.0
+ XE Daring    x         2.0            y         1.0
+CONSTANTS
+ RE Level               2.0
+ Z  SUPERSIM  Cautious                 Level
+ Z  SUPERSIM  Daring                   Level
+BOUNDS
+ XR SUPERSIM  y
+ENDATA

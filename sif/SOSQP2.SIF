@@ -1,0 +1,130 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SOSQP2   
+
+*   Problem :
+*   *********
+
+*   A non-convex quadratic program which is always
+*   second-order sufficient
+
+*   The objective function is of the form
+*
+*      sum (i=1,n) x_i y_i
+*
+*   There are n equality constraints of the form
+*
+*        i x_i - y_i = i   
+*
+*   and another equality constraint of the form
+*
+*        sum x_i + sum y_i = n / 2
+*
+*   Finally, there are simple bounds
+*
+*       -1 <= x_i, y_i <= 1    (i=1,n)
+
+*   SIF input: Nick Gould, April 25th 1995
+
+*   classification QLR2-AN-V-V
+
+*   The number of equality constraints
+
+*IE N                   10             $-PARAMETER 
+*IE N                   100            $-PARAMETER 
+*IE N                   1000           $-PARAMETER      original value
+*IE N                   2500           $-PARAMETER 
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER 
+*IE N                   10000          $-PARAMETER 
+*IE N                   50000          $-PARAMETER 
+
+*  Other useful values.
+
+ IE 1                   1
+ RI RN        N
+ RM RN/2      RN        0.5
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ X  Y(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ DO I         1                        N
+ RI RI        I
+ ZE E(I)      X(I)                     RI
+ XE E(I)      Y(I)      -1.0           
+ ND
+
+ DO I         1                        N
+ XE CX        X(I)      1.0            Y(I)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ RI RI        I
+ ZE SOSQP2    E(I)                     RI
+ ND
+
+ ZE SOSQP2    CX                       RN/2
+
+BOUNDS
+
+ LO SOSQP2    'DEFAULT' -1.0
+ UP SOSQP2    'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV PROD      X                        Y
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT P(I)      PROD
+ ZV P(I)      X                        X(I)
+ ZV P(I)      Y                        Y(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE OBJ       P(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -3.99781D+00   $ (N=10)
+*LO SOLTN               -4.87375D+01   $ (N=100)
+*LO SOLTN               -4.98703D+02   $ (N=1000)
+*LO SOLTN               -4.99864D+03   $ (N=10000)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SOSQP2  
+
+INDIVIDUALS
+
+ T  PROD
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+

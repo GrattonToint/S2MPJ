@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SYNTHES1
+
+*   Problem :
+*   *********
+
+*   Source: Test problem 1 (Synthesis of processing system) in 
+*   M. Duran & I.E. Grossmann,
+*   "An outer approximation algorithm for a class of mixed integer nonlinear
+*    programs", Mathematical Programming 36, pp. 307-339, 1986.
+
+*   SIF input: S. Leyffer, October 1997
+
+*   classification OOR2-AN-6-6
+
+ IE 1                   1
+ IE 3                   3
+
+VARIABLES
+
+ DO I         1                        3
+ X  X(I)      
+ ND
+ DO I         1                        3
+ X  Y(I)      INTEGER
+ ND
+
+GROUPS
+
+ N  OBJ       Y1        5.0            Y2        6.0
+ N  OBJ       Y3        8.0            
+ N  OBJ       X1        10.0           X3        -7.0
+
+ G  N1        X3        -0.8
+
+ G  N2        X3        -1.0           Y3        -2.0
+
+ L  L3        X2        1.0            X1        -1.0
+
+ L  L4        X2        1.0            Y1        -2.0
+
+ L  L5        X2        -1.0           X1        1.0
+ L  L5        Y2        -2.0
+
+ L  L6        Y1        1.0            Y2        1.0
+
+CONSTANTS
+
+ X  SYNTHES1  OBJ       -10.0
+ X  SYNTHES1  N2        -2.0
+ X  SYNTHES1  L6        1.0
+
+BOUNDS
+
+ XU SYNTHES1  X1        2.0
+ XU SYNTHES1  X2        2.0
+ XU SYNTHES1  X3        1.0
+ XU SYNTHES1  Y1        1.0
+ XU SYNTHES1  Y2        1.0
+ XU SYNTHES1  Y3        1.0
+
+ELEMENT TYPE
+
+ EV LOGXP1    X
+ EV LOGDIFF   X                        Y
+
+ELEMENT USES
+
+ T  LOGX2     LOGXP1
+ ZV LOGX2     X                        X2
+
+ T  LOGX1X2   LOGDIFF
+ ZV LOGX1X2   X                        X1
+ ZV LOGX1X2   Y                        X2
+
+GROUP USES
+
+ E  OBJ       LOGX2     -18.0          LOGX1X2   -19.2  
+
+ E  N1        LOGX2     0.8            LOGX1X2   0.96   
+
+ E  N2        LOGX2     1.0            LOGX1X2   1.2    
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SYNTHES1
+
+ EV LOGXP1    X
+ EV LOGDIFF   X                        Y
+
+TEMPORARIES
+
+ R  DX
+ R  DXDX
+
+INDIVIDUALS
+
+ T  LOGXP1
+ F                      LOG( X + 1.0 )
+ G  X                   1.0 / ( X + 1.0 )
+ H  X         X         -1.0 / ( X + 1.0 )**2
+
+ T  LOGDIFF
+ F                      LOG( X - Y + 1.0 )
+ A  DX                  1.0 / ( X - Y + 1.0 )
+ G  X                   DX
+ G  Y                   -DX
+ A  DXDX                -1.0 / ( X - Y + 1.0 )**2
+ H  X         X         DXDX
+ H  X         Y         -DXDX
+ H  Y         Y         DXDX
+
+ENDATA

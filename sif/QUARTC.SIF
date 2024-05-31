@@ -1,0 +1,95 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          QUARTC
+
+*   Problem :
+*   *********
+
+*   A simple quartic function.
+
+*   Source:  problem 157 (p. 87) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, March 1991.
+
+*   classification OUR2-AN-V-0
+
+*   number of variables
+
+*IE N                   25             $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   other parameter definitions
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN G(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ RI REALI     I
+ Z  QUARTC    G(I)                     REALI
+ ND
+
+BOUNDS
+
+ FR QUARTC    'DEFAULT'
+
+START POINT
+
+ XV QUARTC    'DEFAULT' 2.0
+
+GROUP TYPE
+
+ GV L4        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L4
+
+OBJECT BOUND
+
+ LO QUARTC              0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        QUARTC
+
+INDIVIDUALS
+
+ T  L4
+ F                      GVAR**4
+ G                      4.0 * GVAR**3
+ H                      12.0 * GVAR**2
+
+ENDATA

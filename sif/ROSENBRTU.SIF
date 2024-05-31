@@ -1,0 +1,116 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ROSENBRTU
+
+*   Problem :
+*   *********
+
+*   The ever famous 2 variables Rosenbrock "banana valley" problem,
+*   but using the Tukey bighweight rather than quadratic loss function
+
+*   Source:  variant of problem 1 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   SIF input: Ph. Toint, Dec 1989, modified for the Tukey biweight loss
+*              Nick Gould, July 2018
+
+*   classification OUR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X2        1.0
+ N  G1        'SCALE'   0.01
+ N  G2        X1        1.0
+
+CONSTANTS
+
+    ROSENBRTU G2        1.0
+
+BOUNDS
+
+ FR ROSENBRTU 'DEFAULT'
+
+START POINT
+
+    ROSENBRTA X1        -12.0
+    ROSENBRTA X2         10.0
+
+    ROSENBRTB X1        -1.2
+    ROSENBRTB X2         1.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+GROUP TYPE
+
+ GV BIWEIGHT  THETA
+
+GROUP USES
+
+ T  'DEFAULT' BIWEIGHT
+ XE G1        E1         -1.0
+
+OBJECT BOUND
+
+ LO ROSENBRTU            0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ROSENBRTU
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ROSENBRTU
+
+TEMPORARIES
+
+ R  T2
+ R  OPT2
+
+INDIVIDUALS
+
+ T  BIWEIGHT
+ A  T2                  THETA * THETA
+ A  OPT2                1.0D0 + T2
+ F                      T2 / OPT2
+ G                      2.0D0 * THETA / OPT2 ** 2
+ H                      2.0D0 / OPT2 ** 2
+ H+                       - 8.0D0 * T2 / OPT2 ** 3
+
+ENDATA

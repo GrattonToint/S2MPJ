@@ -1,0 +1,169 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SYNTHES2
+
+*   Problem :
+*   *********
+
+*   Source: Test problem 2 (Synthesis of processing system) in 
+*   M. Duran & I.E. Grossmann,
+*   "An outer approximation algorithm for a class of mixed integer nonlinear
+*    programs", Mathematical Programming 36, pp. 307-339, 1986.
+
+*   SIF input: S. Leyffer, October 1997
+
+*   classification OOR2-AN-11-14
+
+ IE 1                   1
+ IE 5                   5
+ IE 6                   6
+
+VARIABLES
+
+ DO I         1                        6
+ X  X(I)      
+ ND
+ DO I         1                        5
+ X  Y(I)      INTEGER
+ ND
+
+GROUPS
+
+ N  OBJ       Y1        5.0            Y2        8.0
+ N  OBJ       Y3        6.0            Y4        10.0
+ N  OBJ       Y5        6.0
+ N  OBJ       X1        -10.0          X2        -15.0
+ N  OBJ       X3        -15.0          X4        15.0
+ N  OBJ       X5        5.0            X6        -20.0
+
+ L  N1
+ L  N2        Y1        -10.0
+ L  N3        Y2        -10.0 
+
+ L  L1        X3        1.25           Y3        -10.0
+
+ L  L2        X4        1.0            X5        1.0
+ L  L2        Y4        -10.0
+
+ L  L3        X3        -2.0           X6        2.0
+ L  L3        Y5        -10.0
+
+ L  L4        X1        -1.0           X2        -1.0
+ L  L4        X3        -2.0           X4        1.0
+ L  L4        X6        2.0 
+
+ L  L5        X1        -1.0           X2        -1.0
+ L  L5        X3        -0.75          X4        1.0
+ L  L5        X6        2.0 
+
+ L  L6        X3        1.0            X6        -1.0
+
+ L  L7        X3        2.0            X4        -1.0
+ L  L7        X6        -2.0
+
+ L  L8        X4        -0.5           X5        1.0
+
+ L  L9        X4        0.2            X5        -1.0
+
+ E  L10       Y1        1.0            Y2        1.0
+
+ L  L11       Y4        1.0            Y5        1.0
+
+CONSTANTS
+
+ X  SYNTHES2  OBJ       -140.0
+ X  SYNTHES2  N2        1.0
+ X  SYNTHES2  N3        1.0
+ X  SYNTHES2  L10       1.0
+ X  SYNTHES2  L11       1.0
+
+RANGES
+
+    SYNTHESE2 L11       -1.0
+
+BOUNDS
+
+ XU SYNTHES2  X1        2.0
+ XU SYNTHES2  X2        2.0
+ XU SYNTHES2  X3        2.0
+ XU SYNTHES2  X6        3.0
+ DO I         1                        5
+ XU SYNTHES2  Y(I)      1.0
+ ND
+
+ELEMENT TYPE
+
+ EV LOGSUM    X                        Y
+
+ EV EXPA      X                        
+ EP EXPA      A
+
+ELEMENT USES
+
+ T  LOGX4X5   LOGSUM    
+ V  LOGX4X5   X                        X4
+ V  LOGX4X5   Y                        X5
+
+ T  EXPX1     EXPA 
+ V  EXPX1     X                        X1
+ P  EXPX1     A         1.0         
+
+ T  EXPX2     EXPA 
+ V  EXPX2     X                        X2
+ P  EXPX2     A         1.2         
+
+GROUP USES
+
+ E  OBJ       EXPX1     1.0            EXPX2     1.0
+ E  OBJ       LOGX4X5   -60.0
+
+ E  N1        LOGX4X5   -1.0
+
+ E  N2        EXPX1     1.0 
+
+ E  N3        EXPX2     1.0 
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SYNTHES2
+
+ EV LOGSUM    X                        Y
+ EV EXPA      X
+ EP EXPA      A
+
+TEMPORARIES
+
+ R  DX
+ R  DXDX
+ R  EXPXA
+
+INDIVIDUALS
+
+ T  LOGSUM
+ F                      LOG( X + Y + 1.0 )
+ A  DX                  1.0 / ( X + Y + 1.0 )
+ G  X                   DX
+ G  Y                   DX
+ A  DXDX                -1.0 / ( X + Y + 1.0 )**2
+ H  X         X         DXDX
+ H  X         Y         DXDX
+ H  Y         Y         DXDX
+
+ T  EXPA
+ A  EXPXA               EXP( X / A )
+ F                      EXPXA
+ G  X                   EXPXA / A
+ H  X         X         EXPXA / A / A
+
+ENDATA

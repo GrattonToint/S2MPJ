@@ -1,0 +1,161 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TRIGON1B
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example Trigonometric01
+
+*   Fit: y = \sum_{j=1}^{n} cos(x_j) + i (cos(x_i) + sin(x_i) ) + e
+
+*   version with box-constrained feasible region
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification SBR2-MN-V-0
+
+*   Number of variables
+
+*IE N                   10             $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+
+*   Number of data values
+
+ I= M         N
+
+*   Useful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN F(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ I+ N+I       N                        I
+ RI RN+I      N+I
+ Z  TRIGON1   F(I)                     RN+I
+ ND
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' 0.0
+ UP BOUNDS    'DEFAULT' 3.141592653
+
+START POINT
+
+    START     X1        0.1
+ DO I         2                        N
+ X  START     X(I)      0.1
+ ND
+
+ELEMENT TYPE
+
+ EV SIN       X
+ EV COS       X
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT S(I)      SIN
+ ZV S(I)      X                        X(I)
+ XT C(I)      COS
+ ZV C(I)      X                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        M
+ IA I-1       I         -1
+ IA I+1       I         1
+ RI RI        I
+ RI RI+1      I+1
+ DO J         1                        I-1
+ XE F(I)      C(J)
+ OD J
+ ZE F(I)      C(I)                     RI+1
+ ZE F(I)      S(I)                     RI
+ DO J         I+1                      M
+ XE F(I)      C(J)
+ OD J
+ OD I
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO TRIGON1             0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      TRIGON1B
+
+TEMPORARIES
+
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SIN
+ F                      SIN( X )
+ G  X                   COS( X )
+ H  X         X         - SIN( X )
+
+ T  COS
+ F                      COS( X )
+ G  X                   - SIN( X )
+ H  X         X         - COS( X )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        TRIGON1B
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,239 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TRAINF  
+
+*   Problem :
+*   *********
+
+*   This is an optimal control problem.
+*   The problem is to minimize the energy spent to move a train 
+*   from the beginning of a flat track to its end in a given time.  The train
+*   is slowed down by some drag (assumed to be quadratic in the the velocity).
+*   The control variables are the acceleration force (UA) and the braking
+*   force (UB) applied on the train.
+
+*   Source:
+*   J. Kautsky and N. K. Nichols,
+*   "OTEP-2: Optimal Train Energy Programme, mark 2",
+*   Numerical Analysis Report NA/4/83,
+*   Department of Mathematics, University of Reading, 1983.
+
+*   SIF input: N. Nichols and Ph. Toint, April 1993
+
+*   classification QQR2-MN-V-V
+
+*   Problem variants
+
+*RE TIME                4.8            $-PARAMETER  travel time
+*RE LENGTH              6.0            $-PARAMETER  length of track
+
+*RE TIME                2.0            $-PARAMETER  travel time
+*RE LENGTH              2.0            $-PARAMETER  length of track
+
+*RE TIME                1.5            $-PARAMETER  travel time
+ RE TIME                1.5            $-PARAMETER     modified for S2X tests
+*RE LENGTH              2.0            $-PARAMETER  length of track
+ RE LENGTH              2              $-PARAMETER     modified for S2X tests
+
+*   Number of discretized points in the interval
+
+*IE N                   11             $-PARAMETER
+*IE N                   51             $-PARAMETER
+*IE N                   101            $-PARAMETER     original value
+*IE N                   201            $-PARAMETER
+*IE N                   501            $-PARAMETER
+*IE N                   1001           $-PARAMETER
+ IE N                   11             $-PARAMETER     modified for S2X tests
+*IE N                   5001           $-PARAMETER
+*IE N                   10001          $-PARAMETER
+
+*   Mesh
+
+ IA N-1       N         -1
+ RI RN        N
+ R/ H         TIME                     RN        
+ RM H/2       H         0.5
+ RM -H        H         -1.0
+ RM -H/2      H/2       -1.0
+
+*   Acceleration bounds
+
+ RE UAMAX               10.0           $ maximum acceleration
+ RE UBMIN               -2.0           $ maximum braking
+
+*   Speed bounds
+
+ RE VMAX                10.0           $ maximum train speed
+
+*   Drag coefficients
+
+ RE A                   0.3            $ constant term
+ RE B                   0.14           $ linear term
+ RE C                   0.16           $ quadratic term
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+ R* BH/2      B                        H/2
+ RA 1+BH/2    BH/2      1.0
+ RA BH/2-1    BH/2      -1.0
+ R* -AH       A                        -H
+ R/ LENGTH/N  LENGTH                   RN
+ R* CH/2      C                        H/2
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ OD I
+
+ DO I         0                        N
+ X  V(I)
+ OD I
+
+ DO I         0                        N
+ X  UA(I)
+ OD I
+
+ DO I         0                        N
+ X  UB(I)
+ OD I
+
+GROUPS
+
+ XN ENERGY
+
+ DO I         0                        N-1
+ IA I+1       I         1
+
+*   Velocity = derivative of position
+
+ XE XEQ(I)    X(I+1)    1.0            X(I)      -1.0
+ ZE XEQ(I)    V(I+1)                   -H/2
+ ZE XEQ(I)    V(I)                     -H/2
+
+*   Acceleration = derivative of velocity
+
+ ZE VEQ(I)    V(I+1)                   1+BH/2   
+ ZE VEQ(I)    V(I)                     BH/2-1
+ ZE VEQ(I)    UA(I+1)                  -H/2
+ ZE VEQ(I)    UA(I)                    -H/2
+ ZE VEQ(I)    UB(I+1)                  -H/2
+ ZE VEQ(I)    UB(I)                    -H/2
+ ND
+
+CONSTANTS
+
+ DO I         0                        N-1
+ Z  TRAINF    VEQ(I)                   -AH
+ ND
+
+BOUNDS
+
+ XX TRAINF    X(0)      0.0
+ XX TRAINF    V(0)      0.0
+ ZX TRAINF    UA(0)                    UAMAX
+ XX TRAINF    UB(0)     0.0
+
+ DO I         1                        N-1
+ XR TRAINF    X(I)
+ XR TRAINF    V(I)
+ XL TRAINF    UA(I)     0.0
+ ZU TRAINF    UA(I)                    UAMAX
+ ZL TRAINF    UB(I)                    UBMIN
+ XU TRAINF    UB(I)     0.0 
+ ND
+
+ ZX TRAINF    X(N)                     LENGTH
+ XX TRAINF    V(N)      0.0
+ XX TRAINF    UA(N)     0.0
+ ZX TRAINF    UB(N)                    UBMIN
+
+START POINT
+
+ XV TRAINF    X(0)      0.0
+ XV TRAINF    V(0)      0.0
+ ZV TRAINF    UA(0)                    UAMAX
+ XV TRAINF    UB(0)     0.0
+
+ DO I         1                        N-1
+ RI RI        I
+ R* PI        LENGTH/N                 RI
+ ZV TRAINF    X(I)                     PI
+ ZV TRAINF    V(I)                     LENGTH/N
+ XV TRAINF    UA(I)     0.0     
+ XV TRAINF    UB(I)     0.0     
+ OD I
+
+ ZV TRAINF    X(N)                     LENGTH
+ XV TRAINF    V(N)      0.0
+ XV TRAINF    UA(N)     0.0
+ ZV TRAINF    UB(N)                    UBMIN
+
+ELEMENT TYPE
+
+ EV PROD      UU
+ EV PROD      VV
+
+ EV SQ        VVV
+
+ELEMENT USES
+
+ DO I         0                        N
+ IA I+1       I         1
+ XT VISQ(I)   SQ
+ ZV VISQ(I)   VVV                      V(I)
+ OD I
+
+ DO I         1                        N-1
+ XT UV(I)     PROD
+ ZV UV(I)     UU                       UA(I)
+ ZV UV(I)     VV                       V(I)
+ OD I
+
+GROUP USES
+
+ DO I         0                        N-1
+ IA I+1       I         1
+ ZE VEQ(I)    VISQ(I)                  CH/2
+ ZE VEQ(I)    VISQ(I+1)                CH/2
+ OD I
+
+ DO I         1                        N-1
+ ZE ENERGY    UV(I)                    H
+ OD I
+
+OBJECT BOUND
+
+ LO TRAINF              0.0
+
+*LO SOLUTION            3.09751881012
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+ELEMENTS      TRAINF
+
+INDIVIDUALS
+
+ T  SQ
+ F                      VVV * VVV
+ G  VVV                 VVV + VVV
+ H  VVV       VVV       2.0
+
+ T  PROD
+ F                      UU * VV
+ G  UU                  VV
+ G  VV                  UU
+ H  UU        VV        1.0
+
+ENDATA
+

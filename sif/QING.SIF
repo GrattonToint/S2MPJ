@@ -1,0 +1,131 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          QING
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example Qing
+
+*   Fit: y  = x_i^2 + e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, Jan 2020
+
+*   classification SUR2-MN-V-0
+
+*   Number of variables
+
+*IE N                   100            $-PARAMETER
+ IE N                   5              $-PARAMETER     modified for S2X tests
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+
+*   Number of data values
+
+ I= M         N
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN F(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ RI RI        I
+ Z  QING      F(I)                     RI
+ ND
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ XV START     X(I)      1.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       X
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT E(I)      SQR
+ ZV E(I)      X                        X(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        M
+ XE F(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO QING                0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      QING
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X ** 2
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        QING
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

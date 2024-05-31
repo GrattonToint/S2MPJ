@@ -1,0 +1,1250 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ROTDISC 
+
+*   Problem:
+*   ********
+
+*   Optimal design of a rotating disk of minimal weight, with constraints on
+*   stress and profile.
+*   The problem arise in the mechanical design of turbine where several disks 
+*   are assembled, as in jet engines and steam turbines in power generation
+*   systems. The data correspond to the real design problem for the engine of 
+*   a small civil jet.
+*   The problem has a linear objective function, linear constraints and 
+*   quadratic equality constraints.  The solution lies at a vertex of the
+*   feasible set.
+
+*   Source:
+*   B. Apraxine and E. Loute,
+*   "The optimal design of a rotating disk: a test case for nonlinear
+*   programming codes",
+*   Facultes Universitaires Saint Louis, Brussels, 1993.
+*   See also:
+*   J. P. Nigoghossian,
+*   "Problem: the optimization of jet engine discs",
+*   in "Optimisation and Design", M. Avriel, M. J. Rijckaert and D. J. Wilde,
+*   eds., Prentice Hall, Englewood Cliffs, 1973.
+
+*   SIF input : E. Loute and Ph. L. Toint, April 1993
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification LQR2-RN-905-1081
+
+ IE K                   180            $ number of intervals in discretization
+ RE rotspeed            22000.0        $ rotational speed (rpm)
+ RE ri                  41.0           $ inner radius (mm)
+ RE ro                  131.0          $ outer radius (mm)
+ RE rim                 127.0          $ rim radius (mm)
+ RE rho                 8200.0         $ specific weight (kg/m**3)
+ RE E                   18525.0        $ elasticity modulus (hb)
+ RE epsc                14.0D-6        $ dilatation coefficient
+ RE nu                  0.3            $ Poisson coefficient
+ RE wro                 13.0           $ outer thickness
+ RE wmin                4.0            $ minimal thickness
+ RE wmax                34.0           $ maximal thickness
+ RE sigmaro             18.5           $ radial stress on outer radius
+ RE sigmari             0.0            $ radial stress on inner radius
+ RE sigmati             72.0           $ maximal radial stress on inner radius
+ RE sigmato             47.5           $ maximal radial stress on outer radius
+ RE sigmatA             66.0           $ maximal average tangential stress
+ RE sigmaru             55.0           $ maximal radial stress      
+
+*   temperature law: t(r) = tempo + tempn * ( r / r0 )**n
+
+ RE tempo               450.0
+ RE tempn               150.0
+ IE n                   4
+
+*   scaling constants
+
+ RE ech1                100.0
+ RE ech2                1.0E-13
+ RE ech3                1.0E-9         
+
+* useful parameters
+
+ IE 1                   1
+ IE 0                   0
+ IA K-1       K         -1
+
+ RI RK        K
+ R- Dr        ro                       ri
+ R/ dr        Dr                       RK
+ RE pi                  3.1415926535
+ RM 2pi       pi        2.0
+ R* aux1      2pi                      rotspeed
+ RE 60.0                60.0
+ R/ omega     aux1                     60.0
+ R* omega2    omega                    omega
+ R* romg2     rho                      omega2
+ RM romg2/2   romg2     0.5
+ R* aux2      romg2/2                  ech2
+ RA 1+nu      nu        1.0
+ RM 3nu       nu        3.0
+ RA 1+3nu     3nu       1.0
+ RA 3+nu      nu        3.0
+ RM (1+nu)/2  1+nu      0.5
+ RM (1+3nu)/2 1+3nu     0.5
+ RM (3+nu)/2  3+nu      0.5
+ R* pirho     pi                       rho
+ RM dr/2      dr        0.5
+ R* aux3      aux2                     dr
+
+VARIABLES
+
+ DO k         0                        K
+
+*   thickness
+
+ X  w(k)
+
+*   tangential stress
+
+ X  sigt(k)
+
+*   radial stress
+
+ X  sigr(k)
+
+*   additional variables to handle average tangential stress
+
+ X  x(k)
+ X  y(k)
+ OD k
+
+GROUPS
+
+ R= rk        ri
+ RM -dr/2     dr/2      -1.0
+ R* rk2       rk                       rk
+
+ DO k         0                        K-1
+ IA k+1       k         1
+ R+ rk+1      rk                       dr
+
+* aux3 is ech2*rho*omega**2*dr/2
+
+ R* coef1     aux3                     rk2
+ R* rk+1sq    rk+1                     rk+1
+ R* coef2     aux3                     rk+1sq
+ ZE SR(k)     'SCALE'                  ech1
+ ZE SR(k)     w(k)                     coef1
+ ZE SR(k)     w(k+1)                   coef2
+
+ R* tmp1      (1+3nu)/2                rk
+ R* tmp2      (1+nu)/2                 rk+1
+ R- tmp3      tmp1                     tmp2
+ R/ coef3     tmp3                     rk
+ ZE ST(k)     sigr(k)                  coef3
+
+ R* tmp4      (3+nu)/2                 rk
+ R* tmp5      (1+nu)/2                 rk+1
+ R- tmp6      tmp5                     tmp4
+ R/ coef4     tmp6                     rk
+ ZE ST(k)     sigt(k)                  coef4
+
+ R* tmp7      (1+3nu)/2                rk+1
+ R* tmp8      (1+nu)/2                 rk
+ R- tmp9      tmp8                     tmp7
+ R/ coef5     tmp9                     rk+1
+ ZE ST(k)     sigr(k+1)                coef5
+
+ R* tmp10     (3+nu)/2                 rk+1
+ R* tmp11     (1+nu)/2                 rk
+ R- tmp12     tmp10                    tmp11
+ R/ coef6     tmp12                    rk+1
+ ZE ST(k)     sigt(k+1)                coef6
+
+ XE STAy(k)   y(k+1)    1.0            y(k)      -1.0  
+
+ XE STAx(k)   x(k+1)    1.0            x(k)      -1.0
+ ZE STAx(k)   w(k+1)                   -dr/2
+ ZE STAx(k)   w(k)                     -dr/2
+
+ R= rk        rk+1
+ R= rk2       rk+1sq
+ OD k
+
+*   objective function
+
+ R= rk-1      ri
+ R+ rk        rk-1                     dr
+ R* rk-1sq    rk-1                     rk-1
+ R* rk2       rk                       rk
+ R- aux3      rk-1sq                   rk2
+ R* aux4      aux3                     pirho
+ R* coef1     aux4                     ech3
+ RM -coef1    coef1     -1.0
+ ZN WEIGHT    w(0)                     -coef1
+
+ DO k         1                        K-1
+ IA k-1       k         -1
+ R+ rk+1      rk                       dr
+ R* rk+1sq    rk+1                     rk+1
+ R- aux3      rk-1sq                   rk+1sq
+ R* aux4      aux3                     pirho
+ R* coef1     aux4                     ech3
+ RM -coef1    coef1     -1.0
+ ZE WEIGHT    w(k)                     -coef1
+ R= rk-1sq    rk2
+ R= rk        rk+1
+ R= rk2       rk+1sq
+ OD k
+
+ R- aux3      rk-1sq                   rk2
+ R* aux4      pirho                    aux3
+ R* coef1     aux4                     ech3
+ RM -coef1    coef1     -1.0
+ ZN WEIGHT    w(K)                     -coef1
+
+ DO k         0                        K-1
+ IA k+1       k         1
+ XL SLOP(k)   w(k+1)    1.0            w(k)      -1.0
+ XL SLOM(k)   w(k+1)    -1.0           w(k)      1.0
+ OD k
+
+ RM -sigmatA  sigmatA   -1.0
+ XL AVsigt    y(K)      1.0
+ ZL AVsigt    x(K)                     -sigmatA
+
+CONSTANTS
+
+* We compute in the loop the value of the temperature function
+*      tk = tempo + tempn*(rk/ro)**n (here n = 4)
+
+ R* Eepsc     E                        epsc
+ R= rk        ri
+ R/ aux1      rk                       ro
+ R* aux2      aux1                     aux1
+ R* aux2      aux2                     aux2
+ R* tmp1      aux2                     tempn
+ R+ tk        tmp1                     tempo      
+
+ DO k         0                        K-1
+ R+ rk+1      rk                       dr
+ R/ aux1      rk+1                     ro
+ R* aux2      aux1                     aux1
+ R* aux2      aux2                     aux2
+ R* tmp1      aux2                     tempn
+ R+ tk+1      tmp1                     tempo
+ R- tmp2      tk                       tk+1
+ R* coef1     tmp2                     Eepsc
+ Z  ROTDISC   ST(k)                    coef1
+ R= rk        rk+1
+ R= tk        tk+1
+ OD k
+
+ RM 4dr       dr        4.0 
+ DO k         0                        K-1
+ Z  ROTDISC   SLOP(k)                  4dr
+ Z  ROTDISC   SLOM(k)                  4dr
+ OD k
+
+BOUNDS
+
+ FR ROTDISC   'DEFAULT'
+ ZX ROTDISC   sigr(0)                  sigmari
+ ZU ROTDISC   sigt(0)                  sigmati
+ XL ROTDISC   sigt(0)   -100.0         
+ XX ROTDISC   x(0)      0.0
+ XX ROTDISC   y(0)      0.0
+
+ DO k         1                        K
+ XL ROTDISC   x(k)      0.0
+ OD k
+
+ DO k         1                        K-1
+ XL ROTDISC   sigr(k)   0.0
+ ZU ROTDISC   sigr(k)                  sigmaru
+ XL ROTDISC   sigt(k)   -100.0
+ XU ROTDISC   sigt(k)   100.0
+ OD k
+
+* We express that thickness is constant on the rim and bounded outside
+
+ IA K-9       K         -9
+ DO k         0                        K-9
+ ZL ROTDISC   w(k)                     wmin
+ ZU ROTDISC   w(k)                     wmax
+ OD k
+ IA K-8       K         -8
+ DO k         K-8                      K
+ ZX ROTDISC   w(k)                     wro
+ OD k
+ 
+ ZU ROTDISC   sigt(K)                  sigmato
+ ZX ROTDISC   sigr(K)                  sigmaro
+
+START POINT
+
+* This starting point is slightly infeasible 
+* (the upper bound on sigr(k) is violated for some k)
+
+    ROTDISC   w0        30.000000000
+    ROTDISC   sigt0     70.224043123
+    ROTDISC   sigr0     0.0
+    ROTDISC   x0        0.0
+    ROTDISC   y0        0.0
+    ROTDISC   w1        30.000000000
+    ROTDISC   sigt1     69.337178701
+    ROTDISC   sigr1     .75150203489
+    ROTDISC   x1        15.000000000
+    ROTDISC   y1        1046.7091637
+    ROTDISC   w2        30.000000000
+    ROTDISC   sigt2     68.478656583
+    ROTDISC   sigr2     1.4725717269
+    ROTDISC   x2        30.000000000
+    ROTDISC   y2        2080.3279283
+    ROTDISC   w3        30.000000000
+    ROTDISC   sigt3     67.647086003
+    ROTDISC   sigr3     2.1645828149
+    ROTDISC   x3        45.000000000
+    ROTDISC   y3        3101.2709977
+    ROTDISC   w4        30.000000000
+    ROTDISC   sigt4     66.841155637
+    ROTDISC   sigr4     2.8288294334
+    ROTDISC   x4        60.000000000
+    ROTDISC   y4        4109.9328100
+    ROTDISC   w5        30.000000000
+    ROTDISC   sigt5     66.059628152
+    ROTDISC   sigr5     3.4665315686
+    ROTDISC   x5        75.000000000
+    ROTDISC   y5        5106.6886884
+    ROTDISC   w6        30.000000000
+    ROTDISC   sigt6     65.301335165
+    ROTDISC   sigr6     4.0788400842
+    ROTDISC   x6        90.000000000
+    ROTDISC   y6        6091.8959133
+    ROTDISC   w7        30.000000000
+    ROTDISC   sigt7     64.565172618
+    ROTDISC   sigr7     4.6668413532
+    ROTDISC   x7        105.00000000
+    ROTDISC   y7        7065.8947217
+    ROTDISC   w8        30.000000000
+    ROTDISC   sigt8     63.850096500
+    ROTDISC   sigr8     5.2315615316
+    ROTDISC   x8        120.00000000
+    ROTDISC   y8        8029.0092401
+    ROTDISC   w9        30.000000000
+    ROTDISC   sigt9     63.155118892
+    ROTDISC   sigr9     5.7739705049
+    ROTDISC   x9        135.00000000
+    ROTDISC   y9        8981.5483555
+    ROTDISC   w10       30.000000000
+    ROTDISC   sigt10    62.479304325
+    ROTDISC   sigr10    6.2949855370
+    ROTDISC   x10       150.00000000
+    ROTDISC   y10       9923.8065296
+    ROTDISC   w11       30.000000000
+    ROTDISC   sigt11    61.821766398
+    ROTDISC   sigr11    6.7954746441
+    ROTDISC   x11       165.00000000
+    ROTDISC   y11       10856.064560
+    ROTDISC   w12       30.000000000
+    ROTDISC   sigt12    61.181664651
+    ROTDISC   sigr12    7.2762597204
+    ROTDISC   x12       180.00000000
+    ROTDISC   y12       11778.590293
+    ROTDISC   w13       30.000000000
+    ROTDISC   sigt13    60.558201672
+    ROTDISC   sigr13    7.7381194336
+    ROTDISC   x13       195.00000000
+    ROTDISC   y13       12691.639290
+    ROTDISC   w14       30.000000000
+    ROTDISC   sigt14    59.950620407
+    ROTDISC   sigr14    8.1817919107
+    ROTDISC   x14       210.00000000
+    ROTDISC   y14       13595.455456
+    ROTDISC   w15       30.000000000
+    ROTDISC   sigt15    59.358201664
+    ROTDISC   sigr15    8.6079772309
+    ROTDISC   x15       225.00000000
+    ROTDISC   y15       14490.271621
+    ROTDISC   w16       30.000000000
+    ROTDISC   sigt16    58.780261800
+    ROTDISC   sigr16    9.0173397415
+    ROTDISC   x16       240.00000000
+    ROTDISC   y16       15376.310097
+    ROTDISC   w17       30.000000000
+    ROTDISC   sigt17    58.216150564
+    ROTDISC   sigr17    9.4105102106
+    ROTDISC   x17       255.00000000
+    ROTDISC   y17       16253.783190
+    ROTDISC   w18       30.000000000
+    ROTDISC   sigt18    57.665249095
+    ROTDISC   sigr18    9.7880878301
+    ROTDISC   x18       270.00000000
+    ROTDISC   y18       17122.893688
+    ROTDISC   w19       30.000000000
+    ROTDISC   sigt19    57.126968056
+    ROTDISC   sigr19    10.150642080
+    ROTDISC   x19       285.00000000
+    ROTDISC   y19       17983.835316
+    ROTDISC   w20       30.000000000
+    ROTDISC   sigt20    56.600745894
+    ROTDISC   sigr20    10.498714467
+    ROTDISC   x20       300.00000000
+    ROTDISC   y20       18836.793171
+    ROTDISC   w21       30.000000000
+    ROTDISC   sigt21    56.086047224
+    ROTDISC   sigr21    10.832820143
+    ROTDISC   x21       315.00000000
+    ROTDISC   y21       19681.944119
+    ROTDISC   w22       30.000000000
+    ROTDISC   sigt22    55.582361311
+    ROTDISC   sigr22    11.153449416
+    ROTDISC   x22       330.00000000
+    ROTDISC   y22       20519.457183
+    ROTDISC   w23       30.000000000
+    ROTDISC   sigt23    55.089200663
+    ROTDISC   sigr23    11.461069163
+    ROTDISC   x23       345.00000000
+    ROTDISC   y23       21349.493898
+    ROTDISC   w24       30.000000000
+    ROTDISC   sigt24    54.606099709
+    ROTDISC   sigr24    11.756124148
+    ROTDISC   x24       360.00000000
+    ROTDISC   y24       22172.208651
+    ROTDISC   w25       30.000000000
+    ROTDISC   sigt25    54.132613569
+    ROTDISC   sigr25    12.039038253
+    ROTDISC   x25       375.00000000
+    ROTDISC   y25       22987.749000
+    ROTDISC   w26       30.000000000
+    ROTDISC   sigt26    53.668316898
+    ROTDISC   sigr26    12.310215632
+    ROTDISC   x26       390.00000000
+    ROTDISC   y26       23796.255979
+    ROTDISC   w27       30.000000000
+    ROTDISC   sigt27    53.212802809
+    ROTDISC   sigr27    12.570041791
+    ROTDISC   x27       405.00000000
+    ROTDISC   y27       24597.864377
+    ROTDISC   w28       30.000000000
+    ROTDISC   sigt28    52.765681856
+    ROTDISC   sigr28    12.818884596
+    ROTDISC   x28       420.00000000
+    ROTDISC   y28       25392.703012
+    ROTDISC   w29       30.000000000
+    ROTDISC   sigt29    52.326581096
+    ROTDISC   sigr29    13.057095224
+    ROTDISC   x29       435.00000000
+    ROTDISC   y29       26180.894984
+    ROTDISC   w30       30.000000000
+    ROTDISC   sigt30    51.895143190
+    ROTDISC   sigr30    13.285009049
+    ROTDISC   x30       450.00000000
+    ROTDISC   y30       26962.557916
+    ROTDISC   w31       30.000000000
+    ROTDISC   sigt31    51.471025575
+    ROTDISC   sigr31    13.502946477
+    ROTDISC   x31       465.00000000
+    ROTDISC   y31       27737.804182
+    ROTDISC   w32       30.000000000
+    ROTDISC   sigt32    51.053899680
+    ROTDISC   sigr32    13.711213727
+    ROTDISC   x32       480.00000000
+    ROTDISC   y32       28506.741121
+    ROTDISC   w33       30.000000000
+    ROTDISC   sigt33    50.643450190
+    ROTDISC   sigr33    13.910103570
+    ROTDISC   x33       495.00000000
+    ROTDISC   y33       29269.471245
+    ROTDISC   w34       30.000000000
+    ROTDISC   sigt34    50.239374354
+    ROTDISC   sigr34    14.099896013
+    ROTDISC   x34       510.00000000
+    ROTDISC   y34       30026.092429
+    ROTDISC   w35       30.000000000
+    ROTDISC   sigt35    49.841381338
+    ROTDISC   sigr35    14.280858959
+    ROTDISC   x35       525.00000000
+    ROTDISC   y35       30776.698097
+    ROTDISC   w36       30.000000000
+    ROTDISC   sigt36    49.449191607
+    ROTDISC   sigr36    14.453248807
+    ROTDISC   x36       540.00000000
+    ROTDISC   y36       31521.377394
+    ROTDISC   w37       30.000000000
+    ROTDISC   sigt37    49.062536356
+    ROTDISC   sigr37    14.617311038
+    ROTDISC   x37       555.00000000
+    ROTDISC   y37       32260.215354
+    ROTDISC   w38       30.000000000
+    ROTDISC   sigt38    48.681156965
+    ROTDISC   sigr38    14.773280750
+    ROTDISC   x38       570.00000000
+    ROTDISC   y38       32993.293054
+    ROTDISC   w39       30.000000000
+    ROTDISC   sigt39    48.304804485
+    ROTDISC   sigr39    14.921383174
+    ROTDISC   x39       585.00000000
+    ROTDISC   y39       33720.687765
+    ROTDISC   w40       30.000000000
+    ROTDISC   sigt40    47.933239160
+    ROTDISC   sigr40    15.061834152
+    ROTDISC   x40       600.00000000
+    ROTDISC   y40       34442.473092
+    ROTDISC   w41       29.017500000
+    ROTDISC   sigt41    47.721358592
+    ROTDISC   sigr41    15.705670256
+    ROTDISC   x41       614.75437500
+    ROTDISC   y41       35148.161016
+    ROTDISC   w42       28.035000000
+    ROTDISC   sigt42    47.528871380
+    ROTDISC   sigr42    16.379639595
+    ROTDISC   x42       629.01750000
+    ROTDISC   y42       35827.467624
+    ROTDISC   w43       27.052500000
+    ROTDISC   sigt43    47.356912245
+    ROTDISC   sigr43    17.087816055
+    ROTDISC   x43       642.78937500
+    ROTDISC   y43       36480.866319
+    ROTDISC   w44       26.070000000
+    ROTDISC   sigt44    47.206824226
+    ROTDISC   sigr44    17.834855648
+    ROTDISC   x44       656.07000000
+    ROTDISC   y44       37108.817513
+    ROTDISC   w45       25.087500000
+    ROTDISC   sigt45    47.080196532
+    ROTDISC   sigr45    18.626112102
+    ROTDISC   x45       668.85937500
+    ROTDISC   y45       37711.769097
+    ROTDISC   w46       24.105000000
+    ROTDISC   sigt46    46.978911596
+    ROTDISC   sigr46    19.467780620
+    ROTDISC   x46       681.15750000
+    ROTDISC   y46       38290.156871
+    ROTDISC   w47       23.122500000
+    ROTDISC   sigt47    46.905204055
+    ROTDISC   sigr47    20.367078186
+    ROTDISC   x47       692.96437500
+    ROTDISC   y47       38844.404932
+    ROTDISC   w48       22.140000000
+    ROTDISC   sigt48    46.861735282
+    ROTDISC   sigr48    21.332471779
+    ROTDISC   x48       704.28000000
+    ROTDISC   y48       39374.926032
+    ROTDISC   w49       21.372500000
+    ROTDISC   sigt49    46.783637776
+    ROTDISC   sigr49    22.149717856
+    ROTDISC   x49       715.15812500
+    ROTDISC   y49       39884.276561
+    ROTDISC   w50       20.605000000
+    ROTDISC   sigt50    46.729531640
+    ROTDISC   sigr50    23.016346353
+    ROTDISC   x50       725.65250000
+    ROTDISC   y50       40374.962886
+    ROTDISC   w51       19.837500000
+    ROTDISC   sigt51    46.701411241
+    ROTDISC   sigr51    23.938737423
+    ROTDISC   x51       735.76312500
+    ROTDISC   y51       40847.288197
+    ROTDISC   w52       19.070000000
+    ROTDISC   sigt52    46.701615132
+    ROTDISC   sigr52    24.924274110
+    ROTDISC   x52       745.49000000
+    ROTDISC   y52       41301.547959
+    ROTDISC   w53       18.302500000
+    ROTDISC   sigt53    46.732895222
+    ROTDISC   sigr53    25.981553727
+    ROTDISC   x53       754.83312500
+    ROTDISC   y53       41738.030113
+    ROTDISC   w54       17.535000000
+    ROTDISC   sigt54    46.798503908
+    ROTDISC   sigr54    27.120654675
+    ROTDISC   x54       763.79250000
+    ROTDISC   y54       42157.015258
+    ROTDISC   w55       16.767500000
+    ROTDISC   sigt55    46.902304859
+    ROTDISC   sigr55    28.353476460
+    ROTDISC   x55       772.36812500
+    ROTDISC   y55       42558.776798
+    ROTDISC   w56       16.000000000
+    ROTDISC   sigt56    47.048915288
+    ROTDISC   sigr56    29.694177498
+    ROTDISC   x56       780.56000000
+    ROTDISC   y56       42943.581059
+    ROTDISC   w57       15.440000000
+    ROTDISC   sigt57    47.117144627
+    ROTDISC   sigr57    30.741797333
+    ROTDISC   x57       788.42000000
+    ROTDISC   y57       43313.648898
+    ROTDISC   w58       14.880000000
+    ROTDISC   sigt58    47.215105046
+    ROTDISC   sigr58    31.860061245
+    ROTDISC   x58       796.00000000
+    ROTDISC   y58       43671.161267
+    ROTDISC   w59       14.320000000
+    ROTDISC   sigt59    47.345666162
+    ROTDISC   sigr59    33.057769694
+    ROTDISC   x59       803.30000000
+    ROTDISC   y59       44016.298943
+    ROTDISC   w60       13.760000000
+    ROTDISC   sigt60    47.512175218
+    ROTDISC   sigr60    34.345138122
+    ROTDISC   x60       810.32000000
+    ROTDISC   y60       44349.238310
+    ROTDISC   w61       13.200000000
+    ROTDISC   sigt61    47.718555318
+    ROTDISC   sigr61    35.734097806
+    ROTDISC   x61       817.06000000
+    ROTDISC   y61       44670.151426
+    ROTDISC   w62       12.640000000
+    ROTDISC   sigt62    47.969429433
+    ROTDISC   sigr62    37.238676641
+    ROTDISC   x62       823.52000000
+    ROTDISC   y62       44979.206055
+    ROTDISC   w63       12.080000000
+    ROTDISC   sigt63    48.270278469
+    ROTDISC   sigr63    38.875485767
+    ROTDISC   x63       829.70000000
+    ROTDISC   y63       45276.565693
+    ROTDISC   w64       11.520000000
+    ROTDISC   sigt64    48.627644833
+    ROTDISC   sigr64    40.664348076
+    ROTDISC   x64       835.60000000
+    ROTDISC   y64       45562.389551
+    ROTDISC   w65       11.175000000
+    ROTDISC   sigt65    48.801073466
+    ROTDISC   sigr65    41.809788300
+    ROTDISC   x65       841.27375000
+    ROTDISC   y65       45838.775167
+    ROTDISC   w66       10.830000000
+    ROTDISC   sigt66    49.001998851
+    ROTDISC   sigr66    43.023368828
+    ROTDISC   x66       846.77500000
+    ROTDISC   y66       46107.786078
+    ROTDISC   w67       10.485000000
+    ROTDISC   sigt67    49.232764164
+    ROTDISC   sigr67    44.312155780
+    ROTDISC   x67       852.10375000
+    ROTDISC   y67       46369.510373
+    ROTDISC   w68       10.140000000
+    ROTDISC   sigt68    49.496036475
+    ROTDISC   sigr68    45.684166505
+    ROTDISC   x68       857.26000000
+    ROTDISC   y68       46624.034209
+    ROTDISC   w69       9.7950000000
+    ROTDISC   sigt69    49.794861993
+    ROTDISC   sigr69    47.148537492
+    ROTDISC   x69       862.24375000
+    ROTDISC   y69       46871.441830
+    ROTDISC   w70       9.4500000000
+    ROTDISC   sigt70    50.132733249
+    ROTDISC   sigr70    48.715729024
+    ROTDISC   x70       867.05500000
+    ROTDISC   y70       47111.815580
+    ROTDISC   w71       9.1050000000
+    ROTDISC   sigt71    50.513671349
+    ROTDISC   sigr71    50.397776340
+    ROTDISC   x71       871.69375000
+    ROTDISC   y71       47345.235907
+    ROTDISC   w72       8.7600000000
+    ROTDISC   sigt72    50.942327392
+    ROTDISC   sigr72    52.208600106
+    ROTDISC   x72       876.16000000
+    ROTDISC   y72       47571.781348
+    ROTDISC   w73       8.6275000000
+    ROTDISC   sigt73    51.020192955
+    ROTDISC   sigr73    52.831000764
+    ROTDISC   x73       880.50687500
+    ROTDISC   y73       47793.389224
+    ROTDISC   w74       8.4950000000
+    ROTDISC   sigt74    51.105469720
+    ROTDISC   sigr74    53.471000483
+    ROTDISC   x74       884.78750000
+    ROTDISC   y74       48011.968644
+    ROTDISC   w75       8.3625000000
+    ROTDISC   sigt75    51.198444013
+    ROTDISC   sigr75    54.129557211
+    ROTDISC   x75       889.00187500
+    ROTDISC   y75       48227.540632
+    ROTDISC   w76       8.2300000000
+    ROTDISC   sigt76    51.299424731
+    ROTDISC   sigr76    54.807687715
+    ROTDISC   x76       893.15000000
+    ROTDISC   y76       48440.125946
+    ROTDISC   w77       8.0975000000
+    ROTDISC   sigt77    51.408745006
+    ROTDISC   sigr77    55.506472516
+    ROTDISC   x77       897.23187500
+    ROTDISC   y77       48649.745090
+    ROTDISC   w78       7.9650000000
+    ROTDISC   sigt78    51.526764037
+    ROTDISC   sigr78    56.227061303
+    ROTDISC   x78       901.24750000
+    ROTDISC   y78       48856.418337
+    ROTDISC   w79       7.8325000000
+    ROTDISC   sigt79    51.653869098
+    ROTDISC   sigr79    56.970678892
+    ROTDISC   x79       905.19687500
+    ROTDISC   y79       49060.165739
+    ROTDISC   w80       7.7000000000
+    ROTDISC   sigt80    51.790477770
+    ROTDISC   sigr80    57.738631802
+    ROTDISC   x80       909.08000000
+    ROTDISC   y80       49261.007141
+    ROTDISC   w81       7.6725000000
+    ROTDISC   sigt81    51.694572152
+    ROTDISC   sigr81    57.731509685
+    ROTDISC   x81       912.92312500
+    ROTDISC   y81       49459.860462
+    ROTDISC   w82       7.6450000000
+    ROTDISC   sigt82    51.596245048
+    ROTDISC   sigr82    57.723691663
+    ROTDISC   x82       916.75250000
+    ROTDISC   y82       49657.630436
+    ROTDISC   w83       7.6175000000
+    ROTDISC   sigt83    51.495471481
+    ROTDISC   sigr83    57.715173744
+    ROTDISC   x83       920.56812500
+    ROTDISC   y83       49854.310448
+    ROTDISC   w84       7.5900000000
+    ROTDISC   sigt84    51.392226289
+    ROTDISC   sigr84    57.705951941
+    ROTDISC   x84       924.37000000
+    ROTDISC   y84       50049.893886
+    ROTDISC   w85       7.5625000000
+    ROTDISC   sigt85    51.286484124
+    ROTDISC   sigr85    57.696022277
+    ROTDISC   x85       928.15812500
+    ROTDISC   y85       50244.374144
+    ROTDISC   w86       7.5350000000
+    ROTDISC   sigt86    51.178219453
+    ROTDISC   sigr86    57.685380778
+    ROTDISC   x86       931.93250000
+    ROTDISC   y86       50437.744624
+    ROTDISC   w87       7.5075000000
+    ROTDISC   sigt87    51.067406560
+    ROTDISC   sigr87    57.674023474
+    ROTDISC   x87       935.69312500
+    ROTDISC   y87       50629.998734
+    ROTDISC   w88       7.4800000000
+    ROTDISC   sigt88    50.954019546
+    ROTDISC   sigr88    57.661946402
+    ROTDISC   x88       939.44000000
+    ROTDISC   y88       50821.129889
+    ROTDISC   w89       7.4450000000
+    ROTDISC   sigt89    50.855607376
+    ROTDISC   sigr89    57.707215988
+    ROTDISC   x89       943.17125000
+    ROTDISC   y89       51011.068905
+    ROTDISC   w90       7.4100000000
+    ROTDISC   sigt90    50.755029735
+    ROTDISC   sigr90    57.752273609
+    ROTDISC   x90       946.88500000
+    ROTDISC   y90       51199.747597
+    ROTDISC   w91       7.3750000000
+    ROTDISC   sigt91    50.652260905
+    ROTDISC   sigr91    57.797128035
+    ROTDISC   x91       950.58125000
+    ROTDISC   y91       51387.161395
+    ROTDISC   w92       7.3400000000
+    ROTDISC   sigt92    50.547275164
+    ROTDISC   sigr92    57.841788143
+    ROTDISC   x92       954.26000000
+    ROTDISC   y92       51573.305751
+    ROTDISC   w93       7.3050000000
+    ROTDISC   sigt93    50.440046782
+    ROTDISC   sigr93    57.886262921
+    ROTDISC   x93       957.92125000
+    ROTDISC   y93       51758.176137
+    ROTDISC   w94       7.2700000000
+    ROTDISC   sigt94    50.330550025
+    ROTDISC   sigr94    57.930561476
+    ROTDISC   x94       961.56500000
+    ROTDISC   y94       51941.768047
+    ROTDISC   w95       7.2350000000
+    ROTDISC   sigt95    50.218759151
+    ROTDISC   sigr95    57.974693041
+    ROTDISC   x95       965.19125000
+    ROTDISC   y95       52124.077002
+    ROTDISC   w96       7.2000000000
+    ROTDISC   sigt96    50.104648409
+    ROTDISC   sigr96    58.018666983
+    ROTDISC   x96       968.80000000
+    ROTDISC   y96       52305.098550
+    ROTDISC   w97       7.1712500000
+    ROTDISC   sigt97    49.972881021
+    ROTDISC   sigr97    58.011883331
+    ROTDISC   x97       972.39281250
+    ROTDISC   y97       52484.878923
+    ROTDISC   w98       7.1425000000
+    ROTDISC   sigt98    49.838337287
+    ROTDISC   sigr98    58.004462269
+    ROTDISC   x98       975.97125000
+    ROTDISC   y98       52663.463510
+    ROTDISC   w99       7.1137500000
+    ROTDISC   sigt99    49.700989951
+    ROTDISC   sigr99    57.996401618
+    ROTDISC   x99       979.53531250
+    ROTDISC   y99       52840.846195
+    ROTDISC   w100      7.0850000000
+    ROTDISC   sigt100   49.560811600
+    ROTDISC   sigr100   57.987699220
+    ROTDISC   x100      983.08500000
+    ROTDISC   y100      53017.020887
+    ROTDISC   w101      7.0562500000
+    ROTDISC   sigt101   49.417774661
+    ROTDISC   sigr101   57.978352944
+    ROTDISC   x101      986.62031250
+    ROTDISC   y101      53191.981517
+    ROTDISC   w102      7.0275000000
+    ROTDISC   sigt102   49.271851404
+    ROTDISC   sigr102   57.968360681
+    ROTDISC   x102      990.14125000
+    ROTDISC   y102      53365.722044
+    ROTDISC   w103      6.9987500000
+    ROTDISC   sigt103   49.123013943
+    ROTDISC   sigr103   57.957720351
+    ROTDISC   x103      993.64781250
+    ROTDISC   y103      53538.236452
+    ROTDISC   w104      6.9700000000
+    ROTDISC   sigt104   48.971234234
+    ROTDISC   sigr104   57.946429896
+    ROTDISC   x104      997.14000000
+    ROTDISC   y104      53709.518751
+    ROTDISC   w105      6.9412500000
+    ROTDISC   sigt105   48.816484081
+    ROTDISC   sigr105   57.934487286
+    ROTDISC   x105      1000.6178125
+    ROTDISC   y105      53879.562982
+    ROTDISC   w106      6.9125000000
+    ROTDISC   sigt106   48.658735129
+    ROTDISC   sigr106   57.921890519
+    ROTDISC   x106      1004.0812500
+    ROTDISC   y106      54048.363213
+    ROTDISC   w107      6.8837500000
+    ROTDISC   sigt107   48.497958873
+    ROTDISC   sigr107   57.908637618
+    ROTDISC   x107      1007.5303125
+    ROTDISC   y107      54215.913546
+    ROTDISC   w108      6.8550000000
+    ROTDISC   sigt108   48.334126653
+    ROTDISC   sigr108   57.894726636
+    ROTDISC   x108      1010.9650000
+    ROTDISC   y108      54382.208112
+    ROTDISC   w109      6.8262500000
+    ROTDISC   sigt109   48.167209655
+    ROTDISC   sigr109   57.880155655
+    ROTDISC   x109      1014.3853125
+    ROTDISC   y109      54547.241075
+    ROTDISC   w110      6.7975000000
+    ROTDISC   sigt110   47.997178915
+    ROTDISC   sigr110   57.864922786
+    ROTDISC   x110      1017.7912500
+    ROTDISC   y110      54711.006635
+    ROTDISC   w111      6.7687500000
+    ROTDISC   sigt111   47.824005317
+    ROTDISC   sigr111   57.849026171
+    ROTDISC   x111      1021.1828125
+    ROTDISC   y111      54873.499025
+    ROTDISC   w112      6.7400000000
+    ROTDISC   sigt112   47.647659596
+    ROTDISC   sigr112   57.832463983
+    ROTDISC   x112      1024.5600000
+    ROTDISC   y112      55034.712515
+    ROTDISC   w113      6.7187500000
+    ROTDISC   sigt113   47.448591006
+    ROTDISC   sigr113   57.750663878
+    ROTDISC   x113      1027.9246875
+    ROTDISC   y113      55194.697627
+    ROTDISC   w114      6.6975000000
+    ROTDISC   sigt114   47.245860884
+    ROTDISC   sigr114   57.667755969
+    ROTDISC   x114      1031.2787500
+    ROTDISC   y114      55353.503720
+    ROTDISC   w115      6.6762500000
+    ROTDISC   sigt115   47.039439651
+    ROTDISC   sigr115   57.583729120
+    ROTDISC   x115      1034.6221875
+    ROTDISC   y115      55511.122773
+    ROTDISC   w116      6.6550000000
+    ROTDISC   sigt116   46.829297460
+    ROTDISC   sigr116   57.498572198
+    ROTDISC   x116      1037.9550000
+    ROTDISC   y116      55667.546782
+    ROTDISC   w117      6.6337500000
+    ROTDISC   sigt117   46.615404203
+    ROTDISC   sigr117   57.412274068
+    ROTDISC   x117      1041.2771875
+    ROTDISC   y117      55822.767760
+    ROTDISC   w118      6.6125000000
+    ROTDISC   sigt118   46.397729510
+    ROTDISC   sigr118   57.324823593
+    ROTDISC   x118      1044.5887500
+    ROTDISC   y118      55976.777741
+    ROTDISC   w119      6.5912500000
+    ROTDISC   sigt119   46.176242754
+    ROTDISC   sigr119   57.236209626
+    ROTDISC   x119      1047.8896875
+    ROTDISC   y119      56129.568777
+    ROTDISC   w120      6.5700000000
+    ROTDISC   sigt120   45.950913048
+    ROTDISC   sigr120   57.146421013
+    ROTDISC   x120      1051.1800000
+    ROTDISC   y120      56281.132942
+    ROTDISC   w121      6.5412500000
+    ROTDISC   sigt121   45.741494802
+    ROTDISC   sigr121   57.120910879
+    ROTDISC   x121      1054.4578125
+    ROTDISC   y121      56431.408955
+    ROTDISC   w122      6.5125000000
+    ROTDISC   sigt122   45.528600901
+    ROTDISC   sigr122   57.094665862
+    ROTDISC   x122      1057.7212500
+    ROTDISC   y122      56580.336846
+    ROTDISC   w123      6.4837500000
+    ROTDISC   sigt123   45.312199922
+    ROTDISC   sigr123   57.067684218
+    ROTDISC   x123      1060.9703125
+    ROTDISC   y123      56727.911344
+    ROTDISC   w124      6.4550000000
+    ROTDISC   sigt124   45.092260303
+    ROTDISC   sigr124   57.039964224
+    ROTDISC   x124      1064.2050000
+    ROTDISC   y124      56874.127223
+    ROTDISC   w125      6.4262500000
+    ROTDISC   sigt125   44.868750344
+    ROTDISC   sigr125   57.011504190
+    ROTDISC   x125      1067.4253125
+    ROTDISC   y125      57018.979310
+    ROTDISC   w126      6.3975000000
+    ROTDISC   sigt126   44.641638205
+    ROTDISC   sigr126   56.982302451
+    ROTDISC   x126      1070.6312500
+    ROTDISC   y126      57162.462482
+    ROTDISC   w127      6.3687500000
+    ROTDISC   sigt127   44.410891909
+    ROTDISC   sigr127   56.952357376
+    ROTDISC   x127      1073.8228125
+    ROTDISC   y127      57304.571669
+    ROTDISC   w128      6.3400000000
+    ROTDISC   sigt128   44.176479340
+    ROTDISC   sigr128   56.921667364
+    ROTDISC   x128      1077.0000000
+    ROTDISC   y128      57445.301855
+    ROTDISC   w129      6.3162500000
+    ROTDISC   sigt129   43.924748683
+    ROTDISC   sigr129   56.845155310
+    ROTDISC   x129      1080.1640625
+    ROTDISC   y129      57584.681499
+    ROTDISC   w130      6.2925000000
+    ROTDISC   sigt130   43.668982053
+    ROTDISC   sigr130   56.767522016
+    ROTDISC   x130      1083.3162500
+    ROTDISC   y130      57722.738189
+    ROTDISC   w131      6.2687500000
+    ROTDISC   sigt131   43.409146055
+    ROTDISC   sigr131   56.688758490
+    ROTDISC   x131      1086.4565625
+    ROTDISC   y131      57859.465228
+    ROTDISC   w132      6.2450000000
+    ROTDISC   sigt132   43.145207079
+    ROTDISC   sigr132   56.608855703
+    ROTDISC   x132      1089.5850000
+    ROTDISC   y132      57994.855954
+    ROTDISC   w133      6.2212500000
+    ROTDISC   sigt133   42.877131300
+    ROTDISC   sigr133   56.527804595
+    ROTDISC   x133      1092.7015625
+    ROTDISC   y133      58128.903746
+    ROTDISC   w134      6.1975000000
+    ROTDISC   sigt134   42.604884678
+    ROTDISC   sigr134   56.445596072
+    ROTDISC   x134      1095.8062500
+    ROTDISC   y134      58261.602028
+    ROTDISC   w135      6.1737500000
+    ROTDISC   sigt135   42.328432957
+    ROTDISC   sigr135   56.362220999
+    ROTDISC   x135      1098.8990625
+    ROTDISC   y135      58392.944262
+    ROTDISC   w136      6.1500000000
+    ROTDISC   sigt136   42.047741672
+    ROTDISC   sigr136   56.277670207
+    ROTDISC   x136      1101.9800000
+    ROTDISC   y136      58522.923955
+    ROTDISC   w137      6.1150000000
+    ROTDISC   sigt137   41.794038608
+    ROTDISC   sigr137   56.295428092
+    ROTDISC   x137      1105.0462500
+    ROTDISC   y137      58651.464995
+    ROTDISC   w138      6.0800000000
+    ROTDISC   sigt138   41.536786267
+    ROTDISC   sigr138   56.313098515
+    ROTDISC   x138      1108.0950000
+    ROTDISC   y138      58778.493546
+    ROTDISC   w139      6.0450000000
+    ROTDISC   sigt139   41.275954987
+    ROTDISC   sigr139   56.330696252
+    ROTDISC   x139      1111.1262500
+    ROTDISC   y139      58904.007748
+    ROTDISC   w140      6.0100000000
+    ROTDISC   sigt140   41.011515151
+    ROTDISC   sigr140   56.348236444
+    ROTDISC   x140      1114.1400000
+    ROTDISC   y140      59028.005837
+    ROTDISC   w141      5.9750000000
+    ROTDISC   sigt141   40.743437190
+    ROTDISC   sigr141   56.365734613
+    ROTDISC   x141      1117.1362500
+    ROTDISC   y141      59150.486148
+    ROTDISC   w142      5.9400000000
+    ROTDISC   sigt142   40.471691591
+    ROTDISC   sigr142   56.383206675
+    ROTDISC   x142      1120.1150000
+    ROTDISC   y142      59271.447119
+    ROTDISC   w143      5.9050000000
+    ROTDISC   sigt143   40.196248899
+    ROTDISC   sigr143   56.400668955
+    ROTDISC   x143      1123.0762500
+    ROTDISC   y143      59390.887293
+    ROTDISC   w144      5.8700000000
+    ROTDISC   sigt144   39.917079719
+    ROTDISC   sigr144   56.418138202
+    ROTDISC   x144      1126.0200000
+    ROTDISC   y144      59508.805320
+    ROTDISC   w145      5.8412500000
+    ROTDISC   sigt145   39.615894752
+    ROTDISC   sigr145   56.375167857
+    ROTDISC   x145      1128.9478125
+    ROTDISC   y145      59625.235221
+    ROTDISC   w146      5.8125000000
+    ROTDISC   sigt146   39.310443929
+    ROTDISC   sigr146   56.331441829
+    ROTDISC   x146      1131.8612500
+    ROTDISC   y146      59740.209796
+    ROTDISC   w147      5.7837500000
+    ROTDISC   sigt147   39.000692735
+    ROTDISC   sigr147   56.286959540
+    ROTDISC   x147      1134.7603125
+    ROTDISC   y147      59853.725349
+    ROTDISC   w148      5.7550000000
+    ROTDISC   sigt148   38.686606531
+    ROTDISC   sigr148   56.241720481
+    ROTDISC   x148      1137.6450000
+    ROTDISC   y148      59965.778269
+    ROTDISC   w149      5.7262500000
+    ROTDISC   sigt149   38.368150555
+    ROTDISC   sigr149   56.195724220
+    ROTDISC   x149      1140.5153125
+    ROTDISC   y149      60076.365029
+    ROTDISC   w150      5.6975000000
+    ROTDISC   sigt150   38.045289920
+    ROTDISC   sigr150   56.148970399
+    ROTDISC   x150      1143.3712500
+    ROTDISC   y150      60185.482195
+    ROTDISC   w151      5.6687500000
+    ROTDISC   sigt151   37.717989622
+    ROTDISC   sigr151   56.101458742
+    ROTDISC   x151      1146.2128125
+    ROTDISC   y151      60293.126418
+    ROTDISC   w152      5.6400000000
+    ROTDISC   sigt152   37.386214534
+    ROTDISC   sigr152   56.053189053
+    ROTDISC   x152      1149.0400000
+    ROTDISC   y152      60399.294444
+    ROTDISC   w153      5.6112500000
+    ROTDISC   sigt153   37.049929410
+    ROTDISC   sigr153   56.004161223
+    ROTDISC   x153      1151.8528125
+    ROTDISC   y153      60503.983110
+    ROTDISC   w154      5.5825000000
+    ROTDISC   sigt154   36.709098885
+    ROTDISC   sigr154   55.954375227
+    ROTDISC   x154      1154.6512500
+    ROTDISC   y154      60607.189351
+    ROTDISC   w155      5.5537500000
+    ROTDISC   sigt155   36.363687480
+    ROTDISC   sigr155   55.903831135
+    ROTDISC   x155      1157.4353125
+    ROTDISC   y155      60708.910194
+    ROTDISC   w156      5.5250000000
+    ROTDISC   sigt156   36.013659597
+    ROTDISC   sigr156   55.852529108
+    ROTDISC   x156      1160.2050000
+    ROTDISC   y156      60809.142769
+    ROTDISC   w157      5.4962500000
+    ROTDISC   sigt157   35.658979526
+    ROTDISC   sigr157   55.800469405
+    ROTDISC   x157      1162.9603125
+    ROTDISC   y157      60907.884303
+    ROTDISC   w158      5.4675000000
+    ROTDISC   sigt158   35.299611440
+    ROTDISC   sigr158   55.747652383
+    ROTDISC   x158      1165.7012500
+    ROTDISC   y158      61005.132126
+    ROTDISC   w159      5.4387500000
+    ROTDISC   sigt159   34.935519403
+    ROTDISC   sigr159   55.694078505
+    ROTDISC   x159      1168.4278125
+    ROTDISC   y159      61100.883671
+    ROTDISC   w160      5.4100000000
+    ROTDISC   sigt160   34.566667368
+    ROTDISC   sigr160   55.639748340
+    ROTDISC   x160      1171.1400000
+    ROTDISC   y160      61195.136478
+    ROTDISC   w161      5.6025000000
+    ROTDISC   sigt161   33.529237255
+    ROTDISC   sigr161   53.385743943
+    ROTDISC   x161      1173.8931250
+    ROTDISC   y161      61288.849783
+    ROTDISC   w162      5.7950000000
+    ROTDISC   sigt162   32.521949841
+    ROTDISC   sigr162   51.273873576
+    ROTDISC   x162      1176.7425000
+    ROTDISC   y162      61382.927846
+    ROTDISC   w163      5.9875000000
+    ROTDISC   sigt163   31.541203081
+    ROTDISC   sigr163   49.290216376
+    ROTDISC   x163      1179.6881250
+    ROTDISC   y163      61477.257259
+    ROTDISC   w164      6.1800000000
+    ROTDISC   sigt164   30.583856128
+    ROTDISC   sigr164   47.422585757
+    ROTDISC   x164      1182.7300000
+    ROTDISC   y164      61571.722555
+    ROTDISC   w165      6.8125000000
+    ROTDISC   sigt165   28.755024885
+    ROTDISC   sigr165   42.704591925
+    ROTDISC   x165      1185.9781250
+    ROTDISC   y165      61667.948015
+    ROTDISC   w166      7.4450000000
+    ROTDISC   sigt166   27.140969642
+    ROTDISC   sigr166   38.769382165
+    ROTDISC   x166      1189.5425000
+    ROTDISC   y166      61767.437546
+    ROTDISC   w167      8.0775000000
+    ROTDISC   sigt167   25.689067179
+    ROTDISC   sigr167   35.432574692
+    ROTDISC   x167      1193.4231250
+    ROTDISC   y167      61869.829536
+    ROTDISC   w168      8.7100000000
+    ROTDISC   sigt168   24.362140259
+    ROTDISC   sigr168   32.563342979
+    ROTDISC   x168      1197.6200000
+    ROTDISC   y168      61974.753956
+    ROTDISC   w169      9.6750000000
+    ROTDISC   sigt169   22.820212971
+    ROTDISC   sigr169   29.029268985
+    ROTDISC   x169      1202.2162500
+    ROTDISC   y169      62082.998907
+    ROTDISC   w170      10.640000000
+    ROTDISC   sigt170   21.448594019
+    ROTDISC   sigr170   26.114653928
+    ROTDISC   x170      1207.2950000
+    ROTDISC   y170      62195.248557
+    ROTDISC   w171      11.820000000
+    ROTDISC   sigt171   20.072296567
+    ROTDISC   sigr171   23.231954054
+    ROTDISC   x171      1212.9100000
+    ROTDISC   y171      62311.615454
+    ROTDISC   w172      13.000000000
+    ROTDISC   sigt172   18.833069241
+    ROTDISC   sigr172   20.850204821
+    ROTDISC   x172      1219.1150000
+    ROTDISC   y172      62432.136565
+    ROTDISC   w173      13.000000000
+    ROTDISC   sigt173   18.214200054
+    ROTDISC   sigr173   20.564709344
+    ROTDISC   x173      1225.6150000
+    ROTDISC   y173      62552.540190
+    ROTDISC   w174      13.000000000
+    ROTDISC   sigt174   17.589839561
+    ROTDISC   sigr174   20.276848479
+    ROTDISC   x174      1232.1150000
+    ROTDISC   y174      62668.903319
+    ROTDISC   w175      13.000000000
+    ROTDISC   sigt175   16.959939451
+    ROTDISC   sigr175   19.986619910
+    ROTDISC   x175      1238.6150000
+    ROTDISC   y175      62781.190101
+    ROTDISC   w176      13.000000000
+    ROTDISC   sigt176   16.324451370
+    ROTDISC   sigr176   19.694021169
+    ROTDISC   x176      1245.1150000
+    ROTDISC   y176      62889.364371
+    ROTDISC   w177      13.000000000
+    ROTDISC   sigt177   15.683326910
+    ROTDISC   sigr177   19.399049638
+    ROTDISC   x177      1251.6150000
+    ROTDISC   y177      62993.389650
+    ROTDISC   w178      13.000000000
+    ROTDISC   sigt178   15.036517615
+    ROTDISC   sigr178   19.101702555
+    ROTDISC   x178      1258.1150000
+    ROTDISC   y178      63093.229145
+    ROTDISC   w179      13.000000000
+    ROTDISC   sigt179   14.383974972
+    ROTDISC   sigr179   18.801977014
+    ROTDISC   x179      1264.6150000
+    ROTDISC   y179      63188.845746
+    ROTDISC   w180      13.000000000
+    ROTDISC   sigr180   18.500000000
+    ROTDISC   sigt180   13.725650411
+    ROTDISC   x180      1271.1150000
+    ROTDISC   y180      63280.202028
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ DO k         0                        K
+ XT WSR(k)    2PR
+ ZV WSR(k)    X                        w(k)
+ ZV WSR(k)    Y                        sigr(k)
+ OD k
+
+ DO k         0                        K
+ XT WST(k)    2PR
+ ZV WST(k)    X                        w(k)
+ ZV WST(k)    Y                        sigt(k)
+ OD k
+
+GROUP USES
+
+ R= rk        ri
+ DO k         0                        K-1
+ R+ rk+1      rk                       dr
+ IA k+1       k         1
+ RM -rk       rk        -1.0
+ ZE SR(k)     WSR(k)                   -rk
+ ZE SR(k)     WSR(k+1)                 rk+1
+ ZE SR(k)     WST(k)                   -dr/2
+ ZE SR(k)     WST(k+1)                 -dr/2
+ ZE STAy(k)   WST(k)                   -dr/2
+ ZE STAy(k)   WST(k+1)                 -dr/2
+ R= rk        rk+1
+ OD k
+
+OBJECT BOUND
+
+ LO WEIGHT              5.0
+
+*LO SOLUTION            7.872067544
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ROTDISC
+
+INDIVIDUALS
+
+ T  2PR
+
+ F                      X*Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

@@ -1,0 +1,134 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          TRIDIA
+
+*   Problem :
+*   *********
+
+*   Shanno's TRIDIA quadratic tridiagonal problem
+
+*   Source: problem 8 in
+*   Ph.L. Toint,
+*   "Test problems for partially separable optimization and results
+*   for the routine PSPMIN",
+*   Report 83/4, Department of Mathematics, FUNDP (Namur, B), 1983.
+
+*   See also Buckley#40 (p.96)
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification QUR2-AN-V-0
+
+*   This problem is decomposed in n linear groups, the last n-1 of which
+*   are 2 x 2 and singular.
+
+*   N is the number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   20             $-PARAMETER
+*IE N                   30             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   5              $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   TRIDIA problem parameters (see Buckley#40)
+
+ RE ALPHA               2.0            $-PARAMETER
+ RE BETA                1.0            $-PARAMETER
+ RE GAMMA               1.0            $-PARAMETER
+ RE DELTA               1.0            $-PARAMETER
+
+*   Define a few helpful parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ RM MBETA     BETA      -1.0
+ RD 1/GAMMA   GAMMA     1.0
+
+VARIABLES
+
+*   Define N variables
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Define group 1
+
+ ZN G(1)      X(1)                     DELTA
+ ZN G(1)      'SCALE'                  1/GAMMA
+
+*   Define the N-1 last objective groups
+
+ DO I         2                        N
+
+ RI REALI     I
+ RD 1/I       REALI     1.0
+ IA I-1       I         -1
+
+ ZN G(I)      X(I-1)                   MBETA
+ ZN G(I)      X(I)                     ALPHA
+ ZN G(I)      'SCALE'                  1/I
+
+ ND
+
+CONSTANTS
+
+*   The constant in the last group is 1.0, the other being 0.0
+
+ X  TRIDIA    G(1)      1.0
+
+BOUNDS
+
+ FR TRIDIA    'DEFAULT'
+
+START POINT
+
+ XV TRIDIA    'DEFAULT' 1.0
+
+GROUP TYPE
+
+*   Groups are of the least-square type
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO TRIDIA              0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        TRIDIA
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

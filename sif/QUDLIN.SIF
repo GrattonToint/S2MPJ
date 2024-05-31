@@ -1,0 +1,104 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          QUDLIN
+
+*   Problem :
+*   *********
+
+*   A simple problem.
+
+*   SIF input: unknown.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification QBR2-AN-V-V
+
+*IE N                   12             $-PARAMETER     original value
+*IE N                   120            $-PARAMETER
+*IE N                   1200           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*IE M                   6              $-PARAMETER     original value
+*IE M                   60             $-PARAMETER
+*IE M                   600            $-PARAMETER
+*IE M                   2500           $-PARAMETER
+ IE M                   6              $-PARAMETER     modified for S2X tests
+*IE M                   5000           $-PARAMETER
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ RI RI        I
+ RM C         RI         - 10.0
+ ZN OBJ       X(I)                     C
+ ND
+
+CONSTANTS
+
+BOUNDS
+
+ XU QUDLIN    'DEFAULT'  10.0
+
+START POINT
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+ DO I         1                        M
+ I+ I+1       I                        1
+ ZV E(I)      X                        X(I)
+ ZV E(I)      Y                        X(I+1)
+ OD I
+
+GROUP USES
+ DO I         1                        M
+ XE OBJ       E(I)
+ OD I
+
+OBJECT BOUND
+
+ LO QUDLIN              0.0
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      QUDLIN
+
+INDIVIDUALS
+
+*   The product of X and Y
+
+ T  2PR
+
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  Y         X         1.0
+
+ENDATA
+

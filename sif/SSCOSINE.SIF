@@ -1,0 +1,165 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          SSCOSINE 
+
+*   Problem :
+*   *********
+
+*   Another function with nontrivial groups and
+*   repetitious elements.
+*   NB: scaled version of COSINE by Luksan et al.
+
+*   Source: problem 50 in
+*   L. Luksan, C. Matonoha and J. Vlcek  
+*   Modified CUTE problems for sparse unconstraoined optimization
+*   Technical Report 1081
+*   Institute of Computer Science
+*   Academy of Science of the Czech Republic
+
+*   that is a scaled variant of 
+*   N. Gould, private communication.
+
+*   SIF input: N. Gould, Nov 1997
+*              this version Nick Gould, June, 2013
+
+*   classification OUR2-AN-V-0
+
+*   number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER    original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+*IE N                   1000000        $-PARAMETER
+
+*  ratio of smallest to largest scale factors will be exp(scal)
+
+ RE SCAL                6.0
+
+*   other parameter definitions
+
+ IE 1                   1
+ IA N-1       N         -1
+ RI RN-1      N-1          
+ RM -RN-1     RN-1      -1.0
+
+ RE ONE                 1.0
+ RI RN        N
+ RA RN-1      RN        -1
+
+VARIABLES
+
+ DO I         1                        N
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R/ RAT       RI-1                     RN-1
+ R* ARG       RAT                      SCAL
+ A( S(I)      EXP                      ARG
+ X  X(I)
+ ND
+
+GROUPS
+
+*  objective function
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ AM MULT      S(I+1)    -0.5
+ ZN G(I)      X(I+1)                   MULT
+ OD
+
+BOUNDS
+
+ FR SSCOSINE  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ A/ DIV       ONE                      S(I)
+ ZV SSCOSINE  X(I)                     DIV
+ ND
+
+ELEMENT TYPE
+
+ EV SQ        V
+ EP SQ        P
+
+ELEMENT USES
+
+ DO I         1                        N-1
+
+ XT E(I)      SQ
+ ZV E(I)      V                        X(I)
+ ZP E(I)      P                        S(I)
+
+ ND
+
+GROUP TYPE
+
+ GV COS       GVAR
+
+GROUP USES
+
+ DO I         1                        N-1
+ XT G(I)      COS
+ XE G(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+ ZL SSCOSINE                           -RN-1
+
+*   Solution
+
+*LO SOLTN               ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      SSCOSINE 
+
+TEMPORARIES
+
+ R  PP
+
+INDIVIDUALS
+
+ T  SQ
+ A  PP                  P * P
+ F                      PP * V * V
+ G  V                   PP * ( V + V )
+ H  V         V         2.0 * PP
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        SSCOSINE 
+
+TEMPORARIES
+
+ R  COSG
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  COS
+ A  COSG                COS( GVAR )
+ F                      COSG
+ G                      - SIN( GVAR )
+ H                      - COSG
+
+ENDATA

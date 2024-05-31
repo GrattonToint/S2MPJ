@@ -1,0 +1,122 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          S316m322
+
+*   Problem :
+*   *********
+
+*   Source: problems 316 to 322 in
+*   K. Schittkowski,
+*   " More Test Problems for Nonlinear Programming Codes",
+*   Springer Verlag, Berlin, 1987.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification QQR2-AN-2-1
+
+*   Denominator of x2**2 in the equality constraint.
+
+ RE DEN                 100.0          $ problem 316
+*RE DEN                 64.0           $ problem 317
+*RE DEN                 36.0           $ problem 318
+*RE DEN                 16.0           $ problem 319
+*RE DEN                 4.0            $ problem 320
+*RE DEN                 1.0            $ problem 321
+*RE DEN                 0.01           $ problem 322
+
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ1      X1        1.0
+ N  OBJ2      X2        1.0
+ E  CON
+
+CONSTANTS
+
+ X  S316-322  OBJ1      20.0
+ X  S316-322  OBJ2      -20.0
+ X  S316-322  CON       1.0
+
+BOUNDS
+
+ FR S316-322  'DEFAULT'
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  OBJ1      L2
+ T  OBJ2      L2
+
+ E  CON       X1SQ      0.01
+ RD SCAL      DEN       1.0
+ ZE CON       X2SQ                     SCAL
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               334.315       $ problem 316
+*LO SOLTN               372.467       $ problem 317
+*LO SOLTN               412.750       $ problem 318
+*LO SOLTN               452.404       $ problem 319
+*LO SOLTN               485.531       $ problem 320
+*LO SOLTN               496.112       $ problem 321
+*LO SOLTN               499.960       $ problem 322
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      S316m322
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        S316m322
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
