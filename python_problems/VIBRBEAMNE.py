@@ -1,0 +1,355 @@
+from s2xlib import *
+class  VIBRBEAMNE(CUTEst_problem):
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# 
+# 
+#    Problem:
+#    ********
+# 
+#    A nonlinear least-squares problem arising from laser-Doppler
+#    measurements of a vibrating beam.  The data correspond to a simulated
+#    experiment where two laser-Doppler velocimeters take measurements
+#    at random points along the centreline of the beam.  These measurements
+#    consist of a position (x), an incident angle (p) and the magnitude
+#    of the velocity along the line of sight (v).
+#    The problem is then to fit
+# 
+#                          2      3                    2     3
+#        v = (c + c x + c x  + c x ) cos[ d + d x + d x + d x  - p ]
+#              0   1     2      3          0   1     2     3
+#            <---- magnitude ----->       <------ phase ----->
+# 
+#    in the least-squares sense.
+# 
+#    Source:
+#    a modification of an exercize for L. Watson course on LANCELOT in
+#    the Spring 1993. Compared to the original proposal, the unnecessary
+#    elements were removed as well as an unnecessary constraint on the phase.
+# 
+#    SIF input: Ph. L. Toint, May 1993, based on a proposal by
+#               D. E. Montgomery, Virginia Tech., April 1993.
+#    Nonlinear-equations version of VIBRBEAM.SIF, Nick Gould, Jan 2020.
+# 
+#    classification = "NOR2-MN-8-30"
+# 
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    name = 'VIBRBEAMNE'
+
+    def __init__(self, *args): 
+        import numpy as np
+        pbm      = structtype()
+        pb       = structtype()
+        pb.name  = self.name
+        pb.sifpbname = 'VIBRBEAMNE'
+        pbm.name = self.name
+        nargin   = len(args)
+
+        #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
+        v_  = {}
+        ix_ = {}
+        ig_ = {}
+        v_['0'] = 0
+        v_['1'] = 1
+        v_['3'] = 3
+        v_['m'] = 30
+        v_['x1'] = 39.1722
+        v_['x2'] = 53.9707
+        v_['x3'] = 47.9829
+        v_['x4'] = 12.5925
+        v_['x5'] = 16.5414
+        v_['x6'] = 18.9548
+        v_['x7'] = 27.7168
+        v_['x8'] = 31.9201
+        v_['x9'] = 45.6830
+        v_['x10'] = 22.2524
+        v_['x11'] = 33.9805
+        v_['x12'] = 6.8425
+        v_['x13'] = 35.1677
+        v_['x14'] = 33.5682
+        v_['x15'] = 43.3659
+        v_['x16'] = 13.3835
+        v_['x17'] = 25.7273
+        v_['x18'] = 21.0230
+        v_['x19'] = 10.9755
+        v_['x20'] = 1.5323
+        v_['x21'] = 45.4416
+        v_['x22'] = 14.5431
+        v_['x23'] = 22.4313
+        v_['x24'] = 29.0144
+        v_['x25'] = 25.2675
+        v_['x26'] = 15.5095
+        v_['x27'] = 9.6297
+        v_['x28'] = 8.3009
+        v_['x29'] = 30.8694
+        v_['x30'] = 43.3299
+        v_['v1'] = -1.2026
+        v_['v2'] = 1.7053
+        v_['v3'] = 0.5410
+        v_['v4'] = 1.1477
+        v_['v5'] = 1.2447
+        v_['v6'] = 0.9428
+        v_['v7'] = -0.1360
+        v_['v8'] = -0.7542
+        v_['v9'] = -0.3396
+        v_['v10'] = 0.7057
+        v_['v11'] = -0.8509
+        v_['v12'] = -0.1201
+        v_['v13'] = -1.2193
+        v_['v14'] = -1.0448
+        v_['v15'] = -0.7723
+        v_['v16'] = 0.4342
+        v_['v17'] = 0.1154
+        v_['v18'] = 0.2868
+        v_['v19'] = 0.3558
+        v_['v20'] = -0.5090
+        v_['v21'] = -0.0842
+        v_['v22'] = 0.6021
+        v_['v23'] = 0.1197
+        v_['v24'] = -0.1827
+        v_['v25'] = 0.1806
+        v_['v26'] = 0.5395
+        v_['v27'] = 0.2072
+        v_['v28'] = 0.1466
+        v_['v29'] = -0.2672
+        v_['v30'] = -0.3038
+        v_['p1'] = 2.5736
+        v_['p2'] = 2.7078
+        v_['p3'] = 2.6613
+        v_['p4'] = 2.0374
+        v_['p5'] = 2.1553
+        v_['p6'] = 2.2195
+        v_['p7'] = 2.4077
+        v_['p8'] = 2.4772
+        v_['p9'] = 2.6409
+        v_['p10'] = 2.2981
+        v_['p11'] = 2.5073
+        v_['p12'] = 1.8380
+        v_['p13'] = 2.5236
+        v_['p14'] = 2.5015
+        v_['p15'] = 2.6186
+        v_['p16'] = 0.4947
+        v_['p17'] = 0.6062
+        v_['p18'] = 0.5588
+        v_['p19'] = 0.4772
+        v_['p20'] = 0.4184
+        v_['p21'] = 0.9051
+        v_['p22'] = 0.5035
+        v_['p23'] = 0.5723
+        v_['p24'] = 0.6437
+        v_['p25'] = 0.6013
+        v_['p26'] = 0.5111
+        v_['p27'] = 0.4679
+        v_['p28'] = 0.4590
+        v_['p29'] = 0.6666
+        v_['p30'] = 0.8630
+        #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
+        pb.xnames = np.array([])
+        xscale    = np.array([])
+        intvars   = np.array([])
+        binvars   = np.array([])
+        [iv,ix_,_] = s2x_ii('c0',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'c0')
+        [iv,ix_,_] = s2x_ii('c1',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'c1')
+        [iv,ix_,_] = s2x_ii('c2',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'c2')
+        [iv,ix_,_] = s2x_ii('c3',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'c3')
+        [iv,ix_,_] = s2x_ii('d0',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'d0')
+        [iv,ix_,_] = s2x_ii('d1',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'d1')
+        [iv,ix_,_] = s2x_ii('d2',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'d2')
+        [iv,ix_,_] = s2x_ii('d3',ix_)
+        pb.xnames=arrset(pb.xnames,iv,'d3')
+        #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
+        pbm.A       = lil_matrix((1000000,1000000))
+        pbm.gscale  = np.array([])
+        pbm.grnames = np.array([])
+        cnames      = np.array([])
+        pb.cnames   = np.array([])
+        gtype       = np.array([])
+        for i in range(int(v_['1']),int(v_['m'])+1):
+            [ig,ig_,_] = s2x_ii('f'+str(i),ig_)
+            gtype = arrset(gtype,ig,'==')
+            cnames = arrset(cnames,ig,'f'+str(i))
+        #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
+        pb.n   = len(ix_)
+        ngrp   = len(ig_)
+        legrps = find(gtype,lambda x:x=='<=')
+        eqgrps = find(gtype,lambda x:x=='==')
+        gegrps = find(gtype,lambda x:x=='>=')
+        pb.nle = len(legrps)
+        pb.neq = len(eqgrps)
+        pb.nge = len(gegrps)
+        pb.m   = pb.nle+pb.neq+pb.nge
+        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
+        pb.cnames= cnames[pbm.congrps]
+        pb.nob = ngrp-pb.m
+        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
+        pbm.gconst = np.zeros((ngrp,1))
+        for i in range(int(v_['1']),int(v_['m'])+1):
+            pbm.gconst = arrset(pbm.gconst,ig_['f'+str(i)],float(v_['v'+str(i)]))
+        pb.xlower = np.zeros((pb.n,1))
+        pb.xupper = np.full((pb.n,1),+float('Inf'))
+        #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
+        pb.xlower = np.full((pb.n,1),-float('Inf'))
+        pb.xupper = np.full((pb.n,1),+float('Inf'))
+        #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
+        pb.x0 = np.zeros((pb.n,1))
+        pb.y0 = np.zeros((pb.m,1))
+        pb.x0[ix_['c0']] = float(-3.5)
+        pb.x0[ix_['c1']] = float(1.0)
+        pb.x0[ix_['d0']] = float(1.7)
+        #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
+        iet_  = {}
+        elftv = []
+        [it,iet_,_] = s2x_ii( 'efun', iet_)
+        elftv = loaset(elftv,it,0,'a0')
+        elftv = loaset(elftv,it,1,'a1')
+        elftv = loaset(elftv,it,2,'a2')
+        elftv = loaset(elftv,it,3,'a3')
+        elftv = loaset(elftv,it,4,'b')
+        elftp = []
+        elftp = loaset(elftp,it,0,'y')
+        elftp = loaset(elftp,it,1,'q')
+        #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
+        ie_ = {}
+        pbm.elftype = np.array([])
+        ielftype    = np.array([])
+        pbm.elvar   = []
+        pbm.elpar   = []
+        for i in range(int(v_['1']),int(v_['m'])+1):
+            for j in range(int(v_['0']),int(v_['3'])+1):
+                ename = 'fu'+str(i)+','+str(j)
+                [ie,ie_,_] = s2x_ii(ename,ie_)
+                pbm.elftype = arrset(pbm.elftype,ie,'efun')
+                ielftype = arrset(ielftype, ie, iet_["efun"])
+                vname = 'd0'
+                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                posev = find(elftv[ielftype[ie]],lambda x:x=='a0')
+                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                vname = 'd1'
+                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                posev = find(elftv[ielftype[ie]],lambda x:x=='a1')
+                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                vname = 'd2'
+                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                posev = find(elftv[ielftype[ie]],lambda x:x=='a2')
+                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                vname = 'd3'
+                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                posev = find(elftv[ielftype[ie]],lambda x:x=='a3')
+                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                vname = 'c'+str(j)
+                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                posev = find(elftv[ielftype[ie]],lambda x:x=='b')
+                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                posep = find(elftp[ielftype[ie]],lambda x:x=='y')
+                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['x'+str(i)]))
+                posep = find(elftp[ielftype[ie]],lambda x:x=='q')
+                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['p'+str(i)]))
+        #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
+        pbm.grelt   = []
+        for ig in np.arange(0,ngrp):
+            pbm.grelt.append(np.array([]))
+        pbm.grftype = np.array([])
+        pbm.grelw   = []
+        nlc         = np.array([])
+        for i in range(int(v_['1']),int(v_['m'])+1):
+            v_['y'] = 1.0
+            for j in range(int(v_['0']),int(v_['3'])+1):
+                ig = ig_['f'+str(i)]
+                posel = len(pbm.grelt[ig])
+                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['fu'+str(i)+','+str(j)])
+                nlc = np.union1d(nlc,np.array([ig]))
+                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['y']))
+                v_['y'] = v_['y']*v_['x'+str(i)]
+        #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+        #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
+        #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
+        pb.clower = np.full((pb.m,1),-float('Inf'))
+        pb.cupper = np.full((pb.m,1),+float('Inf'))
+        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        delattr( pbm, "A" )
+        #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
+        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
+        pb.pbclass = "NOR2-MN-8-30"
+        self.pb = pb; self.pbm = pbm
+
+    #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
+
+    @staticmethod
+    def efun(pbm,nargout,*args):
+
+        import numpy as np
+        EV_  = args[0]
+        iel_ = args[1]
+        y2 = pbm.elpar[iel_][0]*pbm.elpar[iel_][0]
+        y3 = pbm.elpar[iel_][0]*y2
+        y4 = y2*y2
+        y5 = y2*y3
+        y6 = y3*y3
+        phi  = (
+              EV_[0]+pbm.elpar[iel_][0]*(EV_[1]+pbm.elpar[iel_][0]*(EV_[2]+pbm.elpar[iel_][0]*EV_[3]))-pbm.elpar[iel_][1])
+        cosphi = np.cos(phi)
+        sinphi = np.sin(phi)
+        bcos = EV_[4]*cosphi
+        bsin = EV_[4]*sinphi
+        f_   = bcos
+        if not isinstance( f_, float ):
+            f_   = f_.item();
+        if nargout>1:
+            try:
+                dim = len(IV_)
+            except:
+                dim = len(EV_)
+            g_ = np.zeros(dim)
+            g_[0] = -bsin
+            g_[1] = -bsin*pbm.elpar[iel_][0]
+            g_[2] = -bsin*y2
+            g_[3] = -bsin*y3
+            g_[4] = cosphi
+            if nargout>2:
+                H_ = np.zeros((5,5))
+                H_[0,0] = -bcos
+                H_[0,1] = -bcos*pbm.elpar[iel_][0]
+                H_[1,0] = H_[0,1]
+                H_[0,2] = -bcos*y2
+                H_[2,0] = H_[0,2]
+                H_[0,3] = -bcos*y3
+                H_[3,0] = H_[0,3]
+                H_[0,4] = -sinphi
+                H_[4,0] = H_[0,4]
+                H_[1,1] = -bcos*y2
+                H_[1,2] = -bcos*y3
+                H_[2,1] = H_[1,2]
+                H_[1,3] = -bcos*y4
+                H_[3,1] = H_[1,3]
+                H_[1,4] = -sinphi*pbm.elpar[iel_][0]
+                H_[4,1] = H_[1,4]
+                H_[2,2] = -bcos*y4
+                H_[2,3] = -bcos*y5
+                H_[3,2] = H_[2,3]
+                H_[2,4] = -sinphi*y2
+                H_[4,2] = H_[2,4]
+                H_[3,3] = -bcos*y6
+                H_[3,4] = -sinphi*y3
+                H_[4,3] = H_[3,4]
+        if nargout == 1:
+            return f_
+        elif nargout == 2:
+            return f_,g_
+        elif nargout == 3:
+            return f_,g_,H_
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
