@@ -1,0 +1,404 @@
+function SSBRYBNDNE(action,args...)
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# 
+# 
+#    Problem : SSBRYBNDNE
+#    *********
+#    Broyden banded system of nonlinear equations, considered in the
+#    least square sense.
+#    NB: scaled version of BRYBND with scaling proposed by Luksan et al.
+#    This is a nonlinear equation variant of SSBRYBND
+# 
+#    Source: problem 48 in
+#    L. Luksan, C. Matonoha and J. Vlcek
+#    Modified CUTE problems for sparse unconstraoined optimization
+#    Technical Report 1081
+#    Institute of Computer Science
+#    Academy of Science of the Czech Republic
+# 
+#    that is a scaled variant of problem 31 in
+# 
+#    J.J. More', B.S. Garbow and K.E. Hillstrom,
+#    "Testing Unconstrained Optimization Software",
+#    ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+# 
+#    See also Buckley#73 (p. 41) and Toint#18
+# 
+#    SIF input: Ph. Toint and Nick Gould, Nov 1997.
+#               Nick Gould (nonlinear equation version), Jan 2019
+# 
+#    classification = "NOR2-AN-V-V"
+# 
+#    N is the number of equations and variables (variable).
+# 
+# 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    name = "SSBRYBNDNE"
+
+    if action == "setup"
+        pbm          = PBM(name)
+        pb           = PB(name)
+        pb.sifpbname = "SSBRYBNDNE"
+        nargin       = length(args)
+        pbm.call     = eval( Meta.parse( name ) )
+
+        #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
+        v_  = Dict{String,Float64}();
+        ix_ = Dict{String,Int}();
+        ig_ = Dict{String,Int}();
+        if nargin<1
+            v_["N"] = Int64(10);  #  SIF file default value
+        else
+            v_["N"] = Int64(args[1]);
+        end
+#       Alternative values for the SIF file parameters:
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
+        v_["ONE"] = 1.0
+        v_["KAPPA1"] = 2.0
+        v_["KAPPA2"] = 5.0
+        v_["KAPPA3"] = 1.0
+        v_["LB"] = 5
+        v_["UB"] = 1
+        v_["RN"] = Float64(v_["N"])
+        v_["RN-1"] = -1+v_["RN"]
+        v_["SCAL"] = 6.0
+        v_["1"] = 1
+        v_["MLB"] = -1*v_["LB"]
+        v_["MUB"] = -1*v_["UB"]
+        v_["LB+1"] = 1+v_["LB"]
+        v_["N-UB"] = v_["N"]+v_["MUB"]
+        v_["N-UB-1"] = -1+v_["N-UB"]
+        v_["-KAPPA3"] = -1.0*v_["KAPPA3"]
+        #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
+        xscale  = Float64[]
+        intvars = Int64[]
+        binvars = Int64[]
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            v_["I-1"] = -1+I
+            v_["RI-1"] = Float64(v_["I-1"])
+            v_["RAT"] = v_["RI-1"]/v_["RN-1"]
+            v_["ARG"] = v_["RAT"]*v_["SCAL"]
+            v_["SCALE"*string(I)] = exp(v_["ARG"])
+            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            arrset(pb.xnames,iv,"X"*string(I))
+        end
+        #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
+        gtype    = String[]
+        for I = Int64(v_["1"]):Int64(v_["LB"])
+            v_["I-1"] = -1+I
+            v_["I+1"] = 1+I
+            v_["I+UB"] = I+v_["UB"]
+            for J = Int64(v_["1"]):Int64(v_["I-1"])
+                v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
+                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                arrset(gtype,ig,"==")
+                arrset(pb.cnames,ig,"G"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["KAP"])
+            end
+            v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
+            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            arrset(gtype,ig,"==")
+            arrset(pb.cnames,ig,"G"*string(I))
+            iv = ix_["X"*string(I)]
+            pbm.A[ig,iv] += Float64(v_["KAP"])
+            for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
+                v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
+                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                arrset(gtype,ig,"==")
+                arrset(pb.cnames,ig,"G"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["KAP"])
+            end
+        end
+        for I = Int64(v_["LB+1"]):Int64(v_["N-UB-1"])
+            v_["I-LB"] = I+v_["MLB"]
+            v_["I-1"] = -1+I
+            v_["I+1"] = 1+I
+            v_["I+UB"] = I+v_["UB"]
+            for J = Int64(v_["I-LB"]):Int64(v_["I-1"])
+                v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
+                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                arrset(gtype,ig,"==")
+                arrset(pb.cnames,ig,"G"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["KAP"])
+            end
+            v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
+            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            arrset(gtype,ig,"==")
+            arrset(pb.cnames,ig,"G"*string(I))
+            iv = ix_["X"*string(I)]
+            pbm.A[ig,iv] += Float64(v_["KAP"])
+            for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
+                v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
+                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                arrset(gtype,ig,"==")
+                arrset(pb.cnames,ig,"G"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["KAP"])
+            end
+        end
+        for I = Int64(v_["N-UB"]):Int64(v_["N"])
+            v_["I-LB"] = I+v_["MLB"]
+            v_["I-1"] = -1+I
+            v_["I+1"] = 1+I
+            for J = Int64(v_["I-LB"]):Int64(v_["I-1"])
+                v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
+                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                arrset(gtype,ig,"==")
+                arrset(pb.cnames,ig,"G"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["KAP"])
+            end
+            v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
+            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            arrset(gtype,ig,"==")
+            arrset(pb.cnames,ig,"G"*string(I))
+            iv = ix_["X"*string(I)]
+            pbm.A[ig,iv] += Float64(v_["KAP"])
+            for J = Int64(v_["I+1"]):Int64(v_["N"])
+                v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
+                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                arrset(gtype,ig,"==")
+                arrset(pb.cnames,ig,"G"*string(I))
+                iv = ix_["X"*string(J)]
+                pbm.A[ig,iv] += Float64(v_["KAP"])
+            end
+        end
+        #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
+        pb.n   = length(ix_)
+        ngrp   = length(ig_)
+        legrps = findall(x->x=="<=",gtype)
+        eqgrps = findall(x->x=="==",gtype)
+        gegrps = findall(x->x==">=",gtype)
+        pb.nle = length(legrps)
+        pb.neq = length(eqgrps)
+        pb.nge = length(gegrps)
+        pb.m   = pb.nle+pb.neq+pb.nge
+        pbm.congrps = findall(x->x!="<>",gtype)
+        pb.nob = ngrp-pb.m
+        pbm.objgrps = findall(x->x=="<>",gtype)
+        pb.xlower = zeros(Float64,pb.n)
+        pb.xupper =    fill(Inf,pb.n)
+        #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
+        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xupper =    fill(Inf,pb.n)
+        #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
+        pb.x0 = zeros(Float64,pb.n)
+        pb.y0 = zeros(Float64,pb.m)
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            v_["DIV"] = v_["ONE"]/v_["SCALE"*string(I)]
+            pb.x0[ix_["X"*string(I)]] = Float64(v_["DIV"])
+        end
+        #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
+        iet_  = Dict{String,Int}()
+        elftv = Vector{Vector{String}}()
+        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        loaset(elftv,it,1,"V")
+        elftp = Vector{Vector{String}}()
+        loaset(elftp,it,1,"P")
+        it,iet_,_ = s2x_ii( "eCB", iet_)
+        loaset(elftv,it,1,"V")
+        loaset(elftp,it,1,"P")
+        #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
+        ie_      = Dict{String,Int}()
+        ielftype = Vector{Int64}()
+        for I = Int64(v_["1"]):Int64(v_["N"])
+            ename = "E"*string(I)
+            ie,ie_,newelt = s2x_ii(ename,ie_)
+            arrset(pbm.elftype,ie,"eSQ")
+            arrset(ielftype, ie, iet_["eSQ"])
+            vname = "X"*string(I)
+            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            posev = findfirst(x->x=="V",elftv[ielftype[ie]])
+            loaset(pbm.elvar,ie,posev,iv)
+            posep = findfirst(x->x=="P",elftp[ielftype[ie]])
+            loaset(pbm.elpar,ie,posep,Float64(v_["SCALE"*string(I)]))
+            ename = "Q"*string(I)
+            ie,ie_,newelt = s2x_ii(ename,ie_)
+            arrset(pbm.elftype,ie,"eCB")
+            arrset(ielftype, ie, iet_["eCB"])
+            vname = "X"*string(I)
+            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            posev = findfirst(x->x=="V",elftv[ielftype[ie]])
+            loaset(pbm.elvar,ie,posev,iv)
+            posep = findfirst(x->x=="P",elftp[ielftype[ie]])
+            loaset(pbm.elpar,ie,posep,Float64(v_["SCALE"*string(I)]))
+        end
+        #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
+        for ig in 1:ngrp
+            arrset(pbm.grelt,ig,Int64[])
+        end
+        nlc = Int64[]
+        for I = Int64(v_["1"]):Int64(v_["LB"])
+            v_["I-1"] = -1+I
+            v_["I+1"] = 1+I
+            v_["I+UB"] = I+v_["UB"]
+            for J = Int64(v_["1"]):Int64(v_["I-1"])
+                ig = ig_["G"*string(I)]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["E"*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["-KAPPA3"]))
+            end
+            ig = ig_["G"*string(I)]
+            posel = length(pbm.grelt[ig])+1
+            loaset(pbm.grelt,ig,posel,ie_["Q"*string(I)])
+            arrset(nlc,length(nlc)+1,ig)
+            loaset(pbm.grelw,ig,posel,Float64(v_["KAPPA2"]))
+            for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
+                ig = ig_["G"*string(I)]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["E"*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["-KAPPA3"]))
+            end
+        end
+        for I = Int64(v_["LB+1"]):Int64(v_["N-UB-1"])
+            v_["I-LB"] = I+v_["MLB"]
+            v_["I-1"] = -1+I
+            v_["I+1"] = 1+I
+            v_["I+UB"] = I+v_["UB"]
+            for J = Int64(v_["I-LB"]):Int64(v_["I-1"])
+                ig = ig_["G"*string(I)]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["Q"*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["-KAPPA3"]))
+            end
+            ig = ig_["G"*string(I)]
+            posel = length(pbm.grelt[ig])+1
+            loaset(pbm.grelt,ig,posel,ie_["E"*string(I)])
+            arrset(nlc,length(nlc)+1,ig)
+            loaset(pbm.grelw,ig,posel,Float64(v_["KAPPA2"]))
+            for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
+                ig = ig_["G"*string(I)]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["E"*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["-KAPPA3"]))
+            end
+        end
+        for I = Int64(v_["N-UB"]):Int64(v_["N"])
+            v_["I-LB"] = I+v_["MLB"]
+            v_["I-1"] = -1+I
+            v_["I+1"] = 1+I
+            for J = Int64(v_["I-LB"]):Int64(v_["I-1"])
+                ig = ig_["G"*string(I)]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["E"*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["-KAPPA3"]))
+            end
+            ig = ig_["G"*string(I)]
+            posel = length(pbm.grelt[ig])+1
+            loaset(pbm.grelt,ig,posel,ie_["Q"*string(I)])
+            arrset(nlc,length(nlc)+1,ig)
+            loaset(pbm.grelw,ig,posel,Float64(v_["KAPPA2"]))
+            for J = Int64(v_["I+1"]):Int64(v_["N"])
+                ig = ig_["G"*string(I)]
+                posel = length(pbm.grelt[ig])+1
+                loaset(pbm.grelt,ig,posel,ie_["E"*string(J)])
+                arrset(nlc,length(nlc)+1,ig)
+                loaset(pbm.grelw,ig,posel,Float64(v_["-KAPPA3"]))
+            end
+        end
+        #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+        #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
+        pbm.gconst = zeros(Float64,ngrp)
+        #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
+        pb.clower = -1*fill(Inf,pb.m)
+        pb.cupper =    fill(Inf,pb.m)
+        pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
+        pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
+        Asave = pbm.A[1:ngrp, 1:pb.n]
+        pbm.A = Asave
+        pbm.H = spzeros(Float64,0,0)
+        #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
+        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.pbclass = "NOR2-AN-V-V"
+        return pb, pbm
+
+    #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
+
+    elseif action == "eSQ"
+
+        EV_     = args[1]
+        iel_    = args[2]
+        nargout = args[3]
+        pbm     = args[4]
+        PP = pbm.elpar[iel_][1]*pbm.elpar[iel_][1]
+        f_   = PP*EV_[1]*EV_[1]
+        if nargout>1
+            dim = try length(IV_) catch; length(EV_) end
+            g_  = zeros(Float64,dim)
+            g_[1] = PP*(EV_[1]+EV_[1])
+            if nargout>2
+                H_ = zeros(Float64,1,1)
+                H_[1,1] = 2.0*PP
+            end
+        end
+        if nargout == 1
+            return f_
+        elseif nargout == 2
+            return f_,g_
+        elseif nargout == 3
+            return f_,g_,H_
+        end
+
+    elseif action == "eCB"
+
+        EV_     = args[1]
+        iel_    = args[2]
+        nargout = args[3]
+        pbm     = args[4]
+        PP = pbm.elpar[iel_][1]*pbm.elpar[iel_][1]*pbm.elpar[iel_][1]
+        f_   = PP*EV_[1]*EV_[1]*EV_[1]
+        if nargout>1
+            dim = try length(IV_) catch; length(EV_) end
+            g_  = zeros(Float64,dim)
+            g_[1] = 3.0*PP*EV_[1]*EV_[1]
+            if nargout>2
+                H_ = zeros(Float64,1,1)
+                H_[1,1] = 6.0*PP*EV_[1]
+            end
+        end
+        if nargout == 1
+            return f_
+        elseif nargout == 2
+            return f_,g_
+        elseif nargout == 3
+            return f_,g_,H_
+        end
+
+    #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
+
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+
+        pbm = args[1]
+        if pbm.name == name
+            pbm.has_globs = [0,0]
+            return s2x_eval(action,args...)
+        else
+            println("ERROR: please run "*name*" with action = setup")
+            return ntuple(i->undef,args[end])
+        end
+
+    else
+        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        return ntuple(i->undef,args[end])
+    end
+
+end
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
