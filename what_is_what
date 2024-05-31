@@ -1,0 +1,19 @@
+fullproblist : the list of problems to test, with their arguments calibrated for testing
+
+redim.m : takes the official SIF problems listed in fullproblist from ~/problems/sif,
+          modify them to have the same arguments as those specified in fullproblist and writes the results in ./sif
+          
+regenerate.m : takes the modifies SIF problems from ./sif and decodes them to .m, .py and .jl problem files, writing
+         them in ./matlab_problems, ./python_problems or ./julia_problems respectively. Also updates the docker.
+         
+update_docker.m : copies the modified SIF files and the python programs and problem files to the docker
+
+test_julia_python.jl : performs comparative tests of the .jl and .py problem files specified in fullproblist
+
+test_fortran_python.py : performs comparative tests of the Fortran (as obtained from pycutest) and .py problem
+         files specified in fullproblist.  Must be run in the docker to access pycutest.
+
+test_python.py: tests the .py problem files specified in fullproblist
+
+test_matlab.m: tests the .m problem files specified in fullproblist
+
