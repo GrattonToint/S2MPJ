@@ -1,0 +1,184 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          VANDERM4
+
+*   Problem:
+*   ********
+
+*   A nonlinear equation problem, subject to monotonicity constraints.
+*   The Jacobian is a dense Vandermonde matrix.
+
+*   Problems VANDERM1, VANDERM2, VANDERM3 and VANDERM4 differ by the rhs
+*   of the equation.  They are increasingly degenerate.
+
+*   The problem is non-convex.
+
+*   Source:
+*   A. Neumaier, private communication, 1991.
+
+*   SIF input: Ph. L. Toint, May 1993.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification NOR2-AN-V-V
+
+*   Size of the system
+
+*IE N                   2              $-PARAMETER
+*IE N                   3              $-PARAMETER
+*IE N                   4              $-PARAMETER
+*IE N                   5              $-PARAMETER     original value
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Useful constants
+
+ IE 1                   1
+ IE 2                   2
+ RI RN        N
+
+*   Define the right-hand-side 
+
+ RE TMP                 2.0
+ DO I         1                        N
+ A= AL(I)     TMP
+ RD TMP       TMP       1.0
+ OD I
+
+ AE A(1)                0.0
+ DO I         1                        N
+ A+ A(1)      AL(I)                    A(1)
+ OD I
+ 
+ DO K         2                        N
+ RI RK        K
+ AE A(K)                0.0
+ DO I         1                        N
+ A( LOGAL     LOG                      AL(I)
+ R* KLOGAL    LOGAL                    RK
+ R( ALK       EXP                      KLOGAL
+ A+ A(K)      A(K)                     ALK
+ OD I
+ OD K
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ OD I   
+
+GROUPS
+
+*   The equations of the system
+
+ DO I         1                        N
+ XE E(1)      X(I)      1.0
+ OD I
+
+ DO K         2                        N
+ XE E(K)
+ OD K
+
+*   The monotonicity constraints
+
+ DO I         2                        N
+ IA I-1       I         -1
+ XG M(I)      X(I)      1.0            X(I-1)    -1.0
+ OD I
+
+CONSTANTS
+
+ DO K         1                        N
+ Z  VANDERM4  E(K)                     A(K)
+ OD K
+
+BOUNDS
+
+ XR VANDERM4  'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ IA I-1       I         -1
+ RI RI-1      I-1
+ R/ TMP       RI-1                     RN
+ ZV VANDERM4  X(I)                     TMP
+ OD I
+
+ELEMENT TYPE
+
+ EV POWER     X
+ EP POWER     PWR
+
+ELEMENT USES
+
+ DO K         2                        N
+ RI RK        K
+ DO I         1                        N
+ XT E(I,K)    POWER
+ ZV E(I,K)    X                        X(I)
+ ZP E(I,K)    PWR                      RK
+ OD I
+ OD K
+
+GROUP TYPE
+
+ GV L2        X
+
+GROUP USES
+
+ XT E(1)      L2
+
+ DO K         2                        N
+ XT E(K)      L2
+ DO I         1                        N
+ XE E(K)      E(I,K)
+ OD I
+ OD K
+
+OBJECT BOUND
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      VANDERM4
+
+INDIVIDUALS
+
+ T  POWER
+ F                      X**PWR
+ G  X                   PWR*X**(PWR-1.0 )
+ H  X         X         PWR*(PWR-1.0)*X**(PWR-2.0)
+
+ENDATA
+
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        VANDERM4
+
+INDIVIDUALS
+
+ T  L2
+ F                      X * X
+ G                      X + X
+ H                      2.0
+
+ENDATA
+
+
+
+
+

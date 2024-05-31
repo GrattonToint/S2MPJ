@@ -1,0 +1,49 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ZANGWIL3
+
+*   Problem :
+*   *********
+
+*   Zangwill's problem in 3 variables.
+
+*   Source:  problem 13 (p. 103) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NLR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ E  G1        X1        1.0            X2        -1.0
+ E  G1        X3        1.0
+
+ E  G2        X1        -1.0           X2        1.0
+ E  G2        X3        1.0
+
+ E  G3        X1        1.0            X2        1.0
+ E  G3        X3        -1.0
+
+BOUNDS
+
+ FR ZANGWIL3  'DEFAULT'
+
+START POINT
+
+    ZANGWIL3  X1        100.0
+    ZANGWIL3  X2        -1.0
+    ZANGWIL3  X3        2.5
+
+ENDATA

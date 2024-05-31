@@ -1,0 +1,110 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ZY2
+
+*   Problem :
+*   *********
+
+*   A simple three variables program.
+
+*   Source: 
+*   Zhengua Lina and Yong Li,
+*   "A Modified Scaling Newton-Type Method for Nonlinear Programming"
+*   Department of Mathematics, Jilin University, Changchun, China, 1994.
+
+*   SIF input: Ph. Toint, January 1994.
+
+*   classification OQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X1        11.0           X2        1.0
+ N  OBJ       X3        1.0
+
+*   Constraints
+
+ L  C1
+ G  C2
+
+CONSTANTS
+
+    ZY2       C1         10.0
+    ZY2       C2         4.0
+
+BOUNDS
+
+ XU ZY2       X3         5.0
+
+START POINT
+
+    ZY2       X1         0.1
+    ZY2       X2         0.1
+    ZY2       X3         3.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV CB        X
+
+ELEMENT USES
+
+ T  X1CB      CB
+ V  X1CB      X                        X1
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+GROUP USES
+
+ E  OBJ       X1CB                     X1SQ      -6.0
+
+ E  C1        X1SQ                     X2SQ
+ E  C1        X3SQ
+
+ E  C2        X1SQ                     X2SQ
+ E  C2        X3SQ
+
+OBJECT BOUND
+
+*   Solution at ( 0.0, 0.0, 2 )
+
+*LO SOLTN               2.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ZY2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  CB
+ F                      X ** 3
+ G  X                   3.0 * X * X
+ H  X         X         6.0 * X
+
+ENDATA

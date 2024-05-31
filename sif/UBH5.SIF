@@ -1,0 +1,193 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          UBH5
+
+*   Problem :
+*   *********
+
+*   The problem is to minimize the integral of the control magnitude needed
+*   to bring a vehicle, from given position and velocity, to the origin with
+*   zero velocity in a fixed amount of time.  The controls are the components
+*   of the vehicle acceleration. The discretization uses the trapezoidal rule.
+*   This version of the problem is a variant of UBH1, where the cumulative
+*   value of the objective is maintained as an additional state variable.
+
+*   The problem is convex.
+
+*   Source: unscaled problem 5 
+*   (ODE = 1, CLS = 2, GRD = 1, MET = T, SEED = 0.) in
+*   J.T. Betts and W.P. Huffman,
+*   "Sparse Nonlinear Programming Test Problems (Release 1.0)",
+*   Boeing Computer services, Seattle, July 1993.
+
+*   SIF input: Ph.L. Toint, October 1993.
+
+*   classification LQR2-MN-V-V
+
+*   Number of grid points
+
+*IE N                   10             $-PARAMETER n=100, m=70    original value
+*IE N                   100            $-PARAMETER n=1000, m=700
+*IE N                   500            $-PARAMETER n=5000, m=3500
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   1000           $-PARAMETER n=10000, m=7000
+*IE N                   2000           $-PARAMETER n=20000, m=14000
+
+*   Initial and final times (guessed)
+
+ RE T0                  0.0
+ RE TF                  1000.0
+
+*   Stepsize
+
+ RI RN        N
+ R- TTIME     TF                       T0
+ R/ K         TTIME                    RN
+ RM -K/2      K         -0.5
+
+*   Useful constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+
+VARIABLES
+
+*   State variables
+
+ DO I         1                        7
+ DO T         0                        N
+ X  Y(I,T)
+ OD T
+ OD I
+
+*   Control variables
+
+ DO I         1                        3
+ DO T         0                        N
+ X  U(I,T)
+ OD T
+ OD I
+
+GROUPS
+
+ XN OBJ       Y(7,N)    1.0
+
+*   State constraints
+
+ DO I         1                        3
+ IA I+3       I         3
+ DO T         1                        N
+ IA T-1       T         -1
+ XE S(I,T)    Y(I,T)    1.0            Y(I,T-1)  -1.0
+ ZE S(I,T)    Y(I+3,T-1)               -K/2
+ ZE S(I,T)    Y(I+3,T)                 -K/2
+ OD T
+ OD I
+
+ DO I         1                        3
+ IA I+3       I         3
+ DO T         1                        N
+ IA T-1       T         -1
+ XE S(I+3,T)  Y(I+3,T)  1.0            Y(I+3,T-1)-1.0
+ ZE S(I+3,T)  U(I,T-1)                 -K/2
+ ZE S(I+3,T)  U(I,T)                   -K/2
+ OD T
+ OD I
+
+*   Cumulative sum of the controls squared.
+
+ DO T         1                        N
+ IA T-1       T         -1
+ XE S(7,T)    Y(7,T)    1.0            Y(7,T-1)  -1.0
+ OD T
+
+BOUNDS
+
+ FR UBH5      'DEFAULT'
+
+*   Bounded control
+
+ DO I         1                        3
+ DO T         0                        N
+ XL UBH5      U(I,T)    -1.0
+ XU UBH5      U(I,T)    1.0
+ OD T
+ OD I
+
+*   Initial position and velocity
+
+ XX UBH5      Y(1,0)    1000.0
+ XX UBH5      Y(2,0)    1000.0
+ XX UBH5      Y(3,0)    1000.0
+ XX UBH5      Y(4,0)    -10.0
+ XX UBH5      Y(5,0)    10.0
+ XX UBH5      Y(6,0)    -10.0
+ XX UBH5      Y(7,0)    0.0
+
+*   Final position
+
+ DO I         1                        6
+ XX UBH5      Y(I,N)    0.0
+ OD I
+
+START POINT
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ELEMENT USES
+
+ DO T         0                        N
+ DO I         1                        3
+ XT E(I,T)    SQ
+ ZV E(I,T)    V                        U(I,T)
+ OD I
+ OD T
+
+GROUP USES
+
+ DO T         1                        N
+ IA T-1       T         -1
+ DO I         1                        3
+ ZE S(7,T)    E(I,T-1)                 -K/2
+ ZE S(7,T)    E(I,T)                   -K/2
+ OD I
+ OD T
+
+OBJECT BOUND
+
+ LO UBH5                0.0
+
+*   Solution
+
+*LO SOLTN(10)           1.14735202967
+*LO SOLTN(100)          1.11631518169
+*LO SOLTN(1000)         1.11598643493
+*LO SOLTN(2000)         1.11587382445
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      UBH5
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V 
+ H  V         V         2.0
+
+ENDATA

@@ -1,0 +1,259 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          VAREIGVL
+
+*   Problem :
+*   *********
+
+*   The variational eigenvalue by Auchmuty.
+*   This problems features a banded matrix of bandwidth 2M+1 = 9.
+
+*   This problem has N least-squares groups, each having a linear part
+*   only and N nonlinear elements,
+*   plus a least q-th power group having N nonlinear elements.
+
+*   Source: problem 1 in
+*   J.J. More',
+*   "A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+*              correction by Ph. Shott, January, 1995
+*              and Nick Gould, December, 2019, May 2024
+
+*   classification OUR2-AN-V-0
+
+*   Number of variables -1 (variable)
+
+*IE N                   19             $-PARAMETER
+*IE N                   49             $-PARAMETER     original value
+*IE N                   99             $-PARAMETER
+*IE N                   499            $-PARAMETER
+*IE N                   999            $-PARAMETER
+*IE N                   4999           $-PARAMETER
+ IE N                   19             $-PARAMETER     modified for S2X tests
+
+*   Half bandwidth  (must be at most N)
+
+*IE M                   4              $-PARAMETER  .le. N
+*IE M                   5              $-PARAMETER  .le. N
+ IE M                   6              $-PARAMETER  .le. N
+
+*   Power parameter (must be in (1,2])
+
+ RE Q                   1.5            $-PARAMETER   power in (1,2)
+
+*   Constants
+
+ IE 1                   1
+ RE -1.0                -1.0
+
+*   Other parameters
+
+ IA N+1       N         1
+ IM -M        M         -1
+ IA M+1       M         1
+ I+ N-M       N                        -M
+ IA N-M+1     N-M       1
+ I* N2        N                        N
+ RI RN2       N2
+ R/ -1/N2     -1.0                     RN2
+
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+    MU
+
+GROUPS
+
+*   First M rows
+
+ DO I         1                        M
+
+ RI RI        I
+ RM -I        RI        -1.0
+ I+ I+M       I                        M
+
+ DO J         1                        I+M
+
+ RI RJ        J
+ R* IJ        RI                       RJ
+ R( SIJ       SIN                      IJ
+ R+ J-I       RJ                       -I
+ R* J-ISQ     J-I                      J-I
+ R* ARG       J-ISQ                    -1/N2
+ R( EX        EXP                      ARG
+ R* AIJ       SIJ                      EX
+
+ ZN G(I)      X(J)                     AIJ
+
+ ND
+
+*   General rows
+
+ DO I         M+1                      N-M
+
+ RI RI        I
+ RM -I        RI        -1.0
+ I+ I-M       I                        -M
+ I+ I+M       I                        M
+
+ DO J         I-M                      I+M
+
+ RI RJ        J
+ R* IJ        RI                       RJ
+ R( SIJ       SIN                      IJ
+ R+ J-I       RJ                       -I
+ R* J-ISQ     J-I                      J-I
+ R* ARG       J-ISQ                    -1/N2
+ R( EX        EXP                      ARG
+ R* AIJ       SIJ                      EX
+
+ ZN G(I)      X(J)                     AIJ
+
+ ND
+
+*   Last M rows
+
+ DO I         N-M+1                    N
+
+ RI RI        I
+ RM -I        RI        -1.0
+ I+ I-M       I                        -M
+
+ DO J         I-M                      N
+
+ RI RJ        J
+ R* IJ        RI                       RJ
+ R( SIJ       SIN                      IJ
+ R+ J-I       RJ                       -I
+ R* J-ISQ     J-I                      J-I
+ R* ARG       J-ISQ                    -1/N2
+ R( EX        EXP                      ARG
+ R* AIJ       SIJ                      EX
+
+ ZN G(I)      X(J)                     AIJ
+
+ ND
+
+*   Least q-th power group
+
+ XN G(N+1)
+
+BOUNDS
+
+ FR VAREIGVL  'DEFAULT'
+
+START POINT
+
+ V  VAREIGVL  'DEFAULT' 1.0
+    VAREIGVL  MU        0.0
+
+ELEMENT TYPE
+
+ EV 2PR       M                        X
+ EV SQ        X
+
+ELEMENT USES
+
+ DO I         1                        N
+
+ XT P(I)      2PR
+ ZV P(I)      M                        MU
+ ZV P(I)      X                        X(I)
+
+ XT S(I)      SQ
+ ZV S(I)      X                        X(I)
+
+ ND
+
+GROUP TYPE
+
+ GV LQ        GVAR
+ GP LQ        POWER
+ GV LQ2       GVAR
+ GP LQ2       POWER
+
+GROUP USES
+
+ DO I         1                        N
+ XT G(I)      LQ
+ XE G(I)      P(I)      -1.0
+ XP G(I)      POWER     2.0
+ ND
+
+ XT G(N+1)    LQ2
+
+ DO I         1                        N
+ XE G(N+1)    S(I)
+ ND
+
+ ZP G(N+1)    POWER                    Q
+
+OBJECT BOUND
+
+ LO VAREIGVL            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      VAREIGVL
+
+INDIVIDUALS
+
+ T  2PR
+ F                      M * X
+ G  M                   X
+ G  X                   M
+ H  M         X         1.0
+
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        VAREIGVL
+
+TEMPORARIES
+
+ I  IPOWER
+ I  PM1
+
+INDIVIDUALS
+
+ T  LQ
+ A  IPOWER              POWER
+ A  PM1                 IPOWER - 1
+ F                      GVAR**IPOWER / POWER
+ G                      GVAR**PM1
+ H                      PM1 * GVAR**( IPOWER - 2)
+ T  LQ2
+ F                      GVAR ** POWER / POWER
+ G                      GVAR ** (POWER - 1.0D0)
+ H                      (POWER - 1.0D0) * GVAR ** (POWER - 2.0D0)
+
+ENDATA

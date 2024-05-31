@@ -1,0 +1,177 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          WATER
+
+*   Problem:
+*   ********
+
+*   A small nonlinear network problem.
+*   The problem is to compute the flows in a water distribution network
+*   with 7 nodes and 8 links, subject to known supply/demand at the nodes 
+*   and a unique reservoir at node 1.
+
+*   The problem is convex.
+
+*   Source:
+*   an exercize for L. Watson course on LANCELOT in the Spring 1993.
+
+*   SIF input: E. P. Smith, Virginia Tech., Spring 1993.
+
+*   classification  ONR2-MN-31-10
+
+ROWS
+
+ N  obj0102   'SCALE'   105665.6
+ N  obj0203   'SCALE'   3613.412
+ N  obj0204   'SCALE'   105665.6
+ N  obj0305   'SCALE'   890.1553
+ N  obj0405   'SCALE'   76.66088
+ N  obj0406   'SCALE'   55145.82
+ N  obj0607   'SCALE'   26030.46
+ N  obj0705   'SCALE'   890.1553
+ N  obj
+ E  c1
+ E  c2
+ E  c3
+ E  c4
+ E  c5
+ E  c6
+ E  c7
+ E  c8
+ E  c9
+ E  c10
+
+COLUMNS
+
+    Q0102     obj0102              1   c1                   1
+    Q0102     c2                  -1
+    Q0203     obj0203              1   c2                   1
+    Q0203     c3                  -1
+    Q0204     obj0204              1   c2                   1
+    Q0204     c4                  -1
+    Q0305     obj0305              1   c3                   1
+    Q0305     c5                  -1
+    Q0405     obj0405              1   c4                   1
+    Q0405     c5                  -1
+    Q0406     obj0406              1   c4                   1
+    Q0406     c6                  -1
+    Q0607     obj0607              1   c6                   1
+    Q0607     c7                  -1
+    Q0705     obj0705              1   c5                  -1
+    Q0705     c7                   1
+    Q01_0     obj                210   c1                   1
+    Q01_0     c8                  -1
+    y02_p     obj                210   c2                   1
+    y02_p     c9                  -1
+    y03_p     obj                210   c3                   1
+    y03_p     c9                  -1
+    y04_p     obj                210   c4                   1
+    y04_p     c9                  -1
+    y05_p     obj                210   c5                   1
+    y05_p     c9                  -1
+    y06_p     obj                210   c6                   1
+    y06_p     c9                  -1
+    y07_p     obj                210   c7                   1
+    y07_p     c9                  -1
+    yq_02     obj               -175   c2                  -1
+    yq_02     c10                  1
+    yq_03     obj               -190   c3                  -1
+    yq_03     c10                  1
+    yq_04     obj               -185   c4                  -1
+    yq_04     c10                  1
+    yq_05     obj               -180   c5                  -1
+    yq_05     c10                  1
+    yq_06     obj               -195   c6                  -1
+    yq_06     c10                  1
+    yq_07     obj               -190   c7                  -1
+    yq_07     c10                  1
+    Q0201     c1                  -1   c2                   1
+    Q0302     c2                  -1   c3                   1
+    Q0402     c2                  -1   c4                   1
+    Q0503     c3                  -1   c5                   1
+    Q0504     c4                  -1   c5                   1
+    Q0604     c4                  -1   c6                   1
+    Q0507     c5                   1   c7                  -1
+    Q0706     c6                  -1   c7                   1
+    y_p_0     c8                  -1   c9                   1
+    y_0_q     c8                   1   c10                 -1
+
+RHS
+
+    rhs       c1                1120   c2                -100
+    rhs       c3                -100   c4                -120
+    rhs       c5                -270   c6                -330
+    rhs       c7                -200
+
+BOUNDS
+
+ UP bnd       Q0102             1200
+ UP bnd       Q0203             1200
+ UP bnd       Q0204             1200
+ UP bnd       Q0305             1200
+ UP bnd       Q0405             1200
+ UP bnd       Q0406             1200
+ UP bnd       Q0607             1200
+ UP bnd       Q0705             1200
+ UP bnd       Q01_0             1200
+ UP bnd       y02_p             1200
+ UP bnd       y03_p             1200
+ UP bnd       y04_p             1200
+ UP bnd       y05_p             1200
+ UP bnd       y06_p             1200
+ UP bnd       y07_p             1200
+ UP bnd       yq_02             1200
+ UP bnd       yq_03             1200
+ UP bnd       yq_04             1200
+ UP bnd       yq_05             1200
+ UP bnd       yq_06             1200
+ UP bnd       yq_07             1200
+ UP bnd       Q0201             1200
+ UP bnd       Q0302             1200
+ UP bnd       Q0402             1200
+ UP bnd       Q0503             1200
+ UP bnd       Q0504             1200
+ UP bnd       Q0604             1200
+ UP bnd       Q0507             1200
+ UP bnd       Q0706             1200
+ UP bnd       y_p_0             1200
+ UP bnd       y_0_q             1200
+
+GROUP TYPE
+
+ GV POWER     ALPHA
+
+GROUP USES
+
+ XT obj0102   POWER
+ XT obj0203   POWER
+ XT obj0204   POWER
+ XT obj0305   POWER
+ XT obj0405   POWER
+ XT obj0406   POWER
+ XT obj0607   POWER
+ XT obj0705   POWER
+
+OBJECT BOUND
+
+*LO SOLUTION           1.054938D+04
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        WATER
+
+INDIVIDUALS
+
+ T  POWER
+ F                      ALPHA**2.852
+ G                      2.852*ALPHA**1.852
+ H                      5.282*ALPHA**.852
+
+ENDATA

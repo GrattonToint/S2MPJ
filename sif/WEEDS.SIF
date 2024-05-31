@@ -1,0 +1,172 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          WEEDS
+
+*   Problem :
+*   *********
+
+*   A nonlinear least squares problem with bounds
+*   arising from agriculture.  The problem is to fit data giving the growth
+*   of weeds per unit surface and per year to a logistic model.
+
+*   model: B1/(1+B2*EXP(-B3*TIME))
+
+*   Source: p. 144 in
+*   J.C. Nash,
+*   "Compact numerical methods for computers"
+*   (2nd edition), Adam Hilger, 1990.
+
+*   SIF input: J.C. Nash and Ph. Toint, June 1992.
+
+*   classification SBR2-RN-3-0
+
+*   Number of data points
+
+ IE M                   12
+
+*   Other data
+
+ IE 1                   1
+
+*   Weeds per square meter
+
+ RE Y1                  5.308
+ RE Y2                  7.24
+ RE Y3                  9.638
+ RE Y4                  12.866
+ RE Y5                  17.069
+ RE Y6                  23.192
+ RE Y7                  31.443
+ RE Y8                  38.558
+ RE Y9                  50.156
+ RE Y10                 62.948
+ RE Y11                 75.995
+ RE Y12                 91.972
+
+VARIABLES
+
+    B1
+    B2
+    B3
+
+GROUPS
+
+ DO I         1                        M
+ XN O(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  WEEDS     O(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ XU WEEDS     B3        3.0
+
+START POINT
+
+ XV WEEDS     'DEFAULT' 1.0
+
+*    Starting with all zeroes might cause interesting(?) early termination.
+
+ELEMENT TYPE
+
+ EV LOGIS     X                        Y
+ EV LOGIS     Z
+ EP LOGIS     TIME
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT E(I)      LOGIS
+ ZV E(I)      X                        B1
+ ZV E(I)      Y                        B2
+ ZV E(I)      Z                        B3
+ RI T         I
+ ZP E(I)      TIME                     T
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        M
+ XT O(I)      L2
+ XE O(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO WEEDS                  0.0
+
+*   Solution
+
+*LO SOLTN                  2.587
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      WEEDS
+
+TEMPORARIES
+
+ R  DENOM
+ R  ARG
+ R  EXPA
+ R  D2
+ R  HYZ
+ R  DDE
+ R  TY
+ M  EXP
+
+INDIVIDUALS
+
+ T  LOGIS
+ A  ARG                 - Z * TIME
+ A  EXPA                EXP( ARG )
+ A  DENOM               1.0 / ( 1 + Y * EXPA )
+ A  DDE                 DENOM * DENOM * EXPA
+ A  TY                  TIME * Y
+ A  D2                  - X * DDE
+ A  HYZ                 - D2 * TIME
+ A+                     + 2.0D0 * D2 * TY * EXPA * DENOM
+ F                      X * DENOM
+ G  X                   DENOM
+ G  Y                   D2
+ G  Z                   - D2 * TY
+ H  X         Y         - DDE
+ H  X         Z         DDE * TY
+ H  Y         Y         2.0 * DENOM**3 * X * EXPA**2
+ H  Y         Z         HYZ
+ H  Z         Z         - HYZ * TY
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        WEEDS
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

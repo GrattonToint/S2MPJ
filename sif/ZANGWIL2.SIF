@@ -1,0 +1,95 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ZANGWIL2
+
+*   Problem :
+*   *********
+
+*   Zangwill's problem in 2 variables.
+
+*   Source:  problem 7 (p. 102) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification QUR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X1        -56.0          X2        -256.0
+ N  G1        'SCALE'   15.0
+
+CONSTANTS
+
+    ZANGWIL2  G1        -991
+
+BOUNDS
+
+ FR ZANGWIL2  'DEFAULT'
+
+START POINT
+
+    ZANGWIL2  X1        3.0
+    ZANGWIL2  X2        8.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X1X2      2PR
+ V  X1X2      X                        X1
+ V  X1X2      Y                        X2
+
+GROUP USES
+
+ E  G1        X1SQ      16.0           X2SQ      16.0
+ E  G1        X1X2      -8.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -18.2
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ZANGWIL2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

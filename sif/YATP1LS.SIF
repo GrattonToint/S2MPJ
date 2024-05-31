@@ -1,0 +1,233 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          YATP1LS
+
+*   Problem :
+*   *********
+
+*   Yet another test problem involving double pseudo-stochastic constraints
+*   on a square matrix. If the matrix dimension is N, the number of
+*   variables is equal to  N**2 + 2* N. The equations are
+*
+*   x_{ij}^3 - A x_{ij}^2 - ( y_i + z_i ) ( x_{ij}cos(x_{ij} - sin(x_{ij}) ) = 0
+*
+*                                                    (i,j = 1, ..., N )
+*
+*   \sum_i^N sin(x_{ij}) / x_{ij} = 1                  (j = 1,..., N)
+*
+*   \sum_j^N sin(x_{ij}) / x_{ij} = 1                  (i = 1,..., N)
+*
+*   The problem is non convex.
+
+*  Least-squares version
+
+*   Source:
+*   a late evening idea by Ph. Toint
+
+*   SIF input: Ph. Toint, June 2003.
+
+*   classification SUR2-AN-V-V
+
+*   The dimension of the matrix
+
+*IE N                   10             $-PARAMETER n = 120
+*IE N                   50             $-PARAMETER n = 2600
+*IE N                   100            $-PARAMETER n = 10200
+*IE N                   200            $-PARAMETER n = 40400
+*IE N                   350            $-PARAMETER n = 123200
+ IE N                   5              $-PARAMETER     modified for S2X tests
+
+ RE A                   10.0
+
+*  Useful constants
+
+ IE 1                   1
+ RM -A        A         -1.0
+
+VARIABLES
+
+*    The entries of the matrix
+
+ DO I         1                        N
+ DO J         1                        N
+ X  X(I,J)
+ ND
+
+*    The multipliers
+
+ DO I         1                        N
+ X  Y(I)
+ X  Z(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ DO J         1                        N
+ XN E(I,J)
+ ND
+
+ DO I         1                        N
+ XN ER(I)
+ XN EC(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ X  ATP1LS    ER(I)     1.0
+ X  ATP1LS    EC(I)     1.0
+ ND
+
+BOUNDS
+
+ FR YATP1LS   'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DO J         1                        N
+ X  YATP1LS   X(I,J)    6.0
+ ND
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV CB        X
+
+ EV LXC       X                        Y
+ EV LXC       Z
+ IV LXC       XX                       YPZ
+
+ EV LS        X                        Y
+ EV LS        Z
+ IV LS        XX                       YPZ
+
+ EV RAT       X
+
+ELEMENT USES
+
+ DO I         1                        N
+ DO J         1                        N
+
+ XT CB(I,J)   CB
+ ZV CB(I,J)   X                        X(I,J)
+
+ XT LS(I,J)   SQ
+ ZV LS(I,J)   X                        X(I,J)
+
+ XT DC(I,J)   LXC
+ ZV DC(I,J)   X                        X(I,J)
+ ZV DC(I,J)   Y                        Y(I)
+ ZV DC(I,J)   Z                        Z(I)
+
+ XT DS(I,J)   LS
+ ZV DS(I,J)   X                        X(I,J)
+ ZV DS(I,J)   Y                        Y(I)
+ ZV DS(I,J)   Z                        Z(I)
+
+ XT SX(I,J)   RAT
+ ZV SX(I,J)   X                        X(I,J)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+ DO I         1                        N
+ DO J         1                        N
+ XE E(I,J)    CB(I,J)    1.0
+ ZE E(I,J)    LS(I,J)                  -A
+ XE E(I,J)    DC(I,J)   -1.0           DS(I,J)    1.0
+ ND
+
+ DO I         1                        N
+ DO J         1                        N
+ XE ER(I)     SX(I,J)
+ XE EC(J)     SX(I,J)
+ ND
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      YATP1LS
+
+TEMPORARIES
+
+ R  C
+ R  S
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  CB
+ F                      X * X * X
+ G  X                   3.0 * X * X
+ H  X         X         6.0 * X
+
+ T  LXC
+ R  XX        X         1.0
+ R  YPZ       Y         1.0            Z          1.0
+ A  C                   COS( XX )
+ A  S                   SIN( XX )
+ F                      YPZ * XX * C
+ G  YPZ                 XX * C
+ G  XX                  YPZ * ( C - XX * S )
+ H  YPZ       XX        C - XX * S
+ H  XX        XX        - YPZ * ( S + S + XX * C )
+
+ T  LS
+ R  XX        X         1.0
+ R  YPZ       Y         1.0            Z          1.0
+ A  C                   COS( XX )
+ A  S                   SIN( XX )
+ F                      YPZ * S
+ G  YPZ                 S
+ G  XX                  YPZ * C
+ H  YPZ       XX        C
+ H  XX        XX        - YPZ * S
+
+ T  RAT
+ A  C                   COS( X )
+ A  S                   SIN( X )
+ F                      S / X
+ G  X                   ( C - S / X ) / X
+ H  X         X         - S/X - (C+C)/X**2 + (S+S)/X**3
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        YATP1LS
+
+INDIVIDUALS
+
+*   Least-square root groups
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

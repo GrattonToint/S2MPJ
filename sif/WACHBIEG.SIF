@@ -1,0 +1,96 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          WACHBIEG
+
+*   Problem :
+*   *********
+
+*   Source: a troublesome problem for some linearch SQP methods
+*   A. Wa"chter and L. T. Biegler,
+*   "Failure of convergence of a class of interior-point methods for
+*    nonlinear programming",
+*   Mathematical Programming 88 2000:565-574.
+
+*   SIF input: Nick Gould, May 2008
+
+*   classification LQR2-AN-3-2
+
+*   parameter definitions
+
+*RE A                   -1.0           $-PARAMETER a
+ RE A                   3              $-PARAMETER     modified for S2X tests
+ RE B                   0.5            $-PARAMETER b
+
+ RM -A        A         -1.0
+
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X1        1.0
+
+ E  CON1      X2        -1.0
+ E  CON2      X1        1.0            X3        -1.0
+
+CONSTANTS
+
+ Z  WACHBIEG  CON1                     -A
+ Z  WACHBIEG  CON2                     B
+
+BOUNDS
+
+ XR WACHBIEG  X1
+
+START POINT
+
+    WACHBIEG  X1        -2.0
+    WACHBIEG  X2        1.0
+    WACHBIEG  X3        1.0
+
+    WBSOL     X1        1.0
+    WBSOL     X2        0.0
+    WBSOL     X3        0.5
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+GROUP USES
+
+ E  CON1      E1
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      WACHBIEG
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA

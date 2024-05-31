@@ -1,0 +1,99 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          WOMFLET
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   R.S. Wommersley and R. Fletcher,
+*   "An algorithm for composite nonsmooth optimization problems",
+*   JOTA,, vol.48, pp. 493-523, 1986.
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification LOR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XG C1        U         1.0            X1        -0.5
+ XG C2        U         1.0            X1        0.5
+ XG C3        U         1.0            X1        0.5
+
+BOUNDS
+
+ FR WOMFLET   'DEFAULT'
+
+START POINT
+
+ XV WOMFLET   X1        3.0
+ XV WOMFLET   X2        1.0
+ XV WOMFLET   U         7.5
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV RAT       X
+
+ELEMENT USES
+
+ T  X2SQ      SQ
+ ZV X2SQ      X                        X2
+
+ T  ERAT      RAT
+ ZV ERAT      X                        X1
+
+GROUP USES
+
+ E  C1        X2SQ      -1.0           ERAT      -5.0
+ E  C2        X2SQ      -1.0           ERAT      -5.0
+ E  C3        X2SQ      1.0            ERAT       5.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      WOMFLET
+
+TEMPORARIES
+
+ R  D
+ R  D2
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  RAT
+ A  D                   X + 0.1
+ A  D2                  D * D
+ F                      X / D
+ G  X                   ( 1.0 - X / D ) / D
+ H  X         X         2.0 * ( X / D - 1.0 ) / D2
+
+ENDATA
+

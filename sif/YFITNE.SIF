@@ -1,0 +1,137 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          YFITNE
+
+*   Problem:
+*   ********
+
+*   This problem arises in measuring angles and distances to a vibrating beam
+*   using a laser-Doppler velocimeter.
+*   This is a nonlinear equation variant of the bounded constrained
+*   problem YFIT.
+
+*   Source:
+*   an exercize for L. Watson course on LANCELOT in the Spring 1993.
+
+*   SIF input: B. E. Lindholm, Virginia Tech., Spring 1993,
+*              modified by Ph. Toint, March 1994.
+*              derivatives corrected by Nick Gould, June 2019.
+
+*   classification NOR2-MN-3-17
+
+ IE zero                0
+ IE p                   16
+ RE realp               16.0
+ RE y0                  21.158931
+ RE y1                  17.591719
+ RE y2                  14.046854
+ RE y3                  10.519732
+ RE y4                  7.0058392
+ RE y5                  3.5007293
+ RE y6                  0.0000000
+ RE y7                  -3.5007293
+ RE y8                  -7.0058392
+ RE y9                  -10.519732
+ RE y10                 -14.046854
+ RE y11                 -17.591719
+ RE y12                 -21.158931
+ RE y13                 -24.753206
+ RE y14                 -28.379405
+ RE y15                 -32.042552
+ RE y16                 -35.747869
+
+VARIABLES
+
+    alpha
+    beta
+    dist
+
+GROUPS
+
+ DO i         zero                     p
+ XE diff(i)
+ OD i
+
+CONSTANTS
+
+ DO i         zero                     p
+ Z  YFITNE    diff(i)                  y(i)
+ OD i
+
+BOUNDS
+
+ FR YFITNE    'DEFAULT'
+
+START POINT
+
+ XV YFITNE    alpha     0.60
+ XV YFITNE    beta      -0.60
+ XV YFITNE    dist      20.0
+
+ELEMENT TYPE
+
+ EV tanab     a1                       b1
+ EV tanab     d1
+ EP tanab     point                    count
+
+ELEMENT USES
+
+ DO i         zero                     p
+ RI index     i
+ XT est(i)    tanab
+ ZV est(i)    a1                       alpha
+ ZV est(i)    b1                       beta
+ ZV est(i)    d1                       dist
+ ZP est(i)    point                    index
+ ZP est(i)    count                    realp
+ OD i
+
+GROUP USES
+
+ DO i         zero                     p
+ XE diff(i)   est(i)
+ OD i
+
+OBJECT BOUND
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      YFITNE
+
+TEMPORARIES
+
+ R  ttan
+ R  tsec
+ R  tsec2
+ R  frac
+ M  tan
+ M  cos
+
+INDIVIDUALS
+
+ T  tanab
+ A  frac                point/count
+ A  ttan                tan(a1*(1.0-frac)+b1*frac)
+ A  tsec                1.0/cos(a1*(1.0-frac)+b1*frac)
+ A  tsec2               tsec*tsec
+ F                      d1*ttan
+ G  a1                  d1*(1.0-frac)*tsec2
+ G  b1                  d1*frac*tsec2
+ G  d1                  ttan
+ H  a1        a1        2.0*d1*((1.0-frac)**2)*tsec2*ttan
+ H  b1        b1        2.0*d1*(frac**2)*tsec2*ttan
+ H  a1        b1        2.0*d1*(1.0-frac)*frac*tsec2*ttan
+ H  a1        d1        (1.0-frac)*tsec2
+ H  b1        d1        frac*tsec2
+ H  d1        d1        0.0
+
+ENDATA

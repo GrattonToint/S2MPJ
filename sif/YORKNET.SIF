@@ -1,0 +1,790 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          YORKNET
+
+*   Problem:
+*   ********
+
+*   A problem arising in the modelling of the Yorkshire water system.
+
+*   Source:
+*   an problem submitted for the LANCELOT licence.
+
+*   SIF input: B. Ulanicki, Water Software Systems,De Montfort University,
+*              The Gateway, Leicester LE1 9BH, UK.
+*              e-mail: bul@uk.ac.dmu * Tel no.0533 577070
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification SOR2-AY-312-256
+
+*DECLARE CONSTANTS DESCRIBING NETWORK
+
+*STANDARD DECLARATIONS
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+ IE 15                  15
+ IE 16                  16
+ IE 17                  17
+ IE 18                  18
+ IE 19                  19
+
+******TIME STEP DATA*********************
+
+*NUMBER OF TIME STEPS
+
+ IE ONE                 1
+ IE NSTEP               8
+ IA NSTEP+1   NSTEP     8
+
+*SIZE OF TIMESTEPS
+
+ RE ST1                 0.125
+ RE ST2                 0.125
+ RE ST3                 0.125
+ RE ST4                 0.125
+ RE ST5                 0.125
+ RE ST6                 0.125
+ RE ST7                 0.125
+ RE ST8                 0.125
+
+*MINUS SIZE OF TIMESTEPS
+
+ RS MST1      ST1       0.0
+ RS MST2      ST2       0.0
+ RS MST3      ST3       0.0
+ RS MST4      ST4       0.0
+ RS MST5      ST5       0.0
+ RS MST6      ST6       0.0
+ RS MST7      ST7       0.0
+ RS MST8      ST8       0.0
+
+*******TARIFF DATA***********************
+
+*TARIFF STRUCTURE
+
+ RE TFL1                1.87
+ RE TFH1                4.03
+
+*TIME STEP TARIFF ALLOCATION
+
+ RA TF1       TFL1      0.0
+ RA TF2       TFL1      0.0
+ RA TF3       TFH1      0.0
+ RA TF4       TFH1      0.0
+ RA TF5       TFH1      0.0
+ RA TF6       TFH1      0.0
+ RA TF7       TFH1      0.0
+ RA TF8       TFH1      0.0
+
+*ACTUAL COST PER KILOWATT-CONVERT TO DAYS(*24) AND MULTIPLY BY TARIFF
+
+ RM BP1       ST1       24.0
+ RM BP2       ST2       24.0
+ RM BP3       ST3       24.0
+ RM BP4       ST4       24.0
+ RM BP5       ST5       24.0
+ RM BP6       ST6       24.0
+ RM BP7       ST7       24.0
+ RM BP8       ST8       24.0
+ R* CP1       BP1                      TF1
+ R* CP2       BP2                      TF2
+ R* CP3       BP3                      TF3
+ R* CP4       BP4                      TF4
+ R* CP5       BP5                      TF5
+ R* CP6       BP6                      TF6
+ R* CP7       BP7                      TF7
+ R* CP8       BP8                      TF8
+
+*******ELEMENT DATA************************
+
+*NUMBER OF ELEMENTS
+
+ IE NEL                 15
+
+*NUMBER OF VALVES
+
+ IE S_VAL               9
+ IE E_VAL               10
+
+*NUMBER OF PIPES
+
+ IE S_PIPE              1
+ IE E_PIPE              8
+
+*CONSTANTS ASSOCIATED WITH PIPES AND VALVES
+
+ RE MGINV1              -3.365170D-3
+ RE MGINV2              -2.314284D-2
+ RE MGINV3              -6.631203D-3
+ RE MGINV4              -1.702093D-3
+ RE MGINV5              -1.205983D-2
+ RE MGINV6              -9.617776D-4
+ RE MGINV7              -1.392046D-5
+ RE MGINV8              -4.411625D-3
+ RE MGINV9              -2.019250D-3
+ RE MGINV10             -2.288437D-3
+
+*NUMBER OF PUMP GROUPS
+
+ IE NPMP                5
+ IE S_PMP               11
+ IE E_PMP               15
+
+*PUMP CONSTANTS
+
+ RE CONA11              -.035520
+ RE CONB11              -.054720
+ RE CONC11              99.80
+ RE CONA12              -0.07475
+*-.014210
+ RE CONB12              -9.05
+*-.013630
+ RE CONC12              110
+*42.25
+ RE CONA13              -.042420
+ RE CONB13              -.005370
+ RE CONC13              175.29
+ RE CONA14              -.040733
+ RE CONB14              -.032036
+ RE CONC14              139.6
+ RE CONA15              -.167495
+ RE CONB15              -.0019
+ RE CONC15              139.6
+
+*******NODE DATA***************************
+
+*NUMBER OF NODES
+
+ IE NND                 13
+
+*DEMANDS FROM NODES
+
+ RE D1                  0.0
+ RE D4                  -33.0
+ RE D2                  0.0
+ RE D3                  -55.0
+ RE D5                  0.0
+ RE D6                  0.0
+ RE D7                  0.0
+ RE D8                  -25.0
+ RE D9                  0.0
+ RE D10                 -17.0
+ RE D11                 0.0
+ RE D12                 0.0
+ RE D13                 0.0
+*NUMBER OF RESERVOIRS
+
+ IE S_RES               1
+ IE E_RES               4
+ IA E_RES+1   E_RES     1
+
+*RESERVOIR PHYSICAL CONSTRAINTS
+*RESERVOIR HEIGHTS(M)
+
+ RE HGT1                5.77
+ RE HGT2                3.00
+ RE HGT3                131.08
+ RE HGT4                44.0
+ RE MXHGT1              9.60
+ RE MXHGT2              7.89
+ RE MXHGT3              138.76
+ RE MXHGT4              53.34
+*RESERVOIR CROSS SECTIONAL AREA (ML/M)
+
+ RE XAR1                1.599
+ RE XAR2                4.6421
+ RE XAR3                30.2307
+ RE XAR4                5.3938
+
+*MINUS RES CROSS SECTIONAL AREA
+
+ RS MXAR1     XAR1      0.0
+ RS MXAR2     XAR2      0.0
+ RS MXAR3     XAR3      0.0
+ RS MXAR4     XAR4      0.0
+
+*MINUS RECIPROCAL XAR
+
+ RD RXAR1     XAR1      1.0
+ RS MRXAR1    RXAR1     0.0
+ RD RXAR2     XAR2      1.0
+ RS MRXAR2    RXAR2     0.0
+ RD RXAR3     XAR3      1.0
+ RS MRXAR3    RXAR3     0.0
+ RD RXAR4     XAR4      1.0
+ RS MRXAR4    RXAR4     0.0
+
+*HEIGHT OF RES TIMES CROSS SECTIONAL AREA
+
+ R* HTXAR1    XAR1                     HGT1
+ R* HTXAR2    XAR2                     HGT2
+ R* HTXAR3    XAR3                     HGT3
+ R* HTXAR4    XAR4                     HGT4
+
+*INITIAL RES. LEVEL
+
+ RE STHGT1              8.5
+ RE STHGT2              6.0
+ RE STHGT3              135.6
+ RE STHGT4              48.5
+ R* STVOL1    STHGT1                   XAR1
+ R* STVOL2    STHGT2                   XAR2
+ R* STVOL3    STHGT3                   XAR3
+ R* STVOL4    STHGT4                   XAR4
+ RS MSTVOL1   STVOL1    0.0
+ RS MSTVOL2   STVOL2    0.0
+ RS MSTVOL3   STVOL3    0.0
+ RS MSTVOL4   STVOL4    0.0
+
+*MINIMUM VALUE OF RESERVOIR CAPACITY
+
+ RE WMN1                3.764
+ RE WMN2                11.35
+ RE WMN3                156.648
+ RE WMN4                45.929
+
+*MAXIMUM VALUE OF RESERVOIR CAPACITY
+
+ RE WMX1                5.646
+ RE WMX2                22.133
+ RE WMX3                223.489
+ RE WMX4                61.876
+
+*INITIAL VALUES FOR RESERVOIRS
+
+*HEADS AT RESERVOIRS
+
+ RE H1                  8.99
+ RE H2                  52.84
+ RE H3                  138.31
+ RE H4                  5.67
+
+*INITIAL VALUES OF RESERVOIR CAPACITY
+
+ RE W1                  4.728
+ RE W2                  15.601
+ RE W3                  190.648
+ RE W4                  55.00
+
+**********TREATMENT WORK DATA*******************
+
+*NUMBER OF TREATMENT WORKS
+
+ IE S_TW                1
+ IE E_TW                2
+
+*TREATMENT WORKS COST PER ML
+
+ RE BCTW1               28.34
+ RE BCTW2               18.86
+ RE BCTW3               1.0
+ RE BCTW4               1.0
+ RE BCTW5               28.34
+ RE BCTW6               18.86
+ RE BCTW7               1.0
+ RE BCTW8               1.0
+
+*TREATMENT WORKS COST PER TIME STEP
+
+ R* CTW1,1    BCTW1                    ST1
+ R* CTW1,2    BCTW1                    ST2
+ R* CTW1,3    BCTW1                    ST3
+ R* CTW1,4    BCTW1                    ST4
+ R* CTW1,5    BCTW1                    ST5
+ R* CTW1,6    BCTW1                    ST6
+ R* CTW1,7    BCTW1                    ST7
+ R* CTW1,8    BCTW1                    ST8
+ R* CTW2,1    BCTW2                    ST1
+ R* CTW2,2    BCTW2                    ST2
+ R* CTW2,3    BCTW2                    ST3
+ R* CTW2,4    BCTW2                    ST4
+ R* CTW2,5    BCTW2                    ST5
+ R* CTW2,6    BCTW2                    ST6
+ R* CTW2,7    BCTW2                    ST7
+ R* CTW2,8    BCTW2                    ST8
+
+*INITIAL VALUES OF FLOW AT SOURCE
+
+ RE WS1                 94.67
+ RE WS2                 30.87
+
+*MAXIMUM VALUES OF SOURCE FLOW
+
+ RE QSMX1               500.0
+ RE QSMX2               40.0
+
+***************SCALE FACTORS************************
+
+ RE SC_Q                1.0
+ RE SC_H                1.0
+ RE SC_V                1.0
+ RE PIPE_SC             1.0
+ RE VAL_SC              1.0
+ RE ND_SC               1.0
+
+*********END OF COMPONENT DATA SECTION********************
+
+VARIABLES
+
+******TIME DEPENDENT VARIABLES*********************
+
+*PIPE FLOWS
+
+ DO I         ONE                      NSTEP
+
+ DO J         ONE                      NEL
+ X  q(J,I)
+ OD J
+ DO J         ONE                      NND
+
+*HEADS AT NODES
+
+ X  h(J,I)
+ OD J
+
+*RESERVOIR FLOWS AND VOLUMES
+
+ DO J         S_RES                    E_RES
+ X  qr(J,I)
+ OD J
+
+*TANK FLOW(VOLUME) FROM TREATMENT WORKS
+
+ DO J         S_TW                     E_TW
+ X  qs(J,I)
+ OD J
+
+*PUMP GROUP CONTROL FACTOR
+
+ DO J         S_PMP                    E_PMP
+ X  u(J,I)
+ OD J
+
+ OD I
+
+*******TIME INDEPENDENT VARIABLES*******************
+
+GROUPS
+
+*MASS BALANCE EQUATIONS
+
+ DO I         ONE                      NSTEP
+
+ XE ND(1,I)   qr(1,I)   -1.0           qs(1,I)   -1.0
+ XE ND(1,I)   q(13,I)   1.0
+ 
+ XE ND(2,I)   qr(2,I)   -1.0           qs(2,I)   -1.0
+ XE ND(2,I)   q(14,I)   1.0            q(15,I)   1.0
+
+ XE ND(3,I)   qr(3,I)   -1.0           q(5,I)    -1.0
+ XE ND(3,I)   q(6,I)    1.0
+
+ XE ND(4,I)   qr(4,I)   -1.0           q(12,I)   1.0
+ XE ND(4,I)   q(8,I)    -1.0           q(9,I)    -1.0
+
+ XE ND(5,I)   q(13,I)   -1.0           q(1,I)    1.0
+
+ XE ND(6,I)   q(2,I)    1.0            q(3,I)    1.0
+ XE ND(6,I)   q(12,I)   -1.0
+
+ XE ND(7,I)   q(2,I)    -1.0           q(7,I)    -1.0
+ XE ND(7,I)   q(11,I)   1.0
+
+ XE ND(8,I)   q(3,I)    -1.0           q(7,I)    1.0
+
+ XE ND(9,I)   q(4,I)    1.0            q(5,I)    1.0
+ XE ND(9,I)   q(11,I)   -1.0
+
+ XE ND(10,I)  q(4,I)    -1.0           q(6,I)    -1.0
+
+ XE ND(11,I)  q(10,I)   1.0            q(14,I)   -1.0
+ XE ND(11,I)  q(15,I)   -1.0
+
+ XE ND(12,I)  q(8,I)    1.0            q(10,I)   -1.0
+
+ XE ND(13,I)  q(9,I)    1.0            q(1,I)    -1.0
+
+ OD I
+
+*HEAD DROP - FLOW RELATIONSHIPS
+
+*FOR EACH ELEMENT DIFFERENCE IN HEADS MUST EQUAL HEAD DROP FROM FLOW
+
+ DO I         1                        NSTEP
+
+*PIPES
+
+ XE EL(1,I)   h(13,I)   -1.0           h(5,I)    1.0
+ XE EL(2,I)   h(7,I)    -1.0           h(6,I)    1.0
+ XE EL(3,I)   h(8,I)    -1.0           h(6,I)    1.0
+ XE EL(4,I)   h(10,I)   -1.0           h(9,I)    1.0
+ XE EL(5,I)   h(3,I)    -1.0           h(9,I)    1.0
+ XE EL(6,I)   h(10,I)   -1.0           h(3,I)    1.0
+ XE EL(7,I)   h(7,I)    -1.0           h(8,I)    1.0
+ XE EL(8,I)   h(4,I)    -1.0           h(12,I)   1.0
+
+*VALVES - TREATED AS PIPES FOR THIS MODEL
+
+ XE EL(9,I)   h(4,I)    -1.0           h(13,I)   1.0
+ XE EL(10,I)  h(12,I)   -1.0           h(11,I)   1.0
+
+*PUMP
+
+ DO J         S_PMP                    E_PMP
+ ZE EL(J,I)
+ OD J
+ OD I
+
+*RESERVOIR CONSTRAINTS
+
+ DO I         ONE                      NSTEP
+
+*TANK CONSTRAINTS
+
+ DO J         S_TW                     E_TW
+
+*TREATMENT COST
+
+ ZN TWC(J,I)  qs(J,I)                  CTW(J,I)
+ OD J
+
+*PUMPING COST
+
+ DO J         S_PMP                    E_PMP
+ XN PC(J,I)
+ OD J
+
+ OD I
+
+*INITIAL STEP DRAINING
+
+ DO J         S_RES                    E_RES
+ ZE RD(J,1)   h(J,1)                   MXAR(J)
+ ZE RD(J,1)   qr(J,1)                  MST(1)
+
+*INITIAL RES LEVEL SHIFTED TO RHS
+
+ OD J
+
+ DO I         2                        NSTEP
+ DO J         S_RES                    E_RES
+ IA A         I         -1
+
+*DRAINING RULES
+
+ ZE RD(J,I)   h(J,I)                   MXAR(J)
+ ZE RD(J,I)   h(J,A)                   XAR(J)
+ ZE RD(J,I)   qr(J,I)                  MST(I)
+ OD J
+ OD I
+
+CONSTANTS
+
+ DO I         ONE                      NSTEP
+ DO J         ONE                      NND
+ Z  YORKNET   ND(J,I)                  D(J)
+ OD J
+ OD I
+ DO J         S_RES                    E_RES
+ Z  YORKNET   RD(J,1)                  MSTVOL(J)
+ OD J
+ 
+BOUNDS
+
+ DO I         ONE                      NSTEP
+
+*COMMON NODE BOUNDS
+
+ DO J         S_RES                    E_RES
+ ZL YORKNET   h(J,I)                   HGT(J)
+ ZU YORKNET   h(J,I)                   MXHGT(J)
+ XR YORKNET   qr(J,I)
+ OD J
+
+ DO J         E_RES+1                  NND
+ XL YORKNET   h(J,I)     0.0
+ OD J
+
+*TREATMENT WORK BOUNDS
+
+ DO J         S_TW                     E_TW
+ XL YORKNET   qs(J,I)    0.0
+ ZU YORKNET   qs(J,I)                  QSMX(J)
+ OD J
+
+*COMMON ELEMENT BOUNDS
+
+ DO J         ONE                      NEL
+ XR YORKNET   q(J,I)
+ OD J
+
+*PUMP BOUNDS
+
+ DO J         S_PMP                    E_PMP
+ XL YORKNET   u(J,I)     0.0
+ XU YORKNET   u(J,I)     7.0
+ XL YORKNET   q(J,I)     0.0
+ OD J
+
+ OD I
+
+START POINT
+
+ X  YORKNET   'DEFAULT'  0.0
+ DO I         1                        NSTEP
+ DO J         E_RES+1                  NND
+ XV YORKNET   h(J,I)     0.0
+ OD J
+
+ DO J         ONE                      NEL
+ XV YORKNET   q(J,I)     20.0
+ OD J
+
+ DO J         S_PMP                    E_PMP
+ XV YORKNET   u(J,I)     3.0
+ OD J
+
+ XV YORKNET   qs(1,I)    25.0
+ XV YORKNET   qs(2,I)    50.0
+ OD I
+
+ELEMENT TYPE
+
+*ELEMENTS FOR FORMULAIC CALCULATION OF PIPES ETC.
+
+*ELEMENT X SQUARED
+
+ EV XSQ       X
+
+*ELEMENT X*Z
+
+ EV XZ        X                        Z
+
+*ELEMENT X**1.852
+
+ EV XPOW      X
+
+*ELEMENT (X-Y)*Z**2
+
+ EV XMYZSQ    X                        Y
+ EV XMYZSQ    Z
+ IV XMYZSQ    IVX                      IVZ
+
+*PIECEWISE LINEAR APPROXIMATIONS TO PUMP POWER USE
+
+ EV PMP1      Q
+ EV PMP2      Q
+ EV PMP3      Q
+ EV PMP4      Q
+
+ELEMENT USES
+
+*DECLARE TYPE OF ELEMENTS AND MAP VARIABLES
+
+ DO I         1                        NSTEP
+
+ DO J         S_PIPE                   E_PIPE
+
+*PIPE GROUP ELEMENTS
+
+ XT EA(J,I)   XPOW
+ ZV EA(J,I)   X                        q(J,I)
+ OD J
+
+ DO J         S_VAL                    E_VAL
+
+*VALVES-AS PIPES FOR THIS MODEL
+
+ XT EA(J,I)   XPOW
+ ZV EA(J,I)   X                        q(J,I)                     
+ OD J
+
+ DO J         S_PMP                    E_PMP
+ XT EA(J,I)   XSQ
+ ZV EA(J,I)   X                        q(J,I)
+ XT EB(J,I)   XZ
+ ZV EB(J,I)   X                        q(J,I) 
+ ZV EB(J,I)   Z                        u(J,I)
+ XT EC(J,I)   XSQ
+ ZV EC(J,I)   X                        u(J,I)
+ XT EH(J,I)   XMYZSQ
+ ZV EH(J,I)   Z                        u(J,I)
+ OD J
+
+*PUMP
+
+ ZV EH(11,I)  X                        h(7,I)
+ ZV EH(11,I)  Y                        h(9,I)
+ ZV EH(12,I)  X                        h(4,I)
+ ZV EH(12,I)  Y                        h(6,I)
+ ZV EH(13,I)  X                        h(1,I)
+ ZV EH(13,I)  Y                        h(5,I)
+ ZV EH(14,I)  X                        h(2,I)
+ ZV EH(14,I)  Y                        h(11,I)
+ ZV EH(15,I)  X                        h(2,I)
+ ZV EH(15,I)  Y                        h(11,I)
+
+ OD I
+
+*PUMP GROUP POWER USE
+
+ DO I         1                        NSTEP
+
+ XT PPW(11,I) PMP4
+ XT PPW(12,I) PMP3
+ XT PPW(13,I) PMP1
+ XT PPW(14,I) PMP2
+ XT PPW(15,I) PMP2
+ DO J         S_PMP                    E_PMP
+ ZV PPW(J,I)  Q                        q(J,I)
+ OD J
+
+ OD I
+
+GROUP USES
+
+ DO I         1                        NSTEP
+
+*PIPES
+
+ DO J         S_PIPE                   E_PIPE
+ ZE EL(J,I)   EA(J,I)                  MGINV(J)
+ OD J
+
+*VALVES AS PIPES
+
+ DO J         S_VAL                    E_VAL 
+ ZE EL(J,I)   EA(J,I)                  MGINV(J)
+ OD J
+
+ DO J         S_PMP                    E_PMP
+ ZE EL(J,I)   EA(J,I)                  CONA(J)
+ ZE EL(J,I)   EB(J,I)                  CONB(J)
+ ZE EL(J,I)   EC(J,I)                  CONC(J)
+ XE EL(J,I)   EH(J,I)    1.0
+ OD J
+
+ OD I
+
+*PUMPING COST GROUPS
+
+ DO J         S_PMP                    E_PMP
+ XE PC(J,2)   PPW(J,2)   100.0
+ XE PC(J,3)   PPW(J,3)   100.0
+ XE PC(J,4)   PPW(J,4)   100.0
+ OD J
+
+*SOLUTION
+
+*LO SOLTN                1392.2890475
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      YORKNET
+
+TEMPORARIES
+
+ R  MODX
+ R  SGN
+ L  ISNEG
+ L  ISPOS
+ M  ABS
+
+INDIVIDUALS
+
+*XSQ - (x)**2  ************
+
+ T  XSQ
+ F  XSQ                 X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*XZ - x*z
+
+ T  XZ
+ F                      X * Z
+ G  X                   Z
+ G  Z                   X
+ H  X         Z         1.0
+
+* XMYZSQ - (x-y)*z**2  ***********
+
+ T  XMYZSQ
+ R  IVX       X         1.0            Y         -1.0
+ R  IVZ       Z         1.0
+ F  XMYZSQ              IVX * IVZ**2
+ G  IVX                 IVZ**2
+ G  IVZ                 2.0 * IVX * IVZ
+ H  IVX       IVZ       2.0 * IVZ
+ H  IVZ       IVZ       2.0 * IVX
+
+* XPOW - (x)**1.852  ******************
+
+ T  XPOW
+ A  MODX                ABS( X )
+ A  ISNEG               X .LT. 0.0
+ A  ISPOS               X .GE. 0.0
+ I  ISNEG     SGN       -1.0
+ I  ISPOS     SGN       +1.0
+ F                      SGN * MODX**1.852
+ G  X                   1.852 * MODX**0.852
+ H  X         X         SGN * 1.577904 * MODX**(-0.148)
+
+*PUMP GROUPS
+
+*PUMP GROUP- AGG. ELVINGTON+RICCALL-EL13
+
+ T  PMP1
+ F                      0.074 * Q * Q + 3.062 * Q + 50.357
+ G  Q                   0.148 * Q + 3.062
+ H  Q         Q         0.148
+
+*PUMP GROUP-BARMBY A,B AGG. EL14+EL15
+
+ T  PMP2
+ F                      0.747 * Q * Q - 10.287 * Q
+ G  Q                   1.494 * Q - 10.287
+ H  Q         Q         1.494
+
+*PUMP GROUP- BRAYTON EL12
+
+ T  PMP3
+ F                      0.034 * Q * Q + 0.220 * Q + 6.685
+ G  Q                   0.068 * Q + 0.220
+ H  Q         Q         0.068
+
+*PUMP GROUP- FRICKLEY EL11
+
+ T  PMP4
+ F                      0.079 * Q * Q - 2.761 * Q + 35.014
+ G  Q                   0.158 * Q - 2.761
+ H  Q         Q         0.158
+
+ENDATA
+
+
+
+
+
+

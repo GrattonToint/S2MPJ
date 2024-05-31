@@ -1,0 +1,130 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          WAYSEA1B
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example WayburnSeader01
+
+*   Fit: y = (X_1^6 + x_2^4, 2x_1 + x_2) + e
+
+*   version with box-constrained feasible region
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification SBR2-MN-2-0
+
+*   Number of data values
+
+ IE M                   2
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  F1
+ N  F2        X1        2.0            X2        1.0
+
+CONSTANTS
+
+    WAYSEA1   F1        17.0
+    WAYSEA1   F2        4.0
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -5.0
+ UP BOUNDS    'DEFAULT' 5.0
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+ELEMENT TYPE
+
+ EV P4        X
+ EV P6        X
+
+ELEMENT USES
+
+ T  E4        P4 
+ V  E4        X                        X2
+
+ T  E6        P6
+ V  E6        X                        X1
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+ E  F1        E4                       E6
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO WAYSEA1             0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      WAYSEA1B
+
+INDIVIDUALS
+
+ T  P4
+ F                      X ** 4
+ G  X                   4.0 * X ** 3
+ H  X         X         12.0 * X ** 2
+
+ T  P6
+ F                      X ** 6
+ G  X                   6.0 * X ** 5
+ H  X         X         30.0 * X ** 4
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        WAYSEA1B
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

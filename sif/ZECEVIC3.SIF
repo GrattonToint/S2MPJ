@@ -1,0 +1,103 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ZECEVIC3
+
+*   Problem :
+*   *********
+
+*   Source:  problem 3 in A. Zecevic, "Contribution to methods 
+*            of external penalty functions - algorithm MNBS"
+*            Advanced Business School, Belgrade, 
+*            (whatever is left of) Yugoslavia.
+
+*   SIF input: Nick Gould, April 1993.
+
+*   classification QQR2-AN-2-2
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        -84.0          X2         -24.0
+ L  CON1
+ L  CON2
+
+CONSTANTS
+
+    ZECEVIC2  OBJ       -300.0
+    ZECEVIC2  CON1      -1.0
+    ZECEVIC2  CON2      9.0
+
+BOUNDS
+
+ UP ZECEVIC3  'DEFAULT' 10.0
+
+START POINT
+
+    ZECEVIC3  X1         0.1
+    ZECEVIC3  X2         -0.1
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV PROD      V1                       V2 
+
+ELEMENT USES
+
+ T  OBJ1      SQ
+ V  OBJ1      V1                       X1
+
+ T  OBJ2      SQ
+ V  OBJ2      V1                       X2
+
+ T  CON1      PROD
+ V  CON1      V1                       X1
+ V  CON1      V2                       X2
+
+ T  CON21     SQ
+ V  CON21     V1                       X1
+
+ T  CON22     SQ
+ V  CON22     V1                       X2
+
+GROUP USES
+
+ E  OBJ       OBJ1       7.0           OBJ2       3.0
+ E  CON1      CON1       -1.0
+ E  CON2      CON21      1.0           CON22      1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                -97.30952
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ZECEVIC3
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  PROD
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA
+

@@ -1,0 +1,108 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          WAYSEA2NE
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example WayburnSeader02
+
+*   Fit: y = ( -4 x_1^2 -4 x_2^2 + 2.5 x_1 + 13 x_2 −9.340125, x_2 - 1 ) + e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   Nonlinear-equation formulation of WAYSEA2.SIF
+
+*   SIF input: Nick Gould, Jan 2020
+
+*   classification NOR2-MN-2-2
+
+*   Number of data values
+
+ IE M                   2
+
+*   Number of variables
+
+ IE N                   2
+
+*   Useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ E  F1        X1        2.5            X2        13.0
+ E  F2        X2        1.0
+
+CONSTANTS
+
+    WAYSEA1   F1        9.340125
+    WAYSEA1   F2        1.0
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X1        1.0
+    START     X2        5.0
+
+    SOLUTION  X1        0.424861025
+    SOLUTION  X2        1.0
+
+ELEMENT TYPE
+
+ EV SQR       X
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT E(I)      SQR
+ ZV E(I)      X                        X(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        M
+ XE F1        E(I)      -4.0
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO WAYSEA2             0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      WAYSEA2NE
+
+TEMPORARIES
+
+INDIVIDUALS
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA

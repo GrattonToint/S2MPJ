@@ -1,0 +1,190 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          YATP2LS
+
+*   Problem :
+*   *********
+
+*   Another test problem involving double pseudo-stochastic constraints
+*   on a square matrix. If the matrix dimension is N, the number of
+*   variables is equal to  N**2 + 2 * N. The equations are
+*
+*   x_{ij} - ( y_i + z_i ) ( 1 + cos( x_{ij} ) ) = A   (i,j = 1, ..., N )
+*
+*   \sum_i^N ( x_{ij} + sin( x_{ij}) ) = 1             (j = 1,..., N)
+*
+*   \sum_j^N ( x_{ij} + sin( x_{ij}) ) = 1             (i = 1,..., N)
+*
+*   The problem is non convex.
+
+*   Source:
+*   a late evening idea by Ph. Toint
+
+*   SIF input: Ph. Toint, June 2003.
+
+*   classification SUR2-AN-V-V
+
+*  least-squares version, October 2014
+
+*   The dimension of the matrix
+
+*IE N                   2              $-PARAMETER n = 8
+*IE N                   10             $-PARAMETER n = 120
+*IE N                   50             $-PARAMETER n = 2600
+*IE N                   100            $-PARAMETER n = 10200
+*IE N                   200            $-PARAMETER n = 40400
+*IE N                   350            $-PARAMETER n = 123200
+ IE N                   5              $-PARAMETER     modified for S2X tests
+*IE N                   2              $-PARAMETER n = 8
+
+ RE A                   1.0
+
+*  Useful constants
+
+ IE 1                   1
+
+VARIABLES
+
+*    The entries of the matrix
+
+ DO I         1                        N
+ DO J         1                        N
+ X  X(I,J)
+ ND
+
+*    The multipliers
+
+ DO I         1                        N
+ X  Y(I)
+ X  Z(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ DO J         1                        N
+ XN E(I,J)    X(I,J)     1.0
+ XN E(I,J)    Y(I)      -1.0           Z(J)      -1.0
+ XN ER(I)     X(I,J)     1.0
+ XN EC(I)     X(I,J)     1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ X  YATP2LS   ER(I)     1.0
+ X  YATP2LS   EC(I)     1.0
+ DO J         1                        N
+ Z  YATP2LS   E(I,J)                   A
+ ND
+
+BOUNDS
+
+ FR YATP2LS   'DEFAULT'
+
+START POINT
+
+ DO I         1                        N
+ DO J         1                        N
+ X  YATP2LS   X(I,J)    10.0
+ ND
+
+ELEMENT TYPE
+
+ EV ATP2      X                        Y
+ EV ATP2      Z
+ IV ATP2      XX                       YPZ
+
+ EV SINX      X
+
+ELEMENT USES
+
+ DO I         1                        N
+ DO J         1                        N
+
+ XT DC(I,J)   ATP2
+ ZV DC(I,J)   X                        X(I,J)
+ ZV DC(I,J)   Y                        Y(I)
+ ZV DC(I,J)   Z                        Z(I)
+
+ XT SX(I,J)   SINX
+ ZV SX(I,J)   X                        X(I,J)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+ DO I         1                        N
+ DO J         1                        N
+ XE E(I,J)    DC(I,J)   -1.0
+ ND
+
+ DO I         1                        N
+ DO J         1                        N
+ XE ER(I)     SX(I,J)
+ XE EC(J)     SX(I,J)
+ ND
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      YATP2LS
+
+TEMPORARIES
+
+ R  C
+ R  S
+
+INDIVIDUALS
+
+ T  ATP2
+ R  XX        X         1.0
+ R  YPZ       Y         1.0            Z          1.0
+ A  C                   COS( XX )
+ A  S                   SIN( XX )
+ F                      YPZ * C
+ G  YPZ                 C
+ G  XX                  - YPZ * S
+ H  YPZ       XX        - S
+ H  XX        XX        - YPZ * C
+
+ T  SINX
+ A  S                   SIN( X )
+ A  C                   COS( X )
+ F                      S
+ G  X                   C
+ H  X         X         - S
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        YATP2LS
+
+INDIVIDUALS
+
+*   Least-square root groups
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
