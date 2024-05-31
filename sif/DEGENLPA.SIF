@@ -1,0 +1,128 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEGENLPA
+
+*   Problem :
+*   *********
+
+*   A small linear program with some degeneracy.
+
+*   Source:
+*   T.C.T. Kotiah and D.I. Steinberg,
+*   "Occurences of cycling and other phenomena arising in a class of
+*   linear programming models",
+*   Communications of the ACM, vol. 20, pp. 107-112, 1977.
+
+*   SIF input: Ph. Toint, Aug 1990.
+
+*   classification LLR2-AN-20-15
+
+*   Number of variables
+
+ IE N                   20
+
+*   Number of linear constraints
+
+ IE M                   15
+
+*   Constants
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ       X2        0.01           X3        33.333
+ N  OBJ       X4        100.0          X5        0.01
+ N  OBJ       X6        33.343         X7        100.01
+ N  OBJ       X8        33.333         X9        133.33
+ N  OBJ       X10       100.0
+
+ E  C1        X1        1.0            X2        2.0
+ E  C1        X3        2.0            X4        2.0
+ E  C1        X5        1.0            X6        2.0
+ E  C1        X7        2.0            X8        1.0
+ E  C1        X9        2.0            X10       1.0
+
+ E  C2        X1        -1.0           X2        300.0
+ E  C2        X3        0.09           X4        0.03
+
+ E  C3        X1        0.326          X2        -101.0
+ E  C3        X5        200.0          X6        0.06
+ E  C3        X7        0.02
+
+ E  C4        X1        0.0066667      X3        -1.03
+ E  C4        X6        200.0          X8        0.06
+ E  C4        X9        0.02
+
+ E  C5        X1        6.6667D-4      X4        -1.01
+ E  C5        X7        200.0          X9        0.06
+ E  C5        X10       0.02
+
+ E  C6        X2        0.978          X5        -201.0
+ E  C6        X11       100.0          X12       0.03
+ E  C6        X13       0.01
+
+ E  C7        X2        0.01           X3        0.489
+ E  C7        X6        -101.03        X12       100.0
+ E  C7        X14       0.03           X15       0.01
+
+ E  C8        X2        0.001          X4        0.489
+ E  C8        X7        -101.03        X13       100.0
+ E  C8        X15       0.03           X16       0.01
+
+ E  C9        X3        0.001          X4        0.01
+ E  C9        X9        -1.04          X15       100.0
+ E  C9        X18       0.03           X19       0.01
+
+ E  C10       X3        0.02           X8        -1.06
+ E  C10       X14       100.0          X17       0.03
+ E  C10       X19       0.01
+
+ E  C11       X4        0.002          X10       -1.02
+ E  C11       X16       100.0          X19       0.03
+ E  C11       X20       0.01
+
+ E  C12       X11       -2.5742D-6     X13       0.00252
+ E  C12       X16       -0.61975       X20       1.03
+
+ E  C13       X11       -0.00257       X12       0.25221
+ E  C13       X14       -6.2           X17       1.09
+
+ E  C14       X11       0.00629        X12       -0.20555
+ E  C14       X13       -4.1106        X15       101.04
+ E  C14       X16       505.1          X19       -256.72
+
+ E  C15       X12       0.00841        X13       -0.08406
+ E  C15       X14       -0.20667       X16       20.658
+ E  C15       X18       1.07           X19       -10.5
+
+CONSTANTS
+
+    DEGENLPA  C1        0.70785
+
+BOUNDS
+
+ XU DEGENLPA  'DEFAULT' 1.0
+
+START POINT
+
+ XV DEGENLPA  'DEFAULT' 1.0
+*D  DEGENLPA2           0.0
+
+OBJECT BOUND
+
+ LO DEGENLPA            0.0
+
+*   Solution
+
+*LO SOLTN               3.06435
+
+ENDATA

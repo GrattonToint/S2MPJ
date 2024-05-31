@@ -1,0 +1,258 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEVGLA2
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example DeVilliersGlasser02
+
+*   Fit: y  = x_1 x_2^t tanh ( t x_3 + sin( t x_4 ) ) cos( t e^x_5 )  +  e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   SIF input: Nick Gould, Jan 2020
+
+*   classification SUR2-MN-5-0
+
+*   Number of data values
+
+ IE M                   16
+
+*   Number of variables
+
+ IE N                   5
+
+*   Useful parameters
+
+ IE 1                   1
+ RE A                   1.27
+ R( LNA       LOG                      A
+
+*  Data values
+
+ DO I         1                        M
+ RI RI        I
+ RA RIM1      RI        -1.0
+ RM T         RIM1      0.1
+ A= T(I)      T
+ R* TLNA      T                        LNA
+ R( AT        EXP                      TLNA
+
+
+ RM TP        T         3.012
+ RM TP2       T         2.13
+ R( STP2      SIN                      TP2
+
+ R+ TPA       TP                       STP2
+ R( HTPA      HYPTAN                   TPA
+ RF EC        EXP       0.507
+ R* ECT       EC                       T
+ R( CECT      COS                      ECT
+ R* P         AT                       HTPA
+ R* PP        P                        CECT
+ RM PPP       PP        53.81
+ A= Y(I)      PPP
+ ND
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN F(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  DEVGLA2   F(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X1        20.0
+    START     X2        2.0
+    START     X3        2.0
+    START     X4        2.0
+    START     X5        0.2
+
+    SOLUTION  X1        53.81
+    SOLUTION  X2        1.27
+    SOLUTION  X3        3.012
+    SOLUTION  X4        2.13
+    SOLUTION  X5        0.507
+
+ELEMENT TYPE
+
+ EV DG2       X1                       X2
+ EV DG2       X3                       X4
+ EV DG2       X5
+ EP DG2       T
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT E(I)      DG2
+ ZV E(I)      X1                       X1
+ ZV E(I)      X2                       X2
+ ZV E(I)      X3                       X3
+ ZV E(I)      X4                       X4
+ ZV E(I)      X5                       X5
+ ZP E(I)      T                        T(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ DO I         1                        M
+ XE F(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO DEVGLA1             0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DEVGLA2
+
+TEMPORARIES
+ R  A
+ R  X2T
+ R  F2
+ R  F2X2
+ R  F2X2X2
+ R  X3T
+ R  X4T
+ R  SINX4T
+ R  COSX4T
+ R  A
+ R  AX3
+ R  AX4
+ R  AX4X4
+ R  F
+ R  FA
+ R  FAA
+ R  F3
+ R  F3X3
+ R  F3X4
+ R  F3X3X3
+ R  F3X3X4
+ R  F3X4X4
+ R  EX5
+ R  TEX5
+ R  CTEX5
+ R  STEX5
+ R  F4
+ R  F4X5
+ R  F4X5X5
+
+ M  EXP
+ M  SIN
+ M  COS
+ M  TANH
+ M  SINH
+ M  COSH
+
+INDIVIDUALS
+
+ T  DG2
+ A  X2T                 X2 ** T
+ A  F2                  X2T
+ A  F2X2                T * X2 ** ( T - 1.0D0 )
+ A  F2X2X2              T * ( T - 1.0D0 ) * X2 ** ( T - 2.0D0 )
+
+ A  X3T                 X3 * T
+ A  X4T                 X4 * T
+ A  SINX4T              SIN( X4T )
+ A  COSX4T              COS( X4T )
+ A  A                   X3T + SINX4T
+ A  AX3                 T
+ A  AX4                 T * COSX4T
+ A  AX4X4               - T  * T * SINX4T
+ A  F                   TANH( A )
+ A  FA                  1.0 / ( COSH( A ) ) ** 2
+ A  FAA                 - 2.0 * FA * F
+ A  F3                  F
+ A  F3X3                FA * AX3
+ A  F3X4                FA * AX4
+ A  F3X3X3              FAA * AX3 * AX3
+ A  F3X3X4              FAA * AX3 * AX4
+ A  F3X4X4              FA * AX4X4 + FAA * AX4 * AX4
+
+ A  EX5                 EXP( X5 )
+ A  TEX5                T * EX5                 
+ A  STEX5               SIN( TEX5 )
+ A  CTEX5               COS( TEX5 )
+ A  F4                  CTEX5
+ A  F4X5                - STEX5 * TEX5 
+ A  F4X5X5              - STEX5 * TEX5 - CTEX5 * TEX5 * TEX5
+
+
+ F                      X1 * F2 * F3 * F4
+ G  X1                  F2 * F3 * F4
+ G  X2                  X1 * F2X2 * F3 * F4
+ G  X3                  X1 * F2 * F3X3 * F4
+ G  X4                  X1 * F2 * F3X4 * F4
+ G  X5                  X1 * F2 * F3 * F4X5
+ H  X1        X2        F2X2 * F3 * F4
+ H  X1        X3        F2 * F3X3 * F4
+ H  X1        X4        F2 * F3X4 * F4
+ H  X1        X5        F2 * F3 * F4X5
+ H  X2        X2        X1 * F2X2X2 * F3 * F4
+ H  X2        X3        X1 * F2X2 * F3X3 * F4
+ H  X2        X4        X1 * F2X2 * F3X4 * F4
+ H  X2        X5        X1 * F2X2 * F3 * F4X5
+ H  X3        X3        X1 * F2 * F3X3X3 * F4
+ H  X3        X4        X1 * F2 * F3X3X4 * F4
+ H  X3        X5        X1 * F2 * F3X3 * F4X5
+ H  X4        X4        X1 * F2 * F3X4X4 * F4
+ H  X4        X5        X1 * F2 * F3X4 * F4X5
+ H  X5        X5        X1 * F2 * F3 * F4X5X5
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DEVGLA2
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

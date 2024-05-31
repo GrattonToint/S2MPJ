@@ -1,0 +1,176 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT11
+
+*   Problem :
+*   *********
+
+*   Source: problem 11 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification OOR2-AY-5-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0
+ E  CON2      X2        1.0            X4        1.0
+ E  CON3      X1        1.0            X5        -1.0
+
+CONSTANTS
+
+ RF ROOT18    SQRT      18.0
+ RF ROOT8     SQRT       8.0
+ RA C1        ROOT18    -2.0
+ RA C2        ROOT8     -2.0
+
+ Z  BT11      CON1                     C1
+ Z  BT11      CON2                     C2
+    BT11      CON3      2.0
+
+BOUNDS
+
+ FR BT11      'DEFAULT'
+
+START POINT
+
+* Start 1
+
+ XV BT11      'DEFAULT' 2.0
+
+* Start 2
+
+*XV BT11      'DEFAULT' 10.0
+
+* Start 3
+
+*XV BT11      'DEFAULT' 50.0
+
+* Solution proposed in the paper (infeasible)
+
+*XV BT11      X1        1.1912
+*XV BT11      X2        1.3626
+*XV BT11      X3        1.4728
+*XV BT11      X4        1.6349
+*XV BT11      X5        1.6790
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV SSQ       X
+ EP SSQ       P
+ EV CB        X
+ EV ISQ       X                        Y
+ IV ISQ       Z
+ EV IFR       X                        Y
+ IV IFR       Z
+
+ELEMENT USES
+
+ T  O1        SSQ
+ V  O1        X                        X1
+ P  O1        P         1.0
+
+ T  O2        ISQ
+ V  O2        X                        X1
+ V  O2        Y                        X2
+
+ T  O3        ISQ
+ V  O3        X                        X2
+ V  O3        Y                        X3
+
+ T  O4        IFR
+ V  O4        X                        X3
+ V  O4        Y                        X4
+
+ T  O5        IFR
+ V  O5        X                        X4
+ V  O5        Y                        X5
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+ T  X3CB      CB
+ V  X3CB      X                        X3
+
+GROUP USES
+
+ E  OBJ       O1                       O2
+ E  OBJ       O3                       O4
+ E  OBJ       O5
+
+ E  CON1      X2SQ                     X3CB
+ 
+ E  CON2      X3SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                0.824891647
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT11
+
+TEMPORARIES
+
+ R  T
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  CB
+ F                      X * X * X
+ G  X                   3.0 * X * X
+ H  X         X         6.0 * X
+
+ T  SSQ
+ A  T                   X - P
+ F                      T * T
+ G  X                   T + T
+ H  X         X         2.0
+
+ T  ISQ
+ R  Z         X         1.0            Y         -1.0
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  IFR
+ R  Z         X         1.0            Y         -1.0
+ F                      Z**4
+ G  Z                   4.0 * Z**3
+ H  Z         Z         12.0 * Z**2
+
+ENDATA

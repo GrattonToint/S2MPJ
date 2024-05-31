@@ -1,0 +1,270 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BATCH   
+
+*   Problem :
+*   *********
+
+*   Source: Optimal Design of Multiproduct Batch Plant
+*   G.R. Kocis & I.E. Grossmann,
+*   "Global OPtimization of Nonconvex Mixed Integer Nonlinear Programmming
+*    (MINLP) problems in Process Synthesis", Indust. Engng. Chem. Res.,
+*   No. 27, pp 1407--1421, 1988.
+
+*   SIF input: S. Leyffer, October 1997
+
+*   classification OOR2-AN-46-73
+
+ IE 1                   1
+ IE M                   6                       $ Number of stages
+ IE N                   5                       $ Number of products
+ IE NU                  4                       $ max no. parallel units
+ RF LOGNU     LOG       4.0                     $ log of NU
+ RF VL        LOG       300.0                   $ lower bound on volume
+ RF VU        LOG       3000.0                  $ upper bound on volume
+ RE H                   6000.0                  $ Horizon time (h)
+ RE TLO1                0.729961                $ lower bounds on cycle time
+ RE TLO2                0.530628 
+ RE TLO3                1.09024 
+ RE TLO4                -0.133531 
+ RE TLO5                0.0487901
+ RE TUP1                2.11626                 $ upper bounds on cycle time
+ RE TUP2                1.91626
+ RE TUP3                2.47654
+ RE TUP4                1.25276
+ RE TUP5                1.43508
+ RE BLO1                4.45966                 $ lower bounds on product rate
+ RE BLO2                3.74950 
+ RE BLO3                4.49144
+ RE BLO4                3.14988
+ RE BLO5                3.04452
+ RE BUP1                397.747               $ upper bounds on product rate
+ RE BUP2                882.353
+ RE BUP3                833.333
+ RE BUP4                638.298
+ RE BUP5                666.667
+ RE Q1                  250000.0              $ production rate product 1 (kg)
+ RE Q2                  150000.0              $ production rate product 2 (kg)
+ RE Q3                  180000.0              $ production rate product 3 (kg)
+ RE Q4                  160000.0              $ production rate product 4 (kg)
+ RE Q5                  120000.0              $ production rate product 5 (kg)
+* ... work out LOGs of K, K=1,NU
+ RF LOGI1     LOG       1.0
+ RF LOGI2     LOG       2.0
+ RF LOGI3     LOG       3.0
+ RF LOGI4     LOG       4.0
+* ... size factors Sij for product i in stage j (L/kg)
+ RF S1,1      LOG       7.9
+ RF S2,1      LOG       0.7
+ RF S3,1      LOG       0.7
+ RF S4,1      LOG       4.7
+ RF S5,1      LOG       1.2
+ RF S1,2      LOG       2.0
+ RF S2,2      LOG       0.8
+ RF S3,2      LOG       2.6
+ RF S4,2      LOG       2.3
+ RF S5,2      LOG       3.6
+ RF S1,3      LOG       5.2
+ RF S2,3      LOG       0.9
+ RF S3,3      LOG       1.6
+ RF S4,3      LOG       1.6
+ RF S5,3      LOG       2.4
+ RF S1,4      LOG       4.9
+ RF S2,4      LOG       3.4
+ RF S3,4      LOG       3.6
+ RF S4,4      LOG       2.7
+ RF S5,4      LOG       4.5
+ RF S1,5      LOG       6.1
+ RF S2,5      LOG       2.1
+ RF S3,5      LOG       3.2
+ RF S4,5      LOG       1.2
+ RF S5,5      LOG       1.6
+ RF S1,6      LOG       4.2
+ RF S2,6      LOG       2.5
+ RF S3,6      LOG       2.9
+ RF S4,6      LOG       2.5
+ RF S5,6      LOG       2.1
+* ... processing time Tij for product i in stage j (h)
+ RF T1,1      LOG       6.4
+ RF T2,1      LOG       6.8
+ RF T3,1      LOG       1.0
+ RF T4,1      LOG       3.2
+ RF T5,1      LOG       2.1
+ RF T1,2      LOG       4.7
+ RF T2,2      LOG       6.4
+ RF T3,2      LOG       6.3
+ RF T4,2      LOG       3.0
+ RF T5,2      LOG       2.5
+ RF T1,3      LOG       8.3
+ RF T2,3      LOG       6.5
+ RF T3,3      LOG       5.4
+ RF T4,3      LOG       3.5
+ RF T5,3      LOG       4.2
+ RF T1,4      LOG       3.9
+ RF T2,4      LOG       4.4
+ RF T3,4      LOG       11.9
+ RF T4,4      LOG       3.3
+ RF T5,4      LOG       3.6
+ RF T1,5      LOG       2.1
+ RF T2,5      LOG       2.3
+ RF T3,5      LOG       5.7
+ RF T4,5      LOG       2.8
+ RF T5,5      LOG       3.7
+ RF T1,6      LOG       1.2
+ RF T2,6      LOG       3.2
+ RF T3,6      LOG       6.2
+ RF T4,6      LOG       3.4
+ RF T5,6      LOG       2.2
+* ... cost coefficients
+ DO J         1                        M
+ AE ALPHA(J)            250.0    
+ AE BETA(J)             0.6
+ ND
+
+VARIABLES
+
+ DO J         1                        M
+ X  N(J)                                         $ LOG( #parallel units at stage j )
+ ND
+ DO J         1                        M
+ X  V(J)                                         $ LOG( volume for stage j )
+ ND
+ DO I         1                        N
+ X  B(I)                                         $ LOG( batch size )
+ ND
+ DO I         1                        N
+ X  TL(I)                                        $ LOG( cycle time )
+ ND 
+ DO J         1                        M
+ DO K         1                        NU
+ X  Y(K,J)    INTEGER
+ OD K
+ OD J
+
+GROUPS
+
+ N  COST
+ DO I         1                        N
+ DO J         1                        M
+ XG VOL(I,J)  V(J)      1.0            B(I)      -1.0
+ OD J
+ OD J
+ DO I         1                        N
+ DO J         1                        M
+ XG CYCL(I,J) N(J)      1.0            TL(I)     1.0
+ OD J
+ OD I
+ L  HORIZON
+ DO J         1                        M
+ DO K         1                        NU
+ ZE NPAR(J)   Y(K,J)                   LOGI(K)
+ OD K
+ XE NPAR(J)   N(J)      -1.0
+ OD J
+ DO J         1                        M
+ DO K         1                        NU
+ XE SOS1(J)   Y(K,J)    1.0               
+ OD K
+ OD J
+
+CONSTANTS
+
+ DO I         1                        N
+ DO J         1                        M
+ Z  BATCH     VOL(I,J)                 S(I,J)
+ OD J
+ OD I
+ DO I         1                        N
+ DO J         1                        M
+ Z  BATCH     CYCL(I,J)                T(I,J)
+ OD J
+ OD I
+ Z  BATCH     HORIZON                  H
+ DO J         1                        M
+ XE BATCH     SOS1(J)   1.0
+ ND
+
+BOUNDS
+
+ DO J         1                        M
+ ZU BATCH     N(J)                     LOGNU       
+ ZL BATCH     V(J)                     VL
+ ZU BATCH     V(J)                     VU
+ ND
+ DO I         1                        N
+ ZL BATCH     B(I)                     BLO(I)
+ ZU BATCH     B(I)                     BUP(I)
+ ZL BATCH     TL(I)                    TLO(I)
+ ZU BATCH     TL(I)                    TUP(I)
+ ND
+ DO J         1                        M
+ DO K         1                        NU
+ XU BATCH     Y(K,J)    1.0
+ OD K
+ OD J
+
+ELEMENT TYPE
+
+ EV EXPXAY    X                        Y
+ EP EXPXAY    A
+
+ELEMENT USES
+
+ DO J         1                        M
+ XT EXPO(J)   EXPXAY
+ ZV EXPO(J)   X                        N(J)
+ ZV EXPO(J)   Y                        V(J)
+ ZP EXPO(J)   A                        BETA(J)
+ ND
+ DO I         1                        M
+ XT EXPC(I)   EXPXAY
+ ZV EXPC(I)   X                        TL(I)
+ ZV EXPC(I)   Y                        B(I)
+ XP EXPC(I)   A         -1.0 
+ ND
+
+GROUP USES
+
+ DO J         1                        M
+ ZE COST      EXPO(J)                  ALPHA(J)
+ ND
+ DO I         1                        N
+ ZE HORIZON   EXPC(I)                  Q(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BATCH   
+
+ EV EXPXAY    X                        Y
+ EP EXPXAY    A
+
+TEMPORARIES
+
+ R  FVALUE
+ R  GYVALU
+
+INDIVIDUALS
+
+ T  EXPXAY
+ A  FVALUE              EXP( X + A * Y )
+ A  GYVALU              A * FVALUE
+ F                      FVALUE
+ G  X                   FVALUE 
+ G  Y                   GYVALU
+ H  X         X         FVALUE 
+ H  X         Y         GYVALU
+ H  Y         Y         A * GYVALU
+
+ENDATA

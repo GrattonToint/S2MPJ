@@ -1,0 +1,68 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BQP1VAR
+
+*   Problem :
+*   *********
+
+*   Source: a one variable box-constrained quadratic
+
+*   SIF input: Nick Gould, March 1992
+
+*   classification QBR2-AN-1-0
+
+VARIABLES
+
+    X1
+
+GROUPS
+
+ N  G1        X1        1.0
+ N  G2        X1        1.0
+
+BOUNDS
+
+ LO BQP1VAR   X1        0.0
+ UP BQP1VAR   X1        0.5
+
+START POINT
+
+    BQP1VAR   X1        0.25
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  G2        L2
+
+OBJECT BOUND
+
+ LO BQP1VAR             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BQP1VAR
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

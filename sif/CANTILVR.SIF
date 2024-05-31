@@ -1,0 +1,93 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CANTILVR
+
+*   Problem:
+*   ********
+
+*   Computation of a minimum weight cantilever consisting of 5 sections of
+*   square shaped tube of given thickness.  
+
+*   Source:
+*   an example in a talk by W.K. Zhang and C. Fleury, LLN, 1994.
+
+*   SIF input: Ph. Toint, November 1994
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification LOR2-MN-5-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ XN WEIGHT    X1        0.0624         X2        0.0624
+ XN WEIGHT    X3        0.0624         X4        0.0624
+ XN WEIGHT    X5        0.0624
+
+ XL CONST
+
+CONSTANTS
+
+ X  CANTILVR  CONST     1.0
+
+BOUNDS
+
+ XL CANTILVR  'DEFAULT' 0.000001
+
+START POINT
+
+ XV CANTILVR  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV INVCUBE   XX
+
+ELEMENT USES
+
+ XT 'DEFAULT' INVCUBE
+ ZV E1        XX                       X1
+ ZV E2        XX                       X2
+ ZV E3        XX                       X3
+ ZV E4        XX                       X4
+ ZV E5        XX                       X5
+
+GROUP USES
+
+ XE CONST     E1        61.0           E2        37.0
+ XE CONST     E3        19.0           E4        7.0
+ XE CONST     E5        1.0 
+
+OBJECT BOUND
+
+ LO CANTILVR             0.0
+
+*   Solution
+
+*LO SOLTN                1.3399595938
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CANTILVR
+
+INDIVIDUALS
+
+ T  INVCUBE
+ F                      1.0 / XX**3
+ G  XX                  -3.0 / XX**4
+ H  XX        XX        12.0 / XX**5
+
+ENDATA
+

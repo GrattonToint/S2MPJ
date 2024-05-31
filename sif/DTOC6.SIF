@@ -1,0 +1,175 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DTOC6 
+
+*   Problem :
+*   *********
+
+*   This is a discrete time optimal control (DTOC) problem.  
+*   The system has N time periods, 1 control variable and 1 state variable.
+
+*   The problem is convex.
+
+*   Sources: problem 6 in
+*   T.F. Coleman and A. Liao,
+*   "An Efficient Trust Region Method for Unconstrained Discret-Time Optimal
+*   Control Problems",
+*   Tech. Report, ctc93tr144,  Advanced Computing Research Institute, 
+*   Cornell University, 1992.
+
+*   D.M. Murray and S.J. Yakowitz,
+*   "The application of optimal contraol methodology to nonlinear programming
+*   problems",
+*   Mathematical Programming 21, pp. 331-347, 1981.
+
+*   SIF input: Ph. Toint, August 1993
+
+*   classification OOR2-AN-V-V
+
+*   Problem variants: they are identified by the value of the parameter N.
+
+*   The problem has 2N-1  variables (of which 1 is fixed),
+*   and N-1 constraints
+
+*IE N                   11             $-PARAMETER n =   21, m =  10
+*IE N                   21             $-PARAMETER n =   41, m =  20
+*IE N                   31             $-PARAMETER n =   61, m =  30
+*IE N                   41             $-PARAMETER n =   81, m =  40
+*IE N                   51             $-PARAMETER n =  101, m =  50
+*IE N                   61             $-PARAMETER n =  121, m =  60
+*IE N                   71             $-PARAMETER n =  141, m =  70
+*IE N                   81             $-PARAMETER n =  161, m =  80
+*IE N                   91             $-PARAMETER n =  181, m =  90
+*IE N                   101            $-PARAMETER n =  201, m = 100
+*IE N                   501            $-PARAMETER n = 1001, m = 500
+*IE N                   1001           $-PARAMETER n = 2001, m =1000
+*IE N                   5001           $-PARAMETER n =10001, m =5000
+ IE N                   11             $-PARAMETER     modified for S2X tests
+
+*   Constants
+
+ IA N-1       N         -1
+ IE 1                   1
+
+VARIABLES
+
+ DO T         1                        N-1
+ X  X(T)
+ OD T
+
+ DO T         1                        N
+ X  Y(T)
+ OD T
+
+GROUPS
+
+*   Objective function
+
+ DO T         1                        N-1
+ XN OY(T)     Y(T)      1.0
+ XN OY(T)     'SCALE'   2.0
+ XN OX(T)     X(T)      1.0
+ XN OX(T)     'SCALE'   2.0
+ OD T
+*   Transition constraints
+
+ DO T         1                        N-1
+ IA T+1       T         1
+ XE TT(T)     Y(T+1)    -1.0           Y(T)      1.0
+ OD T
+
+BOUNDS
+
+ FR DTOC6     'DEFAULT'
+
+ XX DTOC6     Y(1)      0.0
+
+START POINT
+
+ XV DTOC6     Y(1)      0.0
+
+ELEMENT TYPE
+
+ EV EXP       Z
+
+ELEMENT USES
+
+ DO T         1                        N-1
+ XT E(T)      EXP
+ ZV E(T)      Z                        X(T)
+ OD T
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO T         1                        N-1
+ XT OX(T)     L2
+ XT OY(T)     L2
+ XE OY(T)     E(T)
+ XE TT(T)     E(T)
+ OD T
+
+OBJECT BOUND
+
+ LO DTOC6               0.0
+
+*LO SOLUTION(  11)      19.80411526774
+*LO SOLUTION(  21)      62.49481326823
+*LO SOLUTION(  31)      119.0328455446
+*LO SOLUTION(  41)      185.8961987565
+*LO SOLUTION(  51)      261.1131573312
+*LO SOLUTION(  61)      343.3995402405
+*LO SOLUTION(  71)      431.8430677467
+*LO SOLUTION(  81)      525.7575776948
+*LO SOLUTION(  91)      624.6051839906
+*LO SOLUTION( 101)      727.9505731659
+*LO SOLUTION( 501)      6846.330143698
+*LO SOLUTION(1001)      17176.03828316
+*LO SOLUTION(5001)      
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DTOC6
+
+TEMPORARIES
+
+ R  EZ
+ M  EXP
+
+INDIVIDUALS
+
+ T  EXP
+ A  EZ                  EXP( Z )
+ F                      EZ
+ G  Z                   EZ
+ H  Z         Z         EZ
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DTOC6
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+

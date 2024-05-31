@@ -1,0 +1,2082 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ACOPP14
+
+*   Problem :
+*   *********
+
+*   An AC Optimal Power Flow (OPF) problem for the IEEE 14 Bus
+*   Power Systems Test Case from the archive:
+*     http://www.ee.washington.edu/research/pstca/
+
+*   Polar formulation due to 
+*    Anya Castillo, Johns Hopkins University, anya.castillo@jhu.edu
+
+*   variables: 
+*     A - voltage amplitude
+*     M (= |V|) - voltage modulus
+*     P - real power component
+*     Q - imaginary (reactive) power component
+
+*   constants  
+*     PD, QD - constant loads (= withdrawl of power from the network)
+*     Pmin, Pmax - real power limits
+*     Qmin, Qmax - imaginary realtive) power limits
+*     Mmin, Mmax - voltage modulus limits
+*     Amin, Amax - voltage phase aplitude limits
+*     Smax - thermal limits
+
+*   objective function:
+*   ------------------
+*     sum_{i in nodes} f_i(P_i) = a_i P_i^2 + b_i P_i
+
+*   real power flow constraints:
+*   ---------------------------
+*     R_i * ( G * R - B * I ) + I_i * ( G * I + B * R ) 
+*       - P_i + PD_i = 0 for all nodes i
+*     M_i * sum_{j in nodes} M_j * ( G_ij cos A_ij  + B_ij sin A_ij ) 
+*       - P_i + PD_i = 0 for all nodes i
+*     where A_ij = A_i - A_j
+
+*   reactive power flow constraints:
+*   -------------------------------
+*     I_i * ( G * R - B * I ) - R_i * ( G * I + B * R ) 
+*       - Q_i + QD_i = 0 for all nodes i
+*     M_i * sum_{j in nodes} M_j * ( G_ij sin A_ij  - B_ij cos A_ij ) 
+*       - Q_i + QD_i = 0 for all nodes i
+
+*   line thermal limit constraints:
+*   ------------------------------
+*     f_i(A,M) <= Smax_i and  t_i(A,M) <= Smax_i for all lines i
+
+*     here if we write v = M * ( cos A + i sin A ) = v^R + i V^I,
+*       f_i = ( v_j(i) . ( Yf * v )_i ) * conj( v_j(i) . ( Yf * v )_i )
+*       t_i = ( v_j(i) . ( Yt * v )_i ) * conj( v_j(i) . ( Yt * v )_i )
+*     where the nodes j(i) and 
+*       Yf = Yf^R + i Yf^I and Yt = Yt^R + i Yt^I are given
+*     This leads to
+*        f_i = ( R_j . Yf^R R - R_j . Yf^I I + I_j . Yf^R I + I_j . Yf^I R )^2 +
+*              ( I_j . Yf^R R - I_j . Yf^I I - R_j . Yf^R I - R_j . Yf^I R )^2
+*      and
+*        t_i = ( R_j . Yt^R R - R_j . Yt^I I + I_j . Yt^R I + I_j . Yt^I R )^2 +
+*              ( I_j . Yt^R R - I_j . Yt^I I - R_j . Yt^R I - R_j . Yt^I R )^2
+
+*     if Yt^R R = sum_k Yt_k^R R_k (etc), we have
+
+*        f_i = ( sum_k [ R_j . Yf^R_k R_k - R_j . Yf^I_k I_k + 
+*                        I_j . Yf^R_k I_k + I_j . Yf^I_k R_k ] )^2 +
+*              ( sum_k [ I_j . Yf^R_k R_k - I_j . Yf^I_k I_k - 
+*                        R_j . Yf^R_k I_k - R_j . Yf^I_k R_k ] )^2
+*            =  sum_k [          ( Yf^R_k^2 + Yf^I_k^2 ) R_j^2 R_k^2
+*                              + ( Yf^R_k^2 + Yf^I_k^2 ) I_j^2 I_k^2
+*                              + ( Yf^R_k^2 + Yf^I_k^2 ) R_j^2 I_k^2
+*                              + ( Yf^R_k^2 + Yf^I_k^2 ) I_j^2 R_k^2 ] +
+*              sum_k sum_l>k [   2 ( Yf^R_k Yf^R_l + Yf^I_k Yf^I_l ) 
+*                                    R_j^2 R_k R_l 
+*                              + 2 ( Yf^R_k Yf^R_l + Yf^I_k Yf^I_l ) 
+*                                    R_j^2 I_k I_l 
+*                              + 2 ( Yf^R_k Yf^R_l + Yf^I_k Yf^I_l ) 
+*                                    I_j^2 R_k R_l 
+*                              + 2 ( Yf^R_k Yf^R_l + Yf^I_k Yf^I_l ) 
+*                                    I_j^2 I_k I_l 
+*                              + 2 ( Yf^R_k Yf^I_l - Yf^I_k Yf^R_l )
+*                                    R_j^2 I_k R_l 
+*                              - 2 ( Yf^R_k Yf^I_l - Yf^I_k Yf^R_l )
+*                                    R_j^2 R_k I_l 
+*                              + 2 ( Yf^R_k Yf^I_l - Yf^I_k Yf^R_l )
+*                                    I_j^2 I_k R_l 
+*                              - 2 ( Yf^R_k Yf^I_l - Yf^I_k Yf^R_l )
+*                                    I_j^2 R_k I_l                   ]
+*            = sum_k                ( Yf^R_k^2 + Yf^I_k^2 ) M_j^2 M_k^2 +
+*              sum_k sum_l>k [    2 ( Yf^R_k Yf^R_l + Yf^I_k Yf^I_l ) 
+*                                    M_j^2 M_k M_l cos ( A_k - A_l )
+*                              +  2 ( Yf^R_k Yf^I_l - Yf^I_k Yf^R_l ) 
+*                                    M_j^2 M_k M_l sin ( A_k - A_l ) ]
+
+*     and similarly for t_i
+
+* [ ** NOT USED **
+*   maximum phase-amplitude difference constraints:
+*     Amin_ij <= A_i - A_j <= Amax_ij  for all interconnets i and j ] 
+
+*   node voltage modulus limits:
+*   ----------------------------
+*     Mmin_i <= M_i <= Mmax_i  for all nodes i
+
+*   generator real power limits:
+*   ---------------------------
+*     Pmin_i <= P_i <= Pmax_i  for all nodes i
+
+*   generator reactive power limits:
+*   -------------------------------
+*     Qmin_i <= Q_i <= Qmax_i  for all nodes i
+
+*   SIF input: Nick Gould, August 2011
+
+*   classification QOR2-AY-38-68
+
+*   number of nodes
+
+ IE NODES               14
+
+*   number of power limits
+
+ IE LIMITS              5
+
+*   number of lines
+
+ IE LINES               20
+
+*   other parameter definitions
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        NODES
+ X  A(I)
+ X  M(I)
+ ND
+
+ DO I         1                        LIMITS
+ X  P(I)
+ X  Q(I)
+ ND
+
+GROUPS
+
+*  objective function
+
+ N  OBJ       P1        2000.0      
+ N  OBJ       P2        2000.0      
+ N  OBJ       P3        4000.0      
+ N  OBJ       P4        4000.0      
+ N  OBJ       P5        4000.0
+
+*   real power flow constraints
+
+ DO I         1                        NODES
+ XE RP(I)
+ ND
+
+*   reactive power flow constraints
+
+ DO I         1                        NODES
+ XE IP(I)
+ ND
+
+ E  RP1       P1        -1.0        
+ E  IP1       Q1        -1.0        
+ E  RP2       P2        -1.0        
+ E  IP2       Q2        -1.0        
+ E  RP3       P3        -1.0        
+ E  IP3       Q3        -1.0        
+ E  RP6       P4        -1.0        
+ E  IP6       Q4        -1.0        
+ E  RP8       P5        -1.0        
+ E  IP8       Q5        -1.0        
+
+*   thermal limit inequality constraint, from-node
+
+ DO I         1                        LINES
+ XL FN(I)
+ ND
+
+*   thermal limit inequality constraint, to-node
+
+ DO I         1                        LINES
+ XL TN(I)
+ ND
+
+RHS
+
+ X  ACOPR14   RP2       -0.217      
+ X  ACOPR14   RP3       -0.942      
+ X  ACOPR14   RP4       -0.478      
+ X  ACOPR14   RP5       -0.076      
+ X  ACOPR14   RP6       -0.112      
+ X  ACOPR14   RP9       -0.295      
+ X  ACOPR14   RP10      -0.09       
+ X  ACOPR14   RP11      -0.035      
+ X  ACOPR14   RP12      -0.061      
+ X  ACOPR14   RP13      -0.135      
+ X  ACOPR14   RP14      -0.149      
+ X  ACOPR14   IP2       -0.127      
+ X  ACOPR14   IP3       -0.19       
+ X  ACOPR14   IP4       0.039       
+ X  ACOPR14   IP5       -0.016      
+ X  ACOPR14   IP6       -0.075      
+ X  ACOPR14   IP9       -0.166      
+ X  ACOPR14   IP10      -0.058      
+ X  ACOPR14   IP11      -0.018      
+ X  ACOPR14   IP12      -0.016      
+ X  ACOPR14   IP13      -0.058      
+ X  ACOPR14   IP14      -0.05       
+ X  ACOPR14   FN1       9801.0      
+ X  ACOPR14   FN2       9801.0      
+ X  ACOPR14   FN3       9801.0      
+ X  ACOPR14   FN4       9801.0      
+ X  ACOPR14   FN5       9801.0      
+ X  ACOPR14   FN6       9801.0      
+ X  ACOPR14   FN7       9801.0      
+ X  ACOPR14   FN8       9801.0      
+ X  ACOPR14   FN9       9801.0      
+ X  ACOPR14   FN10      9801.0      
+ X  ACOPR14   FN11      9801.0      
+ X  ACOPR14   FN12      9801.0      
+ X  ACOPR14   FN13      9801.0      
+ X  ACOPR14   FN14      9801.0      
+ X  ACOPR14   FN15      9801.0      
+ X  ACOPR14   FN16      9801.0      
+ X  ACOPR14   FN17      9801.0      
+ X  ACOPR14   FN18      9801.0      
+ X  ACOPR14   FN19      9801.0      
+ X  ACOPR14   FN20      9801.0      
+ X  ACOPR14   TN1       9801.0      
+ X  ACOPR14   TN2       9801.0      
+ X  ACOPR14   TN3       9801.0      
+ X  ACOPR14   TN4       9801.0      
+ X  ACOPR14   TN5       9801.0      
+ X  ACOPR14   TN6       9801.0      
+ X  ACOPR14   TN7       9801.0      
+ X  ACOPR14   TN8       9801.0      
+ X  ACOPR14   TN9       9801.0      
+ X  ACOPR14   TN10      9801.0      
+ X  ACOPR14   TN11      9801.0      
+ X  ACOPR14   TN12      9801.0      
+ X  ACOPR14   TN13      9801.0      
+ X  ACOPR14   TN14      9801.0      
+ X  ACOPR14   TN15      9801.0      
+ X  ACOPR14   TN16      9801.0      
+ X  ACOPR14   TN17      9801.0      
+ X  ACOPR14   TN18      9801.0      
+ X  ACOPR14   TN19      9801.0      
+ X  ACOPR14   TN20      9801.0      
+
+BOUNDS
+
+ LO ACOPR14   'DEFAULT' -1.0D+30
+ UP ACOPR14   'DEFAULT' 1.0D+30
+ LO ACOPR14   M1        0.94        
+ UP ACOPR14   M1        1.06        
+ LO ACOPR14   M2        0.94        
+ UP ACOPR14   M2        1.06        
+ LO ACOPR14   M3        0.94        
+ UP ACOPR14   M3        1.06        
+ LO ACOPR14   M4        0.94        
+ UP ACOPR14   M4        1.06        
+ LO ACOPR14   M5        0.94        
+ UP ACOPR14   M5        1.06        
+ LO ACOPR14   M6        0.94        
+ UP ACOPR14   M6        1.06        
+ LO ACOPR14   M7        0.94        
+ UP ACOPR14   M7        1.06        
+ LO ACOPR14   M8        0.94        
+ UP ACOPR14   M8        1.06        
+ LO ACOPR14   M9        0.94        
+ UP ACOPR14   M9        1.06        
+ LO ACOPR14   M10       0.94        
+ UP ACOPR14   M10       1.06        
+ LO ACOPR14   M11       0.94        
+ UP ACOPR14   M11       1.06        
+ LO ACOPR14   M12       0.94        
+ UP ACOPR14   M12       1.06        
+ LO ACOPR14   M13       0.94        
+ UP ACOPR14   M13       1.06        
+ LO ACOPR14   M14       0.94        
+ UP ACOPR14   M14       1.06        
+
+ LO ACOPR14   P1        0.0
+ UP ACOPR14   P1        3.324       
+ LO ACOPR14   P2        0.0
+ UP ACOPR14   P2        1.4         
+ LO ACOPR14   P3        0.0
+ UP ACOPR14   P3        1.0         
+ LO ACOPR14   P4        0.0
+ UP ACOPR14   P4        1.0         
+ LO ACOPR14   P5        0.0
+ UP ACOPR14   P5        1.0         
+
+ LO ACOPR14   Q1        0.0
+ UP ACOPR14   Q1        0.1         
+ LO ACOPR14   Q2        -0.4        
+ UP ACOPR14   Q2        0.5         
+ LO ACOPR14   Q3        0.0
+ UP ACOPR14   Q3        0.4         
+ LO ACOPR14   Q4        -0.06       
+ UP ACOPR14   Q4        0.24        
+ LO ACOPR14   Q5        -0.06       
+ UP ACOPR14   Q5        0.24        
+
+START POINT
+
+ V  ACOPR14   'DEFAULT' 0.0
+ V  ACOPR14   M1        1.06        
+ V  ACOPR14   M2        1.045       
+ V  ACOPR14   M3        1.01        
+ V  ACOPR14   M4        1.019       
+ V  ACOPR14   M5        1.02        
+ V  ACOPR14   M6        1.07        
+ V  ACOPR14   M7        1.062       
+ V  ACOPR14   M8        1.09        
+ V  ACOPR14   M9        1.056       
+ V  ACOPR14   M10       1.051       
+ V  ACOPR14   M11       1.057       
+ V  ACOPR14   M12       1.055       
+ V  ACOPR14   M13       1.05        
+ V  ACOPR14   M14       1.036       
+
+ V  ACOPR14   A2        -0.086917396
+ V  ACOPR14   A3        -0.222005880
+ V  ACOPR14   A4        -0.180292511
+ V  ACOPR14   A5        -0.153239908
+ V  ACOPR14   A6        -0.248185819
+ V  ACOPR14   A7        -0.233350520
+ V  ACOPR14   A8        -0.233175988
+ V  ACOPR14   A9        -0.260752190
+ V  ACOPR14   A10       -0.263544717
+ V  ACOPR14   A11       -0.258134196
+ V  ACOPR14   A12       -0.263021118
+ V  ACOPR14   A13       -0.264591914
+ V  ACOPR14   A14       -0.279950812
+
+ V  ACOPR14   P1        2.324       
+ V  ACOPR14   P2        0.4         
+
+ V  ACOPR14   Q1        -0.169      
+ V  ACOPR14   Q2        0.424       
+ V  ACOPR14   Q3        0.234       
+ V  ACOPR14   Q4        0.122       
+ V  ACOPR14   Q5        0.174       
+
+QUADRATIC
+
+ X  P1        P1        860.586     
+ X  P2        P2        5000.0      
+ X  P3        P3        200.0       
+ X  P4        P4        200.0       
+ X  P5        P5        200.0       
+
+ELEMENT TYPE
+
+ EV P2        V1
+ EV P4        V1
+ EV P11       V1                       V2
+ EV P31       V1                       V2
+ EV P22       V1                       V2
+ EV P211      V1                       V2
+ EV P211      V3
+ 
+ EV SIN11     U1                       U2
+ EV SIN11     A1                       A2
+ IV SIN11     V1                       V2
+ IV SIN11     A
+ EV COS11     U1                       U2
+ EV COS11     A1                       A2
+ IV COS11     V1                       V2
+ IV COS11     A
+
+ EV SIN211    U1                       U2
+ EV SIN211    U3
+ EV SIN211    A1                       A2
+ IV SIN211    V1                       V2
+ IV SIN211    V3                       A
+ EV COS211    U1                       U2
+ EV COS211    U3
+ EV COS211    A1                       A2
+ IV COS211    V1                       V2
+ IV COS211    V3                       A
+
+ EV SIN31     U1                       U2
+ EV SIN31     A1                       A2
+ IV SIN31     V1                       V2
+ IV SIN31     A
+ EV COS31     U1                       U2
+ EV COS31     A1                       A2
+ IV COS31     V1                       V2
+ IV COS31     A
+
+ELEMENT USES
+
+ T  F1        P2
+ V  F1        V1                       M1           
+ T  F2        P2
+ V  F2        V1                       M1           
+ T  F3        COS11
+ V  F3        U1                       M1           
+ V  F3        U2                       M2           
+ V  F3        A1                       A1           
+ V  F3        A2                       A2           
+ T  F4        SIN11
+ V  F4        U1                       M1           
+ V  F4        U2                       M2           
+ V  F4        A1                       A1           
+ V  F4        A2                       A2           
+ T  F5        SIN11
+ V  F5        U1                       M1           
+ V  F5        U2                       M2           
+ V  F5        A1                       A1           
+ V  F5        A2                       A2           
+ T  F6        COS11
+ V  F6        U1                       M1           
+ V  F6        U2                       M2           
+ V  F6        A1                       A1           
+ V  F6        A2                       A2           
+ T  F7        COS11
+ V  F7        U1                       M1           
+ V  F7        U2                       M5           
+ V  F7        A1                       A1           
+ V  F7        A2                       A5           
+ T  F8        SIN11
+ V  F8        U1                       M1           
+ V  F8        U2                       M5           
+ V  F8        A1                       A1           
+ V  F8        A2                       A5           
+ T  F9        SIN11
+ V  F9        U1                       M1           
+ V  F9        U2                       M5           
+ V  F9        A1                       A1           
+ V  F9        A2                       A5           
+ T  F10       COS11
+ V  F10       U1                       M1           
+ V  F10       U2                       M5           
+ V  F10       A1                       A1           
+ V  F10       A2                       A5           
+ T  F11       COS11
+ V  F11       U1                       M2           
+ V  F11       U2                       M1           
+ V  F11       A1                       A2           
+ V  F11       A2                       A1           
+ T  F12       SIN11
+ V  F12       U1                       M2           
+ V  F12       U2                       M1           
+ V  F12       A1                       A2           
+ V  F12       A2                       A1           
+ T  F13       SIN11
+ V  F13       U1                       M2           
+ V  F13       U2                       M1           
+ V  F13       A1                       A2           
+ V  F13       A2                       A1           
+ T  F14       COS11
+ V  F14       U1                       M2           
+ V  F14       U2                       M1           
+ V  F14       A1                       A2           
+ V  F14       A2                       A1           
+ T  F15       P2
+ V  F15       V1                       M2           
+ T  F16       P2
+ V  F16       V1                       M2           
+ T  F17       COS11
+ V  F17       U1                       M2           
+ V  F17       U2                       M3           
+ V  F17       A1                       A2           
+ V  F17       A2                       A3           
+ T  F18       SIN11
+ V  F18       U1                       M2           
+ V  F18       U2                       M3           
+ V  F18       A1                       A2           
+ V  F18       A2                       A3           
+ T  F19       SIN11
+ V  F19       U1                       M2           
+ V  F19       U2                       M3           
+ V  F19       A1                       A2           
+ V  F19       A2                       A3           
+ T  F20       COS11
+ V  F20       U1                       M2           
+ V  F20       U2                       M3           
+ V  F20       A1                       A2           
+ V  F20       A2                       A3           
+ T  F21       COS11
+ V  F21       U1                       M2           
+ V  F21       U2                       M4           
+ V  F21       A1                       A2           
+ V  F21       A2                       A4           
+ T  F22       SIN11
+ V  F22       U1                       M2           
+ V  F22       U2                       M4           
+ V  F22       A1                       A2           
+ V  F22       A2                       A4           
+ T  F23       SIN11
+ V  F23       U1                       M2           
+ V  F23       U2                       M4           
+ V  F23       A1                       A2           
+ V  F23       A2                       A4           
+ T  F24       COS11
+ V  F24       U1                       M2           
+ V  F24       U2                       M4           
+ V  F24       A1                       A2           
+ V  F24       A2                       A4           
+ T  F25       COS11
+ V  F25       U1                       M2           
+ V  F25       U2                       M5           
+ V  F25       A1                       A2           
+ V  F25       A2                       A5           
+ T  F26       SIN11
+ V  F26       U1                       M2           
+ V  F26       U2                       M5           
+ V  F26       A1                       A2           
+ V  F26       A2                       A5           
+ T  F27       SIN11
+ V  F27       U1                       M2           
+ V  F27       U2                       M5           
+ V  F27       A1                       A2           
+ V  F27       A2                       A5           
+ T  F28       COS11
+ V  F28       U1                       M2           
+ V  F28       U2                       M5           
+ V  F28       A1                       A2           
+ V  F28       A2                       A5           
+ T  F29       COS11
+ V  F29       U1                       M3           
+ V  F29       U2                       M2           
+ V  F29       A1                       A3           
+ V  F29       A2                       A2           
+ T  F30       SIN11
+ V  F30       U1                       M3           
+ V  F30       U2                       M2           
+ V  F30       A1                       A3           
+ V  F30       A2                       A2           
+ T  F31       SIN11
+ V  F31       U1                       M3           
+ V  F31       U2                       M2           
+ V  F31       A1                       A3           
+ V  F31       A2                       A2           
+ T  F32       COS11
+ V  F32       U1                       M3           
+ V  F32       U2                       M2           
+ V  F32       A1                       A3           
+ V  F32       A2                       A2           
+ T  F33       P2
+ V  F33       V1                       M3           
+ T  F34       P2
+ V  F34       V1                       M3           
+ T  F35       COS11
+ V  F35       U1                       M3           
+ V  F35       U2                       M4           
+ V  F35       A1                       A3           
+ V  F35       A2                       A4           
+ T  F36       SIN11
+ V  F36       U1                       M3           
+ V  F36       U2                       M4           
+ V  F36       A1                       A3           
+ V  F36       A2                       A4           
+ T  F37       SIN11
+ V  F37       U1                       M3           
+ V  F37       U2                       M4           
+ V  F37       A1                       A3           
+ V  F37       A2                       A4           
+ T  F38       COS11
+ V  F38       U1                       M3           
+ V  F38       U2                       M4           
+ V  F38       A1                       A3           
+ V  F38       A2                       A4           
+ T  F39       COS11
+ V  F39       U1                       M4           
+ V  F39       U2                       M2           
+ V  F39       A1                       A4           
+ V  F39       A2                       A2           
+ T  F40       SIN11
+ V  F40       U1                       M4           
+ V  F40       U2                       M2           
+ V  F40       A1                       A4           
+ V  F40       A2                       A2           
+ T  F41       SIN11
+ V  F41       U1                       M4           
+ V  F41       U2                       M2           
+ V  F41       A1                       A4           
+ V  F41       A2                       A2           
+ T  F42       COS11
+ V  F42       U1                       M4           
+ V  F42       U2                       M2           
+ V  F42       A1                       A4           
+ V  F42       A2                       A2           
+ T  F43       COS11
+ V  F43       U1                       M4           
+ V  F43       U2                       M3           
+ V  F43       A1                       A4           
+ V  F43       A2                       A3           
+ T  F44       SIN11
+ V  F44       U1                       M4           
+ V  F44       U2                       M3           
+ V  F44       A1                       A4           
+ V  F44       A2                       A3           
+ T  F45       SIN11
+ V  F45       U1                       M4           
+ V  F45       U2                       M3           
+ V  F45       A1                       A4           
+ V  F45       A2                       A3           
+ T  F46       COS11
+ V  F46       U1                       M4           
+ V  F46       U2                       M3           
+ V  F46       A1                       A4           
+ V  F46       A2                       A3           
+ T  F47       P2
+ V  F47       V1                       M4           
+ T  F48       P2
+ V  F48       V1                       M4           
+ T  F49       COS11
+ V  F49       U1                       M4           
+ V  F49       U2                       M5           
+ V  F49       A1                       A4           
+ V  F49       A2                       A5           
+ T  F50       SIN11
+ V  F50       U1                       M4           
+ V  F50       U2                       M5           
+ V  F50       A1                       A4           
+ V  F50       A2                       A5           
+ T  F51       SIN11
+ V  F51       U1                       M4           
+ V  F51       U2                       M5           
+ V  F51       A1                       A4           
+ V  F51       A2                       A5           
+ T  F52       COS11
+ V  F52       U1                       M4           
+ V  F52       U2                       M5           
+ V  F52       A1                       A4           
+ V  F52       A2                       A5           
+ T  F53       SIN11
+ V  F53       U1                       M4           
+ V  F53       U2                       M7           
+ V  F53       A1                       A4           
+ V  F53       A2                       A7           
+ T  F54       COS11
+ V  F54       U1                       M4           
+ V  F54       U2                       M7           
+ V  F54       A1                       A4           
+ V  F54       A2                       A7           
+ T  F55       SIN11
+ V  F55       U1                       M4           
+ V  F55       U2                       M9           
+ V  F55       A1                       A4           
+ V  F55       A2                       A9           
+ T  F56       COS11
+ V  F56       U1                       M4           
+ V  F56       U2                       M9           
+ V  F56       A1                       A4           
+ V  F56       A2                       A9           
+ T  F57       COS11
+ V  F57       U1                       M5           
+ V  F57       U2                       M1           
+ V  F57       A1                       A5           
+ V  F57       A2                       A1           
+ T  F58       SIN11
+ V  F58       U1                       M5           
+ V  F58       U2                       M1           
+ V  F58       A1                       A5           
+ V  F58       A2                       A1           
+ T  F59       SIN11
+ V  F59       U1                       M5           
+ V  F59       U2                       M1           
+ V  F59       A1                       A5           
+ V  F59       A2                       A1           
+ T  F60       COS11
+ V  F60       U1                       M5           
+ V  F60       U2                       M1           
+ V  F60       A1                       A5           
+ V  F60       A2                       A1           
+ T  F61       COS11
+ V  F61       U1                       M5           
+ V  F61       U2                       M2           
+ V  F61       A1                       A5           
+ V  F61       A2                       A2           
+ T  F62       SIN11
+ V  F62       U1                       M5           
+ V  F62       U2                       M2           
+ V  F62       A1                       A5           
+ V  F62       A2                       A2           
+ T  F63       SIN11
+ V  F63       U1                       M5           
+ V  F63       U2                       M2           
+ V  F63       A1                       A5           
+ V  F63       A2                       A2           
+ T  F64       COS11
+ V  F64       U1                       M5           
+ V  F64       U2                       M2           
+ V  F64       A1                       A5           
+ V  F64       A2                       A2           
+ T  F65       COS11
+ V  F65       U1                       M5           
+ V  F65       U2                       M4           
+ V  F65       A1                       A5           
+ V  F65       A2                       A4           
+ T  F66       SIN11
+ V  F66       U1                       M5           
+ V  F66       U2                       M4           
+ V  F66       A1                       A5           
+ V  F66       A2                       A4           
+ T  F67       SIN11
+ V  F67       U1                       M5           
+ V  F67       U2                       M4           
+ V  F67       A1                       A5           
+ V  F67       A2                       A4           
+ T  F68       COS11
+ V  F68       U1                       M5           
+ V  F68       U2                       M4           
+ V  F68       A1                       A5           
+ V  F68       A2                       A4           
+ T  F69       P2
+ V  F69       V1                       M5           
+ T  F70       P2
+ V  F70       V1                       M5           
+ T  F71       SIN11
+ V  F71       U1                       M5           
+ V  F71       U2                       M6           
+ V  F71       A1                       A5           
+ V  F71       A2                       A6           
+ T  F72       COS11
+ V  F72       U1                       M5           
+ V  F72       U2                       M6           
+ V  F72       A1                       A5           
+ V  F72       A2                       A6           
+ T  F73       SIN11
+ V  F73       U1                       M6           
+ V  F73       U2                       M5           
+ V  F73       A1                       A6           
+ V  F73       A2                       A5           
+ T  F74       COS11
+ V  F74       U1                       M6           
+ V  F74       U2                       M5           
+ V  F74       A1                       A6           
+ V  F74       A2                       A5           
+ T  F75       P2
+ V  F75       V1                       M6           
+ T  F76       P2
+ V  F76       V1                       M6           
+ T  F77       COS11
+ V  F77       U1                       M6           
+ V  F77       U2                       M11          
+ V  F77       A1                       A6           
+ V  F77       A2                       A11          
+ T  F78       SIN11
+ V  F78       U1                       M6           
+ V  F78       U2                       M11          
+ V  F78       A1                       A6           
+ V  F78       A2                       A11          
+ T  F79       SIN11
+ V  F79       U1                       M6           
+ V  F79       U2                       M11          
+ V  F79       A1                       A6           
+ V  F79       A2                       A11          
+ T  F80       COS11
+ V  F80       U1                       M6           
+ V  F80       U2                       M11          
+ V  F80       A1                       A6           
+ V  F80       A2                       A11          
+ T  F81       COS11
+ V  F81       U1                       M6           
+ V  F81       U2                       M12          
+ V  F81       A1                       A6           
+ V  F81       A2                       A12          
+ T  F82       SIN11
+ V  F82       U1                       M6           
+ V  F82       U2                       M12          
+ V  F82       A1                       A6           
+ V  F82       A2                       A12          
+ T  F83       SIN11
+ V  F83       U1                       M6           
+ V  F83       U2                       M12          
+ V  F83       A1                       A6           
+ V  F83       A2                       A12          
+ T  F84       COS11
+ V  F84       U1                       M6           
+ V  F84       U2                       M12          
+ V  F84       A1                       A6           
+ V  F84       A2                       A12          
+ T  F85       COS11
+ V  F85       U1                       M6           
+ V  F85       U2                       M13          
+ V  F85       A1                       A6           
+ V  F85       A2                       A13          
+ T  F86       SIN11
+ V  F86       U1                       M6           
+ V  F86       U2                       M13          
+ V  F86       A1                       A6           
+ V  F86       A2                       A13          
+ T  F87       SIN11
+ V  F87       U1                       M6           
+ V  F87       U2                       M13          
+ V  F87       A1                       A6           
+ V  F87       A2                       A13          
+ T  F88       COS11
+ V  F88       U1                       M6           
+ V  F88       U2                       M13          
+ V  F88       A1                       A6           
+ V  F88       A2                       A13          
+ T  F89       SIN11
+ V  F89       U1                       M7           
+ V  F89       U2                       M4           
+ V  F89       A1                       A7           
+ V  F89       A2                       A4           
+ T  F90       COS11
+ V  F90       U1                       M7           
+ V  F90       U2                       M4           
+ V  F90       A1                       A7           
+ V  F90       A2                       A4           
+ T  F91       P2
+ V  F91       V1                       M7           
+ T  F92       SIN11
+ V  F92       U1                       M7           
+ V  F92       U2                       M8           
+ V  F92       A1                       A7           
+ V  F92       A2                       A8           
+ T  F93       COS11
+ V  F93       U1                       M7           
+ V  F93       U2                       M8           
+ V  F93       A1                       A7           
+ V  F93       A2                       A8           
+ T  F94       SIN11
+ V  F94       U1                       M7           
+ V  F94       U2                       M9           
+ V  F94       A1                       A7           
+ V  F94       A2                       A9           
+ T  F95       COS11
+ V  F95       U1                       M7           
+ V  F95       U2                       M9           
+ V  F95       A1                       A7           
+ V  F95       A2                       A9           
+ T  F96       SIN11
+ V  F96       U1                       M8           
+ V  F96       U2                       M7           
+ V  F96       A1                       A8           
+ V  F96       A2                       A7           
+ T  F97       COS11
+ V  F97       U1                       M8           
+ V  F97       U2                       M7           
+ V  F97       A1                       A8           
+ V  F97       A2                       A7           
+ T  F98       P2
+ V  F98       V1                       M8           
+ T  F99       SIN11
+ V  F99       U1                       M9           
+ V  F99       U2                       M4           
+ V  F99       A1                       A9           
+ V  F99       A2                       A4           
+ T  F100      COS11
+ V  F100      U1                       M9           
+ V  F100      U2                       M4           
+ V  F100      A1                       A9           
+ V  F100      A2                       A4           
+ T  F101      SIN11
+ V  F101      U1                       M9           
+ V  F101      U2                       M7           
+ V  F101      A1                       A9           
+ V  F101      A2                       A7           
+ T  F102      COS11
+ V  F102      U1                       M9           
+ V  F102      U2                       M7           
+ V  F102      A1                       A9           
+ V  F102      A2                       A7           
+ T  F103      P2
+ V  F103      V1                       M9           
+ T  F104      P2
+ V  F104      V1                       M9           
+ T  F105      COS11
+ V  F105      U1                       M9           
+ V  F105      U2                       M10          
+ V  F105      A1                       A9           
+ V  F105      A2                       A10          
+ T  F106      SIN11
+ V  F106      U1                       M9           
+ V  F106      U2                       M10          
+ V  F106      A1                       A9           
+ V  F106      A2                       A10          
+ T  F107      SIN11
+ V  F107      U1                       M9           
+ V  F107      U2                       M10          
+ V  F107      A1                       A9           
+ V  F107      A2                       A10          
+ T  F108      COS11
+ V  F108      U1                       M9           
+ V  F108      U2                       M10          
+ V  F108      A1                       A9           
+ V  F108      A2                       A10          
+ T  F109      COS11
+ V  F109      U1                       M9           
+ V  F109      U2                       M14          
+ V  F109      A1                       A9           
+ V  F109      A2                       A14          
+ T  F110      SIN11
+ V  F110      U1                       M9           
+ V  F110      U2                       M14          
+ V  F110      A1                       A9           
+ V  F110      A2                       A14          
+ T  F111      SIN11
+ V  F111      U1                       M9           
+ V  F111      U2                       M14          
+ V  F111      A1                       A9           
+ V  F111      A2                       A14          
+ T  F112      COS11
+ V  F112      U1                       M9           
+ V  F112      U2                       M14          
+ V  F112      A1                       A9           
+ V  F112      A2                       A14          
+ T  F113      COS11
+ V  F113      U1                       M10          
+ V  F113      U2                       M9           
+ V  F113      A1                       A10          
+ V  F113      A2                       A9           
+ T  F114      SIN11
+ V  F114      U1                       M10          
+ V  F114      U2                       M9           
+ V  F114      A1                       A10          
+ V  F114      A2                       A9           
+ T  F115      SIN11
+ V  F115      U1                       M10          
+ V  F115      U2                       M9           
+ V  F115      A1                       A10          
+ V  F115      A2                       A9           
+ T  F116      COS11
+ V  F116      U1                       M10          
+ V  F116      U2                       M9           
+ V  F116      A1                       A10          
+ V  F116      A2                       A9           
+ T  F117      P2
+ V  F117      V1                       M10          
+ T  F118      P2
+ V  F118      V1                       M10          
+ T  F119      COS11
+ V  F119      U1                       M10          
+ V  F119      U2                       M11          
+ V  F119      A1                       A10          
+ V  F119      A2                       A11          
+ T  F120      SIN11
+ V  F120      U1                       M10          
+ V  F120      U2                       M11          
+ V  F120      A1                       A10          
+ V  F120      A2                       A11          
+ T  F121      SIN11
+ V  F121      U1                       M10          
+ V  F121      U2                       M11          
+ V  F121      A1                       A10          
+ V  F121      A2                       A11          
+ T  F122      COS11
+ V  F122      U1                       M10          
+ V  F122      U2                       M11          
+ V  F122      A1                       A10          
+ V  F122      A2                       A11          
+ T  F123      COS11
+ V  F123      U1                       M11          
+ V  F123      U2                       M6           
+ V  F123      A1                       A11          
+ V  F123      A2                       A6           
+ T  F124      SIN11
+ V  F124      U1                       M11          
+ V  F124      U2                       M6           
+ V  F124      A1                       A11          
+ V  F124      A2                       A6           
+ T  F125      SIN11
+ V  F125      U1                       M11          
+ V  F125      U2                       M6           
+ V  F125      A1                       A11          
+ V  F125      A2                       A6           
+ T  F126      COS11
+ V  F126      U1                       M11          
+ V  F126      U2                       M6           
+ V  F126      A1                       A11          
+ V  F126      A2                       A6           
+ T  F127      COS11
+ V  F127      U1                       M11          
+ V  F127      U2                       M10          
+ V  F127      A1                       A11          
+ V  F127      A2                       A10          
+ T  F128      SIN11
+ V  F128      U1                       M11          
+ V  F128      U2                       M10          
+ V  F128      A1                       A11          
+ V  F128      A2                       A10          
+ T  F129      SIN11
+ V  F129      U1                       M11          
+ V  F129      U2                       M10          
+ V  F129      A1                       A11          
+ V  F129      A2                       A10          
+ T  F130      COS11
+ V  F130      U1                       M11          
+ V  F130      U2                       M10          
+ V  F130      A1                       A11          
+ V  F130      A2                       A10          
+ T  F131      P2
+ V  F131      V1                       M11          
+ T  F132      P2
+ V  F132      V1                       M11          
+ T  F133      COS11
+ V  F133      U1                       M12          
+ V  F133      U2                       M6           
+ V  F133      A1                       A12          
+ V  F133      A2                       A6           
+ T  F134      SIN11
+ V  F134      U1                       M12          
+ V  F134      U2                       M6           
+ V  F134      A1                       A12          
+ V  F134      A2                       A6           
+ T  F135      SIN11
+ V  F135      U1                       M12          
+ V  F135      U2                       M6           
+ V  F135      A1                       A12          
+ V  F135      A2                       A6           
+ T  F136      COS11
+ V  F136      U1                       M12          
+ V  F136      U2                       M6           
+ V  F136      A1                       A12          
+ V  F136      A2                       A6           
+ T  F137      P2
+ V  F137      V1                       M12          
+ T  F138      P2
+ V  F138      V1                       M12          
+ T  F139      COS11
+ V  F139      U1                       M12          
+ V  F139      U2                       M13          
+ V  F139      A1                       A12          
+ V  F139      A2                       A13          
+ T  F140      SIN11
+ V  F140      U1                       M12          
+ V  F140      U2                       M13          
+ V  F140      A1                       A12          
+ V  F140      A2                       A13          
+ T  F141      SIN11
+ V  F141      U1                       M12          
+ V  F141      U2                       M13          
+ V  F141      A1                       A12          
+ V  F141      A2                       A13          
+ T  F142      COS11
+ V  F142      U1                       M12          
+ V  F142      U2                       M13          
+ V  F142      A1                       A12          
+ V  F142      A2                       A13          
+ T  F143      COS11
+ V  F143      U1                       M13          
+ V  F143      U2                       M6           
+ V  F143      A1                       A13          
+ V  F143      A2                       A6           
+ T  F144      SIN11
+ V  F144      U1                       M13          
+ V  F144      U2                       M6           
+ V  F144      A1                       A13          
+ V  F144      A2                       A6           
+ T  F145      SIN11
+ V  F145      U1                       M13          
+ V  F145      U2                       M6           
+ V  F145      A1                       A13          
+ V  F145      A2                       A6           
+ T  F146      COS11
+ V  F146      U1                       M13          
+ V  F146      U2                       M6           
+ V  F146      A1                       A13          
+ V  F146      A2                       A6           
+ T  F147      COS11
+ V  F147      U1                       M13          
+ V  F147      U2                       M12          
+ V  F147      A1                       A13          
+ V  F147      A2                       A12          
+ T  F148      SIN11
+ V  F148      U1                       M13          
+ V  F148      U2                       M12          
+ V  F148      A1                       A13          
+ V  F148      A2                       A12          
+ T  F149      SIN11
+ V  F149      U1                       M13          
+ V  F149      U2                       M12          
+ V  F149      A1                       A13          
+ V  F149      A2                       A12          
+ T  F150      COS11
+ V  F150      U1                       M13          
+ V  F150      U2                       M12          
+ V  F150      A1                       A13          
+ V  F150      A2                       A12          
+ T  F151      P2
+ V  F151      V1                       M13          
+ T  F152      P2
+ V  F152      V1                       M13          
+ T  F153      COS11
+ V  F153      U1                       M13          
+ V  F153      U2                       M14          
+ V  F153      A1                       A13          
+ V  F153      A2                       A14          
+ T  F154      SIN11
+ V  F154      U1                       M13          
+ V  F154      U2                       M14          
+ V  F154      A1                       A13          
+ V  F154      A2                       A14          
+ T  F155      SIN11
+ V  F155      U1                       M13          
+ V  F155      U2                       M14          
+ V  F155      A1                       A13          
+ V  F155      A2                       A14          
+ T  F156      COS11
+ V  F156      U1                       M13          
+ V  F156      U2                       M14          
+ V  F156      A1                       A13          
+ V  F156      A2                       A14          
+ T  F157      COS11
+ V  F157      U1                       M14          
+ V  F157      U2                       M9           
+ V  F157      A1                       A14          
+ V  F157      A2                       A9           
+ T  F158      SIN11
+ V  F158      U1                       M14          
+ V  F158      U2                       M9           
+ V  F158      A1                       A14          
+ V  F158      A2                       A9           
+ T  F159      SIN11
+ V  F159      U1                       M14          
+ V  F159      U2                       M9           
+ V  F159      A1                       A14          
+ V  F159      A2                       A9           
+ T  F160      COS11
+ V  F160      U1                       M14          
+ V  F160      U2                       M9           
+ V  F160      A1                       A14          
+ V  F160      A2                       A9           
+ T  F161      COS11
+ V  F161      U1                       M14          
+ V  F161      U2                       M13          
+ V  F161      A1                       A14          
+ V  F161      A2                       A13          
+ T  F162      SIN11
+ V  F162      U1                       M14          
+ V  F162      U2                       M13          
+ V  F162      A1                       A14          
+ V  F162      A2                       A13          
+ T  F163      SIN11
+ V  F163      U1                       M14          
+ V  F163      U2                       M13          
+ V  F163      A1                       A14          
+ V  F163      A2                       A13          
+ T  F164      COS11
+ V  F164      U1                       M14          
+ V  F164      U2                       M13          
+ V  F164      A1                       A14          
+ V  F164      A2                       A13          
+ T  F165      P2
+ V  F165      V1                       M14          
+ T  F166      P2
+ V  F166      V1                       M14          
+ T  E1        P4
+ V  E1        V1                       M1           
+ T  E2        COS31
+ V  E2        U1                       M1           
+ V  E2        U2                       M2           
+ V  E2        A1                       A1           
+ V  E2        A2                       A2           
+ T  E3        SIN31
+ V  E3        U1                       M1           
+ V  E3        U2                       M2           
+ V  E3        A1                       A1           
+ V  E3        A2                       A2           
+ T  E4        P22
+ V  E4        V1                       M1           
+ V  E4        V2                       M2           
+ T  E5        P4
+ V  E5        V1                       M1           
+ T  E6        COS31
+ V  E6        U1                       M1           
+ V  E6        U2                       M5           
+ V  E6        A1                       A1           
+ V  E6        A2                       A5           
+ T  E7        SIN31
+ V  E7        U1                       M1           
+ V  E7        U2                       M5           
+ V  E7        A1                       A1           
+ V  E7        A2                       A5           
+ T  E8        P22
+ V  E8        V1                       M1           
+ V  E8        V2                       M5           
+ T  E9        P4
+ V  E9        V1                       M2           
+ T  E10       COS31
+ V  E10       U1                       M2           
+ V  E10       U2                       M3           
+ V  E10       A1                       A2           
+ V  E10       A2                       A3           
+ T  E11       SIN31
+ V  E11       U1                       M2           
+ V  E11       U2                       M3           
+ V  E11       A1                       A2           
+ V  E11       A2                       A3           
+ T  E12       P22
+ V  E12       V1                       M2           
+ V  E12       V2                       M3           
+ T  E13       P4
+ V  E13       V1                       M2           
+ T  E14       COS31
+ V  E14       U1                       M2           
+ V  E14       U2                       M4           
+ V  E14       A1                       A2           
+ V  E14       A2                       A4           
+ T  E15       SIN31
+ V  E15       U1                       M2           
+ V  E15       U2                       M4           
+ V  E15       A1                       A2           
+ V  E15       A2                       A4           
+ T  E16       P22
+ V  E16       V1                       M2           
+ V  E16       V2                       M4           
+ T  E17       P4
+ V  E17       V1                       M2           
+ T  E18       COS31
+ V  E18       U1                       M2           
+ V  E18       U2                       M5           
+ V  E18       A1                       A2           
+ V  E18       A2                       A5           
+ T  E19       SIN31
+ V  E19       U1                       M2           
+ V  E19       U2                       M5           
+ V  E19       A1                       A2           
+ V  E19       A2                       A5           
+ T  E20       P22
+ V  E20       V1                       M2           
+ V  E20       V2                       M5           
+ T  E21       P4
+ V  E21       V1                       M3           
+ T  E22       COS31
+ V  E22       U1                       M3           
+ V  E22       U2                       M4           
+ V  E22       A1                       A3           
+ V  E22       A2                       A4           
+ T  E23       SIN31
+ V  E23       U1                       M3           
+ V  E23       U2                       M4           
+ V  E23       A1                       A3           
+ V  E23       A2                       A4           
+ T  E24       P22
+ V  E24       V1                       M3           
+ V  E24       V2                       M4           
+ T  E25       P4
+ V  E25       V1                       M4           
+ T  E26       COS31
+ V  E26       U1                       M4           
+ V  E26       U2                       M5           
+ V  E26       A1                       A4           
+ V  E26       A2                       A5           
+ T  E27       P22
+ V  E27       V1                       M4           
+ V  E27       V2                       M5           
+ T  E28       P4
+ V  E28       V1                       M4           
+ T  E29       COS31
+ V  E29       U1                       M4           
+ V  E29       U2                       M7           
+ V  E29       A1                       A4           
+ V  E29       A2                       A7           
+ T  E30       P22
+ V  E30       V1                       M4           
+ V  E30       V2                       M7           
+ T  E31       P4
+ V  E31       V1                       M4           
+ T  E32       COS31
+ V  E32       U1                       M4           
+ V  E32       U2                       M9           
+ V  E32       A1                       A4           
+ V  E32       A2                       A9           
+ T  E33       P22
+ V  E33       V1                       M4           
+ V  E33       V2                       M9           
+ T  E34       P4
+ V  E34       V1                       M5           
+ T  E35       COS31
+ V  E35       U1                       M5           
+ V  E35       U2                       M6           
+ V  E35       A1                       A5           
+ V  E35       A2                       A6           
+ T  E36       P22
+ V  E36       V1                       M5           
+ V  E36       V2                       M6           
+ T  E37       P4
+ V  E37       V1                       M6           
+ T  E38       COS31
+ V  E38       U1                       M6           
+ V  E38       U2                       M11          
+ V  E38       A1                       A6           
+ V  E38       A2                       A11          
+ T  E39       P22
+ V  E39       V1                       M6           
+ V  E39       V2                       M11          
+ T  E40       P4
+ V  E40       V1                       M6           
+ T  E41       COS31
+ V  E41       U1                       M6           
+ V  E41       U2                       M12          
+ V  E41       A1                       A6           
+ V  E41       A2                       A12          
+ T  E42       P22
+ V  E42       V1                       M6           
+ V  E42       V2                       M12          
+ T  E43       P4
+ V  E43       V1                       M6           
+ T  E44       COS31
+ V  E44       U1                       M6           
+ V  E44       U2                       M13          
+ V  E44       A1                       A6           
+ V  E44       A2                       A13          
+ T  E45       P22
+ V  E45       V1                       M6           
+ V  E45       V2                       M13          
+ T  E46       P4
+ V  E46       V1                       M7           
+ T  E47       COS31
+ V  E47       U1                       M7           
+ V  E47       U2                       M8           
+ V  E47       A1                       A7           
+ V  E47       A2                       A8           
+ T  E48       P22
+ V  E48       V1                       M7           
+ V  E48       V2                       M8           
+ T  E49       P4
+ V  E49       V1                       M7           
+ T  E50       COS31
+ V  E50       U1                       M7           
+ V  E50       U2                       M9           
+ V  E50       A1                       A7           
+ V  E50       A2                       A9           
+ T  E51       P22
+ V  E51       V1                       M7           
+ V  E51       V2                       M9           
+ T  E52       P4
+ V  E52       V1                       M9           
+ T  E53       COS31
+ V  E53       U1                       M9           
+ V  E53       U2                       M10          
+ V  E53       A1                       A9           
+ V  E53       A2                       A10          
+ T  E54       P22
+ V  E54       V1                       M9           
+ V  E54       V2                       M10          
+ T  E55       P4
+ V  E55       V1                       M9           
+ T  E56       COS31
+ V  E56       U1                       M9           
+ V  E56       U2                       M14          
+ V  E56       A1                       A9           
+ V  E56       A2                       A14          
+ T  E57       P22
+ V  E57       V1                       M9           
+ V  E57       V2                       M14          
+ T  E58       P4
+ V  E58       V1                       M10          
+ T  E59       COS31
+ V  E59       U1                       M10          
+ V  E59       U2                       M11          
+ V  E59       A1                       A10          
+ V  E59       A2                       A11          
+ T  E60       P22
+ V  E60       V1                       M10          
+ V  E60       V2                       M11          
+ T  E61       P4
+ V  E61       V1                       M12          
+ T  E62       COS31
+ V  E62       U1                       M12          
+ V  E62       U2                       M13          
+ V  E62       A1                       A12          
+ V  E62       A2                       A13          
+ T  E63       P22
+ V  E63       V1                       M12          
+ V  E63       V2                       M13          
+ T  E64       P4
+ V  E64       V1                       M13          
+ T  E65       COS31
+ V  E65       U1                       M13          
+ V  E65       U2                       M14          
+ V  E65       A1                       A13          
+ V  E65       A2                       A14          
+ T  E66       P22
+ V  E66       V1                       M13          
+ V  E66       V2                       M14          
+ T  E67       P22
+ V  E67       V1                       M2           
+ V  E67       V2                       M1           
+ T  E68       COS31
+ V  E68       U1                       M2           
+ V  E68       U2                       M1           
+ V  E68       A1                       A2           
+ V  E68       A2                       A1           
+ T  E69       SIN31
+ V  E69       U1                       M2           
+ V  E69       U2                       M1           
+ V  E69       A1                       A2           
+ V  E69       A2                       A1           
+ T  E70       P4
+ V  E70       V1                       M2           
+ T  E71       P22
+ V  E71       V1                       M5           
+ V  E71       V2                       M1           
+ T  E72       COS31
+ V  E72       U1                       M5           
+ V  E72       U2                       M1           
+ V  E72       A1                       A5           
+ V  E72       A2                       A1           
+ T  E73       SIN31
+ V  E73       U1                       M5           
+ V  E73       U2                       M1           
+ V  E73       A1                       A5           
+ V  E73       A2                       A1           
+ T  E74       P4
+ V  E74       V1                       M5           
+ T  E75       P22
+ V  E75       V1                       M3           
+ V  E75       V2                       M2           
+ T  E76       COS31
+ V  E76       U1                       M3           
+ V  E76       U2                       M2           
+ V  E76       A1                       A3           
+ V  E76       A2                       A2           
+ T  E77       SIN31
+ V  E77       U1                       M3           
+ V  E77       U2                       M2           
+ V  E77       A1                       A3           
+ V  E77       A2                       A2           
+ T  E78       P4
+ V  E78       V1                       M3           
+ T  E79       P22
+ V  E79       V1                       M4           
+ V  E79       V2                       M2           
+ T  E80       COS31
+ V  E80       U1                       M4           
+ V  E80       U2                       M2           
+ V  E80       A1                       A4           
+ V  E80       A2                       A2           
+ T  E81       SIN31
+ V  E81       U1                       M4           
+ V  E81       U2                       M2           
+ V  E81       A1                       A4           
+ V  E81       A2                       A2           
+ T  E82       P4
+ V  E82       V1                       M4           
+ T  E83       P22
+ V  E83       V1                       M5           
+ V  E83       V2                       M2           
+ T  E84       COS31
+ V  E84       U1                       M5           
+ V  E84       U2                       M2           
+ V  E84       A1                       A5           
+ V  E84       A2                       A2           
+ T  E85       SIN31
+ V  E85       U1                       M5           
+ V  E85       U2                       M2           
+ V  E85       A1                       A5           
+ V  E85       A2                       A2           
+ T  E86       P4
+ V  E86       V1                       M5           
+ T  E87       P22
+ V  E87       V1                       M4           
+ V  E87       V2                       M3           
+ T  E88       COS31
+ V  E88       U1                       M4           
+ V  E88       U2                       M3           
+ V  E88       A1                       A4           
+ V  E88       A2                       A3           
+ T  E89       SIN31
+ V  E89       U1                       M4           
+ V  E89       U2                       M3           
+ V  E89       A1                       A4           
+ V  E89       A2                       A3           
+ T  E90       P4
+ V  E90       V1                       M4           
+ T  E91       P22
+ V  E91       V1                       M5           
+ V  E91       V2                       M4           
+ T  E92       COS31
+ V  E92       U1                       M5           
+ V  E92       U2                       M4           
+ V  E92       A1                       A5           
+ V  E92       A2                       A4           
+ T  E93       P4
+ V  E93       V1                       M5           
+ T  E94       P22
+ V  E94       V1                       M7           
+ V  E94       V2                       M4           
+ T  E95       COS31
+ V  E95       U1                       M7           
+ V  E95       U2                       M4           
+ V  E95       A1                       A7           
+ V  E95       A2                       A4           
+ T  E96       P4
+ V  E96       V1                       M7           
+ T  E97       P22
+ V  E97       V1                       M9           
+ V  E97       V2                       M4           
+ T  E98       COS31
+ V  E98       U1                       M9           
+ V  E98       U2                       M4           
+ V  E98       A1                       A9           
+ V  E98       A2                       A4           
+ T  E99       P4
+ V  E99       V1                       M9           
+ T  E100      P22
+ V  E100      V1                       M6           
+ V  E100      V2                       M5           
+ T  E101      COS31
+ V  E101      U1                       M6           
+ V  E101      U2                       M5           
+ V  E101      A1                       A6           
+ V  E101      A2                       A5           
+ T  E102      P4
+ V  E102      V1                       M6           
+ T  E103      P22
+ V  E103      V1                       M11          
+ V  E103      V2                       M6           
+ T  E104      COS31
+ V  E104      U1                       M11          
+ V  E104      U2                       M6           
+ V  E104      A1                       A11          
+ V  E104      A2                       A6           
+ T  E105      P4
+ V  E105      V1                       M11          
+ T  E106      P22
+ V  E106      V1                       M12          
+ V  E106      V2                       M6           
+ T  E107      COS31
+ V  E107      U1                       M12          
+ V  E107      U2                       M6           
+ V  E107      A1                       A12          
+ V  E107      A2                       A6           
+ T  E108      P4
+ V  E108      V1                       M12          
+ T  E109      P22
+ V  E109      V1                       M13          
+ V  E109      V2                       M6           
+ T  E110      COS31
+ V  E110      U1                       M13          
+ V  E110      U2                       M6           
+ V  E110      A1                       A13          
+ V  E110      A2                       A6           
+ T  E111      P4
+ V  E111      V1                       M13          
+ T  E112      P22
+ V  E112      V1                       M8           
+ V  E112      V2                       M7           
+ T  E113      COS31
+ V  E113      U1                       M8           
+ V  E113      U2                       M7           
+ V  E113      A1                       A8           
+ V  E113      A2                       A7           
+ T  E114      P4
+ V  E114      V1                       M8           
+ T  E115      P22
+ V  E115      V1                       M9           
+ V  E115      V2                       M7           
+ T  E116      COS31
+ V  E116      U1                       M9           
+ V  E116      U2                       M7           
+ V  E116      A1                       A9           
+ V  E116      A2                       A7           
+ T  E117      P4
+ V  E117      V1                       M9           
+ T  E118      P22
+ V  E118      V1                       M10          
+ V  E118      V2                       M9           
+ T  E119      COS31
+ V  E119      U1                       M10          
+ V  E119      U2                       M9           
+ V  E119      A1                       A10          
+ V  E119      A2                       A9           
+ T  E120      P4
+ V  E120      V1                       M10          
+ T  E121      P22
+ V  E121      V1                       M14          
+ V  E121      V2                       M9           
+ T  E122      COS31
+ V  E122      U1                       M14          
+ V  E122      U2                       M9           
+ V  E122      A1                       A14          
+ V  E122      A2                       A9           
+ T  E123      P4
+ V  E123      V1                       M14          
+ T  E124      P22
+ V  E124      V1                       M11          
+ V  E124      V2                       M10          
+ T  E125      COS31
+ V  E125      U1                       M11          
+ V  E125      U2                       M10          
+ V  E125      A1                       A11          
+ V  E125      A2                       A10          
+ T  E126      P4
+ V  E126      V1                       M11          
+ T  E127      P22
+ V  E127      V1                       M13          
+ V  E127      V2                       M12          
+ T  E128      COS31
+ V  E128      U1                       M13          
+ V  E128      U2                       M12          
+ V  E128      A1                       A13          
+ V  E128      A2                       A12          
+ T  E129      P4
+ V  E129      V1                       M13          
+ T  E130      P22
+ V  E130      V1                       M14          
+ V  E130      V2                       M13          
+ T  E131      COS31
+ V  E131      U1                       M14          
+ V  E131      U2                       M13          
+ V  E131      A1                       A14          
+ V  E131      A2                       A13          
+ T  E132      P4
+ V  E132      V1                       M14          
+
+GROUP USES
+
+ XE RP1       F1        6.0250290558
+ XE IP1       F2        19.447070206
+ XE RP1       F3        -4.999131600
+ XE RP1       F4        15.263086523
+ XE IP1       F5        -4.999131600
+ XE IP1       F6        -15.26308652
+ XE RP1       F7        -1.025897455
+ XE RP1       F8        4.2349836823
+ XE IP1       F9        -1.025897455
+ XE IP1       F10       -4.234983682
+ XE RP2       F11       -4.999131600
+ XE RP2       F12       15.263086523
+ XE IP2       F13       -4.999131600
+ XE IP2       F14       -15.26308652
+ XE RP2       F15       9.5213236108
+ XE IP2       F16       30.272115399
+ XE RP2       F17       -1.135019192
+ XE RP2       F18       4.7818631518
+ XE IP2       F19       -1.135019192
+ XE IP2       F20       -4.781863151
+ XE RP2       F21       -1.686033150
+ XE RP2       F22       5.1158383259
+ XE IP2       F23       -1.686033150
+ XE IP2       F24       -5.115838325
+ XE RP2       F25       -1.701139667
+ XE RP2       F26       5.193927398 
+ XE IP2       F27       -1.701139667
+ XE IP2       F28       -5.193927398
+ XE RP3       F29       -1.135019192
+ XE RP3       F30       4.7818631518
+ XE IP3       F31       -1.135019192
+ XE IP3       F32       -4.781863151
+ XE RP3       F33       3.1209949022
+ XE IP3       F34       9.8223801294
+ XE RP3       F35       -1.985975709
+ XE RP3       F36       5.0688169776
+ XE IP3       F37       -1.985975709
+ XE IP3       F38       -5.068816977
+ XE RP4       F39       -1.686033150
+ XE RP4       F40       5.1158383259
+ XE IP4       F41       -1.686033150
+ XE IP4       F42       -5.115838325
+ XE RP4       F43       -1.985975709
+ XE RP4       F44       5.0688169776
+ XE IP4       F45       -1.985975709
+ XE IP4       F46       -5.068816977
+ XE RP4       F47       10.512989522
+ XE IP4       F48       38.654171208
+ XE RP4       F49       -6.840980661
+ XE RP4       F50       21.578553982
+ XE IP4       F51       -6.840980661
+ XE IP4       F52       -21.57855398
+ XE RP4       F53       4.8895126603
+ XE IP4       F54       -4.889512660
+ XE RP4       F55       1.8554995578
+ XE IP4       F56       -1.855499557
+ XE RP5       F57       -1.025897455
+ XE RP5       F58       4.2349836823
+ XE IP5       F59       -1.025897455
+ XE IP5       F60       -4.234983682
+ XE RP5       F61       -1.701139667
+ XE RP5       F62       5.193927398 
+ XE IP5       F63       -1.701139667
+ XE IP5       F64       -5.193927398
+ XE RP5       F65       -6.840980661
+ XE RP5       F66       21.578553982
+ XE IP5       F67       -6.840980661
+ XE IP5       F68       -21.57855398
+ XE RP5       F69       9.5680177836
+ XE IP5       F70       35.533639456
+ XE RP5       F71       4.2574453353
+ XE IP5       F72       -4.257445335
+ XE RP6       F73       4.2574453353
+ XE IP6       F74       -4.257445335
+ XE RP6       F75       6.5799234075
+ XE IP6       F76       17.34073281 
+ XE RP6       F77       -1.955028563
+ XE RP6       F78       4.0940743442
+ XE IP6       F79       -1.955028563
+ XE IP6       F80       -4.094074344
+ XE RP6       F81       -1.525967440
+ XE RP6       F82       3.175963965 
+ XE IP6       F83       -1.525967440
+ XE IP6       F84       -3.175963965
+ XE RP6       F85       -3.098927403
+ XE RP6       F86       6.1027554482
+ XE IP6       F87       -3.098927403
+ XE IP6       F88       -6.102755448
+ XE RP7       F89       4.8895126603
+ XE IP7       F90       -4.889512660
+ XE IP7       F91       19.549005948
+ XE RP7       F92       5.6769798467
+ XE IP7       F93       -5.676979846
+ XE RP7       F94       9.0900827198
+ XE IP7       F95       -9.090082719
+ XE RP8       F96       5.6769798467
+ XE IP8       F97       -5.676979846
+ XE IP8       F98       5.6769798467
+ XE RP9       F99       1.8554995578
+ XE IP9       F100      -1.855499557
+ XE RP9       F101      9.0900827198
+ XE IP9       F102      -9.090082719
+ XE RP9       F103      5.3260550395
+ XE IP9       F104      24.092506375
+ XE RP9       F105      -3.902049552
+ XE RP9       F106      10.365394127
+ XE IP9       F107      -3.902049552
+ XE IP9       F108      -10.36539412
+ XE RP9       F109      -1.424005487
+ XE RP9       F110      3.0290504569
+ XE IP9       F111      -1.424005487
+ XE IP9       F112      -3.029050456
+ XE RP10      F113      -3.902049552
+ XE RP10      F114      10.365394127
+ XE IP10      F115      -3.902049552
+ XE IP10      F116      -10.36539412
+ XE RP10      F117      5.7829343061
+ XE IP10      F118      14.768337877
+ XE RP10      F119      -1.880884753
+ XE RP10      F120      4.4029437495
+ XE IP10      F121      -1.880884753
+ XE IP10      F122      -4.402943749
+ XE RP11      F123      -1.955028563
+ XE RP11      F124      4.0940743442
+ XE IP11      F125      -1.955028563
+ XE IP11      F126      -4.094074344
+ XE RP11      F127      -1.880884753
+ XE RP11      F128      4.4029437495
+ XE IP11      F129      -1.880884753
+ XE IP11      F130      -4.402943749
+ XE RP11      F131      3.8359133169
+ XE IP11      F132      8.4970180937
+ XE RP12      F133      -1.525967440
+ XE RP12      F134      3.175963965 
+ XE IP12      F135      -1.525967440
+ XE IP12      F136      -3.175963965
+ XE RP12      F137      4.0149920273
+ XE IP12      F138      5.4279385912
+ XE RP12      F139      -2.489024586
+ XE RP12      F140      2.2519746262
+ XE IP12      F141      -2.489024586
+ XE IP12      F142      -2.251974626
+ XE RP13      F143      -3.098927403
+ XE RP13      F144      6.1027554482
+ XE IP13      F145      -3.098927403
+ XE IP13      F146      -6.102755448
+ XE RP13      F147      -2.489024586
+ XE RP13      F148      2.2519746262
+ XE IP13      F149      -2.489024586
+ XE IP13      F150      -2.251974626
+ XE RP13      F151      6.7249461485
+ XE IP13      F152      10.669693549
+ XE RP13      F153      -1.136994157
+ XE RP13      F154      2.3149634751
+ XE IP13      F155      -1.136994157
+ XE IP13      F156      -2.314963475
+ XE RP14      F157      -1.424005487
+ XE RP14      F158      3.0290504569
+ XE IP14      F159      -1.424005487
+ XE IP14      F160      -3.029050456
+ XE RP14      F161      -1.136994157
+ XE RP14      F162      2.3149634751
+ XE IP14      F163      -1.136994157
+ XE IP14      F164      -2.314963475
+ XE RP14      F165      2.5609996448
+ XE IP14      F166      5.344013932 
+ XE FN1       E1        257.14793297
+ XE FN1       E2        -515.1003629
+ XE FN1       E3        0.2639541485
+ XE FN1       E4        257.95312698
+ XE FN2       E5        18.779796341
+ XE FN2       E6        -37.76674355
+ XE FN2       E7        0.0504741547
+ XE FN2       E8        18.987552378
+ XE FN3       E9        23.945517773
+ XE FN3       E10       -48.09952193
+ XE FN3       E11       0.0497138406
+ XE FN3       E12       24.154483769
+ XE FN4       E13       28.840860058
+ XE FN4       E14       -57.85508062
+ XE FN4       E15       0.0573251271
+ XE FN4       E16       29.014509561
+ XE FN5       E17       29.691347384
+ XE FN5       E18       -59.56180607
+ XE FN5       E19       0.0588594324
+ XE FN5       E20       29.870757982
+ XE FN6       E21       29.572165175
+ XE FN6       E22       -59.20912928
+ XE FN6       E23       0.0254204890
+ XE FN6       E24       29.637005073
+ XE FN7       E25       512.43300835
+ XE FN7       E26       -1024.866016
+ XE FN7       E27       512.43300835
+ XE FN8       E28       24.995017225
+ XE FN8       E29       -48.89025369
+ XE FN8       E30       23.907334055
+ XE FN9       E31       3.6666896805
+ XE FN9       E32       -7.106044600
+ XE FN9       E33       3.4428786091
+ XE FN10      E34       20.86730367 
+ XE FN10      E35       -38.89665404
+ XE FN10      E36       18.125840783
+ XE FN11      E37       20.583581419
+ XE FN11      E38       -41.16716283
+ XE FN11      E39       20.583581419
+ XE FN12      E40       12.415323736
+ XE FN12      E41       -24.83064747
+ XE FN12      E42       12.415323736
+ XE FN13      E43       46.846975115
+ XE FN13      E44       -93.69395022
+ XE FN13      E45       46.846975115
+ XE FN14      E46       32.22810018 
+ XE FN14      E47       -64.45620036
+ XE FN14      E48       32.22810018 
+ XE FN15      E49       82.629603852
+ XE FN15      E50       -165.2592077
+ XE FN15      E51       82.629603852
+ XE FN16      E52       122.66738612
+ XE FN16      E53       -245.3347722
+ XE FN16      E54       122.66738612
+ XE FN17      E55       11.202938298
+ XE FN17      E56       -22.40587659
+ XE FN17      E57       11.202938298
+ XE FN18      E58       22.923641118
+ XE FN18      E59       -45.84728223
+ XE FN18      E60       22.923641118
+ XE FN19      E61       11.266633111
+ XE FN19      E62       -22.53326622
+ XE FN19      E63       11.266633111
+ XE FN20      E64       6.651811606 
+ XE FN20      E65       -13.30362321
+ XE FN20      E66       6.651811606 
+ XE TN1       E67       257.14793297
+ XE TN1       E68       -515.1003629
+ XE TN1       E69       0.2639541485
+ XE TN1       E70       257.95312698
+ XE TN2       E71       18.779796341
+ XE TN2       E72       -37.76674355
+ XE TN2       E73       0.0504741547
+ XE TN2       E74       18.987552378
+ XE TN3       E75       23.945517773
+ XE TN3       E76       -48.09952193
+ XE TN3       E77       0.0497138406
+ XE TN3       E78       24.154483769
+ XE TN4       E79       28.840860058
+ XE TN4       E80       -57.85508062
+ XE TN4       E81       0.0573251271
+ XE TN4       E82       29.014509561
+ XE TN5       E83       29.691347384
+ XE TN5       E84       -59.56180607
+ XE TN5       E85       0.0588594324
+ XE TN5       E86       29.870757982
+ XE TN6       E87       29.572165175
+ XE TN6       E88       -59.20912928
+ XE TN6       E89       0.0254204890
+ XE TN6       E90       29.637005073
+ XE TN7       E91       512.43300835
+ XE TN7       E92       -1024.866016
+ XE TN7       E93       512.43300835
+ XE TN8       E94       24.995017225
+ XE TN8       E95       -48.89025369
+ XE TN8       E96       23.907334055
+ XE TN9       E97       3.6666896805
+ XE TN9       E98       -7.106044600
+ XE TN9       E99       3.4428786091
+ XE TN10      E100      20.86730367 
+ XE TN10      E101      -38.89665404
+ XE TN10      E102      18.125840783
+ XE TN11      E103      20.583581419
+ XE TN11      E104      -41.16716283
+ XE TN11      E105      20.583581419
+ XE TN12      E106      12.415323736
+ XE TN12      E107      -24.83064747
+ XE TN12      E108      12.415323736
+ XE TN13      E109      46.846975115
+ XE TN13      E110      -93.69395022
+ XE TN13      E111      46.846975115
+ XE TN14      E112      32.22810018 
+ XE TN14      E113      -64.45620036
+ XE TN14      E114      32.22810018 
+ XE TN15      E115      82.629603852
+ XE TN15      E116      -165.2592077
+ XE TN15      E117      82.629603852
+ XE TN16      E118      122.66738612
+ XE TN16      E119      -245.3347722
+ XE TN16      E120      122.66738612
+ XE TN17      E121      11.202938298
+ XE TN17      E122      -22.40587659
+ XE TN17      E123      11.202938298
+ XE TN18      E124      22.923641118
+ XE TN18      E125      -45.84728223
+ XE TN18      E126      22.923641118
+ XE TN19      E127      11.266633111
+ XE TN19      E128      -22.53326622
+ XE TN19      E129      11.266633111
+ XE TN20      E130      6.651811606 
+ XE TN20      E131      -13.30362321
+ XE TN20      E132      6.651811606 
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ACOPP14
+
+TEMPORARIES
+ R  SINA
+ R  COSA
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  P2
+ F                      V1 ** 2
+ G  V1                  2.0D+0 * V1
+ H  V1        V1        2.0D+0
+
+ T  P4
+ F                      V1 ** 4
+ G  V1                  4.0D+0 * V1 ** 3
+ H  V1        V1        12.0D+0 * V1 ** 2
+
+ T  P11
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0D+0
+
+ T  P31
+ F                      V2 * ( V1 ** 3 )
+ G  V1                  3.0D+0 * V2 * V1 ** 2
+ G  V2                  V1 ** 3
+ H  V1        V1        6.0D+0 * V2 * V1
+ H  V1        V2        3.0D+0 * V1 ** 2
+
+ T  P22
+ F                      ( V1 * V2 ) ** 2 
+ G  V1                  2.0D+0 * V1 * V2 ** 2
+ G  V2                  2.0D+0 * V2 * V1 ** 2
+ H  V1        V1        2.0D+0 * V2 ** 2
+ H  V1        V2        4.0D+0 * V1 * V2
+ H  V2        V2        2.0D+0 * V1 ** 2
+
+ T  P211
+ F                      ( V3 * V2 ) * ( V1 ** 2 )
+ G  V1                  2.0D+0 * V3 * V2 * V1
+ G  V2                  V3 * V1 ** 2
+ G  V3                  V2 * V1 ** 2
+ H  V1        V1        2.0D+0 * V3 * V2
+ H  V1        V2        2.0D+0 * V3 * V1
+ H  V1        V3        2.0D+0 * V2 * V1
+ H  V2        V3        V1 ** 2
+ H  V3        V3        0.0D+0
+
+ T  SIN11
+ R  V1        U1        1.0D+0 
+ R  V2        U2        1.0D+0 
+ R  A         A1        1.0D+0         A2        -1.0D+0 
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ F                      SINA * V1 * V2
+ G  V1                  SINA * V2
+ G  V2                  SINA * V1
+ G  A                   COSA * V1 * V2
+ H  V1        V2        SINA
+ H  A         V1        COSA * V2
+ H  A         V2        COSA * V1
+ H  A         A         - SINA * V1 * V2
+
+ T  COS11
+ R  V1        U1        1.0D+0 
+ R  V2        U2        1.0D+0 
+ R  A         A1        1.0D+0         A2        -1.0D+0 
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ F                      COSA * V1 * V2
+ G  V1                  COSA * V2
+ G  V2                  COSA * V1
+ G  A                   - SINA * V1 * V2
+ H  V1        V2        COSA
+ H  A         V1        - SINA * V2
+ H  A         V2        - SINA * V1
+ H  A         A         - COSA * V1 * V2
+
+ T  SIN211
+ R  V1        U1        1.0D+0 
+ R  V2        U2        1.0D+0 
+ R  V3        U3        1.0D+0 
+ R  A         A1        1.0D+0         A2        -1.0D+0 
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ F                      ( SINA * V3 * V2 ) * ( V1 ** 2 )
+ G  V1                  2.0D+0 * SINA * V3 * V2 * V1
+ G  V2                  SINA * V3 * V1 ** 2
+ G  V3                  SINA * V2 * V1 ** 2
+ G  A                   ( COSA * V3 * V2 ) * ( V1 ** 2 )
+ H  V1        V1        2.0D+0 * SINA * V3 * V2
+ H  V1        V2        2.0D+0 * SINA * V3 * V1
+ H  V1        V3        2.0D+0 * SINA * V2 * V1
+ H  V2        V3        SINA * V1 ** 2
+ H  V3        V3        0.0D+0
+ H  A         V1        2.0D+0 * COSA * V3 * V2 * V1
+ H  A         V2        ( COSA * V3 ) * ( V1 ** 2 )
+ H  A         V3        ( COSA * V2 ) * ( V1 ** 2 )
+ H  A         A         ( - SINA * V3 * V2 ) * ( V1 ** 2 )
+
+ T  COS211
+ R  V1        U1        1.0D+0 
+ R  V2        U2        1.0D+0 
+ R  V3        U3        1.0D+0 
+ R  A         A1        1.0D+0         A2        -1.0D+0 
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ F                      ( COSA * V3 * V2 ) * ( V1 ** 2 )
+ G  V1                  2.0D+0 * COSA * V3 * V2 * V1
+ G  V2                  COSA * V3 * V1 ** 2
+ G  V3                  COSA * V2 * V1 ** 2
+ G  A                   ( - SINA * V3 * V2 ) * ( V1 ** 2 )
+ H  V1        V1        2.0D+0 * COSA * V3 * V2
+ H  V1        V2        2.0D+0 * COSA * V3 * V1
+ H  V1        V3        2.0D+0 * COSA * V2 * V1
+ H  V2        V3        COSA * V1 ** 2
+ H  V3        V3        0.0D+0
+ H  A         V1        - 2.0D+0 * SINA * V3 * V2 * V1
+ H  A         V2        ( - SINA * V3 ) * ( V1 ** 2 )
+ H  A         V3        ( - SINA * V2 ) * ( V1 ** 2 )
+ H  A         A         ( - COSA * V3 * V2 ) * ( V1 ** 2 )
+
+ T  SIN31
+ R  V1        U1        1.0D+0 
+ R  V2        U2        1.0D+0 
+ R  A         A1        1.0D+0         A2        -1.0D+0 
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ F                      SINA * V2 * ( V1 ** 3 )
+ G  V1                  3.0D+0 * SINA * V2 * V1 ** 2
+ G  V2                  SINA * V1 ** 3
+ G  A                   COSA * V2 * ( V1 ** 3 )
+ H  V1        V1        6.0D+0 * SINA * V2 * V1
+ H  V1        V2        3.0D+0 * SINA * V1 ** 2
+ H  A         V1        3.0D+0 * COSA * V2 * ( V1 ** 2 )
+ H  A         V2        COSA * ( V1 ** 3 )
+ H  A         A         - SINA * V2 * ( V1 ** 3 )
+
+ T  COS31
+ R  V1        U1        1.0D+0 
+ R  V2        U2        1.0D+0 
+ R  A         A1        1.0D+0         A2        -1.0D+0 
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ F                      COSA * V2 * ( V1 ** 3 )
+ G  V1                  3.0D+0 * COSA * V2 * V1 ** 2
+ G  V2                  COSA * V1 ** 3
+ G  A                   - SINA * V2 * ( V1 ** 3 )
+ H  V1        V1        6.0D+0 * COSA * V2 * V1
+ H  V1        V2        3.0D+0 * COSA * V1 ** 2
+ H  A         V1        - 3.0D+0 * SINA * V2 * ( V1 ** 2 )
+ H  A         V2        - SINA * ( V1 ** 3 )
+ H  A         A         - COSA * V2 * ( V1 ** 3 )
+
+ENDATA

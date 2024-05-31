@@ -1,0 +1,117 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BRKMCC
+
+*   Problem :
+*   *********
+
+*   Source: Problem 85 (p.35) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OUR2-AN-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  G1        X1        1.0
+ N  G2        X2        1.0
+ N  G3
+ N  G3        'SCALE'   25.0
+ N  G4        X1        1.0            X2        -2.0
+ N  G4        'SCALE'   0.2
+
+CONSTANTS
+
+    BRKMCC    G1        2.0
+    BRKMCC    G2        1.0
+    BRKMCC    G3        -1.0
+    BRKMCC    G4        -1.0
+
+BOUNDS
+
+ FR BRKMC     'DEFAULT'
+
+START POINT
+
+    BRKMCC    X1        2.0
+    BRKMCC    X2        2.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  'DEFAULT' SQ
+
+ V  E1        X                        X1
+ V  E2        X                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+ GV INV       GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ T  G3        INV
+ E  G3        E1        -0.25          E2        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.16904
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BRKMCC
+
+INDIVIDUALS
+
+ T  SQ
+
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BRKMCC
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ T  INV
+ F                      1.0 / GVAR
+ G                      - 1.0 / ( GVAR * GVAR )
+ H                      2.0 / ( GVAR**3 )
+
+ENDATA

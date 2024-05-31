@@ -1,0 +1,81 @@
+**************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DIAGPQT
+
+*   Problem :
+*   *********
+*   A variable dimension convex quadratic problem
+*   with eigenvalues clusetered towards the top of the spectrum
+
+*   lambda_i = - i^2/n + n + 1/n, i = 1, ... , n
+
+*   Source: simple test for GALAHAD gltr/glrt
+
+*   SIF input: Nick Gould, Feb 2019
+
+*   classification QBR2-AN-V-0
+
+*   Number of variables (variable)
+
+*IE N                   10             $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER     original value
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+*IE N                   1000000        $-PARAMETER
+
+*   Other parameters
+
+ IE 1                   1
+ RE ONE                 1.0
+ RI RN        N
+ R/ 1/RN      ONE                      RN
+ R+ SHIFT     RN                       1/RN
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN G(I)      X(I)      1.0
+ ND
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -100000.0
+ UP BOUNDS    'DEFAULT' 1000000.0
+
+START POINT
+
+ XV DIAGPQT   'DEFAULT' 1.0
+
+HESSIAN
+
+ DO I         1                        N
+ RI RI        I
+ R* RI2       RI                       RI
+ R/ RI2/RN    RI2                      RN
+ RM -RI2/RN   RI2/RN    -1.0
+ R+ H         -RI2/RN                  SHIFT
+ Z  X(I)      X(I)                     H
+ ND
+
+OBJECT BOUND
+
+ LO DIAGPQT             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA

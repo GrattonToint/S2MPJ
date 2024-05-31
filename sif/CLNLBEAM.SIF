@@ -1,0 +1,222 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CLNLBEAM
+
+*   Problem :
+*   *********
+
+*   An optimal control version of the CLamped NonLinear BEAM problem.
+*   The energy of a beam of length 1 compressed by a force P is to be
+*   minimized.  The control variable is the derivative of the deflection angle.
+
+*   The problem is discretized using the trapezoidal rule. It is non-convex.
+
+*   Source:
+*   H. Maurer and H.D. Mittelman,
+*   "The non-linear beam via optimal control with bound state variables",
+*   Optimal Control Applications and Methods 12, pp. 19-31, 1991.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  OOR2-MN-V-V
+
+*   Discretization: specify the number of interior points + 1
+
+*IE NI                  10             $-PARAMETER n=33, m=20
+*IE NI                  50             $-PARAMETER n=153, m=100
+*IE NI                  100            $-PARAMETER n=303, m=200
+*IE NI                  500            $-PARAMETER n=1503, m=1000
+*IE NI                  1000           $-PARAMETER n=3003, m=2000 original value
+*IE NI                  2000           $-PARAMETER n=6003, m=4000
+ IE NI                  10             $-PARAMETER     modified for S2X tests
+*IE NI                  5000           $-PARAMETER n=15003, m=10000
+
+*  Set ALPHA to the force divided by the bending stiffness
+
+ RE ALPHA               350.0          $-PARAMETER stiffness
+
+*   Useful constants
+
+ RI RNI       NI
+ IA NI-1      NI        -1
+ RD H         RNI       1.0
+ RM H/4       H         0.25
+ RM H/2       H         0.5
+ R* AH        ALPHA                    H
+ RM AH/2      AH        0.5
+ RM -H/2      H         -0.5
+
+ IE 0                   0
+
+VARIABLES
+
+*   deflection angle
+
+ DO I         0                        NI
+ X  T(I)
+ OD I
+
+*   displacement
+
+ DO I         0                        NI
+ X  X(I)
+ OD I
+
+*   derivative of the deflection angle (control variable)
+
+ DO I         0                        NI
+ X  U(I)
+ OD I
+
+GROUPS
+
+*   objective function: energy
+
+ N  ENERGY    
+
+*   state equations
+
+ DO I         0                        NI-1
+ IA I+1       I         1
+
+ XE EX(I)     X(I+1)    1.0            X(I)      -1.0
+
+ XE ET(I)     T(I+1)    1.0            T(I)      -1.0
+ ZE ET(I)     U(I+1)                   -H/2
+ ZE ET(I)     U(I)                     -H/2
+
+ OD I
+
+BOUNDS
+
+*   All variables are free
+
+ FR CLNLBEAM  'DEFAULT'
+
+*   Impose the bound on the displacements
+
+ DO I         0                        NI
+ XL CLNLBEAM  X(I)      -0.05
+ XU CLNLBEAM  X(I)      0.05
+ OD I
+
+*   Impose that the beam does not curve too far backwards
+
+ DO I         0                        NI
+ XL CLNLBEAM  T(I)      -1.0
+ XU CLNLBEAM  T(I)      1.0
+ OD I
+
+*   Boundary conditions
+
+ XX CLNLBEAM  X(0)      0.0
+ XX CLNLBEAM  X(NI)     0.0
+
+ XX CLNLBEAM  T(0)      0.0
+ XX CLNLBEAM  T(NI)     0.0
+
+START POINT
+
+*  The origin is a saddle point!
+
+*  Perturb the origin
+
+ DO I         0                        NI
+ RI RI        I
+ R* TT        RI                       H
+ R( CTT       COS                      TT
+ RM SCTT      CTT       0.05
+ ZV CLNLBEAM  X(I)                     SCTT
+ ZV CLNLBEAM  T(I)                     SCTT
+ OD I
+
+ELEMENT TYPE
+
+ EV COS       T
+ EV SIN       T
+ EV SQ        U
+
+ELEMENT USES
+
+ DO I         0                        NI
+
+ XT C(I)      COS
+ ZV C(I)      T                        T(I)
+
+ XT S(I)      SIN
+ ZV S(I)      T                        T(I)
+
+ XT USQ(I)    SQ
+ ZV USQ(I)    U                        U(I)
+
+ OD I
+
+GROUP USES
+
+ DO I         0                        NI-1
+ IA I+1       I         1
+
+ ZE EX(I)     S(I+1)                   -H/2
+ ZE EX(I)     S(I)                     -H/2
+
+ ZE ENERGY    USQ(I+1)                 H/2
+ ZE ENERGY    USQ(I)                   H/2
+ ZE ENERGY    C(I+1)                   AH/2
+ ZE ENERGY    C(I)                     AH/2
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)           345.0301196587
+*LO SOLTN(50)           344.8673691861
+*LO SOLTN(100)          344.8801831150
+*LO SOLTN(500)          344.8748539754
+*LO SOLTN(1000)         344.8788169123
+*LO SOLTN(5000)         
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CLNLBEAM
+
+TEMPORARIES
+
+ R  CC
+ R  SS
+
+ M  COS
+ M  SIN
+
+INDIVIDUALS
+
+ T  SQ
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  COS
+ A  CC                  COS( T )
+ A  SS                  SIN( T )
+ F                      CC
+ G  T                   - SS
+ H  T         T         - CC
+
+ T  SIN
+ A  CC                  COS( T )
+ A  SS                  SIN( T )
+ F                      SS
+ G  T                   CC
+ H  T         T         - SS
+
+ENDATA
+
+
+

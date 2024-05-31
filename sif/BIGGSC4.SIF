@@ -1,0 +1,112 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BIGGSC4
+
+*   Problem:
+*   ********
+
+*   A test quadratic test problem (invented starting point).
+
+*   Source:
+*   M. Batholomew-Biggs and F.G. Hernandez,
+*   "Some improvements to the subroutine OPALQP for dealing with large
+*    problems",
+*   Numerical Optimization Centre, Hatfield, 1992.
+
+*   SIF input: Ph Toint, April 1992.
+
+*   classification QLR2-AN-4-7
+
+ IE 1                   1
+ IE 4                   4
+
+VARIABLES
+
+ DO I         1                        4
+ X  X(I)
+ OD I
+
+GROUPS
+
+ XN OBJ
+
+ XG C1        X1        1.0            X2        1.0
+ XG C2        X1        1.0            X3        1.0
+ XG C3        X1        1.0            X4        1.0
+ XG C4        X2        1.0            X3        1.0
+ XG C5        X2        1.0            X4        1.0
+ XG C6        X3        1.0            X4        1.0
+
+ XG C7        X1        1.0            X2        1.0
+ XG C7        X3        1.0            X4        1.0
+
+
+CONSTANTS
+
+ X  BIGGSC4   C1        2.5
+ X  BIGGSC4   C2        2.5
+ X  BIGGSC4   C3        2.5
+ X  BIGGSC4   C4        2.0
+ X  BIGGSC4   C5        2.0
+ X  BIGGSC4   C6        1.5
+ X  BIGGSC4   C7        5.0
+
+RANGES
+
+ X  BIGGSC4   C1        5.0
+ X  BIGGSC4   C2        5.0
+ X  BIGGSC4   C3        5.0
+ X  BIGGSC4   C4        5.0
+ X  BIGGSC4   C5        5.0
+ X  BIGGSC4   C5        5.0
+ X  BIGGSC4   C6        5.0
+
+BOUNDS
+
+ UP BIGGSC4   'DEFAULT' 5.0
+
+ELEMENT TYPE
+
+ EV 2PR       U                        V
+
+ELEMENT USES
+
+ T  E1        2PR
+ V  E1        U                        X1
+ V  E1        V                        X3
+
+ T  E2        2PR
+ V  E2        U                        X2
+ V  E2        V                        X4
+
+GROUP USES
+
+ E  OBJ       E1        -1.0           E2        -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO BIGGSC4             -24.5
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BIGGSC4
+
+INDIVIDUALS
+
+ T  2PR
+ F                      U * V
+ G  U                   V
+ G  V                   U
+ H  U         V         1.0
+
+ENDATA

@@ -1,0 +1,98 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+ 
+NAME          BYRDSPHR
+ 
+*   Problem:
+*   ********
+ 
+*   Minimize a linear function in the intersection of two spheres
+ 
+*   Source:
+*   R. Byrd,
+*   Private communication, Chicago, 1992.
+ 
+*   SIF input: Ph. Toint, November 1992.
+ 
+*   classification LQR2-AN-3-2
+ 
+VARIABLES
+ 
+    X1
+    X2
+    X3
+ 
+GROUPS
+ 
+ N  OBJ       X1        -1.0
+ N  OBJ       X2        -1.0
+ N  OBJ       X3        -1.0
+ 
+ E  SPH1
+ E  SPH2
+ 
+CONSTANTS
+ 
+    BYRDSPHR  SPH1      9.0
+    BYRDSPHR  SPH2      9.0
+ 
+BOUNDS
+ 
+ FR BYRDSPHR  'DEFAULT'
+ 
+START POINT
+ 
+ V  BYRDSPHR  X1        5.0
+ V  BYRDSPHR  X2        0.0001
+ V  BYRDSPHR  X3        -0.0001
+ 
+ELEMENT TYPE
+ 
+ EV SQ        XX
+ EP SQ        SHIFT
+ 
+ELEMENT USES
+ 
+ T  'DEFAULT' SQ
+ 
+ ZV X1SQ      XX                       X1
+ XP X1SQ      SHIFT     0.0
+ ZV X2SQ      XX                       X2
+ XP X2SQ      SHIFT     0.0
+ ZV X3SQ      XX                       X3
+ XP X3SQ      SHIFT     0.0
+ ZV SX1SQ     XX                       X1
+ XP SX1SQ     SHIFT     1.0
+ 
+GROUP USES
+ 
+ XE SPH1      X1SQ                     X2SQ
+ XE SPH1      X3SQ
+ 
+ XE SPH2      SX1SQ                    X2SQ
+ XE SPH2      X3SQ
+ 
+OBJECT BOUND
+ 
+*   Solution
+ 
+*LO SOLTN               -4.68330049
+ 
+ENDATA
+ 
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+ 
+ELEMENTS      BYRDSPHR
+ 
+INDIVIDUALS
+ 
+ T  SQ
+ F                      ( XX - SHIFT) ** 2
+ G  XX                  2.0 * ( XX - SHIFT )
+ H  XX        XX        2.0
+ 
+ENDATA

@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CUBE
+
+*   Problem :
+*   *********
+
+*   A cubic variant of the Rosenbrock test function.
+
+*   Source: problem 5 (p. 89) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-2-0
+
+*   dimension
+
+ IE N                           2
+
+*   other parameter definitions
+
+ IE 1                           1
+ IE 2                           2
+ IA N-1       N                -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN SQ(1)     X(1)             1.0
+
+ DO I         2                        N
+ XN SQ(I)     'SCALE'          0.01
+ XN SQ(I)     X(I)             1.0
+ ND
+
+CONSTANTS
+
+    CUBE      SQ1              1.0
+
+BOUNDS
+
+ FR CUBE      'DEFAULT'
+
+START POINT
+
+    CUBE      X1              -1.2
+    CUBE      X2               1.0
+
+ELEMENT TYPE
+
+ EV ETYPE     V1
+
+ELEMENT USES
+
+ XT 'DEFAULT' ETYPE
+
+ DO I         2                        N
+ IA I-1       I         -1
+ ZV ELA(I)    V1                       X(I-1)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         2                        N
+ XE SQ(I)     ELA(I)
+ ND
+
+OBJECT BOUND
+
+ LO CUBE                0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CUBE
+
+INDIVIDUALS
+
+ T  ETYPE
+ F                      - V1 ** 3
+ G  V1                  - 3.0 * V1 ** 2
+ H  V1        V1        - 6.0 * V1 
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        CUBE
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

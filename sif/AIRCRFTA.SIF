@@ -1,0 +1,151 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          AIRCRFTA
+
+*   Problem :
+*   *********
+
+*   The aircraft stability problem by Rheinboldt, as a function
+*   of the elevator, aileron and rudder deflection controls.
+
+*   Source: Problem 9 in
+*   J.J. More',"A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer Seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NOR2-RN-8-5
+
+*   Values for the controls
+*   1) Elevator
+
+ RE ELVVAL              0.1
+
+*   2) Aileron
+
+ RE AILVAL              0.0
+
+*   3) Rudder deflection
+
+ RE RUDVAL              0.0
+
+VARIABLES
+
+    ROLLRATE
+    PITCHRAT
+    YAWRATE
+    ATTCKANG
+    SSLIPANG
+    ELEVATOR
+    AILERON
+    RUDDERDF
+
+GROUPS
+
+ E  G1        ROLLRATE  -3.933         PITCHRAT  0.107
+ E  G1        YAWRATE   0.126          SSLIPANG  -9.99
+ E  G1        AILERON   -45.83         RUDDERDF  -7.64
+
+ E  G2        PITCHRAT  -0.987         ATTCKANG  -22.95
+ E  G2        ELEVATOR  -28.37
+
+ E  G3        ROLLRATE  0.002          YAWRATE   -0.235
+ E  G3        SSLIPANG  5.67
+ E  G3        AILERON   -0.921         RUDDERDF  -6.51
+
+ E  G4        PITCHRAT  1.0            ATTCKANG  -1.0
+ E  G4        ELEVATOR  -1.168
+
+ E  G5        YAWRATE   -1.0           SSLIPANG  -0.196
+ E  G5        AILERON   -0.0071
+
+BOUNDS
+
+*   defaults = free variables
+
+ FR AIRCRFTA  'DEFAULT'
+
+*   Fix the controls
+
+ ZX AIRCRFTA  ELEVATOR                 ELVVAL
+ ZX AIRCRFTA  AILERON                  AILVAL
+ ZX AIRCRFTA  RUDDERDF                 RUDVAL
+
+START POINT
+
+ XV AIRCRFTA  'DEFAULT'  0.0
+ Z  AIRCRFTA  ELEVATOR                 ELVVAL
+ Z  AIRCRFTA  AILERON                  AILVAL
+ Z  AIRCRFTA  RUDDERDF                 RUDVAL
+
+ELEMENT TYPE
+
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  'DEFAULT' 2PR
+
+ V  E1A       X                        PITCHRAT
+ V  E1A       Y                        YAWRATE
+
+ V  E1B       X                        YAWRATE
+ V  E1B       Y                        ATTCKANG
+
+ V  E1C       X                        ATTCKANG
+ V  E1C       Y                        SSLIPANG
+
+ V  E1D       X                        PITCHRAT
+ V  E1D       Y                        ATTCKANG
+
+ V  E2A       X                        ROLLRATE
+ V  E2A       Y                        YAWRATE
+
+ V  E2B       X                        ROLLRATE
+ V  E2B       Y                        SSLIPANG
+
+ V  E3A       X                        ROLLRATE
+ V  E3A       Y                        PITCHRAT
+
+ V  E3B       X                        ROLLRATE
+ V  E3B       Y                        ATTCKANG
+
+GROUP USES
+
+ E  G1        E1A       -0.727         E1B       8.39
+ E  G1        E1C       -684.4         E1D       63.5
+
+ E  G2        E2A       0.949          E2B       0.173
+
+ E  G3        E3A       -0.716         E3B       -1.578
+ E  G3        E1D       1.132
+
+ E  G4        E2B       -1.0
+
+ E  G5        E3B
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      AIRCRFTA
+
+INDIVIDUALS
+
+*   Product of two variables
+
+ T  2PR
+
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

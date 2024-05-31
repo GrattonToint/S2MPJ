@@ -1,0 +1,124 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHACONN1
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   C. Charalambous and A.R. Conn,
+*   "An efficient method to solve the minmax problem directly",
+*   SINUM 15, pp. 162-187, 1978.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-AY-3-3
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0
+ XL F2        U         -1.0
+ XL F3        U         -1.0
+
+BOUNDS
+
+*   All variables are free
+
+ FR CHACONN1  'DEFAULT'
+
+START POINT
+
+    CHACONN1  X1        1.0
+    CHACONN1  X2        -0.1
+
+ELEMENT TYPE
+
+ EV SQ        V
+ EV FR        V
+ EV EX        V                        W
+ IV EX        Z
+ EV TWOMSQ    V
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      V                        X1
+
+ T  X2FR      FR
+ V  X2FR      V                        X2
+
+ T  TMX1SQ    TWOMSQ
+ V  TMX1SQ    V                        X1
+
+ T  TMX2SQ    TWOMSQ
+ V  TMX2SQ    V                        X2
+
+ T  EX12      EX
+ V  EX12      V                        X1
+ V  EX12      W                        X2
+
+GROUP USES
+
+ E  F1        X1SQ                     X2FR
+ E  F2        TMX1SQ                   TMX2SQ
+ E  F3        EX12      2.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               1.95222
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CHACONN1
+
+TEMPORARIES
+
+ R  T
+
+ M  EXP
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ T  TWOMSQ
+ A  T                   2.0 - V
+ F                      T * T
+ G  V                   -2.0 * T
+ H  V         V         2.0
+
+ T  FR
+ F                      V ** 4
+ G  V                   4.0 * V ** 3
+ H  V         V         12.0 * V ** 2
+
+ T  EX
+ R  Z         V         -1.0           W         1.0
+ A  T                   EXP( Z )
+ F                      T
+ G  Z                   T
+ H  Z         Z         T
+
+ENDATA

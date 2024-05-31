@@ -1,0 +1,69 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEGTRID
+
+*   Problem :
+*   *********
+
+*   A degenerate bound constrained convex quadratic program
+*   with a tri-diagonal Hessian
+
+*   SIF input: Nick Gould, August 2011
+
+*   classification QBR2-AN-V-0
+
+*   The number of variables - 1
+
+*IE N                   10
+*IE N                   50
+*IE N                   100
+*IE N                   1000
+*IE N                   10000
+ IE N                   100000
+
+*  Other useful values.
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N+1       N         1
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN OBJ       X(0)      -0.5
+ XN OBJ       X(1)      -1.5
+ DO I         2                        N-1
+ XN OBJ       X(I)      -2.0
+ ND
+ XN OBJ       X(N)      -1.5
+
+BOUNDS
+
+START POINT
+
+ XV DEGTRID   'DEFAULT' 2.0
+
+QUADRATIC
+
+ X  X(0)      X(0)      1.0
+ DO I         1                        N
+ IA I-1       I         -1
+ X  X(I)      X(I)      1.0
+ X  X(I)      X(I-1)    0.5
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+

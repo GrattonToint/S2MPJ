@@ -1,0 +1,179 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHARDIS02
+
+*   Problem :
+*   *********
+
+*   Distribution of (equal)charges on [-R,R]x[-R,R] (2D)
+
+*   SIF input: R. Felkel, Jun 1999.
+*              correction by S. Gratton & Ph. Toint, May 2024
+*   modifield version of CHARDIS0 (formulation corrected)
+
+*   classification OBR2-AY-V-V
+
+*   Number of positive (or negative) charges -> Number of variables 2*NP1
+
+*IE NP1                 5              $-PARAMETER
+*IE NP1                 9              $-PARAMETER
+*IE NP1                 20             $-PARAMETER
+*IE NP1                 30             $-PARAMETER
+*IE NP1                 50             $-PARAMETER     original value
+*IE NP1                 100            $-PARAMETER
+*IE NP1                 200            $-PARAMETER
+*IE NP1                 500            $-PARAMETER
+*IE NP1                 1000           $-PARAMETER
+ IE NP1                 20             $-PARAMETER     modified for S2X tests
+*IE NP1                 2000           $-PARAMETER
+*IE NP1                 5000           $-PARAMETER
+
+*   Other useful parameters
+
+ RE R                   10.0
+ RE R-                  -10.0
+
+* Some stuff
+
+ IA N         NP1       -1
+ RI NReal     N
+ RI NP1Real   NP1
+ 
+ RF halfPI    ARCSIN    1.0 
+ RM PI        halfPI    2.0
+ RM 2PI       halfPI    4.0
+ RM 4PI       halfPI    8.0
+
+ R/ 4PIqN     4PI                      NReal
+ R/ 2PIqN     2PI                      NReal
+ R/ PIqN      PI                       NReal
+
+ R/ RqN       R                        NReal
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+*   Each candle has position in cylinder coordinates
+
+ DO I         1                        NP1
+ X  X(I)
+ X  Y(I)
+ OD I
+
+GROUPS
+
+*   Objective 
+
+ DO I         1                        NP1
+ IA I+        I         1
+ DO J         I+                       NP1                        
+ XN O(I,J)    'SCALE'   0.01
+ OD J
+ OD I
+
+BOUNDS
+
+ DO I         1                        NP1
+ ZL CHARDIS0  X(I)                     R-
+ ZU CHARDIS0  X(I)                     R
+ ZL CHARDIS0  Y(I)                     R-
+ ZU CHARDIS0  Y(I)                     R
+ OD I
+
+START POINT
+
+ DO I         1                        NP1
+ RI RealI-    I
+ R- RealNP1-I NP1Real                  RealI- 
+ R* PHII-     2PIqN                    RealI-
+ R* RI-       RqN                      RealNP1-I
+ R( XSTT      COS                      PHII-
+ R( YSTT      SIN                      PHII-
+ R* XST       XSTT                     RI-
+ R* YST       YSTT                     RI-
+ RM XS        XST       0.5
+ RM YS        YST       0.5
+ ZV CHARDIS0  X(I)                     XS
+ ZV CHARDIS0  Y(I)                     YS        
+ OD I
+
+ELEMENT TYPE
+
+*   Square of Difference
+
+ EV DIFSQR    V1                       V2
+
+ELEMENT USES
+
+*   Objective
+
+ DO I         1                        NP1
+ IA I+        I         1
+ DO J         I+                       NP1                        
+ XT X(I,J)    DIFSQR
+ ZV X(I,J)    V1                       X(I)
+ ZV X(I,J)    V2                       X(J)
+ XT Y(I,J)    DIFSQR
+ ZV Y(I,J)    V1                       Y(I)
+ ZV Y(I,J)    V2                       Y(J)
+ OD J
+ OD I
+
+GROUP TYPE
+
+ GV REZIP     ALPHA
+
+GROUP USES
+
+*   Objective
+
+ DO I         1                        NP1
+ IA I+        I         1
+ DO J         I+                       NP1 
+ XT O(I,J)    REZIP
+ XE O(I,J)    X(I,J)                   Y(I,J)   
+ OD J
+ OD I
+
+ENDATA          
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CHARDIS02
+
+INDIVIDUALS
+
+ T  DIFSQR
+ F                      (V1-V2)*(V1-V2)
+ G  V1                  2.0*(V1-V2)
+ G  V2                  -2.0*(V1-V2)
+ H  V1        V1        2.0
+ H  V1        V2        -2.0
+ H  V2        V2        2.0
+
+ENDATA
+
+
+GROUPS        CHARDIS02
+
+INDIVIDUALS
+
+ T  REZIP
+ F                      1.0/ALPHA
+ G                      -1.0/(ALPHA*ALPHA)
+ H                      2.0/(ALPHA*ALPHA*ALPHA)
+
+ENDATA
+
+
+
+
+
+

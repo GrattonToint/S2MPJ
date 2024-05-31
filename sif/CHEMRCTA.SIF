@@ -1,0 +1,262 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHEMRCTA
+
+*   Problem :
+*   *********
+
+*   The tubular chemical reactor model problem by Poore, using a
+*   finite difference approximation to the steady state solutions.
+
+*   Source: Problem 8, eqs (8.6)--(8.9) in
+*   J.J. More',
+*   "A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+*              minor correction by Ph. Shott, Jan 1995 and F Ruediger, Mar 1997.
+
+*   classification NOR2-MN-V-V
+
+*   The axial coordinate interval is [0,1]
+
+*   Number of discretized point for the interval [0,1].
+*   The number of variables is 2N.
+
+*IE N                   5              $-PARAMETER n = 10
+*IE N                   25             $-PARAMETER n = 50
+*IE N                   50             $-PARAMETER n = 100
+*IE N                   250            $-PARAMETER n = 500    original value
+*IE N                   500            $-PARAMETER n = 1000
+*IE N                   2500           $-PARAMETER n = 5000
+ IE N                   5              $-PARAMETER     modified for S2X tests
+
+*   Problem's constants
+*   Mass Peclet number
+
+ RE PEM                 1.0            $-PARAMETER
+
+*  Heat Peclet number
+
+ RE PEH                 5.0            $-PARAMETER
+
+*   Damkholer number
+
+ RE D                   0.135          $-PARAMETER
+
+*   Heat of the reaction
+
+ RE B                   0.5            $-PARAMETER
+
+*   Heat transfer coefficient
+
+ RE BETA                2.0            $-PARAMETER
+
+*   Activation energy
+
+ RE GAMMA               25.0           $-PARAMETER
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ RE 1.0                 1.0
+
+*   Discretization definition
+
+
+ IA N-1       N         -1
+ RI 1/H       N-1
+ RM -1/H      1/H       -1.0
+ R/ H         1.0                      1/H
+ R* 1/H2      1/H                      1/H
+
+*   Constant coefficients in the equations
+*   1) concentration equations
+
+ RM -D        D         -1.0
+
+ R/ 1/PEM     1.0                      PEM
+ R* 1/H2PEM   1/PEM                    1/H2
+ RM -1/H2PM   1/H2PEM   -1.0
+ R* HPEM      PEM                      H
+ RM -HPEM     HPEM      -1.0
+ R+ -2/H2PM   -1/H2PM                  -1/H2PM
+
+ RM CU1       -HPEM     1.0
+ R+ CUI-1     1/H2PEM                  1/H
+ R+ CUI       -2/H2PM                  -1/H
+
+*   2) temperature equations
+
+ R* BD        B                        D
+
+ RM -BETA     BETA      -1.0
+
+ R/ 1/PEH     1.0                      PEH
+ R* 1/H2PEH   1/PEH                    1/H2
+ RM -1/H2PH   1/H2PEH   -1.0
+ R* HPEH      PEH                      H
+ RM -HPEH     HPEH      -1.0
+ R+ -2/H2PH   -1/H2PH                  -1/H2PH
+
+ RM CT1       -HPEH     1.0
+ R+ CTI-1     1/H2PEH                  1/H
+ R+ CTI       -2/H2PH                  -1/H
+ R+ CTI       CTI                      -BETA
+
+VARIABLES
+
+*   Temperature at the discretized points.
+
+ DO I         1                        N
+ X  T(I)
+ ND
+
+*   Concentration at the discretized points.
+
+ DO I         1                        N
+ X  U(I)
+ ND
+
+GROUPS
+
+*   First equations in s = 0 (i=1)
+*   1) concentration
+
+ XE GU(1)     U(1)      -1.0
+ ZE GU(1)     U(2)                     CU1
+
+*   2) temperature
+
+ XE GT(1)     T(1)      -1.0
+ ZE GT(1)     T(2)                     CT1
+
+*   Middle equations (1<i<n)
+
+ DO I         2                        N-1
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+*   1) concentration
+
+ ZE GU(I)     U(I-1)                   CUI-1
+ ZE GU(I)     U(I)                     CUI
+ ZE GU(I)     U(I+1)                   1/H2PEM
+
+*   2) temperature
+
+ ZE GT(I)     T(I)                     BETA
+ ZE GT(I)     T(I-1)                   CTI-1
+ ZE GT(I)     T(I)                     CTI
+ ZE GT(I)     T(I+1)                   1/H2PEH
+
+ ND
+
+*   Last equations in s = 1 (i=n)
+*   1) concentration
+
+ XE GU(N)     U(N-1)    -1.0
+ XE GU(N)     U(N)      1.0
+
+*   2) temperature
+
+ XE GT(N)     T(N-1)    -1.0
+ XE GT(N)     T(N)      1.0
+
+CONSTANTS
+
+ Z  CHEMRCTA  GU(1)                    -HPEM
+ Z  CHEMRCTA  GT(1)                    -HPEH
+
+BOUNDS
+
+*   temperature and concentration are nonnegative
+
+ DO I         1                        N
+ XL CHEMRCTA  T(I)      0.0000001
+ ND
+
+START POINT
+
+ XV CHEMRCTA  'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+*   Weighted reaction rate
+
+ EV REAC      U                        T
+ EP REAC      G
+
+ELEMENT USES
+
+ XT 'DEFAULT' REAC
+
+ DO I         2                        N-1
+
+ ZV EU(I)     U                        U(I)
+ ZV EU(I)     T                        T(I)
+ ZP EU(I)     G                        GAMMA
+
+ ZV ET(I)     U                        U(I)
+ ZV ET(I)     T                        T(I)
+ ZP ET(I)     G                        GAMMA
+
+ ND
+
+GROUP USES
+
+ DO I         2                        N-1
+ ZE GU(I)     EU(I)                    -D
+ ZE GT(I)     ET(I)                    BD
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CHEMRCTA
+
+TEMPORARIES
+
+ R  DADT
+ R  D2ADT2
+ R  EX
+ R  UEX
+ M  EXP
+
+INDIVIDUALS
+
+*   Weighted reaction rate (Arrhenius cinetics)
+
+ T  REAC
+
+ A  DADT                G / ( T * T )
+ A  D2ADT2              - 2.0 * DADT / T
+ A  EX                  EXP( G - G / T )
+ A  UEX                 EX * U
+
+ F                      UEX
+
+ G  U                   EX
+ G  T                   UEX * DADT
+
+ H  U         T         EX * DADT
+ H  T         T         UEX * ( DADT * DADT + D2ADT2 )
+
+ENDATA

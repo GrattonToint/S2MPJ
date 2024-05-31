@@ -1,0 +1,77 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BURKEHAN
+
+*   Problem :
+*   *********
+
+*   Source: an infeasible problem
+*   J. V. Burke and S. P. Han,
+*   "A robust SQP method",
+*   Mathematical Programming 43 1989:277-303
+
+*   SIF input: Nick Gould, May 2008
+
+*   classification QOR2-AN-1-1
+
+VARIABLES
+
+    X
+
+GROUPS
+
+ N  OBJ       X         1.0
+ L  CON
+
+CONSTANTS
+
+ X  BURKEHAN  CON       -1.0
+
+BOUNDS
+
+ XM BURKEHAN  X
+ XU BURKEHAN  X         0.0
+
+START POINT
+
+    BURKEHAN  X         10.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E         SQ
+ V  E         V1                       X
+
+GROUP USES
+
+ E  CON       E
+
+OBJECT BOUND
+
+*   Solution (infeasible)
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BURKEHAN
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ENDATA
+

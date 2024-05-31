@@ -1,0 +1,241 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DRCAV3LQ
+
+*   Problem :
+*   *********
+
+*   This system of nonlinear equations models the stream function
+*   corresponding to an incompressible fluid flow in a driven cavity 
+*   (after elimination of the vorticity). The system is solved in the
+*   least-squares sense.  The nonlinear system formulation is problem DRCAVTY3.
+
+*   The problem is nonconvex.
+*   It differs from the problems DRCAV1LQ and DRCAV2LQ by the value 
+*   chosen for the Reynolds number.
+
+*   Source:  
+*   P.N. Brown and Y. Saad, 
+*   "Hybrid Krylov Methods for Nonlinear Systems of Equations",
+*   SIAM J. Sci. Stat. Comput. 11, pp. 450-481, 1990.
+*   The boundary conditions have been set according to
+*   I.E. Kaporin and O. Axelsson,
+*   "On a class of nonlinear equation solvers based on the residual norm
+*   reduction over a sequence of affine subspaces",
+*   SIAM J, Sci. Comput. 16(1), 1995.
+
+*   SIF input: Ph. Toint, Jan 1995.
+
+*   classification OXR2-MY-V-V
+
+*   Discretization mesh: n = (M+3)**2 - fixed variables
+
+*IE M                   10             $-PARAMETER  n =   100   original value
+*IE M                   31             $-PARAMETER  n =   961
+*IE M                   63             $-PARAMETER  n =  3969
+ IE M                   10             $-PARAMETER     modified for S2X tests
+*IE M                   100            $-PARAMETER  n = 10000
+ 
+*   Considered nondimensional Reynolds number
+
+ RE RE                  4500.0         $-PARAMETER  Reynolds number
+
+ IA M+2       M         2
+ RI RM+2      M+2
+ RD H         RM+2      1.0
+
+*   Useful constants
+
+ IE -1                  -1
+ IE 0                   0
+ IE 1                   1
+
+ IA M+1       M         1
+ RM H/2       H         0.5
+ RM -H/2      H/2       -1.0
+ RM RE/4      RE        0.25
+ RM -RE/4     RE/4      -1.0
+
+VARIABLES
+
+ DO I         -1                       M+2
+ DO J         -1                       M+2
+ X  Y(I,J)
+ OD J
+ OD I
+
+GROUPS
+
+ DO I         1                        M
+
+ IA I-2       I         -2
+ IA I-1       I         -1
+ IA I+1       I         1
+ IA I+2       I         2
+
+ DO J         1                        M
+
+ IA J-2       J         -2
+ IA J-1       J         -1
+ IA J+1       J         1
+ IA J+2       J         2
+
+ XN E(I,J)    Y(I,J)    20.0
+ XN E(I,J)    Y(I-1,J)  -8.0           Y(I+1,J)  -8.0
+ XN E(I,J)    Y(I,J-1)  -8.0           Y(I,J+1)  -8.0
+ XN E(I,J)    Y(I-1,J+1) 2.0           Y(I+1,J-1) 2.0
+ XN E(I,J)    Y(I-1,J-1) 2.0           Y(I+1,J+1) 2.0
+ XN E(I,J)    Y(I-2,J)   1.0           Y(I+2,J)   1.0
+ XN E(I,J)    Y(I,J-2)   1.0           Y(I,J+2)   1.0
+
+ OD J
+ OD I
+
+BOUNDS
+
+ FR DRCAV3LQ  'DEFAULT'
+
+* Bottom boundary
+
+ DO J         -1                       M+2
+ XX DRCAV3LQ  Y(-1,J)    0.0
+ XX DRCAV3LQ  Y(0,J)     0.0
+ OD J
+
+* Left boundary
+
+ DO I         1                        M
+ XX DRCAV3LQ  Y(I,-1)    0.0
+ XX DRCAV3LQ  Y(I,0)     0.0
+ OD I
+
+* Right boundary
+
+ DO I         1                        M
+ XX DRCAV3LQ  Y(I,M+1)   0.0
+ XX DRCAV3LQ  Y(I,M+2)   0.0
+ OD I
+
+* Top boundary
+
+ DO J         -1                       M+2
+ ZX DRCAV3LQ  Y(M+1,J)                 -H/2
+ ZX DRCAV3LQ  Y(M+2,J)                 H/2
+ OD J
+
+ELEMENT TYPE
+
+ EV IPR       A1                       A2
+ EV IPR       B1                       B2
+ EV IPR       B3                       B4
+ EV IPR       B5                       B6
+ EV IPR       B7                       B8
+ IV IPR       AA                       BB
+
+ELEMENT USES
+
+ XT 'DEFAULT' IPR
+
+ DO I         1                        M
+
+ IA I-2       I         -2
+ IA I-1       I         -1
+ IA I+1       I         1
+ IA I+2       I         2
+
+ DO J         1                        M
+
+ IA J-2       J         -2
+ IA J-1       J         -1
+ IA J+1       J         1
+ IA J+2       J         2
+
+ ZV X(I,J)    A1                       Y(I,J+1)
+ ZV X(I,J)    A2                       Y(I,J-1)
+ ZV X(I,J)    B1                       Y(I-2,J)
+ ZV X(I,J)    B2                       Y(I-1,J-1)
+ ZV X(I,J)    B3                       Y(I-1,J+1)
+ ZV X(I,J)    B4                       Y(I-1,J)
+ ZV X(I,J)    B5                       Y(I+1,J)
+ ZV X(I,J)    B6                       Y(I+1,J-1)
+ ZV X(I,J)    B7                       Y(I+1,J+1)
+ ZV X(I,J)    B8                       Y(I+2,J)
+
+ ZV Z(I,J)    A1                       Y(I+1,J)
+ ZV Z(I,J)    A2                       Y(I-1,J)
+ ZV Z(I,J)    B1                       Y(I,J-2)
+ ZV Z(I,J)    B2                       Y(I-1,J-1)
+ ZV Z(I,J)    B3                       Y(I+1,J-1)
+ ZV Z(I,J)    B4                       Y(I,J-1)
+ ZV Z(I,J)    B5                       Y(I,J+1)
+ ZV Z(I,J)    B6                       Y(I-1,J+1)
+ ZV Z(I,J)    B7                       Y(I+1,J+1)
+ ZV Z(I,J)    B8                       Y(I,J+2)
+
+ OD J
+ OD I
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+ DO I         1                        M
+ DO J         1                        M
+ ZE E(I,J)    X(I,J)                   RE/4
+ ZE E(I,J)    Z(I,J)                   -RE/4
+ OD J
+ OD I
+
+OBJECT BOUND
+
+ LO DRCAV3LQ             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DRCAV3LQ
+
+INDIVIDUALS
+
+ T  IPR
+ R  AA        A1         1.0           A2        -1.0
+ R  BB        B1         1.0           B2         1.0
+ R  BB        B3         1.0           B4        -4.0
+ R  BB        B5         4.0           B6        -1.0
+ R  BB        B7        -1.0           B8        -1.0  
+ F                      AA * BB
+ G  AA                  BB
+ G  BB                  AA
+ H  AA        BB        1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DRCAV3LQ
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+

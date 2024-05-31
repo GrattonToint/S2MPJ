@@ -1,0 +1,491 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEMBO7
+
+*   Problem :
+*   *******
+
+*   A 7 stage membrane separation model
+
+*   Source: problem 7 in
+*   R.S. Dembo,
+*   "A set of geometric programming test problems and their solutions",
+*   Mathematical Programming, 17, 192-213, 1976.
+
+*   SIF input: A. R. Conn, June 1993.
+
+*   classification QOR2-MN-16-20
+
+*   Number of variables
+
+ IE N                   16
+
+*   Useful parameter
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       X12       1.262626       X13       1.262626
+ N  OBJ       X14       1.262626       X15       1.262626
+ N  OBJ       X16       1.262626
+
+*   Constraint functions
+
+ G  C0        X12       1.262626       X13       1.262626
+ G  C0        X14       1.262626       X15       1.262626
+ G  C0        X16       1.262626
+
+ L  C1        X1        0.975
+
+ L  C2        X2        0.975
+
+ L  C3        X3        0.975
+
+ L  C4        X4        0.975
+
+ L  C5        X5        0.975
+
+ L  C6
+
+ L  C7        X13       -0.002
+
+ L  C8        X8        1.0            X9        1.0
+
+ L  C9
+
+ L  C10
+
+ L  C11       X16       0.002
+
+ L  C12       X11       0.002          X12       -0.002
+
+ L  C13
+
+ L  C14
+
+ L  C15
+
+ L  C16
+
+ L  C17
+
+ L  C18
+
+ L  C19
+
+CONSTANTS
+
+    DEMBO7    'DEFAULT' 1.0
+    DEMBO7    OBJ       0.0
+    DEMBO7    C0        50.0
+
+RANGES
+
+    DEMBO7    C0        200.0
+
+
+BOUNDS
+
+ XL DEMBO7    'DEFAULT' 0.1
+ XU DEMBO7    'DEFAULT' 0.9
+
+ UP DEMBO7    X5        1.0
+ LO DEMBO7    X5        0.9
+
+ UP DEMBO7    X6        0.1
+ LO DEMBO7    X6        0.0001
+
+ UP DEMBO7    X11       1000.0
+ LO DEMBO7    X11       1.0
+
+ UP DEMBO7    X12       500.0
+ LO DEMBO7    X12       0.000001
+
+ UP DEMBO7    X13       500.0
+ LO DEMBO7    X13       1.0
+
+ UP DEMBO7    X14       1000.0
+ LO DEMBO7    X14       500.0
+
+ UP DEMBO7    X15       1000.0
+ LO DEMBO7    X15       500.0
+
+ UP DEMBO7    X16       500.0
+ LO DEMBO7    X16       0.000001
+
+START POINT
+
+    DEMBO7    X1        0.8            X2        0.83
+    DEMBO7    X3        0.85           X4        0.87
+    DEMBO7    X5        0.90           X6        0.10
+    DEMBO7    X7        0.12           X8        0.19
+    DEMBO7    X9        0.25           X10       0.29
+    DEMBO7    X11       512.0          X12       13.1
+    DEMBO7    X13       71.8           X14       640.0
+    DEMBO7    X15       650.0          X16       5.7
+
+ELEMENT TYPE
+
+ EV INV       X
+ EV 2PR       X                        Y
+ EV QT        X                        Y
+ EV QTQT      X                        Y
+ EV QTQT      W                        Z
+ EV 2PRRC     X                        Y
+ EV 2PRRC     Z
+ EV QTRC      X                        Y
+ EV QTRC      Z
+ EV SQQT      X                        Y
+
+ELEMENT USES
+
+ T  E1        2PR
+ V  E1        X                        X1
+ V  E1        Y                        X12
+
+ T  E2        2PR
+ V  E2        X                        X2
+ V  E2        Y                        X13
+
+ T  E3        2PR
+ V  E3        X                        X3
+ V  E3        Y                        X14
+
+ T  E4        2PR
+ V  E4        X                        X4
+ V  E4        Y                        X15
+
+ T  E5        2PR
+ V  E5        X                        X5
+ V  E5        Y                        X16
+
+ T  E6        QT
+ V  E6        X                        X1
+ V  E6        Y                        X6
+
+ T  E7        SQQT
+ V  E7        X                        X1
+ V  E7        Y                        X6
+
+ T  E8        QT
+ V  E8        X                        X2
+ V  E8        Y                        X7
+
+ T  E9        SQQT
+ V  E9        X                        X2
+ V  E9        Y                        X7
+
+ T  E10       QT
+ V  E10       X                        X3
+ V  E10       Y                        X8
+
+ T  E11       SQQT
+ V  E11       X                        X3
+ V  E11       Y                        X8
+
+ T  E12       QT
+ V  E12       X                        X4
+ V  E12       Y                        X9
+
+ T  E13       SQQT
+ V  E13       X                        X4
+ V  E13       Y                        X9
+
+ T  E14       QT
+ V  E14       X                        X5
+ V  E14       Y                        X10
+
+ T  E15       SQQT
+ V  E15       X                        X5
+ V  E15       Y                        X10
+
+ T  E16       QT
+ V  E16       X                        X6
+ V  E16       Y                        X7
+
+ T  E17       QTQT
+ V  E17       X                        X1
+ V  E17       Y                        X7
+ V  E17       W                        X12
+ V  E17       Z                        X11
+
+ T  E18       QTQT
+ V  E18       X                        X6
+ V  E18       Y                        X7
+ V  E18       W                        X12
+ V  E18       Z                        X11
+
+ T  E19       QT
+ V  E19       X                        X7
+ V  E19       Y                        X8
+
+ T  E20       2PRRC
+ V  E20       X                        X7
+ V  E20       Y                        X12
+ V  E20       Z                        X8
+
+ T  E21       2PRRC
+ V  E21       X                        X2
+ V  E21       Y                        X13
+ V  E21       Z                        X8
+
+ T  E22       2PRRC
+ V  E22       X                        X1
+ V  E22       Y                        X12
+ V  E22       Z                        X8
+
+ T  E23       2PR
+ V  E23       X                        X8
+ V  E23       Y                        X13
+
+ T  E24       2PR
+ V  E24       X                        X3
+ V  E24       Y                        X14
+
+ T  E25       2PR
+ V  E25       X                        X2
+ V  E25       Y                        X13
+
+ T  E26       2PR
+ V  E26       X                        X9
+ V  E26       Y                        X14
+
+ T  E27       QT
+ V  E27       X                        X9
+ V  E27       Y                        X3
+
+ T  E28       QTQT
+ V  E28       X                        X4
+ V  E28       Y                        X3
+ V  E28       W                        X15
+ V  E28       Z                        X14
+
+ T  E29       QTRC
+ V  E29       X                        X10
+ V  E29       Y                        X3
+ V  E29       Z                        X14
+
+ T  E30       QTRC
+ V  E30       X                        X9
+ V  E30       Y                        X3
+ V  E30       Z                        X14
+
+ T  E31       QTQT
+ V  E31       X                        X8
+ V  E31       Y                        X3
+ V  E31       W                        X15
+ V  E31       Z                        X14
+
+ T  E32       QTQT
+ V  E32       X                        X5
+ V  E32       Y                        X4
+ V  E32       W                        X16
+ V  E32       Z                        X15
+
+ T  E33       QT
+ V  E33       X                        X10
+ V  E33       Y                        X4
+
+ T  E34       INV
+ V  E34       X                        X15
+
+ T  E35       QT
+ V  E35       X                        X16
+ V  E35       Y                        X15
+
+ T  E36       QTRC
+ V  E36       X                        X10
+ V  E36       Y                        X4
+ V  E36       Z                        X15
+
+ T  E37       INV
+ V  E37       X                        X4
+
+ T  E38       2PRRC
+ V  E38       X                        X5
+ V  E38       Y                        X16
+ V  E38       Z                        X4
+
+ T  E39       QT
+ V  E39       X                        X12
+ V  E39       Y                        X11
+
+ T  E40       QT
+ V  E40       X                        X4
+ V  E40       Y                        X5
+
+ T  E41       QT
+ V  E41       X                        X3
+ V  E41       Y                        X4
+
+ T  E42       QT
+ V  E42       X                        X2
+ V  E42       Y                        X3
+
+ T  E43       QT
+ V  E43       X                        X1
+ V  E43       Y                        X2
+
+ T  E44       QT
+ V  E44       X                        X9
+ V  E44       Y                        X10
+
+ T  E45       QT
+ V  E45       X                        X8
+ V  E45       Y                        X9
+
+
+GROUP USES
+
+ E  OBJ       E1        -1.231060      E2        -1.231060
+ E  OBJ       E3        -1.231060      E4        -1.231060
+ E  OBJ       E5        -1.231060
+
+ E  C0        E1        -1.231060      E2        -1.231060
+ E  C0        E3        -1.231060      E4        -1.231060
+ E  C0        E5        -1.231060
+
+ E  C1        E6        0.034750       E7        -0.00975
+
+ E  C2        E8        0.034750       E9        -0.00975
+
+ E  C3        E10       0.034750       E11       -0.00975
+
+ E  C4        E12       0.034750       E13       -0.00975
+
+ E  C5        E14       0.034750       E15       -0.00975
+
+ E  C6        E16       1.0            E17       1.0
+ E  C6        E18       -1.0
+
+ E  C7        E19       1.0            E20       0.002
+ E  C7        E21       0.002          E22       -0.002
+
+ E  C8        E23       0.002          E24       0.002
+ E  C8        E25       -0.002         E26       -0.002
+
+ E  C9        E27       1.0            E28       1.0
+ E  C9        E29       500.0          E30       -500.0
+ E  C9        E31       -1.0
+
+ E  C10       E32       1.0            E33       1.0
+ E  C10       E34       500.0          E35       -1.0
+ E  C10       E36       -500.0
+
+ E  C11       E37       0.9            E38       -0.002
+
+*E  C12
+
+ E  C13       E39       1.0
+
+ E  C14       E40       1.0
+
+ E  C15       E41       1.0
+
+ E  C16       E42       1.0
+
+ E  C17       E43       1.0
+
+ E  C18       E44       1.0
+
+ E  C19       E45       1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               174.788807
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DEMBO7
+
+TEMPORARIES
+
+ R  XW
+ R  YZ
+
+INDIVIDUALS
+
+ T  INV
+ F                      1.0 / X
+ G  X                   -1.0 / X**2
+ H  X         X         2.0 / X**3
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  QT
+ F                      X / Y
+ G  X                   1 / Y
+ G  Y                   -X / Y**2
+ H  X         Y         -1.0 / Y**2
+ H  Y         Y         (2.0*X) / Y**3
+
+ T  QTQT
+ A  XW                  X*W
+ A  YZ                  Y*Z
+ F                      XW / YZ
+ G  X                   W / YZ
+ G  Y                   -XW / (Y * YZ)
+ G  W                   X / YZ
+ G  Z                   -XW / (YZ * Z)
+ H  X         Y         -W / (Y * YZ)
+ H  X         W         1.0 / YZ
+ H  X         Z         -W / (Z * YZ)
+ H  Y         Y         (2.0 * XW) / (Y**2 * YZ)
+ H  Y         W         -X / (Y * YZ)
+ H  Y         Z         XW / YZ**2
+ H  W         Z         -X / (Z * YZ)
+ H  Z         Z         (2.0 * XW) / (Z**2 * YZ)
+
+ T  2PRRC
+ F                      X*Y / Z
+ G  X                   Y / Z
+ G  Y                   X / Z
+ G  Z                   -X*Y / Z**2
+ H  X         Y         1.0 / Z
+ H  X         Z         -Y / Z**2
+ H  Y         Z         -X / Z**2
+ H  Z         Z         2.0*X*Y / Z**3
+
+ T  QTRC
+ A  YZ                  Y*Z
+ F                      X / YZ
+ G  X                   1.0 / YZ
+ G  Y                   -X / (Y*YZ)
+ G  Z                   -X / (Z*YZ)
+ H  X         Y         -1.0 / (Y*YZ)
+ H  X         Z         -1.0 / (Z*YZ)
+ H  Y         Y         (2.0*X) / (Y**2 * YZ)
+ H  Y         Z         X / YZ**2
+ H  Z         Z         (2.0*X) / (Z**2 * YZ)
+
+ T  SQQT
+ F                      X**2 / Y
+ G  X                   2.0*X / Y
+ G  Y                   -X**2 / Y**2
+ H  X         X         2.0 / Y
+ H  X         Y         -2.0*X / Y**2
+ H  Y         Y         2.0*X**2 / Y**3
+
+ENDATA

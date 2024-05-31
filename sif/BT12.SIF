@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT12
+
+*   Problem :
+*   *********
+
+*   Source: problem 12 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification QQR2-AN-5-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0            X2        1.0
+ E  CON2 
+ E  CON3      X1        1.0
+
+CONSTANTS
+
+    BT12      CON1      25.0
+    BT12      CON2      25.0
+    BT12      CON3      2.0
+
+BOUNDS
+
+ FR BT12      'DEFAULT'
+
+START POINT
+
+* Start 1
+
+ XV BT12      'DEFAULT' 2.0
+
+* Start 2
+
+*XV BT12      'DEFAULT' 1.0
+
+* Start 3
+
+*XV BT12      'DEFAULT' 3.0
+
+* Solution proposed in the paper (infeasible)
+
+ XV BT12      X1        15.811
+ XV BT12      X2        1.5811
+ XV BT12      X3        0.0
+ XV BT12      X4        15.083
+ XV BT12      X5        3.7164
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+ T  X4SQ      SQ
+ V  X4SQ      X                        X4
+
+ T  X5SQ      SQ
+ V  X5SQ      X                        X5
+
+GROUP USES
+
+ E  OBJ       X1SQ      0.01           X2SQ
+
+ E  CON1      X3SQ      -1.0 
+
+ E  CON2      X1SQ                     X2SQ
+ E  CON2      X4SQ      -1.0
+
+ E  CON3      X5SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                6.18811881
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT12
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ENDATA
+

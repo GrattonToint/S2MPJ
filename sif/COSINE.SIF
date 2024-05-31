@@ -1,0 +1,129 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          COSINE 
+
+*   Problem :
+*   *********
+
+*   Another function with nontrivial groups and
+*   repetitious elements.
+
+*   Source:
+*   N. Gould, private communication.
+
+*   SIF input: N. Gould, Jan 1996
+
+*   classification OUR2-AN-V-0
+
+*   number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   other parameter definitions
+
+ IE 1                   1
+ IA N-1       N         -1
+ RI RN-1      N-1          
+ RM -RN-1     RN-1      -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*  objective function
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XN G(I)      X(I+1)    -0.5
+ OD
+
+BOUNDS
+
+ FR COSINE    'DEFAULT'
+
+START POINT
+
+ XV COSINE    'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ELEMENT USES
+
+ DO I         1                        N-1
+
+ XT E(I)      SQ
+ ZV E(I)      V                        X(I)
+
+ ND
+
+GROUP TYPE
+
+ GV COS       GVAR
+
+GROUP USES
+
+ DO I         1                        N-1
+ XT G(I)      COS
+ XE G(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+ ZL COSINE                             -RN-1
+
+*   Solution
+
+*LO SOLTN               ???
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      COSINE 
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        COSINE 
+
+TEMPORARIES
+
+ R  COSG
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  COS
+ A  COSG                COS( GVAR )
+ F                      COSG
+ G                      - SIN( GVAR )
+ H                      - COSG
+
+ENDATA

@@ -1,0 +1,89 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEMYMALO
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem in two variables.
+
+*   Source: 
+*   V.F. Demynanov and V.N. Malozemov
+*   "Introduction to Minimax"
+*   Wiley, 1974
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LQR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XL F1        U         -1.0           X1        5.0
+ XL F1        X2        1.0
+
+ XL F2        U         -1.0           X1        -5.0
+ XL F2        X2        1.0
+
+ XL F3        U         -1.0           X2        4.0
+
+BOUNDS
+
+*   All variables are free
+
+ FR DEMYMALO  'DEFAULT'
+
+START POINT
+
+    DEMYMALO  X1        1.0
+    DEMYMALO  X2        1.0
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      V                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      V                        X2
+
+GROUP USES
+
+ E  F3        X1SQ                     X2SQ
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -3.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DEMYMALO
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ENDATA
+

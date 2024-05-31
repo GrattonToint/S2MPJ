@@ -1,0 +1,269 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CAMSHAPE
+
+*   Problem :
+*   *********
+
+*   Maximize the area of the valve opening for one rotation of a convex cam 
+*   with constraints on the curvature and on the radius of the cam
+
+*   This is problem 4 in the COPS (Version 2) collection of 
+*   E. Dolan and J. More'
+*   see "Benchmarking Optimization Software with COPS"
+*   Argonne National Labs Technical Report ANL/MCS-246 (2000)
+
+*   SIF input: Nick Gould, November 2000
+
+*   classification LOR2-AN-V-V
+
+*   The number of discretization points
+
+*IE N                   100            $-PARAMETER
+*IE N                   200            $-PARAMETER
+*IE N                   400            $-PARAMETER
+*IE N                   800            $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+* design parameter related to the valve shape
+
+ RE RV                  1.0
+
+* maximum allowed radius of the cam
+
+ RE RMAX                2.0
+
+* minimum allowed radius of the cam
+
+ RE RMIN                1.0
+
+* average radius
+
+ R+ RAV       RMIN                     RMAX
+ RM RAV       RAV       0.5
+
+* approximation of pi
+
+ RF PI/4      ARCTAN    1.0
+ RM PI        PI/4      4.0
+
+* curvature limit parameter
+
+ RE ALPHA               1.5
+
+* angle between discretization points 
+
+ IA N+1       N         1
+ IM 5(N+1)    N+1       5
+ RI 5(N+1)    5(N+1)    
+ RM DTHETA    PI        2.0
+ R/ DTHETA    DTHETA                   5(N+1)
+
+*  Other useful values
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1                
+ RI RN        N
+ R* PIRV      PI                       RV
+ R/ PIRV/N    PIRV                     RN
+ RM -PIRV/N   PIRV/N    -1.0
+ R( CDTHETA   COS                      DTHETA
+ RM 2CDTHETA  CDTHETA   2.0                   
+ R* ADTHETA   ALPHA                    DTHETA 
+ RM -ADTHETA  ADTHETA   -1.0
+ RM 2ADTHETA  ADTHETA   2.0
+ RM -RMIN     RMIN      -1.0
+ RM -RMAX     RMAX      -1.0
+ RM -2RMAX    RMAX      -2.0
+ R* RMIN2     RMIN                     RMIN
+ R* RMIN2CD   RMIN                     2CDTHETA
+ R* RMAX2CD   RMAX                     2CDTHETA
+
+VARIABLES
+
+ DO I         1                        N
+ X  R(I)      $ radius of the cam at discretization points
+ ND
+
+GROUPS
+
+*  Objective function: maximize valve_area: ((PI*RV)/n)*sum {i in 1..n} r[i]
+*   = - minimize valve_area: - ((PI*RV)/n)*sum {i in 1..n} r[i]
+
+ DO I         1                        N
+ ZN AREA      R(I)                     -PIRV/N
+ ND
+
+* convexity {i in 2..n-1}: 
+* - r[i-1]*r[i] - r[i]*r[i+1] + r[i-1]*r[i+1]*2CDTHETA <= 0;
+
+ DO I         2                        N-1
+ XL CO(I)
+ ND
+
+* convex_edge1:
+* - RMIN*r[1] - r[1]*r[2] + RMIN*r[2]*2CDTHETA <= 0;
+
+ ZL E1        R(1)                     -RMIN 
+ ZL E1        R(2)                     RMIN2CD 
+
+* convex_edge2:
+* - RMIN^2 - RMIN*r[1] + RMIN*r[1]*2CDTHETA <= 0;
+
+ R- R         RMIN2CD                  RMIN                    
+ ZL E2        R(1)                     R
+
+* convex_edge3:
+*  - r[n-1]*r[n] - r[n]*RMAX + r[n-1]*RMAX*2CDTHETA <= 0;
+
+ ZL E3        R(N)                     -RMAX
+ ZL E3        R(N-1)                   RMAX2CD 
+
+* convex_edge4:
+*  - 2*RMAX*r[n] + r[n]^2*2CDTHETA <= 0;
+
+ ZL E4        R(N)                     -2RMAX
+
+* curvature_edge1:
+*    -ALPHA*DTHETA <= (r[1] - RMIN)^2 <= ALPHA*DTHETA;
+
+ XG CU(0)     R(1)      1.0
+
+* curvature {i in 1..n-1}:
+*   -ALPHA*DTHETA <= (r[i+1] - r[i]) <= ALPHA*DTHETA;
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XG CU(I)     R(I+1)    1.0            R(I)      -1.0
+ ND
+
+* curvature_edge n:
+*    -ALPHA*DTHETA <= (RMAX - r[n]) <= ALPHA*DTHETA;
+
+ XG CU(N)     R(N)      -1.0
+
+CONSTANTS
+
+ Z  CAMSHAPE  E2                       RMIN2
+
+ R+ R         -ADTHETA                 RMIN
+ Z  CAMSHAPE  CU(0)                    R
+
+ DO I         1                        N-1
+ Z  CAMSHAPE  CU(I)                    -ADTHETA
+ ND
+
+ R- R         -ADTHETA                 RMAX
+ Z  CAMSHAPE  CU(N)                    R
+
+RANGES
+
+ DO I         0                        N
+ Z  CAMSHAPE  CU(I)                    2ADTHETA
+ ND
+
+BOUNDS
+
+ DO I         1                        N
+ ZL CAMSHAPE  R(I)                     RMIN
+ ZU CAMSHAPE  R(I)                     RMAX
+ ND
+
+START POINT
+
+ DO I         1                        N
+ ZV CAMSHAPE  R(I)                     RAV
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       X
+ EV PROD      X                        Y
+
+ELEMENT USES
+
+ DO I         2                        N-1
+ IA I-1       I         -1
+ IA I+1       I         1
+ XT RA(I)     PROD
+ ZV RA(I)     X                        R(I)
+ ZV RA(I)     Y                        R(I-1)
+ XT RB(I)     PROD
+ ZV RB(I)     X                        R(I+1)
+ ZV RB(I)     Y                        R(I-1)
+ ND
+ XT RA(N)     PROD
+ ZV RA(N)     X                        R(N)
+ ZV RA(N)     Y                        R(N-1)
+ XT R2        SQR
+ ZV R2        X                        R(N)
+
+GROUP USES
+
+* convexity {i in 2..n-1}: 
+* - r[i-1]*r[i] - r[i]*r[i+1] + r[i-1]*r[i+1]*2CDTHETA <= 0;
+
+ DO I         2                        N-1
+ IA I+1       I         1
+ XE CO(I)     RA(I)     -1.0           RA(I+1)   -1.0
+ ZE CO(I)     RB(I)                    2CDTHETA
+ ND
+
+* convex_edge1:
+* - RMIN*r[1] - r[1]*r[2] + RMIN*r[2]*2CDTHETA <= 0;
+
+ XE E1        RA(2)     -1.0
+
+* convex_edge3:
+*  - r[n-1]*r[n] - r[n]*RMAX + r[n-1]*RMAX*2CDTHETA <= 0;
+
+ XE E3        RA(N)     -1.0
+
+* convex_edge4:
+*  - 2*RMAX*r[n] + r[n]^2*2CDTHETA <= 0;
+
+ ZE E4        R2                       2CDTHETA
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION             -4.2841D+00   $ (NH=100)
+*LO SOLUTION             -4.2785D+00   $ (NH=200)
+*LO SOLUTION             -4.2757D+00   $ (NH=400)
+*LO SOLUTION             -4.2743D+00   $ (NH=800)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CAMSHAPE
+
+TEMPORARIES
+
+ R  ONEPU2
+ R  S1PU2
+ M  SQRT
+
+INDIVIDUALS
+
+ T  PROD
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQR
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+

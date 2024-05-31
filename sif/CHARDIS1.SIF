@@ -1,0 +1,219 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHARDIS1
+
+*   Problem :
+*   *********
+
+*   Distribution of charges on a round plate (2D)
+
+*   SIF input: R. Felkel, Jun 1999.
+*              incorrectly decoded version (see CHARDIS12 for correction)
+
+*   classification OQR2-AY-V-V
+
+*   Number of positive (or negative) charges -> Number of variables 2*NP1
+
+*IE NP1                 5              $-PARAMETER
+*IE NP1                 8              $-PARAMETER
+*IE NP1                 20             $-PARAMETER     original value
+*IE NP1                 50             $-PARAMETER
+*IE NP1                 100            $-PARAMETER
+*IE NP1                 200            $-PARAMETER
+*IE NP1                 500            $-PARAMETER
+*IE NP1                 1000           $-PARAMETER
+ IE NP1                 20             $-PARAMETER     modified for S2X tests
+*IE NP1                 2000           $-PARAMETER
+*IE NP1                 5000           $-PARAMETER
+
+*   Other useful parameters
+
+ RE R                   1.0
+
+*   Some additional definitions
+
+ R* R2        R                        R
+ 
+* Some stuff
+
+ IA N         NP1       -1
+ RI NReal     N
+ RI NP1Real   NP1
+ 
+ RF halfPI    ARCSIN    1.0 
+ RM PI        halfPI    2.0
+ RM 2PI       halfPI    4.0
+ RM 4PI       halfPI    8.0
+
+ R/ 4PIqN     4PI                      NReal
+ R/ 2PIqN     2PI                      NReal
+ R/ PIqN      PI                       NReal
+
+ R/ RqN       R                        NReal
+
+ IE 1                   1
+ IE 2                   2
+
+VARIABLES
+
+*   Each candle has position in cylinder coordinates
+
+ DO I         1                        NP1
+ X  X(I)
+ X  Y(I)
+ OD I
+
+GROUPS
+
+*   Objective 
+
+ DO I         1                        NP1
+ IA I+        I         1
+ DO J         I+                       NP1                        
+ XN O(I,J)
+ OD J
+ OD I
+
+*   Constraints
+
+ DO I         2                        NP1
+ XL RES(I)
+ OD I
+
+CONSTANTS
+
+ DO I         2                        NP1
+ Z  CHARDIS1  RES(I)                   R2
+ OD I
+
+BOUNDS
+
+ DO I         2                        NP1
+ XR CHARDIS1  X(I)
+ XR CHARDIS1  Y(I)
+ OD I
+
+ ZX CHARDIS1  X1                       R
+ XX CHARDIS1  Y1        0.0
+
+START POINT
+
+ DO I         2                        NP1
+ IA I-        I         -1
+ RI RealI-    I-
+ R- RealNP1-I NP1Real                  RealI- 
+ R* PHII-     2PIqN                    RealI-
+ R* RI-       RqN                      RealNP1-I
+ R( XST       COS                      PHII-
+ R( YST       SIN                      PHII-
+ R* XS        XST                      RI-
+ R* YS        YST                      RI-
+ ZV CHARDIS1  X(I)                     XS
+ ZV CHARDIS1  Y(I)                     YS        
+ OD I
+
+ ZV CHARDIS1  X1                       R
+ XV CHARDIS1  Y1        0.0
+
+ELEMENT TYPE
+
+*   Square
+
+ EV SQR       V1
+
+*   Square of Difference
+
+ EV DIFSQR    V1                       V2
+
+ELEMENT USES
+
+*   Objective
+
+ DO I         1                        NP1
+ IA I+        I         1
+ DO J         I+                       NP1                        
+ XT X(I,J)    DIFSQR
+ ZV X(I,J)    V1                       X(I)
+ ZV X(I,J)    V2                       X(J)
+ XT Y(I,J)    DIFSQR
+ ZV Y(I,J)    V1                       Y(I)
+ ZV Y(I,J)    V2                       Y(J)
+ OD J
+ OD I
+
+*   Constraints
+
+ DO I         2                        NP1
+ XT RX(I)     SQR
+ ZV RX(I)     V1                       X(I)
+ XT RY(I)     SQR
+ ZV RY(I)     V1                       Y(I)
+ OD I
+
+GROUP TYPE
+
+ GV REZIP     ALPHA
+
+GROUP USES
+
+*   Objective
+
+ DO I         1                        NP1
+ IA I+        I         1
+ DO J         I+                       NP1 
+ XE O(I,J)    X(I,J)                   Y(I,J)   
+ OD J
+ OD I
+
+*   Constraints
+
+ DO I         2                        NP1
+ XE RES(I)    RX(I)     1.0
+ XE RES(I)    RY(I)     1.0
+ OD I
+
+ENDATA          
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CHARDIS1
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  DIFSQR
+ F                      (V1-V2)*(V1-V2)
+ G  V1                  2.0*(V1-V2)
+ G  V2                  -2.0*(V1-V2)
+ H  V1        V1        2.0
+ H  V1        V2        -2.0
+ H  V2        V2        2.0
+
+ENDATA
+
+
+GROUPS        CHARDIS1
+
+INDIVIDUALS
+
+ T  REZIP
+ F                      1.0/ALPHA
+ G                      -1.0/(ALPHA*ALPHA)
+ H                      2.0/(ALPHA*ALPHA*ALPHA)
+
+ENDATA
+
+
+
+
+
+

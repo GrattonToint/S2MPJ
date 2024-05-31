@@ -1,0 +1,84 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT1
+
+*   Problem :
+*   *********
+
+*   Source: problem 1 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification QQR2-AN-2-1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ       X1        -1.0
+ E  CON1
+
+CONSTANTS
+
+    BT1       OBJ       100.0
+    BT1       CON1      1.0
+
+BOUNDS
+
+ FR BT1       'DEFAULT'
+
+START POINT
+
+ XV BT1       X1        0.08
+ XV BT1       X2        0.06
+
+ELEMENT TYPE
+
+ EV SQ        V1
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+GROUP USES
+
+ E  OBJ       E1        100.0          E2        100.0
+ E  CON1      E1        1.0            E2        1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT1
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  2.0 * V1
+ H  V1        V1        2.0
+
+ENDATA
+

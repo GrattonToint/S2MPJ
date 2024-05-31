@@ -1,0 +1,700 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BQPGASIM
+
+*   Problem :
+*   *********
+
+*   The first 50 variable subproblem from BQPGAUSS.
+
+*   SIF input: N. Gould, July 1990.
+
+*   classification QBR2-AN-50-0
+
+GROUPS
+
+*  objective function
+
+ N  LINGROUP
+
+VARIABLES
+           1  LINGROUP    5.6987D-02
+           2  LINGROUP   -6.1847D-03
+           3  LINGROUP    5.2516D-03
+           4  LINGROUP    1.1729D-02
+           5  LINGROUP    4.9596D-03
+           6  LINGROUP   -4.9271D-03
+           7  LINGROUP    1.2185D-02
+           8  LINGROUP    1.3238D-02
+           9  LINGROUP   -1.5134D-02
+          10  LINGROUP   -1.2247D-02
+          11  LINGROUP    2.3741D-02
+          12  LINGROUP   -9.7666D-02
+          13  LINGROUP    9.8702D-02
+          14  LINGROUP    7.8901D-04
+          15  LINGROUP    5.1663D-04
+          16  LINGROUP   -1.7477D-04
+          17  LINGROUP    1.1795D-03
+          18  LINGROUP   -1.7351D-02
+          19  LINGROUP    1.3439D-03
+          20  LINGROUP   -5.6977D-02
+          21  LINGROUP    1.0040D-02
+          22  LINGROUP   -8.3380D-02
+          23  LINGROUP   -3.7526D-03
+          24  LINGROUP   -9.4555D-04
+          25  LINGROUP   -4.9258D-03
+          26  LINGROUP   -1.3959D-03
+          27  LINGROUP   -4.3749D-03
+          28  LINGROUP   -4.3677D-03
+          29  LINGROUP   -2.7985D-02
+          30  LINGROUP    1.8839D-03
+          31  LINGROUP   -1.2340D-03
+          32  LINGROUP   -6.8139D-04
+          33  LINGROUP   -3.5838D-02
+          34  LINGROUP   -3.4857D-02
+          35  LINGROUP    2.8724D-03
+          36  LINGROUP    1.6625D-02
+          37  LINGROUP    1.3571D-02
+          38  LINGROUP   -7.2447D-03
+          39  LINGROUP   -4.6034D-04
+          40  LINGROUP   -1.6225D-02
+          41  LINGROUP    2.2034D-05
+          42  LINGROUP    5.8844D-02
+          43  LINGROUP    3.0725D-03
+          44  LINGROUP    2.8227D-03
+          45  LINGROUP   -2.0681D-02
+          46  LINGROUP   -5.4952D-03
+          47  LINGROUP    6.2552D-04
+          48  LINGROUP    3.3782D-02
+          49  LINGROUP   -4.8584D-03
+          50  LINGROUP   -1.4371D-03
+
+BOUNDS
+
+ XL BOUND     'DEFAULT'  -0.1
+ XU BOUND     'DEFAULT'   0.1
+
+ LO BOUND            1   -5.4966D-05
+ UP BOUND            1    9.9945D-02
+ LO BOUND            2   -3.9206D-03
+ UP BOUND            3    9.9999D-02
+ LO BOUND            4   -1.0001D-01
+ UP BOUND            4    9.9990D-02
+ UP BOUND            5    9.9997D-02
+ LO BOUND            6   -9.9994D-02
+ UP BOUND            6    6.1561D-06
+ LO BOUND            7   -3.9119D-03
+ UP BOUND            7    9.9986D-02
+ LO BOUND            8   -1.0001D-01
+ UP BOUND            8    2.5683D-02
+ LO BOUND            9   -9.9987D-02
+ UP BOUND            9    1.0001D-01
+ LO BOUND           10   -9.9988D-02
+ UP BOUND           10    1.0001D-01
+ LO BOUND           11   -1.0001D-01
+ UP BOUND           11    2.8998D-03
+ LO BOUND           12   -9.9952D-02
+ UP BOUND           12    4.7652D-05
+ LO BOUND           13   -4.5551D-05
+ UP BOUND           13    9.9954D-02
+ LO BOUND           14   -9.9999D-02
+ LO BOUND           16   -7.2801D-02
+ LO BOUND           18   -9.9992D-02
+ UP BOUND           18    8.3681D-06
+ LO BOUND           20   -9.9956D-02
+ UP BOUND           20    4.3809D-05
+ LO BOUND           22   -9.9961D-02
+ UP BOUND           22    3.9248D-05
+ LO BOUND           25   -4.1110D-03
+ LO BOUND           29   -9.6988D-02
+ UP BOUND           29    1.0002D-01
+ LO BOUND           32   -5.8439D-02
+ LO BOUND           33   -4.5616D-06
+ UP BOUND           33    9.9995D-02
+ LO BOUND           34   -9.9999D-02
+ UP BOUND           34    7.3117D-07
+ LO BOUND           35   -9.9991D-02
+ UP BOUND           35    9.3168D-06
+ LO BOUND           36   -9.9977D-02
+ UP BOUND           36    1.0002D-01
+ LO BOUND           37   -9.9984D-02
+ UP BOUND           37    1.5812D-05
+ LO BOUND           39   -3.9611D-06
+ UP BOUND           39    9.9996D-02
+ LO BOUND           40   -8.8262D-06
+ UP BOUND           40    9.9991D-02
+ LO BOUND           41   -1.0001D-01
+ UP BOUND           41    9.9986D-02
+ LO BOUND           43   -1.9873D-06
+ UP BOUND           43    9.9998D-02
+ LO BOUND           45   -9.9993D-02
+ UP BOUND           45    7.4220D-06
+ LO BOUND           46   -9.9999D-02
+ UP BOUND           46    8.2308D-07
+ LO BOUND           47   -3.0424D-06
+ UP BOUND           47    9.9997D-02
+ LO BOUND           48   -9.9985D-02
+ UP BOUND           48    1.5119D-05
+ LO BOUND           49   -1.0004D-01
+ UP BOUND           49    2.4305D-02
+
+ELEMENT TYPE
+
+ EV OFFDIAG   X                        Y
+ EV DIAG      X
+
+ELEMENT USES
+
+ XT 'DEFAULT' OFFDIAG
+
+ T  D   1   1 DIAG
+ V  D   1   1 X                               1
+ V  O   1  11 X                               1
+ V  O   1  11 Y                              11
+ T  D  11  11 DIAG
+ V  D  11  11 X                              11
+ V  O   1  12 X                               1
+ V  O   1  12 Y                              12
+ V  O  11  12 X                              11
+ V  O  11  12 Y                              12
+ T  D  12  12 DIAG
+ V  D  12  12 X                              12
+ V  O   1  20 X                               1
+ V  O   1  20 Y                              20
+ T  D  20  20 DIAG
+ V  D  20  20 X                              20
+ V  O   1  21 X                               1
+ V  O   1  21 Y                              21
+ V  O  20  21 X                              20
+ V  O  20  21 Y                              21
+ T  D  21  21 DIAG
+ V  D  21  21 X                              21
+ V  O   1  29 X                               1
+ V  O   1  29 Y                              29
+ T  D  29  29 DIAG
+ V  D  29  29 X                              29
+ V  O   1  36 X                               1
+ V  O   1  36 Y                              36
+ T  D  36  36 DIAG
+ V  D  36  36 X                              36
+ V  O   1  37 X                               1
+ V  O   1  37 Y                              37
+ V  O  36  37 X                              36
+ V  O  36  37 Y                              37
+ T  D  37  37 DIAG
+ V  D  37  37 X                              37
+ V  O   1  41 X                               1
+ V  O   1  41 Y                              41
+ T  D  41  41 DIAG
+ V  D  41  41 X                              41
+ V  O   1  42 X                               1
+ V  O   1  42 Y                              42
+ V  O  41  42 X                              41
+ V  O  41  42 Y                              42
+ T  D  42  42 DIAG
+ V  D  42  42 X                              42
+ V  O   1  49 X                               1
+ V  O   1  49 Y                              49
+ T  D  49  49 DIAG
+ V  D  49  49 X                              49
+ T  D   2   2 DIAG
+ V  D   2   2 X                               2
+ V  O   2  11 X                               2
+ V  O   2  11 Y                              11
+ V  O   2  13 X                               2
+ V  O   2  13 Y                              13
+ V  O  11  13 X                              11
+ V  O  11  13 Y                              13
+ T  D  13  13 DIAG
+ V  D  13  13 X                              13
+ V  O   2  20 X                               2
+ V  O   2  20 Y                              20
+ V  O   2  22 X                               2
+ V  O   2  22 Y                              22
+ V  O  20  22 X                              20
+ V  O  20  22 Y                              22
+ T  D  22  22 DIAG
+ V  D  22  22 X                              22
+ V  O   2  29 X                               2
+ V  O   2  29 Y                              29
+ V  O   2  30 X                               2
+ V  O   2  30 Y                              30
+ V  O  29  30 X                              29
+ V  O  29  30 Y                              30
+ T  D  30  30 DIAG
+ V  D  30  30 X                              30
+ V  O   2  36 X                               2
+ V  O   2  36 Y                              36
+ V  O   2  38 X                               2
+ V  O   2  38 Y                              38
+ V  O  36  38 X                              36
+ V  O  36  38 Y                              38
+ T  D  38  38 DIAG
+ V  D  38  38 X                              38
+ V  O   2  41 X                               2
+ V  O   2  41 Y                              41
+ V  O   2  49 X                               2
+ V  O   2  49 Y                              49
+ T  D   3   3 DIAG
+ V  D   3   3 X                               3
+ V  O   3  11 X                               3
+ V  O   3  11 Y                              11
+ V  O   3  20 X                               3
+ V  O   3  20 Y                              20
+ V  O   3  23 X                               3
+ V  O   3  23 Y                              23
+ V  O  20  23 X                              20
+ V  O  20  23 Y                              23
+ T  D  23  23 DIAG
+ V  D  23  23 X                              23
+ V  O   3  29 X                               3
+ V  O   3  29 Y                              29
+ V  O   3  36 X                               3
+ V  O   3  36 Y                              36
+ V  O   3  41 X                               3
+ V  O   3  41 Y                              41
+ V  O   3  43 X                               3
+ V  O   3  43 Y                              43
+ V  O  41  43 X                              41
+ V  O  41  43 Y                              43
+ T  D  43  43 DIAG
+ V  D  43  43 X                              43
+ V  O   3  49 X                               3
+ V  O   3  49 Y                              49
+ V  O   3  50 X                               3
+ V  O   3  50 Y                              50
+ V  O  49  50 X                              49
+ V  O  49  50 Y                              50
+ T  D  50  50 DIAG
+ V  D  50  50 X                              50
+ T  D   4   4 DIAG
+ V  D   4   4 X                               4
+ V  O   4  11 X                               4
+ V  O   4  11 Y                              11
+ V  O   4  14 X                               4
+ V  O   4  14 Y                              14
+ V  O  11  14 X                              11
+ V  O  11  14 Y                              14
+ T  D  14  14 DIAG
+ V  D  14  14 X                              14
+ V  O   4  20 X                               4
+ V  O   4  20 Y                              20
+ V  O   4  29 X                               4
+ V  O   4  29 Y                              29
+ V  O   4  31 X                               4
+ V  O   4  31 Y                              31
+ V  O  29  31 X                              29
+ V  O  29  31 Y                              31
+ T  D  31  31 DIAG
+ V  D  31  31 X                              31
+ V  O   4  36 X                               4
+ V  O   4  36 Y                              36
+ V  O   4  41 X                               4
+ V  O   4  41 Y                              41
+ V  O   4  44 X                               4
+ V  O   4  44 Y                              44
+ V  O  41  44 X                              41
+ V  O  41  44 Y                              44
+ T  D  44  44 DIAG
+ V  D  44  44 X                              44
+ V  O   4  49 X                               4
+ V  O   4  49 Y                              49
+ T  D   5   5 DIAG
+ V  D   5   5 X                               5
+ V  O   5  11 X                               5
+ V  O   5  11 Y                              11
+ V  O   5  15 X                               5
+ V  O   5  15 Y                              15
+ V  O  11  15 X                              11
+ V  O  11  15 Y                              15
+ T  D  15  15 DIAG
+ V  D  15  15 X                              15
+ V  O   5  20 X                               5
+ V  O   5  20 Y                              20
+ V  O   5  24 X                               5
+ V  O   5  24 Y                              24
+ V  O  20  24 X                              20
+ V  O  20  24 Y                              24
+ T  D  24  24 DIAG
+ V  D  24  24 X                              24
+ V  O   5  29 X                               5
+ V  O   5  29 Y                              29
+ V  O   5  32 X                               5
+ V  O   5  32 Y                              32
+ V  O  29  32 X                              29
+ V  O  29  32 Y                              32
+ T  D  32  32 DIAG
+ V  D  32  32 X                              32
+ V  O   5  36 X                               5
+ V  O   5  36 Y                              36
+ V  O   5  39 X                               5
+ V  O   5  39 Y                              39
+ V  O  36  39 X                              36
+ V  O  36  39 Y                              39
+ T  D  39  39 DIAG
+ V  D  39  39 X                              39
+ V  O   5  41 X                               5
+ V  O   5  41 Y                              41
+ V  O   5  45 X                               5
+ V  O   5  45 Y                              45
+ V  O  41  45 X                              41
+ V  O  41  45 Y                              45
+ T  D  45  45 DIAG
+ V  D  45  45 X                              45
+ V  O   5  49 X                               5
+ V  O   5  49 Y                              49
+ T  D   6   6 DIAG
+ V  D   6   6 X                               6
+ V  O   6  11 X                               6
+ V  O   6  11 Y                              11
+ V  O   6  16 X                               6
+ V  O   6  16 Y                              16
+ V  O  11  16 X                              11
+ V  O  11  16 Y                              16
+ T  D  16  16 DIAG
+ V  D  16  16 X                              16
+ V  O   6  20 X                               6
+ V  O   6  20 Y                              20
+ V  O   6  25 X                               6
+ V  O   6  25 Y                              25
+ V  O  20  25 X                              20
+ V  O  20  25 Y                              25
+ T  D  25  25 DIAG
+ V  D  25  25 X                              25
+ V  O   6  29 X                               6
+ V  O   6  29 Y                              29
+ V  O   6  33 X                               6
+ V  O   6  33 Y                              33
+ V  O  29  33 X                              29
+ V  O  29  33 Y                              33
+ T  D  33  33 DIAG
+ V  D  33  33 X                              33
+ V  O   6  36 X                               6
+ V  O   6  36 Y                              36
+ V  O   6  41 X                               6
+ V  O   6  41 Y                              41
+ V  O   6  46 X                               6
+ V  O   6  46 Y                              46
+ V  O  41  46 X                              41
+ V  O  41  46 Y                              46
+ T  D  46  46 DIAG
+ V  D  46  46 X                              46
+ V  O   6  49 X                               6
+ V  O   6  49 Y                              49
+ T  D   7   7 DIAG
+ V  D   7   7 X                               7
+ V  O   7  11 X                               7
+ V  O   7  11 Y                              11
+ V  O   7  17 X                               7
+ V  O   7  17 Y                              17
+ V  O  11  17 X                              11
+ V  O  11  17 Y                              17
+ T  D  17  17 DIAG
+ V  D  17  17 X                              17
+ V  O   7  20 X                               7
+ V  O   7  20 Y                              20
+ V  O   7  29 X                               7
+ V  O   7  29 Y                              29
+ V  O   7  34 X                               7
+ V  O   7  34 Y                              34
+ V  O  29  34 X                              29
+ V  O  29  34 Y                              34
+ T  D  34  34 DIAG
+ V  D  34  34 X                              34
+ V  O   7  36 X                               7
+ V  O   7  36 Y                              36
+ V  O   7  41 X                               7
+ V  O   7  41 Y                              41
+ V  O   7  49 X                               7
+ V  O   7  49 Y                              49
+ T  D   8   8 DIAG
+ V  D   8   8 X                               8
+ V  O   8  11 X                               8
+ V  O   8  11 Y                              11
+ V  O   8  20 X                               8
+ V  O   8  20 Y                              20
+ V  O   8  29 X                               8
+ V  O   8  29 Y                              29
+ V  O   8  36 X                               8
+ V  O   8  36 Y                              36
+ V  O   8  40 X                               8
+ V  O   8  40 Y                              40
+ V  O  36  40 X                              36
+ V  O  36  40 Y                              40
+ T  D  40  40 DIAG
+ V  D  40  40 X                              40
+ V  O   8  41 X                               8
+ V  O   8  41 Y                              41
+ V  O   8  49 X                               8
+ V  O   8  49 Y                              49
+ T  D   9   9 DIAG
+ V  D   9   9 X                               9
+ V  O   9  11 X                               9
+ V  O   9  11 Y                              11
+ V  O   9  20 X                               9
+ V  O   9  20 Y                              20
+ V  O   9  26 X                               9
+ V  O   9  26 Y                              26
+ V  O  20  26 X                              20
+ V  O  20  26 Y                              26
+ T  D  26  26 DIAG
+ V  D  26  26 X                              26
+ V  O   9  29 X                               9
+ V  O   9  29 Y                              29
+ V  O   9  35 X                               9
+ V  O   9  35 Y                              35
+ V  O  29  35 X                              29
+ V  O  29  35 Y                              35
+ T  D  35  35 DIAG
+ V  D  35  35 X                              35
+ V  O   9  36 X                               9
+ V  O   9  36 Y                              36
+ V  O   9  41 X                               9
+ V  O   9  41 Y                              41
+ V  O   9  49 X                               9
+ V  O   9  49 Y                              49
+ T  D  10  10 DIAG
+ V  D  10  10 X                              10
+ V  O  10  11 X                              10
+ V  O  10  11 Y                              11
+ V  O  10  20 X                              10
+ V  O  10  20 Y                              20
+ V  O  10  29 X                              10
+ V  O  10  29 Y                              29
+ V  O  10  36 X                              10
+ V  O  10  36 Y                              36
+ V  O  10  41 X                              10
+ V  O  10  41 Y                              41
+ V  O  10  47 X                              10
+ V  O  10  47 Y                              47
+ V  O  41  47 X                              41
+ V  O  41  47 Y                              47
+ T  D  47  47 DIAG
+ V  D  47  47 X                              47
+ V  O  10  49 X                              10
+ V  O  10  49 Y                              49
+ V  O  11  18 X                              11
+ V  O  11  18 Y                              18
+ T  D  18  18 DIAG
+ V  D  18  18 X                              18
+ V  O  20  27 X                              20
+ V  O  20  27 Y                              27
+ T  D  27  27 DIAG
+ V  D  27  27 X                              27
+ V  O  11  19 X                              11
+ V  O  11  19 Y                              19
+ T  D  19  19 DIAG
+ V  D  19  19 X                              19
+ V  O  20  28 X                              20
+ V  O  20  28 Y                              28
+ T  D  28  28 DIAG
+ V  D  28  28 X                              28
+ V  O  41  48 X                              41
+ V  O  41  48 Y                              48
+ T  D  48  48 DIAG
+ V  D  48  48 X                              48
+
+GROUP USES
+
+ E  LINGROUP  D   1   1   1.0624D+03
+ E  LINGROUP  O   1  11  -9.9819D+01
+ E  LINGROUP  D  11  11   7.8331D+02
+ E  LINGROUP  O   1  12  -9.9709D+01
+ E  LINGROUP  O  11  12   1.0000D+02
+ E  LINGROUP  D  12  12   1.0000D+02
+ E  LINGROUP  O   1  20  -1.0000D+02
+ E  LINGROUP  D  20  20   7.8331D+02
+ E  LINGROUP  O   1  21  -1.0000D+02
+ E  LINGROUP  O  20  21   1.0000D+02
+ E  LINGROUP  D  21  21   1.0000D+02
+ E  LINGROUP  O   1  29   9.0362D+01
+ E  LINGROUP  D  29  29   7.8331D+02
+ E  LINGROUP  O   1  36   6.5103D+01
+ E  LINGROUP  D  36  36   7.8331D+02
+ E  LINGROUP  O   1  37   6.5140D+01
+ E  LINGROUP  O  36  37   1.0000D+02
+ E  LINGROUP  D  37  37   1.0000D+02
+ E  LINGROUP  O   1  41   7.5507D+01
+ E  LINGROUP  D  41  41   7.8331D+02
+ E  LINGROUP  O   1  42   7.5507D+01
+ E  LINGROUP  O  41  42   1.0000D+02
+ E  LINGROUP  D  42  42   1.0000D+02
+ E  LINGROUP  O   1  49  -9.7537D+01
+ E  LINGROUP  D  49  49   7.8331D+02
+ E  LINGROUP  D   2   2   1.0624D+03
+ E  LINGROUP  O   2  11  -9.9213D+01
+ E  LINGROUP  O   2  13  -9.9709D+01
+ E  LINGROUP  O  11  13   9.9608D+01
+ E  LINGROUP  D  13  13   1.0000D+02
+ E  LINGROUP  O   2  20  -9.9698D+01
+ E  LINGROUP  O   2  22  -1.0000D+02
+ E  LINGROUP  O  20  22   9.9608D+01
+ E  LINGROUP  D  22  22   1.0000D+02
+ E  LINGROUP  O   2  29   8.9945D+01
+ E  LINGROUP  O   2  30   9.0300D+01
+ E  LINGROUP  O  29  30   9.9608D+01
+ E  LINGROUP  D  30  30   1.0000D+02
+ E  LINGROUP  O   2  36   6.4885D+01
+ E  LINGROUP  O   2  38   6.5140D+01
+ E  LINGROUP  O  36  38   9.9608D+01
+ E  LINGROUP  D  38  38   1.0000D+02
+ E  LINGROUP  O   2  41   7.5197D+01
+ E  LINGROUP  O   2  49  -9.7167D+01
+ E  LINGROUP  D   3   3   1.0624D+03
+ E  LINGROUP  O   3  11   8.1209D+01
+ E  LINGROUP  O   3  20   8.1463D+01
+ E  LINGROUP  O   3  23  -1.0000D+02
+ E  LINGROUP  O  20  23  -8.1463D+01
+ E  LINGROUP  D  23  23   1.0000D+02
+ E  LINGROUP  O   3  29  -7.3536D+01
+ E  LINGROUP  O   3  36  -5.3119D+01
+ E  LINGROUP  O   3  41  -6.1506D+01
+ E  LINGROUP  O   3  43   7.5507D+01
+ E  LINGROUP  O  41  43  -8.1463D+01
+ E  LINGROUP  D  43  43   1.0000D+02
+ E  LINGROUP  O   3  49   7.9480D+01
+ E  LINGROUP  O   3  50  -9.7566D+01
+ E  LINGROUP  O  49  50  -8.1463D+01
+ E  LINGROUP  D  50  50   1.0000D+02
+ E  LINGROUP  D   4   4   1.0624D+03
+ E  LINGROUP  O   4  11   2.8141D+01
+ E  LINGROUP  O   4  14  -9.9709D+01
+ E  LINGROUP  O  11  14  -2.8225D+01
+ E  LINGROUP  D  14  14   1.0000D+02
+ E  LINGROUP  O   4  20   2.8228D+01
+ E  LINGROUP  O   4  29  -2.5487D+01
+ E  LINGROUP  O   4  31   9.0300D+01
+ E  LINGROUP  O  29  31  -2.8225D+01
+ E  LINGROUP  D  31  31   1.0000D+02
+ E  LINGROUP  O   4  36  -1.8370D+01
+ E  LINGROUP  O   4  41  -2.1312D+01
+ E  LINGROUP  O   4  44   7.5507D+01
+ E  LINGROUP  O  41  44  -2.8225D+01
+ E  LINGROUP  D  44  44   1.0000D+02
+ E  LINGROUP  O   4  49   2.7539D+01
+ E  LINGROUP  D   5   5   1.0624D+03
+ E  LINGROUP  O   5  11   2.6350D+01
+ E  LINGROUP  O   5  15  -9.9709D+01
+ E  LINGROUP  O  11  15  -2.6427D+01
+ E  LINGROUP  D  15  15   1.0000D+02
+ E  LINGROUP  O   5  20   2.6427D+01
+ E  LINGROUP  O   5  24  -1.0000D+02
+ E  LINGROUP  O  20  24  -2.6427D+01
+ E  LINGROUP  D  24  24   1.0000D+02
+ E  LINGROUP  O   5  29  -2.3863D+01
+ E  LINGROUP  O   5  32   9.0300D+01
+ E  LINGROUP  O  29  32  -2.6427D+01
+ E  LINGROUP  D  32  32   1.0000D+02
+ E  LINGROUP  O   5  36  -1.7205D+01
+ E  LINGROUP  O   5  39   6.5140D+01
+ E  LINGROUP  O  36  39  -2.6427D+01
+ E  LINGROUP  D  39  39   1.0000D+02
+ E  LINGROUP  O   5  41  -1.9971D+01
+ E  LINGROUP  O   5  45   7.5507D+01
+ E  LINGROUP  O  41  45  -2.6427D+01
+ E  LINGROUP  D  45  45   1.0000D+02
+ E  LINGROUP  O   5  49   2.5757D+01
+ E  LINGROUP  D   6   6   1.0624D+03
+ E  LINGROUP  O   6  11   9.9709D+01
+ E  LINGROUP  O   6  16  -9.9709D+01
+ E  LINGROUP  O  11  16  -1.0000D+02
+ E  LINGROUP  D  16  16   1.0000D+02
+ E  LINGROUP  O   6  20   1.0000D+02
+ E  LINGROUP  O   6  25  -1.0000D+02
+ E  LINGROUP  O  20  25  -1.0000D+02
+ E  LINGROUP  D  25  25   1.0000D+02
+ E  LINGROUP  O   6  29  -9.0289D+01
+ E  LINGROUP  O   6  33   9.0300D+01
+ E  LINGROUP  O  29  33  -1.0000D+02
+ E  LINGROUP  D  33  33   1.0000D+02
+ E  LINGROUP  O   6  36  -6.5144D+01
+ E  LINGROUP  O   6  41  -7.5509D+01
+ E  LINGROUP  O   6  46   7.5507D+01
+ E  LINGROUP  O  41  46  -1.0000D+02
+ E  LINGROUP  D  46  46   1.0000D+02
+ E  LINGROUP  O   6  49   9.7565D+01
+ E  LINGROUP  D   7   7   1.0624D+03
+ E  LINGROUP  O   7  11  -9.9320D+01
+ E  LINGROUP  O   7  17  -9.9709D+01
+ E  LINGROUP  O  11  17   9.9610D+01
+ E  LINGROUP  D  17  17   1.0000D+02
+ E  LINGROUP  O   7  20  -9.9631D+01
+ E  LINGROUP  O   7  29   8.9946D+01
+ E  LINGROUP  O   7  34   9.0300D+01
+ E  LINGROUP  O  29  34   9.9610D+01
+ E  LINGROUP  D  34  34   1.0000D+02
+ E  LINGROUP  O   7  36   6.4890D+01
+ E  LINGROUP  O   7  41   7.5199D+01
+ E  LINGROUP  O   7  49  -9.7188D+01
+ E  LINGROUP  D   8   8   1.0624D+03
+ E  LINGROUP  O   8  11   9.7157D+01
+ E  LINGROUP  O   8  20   9.7417D+01
+ E  LINGROUP  O   8  29  -8.7973D+01
+ E  LINGROUP  O   8  36  -6.3446D+01
+ E  LINGROUP  O   8  40   6.5140D+01
+ E  LINGROUP  O  36  40  -9.7431D+01
+ E  LINGROUP  D  40  40   1.0000D+02
+ E  LINGROUP  O   8  41  -7.3586D+01
+ E  LINGROUP  O   8  49   9.5052D+01
+ E  LINGROUP  D   9   9   1.0624D+03
+ E  LINGROUP  O   9  11  -2.9055D+00
+ E  LINGROUP  O   9  20  -2.9605D+00
+ E  LINGROUP  O   9  26  -1.0000D+02
+ E  LINGROUP  O  20  26   2.9604D+00
+ E  LINGROUP  D  26  26   1.0000D+02
+ E  LINGROUP  O   9  29   2.6517D+00
+ E  LINGROUP  O   9  35   9.0300D+01
+ E  LINGROUP  O  29  35   2.9604D+00
+ E  LINGROUP  D  35  35   1.0000D+02
+ E  LINGROUP  O   9  36   1.9168D+00
+ E  LINGROUP  O   9  41   2.2464D+00
+ E  LINGROUP  O   9  49  -2.9243D+00
+ E  LINGROUP  D  10  10   1.0624D+03
+ E  LINGROUP  O  10  11   2.9135D+01
+ E  LINGROUP  O  10  20   2.9241D+01
+ E  LINGROUP  O  10  29  -2.6379D+01
+ E  LINGROUP  O  10  36  -1.9046D+01
+ E  LINGROUP  O  10  41  -2.2065D+01
+ E  LINGROUP  O  10  47   7.5507D+01
+ E  LINGROUP  O  41  47  -2.9232D+01
+ E  LINGROUP  D  47  47   1.0000D+02
+ E  LINGROUP  O  11  18  -1.0000D+02
+ E  LINGROUP  D  18  18   1.0000D+02
+ E  LINGROUP  O  20  27  -1.0000D+02
+ E  LINGROUP  D  27  27   1.0000D+02
+ E  LINGROUP  O  11  19  -1.0000D+02
+ E  LINGROUP  D  19  19   1.0000D+02
+ E  LINGROUP  O  20  28  -1.0000D+02
+ E  LINGROUP  D  28  28   1.0000D+02
+ E  LINGROUP  O  41  48  -1.0000D+02
+ E  LINGROUP  D  48  48   1.0000D+02
+
+OBJECT BOUND
+
+*LO BQPGASIM             -5.519814D-5
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BQPGASIM
+
+INDIVIDUALS
+
+ T  DIAG
+ F                      0.5 * X * X
+ G  X                   X
+ H  X         X         1.0
+
+ T  OFFDIAG
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA

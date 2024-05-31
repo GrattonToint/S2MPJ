@@ -1,0 +1,201 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHEBYQAD
+
+*   Problem :
+*   *********
+
+*   The Chebyquad problem using the exact formula for the
+*   shifted chebyshev polynomials.
+*   The Hessian is full.
+
+*   Source: problem 35 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#133 (p. 44).
+*   SIF input: Nick Gould, March 1990.
+
+*   classification SBR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   2              $-PARAMETER
+*IE N                   4              $-PARAMETER
+*IE N                   5              $-PARAMETER
+*IE N                   6              $-PARAMETER
+*IE N                   7              $-PARAMETER
+*IE N                   8              $-PARAMETER
+*IE N                   9              $-PARAMETER
+*IE N                   10             $-PARAMETER     original value
+*IE N                   20             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+ I= M         N
+ IA N+1       N         1
+
+*   Other parameters
+
+ IE 1                   1
+ IE 2                   2
+
+ RI RN        N
+ RD 1/N       RN        1.0
+
+ RI RN+1      N+1
+ RD 1/N+1     RN+1      1.0
+
+VARIABLES
+
+ DO J         1                        N
+ X  X(J)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XN G(I)
+ ND
+
+CONSTANTS
+
+*  The constants are the (0,1) average values of the Chebyshev
+*  polynomials. Analytic expressions are known for these values.
+
+*  Odd averages are zero.
+*  Even averages are -1/(i**2 -1}
+
+ DO I         2                        M
+ DI I         2
+
+ I* I**2      I                        I
+ IA I**2-1    I**2      -1
+ RI RLAST     I**2-1
+ RD -1/LAST   RLAST     -1.0
+
+ Z  CHEBYQAD  G(I)                     -1/LAST
+
+ ND
+
+BOUNDS
+
+*   defaults = variables in (0, 1)
+
+ XU CHEBYQAD  'DEFAULT' 1.0
+
+START POINT
+
+ DO J         1                        N
+ RI RJ        J
+ R* START     RJ                       1/N+1
+ Z  CHEBYQAD  X(J)                     START
+ ND
+
+ELEMENT TYPE
+
+ EV CHEBYPOL  X
+ EP CHEBYPOL  RI
+
+ELEMENT USES
+
+*  The elements are the i-th (shifted) chebyshev polynomial
+*  evaluated at the j-th variable.
+
+ XT 'DEFAULT' CHEBYPOL
+
+ DO I         1                        M
+ RI RI        I
+ DO J         1                        N
+ ZV E(I,J)    X                        X(J)
+ ZP E(I,J)    RI                       RI
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        M
+ DO J         1                        N
+ ZE G(I)      E(I,J)                   1/N
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(2)            0.0
+*LO SOLTN(4)            0.0
+*LO SOLTN(5)            0.0
+*LO SOLTN(6)            0.0
+*LO SOLTN(7)            0.0
+*LO SOLTN(8)            3.516874D-3
+*LO SOLTN(9)            0.0
+*LO SOLTN(10)           4.772713D-3
+*LO SOLTN(20)           4.572955D-3
+*LO SOLTN(50)           5.386315D-3
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CHEBYQAD
+
+TEMPORARIES
+
+ R  DIF
+ R  Y
+ R  SQRTY
+ R  ACOSX
+ R  COSAC
+ R  SINAC
+ M  ACOS
+ M  COS
+ M  SIN
+ M  SQRT
+
+INDIVIDUALS
+
+*  the Chebypol element, the i-th (shifted) Chebyshev polynomial
+
+ T  CHEBYPOL
+ A  DIF                 2.0D+0 * X - 1.0D+0
+ A  Y                   1.0D+0 - DIF * DIF
+ A  SQRTY               SQRT( Y )
+ A  ACOSX               RI * ACOS( DIF )
+ A  COSAC               COS( ACOSX )
+ A  SINAC               SIN( ACOSX )
+ F                      COSAC
+ G  X                   2.0D+0 * RI * SINAC / SQRTY
+ H  X         X         4.0D+0 * RI * ( SINAC * DIF / SQRTY
+ H+                     - RI * COSAC ) / Y
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        CHEBYQAD
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0D+0
+
+ENDATA

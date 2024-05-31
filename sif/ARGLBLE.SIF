@@ -1,0 +1,80 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ARGLBLE
+
+*   Problem :
+*   *********
+*   Variable dimension rank one linear problem
+
+*   Source: Problem 33 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#93 (with different N and M)
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NLR2-AN-V-V
+
+*   This is a(n infeasible) linear feasibility problem 
+
+*   N is the number of free variables
+*   M is the number of equations ( M .ge. N)
+
+*IE N                   2
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER 
+*IE N                   100            $-PARAMETER
+*IE N                   200            $-PARAMETER
+ IE N                   4              $-PARAMETER     modified for S2X tests
+
+*IE M                   4
+*IE M                   20             $-PARAMETER .ge. N
+*IE M                   100            $-PARAMETER .ge. N
+*IE M                   200            $-PARAMETER .ge. N
+*IE M                   400            $-PARAMETER .ge. N
+ IE M                   6              $-PARAMETER     modified for S2X tests
+
+*   Define useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ RI RI        I
+ DO J         1                        N
+ RI RJ        J
+ R* IJ        RI                       RJ
+ ZE G(I)      X(J)                     IJ
+ ND
+
+CONSTANTS
+
+ X  ARGLBLE   'DEFAULT'  1.0
+
+BOUNDS
+
+ FR ARGLBLE   'DEFAULT'
+
+START POINT
+
+ XV ARGLBLE   'DEFAULT'  1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)          4.6341D+00
+*LO SOLTN(50)          24.6268657
+*LO SOLTN(100)         49.6259352
+
+ENDATA

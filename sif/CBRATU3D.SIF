@@ -1,0 +1,228 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CBRATU3D
+
+*   Problem :
+*   *********
+
+*   The complex 3D Bratu problem on the unit cube, using finite
+*   differences.
+
+*   Source: Problem 3 in
+*   J.J. More',
+*   "A collection of nonlinear model problems"
+*   Proceedings of the AMS-SIAM Summer seminar on the Computational
+*   Solution of Nonlinear Systems of Equations, Colorado, 1988.
+*   Argonne National Laboratory MCS-P60-0289, 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification NOR2-MN-V-V
+
+*   P is the number of points in one side of the unit cube
+*   There are 2*P**3 variables
+
+*IE P                   3              $-PARAMETER n = 54   original value
+ IE P                   3              $-PARAMETER     modified for S2X tests
+*IE P                   4              $-PARAMETER n = 128
+*IE P                   7              $-PARAMETER n = 686
+*IE P                   10             $-PARAMETER n = 2000
+*IE P                   12             $-PARAMETER n = 3456
+
+*   LAMBDA is the Bratu problem parameter.  It should be positive.
+
+ RE LAMBDA              6.80812        $-PARAMETER Bratu parameter > 0
+
+*   Define a few helpful parameters
+
+ IE 1                   1
+ IE 2                   2
+ RE 1.0                 1.0
+
+ IA P-1       P         -1
+ RI RP-1      P-1
+ R/ H         1.0                      RP-1
+ R* H2        H                        H
+ R* C         H2                       LAMBDA
+ RM -C        C         -1.0
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit cube
+
+ DO J         1                        P
+ DO I         1                        P
+ DO K         1                        P
+ X  U(I,J,K)
+ X  X(I,J,K)
+ ND
+
+GROUPS
+
+*   Define a group per inner discretized point.
+*   The linear term shows the Laplace operator.
+
+ DO I         2                        P-1
+
+ IA R         I         1
+ IA S         I         -1
+
+ DO J         2                        P-1
+
+ IA V         J         1
+ IA W         J         -1
+
+ DO K         2                        P-1
+
+ IA Y         K         1
+ IA Z         K         -1
+
+ XE G(I,J,K)  U(I,J,K)  6.0
+ XE G(I,J,K)  U(R,J,K)  -1.0           U(S,J,K)  -1.0
+ XE G(I,J,K)  U(I,V,K)  -1.0           U(I,W,K)  -1.0
+ XE G(I,J,K)  U(I,J,Y)  -1.0           U(I,J,Z)  -1.0
+
+ XE F(I,J,K)  X(I,J,K)  6.0
+ XE F(I,J,K)  X(R,J,K)  -1.0           X(S,J,K)  -1.0
+ XE F(I,J,K)  X(I,V,K)  -1.0           X(I,W,K)  -1.0
+ XE F(I,J,K)  X(I,J,Y)  -1.0           X(I,J,Z)  -1.0
+
+ ND
+
+BOUNDS
+
+ FR CBRATU3D  'DEFAULT'
+
+*   Fix the variables on the lower and upper faces of the unit cube
+
+ DO J         1                        P
+ DO K         1                        P
+
+ XX CBRATU3D  U(1,J,K)  0.0
+ XX CBRATU3D  U(P,J,K)  0.0
+
+ XX CBRATU3D  X(1,J,K)  0.0
+ XX CBRATU3D  X(P,J,K)  0.0
+
+ ND
+
+*   Fix the variables on the left and right faces of the unit cube
+
+ DO I         2                        P-1
+ DO K         1                        P
+
+ XX CBRATU3D  U(I,P,K)  0.0
+ XX CBRATU3D  U(I,1,K)  0.0
+
+ XX CBRATU3D  X(I,P,K)  0.0
+ XX CBRATU3D  X(I,1,K)  0.0
+
+ ND
+
+*   Fix the variables on the front and back faces of the unit cube
+
+ DO I         2                        P-1
+ DO J         2                        P-1
+
+ XX CBRATU3D  U(I,J,1)  0.0
+ XX CBRATU3D  U(I,J,P)  0.0
+
+ XX CBRATU3D  X(I,J,1)  0.0
+ XX CBRATU3D  X(I,J,P)  0.0
+
+ ND
+
+START POINT
+
+ XV CBRATU3D  'DEFAULT' 0.0
+
+ELEMENT TYPE
+
+*   Separate real and complex parts
+
+ EV RPART     U                        V
+ EV CPART     U                        V
+
+ELEMENT USES
+
+ DO I         2                        P-1
+ DO J         2                        P-1
+ DO K         2                        P-1
+
+ XT A(I,J,K)  RPART
+ ZV A(I,J,K)  U                        U(I,J,K)
+ ZV A(I,J,K)  V                        X(I,J,K)
+
+ XT B(I,J,K)  CPART
+ ZV B(I,J,K)  U                        U(I,J,K)
+ ZV B(I,J,K)  V                        X(I,J,K)
+
+ ND
+
+GROUP USES
+
+ DO I         2                        P-1
+ DO J         2                        P-1
+ DO K         2                        P-1
+ ZE G(I,J,K)  A(I,J,K)                 -C
+ ZE F(I,J,K)  B(I,J,K)                 -C
+ ND
+
+OBJECT BOUND
+
+ LO CBRATU3D            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CBRATU3D
+
+TEMPORARIES
+
+ M  EXP
+ M  COS
+ M  SIN
+
+ R  EXPU
+ R  EXPUS
+ R  EXPUC
+
+INDIVIDUALS
+
+*   Real part
+
+ T  RPART
+ A  EXPU                EXP( U )
+ A  EXPUC               EXPU * COS( V )
+ A  EXPUS               EXPU * SIN( V )
+ F                      EXPUC
+ G  U                   EXPUC
+ G  V                   - EXPUS
+ H  U         U         EXPUC
+ H  U         V         - EXPUS
+ H  V         V         - EXPUC
+
+*   Complex part
+
+ T  CPART
+ A  EXPU                EXP( U )
+ A  EXPUC               EXPU * COS( V )
+ A  EXPUS               EXPU * SIN( V )
+ F                      EXPUS
+ G  U                   EXPUS
+ G  V                   EXPUC
+ H  U         U         EXPUS
+ H  U         V         EXPUC
+ H  V         V         - EXPUS
+
+ENDATA

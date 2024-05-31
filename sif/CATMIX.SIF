@@ -1,0 +1,208 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CATMIX 
+
+*   Problem :
+*   *********
+
+*   Determine the optimal mixing policy of two catalysts along the
+*   length of a tubular plug flow reactor involving several reactions
+
+*   This is problem 14 in the COPS (Version 2) collection of 
+*   E. Dolan and J. More'
+*   see "Benchmarking Optimization Software with COPS"
+*   Argonne National Labs Technical Report ANL/MCS-246 (2000)
+
+*   SIF input: Nick Gould, November 2000
+
+*   classification OOR2-AN-V-V
+
+*   The number of subintervals
+
+
+*IE NH                  100            $-PARAMETER
+*IE NH                  200            $-PARAMETER
+*IE NH                  400            $-PARAMETER
+*IE NH                  800            $-PARAMETER
+ IE NH                  10             $-PARAMETER     modified for S2X tests
+*IE NH                  3000           $-PARAMETER
+*IE NH                  30000          $-PARAMETER
+
+*  The ODE is defined in [0,TF]
+
+ RE TF                  1.0
+
+*  Initial condition for x1
+
+ RE X1_0                1.0
+
+*  Initial condition for x2
+
+ RE X2_0                0.0
+
+*  Smoothing parameter
+
+ RE ALPHA               0.0
+
+*   The uniform interval length
+
+ RI RNH       NH
+ R/ H         TF                       RNH
+
+*  Other useful values
+
+ IE 0                   0
+ IE 1                   1
+ IA NH-1      NH        -1                
+ R* ALPHAH    ALPHA                    H
+ RM H/2       H         0.5
+ RM -H/2      H/2       -1.0
+
+VARIABLES
+
+ DO I         0                        NH
+ X  U(I)      $ Control
+ X  X1(I)     $ Catalyst 1
+ X  X2(I)     $ Catalyst 2
+ ND
+
+GROUPS
+
+* linear part of the objective: x1[nh] + x2[nh] - 1
+
+ XN OBJ       X1(NH)    1.0            X2(NH)    1.0
+
+ DO I         0                        NH-1
+ IA I+1       I         1
+
+* linear part of constraint 0 = ode1 {i in 0..(nh-1)}: x1[i] - x1[i+1]
+
+ XE ODE1(I)   X1(I)     1.0            X1(I+1)   -1.0
+
+* linear part of constraint 0 = ode2 {i in 0..(nh-1)}: x2[i] - x2[i+1]
+
+ XE ODE2(I)   X2(I)     1.0            X2(I+1)   -1.0
+
+ ND
+
+CONSTANTS
+
+ X  CATMIX    OBJ       1.0
+
+BOUNDS
+
+ XR CATMIX    'DEFAULT'
+ DO I         0                        NH
+ XL CATMIX    U(I)      0.0
+ XU CATMIX    U(I)      1.0
+ ND
+ ZX CATMIX    X1(0)                    X1_0
+ ZX CATMIX    X2(0)                    X2_0
+*XX CATMIX    U(0)      1.0
+
+START POINT
+
+ DO I         0                        NH
+ X  CATMIX    U(I)      0.0
+ X  CATMIX    X1(I)     1.0
+ X  CATMIX    X2(I)     0.0
+ ND
+
+ELEMENT TYPE
+
+ EV DIFSQ     U1                       U2
+ IV DIFSQ     U
+ EV P1        U
+ EV P1        X1                       X2
+ IV P1        U
+ IV P1        X
+ EV P2        U                        X
+
+ELEMENT USES
+
+ DO I         0                        NH-1
+ IA I+1       I         1
+ XT O(I)      DIFSQ
+ ZV O(I)      U1                       U(I)
+ ZV O(I)      U2                       U(I+1)
+ ND
+
+ DO I         0                        NH
+ XT P1(I)     P1
+ ZV P1(I)     U                        U(I)
+ ZV P1(I)     X1                       X1(I)
+ ZV P1(I)     X2                       X2(I)
+ XT P2(I)     P2
+ ZV P2(I)     U                        U(I)
+ ZV P2(I)     X                        X2(I)
+ ND
+
+GROUP USES
+
+* nonlinear part of the objective:
+*   alpha*h*sum{i in 0..nh-1} (u[i+1] - u[i])^2
+
+ DO I         0                        NH-1
+ ZE OBJ       O(I)                     ALPHAH
+
+* nonlinear part of constraint 0 = ode1 {i in 0..(nh-1)}:
+* (h/2)*( u[i]*( 10*x2[i]-x1[i] ) + u[i+1]*( 10*x2[i+1]-x1[i+1] ) )
+
+ ZE ODE1(I)   P1(I)                    H/2
+ ZE ODE1(I)   P1(I+1)                  H/2
+
+* nonlinear part of constraint 0 = ode2 {i in 0..(nh-1)}:
+* (h/2)*( u[i]*( x1[i]-10*x2[i]) + (u[i]-1)*x2[i] +
+*         u[i+1]*(x1[i+1]-10*x2[i+1]) + (u[i+1]-1)*x2[i+1] )
+
+ ZE ODE2(I)   P1(I)                    -H/2
+ ZE ODE2(I)   P1(I+1)                  -H/2
+ ZE ODE2(I)   P2(I)                    H/2
+ ZE ODE2(I)   P2(I+1)                  H/2
+
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION             -4.7748D-02   $ (NH=100)
+*LO SOLUTION             -4.8016D-02   $ (NH=200)
+*LO SOLUTION             -4.7862D-02   $ (NH=400)
+*LO SOLUTION             -4.7185D-02   $ (NH=800)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CATMIX 
+
+INDIVIDUALS
+
+ T  DIFSQ
+ R  U         U1        1.0            U2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  P1
+ R  U         U         1.0
+ R  X         X1        -1.0           X2        10.0
+ F                      U * X
+ G  U                   X
+ G  X                   U
+ H  U         X         1.0
+
+ T  P2
+ F                      ( U - 1.0 ) * X
+ G  U                   X
+ G  X                   U - 1.0
+ H  U         X         1.0
+
+ENDATA
+

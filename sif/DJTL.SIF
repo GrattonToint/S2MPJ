@@ -1,0 +1,221 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DJTL
+
+*   Problem :
+*   *********
+
+*   Source: modified version of problem 19 in
+*   W. Hock and K. Schittkowski,
+*   "Test examples for nonlinear programming codes",
+*   Lectures Notes in Economics and Mathematical Systems 187, Springer
+*   Verlag, Heidelberg, 1981.
+*   that is meant to simulate the Lagrangian barrier objective function
+*   for particular values of the shifts and multipliers
+*
+
+*   SIF input: A.R. Conn August 1993
+
+*   classification OUR2-AN-2-0
+
+*   Define multipliers and shifts
+
+ RE LL1                 1.0
+ RE LL2                 1.0
+ RE LL3                 1.0
+ RE LL4                 1.0
+ RE SL1                 1.0
+ RE SL2                 1.0
+ RE SL3                 1.0
+ RE SL4                 1.0
+ RE LU1                 1.0
+ RE LU2                 1.0
+ RE LU3                 1.0
+ RE LU4                 1.0
+ RE SU1                 1.0
+ RE SU2                 1.0
+ RE SU3                 1.0
+ RE SU4                 1.0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  OBJ
+
+ N  CONU1
+ N  CONL1
+ N  CONU2
+ N  CONL2
+ N  BNDU1     X1        -1.0
+ N  BNDL1     X1        1.0
+ N  BNDU2     X2        -1.0
+ N  BNDL2     X2        1.0
+
+CONSTANTS
+
+    DJTL      CONU1     -200.0
+    DJTL      CONL1     100.0
+    DJTL      CONU2     0.0
+    DJTL      CONL2     -82.81
+    DJTL      BNDU1     -100.0
+    DJTL      BNDL1     13.0
+    DJTL      BNDU2     -100.0
+    DJTL      BNDL2     0.0
+
+BOUNDS
+
+ FR DJTL      'DEFAULT'
+
+
+START POINT
+
+    DJTL      X1        15.0
+    DJTL      X2        6.0
+
+ELEMENT TYPE
+
+ EV CB-10     V1
+ EV CB-20     V1
+ EV SQ-5      V1
+ EV SQ-6      V1
+
+ELEMENT USES
+
+ T  E1        CB-10
+ V  E1        V1                       X1
+
+ T  E2        CB-20
+ V  E2        V1                       X2
+
+ T  E3        SQ-5
+ V  E3        V1                       X1
+
+ T  E4        SQ-5
+ V  E4        V1                       X2
+
+ T  E5        SQ-6
+ V  E5        V1                       X1
+
+GROUP TYPE
+
+ GV LOG       ALPHA
+ GP LOG       P1
+ GP LOG       P2
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ T  CONL1     LOG
+ E  CONL1     E3                       E4
+ ZP CONL1     P1                       SL1
+ ZP CONL1     P2                       LL1
+ T  CONU1     LOG
+ E  CONU1     E3        -1.0           E4        -1.0
+ ZP CONU1     P1                       SU1
+ ZP CONU1     P2                       LU1
+ T  CONL2     LOG
+ E  CONL2     E4        -1.0           E5        -1.0
+ ZP CONL2     P1                       SL2
+ ZP CONL2     P2                       LL2
+ T  CONU2     LOG
+ E  CONU2     E4                       E5
+ ZP CONU2     P1                       SU2
+ ZP CONU2     P2                       LU2
+ T  BNDL1     LOG
+ ZP BNDL1     P1                       SL3
+ ZP BNDL1     P2                       LL3
+ T  BNDU1     LOG
+ ZP BNDU1     P1                       SU3
+ ZP BNDU1     P2                       LU3
+ T  BNDL2     LOG
+ ZP BNDL2     P1                       SL4
+ ZP BNDL2     P2                       LL4
+ T  BNDU2     LOG
+ ZP BNDU2     P1                       SU4
+ ZP BNDU2     P2                       LU4
+
+OBJECT BOUND
+
+
+*   Solution
+
+*LO SOLTN               -8951.54472
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DJTL
+
+TEMPORARIES
+
+ R  DIF
+
+INDIVIDUALS
+
+ T  CB-10
+ A  DIF                 V1 - 10.0
+ F                      DIF**3
+ G  V1                  3.0 * DIF * DIF
+ H  V1        V1        6.0 * DIF
+
+ T  CB-20
+ A  DIF                 V1 - 20.0
+ F                      DIF**3
+ G  V1                  3.0 * DIF * DIF
+ H  V1        V1        6.0 * DIF
+
+ T  SQ-5
+ A  DIF                 V1 - 5.0
+ F                      DIF**2
+ G  V1                  2.0 * DIF
+ H  V1        V1        2.0
+
+ T  SQ-6
+ A  DIF                 V1 - 6.0
+ F                      DIF**2
+ G  V1                  2.0 * DIF
+ H  V1        V1        2.0
+
+ENDATA
+
+GROUPS        DJTL
+
+TEMPORARIES
+
+ L  ARG0
+ R  APP1
+ R  P1P2
+ R  BIG
+ R  FF
+ R  GG
+ R  HH
+ M  LOG
+
+INDIVIDUALS
+
+ T  LOG
+ A  APP1                ALPHA + P1
+ A  P1P2                P1 * P2
+ A  ARG0                APP1 .LE. 0.0
+ A  BIG                 1.0000D+10
+ I  ARG0      FF        BIG * ALPHA**2
+ E  ARG0      FF        -P1P2 * LOG(APP1)
+ I  ARG0      GG        2.0 * BIG * ALPHA
+ E  ARG0      GG        -P1P2 / APP1
+ I  ARG0      HH        2.0 * BIG
+ E  ARG0      HH        P1P2 / APP1**2
+ F                      FF
+ G                      GG
+ H                      HH
+ENDATA
+

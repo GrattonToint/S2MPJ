@@ -1,0 +1,283 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DISC2
+
+*   Problem :
+*   *********
+
+*   The problem is to find the minimum disc radius subject to polygon
+*   determined by boundary discs intersecting all interior discs.
+
+*   Source:
+*   W. Pulleyblank,
+*   private communication, 1991.
+
+*   SIF input: A.R. Conn, November 1991.
+
+*   classification LQR2-MY-29-23
+
+*   Number of nodes
+
+ IE NNODES              11
+
+*   Number of sides to the polygon
+
+ IE NLINES              6
+
+*   Constants
+
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 10                  10
+ IE 12                  12
+
+ RE X1                  0.0
+ RE X2                  8.0
+ RE X3                  12.0
+ RE X4                  8.0
+ RE X5                  0.0
+ RE X6                  4.0
+ RE X7                  8.0
+ RE X8                  8.0
+ RE X9                  4.0
+ RE X10                 2.0
+ RE X11                 2.0
+
+ RE Y1                  10.0
+ RE Y2                  10.0
+ RE Y3                  5.0
+ RE Y4                  0.0
+ RE Y5                  0.0
+ RE Y6                  8.0
+ RE Y7                  7.0
+ RE Y8                  3.0
+ RE Y9                  1.0
+ RE Y10                 3.0
+ RE Y11                 6.0
+
+*   Lower bound on the objective function
+
+ RI RNODES    NNODES
+
+VARIABLES
+
+
+    EPSILON
+
+ DO I         1                        NNODES
+ X  U(I)
+ X  V(I)
+ ND
+
+ DO I         1                        NLINES
+ X  ALPHA(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ N  OBJ       EPSILON   1.0
+
+*   Boundary constraints
+
+ DO I         1                        5
+ XE B(I)
+ ND
+ DO I         6                        NNODES
+ XL B(I)
+ ND
+
+*   Collinearity constraints
+
+ XE B162      U6        1.0            U1        -1.0
+ XE C162      V6        1.0            V1        -1.0
+ XE B273      U7        1.0            U2        -1.0
+ XE C273      V7        1.0            V2        -1.0
+ XE B384      U8        1.0            U3        -1.0
+ XE C384      V8        1.0            V3        -1.0
+ XE B495      U9        1.0            U4        -1.0
+ XE C495      V9        1.0            V4        -1.0
+ XE B5101     U10       1.0            U5        -1.0
+ XE C5101     V10       1.0            V5        -1.0
+ XE B5111     U11       1.0            U5        -1.0
+ XE C5111     V11       1.0            V5        -1.0
+
+BOUNDS
+
+ FR DISC2     'DEFAULT'
+
+ DO I         1                        NLINES
+ XU DISC2     ALPHA(I)  1.0
+ XL DISC2     ALPHA(I)  0.0
+ ND
+
+ LO DISC2     EPSILON   0.0
+ UP DISC2     EPSILON   3.0
+
+START POINT
+
+ DO I         1                        NNODES
+ XV START     U(I)      5.0
+ XV START     V(I)      5.0
+ ND
+
+    START     EPSILON   0.5
+
+ELEMENT TYPE
+
+ EV CIRCLE    X                        Y
+ EV CIRCLE    Z
+ EP CIRCLE    P1                       P2
+
+ EV LINE      X                        Y
+ EV LINE      Z
+ IV LINE      U                        V
+
+ELEMENT USES
+
+
+ T  b162      LINE
+ V  b162      X                        U2
+ V  b162      Y                        U1
+ V  b162      Z                        ALPHA1
+
+ T  c162      LINE
+ V  c162      X                        V2
+ V  c162      Y                        V1
+ V  c162      Z                        ALPHA1
+
+ T  b273      LINE
+ V  b273      X                        U3
+ V  b273      Y                        U2
+ V  b273      Z                        ALPHA2
+
+ T  c273      LINE
+ V  c273      X                        V3
+ V  c273      Y                        V2
+ V  c273      Z                        ALPHA2
+
+ T  b384      LINE
+ V  b384      X                        U4
+ V  b384      Y                        U3
+ V  b384      Z                        ALPHA3
+
+ T  c384      LINE
+ V  c384      X                        V4
+ V  c384      Y                        V3
+ V  c384      Z                        ALPHA3
+
+ T  b495      LINE
+ V  b495      X                        U5
+ V  b495      Y                        U4
+ V  b495      Z                        ALPHA4
+
+ T  c495      LINE
+ V  c495      X                        V5
+ V  c495      Y                        V4
+ V  c495      Z                        ALPHA4
+
+ T  b5101     LINE
+ V  b5101     X                        U1
+ V  b5101     Y                        U5
+ V  b5101     Z                        ALPHA5
+
+ T  c5101     LINE
+ V  c5101     X                        V1
+ V  c5101     Y                        V5
+ V  c5101     Z                        ALPHA5
+
+ T  b5111     LINE
+ V  b5111     X                        U1
+ V  b5111     Y                        U5
+ V  b5111     Z                        ALPHA5
+
+ T  c5111     LINE
+ V  c5111     X                        V1
+ V  c5111     Y                        V5
+ V  c5111     Z                        ALPHA5
+
+
+ DO I         1                        NNODES
+ XT b(I)      CIRCLE
+ ZV b(I)      X                        U(I)
+ ZV b(I)      Y                        V(I)
+ ZV b(I)      Z                        EPSILON
+ ZP b(I)      P1                       X(I)
+ ZP b(I)      P2                       Y(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        NNODES
+ XE B(I)      b(I)
+ ND
+
+ E  B162      b162
+ E  C162      c162
+ E  B273      b273
+ E  C273      c273
+ E  B384      b384
+ E  C384      c384
+ E  B495      b495
+ E  C495      c495
+ E  B5101     b5101
+ E  C5101     c5101
+ E  B5111     b5111
+ E  C5111     c5111
+
+OBJECT BOUND
+
+*ZL DISC2                              RNODES
+
+*   Solution
+
+*LO SOLTN(12)           20.46122911
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DISC2
+
+
+TEMPORARIES
+
+ R  ARG1
+ R  ARG2
+
+INDIVIDUALS
+
+ T  CIRCLE
+ A  ARG1                X - P1
+ A  ARG2                Y - P2
+ F                      ARG1**2 + ARG2**2 - Z**2
+ G  X                   2.0*ARG1
+ G  Y                   2.0*ARG2
+ G  Z                   -2.0*Z
+ H  X         X         2.0
+ H  Y         Y         2.0
+ H  Z         Z         -2.0
+
+ T  LINE
+ R  U         X         1.0            Y         -1.0
+ R  V         Z         -1.0
+ F                      U * V
+ G  U                   V
+ G  V                   U
+ H  U         V         1.0
+
+ENDATA

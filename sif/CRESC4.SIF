@@ -1,0 +1,682 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CRESC4
+
+*   Problem :
+*   *********
+
+*   This problem consists in finding the crescent of smallest area containing
+*   a set of points given in the plane.   This problem arises as a subproblem
+*   in pattern recognition and has been suggested by J.P. Rasson.  It
+*   originates in the detection of "salt domes" (with the potential presence of
+*   oil pockets!) from geological data.
+
+*   The present problem is a simplified version where the crescent is entirely
+*   determined by the only four data points.
+
+*   The problem is not convex.
+
+*   A crescent is defined as follows.  Assume one has two circles of center
+*   C1 and C2 and of radii r1 and r2 respectively. Assume furthermore that
+*   r1 >= r2 and that C2 is within C1.  Assume finally that the distance from
+*   C1 to C2 is >= r1 - r2.  Then the crescent is the part of the plane
+*   contained in circle 2 but not in circle 1.
+
+*   In order to preserve feasibility at all stages (ensuring that the
+*   crescent exists and that its area can be computed), the following
+*   parametrization is used:
+
+*   ( C2x, C2y ) = ( C1x, C1y ) + a * d * ( cos(t), sin(t) )
+
+*   r1 = a * d + r 
+
+*   r2 = ( a + 1 ) * d + r
+
+*   with the bounds
+
+*   a >= 1, 0 <= t <= 2 * pi, r2 >= 0 , 0 <= d <= 1.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification OOR2-MY-6-8
+
+*   number of points to be included in the crescent.
+*   the number of constraints is 2*NP
+
+ IE NP                  4
+
+*   data points
+
+ RE X1                  1.0
+ RE Y1                  0.0
+
+ RE X2                  0.0
+ RE Y2                  1.0
+
+ RE X3                  0.0
+ RE Y3                  -1.0
+
+ RE X4                  0.5
+ RE Y4                  0.0
+
+*   useful constants
+
+ IE 1                   1
+
+VARIABLES
+
+ X  V1
+ X  W1
+ X  D
+ X  A
+ X  T
+ X  R
+
+GROUPS
+
+ XN OBJ
+
+ DO I         1                        NP
+ XL IS2(I)
+ XG OS1(I)
+ ND
+
+BOUNDS
+
+ XR CRESC4    V1
+ XR CRESC4    W1
+
+ XL CRESC4    R          0.39
+ XL CRESC4    A          1.0
+ XL CRESC4    T          0.0
+ XU CRESC4    T          6.2831852
+ XL CRESC4    D          1.0D-8
+
+START POINT
+
+ XV CRESC4    V1         -40.0
+ XV CRESC4    W1         5.0
+ XV CRESC4    R          0.75
+ XV CRESC4    A          2.0
+ XV CRESC4    T          1.5
+ XV CRESC4    D          1.0
+
+* Global solution
+
+*XV CRESC4    V1         -0.75
+*XV CRESC4    W1         0.0
+*XV CRESC4    R          0.5
+*XV CRESC4    A          1.5
+*XV CRESC4    T          0.0
+*XV CRESC4    D          0.5
+
+ELEMENT TYPE
+
+ EV SQR1      A                        R
+ EV SQR1      D
+
+ EV SQR2      D                        R
+ IV SQR2      RAD
+
+ EV SC        AZ                       BZ
+ EV SC        DZ
+
+ EV DIST      X
+ EP DIST      P
+
+ EV DISTX     X                        T
+ EV DISTX     A                        D
+ EP DISTX     P
+
+ EV DISTY     X                        T
+ EV DISTY     A                        D
+ EP DISTY     P
+
+ELEMENT USES
+
+ XT OB        SC
+ ZV OB        AZ                       A
+ ZV OB        BZ                       R
+ ZV OB        DZ                       D
+
+ XT R2SQ      SQR2
+ ZV R2SQ      D                        D
+ ZV R2SQ      R                        R
+
+ XT R1SQ      SQR1
+ ZV R1SQ      D                        D
+ ZV R1SQ      A                        A
+ ZV R1SQ      R                        R
+
+ DO I         1                        NP
+
+ XT XV1(I)    DIST
+ ZV XV1(I)    X                        V1
+ ZP XV1(I)    P                        X(I)
+
+ XT XV2(I)    DISTX
+ ZV XV2(I)    X                        V1
+ ZV XV2(I)    A                        A
+ ZV XV2(I)    D                        D
+ ZV XV2(I)    T                        T
+ ZP XV2(I)    P                        X(I)
+
+ XT YW1(I)    DIST
+ ZV YW1(I)    X                        W1
+ ZP YW1(I)    P                        Y(I)
+
+ XT YW2(I)    DISTY
+ ZV YW2(I)    X                        W1
+ ZV YW2(I)    A                        A
+ ZV YW2(I)    D                        D
+ ZV YW2(I)    T                        T
+ ZP YW2(I)    P                        Y(I)
+
+ ND
+
+GROUP USES
+
+ XE OBJ       OB
+
+ DO I         1                        NP
+
+ XE IS2(I)    XV2(I)                   YW2(I)
+ XE IS2(I)    R2SQ       -1.0
+
+ XE OS1(I)    XV1(I)                   YW1(I)
+ XE OS1(I)    R1SQ       -1.0
+
+ ND
+
+OBJECT BOUND
+
+*   Solution             0.87189692
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CRESC4
+
+TEMPORARIES
+
+ R  A
+ R  AB
+ R  AD
+ R  B
+ R  BT
+ R  BA
+ R  BB
+ R  BD
+ R  BAD
+ R  C
+ R  CQ
+ R  CT
+ R  CA
+ R  CB
+ R  CD
+ R  CH
+ R  CHH
+ R  CAA
+ R  CAB
+ R  CAD
+ R  CBB
+ R  CBD
+ R  CDD
+ R  D
+ R  D2
+ R  DA
+ R  DD
+ R  DAD
+ R  E
+ R  EA
+ R  EB
+ R  ED
+ R  EAB
+ R  EAD
+ R  EBD
+ R  EDD
+ R  F
+ R  FA
+ R  FB
+ R  FD
+ R  FAA
+ R  FAB
+ R  FAD
+ R  FBB
+ R  FBD
+ R  FDD
+ R  G
+ R  SG
+ R  CG
+ R  GF
+ R  GA
+ R  GB
+ R  GD
+ R  GFF
+ R  GAA
+ R  GAB
+ R  GAD
+ R  GBB
+ R  GBD
+ R  GDD
+ R  H
+ R  HA
+ R  HB
+ R  HD
+ R  HAA
+ R  HAB
+ R  HAD
+ R  HBB
+ R  HBD
+ R  HDD
+ R  I
+ R  IA
+ R  IB
+ R  ID
+ R  IAA
+ R  IAB
+ R  IAD
+ R  IBB
+ R  IBD
+ R  IDD
+ R  J
+ R  JA
+ R  JB
+ R  JD
+ R  JAA
+ R  JAB
+ R  JAD
+ R  JBB
+ R  JBD
+ R  JDD
+ R  K
+ R  KX
+ R  KY
+ R  KA
+ R  KB
+ R  KD
+ R  L
+ R  LA
+ R  LB
+ R  LD
+ R  LAA
+ R  LAB
+ R  LAD
+ R  LBB
+ R  LBD
+ R  LDD
+ R  M
+ R  MA
+ R  MB
+ R  MD
+ R  N
+ R  NB
+ R  ND
+ R  O
+ R  OD
+ R  P
+ R  PA
+ R  PB
+ R  PD
+ R  PAA
+ R  PAB
+ R  PAD
+ R  PBD
+ R  PDD
+ R  Q
+ R  QL
+ R  QLL
+ R  QA
+ R  QB
+ R  QD
+ R  QAA
+ R  QAB
+ R  QAD
+ R  QBB
+ R  QBD
+ R  QDD
+ R  R
+ R  RA
+ R  RB
+ R  RD
+ R  RAA
+ R  RAB
+ R  RAD
+ R  RBB
+ R  RBD
+ R  RDD
+ R  S
+ R  SQ
+ R  ST
+ R  SA
+ R  SB
+ R  SD
+ R  SAA
+ R  SAB
+ R  SAD
+ R  SBB
+ R  SBD
+ R  SDD
+ R  U
+ R  UA
+ R  UB
+ R  UD
+ R  UAA
+ R  UAB
+ R  UAD
+ R  UBB
+ R  UBD
+ R  UDD
+ R  V
+ R  VA
+ R  VB
+ R  VD
+ R  VAA
+ R  VAB
+ R  VAD
+ R  VBB
+ R  VBD
+ R  VDD
+ R  W
+ R  WA
+ R  WB
+ R  WD
+ R  WAA
+ R  WAB
+ R  WAD
+ R  WBB
+ R  WBD
+ R  WDD
+ M  SQRT
+ M  SIN
+ M  COS
+ M  ACOS
+ M  ACOS
+
+INDIVIDUALS
+
+ T  SQR1
+ A  Q                   A * D + R
+ F                      Q * Q
+ G  A                   2.0 * Q * D
+ G  D                   2.0 * Q * A
+ G  R                   2.0 * Q
+ H  A         A         2.0 * D * D
+ H  A         D         2.0 * ( A * D + Q )
+ H  A         R         2.0 * D
+ H  D         D         2.0 * A * A
+ H  D         R         2.0 * A
+ H  R         R         2.0
+
+
+ T  SQR2
+ R  RAD       D         1.0            R         1.0
+ F                      RAD * RAD
+ G  RAD                 RAD + RAD
+ H  RAD       RAD       2.0
+
+
+ T  SC
+
+ A  A                   DZ + BZ
+ A  AB                  1.0
+ A  AD                  1.0
+
+ A  B                   AZ * DZ + BZ
+ A  BA                  DZ
+ A  BB                  1.0
+ A  BD                  AZ
+ A  BAD                 1.0
+
+ A  D                   AZ * DZ
+ A  DA                  DZ
+ A  DD                  AZ
+ A  DAD                 1.0
+
+ A  E                   2.0 * A * D
+ A  EA                  2.0 * A * DA
+ A  EB                  2.0 * AB * D
+ A  ED                  2.0 * ( A * DD + AD * D )
+ A  EAB                 2.0 * AB * DA
+ A  EAD                 2.0 * ( AD * DA + A * DAD )
+ A  EBD                 2.0 * AB * DD
+ A  EDD                 2.0 * ( AD * DD + AD * DD )
+
+ A  P                   2.0 * B * D
+ A  PA                  2.0 * ( B * DA + BA * D )
+ A  PB                  2.0 * BB * D
+ A  PD                  2.0 * ( B * DD + BD * D )
+ A  PAA                 2.0 * ( BA * DA + BA * DA )
+ A  PAB                 2.0 * BB * DA
+ A  PAD                 2.0 * ( BD * DA + B * DAD + BAD * D 
+ A+                      + BA * DD )
+ A  PBD                 2.0 * BB * DD
+ A  PDD                 2.0 * ( BD * DD + BD * DD )
+
+ A  F                   D * D + B * B - A * A
+ A  FA                  2.0 * ( D * DA + B * BA )
+ A  FB                  2.0 * ( B * BB - A * AB )
+ A  FD                  2.0 * ( D * DD + B * BD - A * AD )
+ A  FAA                 2.0 * ( DA * DA + BA * BA )
+ A  FAB                 2.0 * BB * BA
+ A  FAD                 2.0 * ( DD * DA + D * DAD + BD * BA
+ A+                      + B * BAD )
+ A  FBB                 2.0 * ( BB * BB - AB * AB )
+ A  FBD                 2.0 * ( BD * BB - AD * AB )
+ A  FDD                 2.0 * ( DD * DD + BD * BD - AD * AD )
+
+ A  G                   D * D - B * B + A * A
+ A  GA                  2.0 * ( D * DA - B * BA )
+ A  GB                  2.0 * ( - B * BB + A * AB )
+ A  GD                  2.0 * ( D * DD - B * BD + A * AD )
+ A  GAA                 2.0 * ( DA * DA - BA * BA ) 
+ A  GAB                 - 2.0 * BB * BA
+ A  GAD                 2.0 * ( DD * DA + D * DAD - BD * BA
+ A+                      - B * BAD )
+ A  GBB                 2.0 * ( - BB * BB + AB * AB )
+ A  GBD                 2.0 * ( - BD * BB + AD * AB )
+ A  GDD                 2.0 * ( DD * DD - BD * BD + AD * AD )
+
+ A  H                   F / P
+ A  I                   FA - H * PA
+ A  J                   FB - H * PB
+ A  K                   FD - H * PD
+ A  HA                  I / P
+ A  HB                  J / P
+ A  HD                  K / P
+ A  IA                  FAA - HA * PA - H * PAA
+ A  IB                  FAB - HB * PA - H * PAB
+ A  ID                  FAD - HD * PA - H * PAD
+ A  JB                  FBB - HB * PB
+ A  JD                  FBD - HD * PB - H * PBD
+ A  KD                  FDD - HD * PD - H * PDD
+ A  HAA                 ( IA - HA * PA ) / P
+ A  HAB                 ( IB - HA * PB ) / P
+ A  HAD                 ( ID - HA * PD ) / P
+ A  HBB                 ( JB - HB * PB ) / P
+ A  HBD                 ( JD - HB * PD ) / P
+ A  HDD                 ( KD - HD * PD ) / P
+
+ A  L                   - G / E
+ A  M                   - GA - L * EA 
+ A  N                   - GB - L * EB 
+ A  O                   - GD - L * ED 
+ A  LA                  M / E
+ A  LB                  N / E
+ A  LD                  O / E
+ A  MA                  - GAA - LA * EA
+ A  MB                  - GAB - LB * EA - L * EAB
+ A  MD                  - GAD - LD * EA - L * EAD
+ A  NB                  - GBB - LB * EB
+ A  ND                  - GBD - LD * EB - L * EBD
+ A  OD                  - GDD - LD * ED - L * EDD
+ A  LAA                 ( MA - LA * EA ) / E
+ A  LAB                 ( MB - LA * EB ) / E
+ A  LAD                 ( MD - LA * ED ) / E
+ A  LBB                 ( NB - LB * EB ) / E
+ A  LBD                 ( ND - LB * ED ) / E
+ A  LDD                 ( OD - LD * ED ) / E
+
+ A  C                   ACOS( H )
+ A  CH                  - 1.0 / SQRT( 1.0 - H * H )
+ A  CHH                 CH * H / ( 1.0 - H * H )
+ A  CA                  CH * HA
+ A  CB                  CH * HB
+ A  CD                  CH * HD
+ A  CAA                 CHH * HA * HA + CH * HAA
+ A  CAB                 CHH * HA * HB + CH * HAB
+ A  CAD                 CHH * HA * HD + CH * HAD
+ A  CBB                 CHH * HB * HB + CH * HBB
+ A  CBD                 CHH * HB * HD + CH * HBD
+ A  CDD                 CHH * HD * HD + CH * HDD
+
+ A  Q                   ACOS( L )
+ A  QL                  - 1.0 / SQRT( 1.0 - L * L )
+ A  QLL                 QL * L / ( 1.0 - L * L )
+ A  QA                  QL * LA
+ A  QB                  QL * LB
+ A  QD                  QL * LD
+ A  QAA                 QLL * LA * LA + QL * LAA
+ A  QAB                 QLL * LA * LB + QL * LAB
+ A  QAD                 QLL * LA * LD + QL * LAD
+ A  QBB                 QLL * LB * LB + QL * LBB
+ A  QBD                 QLL * LB * LD + QL * LBD
+ A  QDD                 QLL * LD * LD + QL * LDD
+
+ A  R                   B * B * C 
+ A  RA                  2.0 * B * BA * C + B * B * CA
+ A  RB                  2.0 * B * BB * C + B * B * CB
+ A  RD                  2.0 * B * BD * C + B * B * CD
+ A  RAA                 2.0 * ( BA * BA * C + B * BA * CA 
+ A+                      + B * BA * CA ) + B * B * CAA
+ A  RAB                 2.0 * ( BB * BA * C + B * BA * CB 
+ A+                      + B * BB * CA ) + B * B * CAB
+ A  RAD                 2.0 * ( BD * BA * C + B * BAD * C
+ A+                      + B * BA * CD + B * BD * CA )
+ A+                      + B * B * CAD
+ A  RBB                 2.0 * ( BB * BB * C + B * BB * CB 
+ A+                      + B * BB * CB ) + B * B * CBB
+ A  RBD                 2.0 * ( BD * BB * C + B * BB * CD 
+ A+                      + B * BD * CB ) + B * B * CBD
+ A  RDD                 2.0 * ( BD * BD * C + B * BD * CD 
+ A+                      + B * BD * CD ) + B * B * CDD
+
+ A  S                   A * A * Q 
+ A  SA                  A * A * QA
+ A  SB                  2.0 * A * AB * Q + A * A * QB
+ A  SD                  2.0 * A * AD * Q + A * A * QD
+ A  SAA                 A * A * QAA
+ A  SAB                 2.0 * A * AB * QA + A * A * QAB
+ A  SAD                 2.0 * A * AD * QA + A * A * QAD
+ A  SBB                 2.0 * ( AB * AB * Q + A * AB * QB 
+ A+                      + A * AB * QB ) + A * A * QBB
+ A  SBD                 2.0 * ( AD * AB * Q + A * AB * QD 
+ A+                      + A * AD * QB ) + A * A * QBD
+ A  SDD                 2.0 * ( AD * AD * Q + A * AD * QD 
+ A+                      + A * AD * QD ) + A * A * QDD
+
+ A  SQ                  SIN( Q )
+ A  CQ                  L
+ A  W                   0.5 * E * SQ
+ A  WA                  0.5 * ( EA * SQ + E * CQ * QA )
+ A  WB                  0.5 * ( EB * SQ + E * CQ * QB )
+ A  WD                  0.5 * ( ED * SQ + E * CQ * QD )
+ A  WAA                 0.5 * ( EA * CQ * QA + EA * CQ * QA 
+ A+                      - E * SQ * QA * QA + E * CQ * QAA )
+ A  WAB                 0.5 * ( EAB * SQ + EA * CQ * QB
+ A+                      + EB * CQ * QA - E * SQ * QB * QA
+ A+                      + E * CQ * QAB )
+ A  WAD                 0.5 * ( EAD * SQ + EA * CQ * QD
+ A+                      + ED * CQ * QA - E * SQ * QD * QA
+ A+                      + E * CQ * QAD ) 
+ A  WBB                 0.5 * ( EB * CQ * QB
+ A+                      + EB * CQ * QB - E * SQ * QB * QB
+ A+                      + E * CQ * QBB )
+ A  WBD                 0.5 * ( EBD * SQ + EB * CQ * QD
+ A+                      + ED * CQ * QB - E * SQ * QD * QB
+ A+                      + E * CQ * QBD )
+ A  WDD                 0.5 * ( EDD * SQ + ED * CQ * QD
+ A+                      + ED * CQ * QD - E * SQ * QD * QD
+ A+                      + E * CQ * QDD )
+
+ A  V                   S - R + W
+ A  VA                  SA - RA + WA
+ A  VB                  SB - RB + WB
+ A  VD                  SD - RD + WD
+ A  VAA                 SAA - RAA + WAA
+ A  VAB                 SAB - RAB + WAB
+ A  VAD                 SAD - RAD + WAD
+ A  VBB                 SBB - RBB + WBB
+ A  VBD                 SBD - RBD + WBD
+ A  VDD                 SDD - RDD + WDD
+
+ F                      V
+ G  AZ                  VA
+ G  BZ                  VB
+ G  DZ                  VD
+ H  AZ        AZ        VAA
+ H  AZ        BZ        VAB
+ H  AZ        DZ        VAD
+ H  BZ        BZ        VBB
+ H  BZ        DZ        VBD
+ H  DZ        DZ        VDD
+
+ T  DIST
+ F                      ( X - P )**2
+ G  X                   2.0 * ( X - P )
+ H  X         X         2.0
+
+ T  DISTY
+ A  ST                  SIN( T )
+ A  CT                  COS( T )
+ A  B                   X +  A * D * ST - P
+ A  BA                  D * ST
+ A  BD                  A * ST
+ A  BT                  A * D * CT
+ F                      B * B
+ G  X                   2.0 * B
+ G  A                   2.0 * B * BA
+ G  D                   2.0 * B * BD
+ G  T                   2.0 * B * BT
+ H  X         X         2.0
+ H  X         A         2.0 * BA
+ H  X         D         2.0 * BD
+ H  X         T         2.0 * BT
+ H  A         A         2.0 * BA * BA
+ H  A         D         2.0 * ( BD * BA + B * ST )
+ H  A         T         2.0 * ( BT * BA + B * D * CT )
+ H  D         D         2.0 * BD * BD
+ H  D         T         2.0 * ( BT * BD + B * A * CT )
+ H  T         T         2.0 * ( BT * BT - B * A * D * ST )
+
+ T  DISTX
+ A  ST                  SIN( T )
+ A  CT                  COS( T )
+ A  B                   X + A * D * CT - P
+ A  BA                  D * CT
+ A  BD                  A * CT
+ A  BT                  - A * D * ST    
+ F                      B * B 
+ G  X                   2.0 * B
+ G  A                   2.0 * B * BA
+ G  D                   2.0 * B * BD
+ G  T                   2.0 * B * BT
+ H  X         X         2.0
+ H  X         A         2.0 * BA
+ H  X         D         2.0 * BD
+ H  X         T         2.0 * BT
+ H  A         A         2.0 * BA * BA
+ H  A         D         2.0 * ( BD * BA + B * CT )
+ H  A         T         2.0 * ( BT * BA - B * D * ST )
+ H  D         D         2.0 * BD * BD
+ H  D         T         2.0 * ( BT * BD - B * A * ST )
+ H  T         T         2.0 * ( BT * BT - B * A * D * CT )
+
+ENDATA
+

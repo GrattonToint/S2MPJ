@@ -1,0 +1,192 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DTOC4 
+
+*   Problem :
+*   *********
+
+*   This is a discrete time optimal control (DTOC) problem.  
+*   The system has N time periods, 1 control variable and 2 state variables.
+
+*   The problem is not convex.
+
+*   Sources: problem 4 in
+*   T.F. Coleman and A. Liao,
+*   "An Efficient Trust Region Method for Unconstrained Discret-Time Optimal
+*   Control Problems",
+*   Tech. Report, ctc93tr144,  Advanced Computing Research Institute, 
+*   Cornell University, 1992.
+
+*   G. Di Pillo, L. Grippo and F. Lampariello,
+*   "A class of structures quasi-Newton algorithms for optimal control
+*   problems",
+*   in H.E. Rauch, ed., IFAC Applications of nonlinear programming to
+*   optimization and control, pp. 101-107, IFAC, Pergamon Press, 1983.
+
+*   SIF input: Ph. Toint, August 1993
+
+*   classification QOR2-AN-V-V
+
+*   Problem variants: they are identified by the value of the parameter N.
+
+*   The problem has 3N-1  variables (of which 2 are fixed),
+*   and 2(N-1) constraints
+
+*IE N                   10             $-PARAMETER  n=   29,m= 18 original value
+*IE N                   50             $-PARAMETER  n=  149,m= 98
+*IE N                   100            $-PARAMETER  n=  299,m=198
+*IE N                   500            $-PARAMETER  n= 1499,m=998
+*IE N                   1000           $-PARAMETER  n= 2999,m=1998
+*IE N                   1500           $-PARAMETER  n= 4499,m=2998
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   5000           $-PARAMETER  n=14999,m=9998
+
+*   Constants
+
+ IA N-1       N         -1
+ IE 1                   1
+ IE 2                   2
+ RI RN        N
+ RD H         RN        1.0
+ RM 5H        H         5.0
+ RD 1/5H      5H        1.0
+ RA 1+5H      5H        1.0
+ RM -5H       5H        -1.0
+
+VARIABLES
+
+ DO T         1                        N-1
+ X  X(T)
+ OD T
+
+ DO T         1                        N
+ X  Y(T,1)
+ X  Y(T,2)
+ OD T
+
+GROUPS
+
+*   Objective function
+
+ ZN OBJ       'SCALE'                  1/5H
+
+*   Transition constraints
+
+ DO T         1                        N-1
+ IA T+1       T         1
+
+ XE TT(T,1)   Y(T+1,1)  -1.0 
+ ZE TT(T,1)   Y(T,1)                   1+5H
+ ZE TT(T,1)   Y(T,2)                   -5H
+ ZE TT(T,1)   X(T)                     5H
+
+ XE TT(T,2)   Y(T+1,2)  -1.0           Y(T,2)    1.0
+ ZE TT(T,2)   Y(T,1)                   5H
+
+ OD T
+
+BOUNDS
+
+ FR DTOC4     'DEFAULT'
+
+ XX DTOC4     Y(1,1)    0.0
+ XX DTOC4     Y(1,2)    1.0
+
+
+START POINT
+
+
+ XV DTOC4     Y(1,1)    0.0
+ XV DTOC4     Y(1,2)    1.0
+
+ELEMENT TYPE
+
+ EV SQ        Z
+
+ EV AAB       A                        B
+
+ELEMENT USES
+
+ XT Y1SQ(1)   SQ
+ ZV Y1SQ(1)   Z                        Y(1,1)
+ XT Y2SQ(1)   SQ
+ ZV Y2SQ(1)   Z                        Y(1,2)
+ XT XSQ(1)    SQ
+ ZV XSQ(1)    Z                        X(1)
+
+ DO T         2                        N-1
+ XT Y1SQ(T)   SQ
+ ZV Y1SQ(T)   Z                        Y(T,1)
+ XT Y2SQ(T)   SQ
+ ZV Y2SQ(T)   Z                        Y(T,2)
+ XT XSQ(T)    SQ
+ ZV XSQ(T)    Z                        X(T)
+ OD T
+
+ XT Y1SQ(N)   SQ
+ ZV Y1SQ(N)   Z                        Y(N,1)
+ XT Y2SQ(N)   SQ
+ ZV Y2SQ(N)   Z                        Y(N,2)
+
+ DO T         1                        N-1
+ XT E(T)      AAB
+ ZV E(T)      A                        Y(T,2)
+ ZV E(T)      B                        Y(T,1)
+ OD T
+
+GROUP USES
+
+ XE OBJ       Y1SQ(1)   0.5            Y2SQ(1)   0.5
+ XE OBJ       XSQ(1)    1.0
+
+ DO T         2                        N-1
+ XE OBJ       Y1SQ(T)                  Y2SQ(T)
+ XE OBJ       XSQ(T)
+ OD T
+
+ XE OBJ       Y1SQ(N)   0.5            Y2SQ(N)   0.5
+
+ DO T         1                        N-1
+ ZE TT(T,1)   E(T)                     -5H
+ OD T
+
+OBJECT BOUND
+
+ LO DTOC4               0.0
+
+*LO SOLUTION(  10)      3.75078392210
+*LO SOLUTION(  50)      3.02963141755
+*LO SOLUTION( 100)      2.94726711402
+*LO SOLUTION( 500)      2.87827434035
+*LO SOLUTION(1000)      2.87483889886
+*LO SOLUTION(5000)      2.86386891514
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DTOC4
+
+INDIVIDUALS
+
+ T  SQ
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  AAB
+ F                      A * A * B
+ G  A                   2.0 * A * B
+ G  B                   A * A
+ H  A         A         B + B
+ H  A         B         A + A
+
+ENDATA
+
+

@@ -1,0 +1,172 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CSFI2
+
+*   Problem :
+*   *********
+
+*   Source: problem MINLEN in
+*   Vasko and Stott
+*   "Optimizing continuous caster product dimensions:
+*    an example of a nonlinear design problem in the steel industry"
+*   SIAM Review, Vol 37 No, 1 pp.82-84, 1995
+
+*   SIF input: A.R. Conn April 1995
+
+*   classification LOR2-RN-5-4
+
+*   input parameters
+
+ RE MINTPH              45.0
+ RE MINTHICK            7.0
+ RE MINAREA             200.0
+ RE MAXAREA             250.0
+ RE MAXASPR             2.0
+ RE K                   1.0
+
+VARIABLES
+
+    THICK
+    WID
+    LEN
+    TPH
+    IPM
+
+GROUPS
+
+ N  OBJ       LEN       1.0
+
+ E  CIPM      IPM       -1.0
+ E  CLEN      LEN       -1.0
+ L  WOT
+ G  TTW
+
+CONSTANTS
+
+ Z  CSFI2     WOT                      MAXASPR
+
+ Z  CSFI2     TTW                      MINAREA
+
+RANGES
+
+ R- RHS       MAXAREA                  MINAREA
+ Z  CSFI2     TTW                      RHS
+
+BOUNDS
+
+ ZL CSFI2     THICK                    MINTHICK
+ ZL CSFI2     TPH                      MINTPH
+
+START POINT
+
+ V  START     'DEFAULT' 0.5
+*V  START     THICK     10.01
+*V  START     WID       20.02
+*V  START     LEN       60.0
+*V  START     TPH       49.1
+*V  START     IPM       28.75
+
+ELEMENT TYPE
+
+ EV CMPLQ     V1                       V2
+ EV CMPLQ     V3
+
+ EV SQQUT     V1                       V2
+
+ EV PROD      V1                       V2
+
+ EV QUOTN     V1                       V2
+
+ELEMENT USES
+
+ T  E1        CMPLQ
+ V  E1        V1                       TPH
+ V  E1        V2                       WID
+ V  E1        V3                       THICK
+
+ T  E2        SQQUT
+ V  E2        V1                       THICK
+ V  E2        V2                       IPM
+
+ T  E3        QUOTN
+ V  E3        V1                       WID
+ V  E3        V2                       THICK
+
+ T  E4        PROD
+ V  E4        V1                       THICK
+ V  E4        V2                       WID
+
+GROUP USES
+
+ E  CIPM      E1
+ E  CLEN      E2
+ E  WOT       E3
+ E  TTW       E4
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               55.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CSFI2
+
+TEMPORARIES
+
+ R  TMP
+ R  TMP0
+ R  TMP1
+ R  TMP2
+
+INDIVIDUALS
+
+ T  CMPLQ
+
+ A  TMP0                V2*V3
+ A  TMP1                117.3708920187793427D0*V1/TMP0
+ A  TMP2                117.3708920187793427D0/TMP0
+ F                      TMP1
+ G  V1                  TMP2
+ G  V2                  -TMP1/V2
+ G  V3                  -TMP1/V3
+ H  V1        V2        -TMP2/V2
+ H  V1        V3        -TMP2/V3
+ H  V2        V2        2.0D0*TMP1/(V2*V2)
+ H  V2        V3        TMP1/TMP0
+ H  V3        V3        2.0D0*TMP1/(V3*V3)
+
+ T  SQQUT
+
+ A  TMP                 V1*V2/48.0D0
+ F                      V1*TMP
+ G  V1                  2.0D0*TMP
+ G  V2                  V1*V1/48.0D0
+ H  V1        V1        V2/24.0D0
+ H  V1        V2        V1/24.0D0
+
+ T  QUOTN
+
+ A  TMP                 V1/V2
+ F                      TMP
+ G  V1                  1.0D0/V2
+ G  V2                  -TMP/V2
+ H  V1        V2        -1.0D0/(V2*V2)
+ H  V2        V2        2.0D0*TMP/(V2*V2)
+
+ T  PROD
+
+ F                      V1*V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0D0
+
+ENDATA

@@ -1,0 +1,289 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DTOC2 
+
+*   Problem :
+*   *********
+
+*   This is a discrete time optimal control (DTOC) problem.  
+*   The system has N time periods, 2 control variables and 4 state variables.
+
+*   The problem is not convex.
+
+*   Sources: problem 2 in
+*   T.F. Coleman and A. Liao,
+*   "An Efficient Trust Region Method for Unconstrained Discret-Time Optimal
+*   Control Problems",
+*   Tech. Report, ctc93tr144,  Advanced Computing Research Institute, 
+*   Cornell University, 1992.
+
+*   L.Z. Liao and C.A. Shoemaker,
+*   "Advantages of differential dynamic programming over Newton's method for
+*   discrete-time optimal control problems",
+*   Tech. Report ctc92tr97, Advanced Computing Research Institute, 
+*   Cornell University, 1992.
+
+*   SIF input: Ph. Toint, August 1993
+
+*   classification OOR2-AN-V-V
+
+*   Problem variants: they are identified by the value of the parameter N.
+
+*   The problem has (N-1)*NX+N*NY  variables (of which NY are fixed),
+*   and (N-1)*NY constraints
+
+*IE N                   10             $-PARAMETER # periods  } original value
+*IE NX                  2              $-PARAMETER # controls } n=   58, m=  36
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   50             $-PARAMETER # periods  }
+*IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   100            $-PARAMETER # periods  }
+*IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   500            $-PARAMETER # periods  }
+*IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   1000           $-PARAMETER # periods  }
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
+ IE NX                  2              $-PARAMETER     modified for S2X tests
+*IE NY                  4              $-PARAMETER # states   }
+ IE NY                  4              $-PARAMETER     modified for S2X tests
+
+*IE N                   10             $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n=  145, m=  90
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   50             $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n=  745, m= 490
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   100            $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n= 1495, m= 990
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   500            $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n= 7495, m=4990
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   1000           $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n=14995, m=9990
+*IE NY                  10             $-PARAMETER # states   }
+
+ IA N-1       N         -1
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IA NY-1      NY        -1
+ I+ 2NY       NY                       NY
+ RI R2NY      2NY
+ RD 1/2NY     R2NY      1.0
+
+*  Build the transition matrix C
+
+ DO J         1                        NX
+ DO I         1                        NY
+ I+ I+J       I                        J
+ RI RI+J      I+J
+ A* C(I,J)    RI+J                     1/2NY
+ OD J
+ OD I
+
+VARIABLES
+
+ DO T         1                        N-1
+ DO I         1                        NX
+ X  X(T,I)
+ OD I
+ OD T
+
+ DO T         1                        N
+ DO I         1                        NY
+ X  Y(T,I)
+ OD I
+ OD T
+
+GROUPS
+
+*   Objective function
+
+ DO T         1                        N
+ XN O(T)
+ OD T
+
+*   Transition constraints
+
+ DO T         1                        N-1
+ IA T+1       T         1
+ DO J         1                        NY
+ XE TT(T,J)   Y(T+1,J)  -1.0
+ OD J
+ OD T
+
+BOUNDS
+
+ FR DTOC2     'DEFAULT'
+
+ DO I         1                        NY
+ RI RI        I
+ R* TMP       RI                       1/2NY
+ ZX DTOC2     Y(1,I)                   TMP
+ OD I
+
+START POINT
+
+ DO I         1                        NY
+ RI RI        I
+ R* TMP       RI                       1/2NY
+ ZV DTOC2     Y(1,I)                   TMP
+ OD I
+
+ELEMENT TYPE
+
+ EV OEL       YY1                      YY2
+ EV OEL       YY3                      YY4
+ EV OEL       XX1                      XX2
+
+ EV SQ        YY
+
+ EV SINE      ZZ
+
+ELEMENT USES
+
+ DO T         1                        N-1
+
+ XT EO(T)     OEL
+ ZV EO(T)     YY1                      Y(T,1)
+ ZV EO(T)     YY2                      Y(T,2)
+ ZV EO(T)     YY3                      Y(T,3)
+ ZV EO(T)     YY4                      Y(T,4)
+ ZV EO(T)     XX1                      X(T,1)
+ ZV EO(T)     XX2                      X(T,2)
+
+ DO J         1                        NY
+ XT SY(T,J)   SINE
+ ZV SY(T,J)   ZZ                       Y(T,J)
+ OD J
+
+ DO I         1                        NX
+ XT SX(T,I)   SINE
+ ZV SX(T,I)   ZZ                       X(T,I)
+ OD J
+
+ OD T
+
+ DO J         1                        NY
+ XT YNSQ(J)   SQ
+ ZV YNSQ(J)   YY                       Y(N,J)
+ OD J
+
+GROUP USES
+
+ DO T         1                        N-1
+ XE O(T)      EO(T)
+ OD T
+
+ DO J         1                        NY
+ XE O(N)      YNSQ(J)
+ OD J
+
+ DO T         1                        N-1
+ DO J         1                        NY
+ XE TT(T,J)   SY(T,J)
+ DO I         1                        NX
+ ZE TT(T,J)   SX(T,I)                  C(J,I)
+ OD I
+ OD J
+ OD T
+
+OBJECT BOUND
+
+ LO DTOC2               0.0
+
+*LO SOLUTION(  10)      0.485983918948
+*LO SOLUTION(  20)      0.486212213803
+*LO SOLUTION(  30)      0.486383392574
+*LO SOLUTION(  40)      0.486572686778
+*LO SOLUTION(  50)      0.486884900389
+*LO SOLUTION( 100)      0.487532342563
+*LO SOLUTION( 500)      0.490996540460
+*LO SOLUTION(1000)      0.490200910983
+
+ENDATA
+
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DTOC2
+
+TEMPORARIES
+
+ R  XN2
+ R  YN2
+ R  SZ
+ R  CZ
+ R  SZ2
+ R  SC
+ R  CCSS
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  SQ
+ F                      YY * YY
+ G  YY                  YY + YY
+ H  YY        YY        2.0
+
+ T  SINE
+ A  SZ                  SIN( ZZ )
+ F                      SZ
+ G  ZZ                  COS( ZZ )
+ H  ZZ        ZZ        - SZ
+
+ T  OEL
+ A  XN2                 XX1 * XX1 + XX2 * XX2
+ A  YN2                 YY1 * YY1 + YY2 * YY2 + YY3 * YY3 
+ A+                      + YY4 * YY4
+ A  SZ                  SIN( 0.5 * XN2 )
+ A  CZ                  COS( 0.5 * XN2 )
+ A  SZ2                 SZ * SZ + 1.0
+ A  SC                  SZ * CZ
+ A  CCSS                CZ * CZ - SZ * SZ
+ F                      YN2 * SZ2
+ G  XX1                 2.0 * YN2 * SC * XX1
+ G  XX2                 2.0 * YN2 * SC * XX2
+ G  YY1                 2.0 * YY1 * SZ2
+ G  YY2                 2.0 * YY2 * SZ2
+ G  YY3                 2.0 * YY3 * SZ2
+ G  YY4                 2.0 * YY4 * SZ2
+ H  XX1       XX1       2.0 * YN2 * ( SC + XX1 * XX1 * CCSS )
+ H  XX1       XX2       2.0 * YN2 * XX1 * XX2 * CCSS
+ H  XX1       YY1       4.0 * YY1 * SC * XX1
+ H  XX1       YY2       4.0 * YY2 * SC * XX1
+ H  XX1       YY3       4.0 * YY3 * SC * XX1
+ H  XX1       YY4       4.0 * YY4 * SC * XX1
+ H  XX2       XX2       2.0 * YN2 * ( SC + XX2 * XX2 * CCSS )
+ H  XX2       YY1       4.0 * YY1 * SC * XX2
+ H  XX2       YY2       4.0 * YY2 * SC * XX2
+ H  XX2       YY3       4.0 * YY3 * SC * XX2
+ H  XX2       YY4       4.0 * YY4 * SC * XX2
+ H  YY1       YY1       2.0 * SZ2
+ H  YY2       YY2       2.0 * SZ2
+ H  YY3       YY3       2.0 * SZ2
+ H  YY4       YY4       2.0 * SZ2
+
+ENDATA
+
+

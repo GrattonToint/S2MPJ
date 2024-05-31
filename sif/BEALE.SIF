@@ -1,0 +1,141 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BEALE
+
+*   Problem :
+*   *********
+*   Beale problem in 2 variables
+
+*   Source: Problem 5 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#89.
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-2-0
+
+ IE N                   2
+
+*   Define useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  A
+ N  B
+ N  C
+
+CONSTANTS
+
+    BEALE     A         1.5
+    BEALE     B         2.25
+    BEALE     C         2.625
+
+BOUNDS
+
+ FR BEALE     'DEFAULT'
+
+START POINT
+
+ XV BEALE     'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV PRODB     V1                       V2
+ EP PRODB     POW
+
+ELEMENT USES
+
+ T  'DEFAULT' PRODB
+
+ V  AE        V1                       X1
+ V  AE        V2                       X2
+ P  AE        POW       1.0
+
+ V  BE        V1                       X1
+ V  BE        V2                       X2
+ P  BE        POW       2.0
+
+ V  CE        V1                       X1
+ V  CE        V2                       X2
+ P  CE        POW       3.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+ E  A         AE
+ E  B         BE
+ E  C         CE
+
+OBJECT BOUND
+
+ LO BEALE                0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BEALE
+
+TEMPORARIES
+
+ R  T
+ R  POWM1
+ R  W
+
+INDIVIDUALS
+
+*   Product type elements
+
+ T  PRODB
+ A  T                   1.0 - V2**POW
+ A  POWM1               POW - 1.0
+ A  W                   - POW * V2**POWM1
+ F                      V1 * T
+ G  V1                  T
+ G  V2                  V1 * W
+ H  V1        V1        0.0
+ H  V1        V2        W
+ H  V2        V2        -V1 * POW * POWM1 * V2**(POW - 2.0)
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BEALE
+
+INDIVIDUALS
+
+*   Least-square groups
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

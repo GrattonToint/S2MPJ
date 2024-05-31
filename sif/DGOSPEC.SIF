@@ -1,0 +1,122 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DGOSPEC
+
+*   Problem :
+*   *********
+
+*   A global-optimization test example
+
+*   Source:  an example from the specification document for GALAHAD's DGO
+
+*   SIF input: Nick Gould, August 2021
+
+*   classification OBR2-AN-3-0
+
+*  problem parameters
+
+ RE FREQ                10.0
+ RE MAG                 1000.0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  Q1        X1        1.0            X3        1.0
+ N  Q2        X2        1.0            X3        1.0
+ N  N1
+ N  L1        X1        1.0            X2        1.0
+ N  L1        X3        1.0
+
+CONSTANTS
+
+    DGOSPEC   Q1        -4.0
+
+BOUNDS
+
+ LO DGOSPEC   'DEFAULT' -1.0
+ UP DGOSPEC   'DEFAULT' 0.5
+
+ LO DGOSPEC2  'DEFAULT' -10.0
+ UP DGOSPEC2  'DEFAULT' 0.5
+
+START POINT
+
+    DGOSPEC   'DEFAULT' 0.0
+
+ELEMENT TYPE
+
+ EV COS       X
+ EP COS       F
+
+ELEMENT USES
+
+ T  E1        COS
+ V  E1        X                        X1
+ ZP E1        F                        FREQ
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  Q1        L2
+ T  Q2        L2
+ ZE N1        E1                       MAG
+
+OBJECT BOUND
+
+ LO DGOSPEC              0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DGOSPEC
+
+TEMPORARIES
+
+ R  FX
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  COS
+ A  FX                  F * X 
+ F                      COS( FX )
+ G  X                   - F * SIN( FX )
+ H  X         X         - F * F * COS( FX )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DGOSPEC
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+

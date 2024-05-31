@@ -1,0 +1,133 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT13 
+
+*   Problem :
+*   *********
+
+*   Source: problem 13 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem has been modified by adding a lower bound of 0.0 on x5
+*   in order to make it bounded below.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification LQR2-AY-5-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ       X5        1.0
+
+ E  CON1
+
+BOUNDS
+
+ FR BT13      'DEFAULT'
+ LO BT13      X5        0.0
+
+START POINT
+
+* Start 1
+
+ XV BT13      X1        1.0
+ XV BT13      X2        2.0
+ XV BT13      X3        3.0
+ XV BT13      X4        3.0
+ XV BT13      X5        228.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ EV ISQ2      X                        Y
+ IV ISQ2      Z
+
+ EV ISQ3      X                        Y
+ IV ISQ3      Z
+
+ EV ISQ4      X                        Y
+ IV ISQ4      Z
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X5SQ      SQ
+ V  X5SQ      X                        X5
+
+ T  C1        ISQ2
+ V  C1        X                        X1
+ V  C1        Y                        X2
+
+ T  C2        ISQ3
+ V  C2        X                        X2
+ V  C2        Y                        X3
+
+ T  C3        ISQ4
+ V  C3        X                        X3
+ V  C3        Y                        X4
+
+GROUP USES
+
+ E  CON1      X1SQ                     C1
+ E  CON1      C2                       C3
+ E  CON1      X5SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT13
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  ISQ2
+ R  Z         X         1.0            Y         -2.0
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  ISQ3
+ R  Z         X         1.0            Y         -3.0
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  ISQ4
+ R  Z         X         1.0            Y         -4.0
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ENDATA

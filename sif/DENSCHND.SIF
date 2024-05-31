@@ -1,0 +1,157 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DENSCHND
+
+*   Problem :
+*   *********
+
+*   Source: an example problem (p. 83) in
+*   J.E. Dennis and R.B. Schnabel,
+*   "Numerical Methods for Unconstrained Optimization and Nonlinear
+*   Equations",
+*   Prentice-Hall, Englewood Cliffs, 1983.
+
+*   SIF input: Ph. Toint, Nov 1990.
+
+*   classification SUR2-AN-3-0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  A
+ N  B
+ N  C
+
+BOUNDS
+
+ FR DENSCHND  'DEFAULT'
+
+START POINT
+
+ XV DENSCHND  'DEFAULT' 10.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV CB        V1
+ EV FR        V1
+ EV 2PR       V1                       V2
+ EV 3PR       V1                       V2
+ EV 3PR       V3
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+
+ T  E1        SQ
+ V  E1        V1                       X1
+
+ T  E2        CB
+ V  E2        V1                       X2
+
+ T  E3        FR
+ V  E3        V1                       X3
+
+ T  E4        3PR
+ V  E4        V1                       X1
+ V  E4        V2                       X2
+ V  E4        V3                       X3
+
+ V  E5        V1                       X1
+ V  E5        V2                       X2
+
+ V  E6        V1                       X2
+ V  E6        V2                       X3
+
+ V  E7        V1                       X1
+ V  E7        V2                       X3
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ E  A         E1                       E2
+ E  A         E3         -1.0
+
+ E  B         E4                       E4
+
+ E  C         E5         2.0           E6        -3.0
+ E  C         E7
+
+OBJECT BOUND
+
+ LO DENSCHND             0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DENSCHND
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  CB
+ F                      V1**3
+ G  V1                  3.0 * V1 * V1
+ H  V1        V1        6.0 * V1
+
+ T  FR
+ F                      V1**4
+ G  V1                  4.0 * V1**3
+ H  V1        V1        12.0 * V1 * V1
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  3PR
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DENSCHND
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

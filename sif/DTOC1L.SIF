@@ -1,0 +1,240 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DTOC1L
+
+*   Problem :
+*   *********
+
+*   This is a discrete time optimal control (DTOC) problem.  
+*   The system has N time periods, NX control variables and NY state variables.
+*   The parameter mu in the original problem formulation is set to zero, 
+*   yielding linear transition functions, hence the L in the problem's name.
+
+*   The problem is convex.
+
+*   Sources: problem 1 (with mu = 0) in
+*   T.F. Coleman and A. Liao,
+*   "An Efficient Trust Region Method for Unconstrained Discret-Time Optimal
+*   Control Problems",
+*   Tech. Report, ctc93tr144,  Advanced Computing Research Institute, 
+*   Cornell University, 1992.
+
+*   L.Z. Liao and C.A. Shoemaker,
+*   "Advantages of differential dynamic programming over Newton's method for
+*   discrete-time optimal control problems",
+*   Tech. Report ctc92tr97, Advanced Computing Research Institute, 
+*   Cornell University, 1992.
+
+*   SIF input: Ph. Toint, August 1993
+
+*   classification OLR2-AN-V-V
+
+*   Problem variants: they are identified by the values of
+*   the parameter vector ( N, NX, NY )
+
+*   The problem has (N-1)*NX+N*NY  variables (of which NY are fixed),
+*   and (N-1)*NY constraints
+
+*IE N                   10             $-PARAMETER # periods  } original value
+*IE NX                  2              $-PARAMETER # controls } n=   58, m=  36
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   50             $-PARAMETER # periods  }
+*IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   100            $-PARAMETER # periods  }
+*IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   500            $-PARAMETER # periods  }
+*IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
+*IE NY                  4              $-PARAMETER # states   }
+
+*IE N                   1000           $-PARAMETER # periods  }
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
+ IE NX                  2              $-PARAMETER     modified for S2X tests
+*IE NY                  4              $-PARAMETER # states   }
+ IE NY                  4              $-PARAMETER     modified for S2X tests
+
+*IE N                   10             $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n=  145, m=  90
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   50             $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n=  745, m= 490
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   100            $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n= 1495, m= 990
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   500            $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n= 7495, m=4990
+*IE NY                  10             $-PARAMETER # states   }
+
+*IE N                   1000           $-PARAMETER # periods  }
+*IE NX                  5              $-PARAMETER # controls } n=14995, m=9990
+*IE NY                  10             $-PARAMETER # states   }
+
+*   Constants
+
+ IA N-1       N         -1
+ IE 1                   1
+ IE 2                   2
+ IA NY-1      NY        -1
+ I+ NX+NY     NX                       NY
+ RI RXY       NX+NY
+ RD 1/RXY     RXY       1.0
+
+*  Build the transition matrix B
+
+ DO J         1                        NX
+ DO I         1                        NY
+ I- I-J       I                        J
+ RI RI-J      I-J
+ A* B(I,J)    RI-J                     1/RXY
+ OD J
+ OD I
+
+VARIABLES
+
+ DO T         1                        N-1
+ DO I         1                        NX
+ X  X(T,I)
+ OD I
+ OD T
+
+ DO T         1                        N
+ DO I         1                        NY
+ X  Y(T,I)
+ OD I
+ OD T
+
+GROUPS
+
+*   Objective function
+
+ DO T         1                        N-1
+ DO I         1                        NX
+ XN OX(T,I)   X(T,I)    1.0
+ OD I
+ OD T
+
+ DO T         1                        N
+ DO I         1                        NY
+ XN OY(T,I)   Y(T,I)    1.0
+ OD I
+ OD T
+
+*   Transition constraints
+
+ DO T         1                        N-1
+ IA T+1       T         1
+
+*   First state
+
+ XE TT(T,1)   Y(T+1,1)  -1.0
+ XE TT(T,1)   Y(T,1)    0.5            Y(T,2)    0.25
+ DO I         1                        NX
+ ZE TT(T,1)   X(T,I)                   B(1,I)
+ OD I
+
+*   Middle states
+
+ DO J         2                        NY-1
+ IA J-1       J         -1
+ IA J+1       J         1 
+ XE TT(T,J)   Y(T+1,J)  -1.0           Y(T,J)    0.5
+ XE TT(T,J)   Y(T,J-1)  -0.25          Y(T,J+1)  0.25
+ DO I         1                        NX
+ ZE TT(T,J)   X(T,I)                   B(J,I)
+ OD I
+ OD J
+
+*   Last state
+
+ XE TT(T,NY)  Y(T+1,NY) -1.0
+ XE TT(T,NY)  Y(T,NY)   0.5            Y(T,NY-1) -0.25
+ DO I         1                        NX
+ ZE TT(T,NY)  X(T,I)                   B(NY,I)
+ OD I
+
+ OD T
+
+CONSTANTS
+
+ DO T         1                        N-1
+ DO I         1                        NX
+ X  DTOC1L    OX(T,I)   -0.5
+ OD I
+ OD T
+
+ DO T         1                        N
+ DO I         1                        NY
+ X  DTOC1L    OY(T,I)   -0.25
+ OD I
+ OD T
+
+BOUNDS
+
+ FR DTOC1L    'DEFAULT'
+
+ DO I         1                        NY
+ XX DTOC1L    Y(1,I)    0.0
+ OD I
+
+GROUP TYPE
+
+ GV L4        GVAR
+
+GROUP USES
+
+ DO T         1                        N-1
+ DO I         1                        NX
+ XT OX(T,I)   L4
+ OD I
+ OD T
+
+ DO T         1                        N
+ DO I         1                        NY
+ XT OY(T,I)   L4
+ OD I
+ OD T
+
+OBJECT BOUND
+
+ LO DTOC1L              0.0
+
+*LO SOLUTION(  10,2, 4) 0.0735931360
+*LO SOLUTION(  50,2, 4) 0.2299411960
+*LO SOLUTION( 100,2, 4) 0.4253681120
+*LO SOLUTION( 500,2, 4) 1.9887794988
+*LO SOLUTION(1000,2, 4) 3.9430507151
+*LO SOLUTION(  10,5,10) 1.1498579294
+*LO SOLUTION(  50,5,10) 6.1678479713
+*LO SOLUTION( 100,5,10) 12.439954329
+*LO SOLUTION( 500,5,10) 62.616843379
+*LO SOLUTION(1000,5,10) 125.33793359
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DTOC1L
+
+INDIVIDUALS
+
+ T  L4
+ F                      GVAR**4
+ G                      4.0 * GVAR**3
+ H                      12.0 * GVAR**2
+
+ENDATA
+

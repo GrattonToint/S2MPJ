@@ -1,0 +1,141 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DENSCHNF
+
+*   Problem :
+*   *********
+
+*   Source: an example problem (p. 107) in
+*   J.E. Dennis and R.B. Schnabel,
+*   "Numerical Methods for Unconstrained Optimization and Nonlinear
+*   Equations",
+*   Prentice-Hall, Englewood Cliffs, 1983.
+
+*   SIF input: Ph. Toint, Nov 1990.
+
+*   classification SUR2-AY-2-0
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ N  A
+ N  B
+
+CONSTANTS
+
+    DENSCHNF  A         8.0
+    DENSCHNF  B         9.0
+
+BOUNDS
+
+ FR DENSCHNF  'DEFAULT'
+
+START POINT
+
+    DENSCHNF  X1        2.0
+    DENSCHNF  X2        0.0
+
+ELEMENT TYPE
+
+ EV SSQ       V1
+ EP SSQ       S
+
+ EV ISQP      V1                       V2
+ IV ISQP      U
+
+ EV ISQM      V1                       V2
+ IV ISQM      U
+
+ELEMENT USES
+
+ T  E1        ISQP
+ V  E1        V1                       X1
+ V  E1        V2                       X2
+
+ T  E2        ISQM
+ V  E2        V1                       X1
+ V  E2        V2                       X2
+
+ T  E3        SSQ
+ V  E3        V1                       X1
+ P  E3        S         0.0
+
+ T  E4        SSQ
+ V  E4        V1                       X2
+ P  E4        S         3.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ E  A         E1        2.0            E2
+ E  B         E3        5.0            E4
+
+OBJECT BOUND
+
+ LO DENSCHNF            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DENSCHNF
+
+TEMPORARIES
+
+ R  SV
+
+INDIVIDUALS
+
+ T  SSQ
+ A  SV                  V1 - S
+ F                      SV * SV
+ G  V1                  SV + SV
+ H  V1        V1        2.0
+
+ T  ISQP
+ R  U         V1        1.0            V2        1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  ISQM
+ R  U         V1        1.0            V2        -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DENSCHNF
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

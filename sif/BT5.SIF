@@ -1,0 +1,133 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT5
+
+*   Problem :
+*   *********
+
+*   Source: problem 5 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem as stated in the paper seems to contain a typo.
+*   The sign of the x3 squared term in the first constraint has been
+*   set to + instead of - in order to ensdure that the problem is 
+*   bounded below and the optimal point stated recovered.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification QQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1
+ E  CON2      X1        8.0            X2        14.0
+ E  CON2      X3        7.0
+
+CONSTANTS
+
+    BT5       OBJ       -1000.0
+    BT5       CON1      25.0
+    BT5       CON2      56.0
+
+BOUNDS
+
+ FR BT5       'DEFAULT'
+
+START POINT
+
+* Start 1
+
+ XV BT5       'DEFAULT' 2.0
+
+* Start 2
+
+*XV BT5       'DEFAULT' 20.0
+
+* Start 3
+
+*XV BT5       'DEFAULT' 80.0
+
+*XV BT5       X1        7.0
+*XV BT5       X2        7.0
+*XV BT5       X3        7.0
+*XV BT5       X4        0.0
+*XV BT5       X5        0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+ T  X1X2      2PR
+ V  X1X2      X                        X1
+ V  X1X2      Y                        X2
+
+ T  X1X3      2PR
+ V  X1X3      X                        X1
+ V  X1X3      Y                        X3
+
+GROUP USES
+
+ E  OBJ       X1SQ      -1.0           X3SQ      -1.0
+ E  OBJ       X2SQ      -2.0           X1X2      -1.0
+ E  OBJ       X1X3      -1.0
+
+ E  CON1      X1SQ                     X2SQ
+ E  CON1      X3SQ
+
+OBJECT BOUND
+
+*   Solution            
+
+*LO SOLTN               961.71517219
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT5
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+

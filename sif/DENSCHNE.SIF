@@ -1,0 +1,121 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DENSCHNE
+
+*   Problem :
+*   *********
+
+*   Source: an example problem (p. 107) in
+*   J.E. Dennis and R.B. Schnabel,
+*   "Numerical Methods for Unconstrained Optimization and Nonlinear
+*   Equations",
+*   Prentice-Hall, Englewood Cliffs, 1983.
+
+*   SIF input: Ph. Toint, Nov 1990.
+
+*   classification SUR2-AN-3-0
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  A         X1        1.0
+ N  B         X2        1.0
+ N  C
+
+CONSTANTS
+
+    DENSCHNE  C         1.0
+
+BOUNDS
+
+ FR DENSCHNE  'DEFAULT'
+
+START POINT
+
+    DENSCHNE  X1        2.0
+    DENSCHNE  X2        3.0
+    DENSCHNE  X3        -8.0
+
+ELEMENT TYPE
+
+ EV SQ        V1
+ EV EX        V1
+
+ELEMENT USES
+
+ T  E2        SQ
+ V  E2        V1                       X2
+
+ T  E3        EX
+ V  E3        V1                       X3
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ E  B         E2
+ E  C         E3
+
+OBJECT BOUND
+
+ LO DENSCHNE                0.0
+
+*   Solution
+
+*LO SOLTN                   0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DENSCHNE
+
+TEMPORARIES
+
+ R  EV
+ M  EXP
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V1 * V1
+ G  V1                  V1 + V1
+ H  V1        V1        2.0
+
+ T  EX
+ A  EV                  EXP( V1 )
+ F                      EV
+ G  V1                  EV
+ H  V1        V1        EV
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DENSCHNE
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,99 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DIXON3DQ
+
+*   Problem :
+*   *********
+
+*   Dixon's tridiagonal quadratic.
+
+*   Source: problem 156 (p. 51) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification QUR2-AN-V-0
+
+*   Number of variables (variable)
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Other parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN G(1)      X(1)      1.0
+
+ DO I         2                        N-1
+ IA I+1       I         1
+ XN G(I)      X(I)      1.0            X(I+1)    -1.0
+ ND
+
+ XN G(N)      X(N)      1.0
+
+CONSTANTS
+
+ X  DIXON3DQ  G(1)      1.0
+ X  DIXON3DQ  G(N)      1.0
+
+BOUNDS
+
+ FR DIXON3DQ  'DEFAULT'
+
+START POINT
+
+ XV DIXON3DQ  'DEFAULT' -1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+OBJECT BOUND
+
+ LO DIXON3DQ            0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DIXON3DQ
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,412 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DIXCHLNG
+
+*   Problem :
+*   *********
+
+*   A constrained problem set as a challenge for SQP methods
+*   by L.C.W. Dixon at the APMOD91 Conference.
+
+*   Source:
+*   L.C.W. Dixon, personnal communication, Jan 1991.
+
+*   SIF input: Ph. Toint, Feb 1991.
+
+*   classification SOR2-AN-10-5
+
+*   Other parameters
+
+ IE 1                   1
+ IE 2                   2
+ IE 7                   7
+ IE 9                   9
+ IE 10                  10
+ RE 90.0                90.0
+ RE 10.1                10.1
+ RE 19.8                19.8
+ RD 1/90.0    90.0      1.0
+ RD 1/10.1    10.1      1.0
+ RD 1/19.8    19.8      1.0
+
+VARIABLES
+
+ DO I         1                        10
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Objective groups
+
+ DO I         1                        7
+ IA I+1       I         1
+ IA I+2       I         2
+ IA I+3       I         3
+
+ XN A(I)      X(I+1)    1.0
+ XN A(I)      'SCALE'   0.01
+
+ XN B(I)      X(I)      1.0
+
+ XN C(I)      X(I+3)    1.0
+ ZN C(I)      'SCALE'                  1/90.0
+
+ XN D(I)      X(I+2)    1.0
+
+ XN E(I)      X(I+1)    1.0
+ ZN E(I)      'SCALE'                  1/10.1
+
+ XN F(I)      X(I+3)    1.0
+ ZN F(I)      'SCALE'                  1/10.1
+
+ XN G(I)
+ ZN G(I)      'SCALE'                  1/19.8
+
+ OD I
+
+*   Constraints
+
+ DO I         2                        10
+ DI I         2
+ XE P(I)
+ OD I
+
+CONSTANTS
+
+ X  DIXCHLNG  'DEFAULT' 1.0
+
+ DO I         1                        7
+ X  DIXCHLNG  A(I)      0.0
+ X  DIXCHLNG  C(I)      0.0
+ X  DIXCHLNG  G(I)      0.0
+ OD I
+
+BOUNDS
+
+ FR DIXCHLNG  'DEFAULT'
+
+START POINT
+
+ RE X0A                 2.0
+ RE X0M                 -1.0
+
+ DO I         1                        9
+ DI I         2
+ R* X0        X0A                      X0M
+ ZV DIXCHLNG  X(I)                     X0
+ RD 1/X0      X0        1.0
+ IA I+1       I         1
+ ZV DIXCHLNG  X(I+1)                   1/X0
+ RA X0A       X0A       1.0
+ RM X0M       X0M       -1.0
+ OD I
+
+ELEMENT TYPE
+
+ EV SQ        V
+
+ EV S2PR      V                        W
+
+ EV PR2       V1                       V2
+
+ EV PR4       V1                       V2
+ EV PR4       V3                       V4
+
+ EV PR6       V1                       V2
+ EV PR6       V3                       V4
+ EV PR6       V5                       V6
+
+ EV PR8       V1                       V2
+ EV PR8       V3                       V4
+ EV PR8       V5                       V6
+ EV PR8       V7                       V8
+
+ EV PR10      V1                       V2
+ EV PR10      V3                       V4
+ EV PR10      V5                       V6
+ EV PR10      V7                       V8
+ EV PR10      V9                       V10
+
+ELEMENT USES
+
+ DO I         1                        9
+ XT XSQ(I)    SQ
+ ZV XSQ(I)    V                        X(I)
+ OD I
+
+ DO I         1                        7
+ IA I+1       I         1
+ IA I+3       I         3
+ XT PR(I)     S2PR
+ ZV PR(I)     V                        X(I+1)
+ ZV PR(I)     W                        X(I+3)
+ OD I
+
+ XT PRD2      PR2
+ ZV PRD2      V1                       X1
+ ZV PRD2      V2                       X2
+
+ XT PRD4      PR4
+ ZV PRD4      V1                       X1
+ ZV PRD4      V2                       X2
+ ZV PRD4      V3                       X3
+ ZV PRD4      V4                       X4
+
+ XT PRD6      PR6
+ ZV PRD6      V1                       X1
+ ZV PRD6      V2                       X2
+ ZV PRD6      V3                       X3
+ ZV PRD6      V4                       X4
+ ZV PRD6      V5                       X5
+ ZV PRD6      V6                       X6
+
+ XT PRD8      PR8
+ ZV PRD8      V1                       X1
+ ZV PRD8      V2                       X2
+ ZV PRD8      V3                       X3
+ ZV PRD8      V4                       X4
+ ZV PRD8      V5                       X5
+ ZV PRD8      V6                       X6
+ ZV PRD8      V7                       X7
+ ZV PRD8      V8                       X8
+
+ XT PRD10     PR10
+ ZV PRD10     V1                       X1
+ ZV PRD10     V2                       X2
+ ZV PRD10     V3                       X3
+ ZV PRD10     V4                       X4
+ ZV PRD10     V5                       X5
+ ZV PRD10     V6                       X6
+ ZV PRD10     V7                       X7
+ ZV PRD10     V8                       X8
+ ZV PRD10     V9                       X9
+ ZV PRD10     V10                      X10
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+*   Objective groups
+
+ DO I         1                        7
+ IA I+2       I         2
+
+ XT A(I)      L2
+ XE A(I)      XSQ(I)    -1.0
+
+ XT B(I)      L2
+
+ XT C(I)      L2
+ XE C(I)      XSQ(I+2)  -1.0
+
+ XT D(I)      L2
+
+ XT E(I)      L2
+
+ XT F(I)      L2
+
+ XE G(I)      PR(I)
+
+ OD I
+
+*   Constraints
+
+ DO I         2                        10
+ DI I         2
+ XE P(I)      PRD(I)
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DIXCHLNG
+
+TEMPORARIES
+
+ M  LOG
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ T  S2PR
+ F                      ( V - 1.0 ) * ( W - 1.0 )
+ G  V                   W - 1.0
+ G  W                   V - 1.0
+ H  V         W         1.0
+
+ T  PR2
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  PR4
+ F                      V1*V2*V3*V4
+ G  V1                  V2*V3*V4
+ G  V2                  V1*V3*V4
+ G  V3                  V1*V2*V4
+ G  V4                  V1*V2*V3
+ H  V1        V2        V3*V4
+ H  V1        V3        V2*V4
+ H  V1        V4        V2*V3
+ H  V2        V3        V1*V4
+ H  V2        V4        V1*V3
+ H  V3        V4        V1*V2
+
+ T  PR6
+ F                      V1*V2*V3*V4*V5*V6
+ G  V1                  V2*V3*V4*V5*V6
+ G  V2                  V1*V3*V4*V5*V6
+ G  V3                  V1*V2*V4*V5*V6
+ G  V4                  V1*V2*V3*V5*V6
+ G  V5                  V1*V2*V3*V4*V6
+ G  V6                  V1*V2*V3*V4*V5
+ H  V1        V2        V3*V4*V5*V6
+ H  V1        V3        V2*V4*V5*V6
+ H  V1        V4        V2*V3*V5*V6
+ H  V1        V5        V2*V3*V4*V6
+ H  V1        V6        V2*V3*V4*V5
+ H  V2        V3        V1*V4*V5*V6
+ H  V2        V4        V1*V3*V5*V6
+ H  V2        V5        V1*V3*V4*V6
+ H  V2        V6        V1*V3*V4*V5
+ H  V3        V4        V1*V2*V5*V6
+ H  V3        V5        V1*V2*V4*V6
+ H  V3        V6        V1*V2*V4*V5
+ H  V4        V5        V1*V2*V3*V6
+ H  V4        V6        V1*V2*V3*V5
+ H  V5        V6        V1*V2*V3*V4
+
+ T  PR8
+ F                      V1*V2*V3*V4*V5*V6*V7*V8
+ G  V1                  V2*V3*V4*V5*V6*V7*V8
+ G  V2                  V1*V3*V4*V5*V6*V7*V8
+ G  V3                  V1*V2*V4*V5*V6*V7*V8
+ G  V4                  V1*V2*V3*V5*V6*V7*V8
+ G  V5                  V1*V2*V3*V4*V6*V7*V8
+ G  V6                  V1*V2*V3*V4*V5*V7*V8
+ G  V7                  V1*V2*V3*V4*V5*V6*V8
+ G  V8                  V1*V2*V3*V4*V5*V6*V7
+ H  V1        V2        V3*V4*V5*V6*V7*V8
+ H  V1        V3        V2*V4*V5*V6*V7*V8
+ H  V1        V4        V2*V3*V5*V6*V7*V8
+ H  V1        V5        V2*V3*V4*V6*V7*V8
+ H  V1        V6        V2*V3*V4*V5*V7*V8
+ H  V1        V7        V2*V3*V4*V5*V6*V8
+ H  V1        V8        V2*V3*V4*V5*V6*V7
+ H  V2        V3        V1*V4*V5*V6*V7*V8
+ H  V2        V4        V1*V3*V5*V6*V7*V8
+ H  V2        V5        V1*V3*V4*V6*V7*V8
+ H  V2        V6        V1*V3*V4*V5*V7*V8
+ H  V2        V7        V1*V3*V4*V5*V6*V8
+ H  V2        V8        V1*V3*V4*V5*V6*V7
+ H  V3        V4        V1*V2*V5*V6*V7*V8
+ H  V3        V5        V1*V2*V4*V6*V7*V8
+ H  V3        V6        V1*V2*V4*V5*V7*V8
+ H  V3        V7        V1*V2*V4*V5*V6*V8
+ H  V3        V8        V1*V2*V4*V5*V6*V7
+ H  V4        V5        V1*V2*V3*V6*V7*V8
+ H  V4        V6        V1*V2*V3*V5*V7*V8
+ H  V4        V7        V1*V2*V3*V5*V6*V8
+ H  V4        V8        V1*V2*V3*V5*V6*V7
+ H  V5        V6        V1*V2*V3*V4*V7*V8
+ H  V5        V7        V1*V2*V3*V4*V6*V8
+ H  V5        V8        V1*V2*V3*V4*V6*V7
+ H  V6        V7        V1*V2*V3*V4*V5*V8
+ H  V6        V8        V1*V2*V3*V4*V5*V7
+ H  V7        V8        V1*V2*V3*V4*V5*V6
+
+ T  PR10
+ F                      V1*V2*V3*V4*V5*V6*V7*V8*V9*V10
+ G  V1                  V2*V3*V4*V5*V6*V7*V8*V9*V10
+ G  V2                  V1*V3*V4*V5*V6*V7*V8*V9*V10
+ G  V3                  V1*V2*V4*V5*V6*V7*V8*V9*V10
+ G  V4                  V1*V2*V3*V5*V6*V7*V8*V9*V10
+ G  V5                  V1*V2*V3*V4*V6*V7*V8*V9*V10
+ G  V6                  V1*V2*V3*V4*V5*V7*V8*V9*V10
+ G  V7                  V1*V2*V3*V4*V5*V6*V8*V9*V10
+ G  V8                  V1*V2*V3*V4*V5*V6*V7*V9*V10
+ G  V9                  V1*V2*V3*V4*V5*V6*V7*V8*V10
+ G  V10                 V1*V2*V3*V4*V5*V6*V7*V8*V9
+ H  V1        V2        V3*V4*V5*V6*V7*V8*V9*V10
+ H  V1        V3        V2*V4*V5*V6*V7*V8*V9*V10
+ H  V1        V4        V2*V3*V5*V6*V7*V8*V9*V10
+ H  V1        V5        V2*V3*V4*V6*V7*V8*V9*V10
+ H  V1        V6        V2*V3*V4*V5*V7*V8*V9*V10
+ H  V1        V7        V2*V3*V4*V5*V6*V8*V9*V10
+ H  V1        V8        V2*V3*V4*V5*V6*V7*V9*V10
+ H  V1        V9        V2*V3*V4*V5*V6*V7*V8*V10
+ H  V1        V10       V2*V3*V4*V5*V6*V7*V8*V9
+ H  V2        V3        V1*V4*V5*V6*V7*V8*V9*V10
+ H  V2        V4        V1*V3*V5*V6*V7*V8*V9*V10
+ H  V2        V5        V1*V3*V4*V6*V7*V8*V9*V10
+ H  V2        V6        V1*V3*V4*V5*V7*V8*V9*V10
+ H  V2        V7        V1*V3*V4*V5*V6*V8*V9*V10
+ H  V2        V8        V1*V3*V4*V5*V6*V7*V9*V10
+ H  V2        V9        V1*V3*V4*V5*V6*V7*V8*V10
+ H  V2        V10       V1*V3*V4*V5*V6*V7*V8*V9
+ H  V3        V4        V1*V2*V5*V6*V7*V8*V9*V10
+ H  V3        V5        V1*V2*V4*V6*V7*V8*V9*V10
+ H  V3        V6        V1*V2*V4*V5*V7*V8*V9*V10
+ H  V3        V7        V1*V2*V4*V5*V6*V8*V9*V10
+ H  V3        V8        V1*V2*V4*V5*V6*V7*V9*V10
+ H  V3        V9        V1*V2*V4*V5*V6*V7*V8*V10
+ H  V3        V10       V1*V2*V4*V5*V6*V7*V8*V9
+ H  V4        V5        V1*V2*V3*V6*V7*V8*V9*V10
+ H  V4        V6        V1*V2*V3*V5*V7*V8*V9*V10
+ H  V4        V7        V1*V2*V3*V5*V6*V8*V9*V10
+ H  V4        V8        V1*V2*V3*V5*V6*V7*V9*V10
+ H  V4        V9        V1*V2*V3*V5*V6*V7*V8*V10
+ H  V4        V10       V1*V2*V3*V5*V6*V7*V8*V9
+ H  V5        V6        V1*V2*V3*V4*V7*V8*V9*V10
+ H  V5        V7        V1*V2*V3*V4*V6*V8*V9*V10
+ H  V5        V8        V1*V2*V3*V4*V6*V7*V9*V10
+ H  V5        V9        V1*V2*V3*V4*V6*V7*V8*V10
+ H  V5        V10       V1*V2*V3*V4*V6*V7*V8*V9
+ H  V6        V7        V1*V2*V3*V4*V5*V8*V9*V10
+ H  V6        V8        V1*V2*V3*V4*V5*V7*V9*V10
+ H  V6        V9        V1*V2*V3*V4*V5*V7*V8*V10
+ H  V6        V10       V1*V2*V3*V4*V5*V7*V8*V9
+ H  V7        V8        V1*V2*V3*V4*V5*V6*V9*V10
+ H  V7        V9        V1*V2*V3*V4*V5*V6*V8*V10
+ H  V7        V10       V1*V2*V3*V4*V5*V6*V8*V9
+ H  V8        V9        V1*V2*V3*V4*V5*V6*V7*V10
+ H  V8        V10       V1*V2*V3*V4*V5*V6*V7*V9
+ H  V9        V10       V1*V2*V3*V4*V5*V6*V7*V8
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DIXCHLNG
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

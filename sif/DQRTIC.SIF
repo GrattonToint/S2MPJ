@@ -1,0 +1,95 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DQRTIC
+
+*   Problem :
+*   *********
+*   Variable dimension diagonal quartic problem.
+
+*   Source: problem 157 (p. 87) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OUR2-AN-V-0
+
+*   Number of variables (variable)
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER     original value
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Other parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN G(I)      X(I)      1.0
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+ RI RI        I
+ Z  DQRTIC    G(I)                     RI
+ ND
+
+BOUNDS
+
+ FR DQRTIC    'DEFAULT'
+
+START POINT
+
+ XV DQRTIC    'DEFAULT' 2.0
+
+GROUP TYPE
+
+ GV L4        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L4
+
+OBJECT BOUND
+
+ LO DQRTIC              0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        DQRTIC
+
+INDIVIDUALS
+
+ T  L4
+
+ F                      GVAR**4
+ G                      4.0 * GVAR**3
+ H                      12.0 * GVAR**2
+
+ENDATA

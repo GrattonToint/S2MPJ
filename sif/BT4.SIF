@@ -1,0 +1,128 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT4
+
+*   Problem :
+*   *********
+
+*   Source: a variant of problem 4 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The original problem seems to be unbounded.  The contribution of
+*   x3 in the first constraint has been squared instead of cubed.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification QQR2-AN-3-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ       X1        1.0            X2        -1.0
+
+ E  CON1 
+ E  CON2      X1        1.0            X2        1.0
+ E  CON2      X3        1.0
+
+CONSTANTS
+
+    BT4       CON1      25.0
+    BT4       CON2      1.0
+
+BOUNDS
+
+ FR BT4       'DEFAULT'
+
+START POINT
+
+* Start 1
+
+*XV BT4       X1         3.1494
+*XV BT4       X2         1.4523
+*XV BT4       X3        -3.6017
+
+* Start 2
+
+*XV BT4       X1         3.122
+*XV BT4       X2         1.489
+*XV BT4       X3        -3.611
+
+* Start 3
+
+*XV BT4       X1        -0.94562
+*XV BT4       X2        -2.35984
+*XV BT4       X3         4.30546
+
+*  Solution proposed in the paper for the original problem
+
+ XV BT4       X1         4.0382
+ XV BT4       X2        -2.9470
+ XV BT4       X3        -0.09115
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV CB        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X2CB      CB
+ V  X2CB      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+GROUP USES
+
+ E  OBJ       X2CB
+ E  CON1      X1SQ                     X2SQ
+ E  CON1      X3SQ
+
+OBJECT BOUND
+
+*   Solution 
+
+*LO SOLTN               3.28903771
+*LO SOLTN               -45.510551
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT4
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  CB
+ F                      X**3
+ G  X                   3.0 * X**2
+ H  X         X         6.0 * X
+
+ENDATA
+

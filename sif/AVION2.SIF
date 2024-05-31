@@ -1,0 +1,635 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          AVION2
+
+*   Problem :
+*   *********
+
+*   Dassault France avion (airplane design) problem
+
+*   SIF input:  A. R. Conn, June 1993.
+
+*   classification OLR2-RN-49-15
+
+*   Define useful parameters
+
+ RE 790                 790.0
+ RD 1/790     790       1.0
+ RE 24000               24000.0
+ RD 1/24000   24000     1.0
+
+VARIABLES
+
+    SR
+    LR
+    PK
+    EF
+    SX
+    LX
+    SD
+    SK
+    ST
+    SF
+    LF
+    AM
+    CA
+    CB
+    SO
+    SS
+    IMPDER
+    IMPK
+    IMPFUS
+    QI
+    PT
+    MV
+    MC
+    MD
+    PD
+    NS
+    VS
+    CR
+    PM
+    DV
+    MZ
+    VN
+    QV
+    QF
+    IMPTRAIN
+    IMPMOT
+    IMPNMOT
+    IMPPET
+    IMPPIL
+    IMPCAN
+    IMPSNA
+    MS
+    EL
+    DE
+    DS
+    IMPVOIL
+    NM
+    NP
+    NG
+
+GROUPS
+*XN E0        SR        +1.0
+
+ XE E1        SD        1.0            SR        -0.13
+ XE E2        SX        1.0            SR        -0.7
+ XE E3        LX        1.0            LR        -1.0
+ XN E4        SK        1.0
+ XE E5        SF        1.0            ST        -1.0
+ XE E5        SD        -2.0           SX        -2.0
+ XE E5        SK        -2.0
+ XN E6        CA        1.0
+ XN E7        AM        -2.0           SO        1.0
+ XN E7        SS        1.0
+ XN E8        AM        1.0
+ XN E9        IMPDER    1.0            SD        -27.5
+ XN E10       IMPK      1.0            SK        -70.0
+ XE E11       IMPFUS    1.0            SF        -20.0
+ XE E12       MD        1.0            MV        -2.0
+ XN E13       QI        1.0
+ XN E14       PT        1000.0
+ XE E15       QF        1.0            QI        -1.0
+ XE E15       QV        -1.0
+ XN E16       VN        1.0            VS        1.0
+ ZN E16       QF                       1/790
+ XE E17       IMPTRAIN  1.0            MV        -0.137
+ XN E18       IMPMOT    1.0
+ XE E19       IMPNMOT   1.0            NM        -35.0
+ XE E20       IMPPET    1.0            QI        -0.043
+ XE E21       IMPPIL    1.0            NP        -200.0
+ XE E22       IMPCAN    1.0            NG        -120.0
+ XE E23       IMPSNA    1.0            NS        -300.0
+ XE E24       MC        1.0            MV        -1.0
+ XE E24       NP        95.0           NG        70.0
+ XE E24       NM        660.0          QI        0.5
+ XE E25       MZ        1.0            IMPTRAIN  -1.0
+ XE E25       IMPNMOT   1.0            IMPPET    1.0
+ XE E25       IMPPIL    1.0            IMPCAN    1.0
+ XE E25       IMPSNA    1.0
+ XN E26       ST        1.0
+ XN E27       SR        1.0
+ XN E28       QV        1.0
+ XN E29       SO        1.0
+ XN E30       SS        1.0
+ XN E31       CB        1.0
+ XN E32       IMPVOIL   1.0
+
+CONSTANTS
+
+ X  AVION2    E13       1000.0
+ X  AVION2    E16       -2.0
+ X  AVION2    E23       400.0
+ X  AVION2    E24       380.0
+ X  AVION2    E25       -290.0
+
+
+BOUNDS
+
+ LO AVION2    SR        10.0
+ LO AVION2    LR        0.0
+ LO AVION2    PK        0.0
+ LO AVION2    EF        0.0
+ LO AVION2    SX        7.0
+ LO AVION2    LX        1.5
+ LO AVION2    SD        2.0
+ LO AVION2    SK        2.0
+ LO AVION2    ST        30.0
+ LO AVION2    SF        20.0
+ LO AVION2    LF        0.001
+ LO AVION2    AM        0.0
+ LO AVION2    CA        -0.2
+ LO AVION2    CB        0.1
+ LO AVION2    SO        0.0
+ LO AVION2    SS        0.0
+ LO AVION2    IMPDER    100.0
+ LO AVION2    IMPK      500.0
+ LO AVION2    IMPFUS    500.0
+ LO AVION2    QI        1000.0
+ LO AVION2    PT        2.0
+ LO AVION2    MV        2000.0
+ LO AVION2    MC        3000.0
+ LO AVION2    MD        5000.0
+ LO AVION2    PD        0.2
+ LO AVION2    NS        1.0
+ LO AVION2    VS        0.0
+ LO AVION2    CR        100.0
+ LO AVION2    PM        4.0
+ LO AVION2    DV        0.0
+ LO AVION2    MZ        500.0
+ LO AVION2    VN        10.0
+ LO AVION2    QV        250.0
+ LO AVION2    QF        750.0
+ LO AVION2    IMPTRAIN  250.0
+ LO AVION2    IMPMOT    10.0
+ LO AVION2    IMPNMOT   35.0
+ LO AVION2    IMPPET    100.0
+ LO AVION2    IMPPIL    200.0
+ LO AVION2    IMPCAN    120.0
+ LO AVION2    IMPSNA    700.0
+ LO AVION2    MS        100.0
+ LO AVION2    EL        2.0
+ LO AVION2    DE        0.0
+ LO AVION2    DS        0.0
+ LO AVION2    IMPVOIL   500.0
+
+ UP AVION2    SR        150.0
+ UP AVION2    LR        10.0
+ UP AVION2    PK        10.0
+ UP AVION2    EF        5.0
+ UP AVION2    SX        120.0
+ UP AVION2    LX        8.0
+ UP AVION2    SD        20.0
+ UP AVION2    SK        30.0
+ UP AVION2    ST        500.0
+ UP AVION2    SF        200.0
+ UP AVION2    LF        20.0
+ UP AVION2    AM        10.0
+ UP AVION2    CA        -0.001
+ UP AVION2    CB        2.0
+ UP AVION2    SO        1.0
+ UP AVION2    SS        2.0
+ UP AVION2    IMPDER    1000.0
+ UP AVION2    IMPK      5000.0
+ UP AVION2    IMPFUS    5000.0
+ UP AVION2    QI        20000.0
+ UP AVION2    PT        30.0
+ UP AVION2    MV        20000.0
+ UP AVION2    MC        30000.0
+ UP AVION2    MD        50000.0
+ UP AVION2    PD        0.8
+ UP AVION2    NS        5.0
+ UP AVION2    VS        20.0
+ UP AVION2    CR        400.0
+ UP AVION2    PM        15.0
+ UP AVION2    DV        10.0
+ UP AVION2    MZ        10000.0
+ UP AVION2    VN        50.0
+ UP AVION2    QV        5000.0
+ UP AVION2    QF        15000.0
+ UP AVION2    IMPTRAIN  3000.0
+ UP AVION2    IMPMOT    5000.0
+ UP AVION2    IMPNMOT   70.0
+ UP AVION2    IMPPET    3000.0
+ UP AVION2    IMPPIL    400.0
+ UP AVION2    IMPCAN    240.0
+ UP AVION2    IMPSNA    1900.0
+ UP AVION2    MS        1000.0
+ UP AVION2    EL        20.0
+ UP AVION2    DE        1.0
+ UP AVION2    DS        2.0
+ UP AVION2    IMPVOIL   5000.0
+
+ UP AVION2    NM        2.0
+ LO AVION2    NM        1.0
+ UP AVION2    NP        2.0
+ LO AVION2    NP        1.0
+ UP AVION2    NG        2.0
+ LO AVION2    NG        1.0
+
+START POINT
+
+*XV AVION2    'DEFAULT' 10.0
+
+ XV AVION     SR        2.7452D+01
+ XV AVION     LR        1.5000D+00
+ XV AVION     PK        1.0000D+01
+ XV AVION     EF        0.0000D+00
+ XV AVION     SX        1.9217D+01
+ XV AVION     LX        1.5000D+00
+ XV AVION     SD        3.5688D+00
+ XV AVION     SK        4.0696D+00
+ XV AVION     ST        3.4315D+01
+ XV AVION     SF        8.8025D+01
+ XV AVION     LF        5.1306D+00
+ XV AVION     AM        0.0000D+00
+ XV AVION     CA        -1.4809D-01
+ XV AVION     CB        7.5980D-01
+ XV AVION     SO        0.0000D+00
+ XV AVION     SS        0.0000D+00
+ XV AVION     IMPDER    1.1470D+02
+ XV AVION     IMPK      5.0000D+02
+ XV AVION     IMPFUS    1.7605D+03
+ XV AVION     QI        2.3256D+03
+ XV AVION     PT        5.6788D+00
+ XV AVION     MV        1.4197D+04
+ XV AVION     MC        1.2589D+04
+ XV AVION     MD        2.8394D+04
+ XV AVION     PD        2.0000D-01
+ XV AVION     NS        1.0000D+00
+ XV AVION     VS        0.0000D+00
+ XV AVION     CR        1.0000D+02
+ XV AVION     PM        1.5000D+01
+ XV AVION     DV        0.0000D+00
+ XV AVION     MZ        5.0000D+02
+ XV AVION     VN        1.0000D+01
+ XV AVION     QV        8.1490D+02
+ XV AVION     QF        3.1405D+03
+ XV AVION     IMPTRAIN  1.9450D+03
+ XV AVION     IMPMOT    1.9085D+02
+ XV AVION     IMPNMOT   3.5000D+01
+ XV AVION     IMPPET    1.0000D+02
+ XV AVION     IMPPIL    2.0000D+02
+ XV AVION     IMPCAN    1.2000D+02
+ XV AVION     IMPSNA    7.0000D+02
+ XV AVION     MS        1.0000D+03
+ XV AVION     EL        4.9367D+00
+ XV AVION     DE        0.0000D+00
+ XV AVION     DS        0.0000D+00
+ XV AVION     IMPVOIL   5.0000D+03
+ XV AVION     NM        1.0000D+00
+ XV AVION     NP        1.0000D+00
+ XV AVION     NG        1.0000D+00
+
+ELEMENT TYPE
+
+ EV 2PR       Y                        Z
+ EV QD/SQ     W                        X
+ EV QD/SQ     Y                        Z
+ EV 12        Y                        Z
+ EV 12/1      X                        Y
+ EV 12/1      Z
+ EV SQ        Z
+ EV QT        Y                        Z
+ EV 1/LIN     Y                        Z
+ EV SQRT      Z
+ EV SURD      X                        Y
+ EV SURD      Z
+ EV SQPRD     Y                        Z
+ EV CB/SQQD   W                        X
+ EV CB/SQQD   Y                        Z
+ EV SREL      V                        W
+ EV SREL      X                        Y
+ EV SREL      Z
+
+ELEMENT USES
+
+ T  EL1       2PR
+ V  EL1       Y                        PK
+ V  EL1       Z                        SR
+
+ T  EL2       QD/SQ
+ V  EL2       W                        SS
+ V  EL2       X                        SO
+ V  EL2       Y                        CB
+ V  EL2       Z                        LF
+
+ T  EL3       12
+ V  EL3       Y                        EF
+ V  EL3       Z                        LF
+
+ T  EL4       12/1
+ V  EL4       X                        SO
+ V  EL4       Y                        CB
+ V  EL4       Z                        CA
+
+ T  EL5       SQ
+ V  EL5       Z                        SD
+
+ T  EL6       SQ
+ V  EL6       Z                        SK
+
+ T  EL7       SQ
+ V  EL7       Z                        MV
+
+ T  EL8       2PR
+ V  EL8       Y                        MD
+ V  EL8       Z                        PD
+
+ T  EL9       QT
+ V  EL9       Y                        MZ
+ V  EL9       Z                        CR
+
+ T  EL10      2PR
+ V  EL10      Y                        DV
+ V  EL10      Z                        PT
+
+ T  EL11      1/LIN
+ V  EL11      Y                        PT
+ V  EL11      Z                        PM
+
+ T  EL12      SQRT
+ V  EL12      Z                        PT
+
+ T  EL13      2PR
+ V  EL13      Y                        SR
+ V  EL13      Z                        NM
+
+ T  EL14      QT
+ V  EL14      Y                        MD
+ V  EL14      Z                        MS
+
+ T  EL15      SURD
+ V  EL15      X                        SX
+ V  EL15      Y                        EL
+ V  EL15      Z                        LX
+
+ T  EL16      SQPRD
+ V  EL16      Y                        DE
+ V  EL16      Z                        PT
+
+ T  EL17      SQPRD
+ V  EL17      Y                        DS
+ V  EL17      Z                        PT
+
+ T  EL18      CB/SQQD
+ V  EL18      W                        VN
+ V  EL18      X                        CA
+ V  EL18      Y                        LF
+ V  EL18      Z                        SO
+
+ T  EL19      SREL
+ V  EL19      V                        SX
+ V  EL19      W                        MC
+ V  EL19      X                        LX
+ V  EL19      Y                        SR
+ V  EL19      Z                        EL
+
+GROUP TYPE
+ GV SQUARE    ALPHA
+
+GROUP USES
+
+ XT E4        SQUARE
+ E  E4        EL1       -0.01
+ XT E6        SQUARE
+ E  E6        EL2       -1.0
+ XT E7        SQUARE
+ E  E7        EL3       0.01
+ XT E8        SQUARE
+ E  E8        EL4       -0.25
+ XT E9        SQUARE
+ E  E9        EL5       -1.3
+ XT E10       SQUARE
+ E  E10       EL6       8.6
+ XT E13       SQUARE
+ ZE E13       EL7                      1/24000
+ XT E14       SQUARE
+ E  E14       EL8       -1.0
+ XT E16       SQUARE
+ E  E16       EL9       -1.0           EL10      1.0
+ XT E18       SQUARE
+ E  E18       EL11      -1000.0        EL12      -12.0
+ XT E26       SQUARE
+ E  E26       EL13      -1.25
+ XT E27       SQUARE
+ E  E27       EL14      -1.0
+ XT E28       SQUARE
+ E  E28       EL15      -2.4
+ XT E29       SQUARE
+ E  E29       EL16      -0.785
+ XT E30       SQUARE
+ E  E30       EL17      -0.785
+ XT E31       SQUARE
+ E  E31       EL18      -2.0
+ XT E32       SQUARE
+ E  E32       EL19      -1.15
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               9.46801297093018D+07
+
+ENDATA
+
+************************
+* SET UP THE FUNCTIONS *
+************************
+
+ELEMENTS      AVION2
+
+TEMPORARIES
+
+ R  QD
+ R  SQ
+ R  RSQ
+ R  QDOSQ
+ R  ZSQ
+ R  YSQ
+ R  LIN
+ R  RTX
+ R  RTZ
+ R  XRTX
+ R  ZRTZ
+ R  CB
+ R  TMZY
+ R  SQQD
+ R  DYSQQD
+ R  SRLIN
+ R  SRPD
+ R  SRQD
+ R  SRQT
+ R  SRRT
+ R  SRSUM
+ R  SRVLN
+ R  YCB
+ M  SQRT
+
+INDIVIDUALS
+
+ T  2PR
+ F                      Y * Z
+ G  Y                   Z
+ G  Z                   Y
+ H  Y         Z         1.0D0
+
+ T  QD/SQ
+ A  QD                  W - X - Y * Z
+ A  SQ                  Z**2
+ A  RSQ                 1.0D0 / SQ
+ A  QDOSQ               QD / SQ
+ F                      QDOSQ
+ G  W                   RSQ
+ G  X                   -RSQ
+ G  Y                   -1.0D0 / Z
+ G  Z                   -Y / SQ - 2.0D0 * QDOSQ / Z
+ H  W         Z         -2.0D0 / (SQ*Z)
+ H  X         Z         2.0D0 / (SQ*Z)
+ H  Y         Z         RSQ
+ H  Z         Z         (4.0D0 * Y) / (SQ*Z) + 6.0D0 * QDOSQ / SQ
+
+ T  12
+ F                      Y / Z
+ G  Y                   1.0 / Z
+ G  Z                   -Y / Z**2
+ H  Y         Z         -1.0D0 / Z**2
+ H  Z         Z         (2.0D0 * Y) / Z**3
+
+ T  12/1
+ A  ZSQ                 Z**2
+ A  YSQ                 Y**2
+ F                      (X * YSQ) / Z
+ G  X                   YSQ / Z
+ G  Y                   (2.0D0 * X * Y) / Z
+ G  Z                   -(X * YSQ) / ZSQ
+ H  X         Y         (2.0D0 * Y) / Z
+ H  X         Z         -YSQ / ZSQ
+ H  Y         Y         (2.0D0 * X) / Z
+ H  Y         Z         -(2.0D0 * X * Y) / ZSQ
+ H  Z         Z         (2.0D0 * X * YSQ) / (ZSQ * Z)
+
+ T  SQ
+ F                      Z * Z
+ G  Z                   2.0D0 * Z
+ H  Z         Z         2.0D0
+
+ T  QT
+ F                      Y / Z
+ G  Y                   1.0 / Z
+ G  Z                   -Y / Z**2
+ H  Y         Z         -1.0D0 / Z**2
+ H  Z         Z         (2.0D0 * Y) / Z**3
+
+ T  1/LIN
+ A  LIN                 Z + 20.0D0
+ F                      Y / LIN
+ G  Y                   1.0 / LIN
+ G  Z                   -Y / LIN**2
+ H  Y         Z         -1.0D0 / LIN**2
+ H  Z         Z         (2.0D0 * Y) / LIN**3
+
+ T  SQRT
+ A  RTZ                 SQRT(Z)
+ F                      RTZ
+ G  Z                   0.5D0 / RTZ
+ H  Z         Z         -0.25D0 / ( Z*RTZ )
+
+ T  SURD
+ A  RTX                 SQRT(X)
+ A  RTZ                 SQRT(Z)
+ A  XRTX                X * SQRT(X)
+ A  ZRTZ                Z * SQRT(Z)
+ F                      XRTX * Y / RTZ
+ G  X                   1.5D0 *RTX * Y / RTZ
+ G  Y                   XRTX / RTZ
+ G  Z                   -(0.5D0 * XRTX * Y) / ZRTZ
+ H  X         X         0.75D0 * Y / (RTZ * RTX)
+ H  X         Y         1.5D0 *RTX / RTZ
+ H  X         Z         -(0.75D0 * RTX  * Y) / ZRTZ
+ H  Y         Z         -(0.5D0 * XRTX) / ZRTZ
+ H  Z         Z         (0.75D0 * XRTX * Y) / (ZRTZ * Z)
+
+ T  SQPRD
+ F                      Y**2 * Z
+ G  Y                   2.0D0 * Y * Z
+ G  Z                   Y**2
+ H  Y         Y         2.0D0 * Z
+ H  Y         Z         2.0D0 * Y
+
+ T  CB/SQQD
+ A  YCB                 Y**3
+ A  CB                  W - X * YCB
+ A  TMZY                3.0D0 - Z * Y
+ A  SQQD                Y**2 * TMZY
+ A  DYSQQD              3.0D0 * Y * (2.0D0 - Z * Y)
+ F                      CB / SQQD
+ G  W                   1.0D0 / SQQD
+ G  X                   -YCB / SQQD
+ G  Y                   -3.0D0 * X * Y**2 / SQQD -
+ G+                     (CB * DYSQQD) / (SQQD*SQQD)
+ G  Z                   (YCB *CB) / SQQD**2
+ H  W         Y         -DYSQQD / SQQD**2
+ H  W         Z         YCB / SQQD**2
+ H  X         Y         -3.0D0 *(1.0D0 - (TMZY - 1.0D0)
+ H+                      / TMZY) / TMZY
+ H  X         Z         -(YCB**2 *CB) / SQQD**2
+ H  Y         Y         -6.0D0 * X * Y / SQQD +
+ H+                     (3.0D0 * X * Y**2 * DYSQQD) / SQQD**2 +
+ H+                     (2.0D0 * CB * DYSQQD**2) / SQQD**3 -
+ H+                     (6.0D0 * CB * (1.0 - Z * Y)) / SQQD**2
+ H  Y         Z         -(3.0D0 * X * Y) / TMZY**2 -
+ H+                     (6.0D0 * Y**4 * (TMZY - 1.0D0) * CB) /
+ H+                     SQQD**3 + 3.0D0 * CB * Y**2 / SQQD**2
+ H  Z         Z         2.0D0 * (YCB**2 *CB) / SQQD**3
+
+ T  SREL
+ A  SRLIN               15.0D0 + 0.15D0 * V
+ A  SRPD                W * X
+ A  SRQD                50.0D0 * Y * Z
+ A  SRQT                SRPD / SRQD
+ A  SRRT                SQRT(SRQT)
+ A  SRSUM               15.0D0 + 0.3D0 * V
+ A  SRVLN               V *  SRLIN
+ F                      V * SRLIN * (SRQT * SRRT + 8.0D0)
+ G  V                   SRSUM *  (SRQT * SRRT + 8.0D0)
+ G  W                   1.5D0 * ( SRVLN * SRRT * X / SRQD )
+ G  X                   1.5D0 * ( SRVLN * SRRT * W / SRQD )
+ G  Y                   -1.5D0 * SRVLN * SRRT * SRQT / Y
+ G  Z                   -1.5D0 * SRVLN * SRRT * SRQT / Z
+ H  V         V         0.3D0 *  (SRQT * SRRT + 8.0)
+ H  V         W         1.5D0 * ( SRSUM * SRRT * X / SRQD )
+ H  V         X         1.5D0 * ( SRSUM * SRRT * W / SRQD )
+ H  V         Y         -1.5D0 * SRSUM * SRRT * SRQT / Y
+ H  V         Z         -1.5D0 * SRSUM * SRRT * SRQT / Z
+ H  W         W         (0.75D0 * SRVLN * X**2) /
+ H+                     (SRQD**2 * SRRT)
+ H  W         X         SRVLN * ((0.75D0 * SRPD) / (SRQD**2 *
+ H+                     SRRT) + (1.5D0 * SRRT) / SRQD )
+ H  W         Y         -(SRVLN * 2.25D0 * SRRT*SRQT) / (W * Y)
+ H  W         Z         -(SRVLN * 2.25D0 * SRRT*SRQT) / (W * Z)
+ H  X         X         (SRVLN * 0.75D0 * W * W) /
+ H+                     (SRRT * SRQD**2)
+ H  X         Y         -(SRVLN * 2.25D0 * SRRT*SRQT) / (X * Y)
+ H  X         Z         -(SRVLN * 2.25D0 * SRRT*SRQT) / (X * Z)
+ H  Y         Y         (SRVLN * 3.75D0 * SRRT * SRQT) / Y**2
+ H  Y         Z         (SRVLN * 2.25D0 * SRRT*SRQT) / (Y * Z)
+ H  Z         Z         (SRVLN * 3.75D0 * SRRT * SRQT) / Z**2
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        AVION2
+INDIVIDUALS
+ T  SQUARE
+ F                      ALPHA * ALPHA
+ G                      ALPHA + ALPHA
+ H                      2.0D0
+ENDATA

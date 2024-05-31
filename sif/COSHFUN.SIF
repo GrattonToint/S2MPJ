@@ -1,0 +1,163 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          COSHFUN
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   K. Jonasson and K. Madsen,
+*   "Corrected sequential linear programming for sparse
+*   minimax optimization", Technical report, Institute for Numerical
+*   Analysis, Technical U. of Denmark.
+
+*   SIF input: Nick Gould, October 1992.
+
+*   classification LOR2-AN-V-V
+
+*  the number of functions
+
+*IE M                   3              $-PARAMETER
+*IE M                   8              $-PARAMETER
+*IE M                   14             $-PARAMETER
+*IE M                   20             $-PARAMETER     original value
+*IE M                   200            $-PARAMETER
+*IE M                   2000           $-PARAMETER
+ IE M                   8              $-PARAMETER     modified for S2X tests
+
+*  the number of independent variables
+
+ IM N         M         3
+
+*  other useful parameters
+
+ IA N-3       N         -3
+ IA N-5       N         -5
+
+*  Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 3                   3
+ IE 6                   6
+
+VARIABLES
+
+*   The independent variables
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+*   The value of the objective function
+
+    F
+
+GROUPS
+
+ XN OBJ       F          1.0
+
+ DO I         1                        M
+ XL C(I)      F          -1.0
+ ND
+
+ L  C1        X3         -2.0          X6         -1.0
+
+ DO I         6                        N-3
+ DI I         3
+ IA I-5       I         -5
+ IA I+3       I         3
+ I/ I/3       I                        3
+ XL C(I/3)    X(I-5)    1.0            X(I)       -2.0
+ XL C(I/3)    X(I+3)    -1.0
+ ND
+
+ XL C(M)      X(N-5)    1.0            X(N)       -2.0
+
+BOUNDS
+
+ XR COSHFUN   'DEFAULT'
+
+ELEMENT TYPE
+
+ EV SQR       X
+ EV COSH      X
+ EV PROD      X                        Y
+
+ELEMENT USES
+
+ DO I         3                        N
+ DI I         3
+ IA I-1       I         -1
+ IA I-2       I         -2
+ I/ I/3       I                        3
+
+ XT SQR(I/3)  SQR
+ ZV SQR(I/3)  X                        X(I)
+
+ XT COSH(I/3) COSH
+ ZV COSH(I/3) X                        X(I-1)
+
+ XT PROD(I/3) PROD
+ ZV PROD(I/3) X                        X(I-2)
+ ZV PROD(I/3) Y                        X(I)
+
+ ND
+
+GROUP USES
+
+ DO I         1                        M
+ XE C(I)      SQR(I)                   COSH(I)
+ XE C(I)      PROD(I)
+ ND
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      COSHFUN
+
+TEMPORARIES
+
+ R  COSHX
+ M  COSH
+ M  SINH
+
+INDIVIDUALS
+
+*   The square of X
+
+ T  SQR
+ F                      X * X
+ G  X                   2.0D+0 * X
+ H  X         X         2.0D+0
+
+*   The COSH of X
+
+ T  COSH
+ A  COSHX               COSH( X )
+ F                      COSHX
+ G  X                   SINH( X )
+ H  X         X         COSHX
+
+*  Two times the product of X squared and Y
+
+ T  PROD
+ F                      2.0D+0 * X * X * Y
+ G  X                   4.0D+0 * X * Y
+ G  Y                   2.0D+0 * X * X
+ H  X         X         4.0D+0 * Y
+ H  X         Y         4.0D+0 * X
+
+ENDATA
+
+
+

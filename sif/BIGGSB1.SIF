@@ -1,0 +1,104 @@
+
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BIGGSB1
+
+*   Problem:
+*   ********
+
+*   A quadratic test problem with bounds on the variables
+
+*   Source:
+*   M. Batholomew-Biggs and F.G. Hernandez,
+*   "Some improvements to the subroutine OPALQP for dealing with large
+*    problems",
+*   Numerical Optimization Centre, Hatfield, 1992.
+
+*   SIF input: Ph Toint, April 1992.
+
+*   classification QBR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   25             $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+*IE N                   20000          $-PARAMETER
+
+*   useful parameters
+
+ IE 0                   0
+ IE 1                   1
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ OD I
+
+GROUPS
+
+ XN G(0)      X(1)      1.0
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XN G(I)      X(I+1)    1.0            X(I)           -1.0
+ OD I
+
+ XN G(N)      X(N)      -1.0
+
+CONSTANTS
+
+ X  BIGGSB1   G(0)      1.0
+ X  BIGGSB1   G(N)      -1.0
+
+BOUNDS
+
+ UP BIGGSB1   'DEFAULT' 0.9
+
+ XR BIGGSB1   X(N)
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  'DEFAULT' L2
+
+OBJECT BOUND
+
+ LO BIGGSB1             0.0
+
+*   Solution
+
+*LO BIGGSB1             0.015
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BIGGSB1
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+
+
+
+

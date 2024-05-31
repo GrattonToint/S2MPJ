@@ -1,0 +1,113 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT9 
+
+*   Problem :
+*   *********
+
+*   Source: problem 9 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+
+*   The problem as stated in the paper seems to contain a typo.
+*   In order to make the problem bounded below and the second constraint
+*   feasible at the proposed solution, the sign of x2 in the second constraint
+*   has been set to - instead of +.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification LOR2-AN-4-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+
+GROUPS
+
+ N  OBJ       X1        -1.0
+
+ E  CON1      X2        1.0
+ E  CON2      X2        -1.0
+
+BOUNDS
+
+ FR BT9       'DEFAULT'
+
+START POINT
+
+* Start 1
+
+ XV BT9       'DEFAULT' 2.0
+
+* Start 2
+
+*XV BT9       'DEFAULT' 20.0
+
+* Start 3
+
+*XV BT9       'DEFAULT' 50.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV CB        X
+
+ELEMENT USES
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X4SQ      SQ
+ V  X4SQ      X                        X4
+
+ T  X1CB      CB
+ V  X1CB      X                        X1
+
+GROUP USES
+
+ E  CON1      X1CB      -1.0           X3SQ      -1.0
+
+ E  CON2      X1SQ      1.0            X4SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN                -1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT9
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  CB
+ F                      X * X * X
+ G  X                   3.0 * X * X
+ H  X         X         6.0 * X
+
+ENDATA
+

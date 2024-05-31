@@ -1,0 +1,140 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT2
+
+*   Problem :
+*   *********
+
+*   Source: problem 2 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification QQR2-AY-3-1
+
+VARIABLES
+
+    X1
+    X2
+    X3
+
+GROUPS
+
+ N  OBJ
+ E  CON1
+
+CONSTANTS
+
+    BT2       CON1      8.2426407
+
+BOUNDS
+
+ FR BT2       'DEFAULT'
+
+START POINT
+
+ XV BT2       'DEFAULT' 10.0
+
+ELEMENT TYPE
+
+ EV SSQ       V
+ EP SSQ       P
+
+ EV ISQ       X                        Y
+ IV ISQ       Z
+
+ EV I4TH      X                        Y
+ IV I4TH      Z
+
+ EV FOURTH    V
+
+ EV MISC      X                        Y
+
+ELEMENT USES
+
+ T  E1        SSQ
+ V  E1        V                        X1
+ P  E1        P          1.0
+
+ T  E2        ISQ
+ V  E2        X                        X1
+ V  E2        Y                        X2
+
+ T  E3        I4TH
+ V  E3        X                        X2
+ V  E3        Y                        X3
+
+ T  E4        MISC
+ V  E4        X                        X1
+ V  E4        Y                        X2
+
+ T  E5        FOURTH
+ V  E5        V                        X3
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3
+
+ E  CON1      E4                       E5
+
+OBJECT BOUND
+
+ LO BT2                 0.0
+
+*   Solution
+
+*LO SOLTN               0.032568200
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT2
+
+TEMPORARIES
+
+ R  T
+
+INDIVIDUALS
+
+ T  SSQ
+ A  T                   V - P
+ F                      T * T
+ G  V                   2.0 * T
+ H  V         V         2.0
+
+ T  ISQ
+ R  Z         X         1.0            Y         -1.0
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  FOURTH
+ F                      V**4
+ G  V                   4.0 * V**3
+ H  V         V         12.0 * V**2
+
+ T  I4TH
+ R  Z         X         1.0            Y         -1.0
+ F                      Z**4
+ G  Z                   4.0 * Z**3
+ H  Z         Z         12.0 * Z**2
+
+ T  MISC
+ F                      X * ( 1.0 + Y * Y )
+ G  X                   1.0 + Y * Y
+ G  Y                   2.0 * X * Y
+ H  X         Y         2.0 * Y
+ H  Y         Y         2.0 * X
+
+ENDATA
+

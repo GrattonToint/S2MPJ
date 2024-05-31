@@ -1,0 +1,532 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CmRELOAD
+
+*   Problem :
+*   *********
+
+*   Source: Nuclear Reactor Core Reload Pattern Optimization
+*   A.J. Quist et.al., draft paper, September 1997.
+*   (2nd data set implemented here)
+*
+*   SIF input: S. Leyffer, November 1997
+
+*   classification LOR2-MN-342-284
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ IE 6                   6
+ IE 7                   7
+ IE 8                   8
+ IE 9                   9
+ IE 10                  10
+ IE 11                  11
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+
+ IE N                   14             $ number of nodes in core      (index I)
+ IE M                   3              $ number of discharged bundles (index J)
+ IE L                   4              $ number of age groups         (index K)
+ IE T                   6              $ number of time steps         (index S)
+
+ IE D11                 1              $ diagonal positions
+ IE D12                 7
+ IE D21                 11
+ IE D22                 14
+
+ RE KFRESH              1.25
+ RE FLIM                1.8
+
+ AE KEFF_INI            0.956145
+
+ AE ALPHA               6E-6
+ AE CONSPW              364.0
+ AE CYTIME              350.0
+
+ RI TT        T
+ RA T-1       TT        -1.0
+ R/ DELTAT    CYTIME                   T-1
+ A* ACC       ALPHA                    CONSPW
+ A* ACC       ACC                      DELTAT
+ AM -ACC      ACC       -1.0
+
+ DO I         1                        N
+ AE V(I)                1.0
+ ND
+ AE V(D11)              0.5
+ AE V(D12)              0.5
+ AE V(D21)              0.5
+ AE V(D22)              0.5
+
+* ... sparsity pattern of matrix G (row--wise definition)
+ AE NROW1               2
+ AE ROW_(1,1)           1
+ AE ROW_(1,2)           2
+ AE G(1,1)              0.705
+ AE G(1,2)              0.25
+ AE NROW2               5
+ AE ROW_(2,1)           1
+ AE ROW_(2,2)           2
+ AE ROW_(2,3)           3
+ AE ROW_(2,4)           7
+ AE ROW_(2,5)           8
+ AE G(2,1)              0.125
+ AE G(2,2)              0.625
+ AE G(2,3)              0.125
+ AE G(2,7)              0.08
+ AE G(2,8)              0.045
+ AE NROW3               6
+ AE ROW_(3,1)           2
+ AE ROW_(3,2)           3
+ AE ROW_(3,3)           4
+ AE ROW_(3,4)           7
+ AE ROW_(3,5)           8
+ AE ROW_(3,6)           9
+ AE G(3,2)              0.125
+ AE G(3,3)              0.58
+ AE G(3,4)              0.125
+ AE G(3,7)              0.045
+ AE G(3,8)              0.08
+ AE G(3,9)              0.045
+ AE NROW4               6
+ AE ROW_(4,1)           3
+ AE ROW_(4,2)           4
+ AE ROW_(4,3)           5
+ AE ROW_(4,4)           8
+ AE ROW_(4,5)           9
+ AE ROW_(4,6)           10
+ AE G(4,3)              0.125
+ AE G(4,4)              0.58
+ AE G(4,5)              0.125
+ AE G(4,8)              0.045
+ AE G(4,9)              0.08
+ AE G(4,10)             0.045
+ AE NROW5               5
+ AE ROW_(5,1)           4
+ AE ROW_(5,2)           5
+ AE ROW_(5,3)           6
+ AE ROW_(5,4)           9
+ AE ROW_(5,5)           10
+ AE G(5,4)              0.125
+ AE G(5,5)              0.58
+ AE G(5,6)              0.125
+ AE G(5,9)              0.045
+ AE G(5,10)             0.08
+ AE NROW6               3
+ AE ROW_(6,1)           5
+ AE ROW_(6,2)           6
+ AE ROW_(6,3)           10
+ AE G(6,5)              0.125
+ AE G(6,6)              0.58
+ AE G(6,10)             0.045
+ AE NROW7               5
+ AE ROW_(7,1)           1
+ AE ROW_(7,2)           2
+ AE ROW_(7,3)           7
+ AE ROW_(7,4)           8
+ AE ROW_(7,5)           11
+ AE G(7,1)              0.045
+ AE G(7,2)              0.16
+ AE G(7,7)              0.5
+ AE G(7,8)              0.16
+ AE G(7,11)             0.045
+ AE NROW8               8
+ AE ROW_(8,1)           2
+ AE ROW_(8,2)           3
+ AE ROW_(8,3)           4
+ AE ROW_(8,4)           7
+ AE ROW_(8,5)           8
+ AE ROW_(8,6)           9
+ AE ROW_(8,7)           11
+ AE ROW_(8,8)           12
+ AE G(8,2)              0.045
+ AE G(8,3)              0.08
+ AE G(8,4)              0.045
+ AE G(8,7)              0.08
+ AE G(8,8)              0.545
+ AE G(8,9)              0.08
+ AE G(8,11)             0.08
+ AE G(8,12)             0.045
+ AE NROW9               9
+ AE ROW_(9,1)           3
+ AE ROW_(9,2)           4
+ AE ROW_(9,3)           5
+ AE ROW_(9,4)           8
+ AE ROW_(9,5)           9
+ AE ROW_(9,6)           10
+ AE ROW_(9,7)           11
+ AE ROW_(9,8)           12
+ AE ROW_(9,9)           13
+ AE G(9,3)              0.045
+ AE G(9,4)              0.08
+ AE G(9,5)              0.045
+ AE G(9,8)              0.08
+ AE G(9,9)              0.5
+ AE G(9,10)             0.08
+ AE G(9,11)             0.045
+ AE G(9,12)             0.08
+ AE G(9,13)             0.045
+ AE NROW10              7
+ AE ROW_(10,1)          4
+ AE ROW_(10,2)          5
+ AE ROW_(10,3)          6
+ AE ROW_(10,4)          9
+ AE ROW_(10,5)          10
+ AE ROW_(10,6)          12
+ AE ROW_(10,7)          13
+ AE G(10,4)             0.045
+ AE G(10,5)             0.08
+ AE G(10,6)             0.045
+ AE G(10,9)             0.08
+ AE G(10,10)            0.5
+ AE G(10,12)            0.045
+ AE G(10,13)            0.08
+ AE NROW11              6
+ AE ROW_(11,1)          7
+ AE ROW_(11,2)          8
+ AE ROW_(11,3)          9
+ AE ROW_(11,4)          11
+ AE ROW_(11,5)          12
+ AE ROW_(11,6)          14
+ AE G(11,7)             0.045
+ AE G(11,8)             0.125
+ AE G(11,9)             0.045
+ AE G(11,11)            0.5
+ AE G(11,12)            0.16
+ AE G(11,14)            0.045
+ AE NROW12              7
+ AE ROW_(12,1)          8
+ AE ROW_(12,2)          9
+ AE ROW_(12,3)          10
+ AE ROW_(12,4)          11
+ AE ROW_(12,5)          12
+ AE ROW_(12,6)          13
+ AE ROW_(12,7)          14
+ AE G(12,8)             0.045
+ AE G(12,9)             0.08
+ AE G(12,10)            0.045
+ AE G(12,11)            0.08
+ AE G(12,12)            0.545
+ AE G(12,13)            0.08
+ AE G(12,14)            0.08
+ AE NROW13              5
+ AE ROW_(13,1)          9
+ AE ROW_(13,2)          10
+ AE ROW_(13,3)          12
+ AE ROW_(13,4)          13
+ AE ROW_(13,5)          14
+ AE G(13,9)             0.045
+ AE G(13,10)            0.08
+ AE G(13,12)            0.08
+ AE G(13,13)            0.5
+ AE G(13,14)            0.045
+ AE NROW14              3
+ AE ROW_(14,1)          11
+ AE ROW_(14,2)          12
+ AE ROW_(14,3)          14
+ AE G(14,11)            0.045
+ AE G(14,12)            0.125
+ AE G(14,14)            0.5
+
+* computed constants
+
+ IA T-1       T         -1
+
+VARIABLES
+
+ DO I         1                        N
+ DO K         1                        L
+ DO J         1                        M
+ X  X(I,K,J)  INTEGER    
+ OD J
+ OD K
+ OD I
+ 
+ DO S         1                        T
+ DO I         1                        N
+ X  KINF(I,S)
+ X  PHI(I,S)
+ OD I
+ X  KEFF(S)
+ OD S
+
+GROUPS
+
+ XN OBJ       KEFF(T)   -1.0
+
+ DO K         1                        L
+ DO J         1                        M
+ DO I         1                        N 
+ ZE SUMI(K,J) X(I,K,J)                 V(I)
+ OD I
+ OD J
+ OD K
+
+ DO I         1                        N
+ DO K         1                        L
+ DO J         1                        M
+ XE SUMLM(I)  X(I,K,J)  1.0
+ OD J
+ OD K
+ OD I
+
+ DO I         1                        N
+ XE PLAC(I)   KINF(I,1) -1.0
+ DO J         1                        M
+ ZE PLAC(I)   X(I,1,J)                 KFRESH
+ OD J
+ OD I
+
+ DO I         1                        N
+ DO S         1                        T
+ XE KERN(I,S)
+ OD S
+ OD I
+
+ DO I         1                        N
+ DO S         1                        T-1
+ IA R         S         1
+ XE KINFF(I,S)KINF(I,R) -1.0           KINF(I,S) 1.0
+ OD S
+ OD I
+
+ DO S         1                        T
+ XE CPOW(S)
+ OD I
+
+ DO I         1                        N
+ DO S         1                        T
+ XL PEAK(I,S)
+ OD S
+ OD I
+
+CONSTANTS
+
+ DO K         1                        L
+ DO J         1                        M
+ X  C-RELOAD  SUMI(K,J) 1.0
+ OD J
+ OD K
+
+ DO I         1                        N
+ X  C-RELOAD  SUMLM(I)  1.0
+ OD I
+
+ DO S         1                        T
+ X  C-RELOAD  CPOW(S)   1.0
+ OD I
+
+* compute rhs for inequality (7)
+ AE TEMP                0.0
+ DO I         1                        N
+ A+ TEMP      TEMP                     V(I)
+ OD I
+ A/ TEMP      FLIM                     TEMP
+
+ DO I         1                        N
+ DO S         1                        T
+ Z  C-RELOAD  PEAK(I,S)                TEMP
+ OD S
+ OD I
+
+BOUNDS
+
+ DO I         1                        N
+ DO K         1                        L
+ DO J         1                        M
+ XU C-RELOAD  X(I,K,J)  1.0
+ OD J
+ OD K
+ OD I
+
+ DO I         1                        N
+ DO S         1                        T
+ ZU C-RELOAD  KINF(I,S)                KFRESH
+ OD S
+ OD I
+
+ AE LO_KEFF             0.9
+ AE UP_KEFF             1.5
+ AI TEMP      T
+ AM TEMP      TEMP      -0.015
+ A+ LO_KEFF   LO_KEFF                  TEMP
+ A+ UP_KEFF   UP_KEFF                  TEMP
+
+ DO S         1                        T
+ ZL C-RELOAD  KEFF(S)                  LO_KEFF
+ ZU C-RELOAD  KEFF(S)                  UP_KEFF
+ OD S
+
+START POINT
+
+ AE R14                 14.0 
+ A/ TEMP      KFRESH                   R14
+
+ DO S         1                        T
+ Z  C-RELOAD  KEFF(S)                  KEFF_INI
+ OD S
+
+ DO I         1                        N
+ DO S         1                        T
+ Z  C-RELOAD  KINF(I,S)                KFRESH
+ Z  C-RELOAD  PHI(I,S)                 TEMP
+ OD S
+ OD I
+
+ DO I         1                        N
+ DO K         1                        L
+ DO J         1                        M
+ X  C-RELOAD  X(I,K,J)  0.5
+ OD J
+ OD K
+ OD I
+
+ELEMENT TYPE
+
+ EV 2PROD     V1                       V2
+
+ EV 3PROD     V1                       V2
+ EV 3PROD     V3
+
+ELEMENT USES
+
+* ... elements for c/s (3); A_, B_, C_
+ IE K                   2
+ IA K1        K         -1
+ DO J         1                        M
+ DO I         1                        N 
+ DO II        1                        N 
+ XT A_(I,II,J)3PROD
+ ZV A_(I,II,J)V1                       X(I,K,J)
+ ZV A_(I,II,J)V2                       X(II,K1,J)
+ ZV A_(I,II,J)V3                       KINF(II,T)
+ OD II
+ OD I
+ OD J
+ IE K                   3
+ IA K1        K         -1
+ DO J         1                        M
+ DO I         1                        N 
+ DO II        1                        N 
+ XT B_(I,II,J)3PROD
+ ZV B_(I,II,J)V1                       X(I,K,J)
+ ZV B_(I,II,J)V2                       X(II,K1,J)
+ ZV B_(I,II,J)V3                       KINF(II,T)
+ OD II
+ OD I
+ OD J
+ IE K                   4
+ IA K1        K         -1
+ DO J         1                        M
+ DO I         1                        N 
+ DO II        1                        N 
+ XT C_(I,II,J)3PROD
+ ZV C_(I,II,J)V1                       X(I,K,J)
+ ZV C_(I,II,J)V2                       X(II,K1,J)
+ ZV C_(I,II,J)V3                       KINF(II,T)
+ OD II
+ OD I
+ OD J
+
+ DO I         1                        N 
+ DO S         1                        T
+ XT KTP(I,S)  2PROD
+ ZV KTP(I,S)  V1                       KEFF(S)
+ ZV KTP(I,S)  V2                       PHI(I,S)
+ OD S
+ OD I
+
+ DO I         1                        N 
+ DO S         1                        T
+ XT P(I,S)    2PROD
+ ZV P(I,S)    V1                       KINF(I,S)
+ ZV P(I,S)    V2                       PHI(I,S)
+ OD S
+ OD II
+ 
+GROUP USES
+
+ DO I         1                        N 
+ DO J         1                        M
+ DO II        1                        N 
+ ZE PLAC(I)   A_(I,II,J)               V(II)
+ ZE PLAC(I)   B_(I,II,J)               V(II)
+ ZE PLAC(I)   C_(I,II,J)               V(II)
+ OD II
+ OD J
+ OD I
+
+ DO S         1                        T
+ DO I         1                        N 
+ XE KERN(I,S) KTP(I,S)  -1.0
+ A= TEMP      NROW(I)
+ IR N_ROW     TEMP
+ DO II        1                        N_ROW
+ A= TEMP      ROW_(I,II)
+ IR III       TEMP
+ ZE KERN(I,S) P(III,S)                 G(I,III)
+ OD II
+ OD I
+ OD S
+
+ DO I         1                        N
+ DO S         1                        T-1
+ ZE KINFF(I,S)P(I,S)                   -ACC
+ OD S
+ OD I
+
+ DO S         1                        T
+ DO I         1                        N
+ ZE CPOW(S)   P(I,S)                   V(I)
+ OD I
+ OD I
+
+ DO I         1                        N
+ DO S         1                        T
+ XE PEAK(I,S) P(I,S)
+ OD S
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CmRELOAD
+
+ EV 2PROD     V1                       V2
+
+ EV 3PROD     V1                       V2
+ EV 3PROD     V3
+
+INDIVIDUALS
+
+ T  2PROD
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  3PROD
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+ENDATA
+

@@ -1,0 +1,201 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BRATU1D
+
+*   Problem :
+*   *********
+
+*   Bratu's problem in one dimension, according to Osborne.
+
+*   Source: Problem 121 (p. 99) in
+*   A.R. Buckley,
+*   "Test functions for unconstrained minimization",
+*   TR 1989CS-3, Mathematics, statistics and computing centre,
+*   Dalhousie University, Halifax (CDN), 1989.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OXR2-MN-V-0
+
+*   Number of variables (must be odd)
+
+*IE N                   11             $-PARAMETER must be odd
+*IE N                   75             $-PARAMETER must be odd  original value
+*IE N                   101            $-PARAMETER must be odd
+*IE N                   501            $-PARAMETER must be odd
+*IE N                   1001           $-PARAMETER must be odd
+*IE N                   5001           $-PARAMETER must be odd
+ IE N                   11             $-PARAMETER     modified for S2X tests
+
+*   Problem parameter
+
+ RE LAMBDA              -3.4           $-PARAMETER
+
+*   Constants
+
+ RE 1.0                 1.0
+ IE 1                   1
+ IE 0                   0
+
+*   Other parameters
+
+ IA N+1       N         1
+ RI RN+1      N+1
+ R/ H         1.0                      RN+1
+ RM 2/H       RN+1      2.0
+ RM -2/H      2/H       -1.0
+ R* LH        H                        LAMBDA
+ RM 2LH       LH        2.0
+
+VARIABLES
+
+ DO I         0                        N+1
+ X  X(I)
+ ND
+
+GROUPS
+
+ XN GC(0)
+
+ DO I         1                        N
+ XN GA(I)
+ XN GB(I)
+ XN GC(I)
+ ND
+
+BOUNDS
+
+ FR BRATU1D   'DEFAULT'
+
+*   Fix variables 0 and N+1
+
+ XX BRATU1D   X(0)      0.0
+ XX BRATU1D   X(N+1)    0.0
+
+START POINT
+
+ X  BRATU1D   X(0)      0.0
+
+ DO I         1                        N
+
+ IM -I        I         -1
+ I* -ISQ      I                        -I
+ RI NUM       -ISQ
+ R* 10X0      NUM                      H
+ RM VAL       10X0      0.1
+
+ Z  BRATU1D   X(I)                     VAL
+
+ ND
+
+ X  BRATU1D   X(N+1)    0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+ EV BRA       X                        Y
+
+ELEMENT USES
+
+ XT C(0)      BRA
+ ZV C(0)      X                        X(0)
+ ZV C(0)      Y                        X(1)
+
+ DO I         1                        N
+
+ IA I-1       I          -1
+ IA I+1       I          1
+
+ XT A(I)      SQ
+ ZV A(I)      X                        X(I)
+
+ XT B(I)      2PR
+ ZV B(I)      X                        X(I)
+ ZV B(I)      Y                        X(I-1)
+
+ XT C(I)      BRA
+ ZV C(I)      X                        X(I)
+ ZV C(I)      Y                        X(I+1)
+
+ ND
+
+GROUP USES
+
+ ZE GC(0)     C(0)                     2LH
+
+ DO I         1                        N
+ ZE GA(I)     A(I)                     2/H
+ ZE GB(I)     B(I)                     -2/H
+ ZE GC(I)     C(I)                     2LH
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN11             -8.49454553
+*LO SOLTN75             -8.51831187
+*LO SOLTN101            -8.51859
+*LO SOLTN501            -8.51892
+*LO SOLTN1001           -8.51893
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BRATU1D
+
+TEMPORARIES
+
+ R  D
+ R  D2
+ R  D3
+ R  EX
+ R  EY
+ R  DEX
+ R  DEXD2
+ R  DEXD3
+
+INDIVIDUALS
+
+*   Squares
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+*   Products
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+*   Bratu type
+
+ T  BRA
+ A  D                   Y - X
+ A  D2                  D * D
+ A  D3                  D2 * D
+ A  EX                  EXP( X )
+ A  EY                  EXP( Y )
+ A  DEX                 EY - EX
+ A  DEXD2               DEX / D2
+ A  DEXD3               DEX / D3
+
+ F                      DEX / D
+ G  X                   - EX / D + DEXD2
+ G  Y                   EY / D - DEXD2
+ H  X         X         - EX / D - 2.0 * ( EX / D2 - DEXD3 )
+ H  X         Y         ( EX + EY ) / D2 - 2.0 * DEXD3
+ H  Y         Y         EY / D - 2.0 * ( EY / D2 - DEXD3 )
+
+ENDATA

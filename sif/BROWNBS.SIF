@@ -1,0 +1,134 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BROWNBS
+
+*   Problem :
+*   *********
+*   Brown badly scaled problem in 2 variables.
+*   This problem is a sum of n-1 sets of 3 groups, one of then involving
+*   a nonlinear element and all being of the least square type.
+*   It Hessian matrix is tridiagonal.
+
+
+*   Source: Problem 4 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#25
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-2-0
+
+*   N is the number of free variables
+
+ IE N                   2
+
+*   Define useful parameters
+
+ IE 1                   1
+ IA N-1       N         -1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ XN A(I)      X(I)      1.0
+ XN B(I)      X(I+1)    1.0
+ XN C(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        N-1
+ X  BROWNBS   A(I)      1000000.0
+ X  BROWNBS   B(I)      0.000002
+ X  BROWNBS   C(I)      2.0
+ ND
+
+BOUNDS
+
+ FR BROWNBS   'DEFAULT'
+
+START POINT
+
+ XV BROWNBS   'DEFAULT'  1.0
+
+ELEMENT TYPE
+
+ EV 2PR       V1                       V2
+
+ELEMENT USES
+
+ XT 'DEFAULT' 2PR
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ ZV CE(I)     V1                       X(I)
+ ZV CE(I)     V2                       X(I+1)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+ DO I         1                        N-1
+ XE C(I)      CE(I)
+ ND
+
+OBJECT BOUND
+
+ LO BROWNBS             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BROWNBS
+
+INDIVIDUALS
+
+ T  2PR
+
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BROWNBS
+
+INDIVIDUALS
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

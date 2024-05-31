@@ -1,0 +1,374 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DRUGDIS
+
+*   Problem :
+*   *********
+
+*   A control problem based on the kinetic model of Aarons and Rowland for
+*   DRUG DISplacemnt, which simulates the interaction of the two drugs 
+*   (warfarin and phenylnutazone) in a patient bloodstream.  
+*   The state variable are the concentrations of unbound warfarin (w) and 
+*   phenylbutazone (p).  The problem is to control the rate of injection (u) 
+*   of the pain-killing phenylbutazone so that both drugs reach a specified 
+*   steady-state in minimum time and the concentration of warfarin does not 
+*   rise above a given toxicity level.
+
+*   The problem is discretized using the trapezoidal rule.  It is non-convex.
+
+*   The problem can be made harder by diminishing the value of the lower bound
+*   on the final time TF (while maintaining it strictly positive).
+
+*   Source:
+*   H. Maurer and M. Wiegand,
+*   "Numerical solution of a drug displacement problem with bounded state
+*   variables",
+*   Optimal Control Applications and Methods 13, pp. 43-55, 1992.
+
+*   SIF input: Ph. Toint, Nov 1993.
+*              correction by S. Gratton & Ph. Toint, May 2024
+
+*   classification  LOR2-MN-V-V
+
+*   Discretization: specify the number of interior points + 1
+
+*IE NI                  10             $-PARAMETER n=  34, m= 20 
+ IE NI                  10             $-PARAMETER     modified for S2X tests
+*IE NI                  50             $-PARAMETER n= 154, m=100 
+*IE NI                  100            $-PARAMETER n= 304, m=200  original value
+*IE NI                  200            $-PARAMETER n= 604, m=400 
+*IE NI                  500            $-PARAMETER n=1504, m=1000 
+*IE NI                  1000           $-PARAMETER n=3004, m=2000 
+*IE NI                  2000           $-PARAMETER n=6004, m=4000 
+
+*   Problem parameters
+
+ RE TOXIC               0.026          $-PARAMETER warfarin toxicity level
+ RE WSS                 0.02           $-PARAMETER initial/final warfarin levels
+ RE UMAX                8.0            $-PARAMETER maximal injection rate
+ RE PSTART              0.0            $-PARAMETER initial phenybutazone level
+ RE PFINAL              2.0            $-PARAMETER final phenylbutazone level
+
+*   Define useful parameters
+
+ R+ AVP       PSTART                   PFINAL
+ RM AVP       AVP       0.5
+ IA NI-1      NI        -1
+ RI RNI       NI
+ RD -1/2NI    RNI       -0.5
+
+ IE 0                   0
+
+VARIABLES
+
+*   final time
+
+    TF        'SCALE'   200.0
+
+*   warfarin concentration
+
+ DO I         0                        NI
+ X  W(I)      'SCALE'   0.02
+ OD I
+
+*   phenylbutazone concentration
+
+ DO I         0                        NI
+ X  P(I)
+ OD I
+
+*   injection rate (control)
+
+ DO I         0                        NI
+ X  U(I)
+ OD I
+
+GROUPS
+
+ N  TFINAL    TF        1.0
+ N  TFINAL    'SCALE'   100.0
+
+*   state equations
+
+ DO I         0                        NI-1
+ IA I+1       I         1
+
+*   warfarin concentration dynamics
+
+ XE EW(I)     W(I+1)    1.0            W(I)      -1.0
+ XE EW(I)     'SCALE'   0.02
+
+*   phenylbutazone concentration dynamics
+
+ XE EP(I)     P(I+1)    1.0            P(I)      -1.0
+
+ OD I
+
+BOUNDS
+
+*   All variables are non-negative
+
+*   Injection takes at least 200 seconds. 
+*   The problem can be made harder by diminishing this value while
+*   maintaining it strictly positive.
+
+ LO DRUGDIS   TF        200.0
+
+*   Impose the bound on warfarin concentration corresponding to
+*   the toxicity level
+
+ DO I         0                        NI
+ ZU DRUGDIS   W(I)                     TOXIC
+ OD I
+
+*   Impose the bound on the maximum phenylbutazone injection rate
+
+ DO I         0                        NI-1
+ ZU DRUGDIS   U(I)                     UMAX
+ OD I
+
+*   Fix the initial and final concentrations of warfarin and phenylbutazone
+
+ ZX DRUGDIS   W(0)                     WSS
+ ZX DRUGDIS   W(NI)                    WSS
+
+ ZX DRUGDIS   P(0)                     PSTART
+ ZX DRUGDIS   P(NI)                    PFINAL
+
+START POINT
+
+ R- DP        PFINAL                   PSTART
+ R/ DP/NI     DP                       RNI
+
+ DO I         0                        NI-1
+ RI RI        I
+ R* IDP/NI    RI                       DP/NI
+ ZV DRUGDIS   P(I)                     IDP/NI
+ ZV DRUGDIS   W(I)                     WSS
+ ZV DRUGDIS   U(I)                     UMAX
+ OD I
+
+ XV DRUGDIS   TF        240.0
+
+ ZV DRUGDIS   W(NI)                    WSS
+ ZV DRUGDIS   P(NI)                    PFINAL
+
+ELEMENT TYPE
+
+*   Warfarin dynamics
+
+ EV EW        T                        W
+ EV EW        P                        U
+
+*   Phenylbutazone dynamics
+
+ EV EP        T                        W
+ EV EP        P                        U
+
+ELEMENT USES
+
+ DO I         0                        NI
+
+ XT WA(I)     EW
+ ZV WA(I)     T                        TF
+ ZV WA(I)     W                        W(I)
+ ZV WA(I)     P                        P(I)
+ ZV WA(I)     U                        U(I)
+
+ XT PA(I)     EP
+ ZV PA(I)     T                        TF
+ ZV PA(I)     W                        W(I)
+ ZV PA(I)     P                        P(I)
+ ZV PA(I)     U                        U(I)
+
+ OD I
+
+GROUP USES
+
+ DO I         0                        NI-1
+
+ ZE EW(I)     WA(I+1)                  -1/2NI
+ ZE EW(I)     WA(I)                    -1/2NI
+
+ ZE EP(I)     PA(I+1)                  -1/2NI
+ ZE EP(I)     PA(I)                    -1/2NI
+
+ OD I
+
+OBJECT BOUND
+
+ LO DRUGDIS             200.0
+
+*   Solution
+
+*LO SOLTN(10)           3.82432
+*LO SOLTN(50)           4.19953
+*LO SOLTN(100)          4.23934
+*LO SOLTN(200)          4.25762
+*LO SOLTN(500)
+*LO SOLTN(1000)
+*LO SOLTN(Maurer)       2.62637
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DRUGDIS
+
+TEMPORARIES
+
+ R  Z
+ R  ZZ
+ R  D
+ R  DD
+ R  DD1
+ R  DD2
+ R  A
+ R  AW
+ R  B
+ R  BP
+ R  C
+ R  CW
+ R  CP
+ R  CWW
+ R  CWP
+ R  CPP
+ R  F
+ R  FW
+ R  FP
+ R  FWW
+ R  FWP
+ R  FPP
+ R  G
+ R  GW
+ R  GP
+ R  GU
+ R  GWW
+ R  GWP
+ R  GPP
+ R  GUU
+ R  H
+ R  HW
+ R  HP
+ R  I
+ R  IP
+ R  WSS
+ R  DCOEFF
+ R  ABCNST
+
+GLOBALS
+
+ A  Z                   46.4
+ A  WSS                 0.02
+ A  DCOEFF              0.2
+ A  ABCNST              232.0
+ A  ZZ                  Z * Z
+
+INDIVIDUALS
+
+ T  EW
+ A  D                   1.0 + DCOEFF * ( W + P )
+ A  DD                  D * D
+ A  DD1                 2.0 * DCOEFF * D
+ A  DD2                 2.0 * DCOEFF * DCOEFF
+ A  A                   DD + ABCNST + Z * W
+ A  AW                  DD1 + Z
+ A  B                   DD + ABCNST + Z * P
+ A  BP                  DD1 + Z
+ A  C                   A * B - ZZ * W * P
+ A  CW                  AW * B + A * DD1 - ZZ * P
+ A  CP                  DD1 * B + A * BP - ZZ * W
+ A  CWW                 DD2 * B + 2.0 * AW * DD1 + A * DD2
+ A  CWP                 DD2 * B + AW * BP + DD1 * DD1 + A * DD2
+ A+                      - ZZ
+ A  CPP                 DD2 * B + 2.0 * DD1 * BP + A * DD2
+ A  F                   DD / C
+ A  H                   DD1 - F * CW
+ A  I                   DD1 - F * CP
+ A  FW                  H / C
+ A  FP                  I / C
+ A  HW                  DD2 - CW * FW - F * CWW
+ A  HP                  DD2 - CW * FW - F * CWP
+ A  IP                  DD2 - CP * FP - F * CPP
+ A  FWW                 ( HW - FW * CW ) / C
+ A  FWP                 ( HP - FW * CP ) / C
+ A  FPP                 ( IP - FP * CP ) / C
+ A  GU                  Z * W
+ A  G                   A * ( WSS - W ) + GU * ( U - 2.0 * P )
+ A  GW                  AW * ( WSS - W )  - A
+ A+                       + Z * ( U - 2.0 * P )
+ A  GP                  DD1 * ( WSS - W ) - 2.0 * GU
+ A  GPP                 DD2 * ( WSS - W )
+ A  GWW                 GPP - 2.0 * AW
+ A  GWP                 GPP - DD1 - 2.0 * Z
+ F                      T * F * G
+ G  T                   F * G
+ G  W                   T * ( FW * G + F * GW )
+ G  P                   T * ( FP * G + F * GP )
+ G  U                   T * F * GU
+ H  T         W         FW * G + F * GW
+ H  T         P         FP * G + F * GP
+ H  T         U         F * GU
+ H  W         W         T * ( FWW * G + 2.0 * FW * GW + F * GWW )
+ H  W         P         T * ( FWP * G + FW * GP
+ H+                       + FP * GW + F * GWP )
+ H  W         U         T * ( FW * GU + F * Z )
+ H  P         P         T * ( FPP * G + 2.0 * FP * GP + F * GPP )
+ H  P         U         T * FP * GU
+
+ T  EP
+ A  D                   1.0 + DCOEFF * ( W + P )
+ A  DD                  D * D
+ A  DD1                 2.0 * DCOEFF * D
+ A  DD2                 2.0 * DCOEFF * DCOEFF
+ A  A                   DD + ABCNST + Z * W
+ A  AW                  DD1 + Z
+ A  B                   DD + ABCNST + Z * P
+ A  BP                  DD1 + Z
+ A  C                   A * B - ZZ * W * P
+ A  CW                  AW * B + A * DD1 - ZZ * P
+ A  CP                  DD1 * B + A * BP - ZZ * W
+ A  CWW                 DD2 * B + 2.0 * AW * DD1 + A * DD2
+ A  CWP                 DD2 * B + AW * BP + DD1 * DD1 + A * DD2
+ A+                      - ZZ
+ A  CPP                 DD2 * B + 2.0 * DD1 * BP + A * DD2
+ A  F                   DD / C
+ A  H                   DD1 - F * CW
+ A  I                   DD1 - F * CP
+ A  FW                  H / C
+ A  FP                  I / C
+ A  HW                  DD2 - CW * FW - F * CWW
+ A  HP                  DD2 - CW * FW - F * CWP
+ A  IP                  DD2 - CP * FP - F * CPP
+ A  FWW                 ( HW - FW * CW ) / C
+ A  FWP                 ( HP - FW * CP ) / C
+ A  FPP                 ( IP - FP * CP ) / C
+ A  G                   B * ( U - 2.0 * P )
+ A+                       + Z * P * ( WSS - W )
+ A  GW                  DD1 * ( U - 2.0 * P ) - Z * P
+ A  GP                  BP * ( U - 2.0 * P ) - 2.0 * B
+ A+                       + Z * ( WSS - W )
+ A  GWW                 DD2 * ( U - 2.0 * P )
+ A  GWP                 GWW - 2.0 * DD1 - Z
+ A  GPP                 GWW - 4.0 * BP
+ F                      T * F * G
+ G  T                   F * G
+ G  W                   T * ( FW * G + F * GW )
+ G  P                   T * ( FP * G + F * GP )
+ G  U                   T * F * B
+ H  T         W         FW * G + F * GW
+ H  T         P         FP * G + F * GP
+ H  T         U         F * B
+ H  W         W         T * ( FWW * G + 2.0 * FW * GW + F * GWW )
+ H  W         P         T * ( FWP * G + FW * GP
+ H+                       + FP * GW + F * GWP )
+ H  W         U         T * ( FW * B + F * DD1 )
+ H  P         P         T * ( FPP * G + 2.0 * FP * GP + F * GPP )
+ H  P         U         T * ( FP * B + F * BP )
+
+ENDATA

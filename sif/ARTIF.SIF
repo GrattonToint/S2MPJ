@@ -1,0 +1,135 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ARTIF
+
+*   Problem :
+*   *********
+*   An artificial nonlinear system.
+
+*   Source:
+*   K.M. Irani, M.P. Kamat, C.J. Ribbens, H.F.Walker and L.T. Watson,
+*   "Experiments with conjugate gradient algoritms for homotopy curve
+*    tracking" ,
+*   SIAM Journal on Optimization, May 1991, pp. 222-251, 1991.
+
+*   SIF input: Ph. Toint, May 1990.
+
+*   classification NOR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   10             $-PARAMETER     original value
+*IE N                   50             $-PARAMETER 
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+*   Computed parameters
+
+ IA N+1       N         1
+
+VARIABLES
+
+ DO I         0                        N+1
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+
+ IA I-1       I         -1
+ IA I+1       I         1
+
+ XE EQ(I)     X(I)      -0.05          X(I+1)    -0.05
+ XE EQ(I)     X(I-1)    -0.05
+
+ ND
+
+BOUNDS
+
+ FR ARTIF     'DEFAULT'
+
+ XX ARTIF     X(0)      0.0
+ XX ARTIF     X(N+1)    0.0
+
+START POINT
+
+ XV ARTIF     'DEFAULT' 1.0
+
+ELEMENT TYPE
+
+ EV TRIG      X
+ EP TRIG      PAR
+
+ELEMENT USES
+
+ T  'DEFAULT' TRIG
+
+ DO I         1                        N
+ RI RI        I
+ ZV E(I)      X                        X(I)
+ ZP E(I)      PAR                      RI
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE EQ(I)     E(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ARTIF
+
+TEMPORARIES
+
+ R  FACT
+ R  S
+ R  DSDX
+ R  D2SDX2
+ R  D
+ R  THAT
+ M  ATAN
+ M  SIN
+ M  COS
+ M  MOD
+
+INDIVIDUALS
+
+*   Trigonometric
+
+ T  TRIG
+
+ A  THAT                100.0
+ A  FACT                MOD( PAR, THAT )
+ A  S                   SIN( FACT * X )
+ A  DSDX                FACT * COS( FACT * X )
+ A  D2SDX2              - FACT * FACT * S
+ A  D                   1.0 + S * S
+
+ F                      ATAN( S )
+ G  X                   DSDX / D
+ H  X         X         ( D2SDX2 * D - 2.0 * S * DSDX**2 ) /D**2
+
+ENDATA

@@ -1,0 +1,166 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ALJAZZAF
+
+*   Problem :
+*   *********
+
+*   Source:
+*   M. Aljazzaf,
+*   "Multiplier methods with partial elimination of constraints for
+*   nonlinear programming",
+*   PhD Thesis, North Carolina State University, Raleigh, 1990.
+
+*   SDIF input: Ph. Toint, May 1990.
+
+*   classification QQR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   3              $-PARAMETER     original value
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+
+*   Upper range of active lower bounds (from 2 to N1)
+
+*IE N1                  2               $-PARAMETER  .lt. N  original value
+*IE N1                  50              $-PARAMETER  .lt. N
+*IE N1                  500             $-PARAMETER  .lt. N
+ IE N1                  2               $-PARAMETER     modified for S2X tests
+*IE N1                  5000            $-PARAMETER  .lt. N
+
+*   Problem parameter A
+
+ RE BIGA                100.0
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+
+*   Computed parameters A(I) and B(I).
+
+ IA N-1       N         -1
+ IA N1+1      N1        1
+
+
+ R* ASQ       BIGA                     BIGA
+ RA ASQ-1     ASQ       -1.0
+ RI RN-1      N-1
+ R/ F         ASQ-1                    RN-1
+ R/ F2        F                        BIGA
+
+ DO I         1                        N
+
+ IA I-1       I         -1
+ RI RI-1      I-1
+
+ R* T         RI-1                     F2
+ A- A(I)      BIGA                     T
+
+ R* T         RI-1                     F
+ AA B(I)      T         1.0
+
+ ND
+
+ RM -B1       B1        -1.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ N  OBJ
+
+ ZE H         X1                       -B1
+
+CONSTANTS
+
+ Z  ALJAZZAF  H                        -B1
+
+START POINT
+
+ XV ALJAZZAF  'DEFAULT' 0.0
+
+ELEMENT TYPE
+
+ EV SSQ       X
+ EP SSQ       SHIFT
+
+ELEMENT USES
+
+ XT 'DEFAULT' SSQ
+
+ ZV E(1)      X                        X(1)
+ XP E(1)      SHIFT     0.5
+
+ DO I         2                        N1
+ ZV E(I)      X                        X(I)
+ XP E(I)      SHIFT     -1.0
+ ND
+
+ DO I         N1+1                     N
+ ZV E(I)      X                        X(I)
+ XP E(I)      SHIFT     1.0
+ ND
+
+
+*   Constraints elements
+
+ DO I         2                        N1
+ ZV C(I)      X                        X(I)
+ XP C(I)      SHIFT     0.0
+ ND
+
+ DO I         N1+1                     N
+ ZV C(I)      X                        X(I)
+ XP C(I)      SHIFT     1.0
+ ND
+
+GROUP USES
+
+ ZE OBJ       E(1)                     A(1)
+
+ DO I         2                        N
+ ZE OBJ       E(I)                     A(I)
+ ZE H         C(I)                     B(I)
+ ND
+
+OBJECT BOUND
+
+ LO ALJAZZAF            0.0
+
+*   Solution
+
+*LO SOLTN               75.004996
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ALJAZZAF
+
+TEMPORARIES
+
+ R  SX
+
+INDIVIDUALS
+
+ T  SSQ
+ A  SX                  X - SHIFT
+ F                      SX * SX
+ G  X                   SX + SX
+ H  X         X         2.0
+
+ENDATA
+

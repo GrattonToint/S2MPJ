@@ -1,0 +1,111 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CURLY30
+
+*   Problem :
+*   --------
+
+*   A banded function with semi-bandwidth 30 and
+*   negative curvature near the starting point
+
+*   Source: Nick Gould
+
+*   SIF input: Nick Gould, September 1997.
+
+*   classification OUR2-AN-V-0
+
+*   Number of variables
+
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   10000          $-PARAMETER
+ IE N                   35             $-PARAMETER     modified for S2X tests
+
+*  Semi-bandwidth
+
+ IE K                   30
+
+*   other parameter definitions
+
+ IE 1                   1
+ I- N-K       N                        K
+ IA N-K+1     N-K       1
+ RI RN        N
+ RA RN+1      RN        1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N-K
+ I+ I+K       I                        K
+ DO J         I                        I+K
+ XN Q(I)      X(J)      1.0
+ ND
+
+ DO I         N-K+1                    N
+ DO J         I                        N
+ XN Q(I)      X(J)      1.0
+ ND
+
+BOUNDS
+
+ FR CURLY30   'DEFAULT'
+
+START POINT
+
+*  start with X(I) = 0.0001 * I / (N+1).
+
+ DO I         1                        N
+
+ RI RI        I
+ R/ T         RI                       RN+1
+ RM T         T         0.0001
+ ZV CURLY30   X(I)                     T
+
+ ND
+
+GROUP TYPE
+
+ GV P4        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' P4
+
+OBJECT BOUND
+
+*   Solution
+
+*ZL SOLTN               -1.003163D+5   $ (n=1000)
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        CURLY30
+
+TEMPORARIES
+
+ R  APB
+
+INDIVIDUALS
+
+ T  P4
+ A  APB                 2.0D+1
+ F                      GVAR * ( GVAR * ( GVAR ** 2 - APB )
+ F+                     - 1.0D-1 )
+ G                      2.0D+0 * GVAR * ( 2.0D+0 * GVAR ** 2
+ G+                     - APB ) - 1.0D-1
+ H                      1.2D+1 * GVAR ** 2 - 2.0D+0 * APB
+
+ENDATA

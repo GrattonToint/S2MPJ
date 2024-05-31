@@ -1,0 +1,126 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CYCLIC3
+
+*   Problem :
+*   *********
+
+*   The cyclic cubic system whose root at zero has exponential multiplicity
+*   as a function of dimension.
+
+*   Source:  problem 8.2 in
+*   Wenrui Hao, Andrew J. Sommese and Zhonggang Zeng, 
+*   "An algorithm and software for computing multiplicity structures 
+*    at zeros of nonlinear systems", Technical Report,
+*   Department of Applied & Computational Mathematics & Statistics,
+*   University of Notre Dame, Indiana, USA (2012)
+
+*   SIF input: Nick Gould, Jan 2012.
+
+*   classification NOR2-AN-V-0
+
+*   dimension parameter
+
+*IE N                   4              $ original value
+*IE N                   10
+*IE N                   100
+*IE N                   1000
+*IE N                   10000
+ IE N                   100000
+
+*   Problem dimension
+
+ IA N+2       N         2 
+
+*   Define useful parameters
+
+ IE 1                   1
+ IE 2                   2
+ IA N+1       N         1
+
+VARIABLES
+
+ DO I         1                        N+2
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XE E(I)
+ ND
+ XE E(N+1)    X(N+1)    1.0            X(1)      -1.0
+ XE E(N+2)    X(N+2)    1.0            X(2)      -1.0
+
+BOUNDS
+
+ FR CYCLIC3   'DEFAULT'
+
+START POINT
+
+ X  CYCLIC3   'DEFAULT' 1000.0
+
+ELEMENT TYPE
+
+ EV CUBE      X
+ EV PROD      X
+ EV PROD      Y
+
+ELEMENT USES
+
+ DO I         1                        N
+ XT C(I)      CUBE
+ ZV C(I)      X                        X(I)
+ IA I+1       I         1
+ IA I+2       I         2
+ XT P(I)      PROD
+ ZV P(I)      X                        X(I+1)
+ ZV P(I)      Y                        X(I+2)
+ ND
+
+GROUP USES
+
+ DO I         1                        N
+ XE E(I)      C(I)      1.0            P(I)      -1.0
+ ND
+
+OBJECT BOUND
+
+*   no objective
+
+ LO CYCLIC3             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CYCLIC3
+
+INDIVIDUALS
+
+*   cubic elements
+
+ T  CUBE
+ F                      X ** 3
+ G  X                   3.0 * X ** 2
+ H  X         X         6.0 * X
+
+*   product elements
+
+ T  PROD
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+

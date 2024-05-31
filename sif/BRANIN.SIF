@@ -1,0 +1,148 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BRANIN
+
+*   Problem :
+*   *********
+
+*   Source: the Branin & Ho function
+
+*   a(x2 - b*x1**2 + c*x1 - r)**2 + s(1-t)cos(x1) + s
+*   where a=1, b=5.1/(4π²), c=5/π, s=10 and t=1/(8π),
+*   and x1 in [-5, 10], x2 in [0, 15]
+
+*   L. C. W. Dixon and G. P. Szego (Eds.)
+*   Towards Global Optimization
+*   North Holland, 1975.
+
+*   SIF input: Nick Gould, July 2021
+
+*   classification OBR2-AN-2-0
+
+* approximation of pi
+
+ RF PI/4      ARCTAN    1.0
+ RM PI        PI/4      4.0
+ RM 8PI       PI        8.0
+ R* PI2       PI                       PI
+ RM 4PI2      PI2       4.0 
+
+ RE ONE                 1.0
+ RE A                   1.0
+ RE B                   5.1
+ R/ B         B                        4PI2
+ RM -B        B         -1.0
+ RE C                   5.0
+ R/ C         C                        PI
+ RE R                   6.0
+ RE S                   10.0
+ RE T                   1.0
+ R/ T         T                        8PI
+ R- 1MT       ONE                      T
+
+ R* S1MT      S                        1MT
+
+VARIABLES
+
+    X1
+    X2
+
+GROUPS
+
+ ZN OBJ1      X1                       C 
+ N  OBJ1      X2         1.0
+ N  OBJ2
+
+CONSTANTS
+
+ Z  BRANIN    OBJ1                     R
+    BRANIN    OBJ2      -10.0
+
+BOUNDS
+
+ LO BRANIN1   X1        -5.0
+ UP BRANIN1   X1        10.0
+ LO BRANIN1   X2        0.0
+ UP BRANIN1   X2        15.0
+
+ LO BRANIN2   X1        -5.0
+ UP BRANIN2   X1        0.0
+ LO BRANIN2   X2        10.0
+ UP BRANIN2   X2        15.0
+
+START POINT
+
+ XV BRANIN    X1        5.0
+ XV BRANIN    X2        10.0
+
+ELEMENT TYPE
+
+ EV SQ        V 
+ EV COS       V
+
+ELEMENT USES
+
+ T  E1        SQ
+ V  E1        V                        X1
+
+ T  E2        COS
+ V  E2        V                        X1
+
+GROUP TYPE
+
+ GV L2        GVAR
+ GP L2        P
+
+GROUP USES
+
+ T  OBJ1      L2 
+ ZE OBJ1      E1                       -B
+ ZP OBJ1      P                        A
+ ZE OBJ2      E2                       S1MT
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -1.031628
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BRANIN
+
+INDIVIDUALS
+
+ T  SQ
+ F                      V * V
+ G  V                   2.0 * V
+ H  V         V         2.0
+
+ T  COS
+ F                      COS( V )
+ G  V                   - SIN( V )
+ H  V         V         - COS( V )
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BRANIN
+
+INDIVIDUALS
+
+ T  L2
+ F                      P * GVAR * GVAR
+ G                      2.0 * P * GVAR
+ H                      2.0 * P
+
+ENDATA

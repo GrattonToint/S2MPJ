@@ -1,0 +1,165 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT7
+
+*   Problem :
+*   *********
+
+*   Source: problem 7 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification OQR2-AN-5-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ1      X2        1.0
+ N  OBJ1      'SCALE'   0.01
+ N  OBJ2      X1        1.0
+
+ E  CON1
+ E  CON2      X1        1.0 
+ E  CON3      X1        1.0
+
+CONSTANTS
+
+    BT7       OBJ2      1.0
+    BT7       CON1      1.0
+    BT7       CON3      0.5
+
+BOUNDS
+
+ FR BT7       'DEFAULT'
+
+START POINT
+
+* Start 1
+
+ XV BT7       X1        -2.0
+ XV BT7       X2        1.0
+ XV BT7       X3        1.0
+ XV BT7       X4        1.0
+ XV BT7       X5        1.0
+
+* Start 2
+
+*XV BT7       X1        -20.0
+*XV BT7       X2        10.0
+*XV BT7       X3        1.0
+*XV BT7       X4        1.0
+*XV BT7       X5        1.0
+
+*  Solution proposed in paper 
+*  (corresponding to an objective value of  360.3665439)
+
+*XV BT7       X1        -0.79212
+*XV BT7       X2        -1.2624
+*XV BT7       X3        0.0
+*XV BT7       X4        -0.89532
+*XV BT7       X5        1.1367
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV 2PR       X                        Y
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+ T  X4SQ      SQ
+ V  X4SQ      X                        X4
+
+ T  X5SQ      SQ
+ V  X5SQ      X                        X5
+
+ T  X1X2      2PR
+ V  X1X2      X                        X1
+ V  X1X2      Y                        X2
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ T  OBJ1      L2
+ E  OBJ1      X1SQ      -1.0
+ T  OBJ2      L2
+
+ E  CON1      X3SQ      -1.0           X1X2 
+
+ E  CON2      X4SQ      -1.0           X2SQ
+
+ E  CON3      X5SQ
+
+OBJECT BOUND
+
+*   Solution  ( for a lower objective value than that 
+*   corresponding to the solution quoted in the paper)
+
+*LO SOLTN               306.49640688
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT7
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        BT7
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA
+

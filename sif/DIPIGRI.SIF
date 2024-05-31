@@ -1,0 +1,189 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DIPIGRI
+
+*   Problem :
+*   *********
+
+*   A problem proposed by Di Pillo and Grippo.
+
+*   Source:
+*   G. Di Pillo and L. Grippo,
+*   "An new augmented Lagrangian function for inequality constraints
+*   in nonlinear programming problems",
+*   JOTA, vol. 36, pp. 495-519, 1982.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification OOR2-AN-7-4
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+    X6
+    X7
+
+GROUPS
+
+ N  OBJ       X6        -10.0          X7        -8.0
+
+ L  C1        X3        1.0            X5        5.0
+
+ L  C2        X1        7.0            X2        3.0
+ L  C2        X4        1.0            X5        -1.0
+
+ L  C3        X1        23.0           X7        -8.0
+
+ L  C4        X6        5.0            X7        -11.0
+
+CONSTANTS
+
+    DIPIGRI   C1        127.0
+    DIPIGRI   C2        282.0
+    DIPIGRI   C3        196.0
+
+BOUNDS
+
+ FR DIPIGRI   'DEFAULT'
+
+START POINT
+
+    DIPIGRI   X1        1.0
+    DIPIGRI   X2        2.0
+    DIPIGRI   X3        0.0
+    DIPIGRI   X4        4.0
+    DIPIGRI   X5        0.0
+    DIPIGRI   X6        1.0
+    DIPIGRI   X7        1.0
+
+ELEMENT TYPE
+
+ EV SSQ       X
+ EP SSQ       S
+ EV P4        X
+ EV SQ        X
+ EV P6        X
+ EV OE        X                        Y
+ EV CE        X                        Y
+
+ELEMENT USES
+
+ T  O1        SSQ
+ V  O1        X                        X1
+ P  O1        S         10.0
+
+ T  O2        SSQ
+ V  O2        X                        X2
+ P  O2        S         12.0
+
+ T  O3        P4
+ V  O3        X                        X3
+
+ T  O4        SSQ
+ V  O4        X                        X4
+ P  O4        S         11.0
+
+ T  O5        P6
+ V  O5        X                        X5
+
+ T  O6        OE
+ V  O6        X                        X6
+ V  O6        Y                        X7
+
+ T  C11       SQ
+ V  C11       X                        X1
+
+ T  C12       P4
+ V  C12       X                        X2
+
+ T  C13       SQ
+ V  C13       X                        X4
+
+ T  C21       SQ
+ V  C21       X                        X3
+
+ T  C31       SQ
+ V  C31       X                        X2
+
+ T  C32       SQ
+ V  C32       X                        X6
+
+ T  C41       CE
+ V  C41       X                        X1
+ V  C41       Y                        X2
+
+GROUP USES
+
+ E  OBJ       O1                       O2        5.0
+ E  OBJ       O3                       O4        3.0
+ E  OBJ       O5        10.0           O6
+
+ E  C1        C11       2.0            C12       3.0
+ E  C1        C13       4.0
+
+ E  C2        C21       10.0
+
+ E  C3        C31                      C32       6.0
+
+ E  C4        C41                      C21       2.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               680.630
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DIPIGRI
+
+INDIVIDUALS
+
+ T  SSQ
+ F                      ( X - S )**2
+ G  X                   2.0 * ( X - S )
+ H  X         X         2.0
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  P4
+ F                      X**4
+ G  X                   4.0 * X**3
+ H  X         X         12.0 * X**2
+
+ T  P6
+ F                      X**6
+ G  X                   6.0 * X**5
+ H  X         X         30.0 * X**4
+
+ T  OE
+ F                      7.0 * X**2 + Y**4 - 4.0 * X * Y
+ G  X                   14.0 * X - 4.0 * Y
+ G  Y                   4.0 * Y**3 - 4.0 * X
+ H  X         X         14.0
+ H  X         Y         -4.0
+ H  Y         Y         12.0 * Y**2
+
+ T  CE
+ F                      4.0 * X**2 + Y**2 - 3.0 * X * Y
+ G  X                   8.0 * X - 3.0 * Y
+ G  Y                   2.0 * Y - 3.0 * X
+ H  X         X         8.0
+ H  X         Y         -3.0
+ H  Y         Y         2.0
+
+ENDATA

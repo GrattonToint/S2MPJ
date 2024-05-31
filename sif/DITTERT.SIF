@@ -1,0 +1,334 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DITTERT
+
+*   Problem :
+*   *********
+
+*   Minimize the Dittert function.
+*   Source: See Minc, Linear and Multilinear Algebra 21, 1987
+
+*   SIF input: N. Gould, March 1992.
+*              minor correction by Ph. Shott, Jan 1995.
+
+*   classification OQR2-AN-V-V
+
+*   Size of matrix
+
+*IE N                   2              $-PARAMETER
+*IE N                   3              $-PARAMETER
+*IE N                   4              $-PARAMETER
+*IE N                   5              $-PARAMETER
+*IE N                   6              $-PARAMETER
+*IE N                   7              $-PARAMETER
+*IE N                   8              $-PARAMETER     original value
+*IE N                   9              $-PARAMETER
+*IE N                   10             $-PARAMETER
+ IE N                   5              $-PARAMETER     modified for S2X tests
+
+*   Define constants
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+
+ RI RN        N
+ IA N+1       N         1
+
+*   Compute the number of sub-permanents
+
+ IE 2**N                1
+
+ DO I         1                        N
+ I- N-I+1     N+1                      I
+ IA I-1       I         - 1
+ RI R2**N     2**N
+ AA S(N-I+1)  R2**N     0.1
+ AA T(I-1)    R2**N     0.1
+ I* 2**N      2**N                     2
+ ND
+
+ IA N-1       N         - 1
+ IA 2**N-1    2**N      - 1
+
+VARIABLES
+
+*   Sub permanents
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+ X  P(K)
+ ND
+
+*   Entries in the coefficient matrix
+
+ DO I         1                        N
+ DO J         1                        N
+ X  A(I,J)
+ ND
+
+*   Row and column sums
+
+ DO I         1                        N
+ X  R(I)
+ X  C(I)
+ ND
+
+GROUPS
+
+*   Define objective function groups
+
+ XN ROWPROD
+ XN COLPROD
+ XN OBJ       P(2**N-1) 1.0
+
+*   Linear terms in the sub-permanent constraints.
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+ XE PE(K)     P(K)      - 1.0
+ ND
+
+*   Row and column sum constraints.
+
+ DO I         1                        N
+ DO J         1                        N
+ XE R(I)      A(I,J)    1.0
+ XE C(J)      A(I,J)    1.0
+ ND
+
+ DO I         1                        N
+ XE R(I)      R(I)      -1.0
+ XE C(I)      C(I)      -1.0
+ ND
+
+*  Constraint that the sum of all the entries is n.
+
+ DO I         1                        N
+ XE SUM       R(I)      1.0
+ ND
+
+CONSTANTS
+
+
+*  Constraint that the sum of all the entries is n.
+
+ Z  DITTERT   SUM                      RN
+
+BOUNDS
+
+*   Entries in the coefficient matrix.
+
+ DO I         1                        N
+ XL DITTERT   R(I)      1.0D-6
+ XL DITTERT   C(I)      1.0D-6
+ DO J         1                        N
+ XU DITTERT   A(I,J)    1.0
+ ND
+
+START POINT
+
+ELEMENT TYPE
+
+ EV 2PR       A                        P
+ EV LOG       Y
+
+ELEMENT USES
+
+*   Set up the elements associated with sub-permanent constraint K
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+
+ IE ID                  0
+ IE PT                  1
+ I= KK        K
+
+*   Construct the I-th component of the binary representation of K.
+
+ DO I         1                        N
+ A= SI        S(I)
+ IR ISI       SI
+ I/ BI        KK                       ISI
+ I+ ID        ID                       BI
+ I* BISI      BI                       ISI
+ I- KK        KK                       BISI
+ RI RI        I
+ AA RNZ(PT)   RI        0.1
+ I+ PT        PT                       BI
+ OD I
+
+*   Associate elements with nonzero entries in the binary string
+*   This corresponds to finding the sub-permanents which occur
+*   in the usual expansion of the sub-permanent in terms of its
+*   sub-sub-permanents.
+
+ I= I1        0
+ I= I2        1
+ IA ID-2      ID        - 2
+
+ DO I         1                        ID-2
+ I= I1        ID
+ I= I2        0
+ OD I
+
+ DO I         1                        I1
+ A= RJ        RNZ(I)
+ IR J         RJ
+ A= SI        S(J)
+ IR ISI       SI
+ I- IPP       K                        ISI
+ XT E(K,I)    2PR
+ ZV E(K,I)    A                        A(ID,J)
+ ZV E(K,I)    P                        P(IPP)
+ OD I
+
+ DO I         1                        I2
+ A= RJ        RNZ(1)
+ IR J         RJ
+ A= RJJ       RNZ(2)
+ IR JJ        RJJ
+ XT E(K,1)    2PR
+ ZV E(K,1)    A                        A(2,J)
+ ZV E(K,1)    P                        A(1,JJ)
+ XT E(K,2)    2PR
+ ZV E(K,2)    A                        A(2,JJ)
+ ZV E(K,2)    P                        A(1,J)
+ OD I
+
+ RI RD        ID
+ AA D(K)      RD        0.1
+
+ ND
+
+ DO I         1                        N
+ XT LOGC(I)   LOG
+ ZV LOGC(I)   Y                        C(I)
+ XT LOGR(I)   LOG
+ ZV LOGR(I)   Y                        R(I)
+ ND
+
+GROUP TYPE
+
+ GV EXP       Z
+
+GROUP USES
+
+ DO M         1                        N-1
+ A= RK1       T(M)
+ IR K1        RK1
+ IM K2        K1        2
+ IA K1        K1        1
+ IA K2        K2        - 1
+
+ DO K         K1                       K2
+
+ A= RD        D(K)
+ IR ID        RD
+
+ DO I         1                        ID
+ XE PE(K)     E(K,I)
+
+ ND
+
+ DO I         1                        N
+ XT ROWPROD   EXP
+ XE ROWPROD   LOGR(I)
+ XT COLPROD   EXP
+ XE COLPROD   LOGC(I)
+ ND
+
+OBJECT BOUND
+
+ LO DITTERT             0.0
+
+*   Solution
+
+*LO SOLTN(2)           5.0D-1
+*LO SOLTN(3)           2.22222222D-1
+*LO SOLTN(4)           9.375-2
+*LO SOLTN(5)           3.84D-2
+*LO SOLTN(6)           1.54321098D-2
+*LO SOLTN(7)           6.11989902D-3
+*LO SOLTN(8)           2.40325927D-3
+*LO SOLTN(9)           9.36656708D-4
+*LO SOLTN(10)          3.6288D-4
+*LO SOLTN(11)          1.39905948D-4
+*LO SOLTN(12)          5.37232170D-5
+*LO SOLTN(13)          2.05596982D-5
+*LO SOLTN(14)          7.84541375D-6
+*LO SOLTN(15)          2.98628137D-6
+*LO SOLTN(16)          1.13422671D-6
+*LO SOLTN(17)          4.29968709D-7
+*LO SOLTN(18)          1.62718123D-7
+*LO SOLTN(19)          6.14859946D-8
+*LO SOLTN(20)          2.32019615D-8
+
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DITTERT
+
+INDIVIDUALS
+
+*   product of A and P
+
+ T  2PR
+
+ F                      A * P
+ G  A                   P
+ G  P                   A
+ H  A         P         1.0
+
+ T  LOG
+
+ F                      LOG( Y )
+ G  Y                   1.0 / Y
+ H  Y         Y         - 1.0 / ( Y * Y )
+
+ENDATA
+
+GROUPS        DITTERT
+
+TEMPORARIES
+
+ R  EXZ
+ M  EXP
+
+INDIVIDUALS
+
+*   exponential
+
+ T  EXP
+
+ A  EXZ                 - EXP( Z )
+ F                      EXZ
+ G                      EXZ
+ H                      EXZ
+
+ENDATA

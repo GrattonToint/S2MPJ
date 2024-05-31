@@ -1,0 +1,60 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ALSOTAME
+
+*   Problem :
+*   *********
+*   Another simple constrained  problem
+
+*   Source:
+*   A.R. Conn, N. Gould and Ph.L. Toint,
+*   "The LANCELOT User's Manual",
+*   Dept of Maths, FUNDP, 1991.
+
+*   SIF input:  Ph. Toint, Jan 1991.
+
+*   classification OOR2-AN-2-1
+
+VARIABLES
+    x
+    y
+GROUPS
+ XN Object    x         1.0            y         -2.0
+ XE Constr    x         -1.0           y         1.0
+CONSTANTS
+ X  ALSOTAME  Constr    1.0
+BOUNDS
+ XL ALSOTAME  x         -2.0
+ XU ALSOTAME  x         2.0
+ XL ALSOTAME  y         -1.5
+ XU ALSOTAME  y         1.5
+GROUP TYPE
+ GV EXPN      ALPHA
+ GV SINE      ALPHA
+GROUP USES
+ XT Object    EXPN
+ XT Constr    SINE
+ENDATA
+
+GROUPS        ALSOTAME
+TEMPORARIES
+ R  EXPA
+ R  SINA
+ M  EXP
+ M  SIN
+ M  COS
+INDIVIDUALS
+ T  EXPN
+ A  EXPA                EXP( ALPHA )
+ F                      EXPA
+ G                      EXPA
+ H                      EXPA
+
+ T  SINE
+ A  SINA                SIN( ALPHA )
+ F                      SINA
+ G                      COS( ALPHA )
+ H                      - SINA
+ENDATA

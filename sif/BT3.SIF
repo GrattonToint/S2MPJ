@@ -1,0 +1,125 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT3
+
+*   Problem :
+*   *********
+
+*   Source: problem 3 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem is convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification SLR2-AY-5-3
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ
+ E  CON1      X1        1.0            X2        3.0
+ E  CON2      X3        1.0            X4        1.0
+ E  CON2      X5        -2.0
+ E  CON3      X2        1.0            X5        -1.0
+
+BOUNDS
+
+ FR BT3       'DEFAULT'
+
+START POINT
+
+ XV BT3       'DEFAULT' 20.0
+
+ELEMENT TYPE
+
+ EV SSQ       X
+ EP SSQ       P
+
+ EV ISQ       X                        Y
+ IV ISQ       Z
+
+ EV SISQ      X                        Y
+ IV SISQ      Z
+ EP SISQ      P
+
+ELEMENT USES
+
+ T  E1        ISQ
+ V  E1        X                        X1
+ V  E1        Y                        X2
+
+ T  E2        SISQ
+ V  E2        X                        X2
+ V  E2        Y                        X3
+ P  E2        P          2.0
+
+ T  E3        SSQ
+ V  E3        X                        X4
+ P  E3        P          1.0
+
+ T  E4        SSQ
+ V  E4        X                        X5
+ P  E4        P          1.0
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+
+OBJECT BOUND
+
+ LO BT3                 0.0
+
+*   Solution
+
+*LO SOLTN               4.09301056
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT3
+
+TEMPORARIES
+
+ R  T
+
+INDIVIDUALS
+
+ T  SSQ
+ A  T                   X - P
+ F                      T * T
+ G  X                   2.0 * T
+ H  X         X         2.0
+
+ T  ISQ
+ R  Z         X         1.0            Y         -1.0
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  SISQ
+ R  Z         X         1.0            Y         1.0
+ A  T                   Z - P
+ F                      T * T
+ G  Z                   T + T
+ H  Z         Z         2.0
+
+ENDATA
+

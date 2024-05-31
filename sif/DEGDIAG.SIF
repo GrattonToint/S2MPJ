@@ -1,0 +1,64 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEGDIAG
+
+*   Problem :
+*   *********
+
+*   A degenerate bound constrained convex quadratic program
+*   with a tri-diagonal Hessian
+
+*   SIF input: Nick Gould, August 2011
+
+*   classification QBR2-AN-V-0
+
+*   The number of variables - 1
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*  Other useful values.
+
+ IE 0                   0
+
+VARIABLES
+
+ DO I         0                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+BOUNDS
+
+ RI RN        I
+ RA RN        RN        1.0
+ DO I         0                        N
+ RI RI        I
+ R/ LOWER     RI                       RN
+ ZL DEGDIAG   X(I)                     LOWER
+ ND
+
+START POINT
+
+ XV DEGDIAG   'DEFAULT' 2.0
+
+QUADRATIC
+
+ DO I         0                        N
+ X  X(I)      X(I)      1.0
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+ENDATA
+

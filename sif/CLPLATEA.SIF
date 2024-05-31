@@ -1,0 +1,164 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CLPLATEA
+
+*   Problem :
+*   *********
+
+*   The clamped plate problem (Strang, Nocedal, Dax)
+*   The problem comes from the discretization the following problem
+*   in mechanics:  a plate is clamped on one edge and loaded on the
+*   opposite side.  The plate is the unit square.
+
+*   In this version of the problem, the weight WGHT is entirely put on the
+*   upper right corner of the plate.
+
+*   The plate is clamped on its lower edge, by fixing the
+*   corresponding variables to zero.
+
+*   Source:
+*   J. Nocedal,
+*   "Solving large nonlinear systems of equations arising in mechanics",
+*   Proceedings of the Cocoyoc Numerical Analysis Conference, Mexico,
+*   pp. 132-141, 1981.
+
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification OXR2-MN-V-0
+
+*   P is the number of points in one side of the unit square
+*   The number of variables is P*P, of which (P-1)*(P-1) are free.
+
+*IE P                   4              $-PARAMETER n = 16
+*IE P                   7              $-PARAMETER n = 49    original value
+*IE P                   10             $-PARAMETER n = 100
+*IE P                   23             $-PARAMETER n = 529
+*IE P                   32             $-PARAMETER n = 1024
+*IE P                   71             $-PARAMETER n = 5041
+ IE P                   4              $-PARAMETER     modified for S2X tests
+
+*   Total weight on the upper edge
+
+ RE WGHT                -0.1
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+
+*   Some useful parameters
+
+ I* P2        P                        P
+ RI RP2       P2
+ RM HP2       RP2       0.5
+ RD 1/HP2     HP2       1.0
+
+VARIABLES
+
+*   Define one variable per discretized point in the unit square
+
+ DO J         1                        P
+ DO I         1                        P
+ X  X(I,J)
+ ND
+
+GROUPS
+
+*   Define four groups per node of the discretized grid
+
+ DO I         2                        P
+
+ IA I-1       I         -1
+
+ DO J         2                        P
+
+ IA J-1       J         -1
+
+ XN A(I,J)    'SCALE'   2.0
+ XN A(I,J)    X(I,J)    1.0            X(I,J-1)  -1.0
+
+ XN B(I,J)    'SCALE'   2.0
+ XN B(I,J)    X(I,J)    1.0            X(I-1,J)  -1.0
+
+ ZN C(I,J)    'SCALE'                  1/HP2
+ XN C(I,J)    X(I,J)    1.0            X(I,J-1)  -1.0
+
+ ZN D(I,J)    'SCALE'                  1/HP2
+ XN D(I,J)    X(I,J)    1.0            X(I-1,J)  -1.0
+
+ ND
+
+*   Define a linear group that will represent the weight
+
+ ZN W         X(P,P)                   WGHT
+
+BOUNDS
+
+ FR CLPLATEA  'DEFAULT'
+
+*   Fix the variables on the lower edge of the unit square
+
+ DO J         1                        P
+ XX CLPLATEA  X(1,J)    0.0
+ ND
+
+START POINT
+
+ XV CLPLATEA  'DEFAULT' 0.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+ GV L4        GVAR
+
+GROUP USES
+
+ DO I         2                        P
+ DO J         2                        P
+ XT A(I,J)    L2
+ XT B(I,J)    L2
+ XT C(I,J)    L4
+ XT D(I,J)    L4
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(4)            -6.5955D-03
+*LO SOLTN(7)            -8.2007D-03
+*LO SOLTN(10)           -9.1452D-03
+*LO SOLTN(23)           -1.0974D-02
+*LO SOLTN(32)           -1.1543D-02
+*LO SOLTN(71)           -1.2592D-02
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        CLPLATEA
+
+INDIVIDUALS
+
+*   Least squares groups
+
+ T  L2
+
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+*   Least fourth power
+
+ T  L4
+
+ F                      GVAR**4
+ G                      4.0 * GVAR**3
+ H                      12.0 *GVAR**2
+
+ENDATA

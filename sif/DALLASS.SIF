@@ -1,0 +1,417 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DALLASS
+
+*   Problem :
+*   *********
+
+*   The small Dallas water distribution problem
+*   The problem is also named "W30" in some references.
+*   This is a nonlinear network problem with conditioning of
+*   the order of 10**4.
+
+*   Source:
+*   R. Dembo,
+*   private communication, 1986.
+
+*   SIF input: Ph. Toint, June 1990.
+
+*   classification ONR2-MN-46-31
+
+*   Number of arcs
+
+ IE N                   46
+
+*   Number of nodes
+
+ IE NODES               31
+
+*   Constants
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+*   Linear elements
+
+ N  OBJ       X42       -6.38400D+02   X43       -6.33000D+02
+ N  OBJ       X44       -5.54500D+02   X45       -5.05000D+02
+ N  OBJ       X46       -4.36900D+02
+
+*   Network flow constraints
+
+ E  N1        X46       1.0            X41       1.0
+ E  N1        X1        -1.0
+ E  N2        X45       1.0            X2        -1.0
+ E  N3        X44       1.0            X3        -1.0
+ E  N4        X4        -1.0
+ E  N5        X16       1.0            X7        -1.0
+ E  N5        X6        -1.0           X5        -1.0
+ E  N6        X7        1.0
+ E  N6        X9        -1.0           X8        -1.0
+ E  N7        X9        1.0            X10       -1.0
+ E  N8        X10       1.0            X2        1.0
+ E  N8        X12       -1.0           X11       -1.0
+ E  N9        X12       1.0            X3        1.0
+ E  N9        X13       -1.0
+ E  N10       X4        1.0            X16       -1.0
+ E  N10       X15       -1.0           X14       -1.0
+ E  N11       X15       1.0            X13       1.0
+ E  N11       X5        1.0            X17       -1.0
+ E  N12       X20       1.0            X19       1.0
+ E  N12       X8        1.0            X6        1.0
+ E  N12       X18       -1.0
+ E  N13       X42       1.0            X18       1.0
+ E  N13       X19       -1.0
+ E  N14       X21       1.0            X20       -1.0
+ E  N15       X43       1.0            X21       -1.0
+ E  N16       X14       1.0            X11       1.0
+ E  N16       X23       -1.0           X22       -1.0
+ E  N17       X23       1.0
+ E  N17       X25       -1.0           X24       -1.0
+ E  N18       X31       1.0            X25       1.0
+ E  N18       X22       1.0            X26       -1.0
+ E  N19       X26       1.0            X17       1.0
+ E  N19       X28       -1.0           X27       -1.0
+ E  N20       X28       1.0
+ E  N21       X31       -1.0           X30       -1.0
+ E  N21       X29       -1.0
+ E  N22       X30       1.0            X27       1.0
+ E  N23       X24       1.0            X32       -1.0
+ E  N24       X38       1.0            X29       1.0
+ E  N24       X34       -1.0           X33       -1.0
+ E  N25       X32       1.0            X35       -1.0
+ E  N26       X35       1.0
+ E  N26       X37       -1.0           X36       -1.0
+ E  N27       X37       1.0            X34       1.0
+ E  N28       X36       1.0            X40       -1.0
+ E  N28       X39       -1.0           X38       -1.0
+ E  N29       X39       1.0            X33       1.0
+ E  N29       X1        1.0
+ E  N30       X40       1.0            X41       -1.0
+ E  N31       X46       -1.0           X45       -1.0
+ E  N31       X44       -1.0           X43       -1.0
+ E  N31       X42       -1.0
+
+CONSTANTS
+
+    DALLASS   N5         2.80000D+00   N7         4.03000D-01
+    DALLASS   N8         5.92000D-01   N9         1.15600D+00
+    DALLASS   N10        2.00000D-01   N11        4.95000D-01
+    DALLASS   N16        3.13000D-01   N17        8.44000D-01
+    DALLASS   N18        3.31000D-01   N19        5.30000D-02
+    DALLASS   N21        2.72000D-01   N22        8.83000D-01
+    DALLASS   N23        5.71000D-01   N24        7.55000D-01
+    DALLASS   N26        5.27000D-01   N29        1.00000D-03
+    DALLASS   N31       -1.01960D+01
+
+BOUNDS
+
+ XL DALLASS   'DEFAULT' -2.00000D+02
+ XU DALLASS   'DEFAULT'  2.00000D+02
+
+ LO DALLASS   X1         0.00000D+00
+ UP DALLASS   X1         2.11673D+01
+ LO DALLASS   X2         0.00000D+00
+ UP DALLASS   X2         4.37635D+01
+ LO DALLASS   X3         0.00000D+00
+ UP DALLASS   X3         3.28255D+01
+ LO DALLASS   X19        0.00000D+00
+ UP DALLASS   X19        2.20120D+01
+ LO DALLASS   X21        0.00000D+00
+ UP DALLASS   X21        1.36703D+01
+
+START POINT
+
+ XV DALLASS   'DEFAULT' -2.00000D+02
+
+    DALLASS   X1         2.11673D+01   X2         4.37635D+01
+    DALLASS   X3         3.28255D+01   X4         1.42109D-14
+    DALLASS   X5         1.68826D+02   X7         2.81745D+01
+    DALLASS   X8         8.75603D+01   X9        -5.93858D+01
+    DALLASS   X10       -5.97888D+01   X11        1.83383D+02
+    DALLASS   X13       -1.68331D+02   X15        2.00000D+02
+    DALLASS   X16        2.00000D-01   X17        2.00000D+02
+    DALLASS   X18       -7.67574D+01   X19        2.20120D+01
+    DALLASS   X20        1.36703D+01   X21        1.36703D+01
+    DALLASS   X22       -1.98461D+02   X23        1.81531D+02
+    DALLASS   X24       -1.93133D+01   X25        2.00000D+02
+    DALLASS   X26       -1.98792D+02   X27        1.15500D+00
+    DALLASS   X28        0.00000D+00   X29        2.00000D+02
+    DALLASS   X30        2.72000D-01   X32       -1.98843D+01
+    DALLASS   X33        1.78834D+02   X34       -1.79589D+02
+    DALLASS   X35       -1.98843D+01   X37        1.79589D+02
+    DALLASS   X40        2.00000D+02   X41        2.00000D+02
+    DALLASS   X42        9.87694D+01   X43        1.36703D+01
+    DALLASS   X44        3.28255D+01   X45        4.37635D+01
+    DALLASS   X46       -1.78833D+02
+
+ELEMENT TYPE
+
+ EV T1        ARC
+ EP T1        C1
+ EP T1        C2
+ EP T1        C3
+
+ EV T4        ARC
+ EP T4        C1
+ EP T4        C2
+
+ELEMENT USES
+
+ XT 'DEFAULT' T1
+
+ T  E1        T4
+ V  E1        ARC                      X1
+ P  E1        C1         4.48060D+02
+ P  E1        C2         2.51200D+02
+ T  E2        T4
+ V  E2        ARC                      X2
+ P  E2        C1         1.91526D+03
+ P  E2        C2         6.46300D+01
+ T  E3        T4
+ V  E3        ARC                      X3
+ P  E3        C1         1.07752D+03
+ P  E3        C2         4.81400D+01
+ V  E4        ARC                      X4
+ P  E4        C1         6.90000D+03
+ P  E4        C2         6.60000D+01
+ P  E4        C3         1.22000D+02
+ V  E5        ARC                      X5
+ P  E5        C1         1.00000D+02
+ P  E5        C2         1.00000D+01
+ P  E5        C3         1.00000D+02
+ V  E6        ARC                      X6
+ P  E6        C1         6.63000D+02
+ P  E6        C2         3.60000D+01
+ P  E6        C3         1.20000D+02
+ V  E7        ARC                      X7
+ P  E7        C1         5.10000D+03
+ P  E7        C2         6.60000D+01
+ P  E7        C3         1.22000D+02
+ V  E8        ARC                      X8
+ P  E8        C1         6.45000D+02
+ P  E8        C2         3.00000D+01
+ P  E8        C3         1.20000D+02
+ V  E9        ARC                      X9
+ P  E9        C1         7.40000D+03
+ P  E9        C2         6.60000D+01
+ P  E9        C3         1.22000D+02
+ V  E10       ARC                      X10
+ P  E10       C1         5.00000D+03
+ P  E10       C2         6.60000D+01
+ P  E10       C3         9.50000D+01
+ V  E11       ARC                      X11
+ P  E11       C1         8.00000D+02
+ P  E11       C2         5.40000D+01
+ P  E11       C3         1.07000D+02
+ V  E12       ARC                      X12
+ P  E12       C1         5.20000D+03
+ P  E12       C2         4.80000D+01
+ P  E12       C3         1.10000D+02
+ V  E13       ARC                      X13
+ P  E13       C1         6.00000D+03
+ P  E13       C2         4.80000D+01
+ P  E13       C3         1.10000D+02
+ V  E14       ARC                      X14
+ P  E14       C1         4.00000D+02
+ P  E14       C2         5.40000D+01
+ P  E14       C3         1.00000D+02
+ V  E15       ARC                      X15
+ P  E15       C1         4.00000D+01
+ P  E15       C2         3.12200D+01
+ P  E15       C3         1.30000D+02
+ V  E16       ARC                      X16
+ P  E16       C1         4.50000D+03
+ P  E16       C2         6.60000D+01
+ P  E16       C3         1.22000D+02
+ V  E17       ARC                      X17
+ P  E17       C1         5.10000D+03
+ P  E17       C2         2.40000D+01
+ P  E17       C3         1.10000D+02
+ V  E18       ARC                      X18
+ P  E18       C1         3.00000D+01
+ P  E18       C2         4.80000D+01
+ P  E18       C3         1.18000D+02
+ T  E19       T4
+ V  E19       ARC                      X19
+ P  E19       C1         4.84530D+02
+ P  E19       C2         1.12970D+02
+ V  E20       ARC                      X20
+ P  E20       C1         2.60000D+04
+ P  E20       C2         4.80000D+01
+ P  E20       C3         1.10000D+02
+ T  E21       T4
+ V  E21       ARC                      X21
+ P  E21       C1         1.86880D+02
+ P  E21       C2         1.60610D+02
+ V  E22       ARC                      X22
+ P  E22       C1         5.20000D+02
+ P  E22       C2         3.36100D+01
+ P  E22       C3         1.30000D+02
+ V  E23       ARC                      X23
+ P  E23       C1         4.60000D+03
+ P  E23       C2         5.40000D+01
+ P  E23       C3         9.50000D+01
+ V  E24       ARC                      X24
+ P  E24       C1         5.40000D+03
+ P  E24       C2         5.40000D+01
+ P  E24       C3         9.50000D+01
+ V  E25       ARC                      X25
+ P  E25       C1         5.60000D+03
+ P  E25       C2         1.20000D+01
+ P  E25       C3         1.10000D+02
+ V  E26       ARC                      X26
+ P  E26       C1         3.30000D+03
+ P  E26       C2         1.20000D+01
+ P  E26       C3         1.10000D+02
+ V  E27       ARC                      X27
+ P  E27       C1         2.20000D+03
+ P  E27       C2         2.40000D+01
+ P  E27       C3         1.24000D+02
+ V  E28       ARC                      X28
+ P  E28       C1         1.00000D+03
+ P  E28       C2         2.40000D+01
+ P  E28       C3         1.10000D+02
+ V  E29       ARC                      X29
+ P  E29       C1         5.90000D+03
+ P  E29       C2         2.40000D+01
+ P  E29       C3         1.13000D+02
+ V  E30       ARC                      X30
+ P  E30       C1         2.80000D+03
+ P  E30       C2         2.40000D+01
+ P  E30       C3         1.13000D+02
+ V  E31       ARC                      X31
+ P  E31       C1         2.70000D+03
+ P  E31       C2         1.20000D+01
+ P  E31       C3         1.10000D+02
+ V  E32       ARC                      X32
+ P  E32       C1         3.10000D+03
+ P  E32       C2         5.40000D+01
+ P  E32       C3         9.50000D+01
+ V  E33       ARC                      X33
+ P  E33       C1         1.00000D+02
+ P  E33       C2         1.00000D+01
+ P  E33       C3         1.00000D+02
+ V  E34       ARC                      X34
+ P  E34       C1         4.30000D+03
+ P  E34       C2         2.40000D+01
+ P  E34       C3         1.13000D+02
+ V  E35       ARC                      X35
+ P  E35       C1         2.20000D+03
+ P  E35       C2         5.40000D+01
+ P  E35       C3         9.50000D+01
+ V  E36       ARC                      X36
+ P  E36       C1         1.80000D+03
+ P  E36       C2         5.40000D+01
+ P  E36       C3         1.10000D+02
+ V  E37       ARC                      X37
+ P  E37       C1         1.00000D+02
+ P  E37       C2         2.40000D+01
+ P  E37       C3         1.10000D+02
+ V  E38       ARC                      X38
+ P  E38       C1         1.31000D+03
+ P  E38       C2         3.00000D+01
+ P  E38       C3         1.00000D+02
+ V  E39       ARC                      X39
+ P  E39       C1         6.65000D+02
+ P  E39       C2         3.60000D+01
+ P  E39       C3         1.20000D+02
+ V  E40       ARC                      X40
+ P  E40       C1         1.10000D+03
+ P  E40       C2         3.60000D+01
+ P  E40       C3         1.20000D+02
+ V  E41       ARC                      X41
+ P  E41       C1         3.23000D+01
+ P  E41       C2         1.00000D+01
+ P  E41       C3         1.00000D+02
+
+GROUP USES
+
+ E  OBJ       E1                       E2
+ E  OBJ       E3                       E4
+ E  OBJ       E5                       E6
+ E  OBJ       E7                       E8
+ E  OBJ       E9                       E10
+ E  OBJ       E11                      E12
+ E  OBJ       E13                      E14
+ E  OBJ       E15                      E16
+ E  OBJ       E17                      E18
+ E  OBJ       E19                      E20
+ E  OBJ       E21                      E22
+ E  OBJ       E23                      E24
+ E  OBJ       E25                      E26
+ E  OBJ       E27                      E28
+ E  OBJ       E29                      E30
+ E  OBJ       E31                      E32
+ E  OBJ       E33                      E34
+ E  OBJ       E35                      E36
+ E  OBJ       E37                      E38
+ E  OBJ       E39                      E40
+ E  OBJ       E41
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               -3.2393D+04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DALLASS
+
+TEMPORARIES
+
+ R  TMP
+ R  TMP2
+ R  X
+ R  XEXP
+ R  SQC1
+ R  EPS2
+ M  ABS
+ M  SQRT
+ M  MAX
+ M  MIN
+ M  ASIN
+
+INDIVIDUALS
+
+*   Pipe function
+
+ T  T1
+ A  TMP                 850559.0D0 / 2.85 * C1
+ A  TMP                 TMP / ( C3**1.85 )
+ A  TMP                 TMP / ( C2**4.87 )
+ A  X                   ABS( ARC )
+ A  XEXP                X**0.85
+ F                      TMP * X**2 * XEXP
+ G  ARC                 2.85 * TMP * ARC * XEXP
+ H  ARC       ARC       5.2725 * TMP * XEXP
+
+*   Elliptic pump
+
+ T  T4
+ A  EPS2                1.0D-14
+ A  SQC1                SQRT( C1 )
+ A  X                   MIN( ARC, SQC1 )
+ A  TMP                 C2 * ( C1 - X * X )
+ A  TMP                 SQRT( MAX( TMP, EPS2 ) )
+ A  TMP2                SQRT( C2 ) * ASIN( X / SQC1 )
+ F                      0.5 * ( - X * TMP - C1 * TMP2 )
+ G  ARC                 - TMP
+ H  ARC       ARC       C2 * X / TMP
+
+ENDATA

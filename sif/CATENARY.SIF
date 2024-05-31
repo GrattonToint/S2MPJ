@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CATENARY
+
+*   Problem:
+*   ********
+
+*   An erroneous but interesting version of the classical problem of the hanging
+*   catenary.  Here the catenary consists of N+1 beams of length BL,
+*   with the first beam fixed at the origin and the final bean fixed
+*   at a fraction FRACT of the total length of all beams.
+
+*   The correct version of the same problem is given by problem CATENA.SIF
+
+*   The problem is non-convex.
+
+*   Source: 
+*   K. Veselic,
+*   "De forma catenarum in campo gravitatis pendentium",
+*   Klasicna Gimnazija u Zagrebu, Zagreb, 1987.
+
+*   SIF input: Ph. L. Toint, May 1993.
+
+*   classification LQR2-AY-V-V
+
+*   Number of beams = N+1 ; the number of variables is 3*(N+2)
+
+*IE N+1                 4              $-PARAMETER n = 15
+*IE N+1                 10             $-PARAMETER n = 33
+*IE N+1                 32             $-PARAMETER n = 99
+*IE N+1                 166            $-PARAMETER n = 501     original value
+*IE N+1                 1000           $-PARAMETER n = 3003
+ IE N+1                 4              $-PARAMETER     modified for S2X tests
+
+ RE GAMMA               9.81           $ gravity
+ RE TMASS               500.0          $ total mass of the N+1 beams
+ RE BL                  1.0            $ beam length
+ RE FRACT               0.6            $ shortening factor
+
+ IE 0                   0
+ IE 1                   1
+ IA N         N+1       -1
+ RI RN+1      N+1
+ R* TMP       BL                       RN+1
+ R* LENGTH    TMP                      FRACT
+ R/ MASS      TMASS                    RN+1
+ R* MG        MASS                     GAMMA
+ RM MG/2      MG        0.5
+ R* BLSQ      BL                       BL
+
+VARIABLES
+
+*   Positions of the beam joints
+
+ DO I         0                        N+1
+ X  X(I)
+ X  Y(I)
+ Z  Z(I)
+ OD I
+
+GROUPS
+
+ ZN OBJ       Y(0)                     MG/2
+ DO I         1                        N
+ ZN OBJ       Y(I)                     MG        
+ OD I
+ ZN OBJ       Y(N+1)                   MG/2
+
+*   Constraints on beam lengths
+
+ DO I         1                        N+1
+ XE C(I)
+ OD I
+
+CONSTANTS
+
+ DO I         1                        N+1
+ Z  CATENARY  C(I)                     BLSQ
+ OD I
+
+BOUNDS
+
+ XR CATENARY  'DEFAULT'
+
+*   Fix initial joint at the origin
+
+ XX CATENARY  X0        0.0
+ XX CATENARY  Y0        0.0
+ XX CATENARY  Z0        0.0
+
+*   Fix position of final joint
+
+ ZX CATENARY  X(N+1)                   LENGTH
+
+START POINT
+
+ R/ TMP       LENGTH                   RN+1
+ DO I         1                        N+1
+ RI RI        I
+ R* VAL       TMP                      RI
+ ZV CATENARY  X(I)                     TMP
+ OD I
+
+ELEMENT TYPE
+
+ EV ISQ       V                        W
+ IV ISQ       U
+
+ELEMENT USES
+
+ DO I         1                        N+1
+ IA I-1       I         -1
+
+ XT EX(I)     ISQ
+ ZV EX(I)     V                        X(I)
+ ZV EX(I)     W                        X(I-1)
+
+ XT EY(I)     ISQ
+ ZV EY(I)     V                        Y(I)
+ ZV EY(I)     W                        Y(I-1)
+
+ XT EZ(I)     ISQ
+ ZV EZ(I)     V                        X(I)
+ ZV EZ(I)     W                        Z(I-1)
+ OD I
+
+GROUP USES
+
+ DO I         1                        N+1
+ XE C(I)      EX(I)                    EY(I)
+ XE C(I)      EZ(I)
+ OD I
+
+OBJECT BOUND
+
+*LO SOL(15)             -8184.81057777
+*LO SOL(33)             -20837.3763330
+*LO SOL(99)             -67050.9978802
+*LO SOL(501)            -348403.164505
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CATENARY
+
+INDIVIDUALS
+
+* The square element type 
+
+ T  ISQ
+ R  U         V         1.0            W         -1.0
+ F                      U*U
+ G  U                   U+U
+ H  U         U         2.0
+
+ENDATA

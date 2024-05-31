@@ -1,0 +1,907 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ANTWERP
+
+*   Problem :
+*   *********
+
+*   This problem arises in the determination of a synthetic population for
+*   Belgian municipalities. The question is to estimate the distribution in 
+*   Antwerp that households of the following types:
+*      type F (a couple + 1 to 5 children + 0 to 2 additional adults)
+*      type W (a woman  + 1 to 3 children + 0 to 2 additional adults)
+*      type M (a man    + 1 to 3 children + 0 to 2 additional adults).
+*
+*   The data consists in 
+*
+*      - the number of individuals in households with 3 to 8 members, 
+*      - the number of F, W and N households according to their number of
+*        children
+*      - and the total number of adults and children.
+*
+*   If we define the variables by
+*
+*   p1F: probability for a F_household to have 1 child,
+*   p2F: probability for a F_household to have 2 children,
+*   p3F: probability for a F_household to have 3 children,
+*   p4F: probability for a F_household to have 4 children,
+*   p5F: probability for a F_household to have 5 children,
+*   p1W: probability for a W_household to have 1 child,
+*   p2W: probability for a W_household to have 2 children,
+*   p3W: probability for a W_household to have 3 children,
+*   p1M: probability for a M_household to have 1 child,
+*   p2M: probability for a M_household to have 2 children,
+*   p3M: probability for a M_household to have 3 children,
+*   q0F: probability for a F_household to have 1 additional adult,
+*   q1F: probability for a F_household to have 2 additional adults,
+*   q2F: probability for a F_household to have 3 additional adults,
+*   q0W: probability for a W_household to have 1 additional adult,
+*   q1W: probability for a W_household to have 2 additional adults,
+*   q2W: probability for a W_household to have 3 additional adults,
+*   q0M: probability for a M_household to have 1 additional adult,
+*   q1M: probability for a M_household to have 2 additional adults,
+*   q2M: probability for a M_household to have 3 additional adults,
+*   nF : number of F-households,
+*   nW : number of W-households,
+*   nM : number of N-households,
+*   nC2: number of individuals considered as children in age class 2
+*   nC3: number of individuals considered as children in age class 3,
+*   nA2: number of individuals considered as adults in age class 2,
+*   nA3: number of individuals considered as adults in age class 3,
+*
+*   the derived predictions for the observed quantities are then given by
+*
+*   1) prediction of the number of individuals in household of size 3:
+*
+*      p1F*q0F*nF + (p1W*q1W+p2W*q0W)*nW + (p1M*q1M+p2M*q0M)*nM = M3
+*
+*   2) prediction of the number of individuals in household of size 4:
+*
+*      (p2F*q0F+p1F*q1F)*nF + (p1W*q2W+p2W*q1W+p3W*q0W)*nW 
+*                           + (p1M*q2M+p2M*q1M+p3M*q0M)*nM = M4
+*
+*   3) prediction of the number of individuals in household of size 5:
+*
+*      (p3F*q0F+p2F*q1F+p1F*q2F)*nF + (p2W*q2W+p3W*q1W)*nW 
+*                                   + (p2M*q2M+p3M*q1M)*nM = M5
+*
+*   4) prediction of the number of individuals in household of size 6:
+*
+*      (p4F*q0F+p3F*q1F+p2F*q2F)*nF + p3W*q2W*nW + p3M*q2M*nM = M6
+*
+*   5) prediction of the number of individuals in household of size 7:
+*
+*      (p5F*q0F+p4F*q1F+p3F*q2F)*nF = M7
+*
+*   6) prediction of the number of individuals in household of size 8:
+*
+*      (p5F*q1F+p4F*q2F)*nF = M8
+*
+*   7) prediction of the number of F-households with 1 child
+*
+*      p1F*nF*(M1F+M2F+M3F) = M1F
+*
+*   8) prediction of the number of F-households with 2 children
+*
+*      p2F*nF*(M1F+M2F+M3F) = M2F
+*
+*   9) prediction of the number of F-households with 3 children or more
+*
+*      (p3F+p4F+p5F)*nF*(M1F+M2F+M3F) = M3F
+*
+*   10) prediction of the number of W-households with 1 child
+*
+*       p1W*nW*(M1W+M2W+M3W) = M1W
+*
+*   11) prediction of the number of W-households with 2 children
+*
+*       p2W*nW*(M1W+M2W+M3W) = M2W
+*
+*   12) prediction of the number of W-households with 3 children
+*
+*       p3W*nW*(M1W+M2W+M3W) = M3W
+*
+*   13) prediction of the number of M-households with 1 child
+*
+*       p1M*nM*(M1M+M2M+M3M) = M1M
+*
+*   14) prediction of the number of M-households with 2 children
+*
+*       p2M*nM*(M1M+M2M+M3M) = M2M
+* 
+*   14) prediction of the number of M-households with 3 children
+*
+*       p3M*nM*(M1M+M2M+M3M) = M3M
+*
+*   15) prediction of the number of children
+*
+*       (p1F+2*p2F+3*p3F+4*P4F+5*p5F)*NF + (p1W+2*p2W+3*p3W)*nW
+*                 + (p1W+2*p2W+3*p3W)*nW - nC2 -nC3 = N0 + N1
+*
+*   16) prediction of the total number of adults
+*
+*       (2*q0F+3*q1F+4*q2F)*nF + (q0W+2*q1W+3*q2W)*nW 
+*                 + (q0W+2*q1W+3*q2W)*nW - nA2 -nA3 = N4
+*
+*   17) composition of age class 2
+*
+*       nC2 + nA2 = N2
+*
+*   18) composition of age class 3
+*
+*       nC3 + nA3 = N3
+*
+*   19) prediction of the total number of individuals in F-households
+*
+*       (p1F+2*p2F+3*p3F+4*P4F+5*p5F)*NF + (2*q0F+3*q1F+4*q2F)*nF = NINF
+*
+*   20) the piF are probabilities and sum up to 1
+*
+*       p1F + p2F + p3F + p4F + p5F = 1
+*
+*   21) the qiF are probabilities and sum up to 1
+*       
+*       q0F + q1F + q2F = 1
+*
+*   22) the piW are probabilities and sum up to 1
+*
+*       p1W + p2W + p3W = 1
+*
+*   23) the qiW are probabilities and sum up to 1
+*       
+*       q0W + q1W + q2W = 1
+*
+*   24) the piM are probabilities and sum up to 1
+*
+*       p1M + p2M + p3M = 1
+*
+*   25) the qiM are probabilities and sum up to 1
+*       
+*       q0M + q1M + q2M = 1
+*
+*   In addition, the following inequalities are imposed
+*
+*   26) the fraction of children in age class 2 exceeds that in age class 3
+*
+*        nC2/N2 >= nC3/N3
+*
+*   27) there are more adults in age class 2 than children
+*
+*        nA2 >= nC2
+*
+*   28) there are more adults in age class 3 than children
+*
+*        nA3 >= nC3
+*
+*   and the bounds on the variables are
+*
+*       0 <= piF <= 1      ( i = 1, 2, 3, 4, 5 )
+* 
+*       0 <= qiF <= 1      ( i = 0, 1, 2 ) 
+*
+*       0 <= piW <= 1      ( i = 1, 2, 3 )
+* 
+*       0 <= qiW <= 1      ( i = 0, 1, 2 ) 
+*
+*       0 <= piM <= 1      ( i = 1, 2, 3 )
+* 
+*       0 <= qiM <= 1      ( i = 0, 1, 2 ) 
+*
+*       nF >= 0,  nW >= 0,  nM >= 0
+*
+*       0 <= nC2 <= N2,   0 <= nA2 <= N2
+*
+*       0 <= nC3 <= N3,   0 <= nA3 <= N3
+*
+
+*   The problem is solved as a linearly/bound  constrained nonlinear least-squares
+*   problem in 27 variables.  In the least-squares formulation,
+*   each equation is scaled in a proportion inverse to its right-hand side. 
+
+*   The problem appears to be very ill-conditioned.
+*
+*   SIF input: Ph. Toint, Apr 2006.
+
+*   classification SLR2-RN-27-8-0-3-24-0-2-0-8-0-0-0
+
+*   Problem initial data
+
+*   Number of households according to their sizes
+
+ RE M3                        23844.0
+ RE M4                        16323.0
+ RE M5                         6613.0
+ RE M6                         2535.0
+ RE M7                         1109.0
+ RE M8                         1667.0
+
+*  Number of F-households according the number of children
+
+ RE M1F                       16405.0
+ RE M2F                       13647.0
+ RE M3F                        9895.0
+
+*  Number of M-households according the number of children
+
+ RE M1M                        4041.0
+ RE M2M                        1634.0
+ RE M3M                         637.0
+
+*  Number of W-households according the number of children
+
+
+ RE M1W                       10966.0
+ RE M2W                        4566.0
+ RE M3W                        1921.0
+
+*  Number of children and adults in households of type F and N
+
+ RE N0                        15866.0
+ RE N1                        59832.0
+ RE N2                        61929.0
+ RE N3                        32321.0
+ RE N4                        73650.0
+
+*  Number of individuals in F-households
+
+ RE NINF                     180055.0
+
+*  Number of individuals in N-households
+
+ RE NINN                      47677.0
+
+*  Initial total number of households of type F
+
+ R+ TMP       M1F                      M2F               
+ R+ SNF       TMP                      M3F  
+
+*  Initial total number of households of type M
+
+ R+ TMP       M1M                      M2M               
+ R+ SNM       TMP                      M3M               
+
+*  Initial total number of households of type W
+
+ R+ TMP       M1W                      M2W              
+ R+ SNW       TMP                      M3W
+
+*  Partial age class sums
+
+ RM N2/2      N2         0.5
+ RM N3/2      N3         0.5
+ R+ N23/2     N2/2                     N3/2
+ R+ N01       N0                       N1
+ R+ N0123     N01                      N23/2
+ R+ N234      N4                       N23/2
+
+*  Compute starting values for easy probabilities
+
+ R/ SP1F      M1F                      SNF
+ R/ SP2F      M2F                      SNF
+ R/ SP1W      M1W                      SNW
+ R/ SP2W      M2W                      SNW
+ R/ SP3W      M3W                      SNW
+ R/ SP1M      M1M                      SNM
+ R/ SP2M      M2M                      SNM
+ R/ SP3M      M3M                      SNM
+
+*   Useful inverses
+
+ RD 1/N3      N3        1.0
+ RD -1/N2     N2        -1.0
+ 
+VARIABLES
+
+    P1F
+    P2F
+    P3F
+    P4F
+    P5F
+    P1W
+    P2W
+    P3W
+    P1M
+    P2M
+    P3M
+    Q0F
+    Q1F
+    Q2F
+    Q0W
+    Q1W
+    Q2W
+    Q0M
+    Q1M
+    Q2M
+    NF
+    NW
+    NM
+    NC2
+    NA2
+    NC3
+    NA3
+
+GROUPS
+
+*   Household of size 3 to 8: each of these constraints
+*   imposes that the total number of individuals in households 
+*   of a given size is equal to the observed value.
+
+ ZN HSZ3      'SCALE'                  M3
+ ZN HSZ4      'SCALE'                  M4
+ ZN HSZ5      'SCALE'                  M5
+ ZN HSZ6      'SCALE'                  M6
+ ZN HSZ7      'SCALE'                  M7
+ ZN HSZ8      'SCALE'                  M8
+
+*   Household with 1,2 or 3+ children, for families (F), isolated woman (W) or
+*   isolated man (M)
+
+ ZN HST1F     'SCALE'                  M1F
+ ZN HST2F     'SCALE'                  M2F
+ ZN HST3F     'SCALE'                  M3F
+
+ ZN HST1W     'SCALE'                  M1W
+ ZN HST2W     'SCALE'                  M2W
+ ZN HST3W     'SCALE'                  M3W
+
+ ZN HST1M     'SCALE'                  M1M
+ ZN HST2M     'SCALE'                  M2M
+ ZN HST3M     'SCALE'                  M3M
+
+*   Number of children 
+
+ RM WHCH      N0123      100.0
+ ZN HCH       'SCALE'                  WHCH
+ XN HCH       NC2       -1.0           NC3       -1.0
+
+*   Number of adults
+
+ RM WHAD      N234       100.0
+ ZN HAD       'SCALE'                  WHAD
+ XN HAD       NA2       -1.0           NA3       -1.0
+
+*   Number of individuals in age class 2
+
+ XE AGE2      NC2       1.0            NA2       1.0
+
+*   Number of individuals in age class 3
+
+ XE AGE3      NC3       1.0            NA3       1.0
+
+*   Number of individuals in F-households
+
+ ZN HINF
+
+*   Number of individuals in N-households
+
+ ZN HINN
+
+*   Probability sums
+
+ E  PSF       P1F       1.0            P2F       1.0
+ E  PSF       P3F       1.0            P4F       1.0
+ E  PSF       P5F       1.0
+
+ E  PSW       P1W       1.0            P2W       1.0
+ E  PSW       P3W       1.0
+
+ E  PSM       P1M       1.0            P2M       1.0
+ E  PSM       P3M       1.0
+
+ E  QSF       Q0F       1.0            Q1F       1.0
+ E  QSF       Q2F       1.0
+
+ E  QSM       Q0M       1.0            Q1M       1.0
+ E  QSM       Q2M       1.0
+
+ E  QSW       Q0W       1.0            Q1W       1.0
+ E  QSW       Q2W       1.0
+
+* ZL INEQ1     NC3                      1/N3
+* ZL INEQ1     NC2                      -1/N2
+
+ L  INEQ2     NC2       1.0            NA2       -1.0
+
+ L  INEQ3     NC3       1.0            NA3       -1.0
+
+CONSTANTS
+
+ Z  ANTWERP   HSZ3                     M3                    
+ Z  ANTWERP   HSZ4                     M4                    
+ Z  ANTWERP   HSZ5                     M5                    
+ Z  ANTWERP   HSZ6                     M6                    
+ Z  ANTWERP   HSZ7                     M7                    
+ Z  ANTWERP   HSZ8                     M8                    
+
+ Z  ANTWERP   HST1F                    M1F
+ Z  ANTWERP   HST2F                    M2F
+ Z  ANTWERP   HST3F                    M3F
+
+ Z  ANTWERP   HST1W                    M1W
+ Z  ANTWERP   HST2W                    M2W
+ Z  ANTWERP   HST3W                    M3W
+
+ Z  ANTWERP   HST1M                    M1M
+ Z  ANTWERP   HST2M                    M2M
+ Z  ANTWERP   HST3M                    M3M
+
+ Z  ANTWERP   HCH                      N01
+ Z  ANTWERP   HAD                      N4
+ Z  ANTWERP   HINF                     NINF
+ Z  ANTWERP   HINN                     NINN
+
+ Z  ANTWERP   AGE2                     N2
+ Z  ANTWERP   AGE3                     N3
+
+    ANTWERP   PSF       1.0
+    ANTWERP   PSM       1.0
+    ANTWERP   PSW       1.0
+    ANTWERP   QSF       1.0
+    ANTWERP   QSM       1.0
+    ANTWERP   QSW       1.0
+
+BOUNDS
+
+* FR ANTWERP   'DEFAULT'
+
+ LO ANTWERP   'DEFAULT' 0.0
+ UP ANTWERP   'DEFAULT' 1.0
+ PL ANTWERP   NF 
+ PL ANTWERP   NM 
+ PL ANTWERP   NW 
+ XL ANTWERP   NC2       0.0
+ ZU ANTWERP   NC2                      N2
+ XL ANTWERP   NA2       0.0
+ ZU ANTWERP   NA2                      N2
+ XL ANTWERP   NC3       0.0
+ ZU ANTWERP   NC3                      N3
+ XL ANTWERP   NA3       0.0
+ ZU ANTWERP   NA3                      N3
+
+START POINT
+
+ Z  ANTWERP   P1F                      SP1F
+ Z  ANTWERP   P2F                      SP2F
+    ANTWERP   P3F       0.15
+    ANTWERP   P4F       0.10
+    ANTWERP   P5F       0.05
+ Z  ANTWERP   P1W                      SP1W
+ Z  ANTWERP   P2W                      SP2W
+ Z  ANTWERP   P3W                      SP3W
+ Z  ANTWERP   P1M                      SP1M
+ Z  ANTWERP   P2M                      SP2M
+ Z  ANTWERP   P3M                      SP3M
+    ANTWERP   Q0F       0.6
+    ANTWERP   Q1F       0.3
+    ANTWERP   Q2F       0.1
+    ANTWERP   Q0M       0.6
+    ANTWERP   Q1M       0.3
+    ANTWERP   Q2M       0.1
+    ANTWERP   Q0W       0.6
+    ANTWERP   Q1W       0.3
+    ANTWERP   Q2W       0.1
+ Z  ANTWERP   NF                       SNF
+ Z  ANTWERP   NW                       SNW
+ Z  ANTWERP   NM                       SNM
+    ANTWERP   NC2       0.0
+    ANTWERP   NC3       0.0
+ Z  ANTWERP   NA2                      N2
+ Z  ANTWERP   NA3                      N3
+    
+ELEMENT TYPE
+
+ EV 2PR       V1                       V2
+
+ EV 3PR       V1                       V2
+ EV 3PR       V3
+
+ELEMENT USES
+
+*   HSZ3
+
+ T  P1FQ0FNF  3PR
+ V  P1FQ0FNF  V1                       P1F
+ V  P1FQ0FNF  V2                       Q0F
+ V  P1FQ0FNF  V3                       NF
+
+ T  P1WQ1WNW  3PR
+ V  P1WQ1WNW  V1                       P1W
+ V  P1WQ1WNW  V2                       Q1W
+ V  P1WQ1WNW  V3                       NW
+
+ T  P2WQ0WNW  3PR
+ V  P2WQ0WNW  V1                       P2W
+ V  P2WQ0WNW  V2                       Q0W
+ V  P2WQ0WNW  V3                       NW
+
+ T  P1MQ1MNM  3PR
+ V  P1MQ1MNM  V1                       P1M
+ V  P1MQ1MNM  V2                       Q1M
+ V  P1MQ1MNM  V3                       NM
+
+ T  P2MQ0MNM  3PR
+ V  P2MQ0MNM  V1                       P2M
+ V  P2MQ0MNM  V2                       Q0M
+ V  P2MQ0MNM  V3                       NM
+
+*   HSZ4
+
+ T  P2FQ0FNF  3PR
+ V  P2FQ0FNF  V1                       P2F
+ V  P2FQ0FNF  V2                       Q0F
+ V  P2FQ0FNF  V3                       NF
+
+ T  P1FQ1FNF  3PR
+ V  P1FQ1FNF  V1                       P1F
+ V  P1FQ1FNF  V2                       Q1F
+ V  P1FQ1FNF  V3                       NF
+
+ T  P1WQ2WNW  3PR
+ V  P1WQ2WNW  V1                       P1W
+ V  P1WQ2WNW  V2                       Q2W
+ V  P1WQ2WNW  V3                       NW
+
+ T  P2WQ1WNW  3PR
+ V  P2WQ1WNW  V1                       P2W
+ V  P2WQ1WNW  V2                       Q1W
+ V  P2WQ1WNW  V3                       NW
+
+ T  P3WQ0WNW  3PR
+ V  P3WQ0WNW  V1                       P3W
+ V  P3WQ0WNW  V2                       Q0W
+ V  P3WQ0WNW  V3                       NW
+
+ T  P1MQ2MNM  3PR
+ V  P1MQ2MNM  V1                       P1M
+ V  P1MQ2MNM  V2                       Q2M
+ V  P1MQ2MNM  V3                       NM
+
+ T  P2MQ1MNM  3PR
+ V  P2MQ1MNM  V1                       P2M
+ V  P2MQ1MNM  V2                       Q1M
+ V  P2MQ1MNM  V3                       NM
+
+ T  P3MQ0MNM  3PR
+ V  P3MQ0MNM  V1                       P3M
+ V  P3MQ0MNM  V2                       Q0M
+ V  P3MQ0MNM  V3                       NM
+
+*   HSZ5
+
+ T  P3FQ0FNF  3PR
+ V  P3FQ0FNF  V1                       P3F
+ V  P3FQ0FNF  V2                       Q0F
+ V  P3FQ0FNF  V3                       NF
+
+ T  P2FQ1FNF  3PR
+ V  P2FQ1FNF  V1                       P2F
+ V  P2FQ1FNF  V2                       Q1F
+ V  P2FQ1FNF  V3                       NF
+
+ T  P1FQ2FNF  3PR
+ V  P1FQ2FNF  V1                       P1F
+ V  P1FQ2FNF  V2                       Q2F
+ V  P1FQ2FNF  V3                       NF
+
+ T  P2WQ2WNW  3PR
+ V  P2WQ2WNW  V1                       P2W
+ V  P2WQ2WNW  V2                       Q2W
+ V  P2WQ2WNW  V3                       NW
+
+ T  P3WQ1WNW  3PR
+ V  P3WQ1WNW  V1                       P3W
+ V  P3WQ1WNW  V2                       Q1W
+ V  P3WQ1WNW  V3                       NW
+
+ T  P2MQ2MNM  3PR
+ V  P2MQ2MNM  V1                       P2M
+ V  P2MQ2MNM  V2                       Q2M
+ V  P2MQ2MNM  V3                       NM
+
+ T  P3MQ1MNM  3PR
+ V  P3MQ1MNM  V1                       P3M
+ V  P3MQ1MNM  V2                       Q1M
+ V  P3MQ1MNM  V3                       NM
+
+*   HSZ6
+
+ T  P4FQ0FNF  3PR
+ V  P4FQ0FNF  V1                       P4F
+ V  P4FQ0FNF  V2                       Q0F
+ V  P4FQ0FNF  V3                       NF
+
+ T  P3FQ1FNF  3PR
+ V  P3FQ1FNF  V1                       P3F
+ V  P3FQ1FNF  V2                       Q1F
+ V  P3FQ1FNF  V3                       NF
+
+ T  P2FQ2FNF  3PR
+ V  P2FQ2FNF  V1                       P2F
+ V  P2FQ2FNF  V2                       Q2F
+ V  P2FQ2FNF  V3                       NF
+
+ T  P3WQ2WNW  3PR
+ V  P3WQ2WNW  V1                       P3W
+ V  P3WQ2WNW  V2                       Q2W
+ V  P3WQ2WNW  V3                       NW
+
+ T  P3MQ2MNM  3PR
+ V  P3MQ2MNM  V1                       P3M
+ V  P3MQ2MNM  V2                       Q2M
+ V  P3MQ2MNM  V3                       NM
+
+*   HSZ7
+
+ T  P5FQ0FNF  3PR
+ V  P5FQ0FNF  V1                       P5F
+ V  P5FQ0FNF  V2                       Q0F
+ V  P5FQ0FNF  V3                       NF
+
+ T  P4FQ1FNF  3PR
+ V  P4FQ1FNF  V1                       P4F
+ V  P4FQ1FNF  V2                       Q1F
+ V  P4FQ1FNF  V3                       NF
+
+ T  P3FQ2FNF  3PR
+ V  P3FQ2FNF  V1                       P3F
+ V  P3FQ2FNF  V2                       Q2F
+ V  P3FQ2FNF  V3                       NF
+
+*   HSZ8
+
+ T  P5FQ1FNF  3PR
+ V  P5FQ1FNF  V1                       P5F
+ V  P5FQ1FNF  V2                       Q1F
+ V  P5FQ1FNF  V3                       NF
+
+ T  P4FQ2FNF  3PR
+ V  P4FQ2FNF  V1                       P4F
+ V  P4FQ2FNF  V2                       Q2F
+ V  P4FQ2FNF  V3                       NF
+
+*   HST1F
+
+ T  P1FNF     2PR
+ V  P1FNF     V1                       P1F
+ V  P1FNF     V2                       NF
+
+*   HST2F
+
+ T  P2FNF     2PR
+ V  P2FNF     V1                       P2F
+ V  P2FNF     V2                       NF
+
+*   HST3F
+
+ T  P3FNF     2PR
+ V  P3FNF     V1                       P3F
+ V  P3FNF     V2                       NF
+
+ T  P4FNF     2PR
+ V  P4FNF     V1                       P4F
+ V  P4FNF     V2                       NF
+
+ T  P5FNF     2PR
+ V  P5FNF     V1                       P5F
+ V  P5FNF     V2                       NF
+
+*   HST1W
+
+ T  P1WNW     2PR
+ V  P1WNW     V1                       P1W
+ V  P1WNW     V2                       NW
+
+*   HST2W
+
+ T  P2WNW     2PR
+ V  P2WNW     V1                       P2W
+ V  P2WNW     V2                       NW
+
+*   HST3W
+
+ T  P3WNW     2PR
+ V  P3WNW     V1                       P3W
+ V  P3WNW     V2                       NW
+
+*   HST1M
+
+ T  P1MNM     2PR
+ V  P1MNM     V1                       P1M
+ V  P1MNM     V2                       NM
+
+*   HST2M
+
+ T  P2MNM     2PR
+ V  P2MNM     V1                       P2M
+ V  P2MNM     V2                       NM
+
+*   HST3M
+
+ T  P3MNM     2PR
+ V  P3MNM     V1                       P3M
+ V  P3MNM     V2                       NM
+
+*   HNAD
+
+ T  Q0FNF     2PR
+ V  Q0FNF     V1                       Q0F
+ V  Q0FNF     V2                       NF
+
+ T  Q1FNF     2PR
+ V  Q1FNF     V1                       Q1F
+ V  Q1FNF     V2                       NF
+
+ T  Q2FNF     2PR
+ V  Q2FNF     V1                       Q2F
+ V  Q2FNF     V2                       NF
+
+ T  Q0WNW     2PR
+ V  Q0WNW     V1                       Q0W
+ V  Q0WNW     V2                       NW
+
+ T  Q1WNW     2PR
+ V  Q1WNW     V1                       Q1W
+ V  Q1WNW     V2                       NW
+
+ T  Q2WNW     2PR
+ V  Q2WNW     V1                       Q2W
+ V  Q2WNW     V2                       NW
+
+ T  Q0MNM     2PR
+ V  Q0MNM     V1                       Q0M
+ V  Q0MNM     V2                       NM
+
+ T  Q1MNM     2PR
+ V  Q1MNM     V1                       Q1M
+ V  Q1MNM     V2                       NM
+
+ T  Q2MNM     2PR
+ V  Q2MNM     V1                       Q2M
+ V  Q2MNM     V2                       NM
+
+GROUP TYPE
+
+ GV L2        GVAR   
+
+GROUP USES
+
+ T  HSZ3      L2
+ E  HSZ3      P1FQ0FNF                 P1WQ1WNW
+ E  HSZ3      P2WQ0WNW                 P1MQ1MNM
+ E  HSZ3      P2MQ0MNM
+
+ T  HSZ4      L2
+ E  HSZ4      P2FQ0FNF                 P1FQ1FNF
+ E  HSZ4      P1WQ2WNW                 P2WQ1WNW
+ E  HSZ4      P3WQ0WNW                 P1MQ2MNM
+ E  HSZ4      P2MQ1MNM                 P3MQ0MNM
+
+ T  HSZ5      L2
+ E  HSZ5      P3FQ0FNF                 P2FQ1FNF
+ E  HSZ5      P1FQ2FNF                 P2WQ2WNW
+ E  HSZ5      P3WQ1WNW                 P2MQ2MNM
+ E  HSZ5      P3MQ1MNM
+
+ T  HSZ6      L2
+ E  HSZ6      P4FQ0FNF                 P3FQ1FNF
+ E  HSZ6      P2FQ2FNF                 P3WQ2WNW
+ E  HSZ6      P3MQ2MNM
+
+ T  HSZ7      L2
+ E  HSZ7      P5FQ0FNF                 P4FQ1FNF
+ E  HSZ7      P3FQ2FNF
+
+ T  HSZ8      L2
+ E  HSZ8      P5FQ1FNF                 P4FQ2FNF
+
+ T  HST1F     L2
+ E  HST1F     P1FNF
+
+ T  HST2F     L2
+ E  HST2F     P2FNF
+
+ T  HST3F     L2
+ E  HST3F     P3FNF                    P4FNF
+ E  HST3F     P5FNF
+
+ T  HST1W     L2
+ E  HST1W     P1WNW
+
+ T  HST2W     L2
+ E  HST2W     P2WNW
+
+ T  HST3W     L2
+ E  HST3W     P3WNW
+
+ T  HST1M     L2
+ E  HST1M     P1MNM
+
+ T  HST2M     L2
+ E  HST2M     P2MNM
+
+ T  HST3M     L2
+ E  HST3M     P3MNM
+
+ T  HCH       L2
+ E  HCH       P1FNF      1.0           P2FNF      2.0
+ E  HCH       P3FNF      3.0           P4FNF      4.0
+ E  HCH       P5FNF      5.0           P1MNM      1.0
+ E  HCH       P2MNM      2.0           P3MNM      3.0
+ E  HCH       P1WNW      1.0           P2WNW      2.0
+ E  HCH       P3WNW      3.0
+
+ T  HAD       L2
+ E  HAD       Q0FNF      2.0           Q1FNF      3.0
+ E  HAD       Q2FNF      4.0
+ E  HAD       Q0MNM
+ E  HAD       Q1MNM      2.0           Q2MNM      3.0
+ E  HAD       Q0WNW
+ E  HAD       Q1WNW      2.0           Q2WNW      3.0
+ 
+ T  HINF      L2
+ E  HINF      P1FNF      1.0           P2FNF      2.0
+ E  HINF      P3FNF      3.0           P4FNF      4.0
+ E  HINF      P5FNF      5.0           Q0FNF      2.0
+ E  HINF      Q1FNF      3.0           Q2FNF      4.0
+
+ T  HINN      L2
+ E  HINN      P1WNW      1.0           P2WNW      2.0
+ E  HINN      P3WNW      3.0           Q0WNW      1.0
+ E  HINN      Q1WNW      2.0           Q2WNW      3.0
+ E  HINN      P1MNM      1.0           P2MNM      2.0
+ E  HINN      P3MNM      3.0           Q0MNM      1.0
+ E  HINN      Q1MNM      2.0           Q2MNM      3.0
+
+OBJECT BOUND
+
+ LO ANTWERP              0.0
+
+*   Solution
+
+*LO SOLTN                0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      ANTWERP
+
+INDIVIDUALS
+
+ T  2PR
+ F                      V1 * V2
+ G  V1                  V2
+ G  V2                  V1
+ H  V1        V2        1.0
+
+ T  3PR
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ANTWERP
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

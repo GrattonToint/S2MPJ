@@ -1,0 +1,307 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BLOWEYC
+
+*   Problem :
+*   *********
+
+*   A nonconvex quadratic program proposed by 
+*   James Blowey (University of Durham)
+
+*   Given function v(s) and f(s) = v(s) + A(inv) v(s), s in [0,1],
+*   minimize 
+
+*        (u(s) - v(s))(trans) ( A + A(inv) ) u(s) - (u(s) - v(s))(trans)f(s)
+
+*   where 
+
+*      u(s) in [-1,1] and int[0,1] u(s) ds = int[0,1] v(s) ds
+
+*   and A is the 
+
+*      "- Laplacian with Neumann boundary conditions on a uniform mesh"
+
+*   The troublesome term A(inv) u(s) is replaced by the additional 
+*   variable w(s) and the constraint A w(s) = u(s)
+
+*   The function v(s) is chosen to be 
+
+      0  a  b   c  d   1
+*  1  ----         ----
+*         \       /
+*          \     /
+*           \   /
+* -1         --- 
+
+*   Thus the problem is formulated as the nonconvex QP
+
+*   minimize 
+
+*        u(s) (trans) A u(s) + u(s) (trans) w(s) - 
+*        v(s)(trans) A u(s) - 2.0 v(s)(trans) w(s) - 
+*        u(s)(trans) v(s) + constant (ignored)
+
+*   subject to A w(s) = u(s), 
+*              u(s) in [-1,1],
+*          and int[0,1] u(s) ds = 1 + a + b - c - d
+
+*   Case C: a = 0.2, b = 0.5, c = 0.5 and d = 0.8. 
+
+*   Source: a simplification of
+*   J.F. Blowey and C.M. Elliott,
+*   "The Cahn-Hilliard gradient theory for phase separation with 
+*   non-smooth free energy Part II: Numerical analysis",
+*   European Journal of Applied Mathematics (3) pp 147-179, 1992.
+
+*   SIF input: Nick Gould, August 1996
+
+*   classification QLR2-MN-V-V
+
+*   The number of discretization intervals
+
+*IE N                   10             $-PARAMETER  n = 22, m = 12
+*IE N                   100            $-PARAMETER  n = 202, m = 102
+*IE N                   1000           $-PARAMETER  n = 2002, m = 1002
+*IE N                   2000           $-PARAMETER  n = 4002, m = 2002
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   4000           $-PARAMETER  n = 8002, m = 4002
+*IE N                   8000           $-PARAMETER  n = 16002, m = 8002
+
+*  Other useful values
+
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IE 4                   4
+ IE 5                   5
+ RE ONE                 1.0
+ RE -ONE                -1.0
+ RE TWO                 2.0
+ RE -TWO                -2.0
+
+ RI RN        N
+ R* N**2      RN                       RN
+ IA N-1       N         -1
+ R/ 1/N**2    ONE                      N**2
+ R/ -1/N**2   -ONE                     N**2
+ RM -2/N**2   -1/N**2   2.0
+ RM 2N**2     N**2      2.0
+ RM -2N**2    N**2      -2.0
+
+ I/ N/2       N                        2
+ I/ N/5       N                        5
+ I= NA        N/5
+ RI A         NA
+ R/ A         A                        RN
+ IA NA+1      NA        1
+ I= NB        N/2
+ RI B         NB
+ R/ B         B                        RN
+ IA NB+1      NB        1
+ I= NC        N/2
+ RI C         NC
+ R/ C         C                        RN
+ IA NC+1      NC        1
+ I* ND        N/5                      4
+ RI D         ND
+ R/ D         D                        RN
+ IA ND+1      ND        1
+
+ R= INT       ONE
+ R+ INT       INT                      A 
+ R+ INT       INT                      B
+ R- INT       INT                      C
+ R- INT       INT                      D
+ R* INT       INT                      RN
+
+*   The values of v
+
+ DO I         0                        NA
+ AE V(I)                1.0
+ ND
+
+ R- STEP      B                        A
+ R* STEP      STEP                     RN
+ R/ STEP      TWO                      STEP
+
+ DO I         NA+1                     NB
+ I- J         I                        NA
+ RI RJ        J
+ R* VAL       RJ                       STEP
+ R- VAL       ONE                      VAL
+ A= V(I)      VAL
+ ND
+
+ DO I         NB+1                     NC
+ AE V(I)                -1.0
+ ND
+
+ R- STEP      D                        C
+ R* STEP      STEP                     RN
+ R/ STEP      TWO                      STEP
+
+ DO I         NC+1                     ND
+ I- J         I                        NC
+ RI RJ        J
+ R* VAL       RJ                       STEP
+ R+ VAL       -ONE                     VAL
+ A= V(I)      VAL
+ ND
+
+ DO I         ND                       N
+ AE V(I)                1.0
+ ND
+
+VARIABLES
+
+ DO I         0                        N
+ X  U(I)
+ X  W(I)
+ ND
+
+GROUPS
+
+*  Objective function terms
+
+ DO I         0                        N
+ A* VAL       V(I)                     -1/N**2
+ ZN OBJ       U(I)                     VAL
+ A* VAL       V(I)                     -2/N**2
+ ZN OBJ       W(I)                     VAL
+ ND
+
+ A- VAL       V(1)                     V(0)
+ ZN OBJ       U(0)                     VAL
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ AM VAL       V(I)      -2.0     
+ A+ VAL       VAL                      V(I-1)
+ A+ VAL       VAL                      V(I+1)
+ ZN OBJ       U(I)                     VAL
+ ND
+
+ A- VAL       V(N-1)                   V(N)
+ ZN OBJ       U(N)                     VAL
+
+*  Integral constraint using the trapezoidal rule
+
+ XE INT       U(0)      0.5
+
+*  A w(s) = u(s) constraints
+
+ XE CON(0)    U(0)      1.0            U(1)      -1.0
+ ZE CON(0)    W(0)                     -1/N**2
+
+ DO I         1                        N-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ XE CON(I)    U(I)      2.0
+ XE CON(I)    U(I+1)    -1.0           U(I-1)    -1.0
+ ZE CON(I)    W(I)                     -1/N**2
+
+ XE INT       U(I)      1.0
+ ND
+
+ XE CON(N)    U(N)      1.0            U(N-1)    -1.0
+ ZE CON(N)    W(N)                     -1/N**2
+ XE INT       U(N)      0.5
+ 
+CONSTANTS
+
+ ZE BLOWEYC   INT       0.2            INT
+
+BOUNDS
+
+ XR BLOWEYC   'DEFAULT'
+
+ DO I         0                        N
+ XL BLOWEYC   U(I)      -1.0
+ XU BLOWEYC   U(I)      1.0
+ ND
+
+START POINT
+
+ XV BLOWEYC   'DEFAULT' 0.0
+
+ DO I         0                        N
+ ZV BLOWEYC   U(I)                     V(I)
+ ND
+
+ELEMENT TYPE
+
+ EV SQ        Z
+ EV PROD      X                        Y
+
+ELEMENT USES
+
+ DO I         0                        N
+ XT C(I)      PROD
+ ZV C(I)      X                        U(I)
+ ZV C(I)      Y                        W(I)
+ ND
+
+ DO I         0                        N-1
+ IA I+1       I         1
+ XT D(I)      SQ
+ ZV D(I)      Z                        U(I)
+ XT O(I)      PROD
+ ZV O(I)      X                        U(I)
+ ZV O(I)      Y                        U(I+1)
+ ND
+
+ XT D(N)      SQ
+ ZV D(N)      Z                        U(N)
+
+GROUP USES
+
+ ZE OBJ       O(0)                     -TWO
+ ZE OBJ       D(0)                     ONE
+
+ DO I         1                        N-1
+ ZE OBJ       O(I)                     -TWO
+ ZE OBJ       D(I)                     TWO
+ ND
+
+ ZE OBJ       D(N)                     ONE
+
+ DO I         0                        N
+ ZE OBJ       C(I)                     1/N**2
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*XL SOLUTION            -2.38816D+02   $ N = 10 
+*XL SOLUTION            -2.65340D+03   $ N = 100
+*XL SOLUTION            -2.67211D+04   $ N = 1000
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BLOWEYC
+
+INDIVIDUALS
+
+ T  SQ
+ F                      Z * Z
+ G  Z                   Z + Z
+ H  Z         Z         2.0
+
+ T  PROD
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ENDATA
+

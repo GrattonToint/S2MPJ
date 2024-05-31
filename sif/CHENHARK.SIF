@@ -1,0 +1,182 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CHENHARK
+
+*   Problem :
+*   --------
+
+*   A bound-constrained version the Linear Complementarity problem
+
+*   Find x such that w = M x + q, x and w nonnegative and x^T w = 0,
+*   where
+
+*   M = (  6   -4   1   0  ........ 0 ) 
+*       ( -4    6  -4   1  ........ 0 )
+*       (  1   -4   6  -4  ........ 0 )
+*       (  0    1  -4   6  ........ 0 )  
+*          ..........................
+*       (  0   ........... 0  1 -4  6 )
+
+*   and q is given.
+
+*   Source: 
+*   B. Chen and P. T. Harker,
+*   SIMAX 14 (1993) 1168-1190
+
+*   SDIF input: Nick Gould, November 1993.
+
+*   classification QBR2-AN-V-V
+
+*   Number of variables
+
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   10000          $-PARAMETER
+*IE N                   50000          $-PARAMETER
+
+*   Number of variables free from their bounds at the solution
+
+*IE NFREE               5              $-PARAMETER
+*IE NFREE               50             $-PARAMETER
+*IE NFREE               500            $-PARAMETER     original value
+*IE NFREE               2500           $-PARAMETER
+ IE NFREE               5              $-PARAMETER     modified for S2X tests
+*IE NFREE               5000           $-PARAMETER
+*IE NFREE               10000          $-PARAMETER
+
+*   Number of degenerate variables at the solution
+
+*IE NDEGEN              2              $-PARAMETER
+*IE NDEGEN              20             $-PARAMETER
+*IE NDEGEN              200            $-PARAMETER     original value
+*IE NDEGEN              500            $-PARAMETER
+ IE NDEGEN              2              $-PARAMETER     modified for S2X tests
+*IE NDEGEN              1000           $-PARAMETER
+*IE NDEGEN              2000           $-PARAMETER
+
+*   other parameter definitions
+
+ IE -1                  -1
+ IE 0                   0
+ IE 1                   1
+ IE 2                   2
+ IA N-1       N         -1
+ IA N+1       N         1
+ IA N+2       N         2
+ IA NFREE+1   NFREE     1
+ I+ NF+ND     NFREE                    NDEGEN    
+ IA NF+ND+1   NF+ND     1
+
+ AE X(-1)               0.0
+ AE X(0)                0.0
+ DO I         1                        NFREE
+ AE X(I)                1.0
+ ND
+
+ DO I         NFREE+1                  N+2
+ AE X(I)                0.0
+ ND
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         2                        N-1
+ IA I+1       I         1
+ IA I-1       I         -1
+ XN Q(I)      X(I+1)    1.0            X(I-1)    1.0
+ XN Q(I)      X(I)      -2.0
+ ND
+
+ XN Q(0)      X(1)      1.0
+ XN Q(1)      X(1)      2.0            X(2)      -1.0
+ XN Q(N)      X(N)      2.0            X(N-1)    -1.0
+ XN Q(N+1)    X(N)      1.0
+
+ DO I         1                        NF+ND
+ IA I+1       I         1
+ IA I+2       I         2
+ IA I-1       I         -1
+ IA I-2       I         -2
+ AM Q1        X(I)      -6.0
+ AM Q2        X(I+1)    4.0
+ AM Q3        X(I-1)    4.0
+ AM Q4        X(I+2)    -1.0
+ AM Q5        X(I-2)    -1.0
+ R+ Q         Q1                       Q2
+ R+ Q         Q                        Q3
+ R+ Q         Q                        Q4
+ R+ Q         Q                        Q5
+ ZN L         X(I)                     Q
+ ND
+
+ DO I         NF+ND+1                  N
+ IA I+1       I         1
+ IA I+2       I         2
+ IA I-1       I         -1
+ IA I-2       I         -2
+ AM Q1        X(I)      -6.0
+ AM Q2        X(I+1)    4.0
+ AM Q3        X(I-1)    4.0
+ AM Q4        X(I+2)    -1.0
+ AM Q5        X(I-2)    -1.0
+ R+ Q         Q1                       Q2
+ R+ Q         Q                        Q3
+ R+ Q         Q                        Q4
+ R+ Q         Q                        Q5
+ RA Q         Q         1.0
+ ZN L         X(I)                     Q
+ ND
+
+START POINT
+
+ DO I         1                        N
+ X  CHENHARK  X(I)      0.5
+ ND
+
+GROUP TYPE
+
+ GV HALFL2    GVAR
+
+GROUP USES
+
+ DO I         0                        N+1
+ XT Q(I)      HALFL2
+ ND
+
+OBJECT BOUND
+
+ LO CHENHARK             1.0
+
+*   Solution
+
+*LO SOLTN               -0.5
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        CHENHARK
+
+INDIVIDUALS
+
+
+ T  HALFL2
+ F                      5.0D-1 * GVAR * GVAR
+ G                      GVAR
+ H                      1.0D+0
+
+ENDATA
+

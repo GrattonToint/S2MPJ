@@ -1,0 +1,102 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          ARGLINB
+
+*   Problem :
+*   *********
+*   Variable dimension rank one linear problem
+
+*   Source: Problem 33 in
+*   J.J. More', B.S. Garbow and K.E. Hillstrom,
+*   "Testing Unconstrained Optimization Software",
+*   ACM Transactions on Mathematical Software, vol. 7(1), pp. 17-41, 1981.
+
+*   See also Buckley#93 (with different N and M)
+*   SIF input: Ph. Toint, Dec 1989.
+
+*   classification SUR2-AN-V-0
+
+*   This problem is a linear least squares
+
+*   N is the number of free variables
+*   M is the number of equations ( M .ge. N)
+
+*IE N                   10             $-PARAMETER
+*IE N                   50             $-PARAMETER 
+*IE N                   100            $-PARAMETER
+*IE N                   200            $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
+*IE M                   20             $-PARAMETER .ge. N
+*IE M                   100            $-PARAMETER .ge. N
+*IE M                   200            $-PARAMETER .ge. N
+ IE M                   400            $-PARAMETER .ge. N
+
+*   Define useful parameters
+
+ IE 1                   1
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ RI RI        I
+ DO J         1                        N
+ RI RJ        J
+ R* IJ        RI                       RJ
+ ZN G(I)      X(J)                     IJ
+ ND
+
+CONSTANTS
+
+ X  ARGLINB   'DEFAULT'  1.0
+
+BOUNDS
+
+ FR ARGLINB   'DEFAULT'
+
+START POINT
+
+ XV ARGLINB   'DEFAULT'  1.0
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ XT 'DEFAULT' L2
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)          4.6341D+00
+*LO SOLTN(50)          24.6268657
+*LO SOLTN(100)         49.6259352
+
+ENDATA
+
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        ARGLINB
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

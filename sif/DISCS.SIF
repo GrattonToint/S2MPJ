@@ -1,0 +1,210 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DISCS
+
+*   Problem :
+*   *********
+
+*   The problem is to replace the nodes of a planar graph by discs
+*   such that adjacent nodes have touching discs and non adjacent nodes
+*   disjoint discs.  The smallest disc is constrained to have radius equal to
+*   one and is centered at the origin.  The second discs is also
+*   constrained to have its Y = 0.0, in order to cancel invariance under
+*   rotation.
+
+*   Source:
+*   W. Pulleyblank,
+*   private communication, 1991.
+
+*   classification LQR2-MY-36-66
+
+*   SIF input: A.R. Conn and Ph. Toint, April 1991.
+
+*   Number of nodes
+
+ IE NNODES              12
+
+*   Separation threshold
+
+ RE EPSIL               0.0001
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+
+*   Construct  of adjacency matrix
+
+ DO I         1                        NNODES
+ IA I-1       I         -1
+ DO J         1                        I-1
+ AE A(J,I)              0.0
+ ND
+
+*   Annihilate elements of A corresponding to arcs of the graph
+
+ RE A1,2                1.01
+ RE A1,7                1.01
+ RE A2,3                1.01
+ RE A2,4                1.01
+ RE A3,4                1.01
+ RE A4,5                1.01
+ RE A4,6                1.01
+ RE A5,6                1.01
+ RE A5,11               1.01
+ RE A6,7                1.01
+ RE A7,8                1.01
+ RE A7,9                1.01
+ RE A8,9                1.01
+ RE A8,10               1.01
+ RE A9,10               1.01
+ RE A10,11              1.01
+ RE A10,12              1.01
+ RE A11,12              1.01
+
+*   Lower bound on the objective function
+
+ RI RNODES    NNODES
+
+VARIABLES
+
+ DO I         1                        NNODES
+ X  X(I)
+ X  Y(I)
+ X  R(I)
+ ND
+
+GROUPS
+
+*   Objective function
+
+ DO I         1                        NNODES
+ XN OBJ       R(I)      1.0
+ ND
+
+*   Separation constraints
+
+ DO I         2                        NNODES
+ IA I-1       I         -1
+ DO J         1                        I-1
+ A= RAIJ      A(J,I)
+ IR AIJ       RAIJ
+ DO K         1                        AIJ
+ XE S(J,I)
+ OD K
+ IA AIJ-1     AIJ       -1
+ IM NAIJ      AIJ-1     -1
+ DO K         1                        NAIJ
+ XL S(J,I)
+ ND
+
+CONSTANTS
+
+ RM -EPSIL    EPSIL     -1.0
+ DO I         1                        NNODES
+ IA I-1       I         -1
+ DO J         1                        I-1
+ A= RAIJ      A(J,I)
+ IR AIJ       RAIJ
+ IA AIJ-1     AIJ       -1
+ IM NAIJ      AIJ-1     -1
+ DO K         1                        NAIJ
+ Z  DISCS     S(J,I)                   -EPSIL
+ ND
+
+BOUNDS
+
+ FR DISCS     'DEFAULT'
+
+ DO I         1                        NNODES
+ XL DISCS     R(I)      1.0
+ ND
+
+ XX DISCS     X(1)      0.0
+ XX DISCS     Y(1)      0.0
+ XX DISCS     Y(2)      0.0
+
+START POINT
+
+ DO I         1                        NNODES
+ RI RI        I
+ RM RM        RI        0.03
+ RM RP        RI        0.0055555
+ ZV DISCS     R(I)                     RI
+ ZV DISCS     X(I)                     RM
+ ZV DISCS     Y(I)                     RP
+ ND
+
+ELEMENT TYPE
+
+ EV IPSQ      X                        Y
+ IV IPSQ      U
+
+ EV IMSQ      X                        Y
+ IV IMSQ      U
+
+ELEMENT USES
+
+ DO I         2                        NNODES
+ IA I-1       I         -1
+ DO J         1                        I-1
+
+ XT DR(J,I)   IPSQ
+ ZV DR(J,I)   X                        R(I)
+ ZV DR(J,I)   Y                        R(J)
+
+ XT DX(J,I)   IMSQ
+ ZV DX(J,I)   X                        X(I)
+ ZV DX(J,I)   Y                        X(J)
+
+ XT DY(J,I)   IMSQ
+ ZV DY(J,I)   X                        Y(I)
+ ZV DY(J,I)   Y                        Y(J)
+
+ ND
+
+GROUP USES
+
+ DO I         2                        NNODES
+ IA I-1       I         -1
+ DO J         1                        I-1
+ XE S(J,I)    DR(J,I)
+ XE S(J,I)    DX(J,I)   -1.0           DY(J,I)   -1.0
+ ND
+
+OBJECT BOUND
+
+*ZL DISCS                              RNODES
+
+*   Solution
+
+*LO SOLTN(12)           20.46122911
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DISCS
+
+
+INDIVIDUALS
+
+ T  IPSQ
+ R  U         X         1.0            Y         1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ T  IMSQ
+ R  U         X         1.0            Y         -1.0
+ F                      U * U
+ G  U                   U + U
+ H  U         U         2.0
+
+ENDATA
+

@@ -1,0 +1,118 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          BT8
+
+*   Problem :
+*   *********
+
+*   Source: problem 8 in
+*   P.T. Boggs and J.W. Tolle,
+*   "A strategy for global convergence in a sequential 
+*    quadratic programming algorithm",
+*   SINUM 26(3), pp. 600-623, 1989.
+
+*   The problem is not convex.
+
+*   SIF input: Ph. Toint, June 1993.
+
+*   classification QQR2-AN-5-2
+
+VARIABLES
+
+    X1
+    X2
+    X3
+    X4
+    X5
+
+GROUPS
+
+ N  OBJ
+
+ E  CON1      X1        1.0
+ E  CON2 
+
+CONSTANTS
+
+    BT8       CON1      1.0
+    BT8       CON2      1.0
+
+BOUNDS
+
+ FR BT8       'DEFAULT'
+
+START POINT
+
+* Start 1
+
+ XV BT8       X1        1.0
+ XV BT8       X2        1.0
+ XV BT8       X3        1.0
+ XV BT8       X4        0.0
+ XV BT8       X5        0.0
+
+* Start 2
+
+*XV BT8       X1        7.0
+*XV BT8       X2        7.0
+*XV BT8       X3        7.0
+*XV BT8       X4        0.0
+*XV BT8       X5        0.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ V  X1SQ      X                        X1
+
+ T  X2SQ      SQ
+ V  X2SQ      X                        X2
+
+ T  X3SQ      SQ
+ V  X3SQ      X                        X3
+
+ T  X4SQ      SQ
+ V  X4SQ      X                        X4
+
+ T  X5SQ      SQ
+ V  X5SQ      X                        X5
+
+GROUP USES
+
+ E  OBJ       X1SQ                     X2SQ
+ E  OBJ       X3SQ
+
+ E  CON1      X4SQ      -1.0           X2SQ
+
+ E  CON2      X1SQ                     X2SQ
+ E  CON2      X5SQ      -1.0
+
+OBJECT BOUND
+
+*   Solution            
+
+*LO SOLTN               1.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      BT8
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   2.0 * X
+ H  X         X         2.0
+
+ENDATA
+

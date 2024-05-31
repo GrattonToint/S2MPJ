@@ -1,0 +1,162 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DEVGLA1NE
+
+*   Problem :
+*   *********
+
+*   SCIPY global optimization benchmark example DeVilliersGlasser01
+
+*   Fit: y  = x_1 x_2^t sin( t x_3 + x_4 )  +  e
+
+*   Source:  Problem from the SCIPY benchmark set
+*     https://github.com/scipy/scipy/tree/master/benchmarks/ ...
+*             benchmarks/go_benchmark_functions
+
+*   Nonlinear-equation formulation of DEVGLA1.SIF
+
+*   SIF input: Nick Gould, Jan 2020
+
+*   classification NOR2-MN-4-24
+
+*   Number of data values
+
+ IE M                   24
+
+*   Number of variables
+
+ IE N                   4
+
+*   Useful parameters
+
+ IE 1                   1
+ RE A                   1.371
+ R( LNA       LOG                      A
+
+*  Data values
+
+ DO I         1                        M
+ RI RI        I
+ RA RIM1      RI        -1.0
+ RM T         RIM1      0.1
+ A= T(I)      T
+ R* TLNA      T                        LNA
+ R( AT        EXP                      TLNA
+ RM TP        T         3.112
+ RA TPA       TP        1.761
+ R( STPA      SIN                      TPA
+ R* P         AT                       STPA
+ RM PP        P         60.137
+ A= Y(I)      PP
+ ND
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        M
+ XE F(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        M
+ Z  DEVGLA1   F(I)                     Y(I)
+ ND
+
+BOUNDS
+
+ FR BOUNDS    'DEFAULT'
+
+START POINT
+
+    START     X1        2.0
+    START     X2        2.0
+    START     X3        2.0
+    START     X4        2.0
+
+ELEMENT TYPE
+
+ EV DG1       X1                       X2
+ EV DG1       X3                       X4
+ EP DG1       T
+
+ELEMENT USES
+
+ DO I         1                        M
+ XT E(I)      DG1
+ ZV E(I)      X1                       X1
+ ZV E(I)      X2                       X2
+ ZV E(I)      X3                       X3
+ ZV E(I)      X4                       X4
+ ZP E(I)      T                        T(I)
+ ND
+
+GROUP USES
+
+ DO I         1                        M
+ XE F(I)      E(I)
+ ND
+
+OBJECT BOUND
+
+*   Least square problems are bounded below by zero
+
+ LO DEVGLA1             0.0
+
+*   Solution
+
+*LO SOLUTION            0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DEVGLA1NE
+
+TEMPORARIES
+ R  A
+ R  X2T
+ R  DX2T
+ R  D2X2T
+ R  X1X2T
+ R  SINA
+ R  COSA
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  DG1
+ A  A                   T * X3 + X4
+ A  SINA                SIN(A)
+ A  COSA                COS(A)
+ A  X2T                 X2 ** T
+ A  DX2T                T * X2 ** ( T - 1.0D0 )
+ A  D2X2T               T * ( T - 1.0D0 ) * X2 ** ( T - 2.0D0 )
+ A  X1X2T               X1 * X2T
+ F                      X1X2T * SINA
+ G  X1                  X2T * SINA
+ G  X2                  X1 * DX2T * SINA
+ G  X3                  X1X2T * COSA * T
+ G  X4                  X1X2T * COSA
+ H  X1        X2        DX2T * SINA
+ H  X1        X3        X2T * COSA * T
+ H  X1        X4        X2T * COSA
+ H  X2        X2        X1 * D2X2T * SINA
+ H  X2        X3        X1 * DX2T * COSA * T
+ H  X2        X4        X1 * DX2T * COSA
+ H  X3        X3        - X1X2T * SINA * T * T
+ H  X3        X4        - X1X2T * SINA * T
+ H  X4        X4        - X1X2T * SINA
+
+ENDATA

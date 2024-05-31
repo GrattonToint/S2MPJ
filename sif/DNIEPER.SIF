@@ -1,0 +1,442 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DNIEPER
+
+*   Problem :
+*   *********
+
+*   This problem models the planning of systematic use of water resources
+*   in the basin of the river Dnieper.
+
+*   Source: p. 139sq in 
+*   B.N. Pshenichnyj
+*   "The Linearization Method for Constrained Optimization",
+*   Springer Verlag, SCM Series 22, Heidelberg, 1994
+
+*   SIF input: Ph. Toint, December 1994.
+
+*   classification QOR2-MN-61-24
+
+*   Problem data
+
+ RE C1                  5.61
+ RE C2                  4.68
+ RE C3                  1.62
+ RE C4                  1.8
+ RE C5                  2.13
+ RE C6                  2.1
+ RE C7                  1.99
+ RE C8                  2.02
+ RE C9                  2.14
+ RE C10                 2.15
+ RE C11                 2.36
+ RE C12                 2.63
+ RE C13                 -0.02
+ RE C14                 -0.01
+ RE C15                 -0.16
+ RE C16                 -0.47
+ RE C17                 -0.75
+ RE C18                 -0.94
+ RE C19                 -0.93
+ RE C20                 -0.99
+ RE C21                 -0.42
+ RE C22                 -0.07
+ RE C23                 0.04
+ RE C24                 -0.06
+
+
+*   Constants
+
+ IE 1                   1
+ IE 2                   2
+ IE 4                   4
+ IE 5                   5
+ IE 8                   8
+ IE 9                   9
+ IE 12                  12
+ IE 13                  13
+ IE 14                  14
+ IE 16                  16
+ IE 17                  17
+ IE 20                  20
+ IE 21                  21
+ IE 24                  24
+ IE 25                  25
+ IE 36                  36
+ IE 37                  37
+ IE 48                  48
+ IE 49                  49
+ IE 52                  52
+ IE 53                  53
+ IE 56                  56
+
+VARIABLES
+
+ DO I         1                        56
+ X  X(I)
+ OD I
+
+    X0F
+    X24F
+    X12F
+    X36F
+
+    AC
+
+GROUPS
+
+*   Objective function
+
+ DO I         1                        12
+ IA I0        I         12
+ IA I1        I         24
+ IA I2        I         36
+ XN OBJ       X(I1)     19.95          X(I)      0.07656
+ XN OBJ       X(I2)     -24.89         X(I0)     -0.7135
+ OD I
+
+*   Ensure maximization
+
+ XN OBJ       'SCALE'   -1.0
+
+*   Equality constraints
+
+ DO I         1                        4
+ IA I0        I         24
+ XE CC(I)     X(I0)     -2.68
+ OD I
+
+ DO I         5                        8
+ IA I0        I         24
+ IA I1        I         44
+ XE CC(I)     X(I0)     -2.68          X(I1)     -2.68
+ OD I
+
+ DO I         9                        12
+ IA I0        I         24
+ XE CC(I)     X(I0)     -2.68
+ OD I
+
+ DO I         13                       16
+ IA I0        I         12
+ IA I1        I         24
+ XE CC(I)     X(I0)     -2.68          X(I1)     -2.68
+ XE CC(I)     AC        -1.0
+ OD I
+
+ DO I         17                       20
+ IA I0        I         12
+ IA I1        I         24
+ IA I2        I         36
+ XE CC(I)     X(I0)     -2.68          X(I1)     -2.68
+ XE CC(I)     X(I2)     -2.68
+ XE CC(I)     AC        -1.0
+ OD I
+
+ DO I         21                       24
+ IA I0        I         12
+ IA I1        I         24
+ XE CC(I)     X(I0)     -2.68          X(I1)     -2.68
+ XE CC(I)     AC        -1.0
+ OD I
+
+CONSTANTS
+
+ X  DNIEPER   OBJ       -112.464
+
+ DO I         1                        24
+ AM CST       C(I)      -1.0
+ Z  DNIEPER   CC(I)                    CST
+ OD I
+
+BOUNDS
+
+ DO I         1                        12
+ XL DNIEPER   X(I)      51.2
+ XU DNIEPER   X(I)      51.4
+ OD I
+
+ DO I         13                       24
+ XL DNIEPER   X(I)      15.0
+ XU DNIEPER   X(I)      16.1
+ OD I
+
+ DO I         25                       36
+ XL DNIEPER   X(I)      0.4
+ XU DNIEPER   X(I)      4.6
+ OD I
+
+ DO I         37                       48
+ XL DNIEPER   X(I)      0.5
+ XU DNIEPER   X(I)      4.8
+ OD I
+
+ DO I         49                       56
+ XL DNIEPER   X(I)      0.0
+ XU DNIEPER   X(I)      0.7
+ OD I
+
+ FX DNIEPER   X0F       50.82
+ FX DNIEPER   X24F      2.0
+ FX DNIEPER   X12F      15.5
+ FX DNIEPER   X36F      2.3
+
+ FR DNIEPER   AC
+
+START POINT
+
+ DO I         1                        12
+ XV DNIEPER   X(I)      51.35
+ OD I
+
+ DO I         13                       24
+ XV DNIEPER   X(I)      15.5
+ OD I
+
+ DO I         25                       36
+ XV DNIEPER   X(I)      2.5
+ OD I
+
+ DO I         37                       48
+ XV DNIEPER   X(I)      2.6
+ OD I
+
+ DO I         49                       56
+ XV DNIEPER   X(I)      0.3
+ OD I
+
+ XV DNIEPER   X0F       50.82
+ XV DNIEPER   X24F      2.0
+ XV DNIEPER   X12F      15.5
+ XV DNIEPER   X36F      2.3
+
+*   Solution
+
+*XV SOLUTION  X1         5.14000D+01
+*XV SOLUTION  X2         5.12000D+01
+*XV SOLUTION  X3         5.14000D+01
+*XV SOLUTION  X4         5.12000D+01
+*XV SOLUTION  X5         5.14000D+01
+*XV SOLUTION  X6         5.14000D+01
+*XV SOLUTION  X7         5.14000D+01
+*XV SOLUTION  X8         5.14000D+01
+*XV SOLUTION  X9         5.14000D+01
+*XV SOLUTION  X10        5.12000D+01
+*XV SOLUTION  X11        5.14000D+01
+*XV SOLUTION  X12        5.12000D+01
+*XV SOLUTION  X13        1.53142D+01
+*XV SOLUTION  X14        1.51879D+01
+*XV SOLUTION  X15        1.51846D+01
+*XV SOLUTION  X16        1.51650D+01
+*XV SOLUTION  X17        1.51615D+01
+*XV SOLUTION  X18        1.51495D+01
+*XV SOLUTION  X19        1.51380D+01
+*XV SOLUTION  X20        1.51238D+01
+*XV SOLUTION  X21        1.50864D+01
+*XV SOLUTION  X22        1.50690D+01
+*XV SOLUTION  X23        1.50389D+01
+*XV SOLUTION  X24        1.50000D+01
+*XV SOLUTION  X25        2.18087D+00
+*XV SOLUTION  X26        1.70780D+00
+*XV SOLUTION  X27        6.18689D-01
+*XV SOLUTION  X28        6.39532D-01
+*XV SOLUTION  X29        4.00000D-01
+*XV SOLUTION  X30        4.00000D-01
+*XV SOLUTION  X31        4.00000D-01
+*XV SOLUTION  X32        4.00000D-01
+*XV SOLUTION  X33        8.04561D-01
+*XV SOLUTION  X34        7.69470D-01
+*XV SOLUTION  X35        9.15035D-01
+*XV SOLUTION  X36        9.49886D-01
+*XV SOLUTION  X37        5.00000D-01
+*XV SOLUTION  X38        5.00000D-01
+*XV SOLUTION  X39        5.00000D-01
+*XV SOLUTION  X40        5.00000D-01
+*XV SOLUTION  X41        5.00000D-01
+*XV SOLUTION  X42        5.00000D-01
+*XV SOLUTION  X43        5.00000D-01
+*XV SOLUTION  X44        5.00000D-01
+*XV SOLUTION  X45        5.00000D-01
+*XV SOLUTION  X46        5.00000D-01
+*XV SOLUTION  X47        5.00000D-01
+*XV SOLUTION  X48        5.00000D-01
+*XV SOLUTION  X49        4.23624D-01
+*XV SOLUTION  X50        3.83582D-01
+*XV SOLUTION  X51        3.42537D-01
+*XV SOLUTION  X52        3.53731D-01
+*XV SOLUTION  X53        0.00000D+00
+*XV SOLUTION  X54        0.00000D+00
+*XV SOLUTION  X55        0.00000D+00
+*XV SOLUTION  X56        0.00000D+00
+*XV SOLUTION  X0F        5.08200D+01
+*XV SOLUTION  X24F       2.00000D+00
+*XV SOLUTION  X12F       1.55000D+01
+*XV SOLUTION  X36F       2.30000D+00
+*XV SOLUTION  AC        -3.08411D+00
+
+ELEMENT TYPE
+
+ EV WJ        X                        Y
+ EV WK        X                        Y
+ EV 2PR       X                        Y
+ EV SQ        X
+
+ELEMENT USES
+
+*   Objective function
+
+ DO I         1                        12
+ IA I1        I          12
+ IA I2        I          36
+ XT E(I)      2PR
+ ZV E(I)      X                        X(I1)
+ ZV E(I)      Y                        X(I2)
+ OD I
+
+ XT ACSQ      SQ
+ ZV ACSQ      X                        AC
+
+*   Constraints
+
+ DO I         1                        12
+ IA I0        I          24
+ XT W1(I)     WJ
+ ZV W1(I)     X                        X(I)
+ ZV W1(I)     Y                        X(I0)
+ OD I
+
+ XT W2(1)     WJ
+ ZV W2(1)     X                        X0F
+ ZV W2(1)     Y                        X24F
+
+ DO I         2                        12
+ IA I0        I           23
+ IA I1        I           -1
+ XT W2(I)     WJ
+ ZV W2(I)     X                        X(I1)
+ ZV W2(I)     Y                        X(I0)
+ OD I
+ 
+ DO I         13                       24
+ IA I1        I           24
+ XT W1(I)     WK
+ ZV W1(I)     X                        X(I)
+ ZV W1(I)     Y                        X(I1)
+ OD I
+
+ XT W2(13)    WK
+ ZV W2(13)    X                        X12F
+ ZV W2(13)    Y                        X36F
+
+ DO I         14                       24
+ IA I0        I           23
+ IA I1        I           -1
+ XT W2(I)     WK
+ ZV W2(I)     X                        X(I1)
+ ZV W2(I)     Y                        X(I0)
+ OD I
+ 
+GROUP USES
+
+*   Objective groups
+
+ DO I         1                        12
+ XE OBJ       E(I)       2.155
+ OD I
+
+ XE OBJ       ACSQ       -2000.0
+
+*   Constraint groups
+
+ DO I         1                        24
+ XE CC(I)     W1(I)                    W2(I)     -1.0
+ OD I
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLUTION             1.87439D+04
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DNIEPER
+
+TEMPORARIES
+
+ R  A1
+ R  A2
+ R  A3
+ R  A4
+ R  A5
+ R  A6
+ R  A7
+ R  A8
+ R  A9
+ R  A10
+
+INDIVIDUALS
+
+ T  WJ
+ A  A1                  34.547
+ A  A2                  -0.55878
+ A  A3                  8.05339
+ A  A4                  -0.02252
+ A  A5                  -0.29316
+ A  A6                  -0.013521
+ A  A7                  0.00042
+ A  A8                  0.00267
+ A  A9                  0.000281
+ A  A10                 0.0000032
+ F                      A1 + A2*X + A3*Y + A4*X**2 + A5*X*Y
+ F+                     + A6*Y**2 + A7*X**3 + A8*X**2*Y 
+ F+                     + A9*X*Y**2 + A10*Y**3
+ G  X                   A2 + 2.0*A4*X + A5*Y +3.0*A7*X**2
+ G+                     + 2.0*A8*X*Y + A9*Y**2
+ G  Y                   A3 + A5*X + 2.0*A6*Y + A8*X**2
+ G+                     + 2.0*A9*X*Y + 3.0*A10*Y**2
+ H  X         X         2.0*A4 + 6.0*A7*X + 2.0*A8*Y              
+ H  X         Y         A5 + 2.0*A8*X + 2.0*A9*Y
+ H  Y         Y         2.0*A6 + 2.0*A9*X +6.0*A10*Y
+
+ T  WK
+ A  A1                  20.923
+ A  A2                  -4.22088
+ A  A3                  1.42061
+ A  A4                  -0.41040
+ A  A5                  -0.15082
+ A  A7                  -0.00826
+ A  A8                  0.00404
+ A  A9                  0.000168
+ A  A10                 -0.000038
+ F                      A1 + A2*X + A3*Y + A4*X**2 + A5*X*Y
+ F+                     + A7*X**3 + A8*X**2*Y 
+ F+                     + A9*X*Y**2 + A10*Y**3
+ G  X                   A2 + 2.0*A4*X + A5*Y +3.0*A7*X**2
+ G+                     + 2.0*A8*X*Y + A9*Y**2
+ G  Y                   A3 + A5*X + A8*X**2
+ G+                     + 2.0*A9*X*Y + 3.0*A10*Y**2
+ H  X         X         2.0*A4 + 6.0*A7*X + 2.0*A8*Y              
+ H  X         Y         A5 + 2.0*A8*X + 2.0*A9*Y
+ H  Y         Y         2.0*A9*X +6.0*A10*Y
+
+ T  2PR
+ F                      X * Y
+ G  X                   Y
+ G  Y                   X
+ H  X         Y         1.0
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ENDATA
+

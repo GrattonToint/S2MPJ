@@ -1,0 +1,298 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          AIRPORT
+
+*   Problem:
+*   ********
+
+*   This problem is concerned with the localisation of airports in Brazil.
+*   We consider  m  balls in the real plane, whose centers are the coordinates
+*   of some Brazilian  cities and whose  radius were chosen such that the balls are
+*   disjoint. The problem is to find one point  (xi, yi) on  each ball, i=1,..,m,
+*   such that  SUM(||(xi,yi) - (xj,yj)||)  is  minimum, where the sum involves all
+*   the pairs (i,j) such that 1 <= i <= m, 1 <= j <= m and i <> j.
+
+*   For this problem instance, we have m =  42 cities and n = 84 points, 
+*   i.e, 42 nonlinear inequalities constraints and 84 variables.
+
+*   Source:
+*   Contribution from a LANCELOT user.
+
+*   SIF input : Rodrigo de Barros Nabholz & Maria Aparecida Diniz Ehrhardt
+*               November 1994, DMA - IMECC- UNICAMP
+*   Adaptation for CUTE: Ph. Toint, November 1994.
+
+*   classification SQR2-MN-84-42
+
+*   Problem data
+
+ IE N                   42
+ IE N-1                 41
+ IE 1                   1
+
+ RE R1                  0.09 
+ RE R2                  0.3
+ RE R3                  0.09
+ RE R4                  0.45
+ RE R5                  0.5
+ RE R6                  0.04
+ RE R7                  0.1
+ RE R8                  0.02
+ RE R9                  0.02
+ RE R10                 0.07
+ RE R11                 0.4
+ RE R12                 0.045
+ RE R13                 0.05
+ RE R14                 0.056
+ RE R15                 0.36
+ RE R16                 0.08
+ RE R17                 0.07
+ RE R18                 0.36
+ RE R19                 0.67
+ RE R20                 0.38
+ RE R21                 0.37
+ RE R22                 0.05
+ RE R23                 0.4
+ RE R24                 0.66
+ RE R25                 0.05
+ RE R26                 0.07
+ RE R27                 0.08
+ RE R28                 0.3
+ RE R29                 0.31
+ RE R30                 0.49
+ RE R31                 0.09
+ RE R32                 0.46
+ RE R33                 0.12
+ RE R34                 0.07
+ RE R35                 0.07
+ RE R36                 0.09
+ RE R37                 0.05
+ RE R38                 0.13
+ RE R39                 0.16
+ RE R40                 0.46
+ RE R41                 0.25
+ RE R42                 0.1
+ RE CX1                 -6.3
+ RE CX2                 -7.8
+ RE CX3                 -9.0
+ RE CX4                 -7.2
+ RE CX5                 -5.7
+ RE CX6                 -1.9
+ RE CX7                 -3.5
+ RE CX8                 -0.5
+ RE CX9                 1.4
+ RE CX10                4.0
+ RE CX11                2.1
+ RE CX12                5.5
+ RE CX13                5.7
+ RE CX14                5.7
+ RE CX15                3.8
+ RE CX16                5.3
+ RE CX17                4.7
+ RE CX18                3.3
+ RE CX19                0.0
+ RE CX20                -1.0
+ RE CX21                -0.4
+ RE CX22                4.2
+ RE CX23                3.2
+ RE CX24                1.7
+ RE CX25                3.3
+ RE CX26                2.0
+ RE CX27                0.7
+ RE CX28                0.1
+ RE CX29                -0.1
+ RE CX30                -3.5
+ RE CX31                -4.0
+ RE CX32                -2.7
+ RE CX33                -0.5
+ RE CX34                -2.9
+ RE CX35                -1.2
+ RE CX36                -0.4
+ RE CX37                -0.1
+ RE CX38                -1.0
+ RE CX39                -1.7
+ RE CX40                -2.1
+ RE CX41                -1.8
+ RE CX42                0.0
+ RE CY1                 8.0
+ RE CY2                 5.1
+ RE CY3                 2.0
+ RE CY4                 2.6
+ RE CY5                 5.5
+ RE CY6                 7.1
+ RE CY7                 5.9
+ RE CY8                 6.6
+ RE CY9                 6.1
+ RE CY10                5.6
+ RE CY11                4.9
+ RE CY12                4.7
+ RE CY13                4.3
+ RE CY14                3.6
+ RE CY15                4.1
+ RE CY16                3.0
+ RE CY17                2.4
+ RE CY18                3.0
+ RE CY19                4.7
+ RE CY20                3.4
+ RE CY21                2.3
+ RE CY22                1.5
+ RE CY23                0.5
+ RE CY24                -1.7
+ RE CY25                -2.0
+ RE CY26                -3.1
+ RE CY27                -3.5
+ RE CY28                -2.4
+ RE CY29                -1.3
+ RE CY30                0.0
+ RE CY31                -1.7
+ RE CY32                -2.1
+ RE CY33                -0.4
+ RE CY34                -2.9
+ RE CY35                -3.4
+ RE CY36                -4.3
+ RE CY37                -5.2
+ RE CY38                -6.5
+ RE CY39                -7.5
+ RE CY40                -6.4
+ RE CY41                -5.1
+ RE CY42                0.0
+
+
+VARIABLES
+
+ DO I         1                        N
+
+ X  X(I)
+ X  Y(I)
+
+ ND
+
+GROUPS
+
+ DO I         1                        N-1
+ I+ I+1       I                        1
+ DO J         I+1                      N
+
+ XN OBJ1(I,J) X(I)      1.0            X(J)      -1.0
+ XN OBJ2(I,J) Y(I)      1.0            Y(J)      -1.0
+
+ ND
+
+ DO I         1                        N
+
+ XL CONS(I)
+
+ ND
+
+CONSTANTS
+
+ DO I         1                        N
+
+ ZN AIRPORT   CONS(I)                  R(I)
+
+ ND
+
+BOUNDS
+
+ DO I         1                        N
+
+ XL AIRPORT   X(I)      -10
+ XU AIRPORT   X(I)      10
+ XL AIRPORT   Y(I)      -10
+ XU AIRPORT   Y(I)      10
+
+ ND
+
+ELEMENT TYPE
+
+ EV DIFSQR    V
+ EP DIFSQR    W
+
+ELEMENT USES
+
+ DO I         1                        N
+
+ XT A(I)      DIFSQR
+ ZV A(I)      V                        X(I)
+ ZP A(I)      W                        CX(I)
+
+ ND
+
+ DO I         1                        N
+
+ XT B(I)      DIFSQR
+ ZV B(I)      V                        Y(I)
+ ZP B(I)      W                        CY(I)
+
+ ND
+
+GROUP TYPE
+
+ GV SQUARE    ALPHA
+
+GROUP USES
+
+ DO I         1                        N-1
+ I+ I+1       I                        1
+ DO J         I+1                      N
+
+ XT OBJ1(I,J) SQUARE
+ XT OBJ2(I,J) SQUARE
+
+ ND
+
+ DO I         1                        N
+
+ XE CONS(I)   A(I)      1.0            B(I)      1.0
+
+ ND
+
+OBJECT BOUND
+
+ LO AIRPORT            0.0
+
+*   Solution
+
+*LO SOLTN              47952.695811
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      AIRPORT
+
+TEMPORARIES
+
+ R  DIF
+
+INDIVIDUALS
+
+ T  DIFSQR
+
+ A  DIF                 V - W
+ F                      DIF*DIF
+ G  V                   2.0*DIF
+ H  V         V         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        AIRPORT
+
+INDIVIDUALS
+
+ T  SQUARE
+ F                      ALPHA*ALPHA
+ G                      ALPHA+ALPHA
+ H                      2.0
+
+ENDATA

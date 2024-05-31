@@ -1,0 +1,281 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CORKSCRW
+
+*   Problem :
+*   *********
+
+*   A nonlinear optimal control problem with both state- and
+*   control constraints.
+*   The problem is to control (using an applied force of limited
+*   magnitude) a mass moving in the 3D space, such that its
+*   trajectory lies within a prescribed distance TOL of the
+*   corkscreww-like curve defined by
+*              y = sin(x), z = cos(x),
+*   and such that it stops at a given abscissa XT in minimum time.
+*   The mass is initially stationary at (0,0,1).
+
+*   Source:
+*   Ph. Toint, private communication.
+
+*   SIF input: Ph. Toint, April 1991.
+
+*   classification SOR2-AN-V-V
+
+*   Number of time intervals
+*   The number of variables is 9T+6, of which 9 are fixed.
+
+*IE T                   10             $-PARAMETER n = 96     original value
+*IE T                   50             $-PARAMETER n = 456
+*IE T                   100            $-PARAMETER n = 906
+*IE T                   500            $-PARAMETER n = 4506
+ IE T                   10             $-PARAMETER     modified for S2X tests
+*IE T                   1000           $-PARAMETER n = 9006
+
+*   Target abscissa
+
+ RE XT                  10.0           $-PARAMETER target abscissa
+
+*   Mass
+
+ RE MASS                0.37           $-PARAMETER mass
+
+*   Tolerance along the sine trajectory
+
+ RE TOL                 0.1            $-PARAMETER tolerance
+
+*   Constants
+
+ IE 0                   0
+ IE 1                   1
+
+*   Useful parameters
+
+ RI RT        T
+ RA T+1       RT        1.0
+ R/ H         XT                       RT
+ RD 1/H       H         1.0
+ RM -1/H      1/H       -1.0
+ R/ M/H       MASS                     H
+ RM -M/H      M/H       -1.0
+ R* TOLSQ     TOL                      TOL
+ R* XTT+1     XT                       T+1
+ RM W         XTT+1     0.5
+ DO I         1                        T
+ RI RI        I
+ R* TI        RI                       H
+ A/ W/T(I)    W                        TI
+ ND
+
+*   Maximal force at any time
+
+ R/ FMAX      XT                       RT
+ RM -FMAX     FMAX      -1.0
+
+VARIABLES
+
+ DO I         0                        T
+ X  X(I)
+ X  Y(I)
+ X  Z(I)
+ X  VX(I)
+ X  VY(I)
+ X  VZ(I)
+ ND
+
+ DO I         1                        T
+ X  UX(I)
+ X  UY(I)
+ X  UZ(I)
+ ND
+
+GROUPS
+
+ DO I         1                        T
+ ZN OX(I)     'SCALE'                  W/T(I)
+ XN OX(I)     X(I)      1.0
+ ND
+
+ DO I         1                        T
+ IA I-1       I         -1
+
+ ZE ACX(I)    VX(I)                    M/H
+ ZE ACX(I)    VX(I-1)                  -M/H
+ XE ACX(I)    UX(I)     -1.0
+
+ ZE ACY(I)    VY(I)                    M/H
+ ZE ACY(I)    VY(I-1)                  -M/H
+ XE ACY(I)    UY(I)     -1.0
+
+ ZE ACZ(I)    VZ(I)                    M/H
+ ZE ACZ(I)    VZ(I-1)                  -M/H
+ XE ACZ(I)    UZ(I)     -1.0
+
+ ZE PSX(I)    X(I)                     1/H
+ ZE PSX(I)    X(I-1)                   -1/H
+ XE PSX(I)    VX(I)     -1.0
+
+ ZE PSY(I)    Y(I)                     1/H
+ ZE PSY(I)    Y(I-1)                   -1/H
+ XE PSY(I)    VY(I)     -1.0
+
+ ZE PSZ(I)    Z(I)                     1/H
+ ZE PSZ(I)    Z(I-1)                   -1/H
+ XE PSZ(I)    VZ(I)     -1.0
+
+ XL SC(I)
+
+ ND
+
+CONSTANTS
+
+ DO I         1                        T
+ Z  CORKSCRW  OX(I)                    XT
+ Z  CORKSCRW  SC(I)                    TOLSQ
+ ND
+
+BOUNDS
+
+ FR CORKSCRW  'DEFAULT'
+
+ XX CORKSCRW  X(0)      0.0
+ XX CORKSCRW  Y(0)      0.0
+ XX CORKSCRW  Z(0)      1.0
+ XX CORKSCRW  VX(0)     0.0
+ XX CORKSCRW  VY(0)     0.0
+ XX CORKSCRW  VZ(0)     0.0
+
+ XX CORKSCRW  VX(T)     0.0
+ XX CORKSCRW  VY(T)     0.0
+ XX CORKSCRW  VZ(T)     0.0
+
+ DO I         1                        T
+ ZL CORKSCRW  UX(I)                    -FMAX
+ ZU CORKSCRW  UX(I)                    FMAX
+ ZL CORKSCRW  UY(I)                    -FMAX
+ ZU CORKSCRW  UY(I)                    FMAX
+ ZL CORKSCRW  UZ(I)                    -FMAX
+ ZU CORKSCRW  UZ(I)                    FMAX
+ XL CORKSCRW  X(I)      0.0
+ ZU CORKSCRW  X(I)                     XT
+ ND
+
+START POINT
+
+ XV CORKSCRW  X(0)      0.0
+ XV CORKSCRW  Y(0)      0.0
+ XV CORKSCRW  Z(0)      1.0
+ XV CORKSCRW  VX(0)     0.0
+ XV CORKSCRW  VY(0)     0.0
+ XV CORKSCRW  VZ(0)     0.0
+
+ XV CORKSCRW  VX(T)     0.0
+ XV CORKSCRW  VY(T)     0.0
+ XV CORKSCRW  VZ(T)     0.0
+
+ DO I         1                        T
+ RI RI        I
+ R* TI        RI                       H
+ Z  CORKSCRW  X(I)                     TI
+ X  CORKSCRW  VX(I)     1.0
+ ND
+
+ELEMENT TYPE
+
+ EV ERRSIN    X                        Y
+ EV ERRCOS    X                        Z
+
+ELEMENT USES
+
+ DO I         1                        T
+ XT ES(I)     ERRSIN
+ ZV ES(I)     X                        X(I)
+ ZV ES(I)     Y                        Y(I)
+ XT EC(I)     ERRCOS
+ ZV EC(I)     X                        X(I)
+ ZV EC(I)     Z                        Z(I)
+ ND
+
+GROUP TYPE
+
+ GV L2        GVAR
+
+GROUP USES
+
+ DO I         1                        T
+ XT OX(I)     L2
+ XE SC(I)     ES(I)                    EC(I)
+ ND
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN(10)           1.1601050195
+*LO SOLTN(50)           26.484181830
+*LO SOLTN(100)          44.368110588
+*LO SOLTN(500)
+*LO SOLTN(1000)
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CORKSCRW
+
+TEMPORARIES
+
+ R  SINX
+ R  COSX
+ R  ERR
+ M  SIN
+ M  COS
+
+INDIVIDUALS
+
+ T  ERRSIN
+ A  SINX                SIN(X)
+ A  COSX                COS(X)
+ A  ERR                 Y - SINX
+ F                      ERR * ERR
+ G  X                   - 2.0 * ERR * COSX
+ G  Y                   2.0 * ERR
+ H  X         X         2.0 * ( COSX**2 + ERR * SINX )
+ H  X         Y         -2.0 * COSX
+ H  Y         Y         2.0
+
+ T  ERRCOS
+ A  SINX                SIN(X)
+ A  COSX                COS(X)
+ A  ERR                 Z - COSX
+ F                      ERR * ERR
+ G  X                   2.0 * ERR * SINX
+ G  Z                   2.0 * ERR
+ H  X         X         2.0 * ( SINX**2 + ERR * COSX )
+ H  X         Z         2.0 * SINX
+ H  Z         Z         2.0
+
+ENDATA
+
+*********************
+* SET UP THE GROUPS *
+* ROUTINE           *
+*********************
+
+GROUPS        CORKSCRW
+
+*   Least-square groups
+
+INDIVIDUALS
+
+ T  L2
+ F                      GVAR * GVAR
+ G                      GVAR + GVAR
+ H                      2.0
+
+ENDATA

@@ -1,0 +1,75 @@
+**************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DIAGPQE
+
+*   Problem :
+*   *********
+*   A variable dimension convex quadratic problem
+*   with equispaced eigenvalues throughout the spectrum
+
+*   lambda_i = i, i = 1, ... , n
+
+*   Source: simple test for GALAHAD gltr/glrt
+
+*   SIF input: Nick Gould, Feb 2019
+
+*   classification QBR2-AN-V-0
+
+*   Number of variables (variable)
+
+*IE N                   10             $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   50             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   500            $-PARAMETER
+*IE N                   1000           $-PARAMETER     original value
+*IE N                   5000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+*IE N                   1000000        $-PARAMETER
+
+*   Other parameters
+
+ IE 1                   1
+ RE SHIFT               0.0
+
+VARIABLES
+
+ DO I         1                        N
+ X  X(I)
+ ND
+
+GROUPS
+
+ DO I         1                        N
+ XN G(I)      X(I)      1.0
+ ND
+
+BOUNDS
+
+ LO BOUNDS    'DEFAULT' -100000.0
+ UP BOUNDS    'DEFAULT' 1000000.0
+
+START POINT
+
+ XV DIAGPQE   'DEFAULT' 1.0
+
+HESSIAN
+
+ DO I         1                        N
+ RI RI        I
+ R+ H         RI                       SHIFT
+ Z  X(I)      X(I)                     H
+ ND
+
+OBJECT BOUND
+
+ LO DIAGPQE             0.0
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA

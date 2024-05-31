@@ -1,0 +1,260 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CYCLOOCF
+
+*   Problem:
+*   ********
+
+*   The cyclooctane molecule is comprised of eight carbon atoms aligned
+*   in an equally spaced ring. When they take a position of minimum
+*   potential energy so that next-neighbours are equally spaced.
+
+*   Given positions v_1, ..., v_p in R^3 (with p = 8 for cyclooctane),
+*   and given a spacing c^2 we have that
+
+*      ||v_i - v_i+1,mod p||^2 = c^2 for i = 1,..,p, and
+*      ||v_i - v_i+2,mod p||^2 = 2p/(p-2) c^3
+
+*   where (arbitrarily) we have v_1 = 0 and component 1 of v_2 = 0
+
+*   Source:
+*   an extension of the cyclooctane molecule configuration space as
+*   described in (for example)
+
+*    E. Coutsias, S. Martin, A. Thompson & J. Watson
+*    "Topology of cyclooctane energy landscape"
+*    J. Chem. Phys. 132-234115 (2010)
+
+*   SIF input: Nick Gould, Feb 2020.
+
+*   This is a version of CYCLOOPT.SIF without the fixed variables
+
+*   classification  NQR2-MN-V-V
+
+*   The number of molecules
+
+*IE P                   8              $-PARAMETER     original value
+*IE P                   100            $-PARAMETER
+*IE P                   1000           $-PARAMETER
+*IE P                   10000          $-PARAMETER
+ IE P                   8              $-PARAMETER     modified for S2X tests
+*IE P                   100000         $-PARAMETER
+
+*   The radius
+
+ RE C                   1.0
+
+*   other parameter definitions
+
+ IE 1                   1
+ IE 2                   2
+ IE 3                   3
+ IA P-1       P         -1
+ IA P-2       P         -2
+ RE THREE               3.0
+ RI RP        P
+ RM 2RP       RP        2.0
+ RA RP-2      RP        -2.0
+ R/ 2RP/RP-2  2RP                      RP-2
+ R* C2        C                        C
+ R* SC2       2RP/RP-2                 C2
+
+VARIABLES
+
+ X  Y2
+ X  Z2
+ DO I         3                        P
+ X  X(I)
+ X  Y(I)
+ X  Z(I)
+ ND
+
+GROUPS
+
+ DO I         1                        P
+ XE A(I)
+ XE B(I)
+ ND
+
+CONSTANTS
+
+ DO I         1                        P
+ Z  CYCLOOCF  A(I)                     C2
+ Z  CYCLOOCF  B(I)                     SC2
+ OD i
+
+BOUNDS
+
+ FR CYCLOOCF  'DEFAULT'
+
+START POINT
+
+ RE RI                  0.0
+ R/ START     RI                       RP
+ ZV CYCLOOCF  Y2                       START
+ ZV CYCLOOCF  Z3                       START
+ DO I         3                        P
+ RI RI        I
+ R/ START     RI                       RP
+ ZV CYCLOOCF  X(I)                     START
+ ZV CYCLOOCF  Y(I)                     START
+ ZV CYCLOOCF  Z(I)                     START
+ ND
+
+ RE RI                  2.0
+ R/ START     RI                       RP
+ ZV CYCLOOC2  Y2                       START
+ ZV CYCLOOC2  Z2                       START
+ DO I         3                        P
+ RI RI        I
+ R/ START     RI                       RP
+ ZV CYCLOOC2  X(I)                     START
+ ZV CYCLOOC2  Y(I)                     START
+ ZV CYCLOOC2  Z(I)                     START
+ ND
+
+ELEMENT TYPE
+
+ EV SQR       V
+ EV SQRDIF    V1                       V2
+ IV SQRDIF    V
+
+ELEMENT USES
+
+ IE I                   1
+ IA I+1       I         1
+ XT AY(I)     SQR
+ ZV AY(I)     V                        Y(I+1)
+ XT AZ(I)     SQR
+ ZV AZ(I)     V                        Z(I+1)
+
+ IE I                   2
+ IA I+1       I         1
+ XT AX(I)     SQR
+ ZV AX(I)     V                        X(I+1)
+ XT AY(I)     SQRDIF
+ ZV AY(I)     V1                       Y(I)
+ ZV AY(I)     V2                       Y(I+1)
+ XT AZ(I)     SQRDIF
+ ZV AZ(I)     V1                       Z(I)
+ ZV AZ(I)     V2                       Z(I+1)
+
+ DO I         3                        P-1
+ IA I+1       I         1
+ XT AX(I)     SQRDIF
+ ZV AX(I)     V1                       X(I)
+ ZV AX(I)     V2                       X(I+1)
+ XT AY(I)     SQRDIF
+ ZV AY(I)     V1                       Y(I)
+ ZV AY(I)     V2                       Y(I+1)
+ XT AZ(I)     SQRDIF
+ ZV AZ(I)     V1                       Z(I)
+ ZV AZ(I)     V2                       Z(I+1)
+ ND
+
+ XT AX(P)     SQR
+ ZV AX(P)     V                        X(P)
+ XT AY(P)     SQR
+ ZV AY(P)     V                        Y(P)
+ XT AZ(P)     SQR
+ ZV AZ(P)     V                        Z(P)
+
+
+
+ IE I                   1
+ IA I+2       I         2
+ XT BX(I)     SQR
+ ZV BX(I)     V                        X(I+2)
+ XT BY(I)     SQR
+ ZV BY(I)     V                        Y(I+2)
+ XT BZ(I)     SQR
+ ZV BZ(I)     V                        Z(I+2)
+
+ IE I                   2
+ IA I+2       I         2
+ XT BX(I)     SQR
+ ZV BX(I)     V                        X(I+2)
+ XT BY(I)     SQRDIF
+ ZV BY(I)     V1                       Y(I)
+ ZV BY(I)     V2                       Y(I+2)
+ XT BZ(I)     SQRDIF
+ ZV BZ(I)     V1                       Z(I)
+ ZV BZ(I)     V2                       Z(I+2)
+
+ DO I         3                        P-2
+ IA I+2       I         2
+ XT BX(I)     SQRDIF
+ ZV BX(I)     V1                       X(I)
+ ZV BX(I)     V2                       X(I+2)
+ XT BY(I)     SQRDIF
+ ZV BY(I)     V1                       Y(I)
+ ZV BY(I)     V2                       Y(I+2)
+ XT BZ(I)     SQRDIF
+ ZV BZ(I)     V1                       Z(I)
+ ZV BZ(I)     V2                       Z(I+2)
+ ND
+
+ XT BX(P-1)   SQR
+ ZV BX(P-1)   V                        X(P-1)
+ XT BY(P-1)   SQR
+ ZV BY(P-1)   V                        Y(P-1)
+ XT BZ(P-1)   SQR
+ ZV BZ(P-1)   V                        Z(P-1)
+
+ XT BX(P)     SQR
+ ZV BX(P)     V                        X(P)
+ XT BY(P)     SQRDIF
+ ZV BY(P)     V1                       Y(P)
+ ZV BY(P)     V2                       Y(2)
+ XT BZ(P)     SQRDIF
+ ZV BZ(P)     V1                       Z(P)
+ ZV BZ(P)     V2                       Z(2)
+
+GROUP USES
+
+ IE I                   1
+ XE A(I)      AY(I)
+ XE A(I)      AZ(I)
+ XE B(I)      BX(I)
+ XE B(I)      BY(I)
+ XE B(I)      BZ(I)
+
+ DO I         2                        P
+ XE A(I)      AX(I)
+ XE A(I)      AY(I)
+ XE A(I)      AZ(I)
+ XE B(I)      BX(I)
+ XE B(I)      BY(I)
+ XE B(I)      BZ(I)
+ ND
+
+OBJECT BOUND
+
+*LO SOLUTION             0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CYCLOOCF
+
+INDIVIDUALS
+
+ T  SQR
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+
+ T  SQRDIF
+ R  V         V1        1.0            V2        -1.0
+ F                      V * V
+ G  V                   V + V
+ H  V         V         2.0
+
+ENDATA

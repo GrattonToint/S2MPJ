@@ -1,0 +1,123 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          CB2
+
+*   Problem :
+*   *********
+
+*   A nonlinear minmax problem.
+
+*   Source:
+*   R.  Wommersley and R. Fletcher,
+*   "An algorithm for composite nonsmooth optimization problems"
+*   JOTA, vol.48, pp.493-523, 1986
+
+*   SIF input: Ph. Toint, April 1992.
+
+*   classification LOR2-AN-3-3
+
+VARIABLES
+
+    X1
+    X2
+    U
+
+GROUPS
+
+ XN OBJ       U         1.0
+
+ XG C1        U         1.0
+ XG C2        U         1.0
+ XG C3        U         1.0
+
+BOUNDS
+
+ FR CB2       'DEFAULT'
+
+START POINT
+
+ XV CB2       X1        2.0
+ XV CB2       X2        2.0
+ XV CB2       U         1.0
+
+ELEMENT TYPE
+
+ EV SQ        X
+ EV FR        X
+ EV SSQ       X
+ EV EXY       X                        Y
+
+ELEMENT USES
+
+ T  X1SQ      SQ
+ ZV X1SQ      X                        X1
+
+ T  X2FR      FR
+ ZV X2FR      X                        X2
+
+ T  SSQ1      SSQ
+ ZV SSQ1      X                        X1
+
+ T  SSQ2      SSQ
+ ZV SSQ2      X                        X2
+
+ T  EEX       EXY
+ ZV EEX       X                        X1
+ ZV EEX       Y                        X2
+
+GROUP USES
+
+ E  C1        X1SQ      - 1.0          X2FR      - 1.0
+ E  C2        SSQ1      - 1.0          SSQ2      - 1.0
+ E  C3        EEX       - 2.0
+
+OBJECT BOUND
+
+*   Solution
+
+*LO SOLTN               0.0
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      CB2
+
+TEMPORARIES
+
+ R  EE
+ M  EXP
+
+INDIVIDUALS
+
+ T  SQ
+ F                      X * X
+ G  X                   X + X
+ H  X         X         2.0
+
+ T  FR
+ F                      X**4
+ G  X                   4.0 * X**3
+ H  X         X         12.0 * X**2
+
+ T  SSQ
+ F                      ( 2.0 - X )**2
+ G  X                   - 2.0 * ( 2.0 - X )
+ H  X         X         2.0
+
+ T  EXY
+ A  EE                  EXP( Y - X )
+ F                      EE
+ G  X                   - EE
+ G  Y                   EE
+ H  X         X         EE
+ H  X         Y         - EE
+ H  Y         Y         EE
+
+ENDATA
+

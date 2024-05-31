@@ -1,0 +1,366 @@
+***************************
+* SET UP THE INITIAL DATA *
+***************************
+
+NAME          DRUGDISE
+
+*   Problem :
+*   *********
+
+*   This is a variant of the drug displacement problem DRUGDIS where the
+*   state equations have been Expanded in term of more intermediate
+*   functions, each one of them being less nonlinear.
+
+*   The problem is based on the kinetic model of Aarons and Rowland which
+*   simulates the interaction of the two drugs (warfarin and phenylnutazone)
+*   in a patient bloodstream.  The state variable are the concentrations of
+*   unbound warfarin (w) and phenylbutazone (p).  The problem is to control
+*   the rate of injection (u) of the pain-killing phenylbutazone so that both
+*   drugs reach a specified steady-state in minimum time and the concentration
+*   of warfarin does not rise above a toxicity level.
+
+*   The problem is discretized using the trapeziodal rule.  It is non-convex.
+
+*   Source:
+*   H. Maurer and M. Wiegand,
+*   "Numerical solution of a drug displacement problem with bounded state
+*   variables",
+*   Optimal Control Applications and Methods 13, pp. 43-55, 1992.
+
+*   SIF input: Ph. Toint, Nov 1993.
+
+*   classification  LOR2-MY-V-V
+
+*   Discretization: specify the number of interior points + 1
+
+*IE NI                  10             $-PARAMETER n=63, m=50 
+*IE NI                  100            $-PARAMETER n=603, m=500   original value
+*IE NI                  100            $-PARAMETER n=6003, m=5000 
+ IE NI                  10             $-PARAMETER     modified for S2X tests
+
+*   Problem parameters
+
+ RE TOXIC               0.026          $-PARAMETER warfarin toxicity level
+ RE WSS                 0.02           $-PARAMETER initial/final warfarin levels
+ RE UMAX                8.0            $-PARAMETER maximal injection rate
+ RE PSTART              0.0            $-PARAMETER initial phenybutazone level
+ RE PFINAL              2.0            $-PARAMETER final phenylbutazone level
+ RE Z                   46.4           $-PARAMETER interaction coefficient
+
+*   Define useful parameters
+
+ R+ AVP       PSTART                   PFINAL
+ RM AVP       AVP       0.5
+ RM -Z        Z         -1.0
+ R* -ZZ       Z                        -Z
+ IA NI-1      NI        -1
+ RI RNI       NI
+ RD -1/NI     RNI       -1.0
+ R* -Z/NI     Z                        -1/NI
+
+ IE 0                   0
+
+VARIABLES
+
+*   final time
+
+    TF        'SCALE'   200.0
+
+*   warfarin concentration
+
+ DO I         0                        NI
+ X  W(I)      'SCALE'   0.02
+ OD I
+
+*   phenylbutazone concentration
+
+ DO I         0                        NI
+ X  P(I)
+ OD I
+
+*   phenylbutazone injection rate (control)
+
+ DO I         0                        NI-1
+ X  U(I)
+ OD I
+
+*   intermediate variables
+
+ DO I         0                        NI-1
+ X  A(I)      'SCALE'   200.0
+ OD I
+
+ DO I         0                        NI-1
+ X  B(I)      'SCALE'   200.0
+ OD I
+
+ DO I         0                        NI-1
+ X  C(I)      'SCALE'   0.0000001
+ OD I
+
+GROUPS
+
+ N  TFINAL    TF        1.0
+ N  TFINAL    'SCALE'   100.0
+
+*   state equations
+
+ DO I         0                        NI-1
+ IA I+1       I         1
+
+*   warfarin concentration dynamics
+
+ XE EW(I)     W(I+1)    1.0            W(I)      -1.0
+ XE EW(I)     'SCALE'   0.02
+
+*   phenylbutazone concentration dynamics
+
+ XE EP(I)     P(I+1)    1.0            P(I)      -1.0
+
+*   defining equation for A
+
+ XE EA(I)     A(I)      1.0
+ ZE EA(I)     P(I)                     -Z
+ XE EA(I)     'SCALE'   200.0
+
+*   defining equation for B
+
+ XE EB(I)     B(I)      1.0
+ ZE EB(I)     W(I)                     -Z
+ XE EB(I)     'SCALE'   200.0
+
+*   defining equation for C
+
+ XE EC(I)
+
+ OD I
+
+CONSTANTS
+
+ DO I         0                        NI-1
+ X  DRUGDISE  EA(I)     232.0
+ X  DRUGDISE  EB(I)     232.0
+ OD I
+
+BOUNDS
+
+*   All variables are non-negative, except the C(I)
+
+ DO I         0                        NI-1
+ XR DRUGDISE  C(I)
+ OD I
+
+*   Impose a lower bound of 200 seconds on the phenylbutazone injection level
+
+ XL DRUGDISE  TF        200.0
+
+*   Impose the bound on the toxicity level
+
+ DO I         0                        NI
+ ZU DRUGDISE  W(I)                     TOXIC
+ OD I
+
+*   Impose the bound on the maximum injection rate
+
+ DO I         0                        NI-1
+ ZU DRUGDISE  U(I)                     UMAX
+ OD I
+
+*   Fix the initial and final concentrations of warfarin and phenylbutazone
+
+ ZX DRUGDISE  W(0)                     WSS
+ ZX DRUGDISE  W(NI)                    WSS
+
+ ZX DRUGDISE  P(0)                     PSTART
+ ZX DRUGDISE  P(NI)                    PFINAL
+
+START POINT
+
+ RM 2W/10     WSS       0.2
+ RM 2P/10     AVP       0.2
+ R+ 2(W+P)/10 2W/10                    2P/10
+ RA D         2(W+P)/10 1.0
+ R* DD        D                        D
+ R* ZP        AVP                      Z
+ R* ZW        WSS                      Z
+ R+ AA        DD                       ZP
+ RA AA        AA        232.0
+ R+ BB        DD                       ZW
+ RA BB        BB        232.0
+ R* AB        AA                       BB
+ R* WP        WSS                      AVP
+ R* -ZZWP     WP                       -ZZ
+ R+ CD        AB                       -ZZWP
+ R/ CC        DD                       CD
+
+ DO I         0                        NI-1
+ ZV DRUGDISE  W(I)                     WSS
+ ZV DRUGDISE  P(I)                     AVP
+ ZV DRUGDISE  U(I)                     UMAX
+ ZV DRUGDISE  A(I)                     AA
+ ZV DRUGDISE  B(I)                     BB
+ ZV DRUGDISE  C(I)                     CC
+ OD I
+
+ XV DRUGDISE  TF        240.0
+
+ ZV DRUGDISE  W(NI)                    WSS
+ ZV DRUGDISE  P(NI)                    PFINAL
+
+ELEMENT TYPE
+
+ EV 3S        V1                       V2
+ EV 3S        V3                       V4
+
+ EV 3D2       V1                       V2
+ EV 3D2       V3                       V4
+ EV 3D2       V5
+ IV 3D2       Y1                       Y2
+ IV 3D2       Y3                       Y4
+
+ EV DSQ       V1                       V2
+ IV DSQ       Y
+
+ EV 3PR       V1                       V2
+ EV 3PR       V3
+
+ELEMENT USES
+
+ DO I         0                        NI-1
+
+ XT WA(I)     3S
+ ZV WA(I)     V1                       TF
+ ZV WA(I)     V2                       C(I)
+ ZV WA(I)     V3                       A(I)
+ ZV WA(I)     V4                       W(I)
+
+ XT WB(I)     3D2
+ ZV WB(I)     V1                       TF
+ ZV WB(I)     V2                       C(I)
+ ZV WB(I)     V3                       W(I)
+ ZV WB(I)     V4                       U(I)
+ ZV WB(I)     V5                       P(I)
+
+ XT PA(I)     3D2
+ ZV PA(I)     V1                       TF
+ ZV PA(I)     V2                       C(I)
+ ZV PA(I)     V3                       B(I)
+ ZV PA(I)     V4                       U(I)
+ ZV PA(I)     V5                       P(I)
+
+ XT PB(I)     3S
+ ZV PB(I)     V1                       TF
+ ZV PB(I)     V2                       C(I)
+ ZV PB(I)     V3                       P(I)
+ ZV PB(I)     V4                       W(I)
+
+ XT DD(I)     DSQ
+ ZV DD(I)     V1                       W(I)
+ ZV DD(I)     V2                       P(I)
+
+ XT CA(I)     3PR
+ ZV CA(I)     V1                       C(I)
+ ZV CA(I)     V2                       A(I)
+ ZV CA(I)     V3                       B(I)
+
+ XT CB(I)     3PR
+ ZV CB(I)     V1                       C(I)
+ ZV CB(I)     V2                       P(I)
+ ZV CB(I)     V3                       W(I)
+
+ OD I
+
+GROUP USES
+
+ DO I         0                        NI-1
+
+ ZE EW(I)     WA(I)                    -1/NI
+ ZE EW(I)     WB(I)                    -Z/NI
+
+ ZE EP(I)     PA(I)                    -1/NI
+ ZE EP(I)     PB(I)                    -Z/NI
+
+ XE EA(I)     DD(I)     -1.0
+
+ XE EB(I)     DD(I)     -1.0
+
+ XE EC(I)     CA(I)     1.0            DD(I)     -1.0
+ ZE EC(I)     CB(I)                    -ZZ
+
+ OD I
+
+OBJECT BOUND
+
+ LO DRUGDISE            200.0
+
+*   Solution
+
+*LO SOLTN               ????
+
+ENDATA
+
+***********************
+* SET UP THE FUNCTION *
+* AND RANGE ROUTINES  *
+***********************
+
+ELEMENTS      DRUGDISE
+
+TEMPORARIES
+
+ R  WSS
+ R  WSSMV4
+
+GLOBALS
+
+ A  WSS                 0.02
+
+INDIVIDUALS
+
+ T  3S
+ A  WSSMV4              WSS - V4
+ F                      V1 * V2 * V3 * WSSMV4
+ G  V1                  V2 * V3 * WSSMV4
+ G  V2                  V1 * V3 * WSSMV4
+ G  V3                  V1 * V2 * WSSMV4
+ G  V4                  - V1 * V2 * V3 
+ H  V1        V2        V3 * WSSMV4
+ H  V1        V3        V2 * WSSMV4
+ H  V1        V4        - V2 * V3 
+ H  V2        V3        V1 * WSSMV4
+ H  V2        V4        - V1 * V3
+ H  V3        V4        - V1 * V2
+
+ T  3D2
+ R  Y1        V1        1.0
+ R  Y2        V2        1.0
+ R  Y3        V3        1.0
+ R  Y4        V4        1.0            V5        -2.0
+ F                      Y1 * Y2 * Y3 * Y4
+ G  Y1                  Y2 * Y3 * Y4
+ G  Y2                  Y1 * Y3 * Y4
+ G  Y3                  Y1 * Y2 * Y4
+ G  Y4                  Y1 * Y2 * Y3
+ H  Y1        Y2        Y3 * Y4
+ H  Y1        Y3        Y2 * Y4
+ H  Y1        Y4        Y2 * Y3
+ H  Y2        Y3        Y1 * Y4
+ H  Y2        Y4        Y1 * Y3
+ H  Y3        Y4        Y1 * Y2
+
+ T  DSQ
+ R  Y         V1        0.2            V2        0.2
+ F                      Y * Y
+ G  Y                   Y + Y
+ H  Y         Y         2.0
+
+ T  3PR
+ F                      V1 * V2 * V3
+ G  V1                  V2 * V3
+ G  V2                  V1 * V3
+ G  V3                  V1 * V2
+ H  V1        V2        V3
+ H  V1        V3        V2
+ H  V2        V3        V1
+
+ENDATA
