@@ -35,7 +35,12 @@ else
    system( [ 'cp fullproblist /home/philippe/docker/mycute_2/newpy' ] );
    system( [ 'cp s2xlib.py /home/philippe/docker/mycute_2/newpy' ] );
    system( [ 'cp test_fortran_python.py /home/philippe/docker/mycute_2/newpy' ] );
-
+   if ( start == 1 )
+      system( [ 'cp -r ',inma.outdir, ' ',  inma.outdir, '_bak' ] )
+      system( [ 'cp -r ',inpy.outdir, ' ',  inpy.outdir, '_bak' ] )
+      system( [ 'cp -r ',injl.outdir, ' ',  injl.outdir, '_bak' ] )
+   end
+   
    theproblems = 'fullproblist';
    
    fid = fopen(theproblems, 'r' );
@@ -62,6 +67,12 @@ else
          system( [ 'cp ./python_problems/', thename, '.py /home/philippe/docker/mycute_2/newpy' ] );
       end
    end
-   
+
+   system( [ 'ls ',inma.outdir, ' > list_of_matlab_problems' ] )
+   system( [ 'ls ',inpy.outdir, ' > list_of_python_problems' ] )
+   system( [ 'ls ',injl.outdir, ' > list_of_julia_problems' ]  )
+
 end
+disp( 'Done.' )
+   
 
