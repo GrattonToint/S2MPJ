@@ -1,4 +1,6 @@
-function check_in_pblist(filename, istart)
+function test_matlab_python(filename, istart)
+
+diary('results_matlab_python');
 
 fid = fopen(filename, 'r' );
 i=1;
@@ -11,6 +13,15 @@ while( ~feof(fid) )
    i = i+1;
 end
 fclose(fid);
+
+addpath('/Users/sgratton/S2X/S2X/matlab_problems');
+
+% Chemin du répertoire contenant le module Python
+modulePath = '/Users/sgratton/S2X/S2X/python_problems';
+
+% Ajouter le répertoire au sys.path
+py.sys.path().append(string(modulePath));
+
 
 
 % Parcours du dictionnaire
@@ -66,3 +77,4 @@ for i = istart:length(pblist)
         disp('')
 end 
 
+diary off;
