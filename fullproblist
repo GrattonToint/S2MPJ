@@ -288,8 +288,8 @@ EXPQUAD     12,6
 EXTRASIM       2
 EXTROSNB      10
 EXTROSNBNE    10
-FBRAIN2LS     10    
-FBRAIN3LS      4
+#FBRAIN2LS     10    
+#FBRAIN3LS      4
 #FBRAINLS       2  # too long in Julia
 FCCU          19
 FEEDLOC       90
