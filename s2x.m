@@ -717,10 +717,10 @@ function [ probname, exitc, errors ] = s2x( sifpbname, varargin )
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 29 V 2024
+%                started VI 2023, this version 1 VI 2024
 %                Apologies in advance for the bugs!
 %                
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %  Set the default S2X options.
 
@@ -834,7 +834,7 @@ if ( nargin > 1 )
             if ( isempty( outdir ) )
                pyfile = [ './', probname, '.py' ];    %  the name of the Python file
             else
-               pyfile = [ outdir, ':', probname, '.py' ];
+               pyfile = [ outdir, '/', probname, '.py' ];
             end
             pbs.fidpy = fopen( pyfile, 'w' );
             pbs.lang  = 'python';                     %  Python code will be generated
@@ -842,7 +842,7 @@ if ( nargin > 1 )
             if ( isempty( outdir ) )
                jlfile = [ './', probname, '.jl' ];    %  the name of the Julia file
             else
-               jlfile = [ outdir, ':', probname, '.py' ];
+               jlfile = [ outdir, '/', probname, '.jl' ];
             end
             pbs.fidjl = fopen( jlfile, 'w' );
             pbs.lang  = 'julia';                      %  Julia code will be generated
@@ -952,6 +952,7 @@ oname = '';
 section         =''; % the name of the current data section
 incomments      = 0; % true while in the initial comments section
 indata          = 1; % true while in the data section
+inobounds       = 0; % rtue while in the objective bounds section
 ingroups        = 0; % true while in the nonlinear elements section
 inelements      = 0; % true while in the nonlinear groups section
 pbs.nline       = 0; % the current line number
@@ -1091,7 +1092,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
              printcmline( sprintf( ' %s', line( 2:end ) ),                                            bindent, pbs.fidma );
              printcpline( sprintf( ' %s', line( 2:end ) ),                                            bindent, pbs.fidpy );
              printcjline( sprintf( ' %s', line( 2:end ) ),                                            bindent, pbs.fidjl );
-         elseif ( incomments || sifcomments )
+         elseif ( incomments || sifcomments || inobounds )
              printcmline( sprintf( ' %s', line( 2:end ) ),                                            bindent, pbs.fidma );
              printcpline( sprintf( ' %s', line( 2:end ) ),                                            bindent, pbs.fidpy );
              printcjline( sprintf( ' %s', line( 2:end ) ),                                            bindent, pbs.fidjl );
@@ -1739,6 +1740,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       printpline( '#%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%',                      indlvl, bindent, pbs.fidpy );
       printjline( '#%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%',                      indlvl, bindent, pbs.fidjl );
       prevlineispass = 0;
+      inobounds      = 1;
 
    %  Nonlinear elements...
 
@@ -1753,6 +1755,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       inelements = 1;
       codeg      = {}; % the Matlab holder for code describing the element's gradient
       codeH      = {}; % the Matlab holder for code describing the element's Hessian
+      inobounds  = 0;
       
    %  ... declarations of names...
       
@@ -1819,11 +1822,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printjline( ' ',                                                                 0,          bindent, pbs.fidjl );
          printjline( '#%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%',              indlvl - 1, bindent, pbs.fidjl );
       end
-      ingroups = 1;
-      globdict = configureDictionary( 'string', 'string' ); %  Reset the global dictionary for ELEMENTS/GROUPS
-      codeg    = {};                  % the Matlab holder for code describing the group function's gradient
-      codeH    = {};                  % the Matlab holder for code describing the group function's Hessian
-
+      ingroups  = 1;
+      globdict  = configureDictionary( 'string', 'string' ); %  Reset the global dictionary for ELEMENTS/GROUPS
+      codeg     = {};                  % the Matlab holder for code describing the group function's gradient
+      codeH     = {};                  % the Matlab holder for code describing the group function's Hessian
+      inobounds = 0;
+      
    %  ... declarations of names...
       
    elseif ( lline >= 11 && strcmp( line(1:11), 'TEMPORARIES' ) && ingroups ) 
@@ -2231,11 +2235,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       %  holding the last value of the loop index. Also adjust the output file's indentation.
 
       case 'OD'
-      
+
          indlvl      = indlvl - 1;
          printmline( 'end',                                                                   indlvl, bindent, pbs.fidma );
          printjline( 'end',                                                                   indlvl, bindent, pbs.fidjl );
-         iloop       = length( pbs.actloop );
+         iloop = pbs.actloop(end);
          switch( pbs.lang )
          case { 'matlab', 'python' }
             pbs.irpdict( pbs.loop{iloop}.index ) =  [ '''', pbs.loop{iloop}.iend, '''' ];
