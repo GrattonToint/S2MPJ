@@ -1,1093 +1,1093 @@
 ACOPP14
 ********   
-Python:  0.3258 0.0109 0.0099  s
-Matlab:  0.0543 0.0116 0.0043  s
+Python:  0.2781 0.0324 0.0100  s
+Matlab:  0.1969 0.0620 0.0213  s
    function difference 0
    gradient difference 3.0811e-17
 ACOPP30
 ********   
-Python:  0.3817 0.0211 0.0200  s
-Matlab:  0.1143 0.0124 0.0072  s
+Python:  0.2637 0.0208 0.0188  s
+Matlab:  0.2014 0.0440 0.0171  s
    function difference 2.0392e-16
    gradient difference 0
 ACOPR14
 ********   
-Python:  0.2968 0.0179 0.0168  s
-Matlab:  0.1206 0.0099 0.0063  s
+Python:  0.2484 0.0177 0.0159  s
+Matlab:  0.2052 0.0327 0.0127  s
    function difference 4.5492e-16
    gradient difference 2.9864e-17
 ACOPR30
 ********   
-Python:  0.3646 0.0335 0.0322  s
-Matlab:  0.2694 0.0129 0.0121  s
+Python:  0.2966 0.0355 0.0339  s
+Matlab:  0.4314 0.0403 0.0162  s
    function difference 2.0286e-16
    gradient difference 0
 AGG
 ********   
-Python:  0.3077 0.0333 0.0320  s
-Matlab:  0.0872 0.0037 0.0032  s
+Python:  0.2474 0.0344 0.0326  s
+Matlab:  0.1920 0.0057 0.0036  s
    function difference 1.352e-16
    gradient difference 0
 AIRCRFTA
 ********   
-Python:  0.3247 0.0021 0.0012  s
-Matlab:  0.0032 0.0009 0.0008  s
+Python:  0.2507 0.0028 0.0012  s
+Matlab:  0.0126 0.0016 0.0008  s
    function difference 0
    gradient difference 0
 AIRCRFTB
 ********   
-Python:  0.2838 0.0019 0.0010  s
-Matlab:  0.0031 0.0020 0.0008  s
+Python:  0.2384 0.0026 0.0010  s
+Matlab:  0.0109 0.0029 0.0014  s
    function difference 0
    gradient difference 0
 AIRPORT
 ********   
-Python:  0.3261 0.0923 0.0912  s
-Matlab:  0.1368 0.0143 0.0121  s
+Python:  0.2757 0.0978 0.0956  s
+Matlab:  0.1558 0.0342 0.0199  s
    function difference 3.4106e-16
    gradient difference 0
 ALJAZZAF
 ********   
-Python:  0.2949 0.0019 0.0010  s
-Matlab:  0.0077 0.0021 0.0010  s
+Python:  0.2500 0.0026 0.0011  s
+Matlab:  0.0152 0.0034 0.0012  s
    function difference 0
    gradient difference 0
 ALLINIT
 ********   
-Python:  0.3836 0.0024 0.0014  s
-Matlab:  0.0027 0.0027 0.0011  s
+Python:  0.2595 0.0030 0.0014  s
+Matlab:  0.0099 0.0039 0.0017  s
    function difference 0
    gradient difference 0
 ALLINITA
 ********   
-Python:  0.3090 0.0027 0.0018  s
-Matlab:  0.0053 0.0031 0.0149  s
+Python:  0.2593 0.0034 0.0018  s
+Matlab:  0.0111 0.0041 0.0013  s
    function difference 0
    gradient difference 0
 ALLINITC
 ********   
-Python:  0.3099 0.0028 0.0018  s
-Matlab:  0.0040 0.0026 0.0014  s
+Python:  0.2646 0.0035 0.0018  s
+Matlab:  0.0102 0.0026 0.0019  s
    function difference 0
    gradient difference 0
 ALLINITU
 ********   
-Python:  0.2973 0.0024 0.0015  s
-Matlab:  0.0029 0.0015 0.0012  s
+Python:  0.2440 0.0030 0.0014  s
+Matlab:  0.0090 0.0016 0.0021  s
    function difference 0
    gradient difference 0
 ALSOTAME
 ********   
-Python:  0.3280 0.0019 0.0010  s
-Matlab:  0.0010 0.0008 0.0002  s
+Python:  0.2654 0.0027 0.0010  s
+Matlab:  0.0072 0.0019 0.0005  s
    function difference 0
    gradient difference 0
 ANTWERP
 ********   
-Python:  0.2629 0.0044 0.0035  s
-Matlab:  0.0131 0.0056 0.0040  s
+Python:  0.2468 0.0050 0.0033  s
+Matlab:  0.0298 0.0077 0.0057  s
    function difference 0
    gradient difference 0
 ARGAUSS
 ********   
-Python:  0.3399 0.0022 0.0013  s
-Matlab:  0.0062 0.0021 0.0013  s
+Python:  0.2729 0.0027 0.0012  s
+Matlab:  0.0124 0.0031 0.0012  s
    function difference 0
    gradient difference 0
 ARGLALE
 ********   
-Python:  0.2809 0.0020 0.0011  s
-Matlab:  0.0029 0.0003 0.0001  s
+Python:  0.2343 0.0026 0.0011  s
+Matlab:  0.0083 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 ARGLBLE
 ********   
-Python:  0.3719 0.0020 0.0011  s
-Matlab:  0.0025 0.0003 0.0001  s
+Python:  0.2714 0.0027 0.0011  s
+Matlab:  0.0073 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 ARGLINB
 ********   
-Python:  0.2995 0.0231 0.0220  s
-Matlab:  0.0399 0.0028 0.0029  s
+Python:  0.2589 0.0221 0.0205  s
+Matlab:  0.0548 0.0105 0.0061  s
    function difference 0
    gradient difference 0
 ARGTRIG
 ********   
-Python:  0.3036 0.0029 0.0021  s
-Matlab:  0.0095 0.0041 0.0020  s
+Python:  0.2701 0.0035 0.0020  s
+Matlab:  0.0162 0.0061 0.0043  s
    function difference 3.7663e-16
    gradient difference 3.3628e-16
 ARGTRIGLS
 ********   
-Python:  0.4447 0.3862 0.3835  s
-Matlab:  0.1832 0.1814 0.1771  s
+Python:  0.4138 0.3660 0.3648  s
+Matlab:  0.2282 0.1984 0.1783  s
    function difference 0
    gradient difference 0
 ARTIF
 ********   
-Python:  0.2948 0.0025 0.0016  s
-Matlab:  0.0050 0.0013 0.0010  s
+Python:  0.2873 0.0032 0.0015  s
+Matlab:  0.0118 0.0016 0.0007  s
    function difference 9.4324e-16
    gradient difference 1.8256e-17
 ARWHEAD
 ********   
-Python:  0.2777 0.0027 0.0018  s
-Matlab:  0.0044 0.0024 0.0013  s
+Python:  0.2830 0.0033 0.0017  s
+Matlab:  0.0099 0.0019 0.0016  s
    function difference 0
    gradient difference 0
 AVGASA
 ********   
-Python:  0.2831 0.0026 0.0017  s
-Matlab:  0.0054 0.0019 0.0009  s
+Python:  0.2757 0.0035 0.0018  s
+Matlab:  0.0122 0.0028 0.0017  s
    function difference 0
    gradient difference 0
 AVGASB
 ********   
-Python:  0.2969 0.0025 0.0018  s
-Matlab:  0.0041 0.0012 0.0008  s
+Python:  0.2954 0.0032 0.0017  s
+Matlab:  0.0112 0.0011 0.0017  s
    function difference 0
    gradient difference 0
 AVION2
 ********   
-Python:  0.3735 0.0040 0.0030  s
-Matlab:  0.0089 0.0034 0.0020  s
+Python:  0.2675 0.0046 0.0030  s
+Matlab:  0.0221 0.0033 0.0027  s
    function difference 0
    gradient difference 0
 BAmL1SP
 ********   
-Python:  0.3393 0.0518 0.0509  s
-Matlab:  0.2543 0.0282 0.0280  s
+Python:  0.3450 0.0515 0.0501  s
+Matlab:  0.4191 0.0500 0.0305  s
    function difference 0
    gradient difference 0
 BAmL1SPLS
 ********   
-Python:  0.3515 0.0512 0.0501  s
-Matlab:  0.1991 0.0279 0.0267  s
+Python:  0.3103 0.0511 0.0496  s
+Matlab:  0.3470 0.0502 0.0354  s
    function difference 0
    gradient difference 0
 BARD
 ********   
-Python:  0.2878 0.0028 0.0017  s
-Matlab:  0.0051 0.0021 0.0023  s
+Python:  0.2912 0.0033 0.0017  s
+Matlab:  0.0142 0.0026 0.0023  s
    function difference 0
    gradient difference 0
 BARDNE
 ********   
-Python:  0.3111 0.0030 0.0020  s
-Matlab:  0.0052 0.0019 0.0014  s
+Python:  0.2671 0.0036 0.0020  s
+Matlab:  0.0116 0.0022 0.0012  s
    function difference 0
    gradient difference 0
 BATCH
 ********   
-Python:  0.2708 0.0066 0.0054  s
-Matlab:  0.0227 0.0016 0.0012  s
+Python:  0.2774 0.0071 0.0054  s
+Matlab:  0.0248 0.0021 0.0011  s
    function difference 0
    gradient difference 1.9387e-21
 BDQRTIC
 ********   
-Python:  0.2884 0.0026 0.0017  s
-Matlab:  0.0037 0.0023 0.0012  s
+Python:  0.2812 0.0032 0.0016  s
+Matlab:  0.0088 0.0023 0.0055  s
    function difference 0
    gradient difference 0
 BEALE
 ********   
-Python:  0.2962 0.0017 0.0007  s
-Matlab:  0.0015 0.0013 0.0004  s
+Python:  0.2953 0.0022 0.0007  s
+Matlab:  0.0070 0.0029 0.0008  s
    function difference 0
    gradient difference 0
 BEALENE
 ********   
-Python:  0.3622 0.0019 0.0009  s
-Matlab:  0.0019 0.0005 0.0003  s
+Python:  0.2861 0.0025 0.0009  s
+Matlab:  0.0079 0.0012 0.0003  s
    function difference 0
    gradient difference 0
 BENNETT5
 ********   
-Python:  0.2911 0.0071 0.0061  s
-Matlab:  0.0254 0.0044 0.0018  s
+Python:  0.2884 0.0077 0.0058  s
+Matlab:  0.0493 0.0117 0.0107  s
    function difference 2.8527e-16
    gradient difference 1.5749e-16
 BENNETT5LS
 ********   
-Python:  0.3142 0.0053 0.0042  s
-Matlab:  0.0262 0.0028 0.0023  s
+Python:  0.2954 0.0059 0.0042  s
+Matlab:  0.0479 0.0165 0.0078  s
    function difference 0
    gradient difference 1.2169e-16
 BIGGS3
 ********   
-Python:  0.3071 0.0022 0.0012  s
-Matlab:  0.0083 0.0035 0.0025  s
+Python:  0.3094 0.0028 0.0012  s
+Matlab:  0.0139 0.0036 0.0026  s
    function difference 1.3666e-16
    gradient difference 6.2261e-17
 BIGGS6
 ********   
-Python:  0.2865 0.0021 0.0012  s
-Matlab:  0.0089 0.0031 0.0022  s
+Python:  0.3010 0.0027 0.0011  s
+Matlab:  0.0141 0.0032 0.0026  s
    function difference 0
    gradient difference 4.6109e-17
 BIGGS6NE
 ********   
-Python:  0.2703 0.0025 0.0014  s
-Matlab:  0.0091 0.0029 0.0016  s
+Python:  0.3205 0.0031 0.0015  s
+Matlab:  0.0151 0.0024 0.0024  s
    function difference 5.2819e-16
    gradient difference 0
 BIGGSB1
 ********   
-Python:  0.3081 0.0022 0.0013  s
-Matlab:  0.0027 0.0007 0.0007  s
+Python:  0.2803 0.0028 0.0012  s
+Matlab:  0.0073 0.0010 0.0005  s
    function difference 0
    gradient difference 0
 BIGGSC4
 ********   
-Python:  0.3084 0.0022 0.0013  s
-Matlab:  0.0028 0.0006 0.0003  s
+Python:  0.3013 0.0030 0.0013  s
+Matlab:  0.0084 0.0012 0.0004  s
    function difference 0
    gradient difference 0
 BLOWEYA
 ********   
-Python:  0.3874 0.0029 0.0020  s
-Matlab:  0.0114 0.0025 0.0014  s
+Python:  0.3031 0.0036 0.0020  s
+Matlab:  0.0187 0.0023 0.0017  s
    function difference 0
    gradient difference 0
 BLOWEYB
 ********   
-Python:  0.3128 0.0029 0.0019  s
-Matlab:  0.0118 0.0021 0.0014  s
+Python:  0.2977 0.0037 0.0019  s
+Matlab:  0.0195 0.0019 0.0018  s
    function difference 0
    gradient difference 0
 BLOWEYC
 ********   
-Python:  0.3674 0.0029 0.0019  s
-Matlab:  0.0120 0.0021 0.0019  s
+Python:  0.2906 0.0035 0.0019  s
+Matlab:  0.0187 0.0018 0.0018  s
    function difference 0
    gradient difference 0
 BOOTH
 ********   
-Python:  0.2935 0.0020 0.0010  s
-Matlab:  0.0010 0.0003 0.0001  s
+Python:  0.2932 0.0024 0.0009  s
+Matlab:  0.0057 0.0004 0.0001  s
    function difference 0
    gradient difference 0
 BOX2
 ********   
-Python:  0.3280 0.0024 0.0014  s
-Matlab:  0.0046 0.0023 0.0013  s
+Python:  0.3029 0.0031 0.0014  s
+Matlab:  0.0097 0.0019 0.0016  s
    function difference 0
    gradient difference 1.0329e-18
 BOX3
 ********   
-Python:  0.2878 0.0025 0.0014  s
-Matlab:  0.0041 0.0019 0.0013  s
+Python:  0.3111 0.0029 0.0014  s
+Matlab:  0.0107 0.0015 0.0016  s
    function difference 0
    gradient difference 1.0329e-18
 BOXBOD
 ********   
-Python:  0.2888 0.0023 0.0012  s
-Matlab:  0.0032 0.0007 0.0005  s
+Python:  0.2909 0.0029 0.0012  s
+Matlab:  0.0104 0.0011 0.0005  s
    function difference 0
    gradient difference 0
 BOXBODLS
 ********   
-Python:  0.2988 0.0021 0.0011  s
-Matlab:  0.0026 0.0009 0.0009  s
+Python:  0.3149 0.0027 0.0011  s
+Matlab:  0.0093 0.0014 0.0006  s
    function difference 0
    gradient difference 0
 BQP1VAR
 ********   
-Python:  0.3881 0.0034 0.0019  s
-Matlab:  0.0007 0.0022 0.0006  s
+Python:  0.3090 0.0039 0.0018  s
+Matlab:  0.0061 0.0032 0.0005  s
    function difference 0
    gradient difference 0
 BQPGABIM
 ********   
-Python:  0.3129 0.0050 0.0033  s
-Matlab:  0.0214 0.0035 0.0018  s
+Python:  0.3284 0.0058 0.0033  s
+Matlab:  0.0501 0.0216 0.0050  s
    function difference 0
    gradient difference 0
 BQPGASIM
 ********   
-Python:  0.3548 0.0048 0.0035  s
-Matlab:  0.0229 0.0020 0.0013  s
+Python:  0.3323 0.0047 0.0033  s
+Matlab:  0.0415 0.0081 0.0064  s
    function difference 0
    gradient difference 0
 BRANIN
 ********   
-Python:  0.2941 0.0031 0.0017  s
-Matlab:  0.0013 0.0006 0.0002  s
+Python:  0.3272 0.0032 0.0017  s
+Matlab:  0.0066 0.0011 0.0004  s
    function difference 0
    gradient difference 0
 BRATU1D
 ********   
-Python:  0.2924 0.0034 0.0020  s
-Matlab:  0.0073 0.0031 0.0017  s
+Python:  0.3505 0.0034 0.0022  s
+Matlab:  0.0137 0.0042 0.0020  s
    function difference 0
    gradient difference 5.8797e-16
 BRATU2D
 ********   
-Python:  0.2677 0.0053 0.0038  s
-Matlab:  0.0165 0.0016 0.0012  s
+Python:  0.3328 0.0053 0.0038  s
+Matlab:  0.0199 0.0021 0.0019  s
    function difference 0
    gradient difference 0
 BRATU2DT
 ********   
-Python:  0.2921 0.0051 0.0035  s
-Matlab:  0.0163 0.0016 0.0011  s
+Python:  0.3338 0.0053 0.0036  s
+Matlab:  0.0189 0.0013 0.0015  s
    function difference 1.8786e-16
    gradient difference 0
 BRATU3D
 ********   
-Python:  0.3052 0.0034 0.0021  s
-Matlab:  0.0071 0.0021 0.0002  s
+Python:  0.3146 0.0033 0.0019  s
+Matlab:  0.0126 0.0021 0.0003  s
    function difference 0
    gradient difference 0
 BRKMCC
 ********   
-Python:  0.3531 0.0033 0.0018  s
-Matlab:  0.0014 0.0010 0.0004  s
+Python:  0.3088 0.0034 0.0018  s
+Matlab:  0.0071 0.0012 0.0005  s
    function difference 0
    gradient difference 0
 BROWNAL
 ********   
-Python:  0.2876 0.0038 0.0022  s
-Matlab:  0.0084 0.0014 0.0008  s
+Python:  0.3046 0.0035 0.0021  s
+Matlab:  0.0142 0.0013 0.0006  s
    function difference 0
    gradient difference 0
 BROWNBS
 ********   
-Python:  0.3378 0.0032 0.0017  s
-Matlab:  0.0012 0.0005 0.0002  s
+Python:  0.3303 0.0035 0.0018  s
+Matlab:  0.0065 0.0007 0.0006  s
    function difference 0
    gradient difference 0
 BROWNBSNE
 ********   
-Python:  0.2810 0.0034 0.0019  s
-Matlab:  0.0016 0.0004 0.0002  s
+Python:  0.3426 0.0033 0.0019  s
+Matlab:  0.0077 0.0006 0.0002  s
    function difference 0
    gradient difference 0
 BROWNDEN
 ********   
-Python:  0.3048 0.0037 0.0023  s
-Matlab:  0.0087 0.0034 0.0020  s
+Python:  0.3293 0.0036 0.0022  s
+Matlab:  0.0154 0.0033 0.0067  s
    function difference 0
    gradient difference 0
 BROWNDENE
 ********   
-Python:  0.2626 0.0041 0.0025  s
-Matlab:  0.0093 0.0027 0.0020  s
+Python:  0.3134 0.0042 0.0025  s
+Matlab:  0.0153 0.0022 0.0027  s
    function difference 0
    gradient difference 0
 BROYDN3D
 ********   
-Python:  0.2910 0.0041 0.0025  s
-Matlab:  0.0043 0.0008 0.0006  s
+Python:  0.3377 0.0041 0.0025  s
+Matlab:  0.0103 0.0010 0.0006  s
    function difference 0
    gradient difference 0
 BROYDN3DLS
 ********   
-Python:  0.2920 0.0035 0.0020  s
-Matlab:  0.0025 0.0007 0.0005  s
+Python:  0.3991 0.0040 0.0021  s
+Matlab:  0.0083 0.0016 0.0006  s
    function difference 0
    gradient difference 0
 BROYDNBDLS
 ********   
-Python:  0.3587 0.0041 0.0026  s
-Matlab:  0.0081 0.0031 0.0020  s
+Python:  0.3786 0.0049 0.0041  s
+Matlab:  0.0163 0.0040 0.0030  s
    function difference 0
    gradient difference 0
 BT10
 ********   
-Python:  0.3029 0.0033 0.0018  s
-Matlab:  0.0014 0.0004 0.0002  s
+Python:  0.3942 0.0037 0.0020  s
+Matlab:  0.0068 0.0008 0.0002  s
    function difference 0
    gradient difference 0
 BT11
 ********   
-Python:  0.2957 0.0036 0.0020  s
-Matlab:  0.0033 0.0012 0.0006  s
+Python:  0.3889 0.0036 0.0020  s
+Matlab:  0.0095 0.0016 0.0008  s
    function difference 0
    gradient difference 0
 BT1
 ********   
-Python:  0.2871 0.0033 0.0018  s
-Matlab:  0.0020 0.0012 0.0003  s
+Python:  0.3692 0.0035 0.0018  s
+Matlab:  0.0078 0.0028 0.0005  s
    function difference 0
    gradient difference 0
 BT12
 ********   
-Python:  0.2935 0.0036 0.0020  s
-Matlab:  0.0024 0.0007 0.0004  s
+Python:  0.3170 0.0035 0.0020  s
+Matlab:  0.0082 0.0006 0.0004  s
    function difference 0
    gradient difference 0
 BT13
 ********   
-Python:  0.2704 0.0039 0.0019  s
-Matlab:  0.0022 0.0015 0.0004  s
+Python:  0.3395 0.0040 0.0026  s
+Matlab:  0.0093 0.0028 0.0006  s
    function difference 0
    gradient difference 0
 BT2
 ********   
-Python:  0.2850 0.0033 0.0018  s
-Matlab:  0.0022 0.0024 0.0005  s
+Python:  0.3524 0.0040 0.0022  s
+Matlab:  0.0093 0.0052 0.0006  s
    function difference 0
    gradient difference 0
 BT3
 ********   
-Python:  0.3011 0.0035 0.0020  s
-Matlab:  0.0021 0.0006 0.0004  s
+Python:  0.3894 0.0041 0.0021  s
+Matlab:  0.0081 0.0008 0.0004  s
    function difference 0
    gradient difference 0
 BT4
 ********   
-Python:  0.3774 0.0035 0.0020  s
-Matlab:  0.0024 0.0008 0.0003  s
+Python:  0.3943 0.0040 0.0029  s
+Matlab:  0.0080 0.0012 0.0003  s
    function difference 0
    gradient difference 0
 BT5
 ********   
-Python:  0.2759 0.0035 0.0019  s
-Matlab:  0.0022 0.0008 0.0004  s
+Python:  0.4042 0.0036 0.0019  s
+Matlab:  0.0078 0.0008 0.0004  s
    function difference 0
    gradient difference 0
 BT6
 ********   
-Python:  0.2949 0.0035 0.0020  s
-Matlab:  0.0028 0.0012 0.0006  s
+Python:  0.3505 0.0035 0.0021  s
+Matlab:  0.0092 0.0011 0.0005  s
    function difference 0
    gradient difference 0
 BT7
 ********   
-Python:  0.3251 0.0036 0.0021  s
-Matlab:  0.0096 0.0021 0.0007  s
+Python:  0.3318 0.0036 0.0021  s
+Matlab:  0.0083 0.0023 0.0006  s
    function difference 0
    gradient difference 0
 BT8
 ********   
-Python:  0.3357 0.0035 0.0020  s
-Matlab:  0.0078 0.0007 0.0004  s
+Python:  0.3316 0.0035 0.0020  s
+Matlab:  0.0082 0.0009 0.0004  s
    function difference 0
    gradient difference 0
 BT9
 ********   
-Python:  0.3144 0.0034 0.0019  s
-Matlab:  0.0073 0.0005 0.0003  s
+Python:  0.3388 0.0033 0.0018  s
+Matlab:  0.0070 0.0005 0.0003  s
    function difference 0
    gradient difference 0
 BURKEHAN
 ********   
-Python:  0.3314 0.0035 0.0018  s
-Matlab:  0.0065 0.0035 0.0005  s
+Python:  0.3318 0.0033 0.0018  s
+Matlab:  0.0074 0.0033 0.0005  s
    function difference 0
    gradient difference 0
 BYRDSPHR
 ********   
-Python:  0.3670 0.0036 0.0019  s
-Matlab:  0.0084 0.0007 0.0003  s
+Python:  0.3465 0.0035 0.0019  s
+Matlab:  0.0079 0.0007 0.0003  s
    function difference 0
    gradient difference 0
 CAMEL6
 ********   
-Python:  0.3927 0.0031 0.0016  s
-Matlab:  0.0073 0.0020 0.0004  s
+Python:  0.3457 0.0031 0.0016  s
+Matlab:  0.0076 0.0024 0.0005  s
    function difference 0
    gradient difference 0
 CAMSHAPE
 ********   
-Python:  0.3315 0.0050 0.0035  s
-Matlab:  0.0143 0.0017 0.0017  s
+Python:  0.3290 0.0051 0.0035  s
+Matlab:  0.0145 0.0019 0.0018  s
    function difference 0
    gradient difference 0
 CANTILVR
 ********   
-Python:  0.3354 0.0034 0.0019  s
-Matlab:  0.0081 0.0006 0.0003  s
+Python:  0.3333 0.0034 0.0018  s
+Matlab:  0.0099 0.0008 0.0004  s
    function difference 0
    gradient difference 0
 CATENARY
 ********   
-Python:  0.3350 0.0037 0.0022  s
-Matlab:  0.0102 0.0010 0.0007  s
+Python:  0.3336 0.0037 0.0021  s
+Matlab:  0.0122 0.0015 0.0008  s
    function difference 0
    gradient difference 0
 CATMIX
 ********   
-Python:  0.3493 0.0056 0.0040  s
-Matlab:  0.0208 0.0048 0.0045  s
+Python:  0.3319 0.0057 0.0041  s
+Matlab:  0.0211 0.0050 0.0057  s
    function difference 0
    gradient difference 0
 CB2
 ********   
-Python:  0.3116 0.0036 0.0020  s
-Matlab:  0.0078 0.0007 0.0003  s
+Python:  0.3445 0.0036 0.0020  s
+Matlab:  0.0079 0.0008 0.0003  s
    function difference 0
    gradient difference 0
 CB3
 ********   
-Python:  0.3495 0.0036 0.0020  s
-Matlab:  0.0074 0.0006 0.0003  s
+Python:  0.3368 0.0038 0.0020  s
+Matlab:  0.0069 0.0006 0.0003  s
    function difference 0
    gradient difference 0
 CBRATU2D
 ********   
-Python:  0.3294 0.0039 0.0023  s
-Matlab:  0.0136 0.0008 0.0005  s
+Python:  0.3595 0.0039 0.0024  s
+Matlab:  0.0140 0.0010 0.0005  s
    function difference 0
    gradient difference 0
 CBRATU3D
 ********   
-Python:  0.3895 0.0034 0.0019  s
-Matlab:  0.0149 0.0005 0.0002  s
+Python:  0.3284 0.0034 0.0018  s
+Matlab:  0.0152 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 CHACONN1
 ********   
-Python:  0.3173 0.0039 0.0020  s
-Matlab:  0.0077 0.0006 0.0003  s
+Python:  0.3249 0.0036 0.0020  s
+Matlab:  0.0080 0.0006 0.0003  s
    function difference 0
    gradient difference 2.6957e-17
 CHACONN2
 ********   
-Python:  0.3375 0.0035 0.0020  s
-Matlab:  0.0078 0.0006 0.0003  s
+Python:  0.3326 0.0036 0.0020  s
+Matlab:  0.0077 0.0006 0.0003  s
    function difference 0
    gradient difference 0
 CHANDHEQ
 ********   
-Python:  0.3328 0.0050 0.0034  s
-Matlab:  0.0322 0.0053 0.0038  s
+Python:  0.3334 0.0050 0.0035  s
+Matlab:  0.0326 0.0054 0.0030  s
    function difference 1.7764e-16
    gradient difference 0
 CHARDIS0
 ********   
-Python:  0.3510 0.0091 0.0077  s
-Matlab:  0.0820 0.0205 0.0075  s
+Python:  0.3580 0.0091 0.0076  s
+Matlab:  0.0834 0.0206 0.0075  s
    function difference 0
    gradient difference 2.2219e-16
 CHARDIS02
 ********   
-Python:  0.3341 0.0093 0.0086  s
-Matlab:  0.0814 0.0204 0.0065  s
+Python:  0.3359 0.0091 0.0077  s
+Matlab:  0.0784 0.0204 0.0071  s
    function difference 0
    gradient difference 2.2219e-16
 CHARDIS1
 ********   
-Python:  0.3275 0.0088 0.0073  s
-Matlab:  0.0860 0.0160 0.0078  s
+Python:  0.3825 0.0092 0.0076  s
+Matlab:  0.0876 0.0170 0.0066  s
    function difference 0
    gradient difference 4.1441e-17
 CHARDIS12
 ********   
-Python:  0.3413 0.0101 0.0087  s
-Matlab:  0.0835 0.0205 0.0082  s
+Python:  0.3527 0.0099 0.0084  s
+Matlab:  0.0877 0.0203 0.0092  s
    function difference 0
    gradient difference 1.6847e-16
 CHEBYQAD
 ********   
-Python:  0.3900 0.0044 0.0028  s
-Matlab:  0.0261 0.0075 0.0055  s
+Python:  0.3444 0.0043 0.0028  s
+Matlab:  0.0276 0.0076 0.0056  s
    function difference 6.1655e-16
    gradient difference 2.7709e-15
 CHEMRCTA
 ********   
-Python:  0.3221 0.0041 0.0024  s
-Matlab:  0.0109 0.0009 0.0005  s
+Python:  0.3336 0.0040 0.0025  s
+Matlab:  0.0116 0.0011 0.0006  s
    function difference 2.0163e-16
    gradient difference 0
 CHENHARK
 ********   
-Python:  0.3556 0.0039 0.0023  s
-Matlab:  0.0100 0.0008 0.0005  s
+Python:  0.3258 0.0038 0.0023  s
+Matlab:  0.0091 0.0008 0.0005  s
    function difference 0
    gradient difference 0
 CHNROSNB
 ********   
-Python:  0.3350 0.0038 0.0021  s
+Python:  0.3276 0.0037 0.0021  s
 Matlab:  0.0078 0.0013 0.0005  s
    function difference 0
    gradient difference 0
 CHNRSNBM
 ********   
-Python:  0.3568 0.0036 0.0021  s
-Matlab:  0.0084 0.0008 0.0006  s
+Python:  0.3355 0.0036 0.0021  s
+Matlab:  0.0072 0.0008 0.0005  s
    function difference 0
    gradient difference 2.6605e-17
 CHWIRUT1LS
 ********   
-Python:  0.3161 0.0081 0.0066  s
-Matlab:  0.0565 0.0202 0.0081  s
+Python:  0.3553 0.0079 0.0065  s
+Matlab:  0.0559 0.0207 0.0077  s
    function difference 0
    gradient difference 0
 CHWIRUT2
 ********   
-Python:  0.3422 0.0051 0.0034  s
-Matlab:  0.0261 0.0054 0.0040  s
+Python:  0.3647 0.0051 0.0037  s
+Matlab:  0.0297 0.0065 0.0076  s
    function difference 1.8131e-16
    gradient difference 0
 CHWIRUT2
 ********   
-Python:  0.3010 0.0039 0.0025  s
-Matlab:  0.0194 0.0029 0.0025  s
+Python:  0.2881 0.0039 0.0026  s
+Matlab:  0.0185 0.0034 0.0029  s
    function difference 1.8131e-16
    gradient difference 0
 CHWIRUT2LS
 ********   
-Python:  0.4377 0.0044 0.0028  s
-Matlab:  0.0247 0.0072 0.0060  s
+Python:  0.3387 0.0043 0.0029  s
+Matlab:  0.0250 0.0154 0.0054  s
    function difference 0
    gradient difference 0
 CLIFF
 ********   
-Python:  0.3531 0.0034 0.0018  s
-Matlab:  0.0067 0.0005 0.0002  s
+Python:  0.3308 0.0033 0.0017  s
+Matlab:  0.0063 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 CLNLBEAM
 ********   
-Python:  0.3546 0.0054 0.0037  s
-Matlab:  0.0172 0.0035 0.0025  s
+Python:  0.3450 0.0053 0.0037  s
+Matlab:  0.0171 0.0038 0.0026  s
    function difference 0
    gradient difference 4.12e-17
 CLPLATEA
 ********   
-Python:  0.3513 0.0051 0.0035  s
-Matlab:  0.0117 0.0016 0.0016  s
+Python:  0.3310 0.0050 0.0034  s
+Matlab:  0.0121 0.0016 0.0016  s
    function difference 0
    gradient difference 0
 CLPLATEB
 ********   
-Python:  0.4102 0.0059 0.0039  s
-Matlab:  0.0115 0.0015 0.0016  s
+Python:  0.3562 0.0050 0.0035  s
+Matlab:  0.0124 0.0015 0.0016  s
    function difference 0
    gradient difference 0
 CLUSTER
 ********   
-Python:  0.3897 0.0037 0.0020  s
-Matlab:  0.0077 0.0009 0.0003  s
+Python:  0.3667 0.0033 0.0018  s
+Matlab:  0.0068 0.0006 0.0003  s
    function difference 0
    gradient difference 0
 CLUSTERLS
 ********   
-Python:  0.4424 0.0032 0.0016  s
-Matlab:  0.0065 0.0006 0.0003  s
+Python:  0.3483 0.0031 0.0017  s
+Matlab:  0.0066 0.0007 0.0003  s
    function difference 0
    gradient difference 0
 CmRELOAD
 ********   
-Python:  0.4878 0.0584 0.0580  s
-Matlab:  0.5460 0.0474 0.0225  s
+Python:  0.3855 0.0534 0.0518  s
+Matlab:  0.4807 0.0461 0.0301  s
    function difference 5.5979e-16
    gradient difference 0
 CONCON
 ********   
-Python:  0.4779 0.0050 0.0034  s
-Matlab:  0.0109 0.0010 0.0007  s
+Python:  0.3390 0.0044 0.0031  s
+Matlab:  0.0114 0.0011 0.0007  s
    function difference 0
    gradient difference 0
 CONGIGMZ
 ********   
-Python:  0.4263 0.0039 0.0023  s
-Matlab:  0.0074 0.0006 0.0003  s
+Python:  0.3349 0.0038 0.0022  s
+Matlab:  0.0085 0.0006 0.0003  s
    function difference 0
    gradient difference 0
 COOLHANS
 ********   
-Python:  0.4559 0.0055 0.0040  s
-Matlab:  0.0230 0.0043 0.0035  s
+Python:  0.3581 0.0048 0.0033  s
+Matlab:  0.0205 0.0041 0.0034  s
    function difference 1.1963e-16
    gradient difference 0
 COOLHANSLS
 ********   
-Python:  0.4297 0.0058 0.0034  s
-Matlab:  0.0202 0.0059 0.0038  s
+Python:  0.3311 0.0045 0.0029  s
+Matlab:  0.0180 0.0053 0.0036  s
    function difference 0
    gradient difference 0
 CORE1
 ********   
-Python:  0.4301 0.0087 0.0064  s
-Matlab:  0.0247 0.0018 0.0017  s
+Python:  0.3518 0.0078 0.0063  s
+Matlab:  0.0245 0.0019 0.0018  s
    function difference 1.8143e-16
    gradient difference 0
 CORKSCRW
 ********   
-Python:  0.4108 0.0094 0.0080  s
-Matlab:  0.0295 0.0023 0.0023  s
+Python:  0.3793 0.0088 0.0071  s
+Matlab:  0.0247 0.0021 0.0021  s
    function difference 1.4638e-16
    gradient difference 4.6392e-17
 COSHFUN
 ********   
-Python:  0.4323 0.0046 0.0036  s
-Matlab:  0.0163 0.0020 0.0016  s
+Python:  0.3347 0.0043 0.0026  s
+Matlab:  0.0139 0.0015 0.0014  s
    function difference 0
    gradient difference 0
 COSINE
 ********   
-Python:  0.4327 0.0044 0.0024  s
-Matlab:  0.0079 0.0012 0.0008  s
+Python:  0.3582 0.0038 0.0022  s
+Matlab:  0.0085 0.0013 0.0008  s
    function difference 0
    gradient difference 0
 CRAGGLVY
 ********   
-Python:  0.5091 0.0046 0.0029  s
-Matlab:  0.0112 0.0029 0.0019  s
+Python:  0.3234 0.0043 0.0028  s
+Matlab:  0.0106 0.0026 0.0016  s
    function difference 0
    gradient difference 2.2553e-20
 CRESC4
 ********   
-Python:  0.4327 0.0043 0.0027  s
-Matlab:  0.0182 0.0072 0.0043  s
+Python:  0.3479 0.0041 0.0024  s
+Matlab:  0.0167 0.0057 0.0030  s
    function difference 0
    gradient difference 0
 CRESC50
 ********   
-Python:  0.4806 0.0106 0.0101  s
-Matlab:  0.0687 0.0556 0.0219  s
+Python:  0.3962 0.0099 0.0081  s
+Matlab:  0.0616 0.0494 0.0192  s
    function difference 0
    gradient difference 0
 CSFI1
 ********   
-Python:  0.4407 0.0043 0.0022  s
-Matlab:  0.0101 0.0006 0.0003  s
+Python:  0.3353 0.0038 0.0021  s
+Matlab:  0.0086 0.0006 0.0003  s
    function difference 0
    gradient difference 0
 CSFI2
 ********   
-Python:  0.4266 0.0041 0.0022  s
-Matlab:  0.0082 0.0005 0.0003  s
+Python:  0.3763 0.0037 0.0022  s
+Matlab:  0.0075 0.0006 0.0003  s
    function difference 0
    gradient difference 0
 CUBE
 ********   
-Python:  0.3930 0.0037 0.0022  s
-Matlab:  0.0068 0.0012 0.0003  s
+Python:  0.3181 0.0033 0.0018  s
+Matlab:  0.0069 0.0009 0.0003  s
    function difference 0
    gradient difference 0
 CUBENE
 ********   
-Python:  0.4306 0.0035 0.0020  s
-Matlab:  0.0073 0.0009 0.0002  s
+Python:  0.3495 0.0036 0.0020  s
+Matlab:  0.0082 0.0007 0.0002  s
    function difference 0
    gradient difference 0
 CURLY10
 ********   
-Python:  0.3973 0.0043 0.0024  s
-Matlab:  0.0155 0.0011 0.0007  s
+Python:  0.3702 0.0039 0.0024  s
+Matlab:  0.0136 0.0010 0.0007  s
    function difference 1.4279e-16
    gradient difference 0
 CURLY20
 ********   
-Python:  0.4654 0.0052 0.0032  s
-Matlab:  0.0235 0.0014 0.0016  s
+Python:  0.3350 0.0045 0.0029  s
+Matlab:  0.0238 0.0013 0.0015  s
    function difference 1.7942e-16
    gradient difference 5.7548e-17
 CURLY30
 ********   
-Python:  0.3635 0.0054 0.0037  s
-Matlab:  0.0300 0.0017 0.0024  s
+Python:  0.3625 0.0050 0.0034  s
+Matlab:  0.0289 0.0016 0.0019  s
    function difference 1.6853e-16
    gradient difference 1.0761e-16
 CVXQP1
 ********   
-Python:  0.3740 0.0044 0.0028  s
-Matlab:  0.0099 0.0008 0.0005  s
+Python:  0.3185 0.0043 0.0027  s
+Matlab:  0.0101 0.0008 0.0005  s
    function difference 0
    gradient difference 0
 CYCLIC3
 ********   
-Python:  0.3563 0.0045 0.0029  s
-Matlab:  0.0106 0.0012 0.0009  s
+Python:  0.3486 0.0044 0.0028  s
+Matlab:  0.0121 0.0014 0.0009  s
    function difference 0
    gradient difference 0
 CYCLIC3LS
 ********   
-Python:  0.3602 0.0043 0.0026  s
-Matlab:  0.0098 0.0023 0.0017  s
+Python:  0.3645 0.0043 0.0026  s
+Matlab:  0.0098 0.0022 0.0017  s
    function difference 0
    gradient difference 0
 CYCLOOCF
 ********   
-Python:  0.3392 0.0043 0.0026  s
-Matlab:  0.0197 0.0027 0.0071  s
+Python:  0.3326 0.0046 0.0027  s
+Matlab:  0.0190 0.0027 0.0032  s
    function difference 3.7112e-16
    gradient difference 0
 CYCLOOCFLS
 ********   
-Python:  0.3553 0.0038 0.0022  s
-Matlab:  0.0174 0.0044 0.0074  s
+Python:  0.3911 0.0039 0.0023  s
+Matlab:  0.0173 0.0043 0.0045  s
    function difference 0
    gradient difference 0
 CYCLOOCT
 ********   
-Python:  0.3718 0.0043 0.0027  s
-Matlab:  0.0181 0.0031 0.0029  s
+Python:  0.3316 0.0044 0.0027  s
+Matlab:  0.0171 0.0030 0.0030  s
    function difference 1.5997e-16
    gradient difference 0
 CYCLOOCTLS
 ********   
-Python:  0.4260 0.0039 0.0023  s
-Matlab:  0.0192 0.0042 0.0033  s
+Python:  0.3805 0.0040 0.0024  s
+Matlab:  0.0181 0.0039 0.0034  s
    function difference 0
    gradient difference 0
 DALLASS
 ********   
-Python:  0.3649 0.0063 0.0045  s
-Matlab:  0.0289 0.0030 0.0030  s
+Python:  0.3217 0.0061 0.0044  s
+Matlab:  0.0285 0.0031 0.0030  s
    function difference 0
    gradient difference 1.1059e-21
 DANIWOOD
 ********   
-Python:  0.4130 0.0037 0.0022  s
-Matlab:  0.0084 0.0006 0.0004  s
+Python:  0.3590 0.0036 0.0020  s
+Matlab:  0.0084 0.0007 0.0004  s
    function difference 1.2845e-16
    gradient difference 1.2563e-16
 DANIWOODLS
 ********   
-Python:  0.3641 0.0033 0.0018  s
-Matlab:  0.0078 0.0008 0.0006  s
+Python:  0.3646 0.0034 0.0018  s
+Matlab:  0.0082 0.0009 0.0006  s
    function difference 1.8983e-16
    gradient difference 1.9414e-16
 DANWOOD
 ********   
-Python:  0.3598 0.0037 0.0020  s
-Matlab:  0.0087 0.0007 0.0005  s
+Python:  0.3296 0.0035 0.0020  s
+Matlab:  0.0088 0.0007 0.0004  s
    function difference 1.2845e-16
    gradient difference 0
 DANWOODLS
 ********   
-Python:  0.3459 0.0033 0.0018  s
-Matlab:  0.0079 0.0009 0.0007  s
+Python:  0.3762 0.0032 0.0017  s
+Matlab:  0.0083 0.0009 0.0006  s
    function difference 1.8983e-16
    gradient difference 1.0348e-17
 DECONVB
 ********   
-Python:  0.3737 0.0090 0.0073  s
-Matlab:  0.0723 0.0181 0.0068  s
+Python:  0.3326 0.0083 0.0068  s
+Matlab:  0.0724 0.0178 0.0065  s
    function difference 0
    gradient difference 0
 DECONVBNE
 ********   
-Python:  0.3709 0.0098 0.0080  s
-Matlab:  0.0781 0.0157 0.0067  s
+Python:  0.3556 0.0091 0.0075  s
+Matlab:  0.0792 0.0215 0.0061  s
    function difference 0
    gradient difference 0
 DECONVC
 ********   
-Python:  0.4251 0.0090 0.0074  s
-Matlab:  0.0761 0.0202 0.0067  s
+Python:  0.3800 0.0088 0.0072  s
+Matlab:  0.0778 0.0267 0.0070  s
    function difference 0
    gradient difference 0
 DECONVU
 ********   
-Python:  0.3929 0.0089 0.0073  s
-Matlab:  0.0706 0.0180 0.0068  s
+Python:  0.3548 0.0086 0.0071  s
+Matlab:  0.0739 0.0180 0.0069  s
    function difference 0
    gradient difference 0
 DEGDIAG
 ********   
-Python:  0.4003 0.0030 0.0016  s
-Matlab:  0.0067 0.0018 0.0002  s
+Python:  0.3686 0.0030 0.0016  s
+Matlab:  0.0066 0.0016 0.0002  s
    function difference 0
    gradient difference 0
 DEGENLPA
 ********   
-Python:  0.3581 0.0044 0.0027  s
-Matlab:  0.0121 0.0004 0.0002  s
+Python:  0.3208 0.0045 0.0028  s
+Matlab:  0.0122 0.0004 0.0002  s
    function difference 0
    gradient difference 0
 DEGENLPB
 ********   
-Python:  0.3620 0.0044 0.0027  s
-Matlab:  0.0114 0.0004 0.0002  s
+Python:  0.3561 0.0043 0.0028  s
+Matlab:  0.0109 0.0004 0.0002  s
    function difference 0
    gradient difference 0
 DEGTRID
 ********   
-Python:  0.3547 0.0031 0.0017  s
-Matlab:  0.0076 0.0005 0.0002  s
+Python:  0.3828 0.0032 0.0017  s
+Matlab:  0.0078 0.0008 0.0001  s
    function difference 0
    gradient difference 0
 DEGTRID2
 ********   
-Python:  0.3620 0.0032 0.0018  s
-Matlab:  0.0086 0.0004 0.0001  s
+Python:  0.3345 0.0032 0.0017  s
+Matlab:  0.0092 0.0004 0.0001  s
    function difference 0
    gradient difference 0
 DEMBO7
 ********   
-Python:  0.3538 0.0055 0.0039  s
-Matlab:  0.0212 0.0040 0.0027  s
+Python:  0.3879 0.0055 0.0039  s
+Matlab:  0.0217 0.0043 0.0027  s
    function difference 0
    gradient difference 0
 DEMYMALO
 ********   
-Python:  0.3947 0.0037 0.0021  s
-Matlab:  0.0071 0.0006 0.0002  s
+Python:  0.3311 0.0037 0.0020  s
+Matlab:  0.0072 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 DENSCHNA
 ********   
-Python:  0.3946 0.0034 0.0018  s
-Matlab:  0.0065 0.0006 0.0002  s
+Python:  0.3888 0.0033 0.0018  s
+Matlab:  0.0066 0.0006 0.0002  s
    function difference 0
    gradient difference 0
 DENSCHNB
 ********   
-Python:  0.3606 0.0035 0.0018  s
-Matlab:  0.0063 0.0008 0.0003  s
+Python:  0.3210 0.0033 0.0018  s
+Matlab:  0.0068 0.0009 0.0003  s
    function difference 0
    gradient difference 0
 DENSCHNBNE
 ********   
-Python:  0.3871 0.0036 0.0020  s
-Matlab:  0.0068 0.0004 0.0002  s
+Python:  0.3536 0.0037 0.0020  s
+Matlab:  0.0064 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 DENSCHNC
 ********   
-Python:  0.3437 0.0032 0.0017  s
-Matlab:  0.0070 0.0012 0.0004  s
+Python:  0.3744 0.0031 0.0017  s
+Matlab:  0.0069 0.0011 0.0003  s
    function difference 0
    gradient difference 0
 DENSCHND
 ********   
-Python:  0.3419 0.0032 0.0017  s
-Matlab:  0.0082 0.0011 0.0006  s
+Python:  0.3406 0.0033 0.0017  s
+Matlab:  0.0092 0.0014 0.0006  s
    function difference 0
    gradient difference 0
 DENSCHNDNE
 ********   
-Python:  0.3499 0.0035 0.0019  s
-Matlab:  0.0080 0.0014 0.0005  s
+Python:  0.4093 0.0036 0.0019  s
+Matlab:  0.0078 0.0015 0.0005  s
    function difference 0
    gradient difference 0
 DENSCHNE
 ********   
-Python:  0.3725 0.0035 0.0019  s
-Matlab:  0.0067 0.0009 0.0003  s
+Python:  0.3593 0.0034 0.0020  s
+Matlab:  0.0064 0.0009 0.0003  s
    function difference 0
    gradient difference 0
 DENSCHNF
 ********   
-Python:  0.3915 0.0033 0.0018  s
-Matlab:  0.0075 0.0011 0.0004  s
+Python:  0.4322 0.0036 0.0022  s
+Matlab:  0.0080 0.0010 0.0006  s
    function difference 0
    gradient difference 0
 DENSCHNFNE
 ********   
-Python:  0.3953 0.0036 0.0019  s
-Matlab:  0.0077 0.0009 0.0003  s
+Python:  0.4585 0.0035 0.0019  s
+Matlab:  0.0076 0.0009 0.0003  s
    function difference 0
    gradient difference 0
 DEVGLA1
 ********   
-Python:  0.3568 0.0039 0.0023  s
-Matlab:  0.0159 0.0035 0.0046  s
+Python:  0.3576 0.0038 0.0023  s
+Matlab:  0.0152 0.0033 0.0043  s
    function difference 0
    gradient difference 0
 DEVGLA1NE
 ********   
-Python:  0.3884 0.0044 0.0027  s
-Matlab:  0.0158 0.0025 0.0023  s
+Python:  0.3679 0.0042 0.0025  s
+Matlab:  0.0157 0.0025 0.0025  s
    function difference 2.7868e-16
    gradient difference 3.4574e-17
 DEVGLA2
 ********   
-Python:  0.3337 0.0037 0.0022  s
-Matlab:  0.0181 0.0030 0.0034  s
+Python:  0.3541 0.0038 0.0023  s
+Matlab:  0.0147 0.0031 0.0034  s
    function difference 0
    gradient difference 7.1975e-18
 DEVGLA2B
 ********   
-Python:  0.3669 0.0039 0.0023  s
-Matlab:  0.0127 0.0032 0.0033  s
+Python:  0.3806 0.0038 0.0022  s
+Matlab:  0.0129 0.0031 0.0034  s
    function difference 0
    gradient difference 7.1975e-18
 DEVGLA2NE
 ********   
-Python:  0.3353 0.0041 0.0025  s
-Matlab:  0.0163 0.0026 0.0023  s
+Python:  0.3222 0.0042 0.0025  s
+Matlab:  0.0146 0.0027 0.0022  s
    function difference 1.4413e-16
    gradient difference 0
 DGOSPEC
 ********   
-Python:  0.3818 0.0035 0.0019  s
-Matlab:  0.0076 0.0005 0.0002  s
+Python:  0.3584 0.0034 0.0019  s
+Matlab:  0.0067 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 DIAGIQB
 ********   
-Python:  0.3893 0.0037 0.0021  s
-Matlab:  0.0073 0.0011 0.0002  s
+Python:  0.3782 0.0037 0.0021  s
+Matlab:  0.0069 0.0011 0.0002  s
    function difference 3.7397e-16
    gradient difference 0
 DIAGIQE
 ********   
-Python:  0.3933 0.0037 0.0022  s
-Matlab:  0.0069 0.0005 0.0002  s
+Python:  0.3459 0.0036 0.0021  s
+Matlab:  0.0074 0.0004 0.0002  s
    function difference 0
    gradient difference 0
 DIAGIQT
 ********   
-Python:  0.3633 0.0037 0.0021  s
-Matlab:  0.0074 0.0004 0.0002  s
+Python:  0.3316 0.0036 0.0020  s
+Matlab:  0.0081 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 DIAGPQB
 ********   
-Python:  0.3894 0.0037 0.0022  s
-Matlab:  0.0070 0.0004 0.0002  s
+Python:  0.3749 0.0041 0.0024  s
+Matlab:  0.0068 0.0005 0.0002  s
    function difference 0
    gradient difference 0
 DIAGPQE
 ********   
-Python:  0.3440 0.0037 0.0021  s
+Python:  0.4405 0.0036 0.0021  s
 Matlab:  0.0072 0.0004 0.0002  s
    function difference 0
    gradient difference 0
 DIAGPQT
 ********   
-Python:  0.3622 0.0039 0.0023  s
-Matlab:  0.0064 0.0005 0.0002  s
+Python:  0.3556 0.0036 0.0021  s
+Matlab:  0.0071 0.0004 0.0002  s
    function difference 0
    gradient difference 0
 DIAMON2D
 ********   
-Python:  51.0620 2.3838 2.3534  s
-Matlab:  593.1822 3.6611 3.5851  s
+Python:  51.5679 2.3170 2.2843  s
+Matlab:  584.3059 3.7311 3.7525  s
    function difference 1.2861e-16
    gradient difference 0
 DIAMON2DLS
 ********   
-Python:  42.2462 2.2851 2.2742  s
-Matlab:  592.7789 0.9867 0.9477  s
+Python:  45.0455 2.2607 2.1939  s
+Matlab:  575.6243 0.9991 0.9695  s
    function difference 0
    gradient difference 0
 DIAMON3D
 ********   
-Python:  49.9919 2.8201 2.8338  s
-Matlab:  647.8559 5.0013 5.0283  s
+Python:  53.4010 2.8107 2.7733  s
+Matlab:  627.3781 5.0336 4.7637  s
    function difference 1.2816e-16
    gradient difference 0
 DIAMON3DLS
 ********   
-Python:  50.7219 2.6881 2.6804  s
-Matlab:  660.0337 0.9749 0.9512  s
+Python:  52.7485 2.6818 2.6079  s
+Matlab:  667.1222 0.9895 0.9453  s
    function difference 0
    gradient difference 0
 DIPIGRI
 ********   
-Python:  0.5125 0.0044 0.0024  s
-Matlab:  0.0099 0.0022 0.0008  s
+Python:  0.4603 0.0041 0.0023  s
+Matlab:  0.0101 0.0021 0.0007  s
    function difference 0
    gradient difference 0
 DISC2
 ********   
-Python:  0.3508 0.0056 0.0039  s
-Matlab:  0.0168 0.0023 0.0015  s
+Python:  0.3736 0.0056 0.0039  s
+Matlab:  0.0166 0.0021 0.0014  s
    function difference 0
    gradient difference 0
 DISCS
 ********   
-Python:  0.4933 0.0107 0.0090  s
-Matlab:  0.0593 0.0273 0.0059  s
+Python:  0.4730 0.0108 0.0089  s
+Matlab:  0.0583 0.0239 0.0084  s
    function difference 0
    gradient difference 0
 DITTERT
@@ -1098,148 +1098,5397 @@ DITTERT
   g_[0] = 1.0/EV_[0]
 /Users/sgratton/S2X/S2X/s2xlib.py:428: RuntimeWarning: invalid value encountered in multiply
   gx += grada * gin / gsc
-Python:  0.4046 0.0148 0.0058  s
-Matlab:  0.0420 0.0058 0.0039  s
+Python:  0.4078 0.0134 0.0058  s
+Matlab:  0.0426 0.0062 0.0040  s
    function difference 0
    gradient difference NaN
 DIXCHLNG
 ********   
-Python:  0.3976 0.0069 0.0053  s
-Matlab:  0.0183 0.0045 0.0076  s
+Python:  0.3830 0.0069 0.0052  s
+Matlab:  0.0182 0.0044 0.0073  s
    function difference 0
    gradient difference 0
 DIXCHLNV
 ********   
-Python:  0.3630 0.0071 0.0054  s
-Matlab:  0.0172 0.0045 0.0045  s
+Python:  0.3823 0.0071 0.0054  s
+Matlab:  0.0176 0.0046 0.0044  s
    function difference 0
    gradient difference 0
 DIXMAANA1
 ********   
-Python:  0.3949 0.0035 0.0020  s
-Matlab:  0.0114 0.0024 0.0018  s
+Python:  0.3604 0.0035 0.0019  s
+Matlab:  0.0110 0.0024 0.0018  s
    function difference 0
    gradient difference 0
 DIXMAANB
 ********   
-Python:  0.4229 0.0037 0.0022  s
-Matlab:  0.0139 0.0024 0.0025  s
+Python:  0.3759 0.0038 0.0022  s
+Matlab:  0.0143 0.0025 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANC
 ********   
-Python:  0.3619 0.0037 0.0022  s
-Matlab:  0.0146 0.0023 0.0025  s
+Python:  0.3981 0.0037 0.0023  s
+Matlab:  0.0140 0.0024 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAAND
 ********   
-Python:  0.3895 0.0037 0.0022  s
-Matlab:  0.0140 0.0023 0.0026  s
+Python:  0.3779 0.0037 0.0022  s
+Matlab:  0.0144 0.0025 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANE1
 ********   
-Python:  0.5265 0.0034 0.0020  s
-Matlab:  0.0112 0.0016 0.0018  s
+Python:  0.4331 0.0035 0.0019  s
+Matlab:  0.0112 0.0015 0.0016  s
    function difference 0
    gradient difference 0
 DIXMAANF
 ********   
-Python:  0.3317 0.0037 0.0022  s
-Matlab:  0.0135 0.0023 0.0026  s
+Python:  0.3711 0.0037 0.0022  s
+Matlab:  0.0141 0.0023 0.0027  s
    function difference 0
    gradient difference 0
 DIXMAANG
 ********   
-Python:  0.4082 0.0038 0.0022  s
-Matlab:  0.0139 0.0026 0.0048  s
+Python:  0.3917 0.0038 0.0024  s
+Matlab:  0.0133 0.0023 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANH
 ********   
-Python:  0.4127 0.0038 0.0023  s
-Matlab:  0.0140 0.0023 0.0025  s
+Python:  0.3762 0.0038 0.0022  s
+Matlab:  0.0140 0.0023 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANI1
 ********   
-Python:  0.3604 0.0035 0.0021  s
-Matlab:  0.0114 0.0016 0.0017  s
+Python:  0.4040 0.0035 0.0019  s
+Matlab:  0.0110 0.0015 0.0017  s
    function difference 0
    gradient difference 0
 DIXMAANJ
 ********   
-Python:  0.3700 0.0038 0.0022  s
-Matlab:  0.0138 0.0023 0.0025  s
+Python:  0.3451 0.0036 0.0021  s
+Matlab:  0.0135 0.0023 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANK
 ********   
-Python:  0.4377 0.0038 0.0022  s
-Matlab:  0.0138 0.0023 0.0025  s
+Python:  0.4144 0.0036 0.0022  s
+Matlab:  0.0139 0.0023 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANL
 ********   
-Python:  0.3814 0.0039 0.0022  s
-Matlab:  0.0132 0.0023 0.0027  s
+Python:  0.3601 0.0037 0.0022  s
+Matlab:  0.0142 0.0023 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANM1
 ********   
-Python:  0.4842 0.0035 0.0020  s
-Matlab:  0.0113 0.0016 0.0017  s
+Python:  0.4863 0.0035 0.0019  s
+Matlab:  0.0114 0.0016 0.0017  s
    function difference 0
    gradient difference 0
 DIXMAANN
 ********   
-Python:  0.3739 0.0036 0.0022  s
-Matlab:  0.0135 0.0023 0.0025  s
+Python:  0.3352 0.0036 0.0021  s
+Matlab:  0.0131 0.0022 0.0025  s
    function difference 0
    gradient difference 0
 DIXMAANO
 ********   
-Python:  0.4046 0.0037 0.0022  s
-Matlab:  0.0141 0.0023 0.0026  s
+Python:  0.3749 0.0037 0.0021  s
+Matlab:  0.0143 0.0022 0.0026  s
    function difference 0
    gradient difference 0
 DIXMAANP
 ********   
-Python:  0.4116 0.0037 0.0022  s
-Matlab:  0.0129 0.0024 0.0026  s
+Python:  0.3720 0.0037 0.0021  s
+Matlab:  0.0136 0.0023 0.0026  s
    function difference 0
    gradient difference 0
 DIXON3DQ
 ********   
-Python:  0.3864 0.0038 0.0022  s
-Matlab:  0.0067 0.0007 0.0004  s
+Python:  0.3776 0.0038 0.0022  s
+Matlab:  0.0068 0.0007 0.0004  s
    function difference 0
    gradient difference 0
 DJTL
 ********   
-Python:  0.4007 0.0040 0.0023  s
-Matlab:  0.0092 0.0015 0.0010  s
+Python:  0.3971 0.0038 0.0022  s
+Matlab:  0.0078 0.0014 0.0009  s
    function difference 0
    gradient difference 0
 DMN15102
 ********   
-Python:  48.8811 2.2718 2.2913  s
-Matlab:  628.3803 3.7471 3.7335  s
+Python:  55.2411 2.2323 2.2305  s
+Matlab:  601.0270 3.6437 3.7031  s
    function difference 1.2861e-16
    gradient difference 0
 DMN15102LS
 ********   
-Python:  50.6692 2.1888 2.1833  s
-Matlab:  598.2702 0.9858 0.9535  s
+Python:  53.0632 2.1854 2.1465  s
+Matlab:  586.6192 0.9717 0.9421  s
    function difference 0
    gradient difference 0
 DMN15103
 ********   
-Python:  53.3934 2.8114 2.8434  s
-Matlab:  662.0872 5.1386 5.1885  s
+Python:  51.4195 2.7817 2.7710  s
+Matlab:  656.3939 5.0722 5.1799  s
    function difference 1.2816e-16
    gradient difference 0
 DMN15103LS
 ********   
-Python:  45.4214 2.7313 2.6908  s
+Python:  53.3377 2.6797 2.6436  s
+Matlab:  672.3731 0.9811 0.9517  s
+   function difference 0
+   gradient difference 0
+DMN15332
+********   
+Python:  54.5859 2.2633 2.2941  s
+Matlab:  599.6979 3.3707 3.2980  s
+   function difference 1.4625e-16
+   gradient difference 0
+DMN15332LS
+********   
+Python:  43.8794 1.9977 2.0586  s
+Matlab:  583.8317 0.9339 0.9032  s
+   function difference 0
+   gradient difference 0
+DMN15333
+********   
+Python:  46.3847 2.6963 2.9429  s
+Matlab:  615.2792 5.1811 4.8160  s
+   function difference 1.798e-15
+   gradient difference 0
+DMN15333LS
+********   
+Python:  48.4427 2.5418 2.5420  s
+Matlab:  614.6427 0.9187 0.8871  s
+   function difference 0
+   gradient difference 0
+DMN37142
+********   
+Python:  54.1246 2.1328 2.1050  s
+Matlab:  590.6992 3.7447 3.7298  s
+   function difference 2.355e-16
+   gradient difference 0
+DMN37142LS
+********   
+Python:  47.8852 2.1353 2.1168  s
+Matlab:  604.9798 0.9538 0.9209  s
+   function difference 0
+   gradient difference 0
+DMN37143
+********   
+Python:  53.6024 2.7711 2.7812  s
+Matlab:  635.9648 4.9644 5.0835  s
+   function difference 2.4584e-16
+   gradient difference 0
+DMN37143LS
+********   
+Python:  50.0412 2.6250 2.6605  s
+Matlab:  646.2102 0.9732 0.9451  s
+   function difference 0
+   gradient difference 0
+DNIEPER
+********   
+Python:  0.4739 0.0070 0.0053  s
+Matlab:  0.0291 0.0071 0.0073  s
+   function difference 0
+   gradient difference 0
+DQRTIC
+********   
+Python:  0.3971 0.0038 0.0023  s
+Matlab:  0.0066 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+DRCAV1LQ
+********   
+Python:  0.5505 0.0129 0.0114  s
+Matlab:  0.1991 0.0687 0.0054  s
+   function difference 0
+   gradient difference 0
+DRCAV2LQ
+********   
+Python:  0.3805 0.0130 0.0113  s
+Matlab:  0.1990 0.0693 0.0059  s
+   function difference 0
+   gradient difference 0
+DRCAV3LQ
+********   
+Python:  0.4953 0.0131 0.0114  s
+Matlab:  0.1983 0.0659 0.0102  s
+   function difference 0
+   gradient difference 0
+DRCAVTY1
+********   
+Python:  0.3804 0.0152 0.0135  s
+Matlab:  0.2044 0.0525 0.0099  s
+   function difference 0
+   gradient difference 0
+DRCAVTY2
+********   
+Python:  0.4871 0.0152 0.0134  s
+Matlab:  0.2035 0.0162 0.0132  s
+   function difference 0
+   gradient difference 0
+DRCAVTY3
+********   
+Python:  0.3541 0.0159 0.0134  s
+Matlab:  0.2026 0.0165 0.0133  s
+   function difference 0
+   gradient difference 0
+DRUGDIS
+********   
+Python:  0.4367 0.0076 0.0054  s
+Matlab:  0.0212 0.0099 0.0101  s
+   function difference 0
+   gradient difference 0
+DRUGDISE
+********   
+Python:  0.4756 0.0087 0.0070  s
+Matlab:  0.0346 0.0071 0.0067  s
+   function difference 8.2371e-16
+   gradient difference 0
+DTOC1L
+********   
+Python:  0.4904 0.0092 0.0073  s
+Matlab:  0.0298 0.0031 0.0022  s
+   function difference 0
+   gradient difference 0
+DTOC1NA
+********   
+Python:  0.4282 0.0131 0.0113  s
+Matlab:  0.0621 0.0163 0.0077  s
+   function difference 0
+   gradient difference 0
+DTOC1NB
+********   
+Python:  0.4104 0.0130 0.0112  s
+Matlab:  0.0636 0.0166 0.0075  s
+   function difference 0
+   gradient difference 0
+DTOC1NC
+********   
+Python:  0.4526 0.0131 0.0112  s
+Matlab:  0.0655 0.0164 0.0082  s
+   function difference 0
+   gradient difference 0
+DTOC1ND
+********   
+Python:  0.4021 0.0130 0.0112  s
+Matlab:  0.0619 0.0169 0.0086  s
+   function difference 0
+   gradient difference 0
+DTOC2
+********   
+Python:  0.3805 0.0082 0.0064  s
+Matlab:  0.0322 0.0082 0.0055  s
+   function difference 1.3166e-16
+   gradient difference 0
+DTOC3
+********   
+Python:  0.3955 0.0057 0.0038  s
+Matlab:  0.0169 0.0018 0.0019  s
+   function difference 0
+   gradient difference 0
+DTOC4
+********   
+Python:  0.3888 0.0053 0.0035  s
+Matlab:  0.0190 0.0019 0.0025  s
+   function difference 0
+   gradient difference 0
+DTOC5
+********   
+Python:  0.4907 0.0046 0.0028  s
+Matlab:  0.0111 0.0016 0.0019  s
+   function difference 0
+   gradient difference 0
+DTOC6
+********   
+Python:  0.3956 0.0055 0.0039  s
+Matlab:  0.0116 0.0019 0.0021  s
+   function difference 0
+   gradient difference 0
+DUAL1
+********   
+Python:  0.5919 0.0403 0.0381  s
+Matlab:  0.5957 0.0424 0.0230  s
+   function difference 0
+   gradient difference 0
+DUAL2
+********   
+Python:  0.5647 0.0500 0.0484  s
+Matlab:  0.8372 0.0455 0.0267  s
+   function difference 0
+   gradient difference 0
+DUAL4
+********   
+Python:  0.5527 0.0324 0.0390  s
+Matlab:  0.4301 0.0348 0.0177  s
+   function difference 0
+   gradient difference 0
+DUALC1
+********   
+Python:  0.3419 0.0178 0.0161  s
+Matlab:  0.1430 0.0032 0.0039  s
+   function difference 0
+   gradient difference 0
+ECKERLE4
+********   
+Python:  0.4023 0.0047 0.0030  s
+Matlab:  0.0178 0.0031 0.0036  s
+   function difference 0
+   gradient difference 0
+ECKERLE4LS
+********   
+Python:  0.3978 0.0043 0.0026  s
+Matlab:  0.0167 0.0049 0.0058  s
+   function difference 0
+   gradient difference 0
+EDENSCH
+********   
+Python:  0.5051 0.0050 0.0034  s
+Matlab:  0.0104 0.0018 0.0019  s
+   function difference 0
+   gradient difference 0
+EG1
+********   
+Python:  0.4234 0.0036 0.0019  s
+Matlab:  0.0070 0.0009 0.0003  s
+   function difference 0
+   gradient difference 0
+EG2
+********   
+Python:  0.3998 0.0725 0.0711  s
+Matlab:  0.1319 0.0308 0.0170  s
+   function difference 0
+   gradient difference 0
+EGGCRATE
+********   
+Python:  0.3887 0.0037 0.0020  s
+Matlab:  0.0072 0.0009 0.0003  s
+   function difference 0
+   gradient difference 0
+EGGCRATEB
+********   
+Python:  0.4113 0.0036 0.0019  s
+Matlab:  0.0062 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+EGGCRATENE
+********   
+Python:  0.3704 0.0037 0.0021  s
+Matlab:  0.0068 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+EIGENA
+********   
+Python:  0.4601 0.0036 0.0021  s
+Matlab:  0.0105 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+EIGENA2
+********   
+Python:  0.3743 0.0042 0.0024  s
+Matlab:  0.0107 0.0011 0.0007  s
+   function difference 0
+   gradient difference 0
+EIGENACO
+********   
+Python:  0.4921 0.0037 0.0021  s
+Matlab:  0.0107 0.0013 0.0008  s
+   function difference 0
+   gradient difference 0
+EIGENALS
+********   
+Python:  0.3818 0.0034 0.0019  s
+Matlab:  0.0100 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+EIGENB2
+********   
+Python:  0.4464 0.0041 0.0024  s
+Matlab:  0.0098 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+EIGENB
+********   
+Python:  0.3808 0.0038 0.0021  s
+Matlab:  0.0103 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+EIGENBCO
+********   
+Python:  0.4093 0.0037 0.0021  s
+Matlab:  0.0107 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+EIGENBLS
+********   
+Python:  0.3766 0.0034 0.0019  s
+Matlab:  0.0100 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+EIGMAXA
+********   
+Python:  0.4361 0.0038 0.0021  s
+Matlab:  0.0087 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+EIGMINA
+********   
+Python:  0.3774 0.0037 0.0021  s
+Matlab:  0.0082 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+ELATTAR
+********   
+Python:  0.4917 0.0139 0.0122  s
+Matlab:  0.0573 0.0143 0.0095  s
+   function difference 0
+   gradient difference 0
+ELATVIDU
+********   
+Python:  0.4547 0.0035 0.0019  s
+Matlab:  0.0064 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+ELATVIDUB
+********   
+Python:  0.3820 0.0036 0.0019  s
+Matlab:  0.0070 0.0006 0.0004  s
+   function difference 0
+   gradient difference 0
+ELATVIDUB
+********   
+Python:  0.3443 0.0014 0.0007  s
+Matlab:  0.0014 0.0005 0.0004  s
+   function difference 0
+   gradient difference 0
+ELATVIDUNE
+********   
+Python:  0.4067 0.0037 0.0020  s
+Matlab:  0.0070 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+ELEC
+********   
+Python:  0.3934 0.0098 0.0081  s
+Matlab:  0.0997 0.0239 0.0074  s
+   function difference 0
+   gradient difference 7.9737e-16
+ENGVAL1
+********   
+Python:  0.4352 0.0046 0.0030  s
+Matlab:  0.0097 0.0014 0.0015  s
+   function difference 0
+   gradient difference 0
+ENGVAL2
+********   
+Python:  0.3794 0.0037 0.0021  s
+Matlab:  0.0076 0.0011 0.0006  s
+   function difference 0
+   gradient difference 0
+ENGVAL2NE
+********   
+Python:  0.5303 0.0039 0.0023  s
+Matlab:  0.0082 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+ENSO
+********   
+Python:  0.3869 0.0252 0.0234  s
+Matlab:  0.1479 0.0263 0.0068  s
+   function difference 1.2439e-16
+   gradient difference 1.3949e-17
+ENSOLS
+********   
+Python:  0.4257 0.0223 0.0204  s
+Matlab:  0.1395 0.0329 0.0095  s
+   function difference 3.9408e-16
+   gradient difference 2.6519e-16
+EQC
+********   
+Python:  0.4294 0.0050 0.0032  s
+Matlab:  0.0163 0.0028 0.0021  s
+   function difference 0
+   gradient difference 0
+ERRINBAR
+********   
+Python:  0.3946 0.0046 0.0029  s
+Matlab:  0.0128 0.0017 0.0013  s
+   function difference 1.9654e-16
+   gradient difference 0
+ERRINROS
+********   
+Python:  0.3754 0.0044 0.0028  s
+Matlab:  0.0088 0.0013 0.0015  s
+   function difference 0
+   gradient difference 0
+ERRINRSM
+********   
+Python:  0.4377 0.0046 0.0029  s
+Matlab:  0.0091 0.0014 0.0014  s
+   function difference 0
+   gradient difference 4.7473e-18
+ERRINRSMNE
+********   
+Python:  0.3990 0.0048 0.0032  s
+Matlab:  0.0092 0.0008 0.0005  s
+   function difference 0
+   gradient difference 2.018e-17
+EXP2B
+********   
+Python:  0.4874 0.0035 0.0020  s
+Matlab:  0.0091 0.0018 0.0017  s
+   function difference 0
+   gradient difference 6.6564e-17
+EXP2NE
+********   
+Python:  0.4386 0.0039 0.0022  s
+Matlab:  0.0104 0.0013 0.0009  s
+   function difference 0
+   gradient difference 0
+EXPFIT
+********   
+Python:  0.3820 0.0035 0.0019  s
+Matlab:  0.0083 0.0014 0.0008  s
+   function difference 0
+   gradient difference 0
+EXPFITA
+********   
+Python:  0.3990 0.0053 0.0037  s
+Matlab:  0.0142 0.0022 0.0014  s
+   function difference 0
+   gradient difference 0
+EXPFITB
+********   
+Python:  0.4297 0.0119 0.0100  s
+Matlab:  0.0470 0.0080 0.0065  s
+   function difference 1.6185e-16
+   gradient difference 0
+EXPFITC
+********   
+Python:  0.4127 0.0429 0.0410  s
+Matlab:  0.1231 0.0303 0.0134  s
+   function difference 2.5954e-16
+   gradient difference 0
+EXPLIN
+********   
+Python:  0.3871 0.0035 0.0019  s
+Matlab:  0.0081 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+EXPLIN2
+********   
+Python:  0.4317 0.0035 0.0019  s
+Matlab:  0.0077 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+EXPQUAD
+********   
+Python:  0.4785 0.0036 0.0019  s
+Matlab:  0.0093 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+EXTRASIM
+********   
+Python:  0.4397 0.0036 0.0020  s
+Matlab:  0.0069 0.0004 0.0001  s
+   function difference 0
+   gradient difference 0
+EXTROSNB
+********   
+Python:  0.3832 0.0041 0.0025  s
+Matlab:  0.0081 0.0012 0.0008  s
+   function difference 0
+   gradient difference 0
+EXTROSNBNE
+********   
+Python:  0.4203 0.0043 0.0026  s
+Matlab:  0.0087 0.0009 0.0005  s
+   function difference 0
+   gradient difference 0
+FCCU
+********   
+Python:  0.3971 0.0052 0.0036  s
+Matlab:  0.0105 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+FEEDLOC
+********   
+Python:  0.4300 0.0272 0.0253  s
+Matlab:  0.1809 0.0193 0.0065  s
+   function difference 2.3198e-15
+   gradient difference 0
+FERRISDC
+********   
+Python:  0.3786 0.0041 0.0023  s
+Matlab:  0.0188 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+FLETBV3M
+********   
+Python:  0.4085 0.0047 0.0031  s
+Matlab:  0.0106 0.0016 0.0018  s
+   function difference 0
+   gradient difference 0
+FLETCBV2
+********   
+Python:  0.4680 0.0051 0.0034  s
+Matlab:  0.0101 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+FLETCBV3
+********   
+Python:  0.4042 0.0050 0.0035  s
+Matlab:  0.0094 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+FLETCHBV
+********   
+Python:  0.5002 0.0051 0.0034  s
+Matlab:  0.0101 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+FLETCHCR
+********   
+Python:  0.4199 0.0043 0.0028  s
+Matlab:  0.0090 0.0013 0.0015  s
+   function difference 0
+   gradient difference 0
+FLETCHER
+********   
+Python:  0.4656 0.0038 0.0021  s
+Matlab:  0.0080 0.0013 0.0003  s
+   function difference 0
+   gradient difference 0
+FLOSP2HH
+********   
+Python:  0.3609 0.0048 0.0031  s
+Matlab:  0.0184 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+FLOSP2HL
+********   
+Python:  0.4295 0.0047 0.0031  s
+Matlab:  0.0181 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+FLOSP2HM
+********   
+Python:  0.3856 0.0048 0.0031  s
+Matlab:  0.0186 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+FLOSP2TH
+********   
+Python:  0.5104 0.0048 0.0032  s
+Matlab:  0.0187 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+FLOSP2TL
+********   
+Python:  0.3536 0.0048 0.0031  s
+Matlab:  0.0188 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+FLOSP2TM
+********   
+Python:  0.4300 0.0047 0.0031  s
+Matlab:  0.0174 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+FLT
+********   
+Python:  0.4273 0.0038 0.0021  s
+Matlab:  0.0067 0.0009 0.0003  s
+   function difference 0
+   gradient difference 0
+FMINSRF2
+********   
+Python:  0.3914 0.0041 0.0025  s
+Matlab:  0.0121 0.0018 0.0018  s
+   function difference 0
+   gradient difference 0
+FMINSURF
+********   
+Python:  0.4155 0.0044 0.0026  s
+Matlab:  0.0123 0.0016 0.0018  s
+   function difference 1.5978e-16
+   gradient difference 1.6211e-16
+FREURONE
+********   
+Python:  0.3940 0.0039 0.0023  s
+Matlab:  0.0092 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+FREUROTH
+********   
+Python:  0.4338 0.0037 0.0021  s
+Matlab:  0.0081 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+GAUSS1LS
+********   
+Python:  0.4585 0.0171 0.0152  s
+Matlab:  0.1354 0.0302 0.0079  s
+   function difference 0
+   gradient difference 1.4229e-18
+GAUSS2LS
+********   
+Python:  0.4128 0.0169 0.0150  s
+Matlab:  0.1359 0.0305 0.0092  s
+   function difference 1.9862e-16
+   gradient difference 9.7105e-16
+GAUSS3LS
+********   
+Python:  0.4552 0.0171 0.0151  s
+Matlab:  0.1346 0.0317 0.0079  s
+   function difference 0
+   gradient difference 5.8644e-16
+GAUSSIAN
+********   
+Python:  0.4203 0.0036 0.0020  s
+Matlab:  0.0103 0.0017 0.0019  s
+   function difference 0
+   gradient difference 0
+GENHS28
+********   
+Python:  0.4073 0.0042 0.0025  s
+Matlab:  0.0097 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+GENHUMPS
+********   
+Python:  0.3728 0.0039 0.0022  s
+Matlab:  0.0225 0.0033 0.0021  s
+   function difference 0
+   gradient difference 0
+GENROSE
+********   
+Python:  0.4227 0.0045 0.0029  s
+Matlab:  0.0093 0.0014 0.0014  s
+   function difference 0
+   gradient difference 0
+GENROSEB
+********   
+Python:  0.4580 0.0047 0.0029  s
+Matlab:  0.0091 0.0014 0.0015  s
+   function difference 0
+   gradient difference 0
+GENROSEBNE
+********   
+Python:  0.4548 0.0048 0.0031  s
+Matlab:  0.0101 0.0009 0.0005  s
+   function difference 1.6566e-16
+   gradient difference 0
+GIGOMEZ1
+********   
+Python:  0.4299 0.0038 0.0021  s
+Matlab:  0.0069 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+GIGOMEZ2
+********   
+Python:  0.3976 0.0038 0.0021  s
+Matlab:  0.0080 0.0009 0.0003  s
+   function difference 0
+   gradient difference 0
+GIGOMEZ3
+********   
+Python:  0.4396 0.0038 0.0021  s
+Matlab:  0.0079 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+GILBERT
+********   
+Python:  0.3795 0.0042 0.0025  s
+Matlab:  0.0098 0.0023 0.0009  s
+   function difference 0
+   gradient difference 0
+GOFFIN
+********   
+Python:  0.3978 0.0070 0.0053  s
+Matlab:  0.0496 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+GOTTFR
+********   
+Python:  0.4410 0.0036 0.0019  s
+Matlab:  0.0073 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+GOULDQP1
+********   
+Python:  0.3817 0.0048 0.0031  s
+Matlab:  0.0157 0.0014 0.0007  s
+   function difference 0
+   gradient difference 0
+GPP
+********   
+Python:  0.7659 0.0747 0.0724  s
+Matlab:  0.7342 0.0557 0.0379  s
+   function difference 2.454e-16
+   gradient difference 0
+GROWTH
+********   
+Python:  0.3803 0.0039 0.0022  s
+Matlab:  0.0111 0.0013 0.0008  s
+   function difference 0
+   gradient difference 0
+GROWTHLS
+********   
+Python:  0.4233 0.0035 0.0020  s
+Matlab:  0.0104 0.0016 0.0015  s
+   function difference 0
+   gradient difference 0
+GULF
+********   
+Python:  0.4232 0.0059 0.0042  s
+Matlab:  0.0364 0.0134 0.0082  s
+   function difference 0
+   gradient difference 0
+GULFNE
+********   
+Python:  0.3952 0.0068 0.0051  s
+Matlab:  0.0377 0.0126 0.0051  s
+   function difference 1.6903e-16
+   gradient difference 3.2865e-19
+HADAMALS
+********   
+Python:  0.4049 0.0113 0.0099  s
+Matlab:  0.1128 0.0287 0.0107  s
+   function difference 0
+   gradient difference 0
+HADAMARD
+********   
+Python:  0.4376 0.0267 0.0249  s
+Matlab:  0.1113 0.0159 0.0076  s
+   function difference 0
+   gradient difference 0
+HAGER1
+********   
+Python:  0.4514 0.0048 0.0032  s
+Matlab:  0.0089 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+HAGER2
+********   
+Python:  0.4683 0.0056 0.0038  s
+Matlab:  0.0120 0.0018 0.0010  s
+   function difference 0
+   gradient difference 0
+HAGER3
+********   
+Python:  0.4639 0.0045 0.0029  s
+Matlab:  0.0100 0.0012 0.0008  s
+   function difference 0
+   gradient difference 0
+HAGER4
+********   
+Python:  0.3952 0.0046 0.0029  s
+Matlab:  0.0139 0.0019 0.0013  s
+   function difference 0
+   gradient difference 0
+HAHN1
+********   
+Python:  0.4503 0.0137 0.0118  s
+Matlab:  0.0922 0.0233 0.0139  s
+   function difference 3.3308e-16
+   gradient difference 0
+HAHN1LS
+********   
+Python:  0.4019 0.0112 0.0095  s
+Matlab:  0.0902 0.0278 0.0105  s
+   function difference 0
+   gradient difference 0
+HAIFAS
+********   
+Python:  0.4206 0.0044 0.0027  s
+Matlab:  0.0144 0.0014 0.0010  s
+   function difference 0
+   gradient difference 0
+HANGING
+********   
+Python:  0.3732 0.0048 0.0031  s
+Matlab:  0.0179 0.0022 0.0029  s
+   function difference 0
+   gradient difference 0
+HAIRY
+********   
+Python:  0.4394 0.0033 0.0018  s
+Matlab:  0.0067 0.0010 0.0003  s
+   function difference 0
+   gradient difference 0
+HALDMADS
+********   
+Python:  0.4590 0.0075 0.0057  s
+Matlab:  0.0174 0.0037 0.0045  s
+   function difference 0
+   gradient difference 0
+HART6
+********   
+Python:  0.4441 0.0036 0.0020  s
+Matlab:  0.0098 0.0024 0.0019  s
+   function difference 0
+   gradient difference 4.1252e-18
+HATFLDA
+********   
+Python:  0.3845 0.0035 0.0020  s
+Matlab:  0.0070 0.0009 0.0003  s
+   function difference 0
+   gradient difference 0
+HATFLDANE
+********   
+Python:  0.4430 0.0037 0.0021  s
+Matlab:  0.0071 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HATFLDB
+********   
+Python:  0.3872 0.0037 0.0020  s
+Matlab:  0.0070 0.0006 0.0004  s
+   function difference 0
+   gradient difference 0
+HATFLDBNE
+********   
+Python:  0.4231 0.0038 0.0021  s
+Matlab:  0.0072 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HATFLDC
+********   
+Python:  0.3917 0.0051 0.0034  s
+Matlab:  0.0101 0.0024 0.0026  s
+   function difference 0
+   gradient difference 0
+HATFLDCNE
+********   
+Python:  0.4272 0.0054 0.0038  s
+Matlab:  0.0116 0.0013 0.0010  s
+   function difference 1.1874e-16
+   gradient difference 0
+HATFLDD
+********   
+Python:  0.4655 0.0036 0.0020  s
+Matlab:  0.0100 0.0024 0.0017  s
+   function difference 0
+   gradient difference 0
+HATFLDDNE
+********   
+Python:  0.3976 0.0039 0.0022  s
+Matlab:  0.0111 0.0021 0.0009  s
+   function difference 1.1255e-16
+   gradient difference 0
+HATFLDE
+********   
+Python:  0.4201 0.0039 0.0024  s
+Matlab:  0.0134 0.0034 0.0042  s
+   function difference 0
+   gradient difference 1.2071e-16
+HATFLDENE
+********   
+Python:  0.4312 0.0043 0.0026  s
+Matlab:  0.0144 0.0022 0.0026  s
+   function difference 1.1623e-16
+   gradient difference 0
+HATFLDF
+********   
+Python:  0.4165 0.0037 0.0021  s
+Matlab:  0.0074 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HATFLDFL
+********   
+Python:  0.4203 0.0037 0.0020  s
+Matlab:  0.0069 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+HATFLDFLNE
+********   
+Python:  0.4062 0.0037 0.0021  s
+Matlab:  0.0075 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+HATFLDFLS
+********   
+Python:  0.4037 0.0036 0.0019  s
+Matlab:  0.0073 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+HATFLDG
+********   
+Python:  0.4724 0.0056 0.0040  s
+Matlab:  0.0148 0.0018 0.0020  s
+   function difference 0
+   gradient difference 0
+HATFLDH
+********   
+Python:  0.4550 0.0041 0.0023  s
+Matlab:  0.0080 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HEART6LS
+********   
+Python:  0.4104 0.0036 0.0021  s
+Matlab:  0.0136 0.0021 0.0021  s
+   function difference 0
+   gradient difference 0
+HEART8LS
+********   
+Python:  0.4236 0.0043 0.0026  s
+Matlab:  0.0149 0.0025 0.0022  s
+   function difference 0
+   gradient difference 0
+HARKERP2
+********   
+Python:  0.4064 0.0045 0.0029  s
+Matlab:  0.0107 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+HELIX
+********   
+Python:  0.3819 0.0036 0.0019  s
+Matlab:  0.0069 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+HELIXNE
+********   
+Python:  0.4001 0.0037 0.0021  s
+Matlab:  0.0074 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HETmZ
+********   
+Python:  0.5006 0.0823 0.0806  s
+Matlab:  0.0864 0.0247 0.0151  s
+   function difference 0
+   gradient difference 0
+HILBERTA
+********   
+Python:  0.5184 0.0040 0.0023  s
+Matlab:  0.0184 0.0038 0.0027  s
+   function difference 0
+   gradient difference 0
+HILBERTB
+********   
+Python:  0.3861 0.0041 0.0023  s
+Matlab:  0.0175 0.0029 0.0027  s
+   function difference 0
+   gradient difference 0
+HIMMELBA
+********   
+Python:  0.4481 0.0037 0.0020  s
+Matlab:  0.0054 0.0005 0.0001  s
+   function difference 0
+   gradient difference 0
+HIMMELBB
+********   
+Python:  0.3799 0.0033 0.0017  s
+Matlab:  0.0066 0.0014 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBB
+********   
+Python:  0.3925 0.0010 0.0002  s
+Matlab:  0.0010 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBC
+********   
+Python:  0.3495 0.0036 0.0019  s
+Matlab:  0.0064 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBCLS
+********   
+Python:  0.4116 0.0034 0.0018  s
+Matlab:  0.0058 0.0010 0.0003  s
+   function difference 0
+   gradient difference 0
+HIMMELBD
+********   
+Python:  0.4531 0.0037 0.0020  s
+Matlab:  0.0067 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBF
+********   
+Python:  0.4186 0.0036 0.0019  s
+Matlab:  0.0092 0.0013 0.0009  s
+   function difference 0
+   gradient difference 0
+HIMMELBFNE
+********   
+Python:  0.4276 0.0038 0.0021  s
+Matlab:  0.0096 0.0015 0.0008  s
+   function difference 0
+   gradient difference 0
+HIMMELBG
+********   
+Python:  0.4660 0.0033 0.0017  s
+Matlab:  0.0059 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBH
+********   
+Python:  0.3658 0.0035 0.0019  s
+Matlab:  0.0066 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBH
+********   
+Python:  0.3480 0.0013 0.0003  s
+Matlab:  0.0009 0.0003 0.0002  s
+   function difference 0
+   gradient difference 0
+HIMMELBI
+********   
+Python:  0.3759 0.0056 0.0041  s
+Matlab:  0.0340 0.0026 0.0017  s
+   function difference 0
+   gradient difference 0
+HIMMELBJ
+********   
+Python:  0.4153 0.0057 0.0044  s
+Matlab:  0.0589 0.0092 0.0065  s
+   function difference 1.123e-16
+   gradient difference 1.1146e-17
+HIMMELBK
+********   
+Python:  0.4673 0.0075 0.0061  s
+Matlab:  0.0776 0.0118 0.0040  s
+   function difference 0
+   gradient difference 0
+HIMMELP1
+********   
+Python:  0.4268 0.0032 0.0020  s
+Matlab:  0.0077 0.0010 0.0003  s
+   function difference 0
+   gradient difference 0
+HIMMELP2
+********   
+Python:  0.4131 0.0033 0.0021  s
+Matlab:  0.0093 0.0019 0.0004  s
+   function difference 0
+   gradient difference 0
+HIMMELP3
+********   
+Python:  0.4064 0.0033 0.0022  s
+Matlab:  0.0081 0.0010 0.0005  s
+   function difference 0
+   gradient difference 0
+HIMMELP4
+********   
+Python:  0.4116 0.0035 0.0022  s
+Matlab:  0.0082 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+HIMMELP5
+********   
+Python:  0.4460 0.0034 0.0022  s
+Matlab:  0.0080 0.0008 0.0005  s
+   function difference 1.9231e-16
+   gradient difference 0
+HIMMELP6
+********   
+Python:  0.3859 0.0037 0.0024  s
+Matlab:  0.0079 0.0010 0.0005  s
+   function difference 2.1119e-16
+   gradient difference 0
+HONG
+********   
+Python:  0.4413 0.0033 0.0020  s
+Matlab:  0.0081 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+HS100
+********   
+Python:  0.3978 0.0038 0.0025  s
+Matlab:  0.0100 0.0023 0.0008  s
+   function difference 0
+   gradient difference 0
+HS100LNP
+********   
+Python:  0.5657 0.0037 0.0025  s
+Matlab:  0.0093 0.0010 0.0006  s
+   function difference 0
+   gradient difference 0
+HS100MOD
+********   
+Python:  0.3932 0.0039 0.0026  s
+Matlab:  0.0096 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+HS10
+********   
+Python:  0.4169 0.0032 0.0021  s
+Matlab:  0.0074 0.0014 0.0002  s
+   function difference 0
+   gradient difference 0
+HS101
+********   
+Python:  0.3988 0.0038 0.0028  s
+Matlab:  0.0180 0.0031 0.0019  s
+   function difference 0
+   gradient difference 0
+HS10
+********   
+Python:  0.3596 0.0017 0.0007  s
+Matlab:  0.0016 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+HS102
+********   
+Python:  0.4461 0.0039 0.0024  s
+Matlab:  0.0295 0.0020 0.0017  s
+   function difference 0
+   gradient difference 0
+HS103
+********   
+Python:  0.3736 0.0036 0.0024  s
+Matlab:  0.0177 0.0021 0.0019  s
+   function difference 0
+   gradient difference 0
+HS104
+********   
+Python:  0.4336 0.0039 0.0026  s
+Matlab:  0.0101 0.0018 0.0009  s
+   function difference 1.2948e-16
+   gradient difference 0
+HS105
+********   
+Python:  0.5021 0.0300 0.0282  s
+Matlab:  0.1498 0.0379 0.0079  s
+   function difference 0
+   gradient difference 4.6249e-19
+HS106
+********   
+Python:  0.4363 0.0038 0.0025  s
+Matlab:  0.0093 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+HS107
+********   
+Python:  0.3986 0.0040 0.0026  s
+Matlab:  0.0130 0.0020 0.0013  s
+   function difference 0
+   gradient difference 0
+HS108
+********   
+Python:  0.4385 0.0038 0.0025  s
+Matlab:  0.0135 0.0032 0.0020  s
+   function difference 0
+   gradient difference 0
+HS109
+********   
+Python:  0.4430 0.0043 0.0029  s
+Matlab:  0.0146 0.0020 0.0019  s
+   function difference 0
+   gradient difference 0
+HS1
+********   
+Python:  0.3724 0.0034 0.0018  s
+Matlab:  0.0063 0.0009 0.0002  s
+   function difference 0
+   gradient difference 0
+HS1NE
+********   
+Python:  0.3975 0.0033 0.0020  s
+Matlab:  0.0079 0.0006 0.0001  s
+   function difference 0
+   gradient difference 0
+HS111
+********   
+Python:  0.4151 0.0038 0.0024  s
+Matlab:  0.0172 0.0021 0.0020  s
+   function difference 0
+   gradient difference 0
+HS11
+********   
+Python:  0.5204 0.0036 0.0020  s
+Matlab:  0.0073 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HS112
+********   
+Python:  0.4066 0.0037 0.0024  s
+Matlab:  0.0137 0.0019 0.0012  s
+   function difference 0
+   gradient difference 0
+HS113
+********   
+Python:  0.4236 0.0041 0.0028  s
+Matlab:  0.0125 0.0015 0.0010  s
+   function difference 0
+   gradient difference 0
+HS114
+********   
+Python:  0.4091 0.0041 0.0027  s
+Matlab:  0.0124 0.0011 0.0006  s
+   function difference 0
+   gradient difference 0
+HS116
+********   
+Python:  0.4352 0.0046 0.0032  s
+Matlab:  0.0144 0.0014 0.0011  s
+   function difference 1.1526e-16
+   gradient difference 0
+HS117
+********   
+Python:  0.4079 0.0040 0.0027  s
+Matlab:  0.0221 0.0022 0.0023  s
+   function difference 0
+   gradient difference 0
+HS118
+********   
+Python:  0.4143 0.0044 0.0031  s
+Matlab:  0.0129 0.0009 0.0007  s
+   function difference 0
+   gradient difference 0
+HS119
+********   
+Python:  0.4229 0.0088 0.0074  s
+Matlab:  0.0756 0.0146 0.0055  s
+   function difference 0
+   gradient difference 0
+HS12
+********   
+Python:  0.4899 0.0036 0.0020  s
+Matlab:  0.0067 0.0011 0.0003  s
+   function difference 0
+   gradient difference 0
+HS13
+********   
+Python:  0.4386 0.0040 0.0021  s
+Matlab:  0.0076 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HS14
+********   
+Python:  0.4244 0.0035 0.0023  s
+Matlab:  0.0075 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+HS15
+********   
+Python:  0.4319 0.0034 0.0022  s
+Matlab:  0.0066 0.0008 0.0003  s
+   function difference 0
+   gradient difference 0
+HS16
+********   
+Python:  0.4382 0.0035 0.0021  s
+Matlab:  0.0071 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+HS17
+********   
+Python:  0.4169 0.0034 0.0021  s
+Matlab:  0.0072 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+HS18
+********   
+Python:  0.4177 0.0032 0.0020  s
+Matlab:  0.0070 0.0015 0.0003  s
+   function difference 0
+   gradient difference 0
+HS19
+********   
+Python:  0.4298 0.0033 0.0020  s
+Matlab:  0.0073 0.0007 0.0003  s
+   function difference 2.5308e-16
+   gradient difference 0
+HS20
+********   
+Python:  0.4743 0.0036 0.0022  s
+Matlab:  0.0083 0.0011 0.0004  s
+   function difference 0
+   gradient difference 0
+HS2
+********   
+Python:  0.4403 0.0031 0.0019  s
+Matlab:  0.0057 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HS21
+********   
+Python:  0.4269 0.0036 0.0022  s
+Matlab:  0.0068 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HS21MOD
+********   
+Python:  0.4275 0.0036 0.0021  s
+Matlab:  0.0082 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+HS22
+********   
+Python:  0.4449 0.0034 0.0021  s
+Matlab:  0.0069 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HS23
+********   
+Python:  0.4020 0.0037 0.0024  s
+Matlab:  0.0075 0.0008 0.0004  s
+   function difference 0
+   gradient difference 0
+HS24
+********   
+Python:  0.4202 0.0034 0.0021  s
+Matlab:  0.0076 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS25
+********   
+Python:  0.4221 0.0054 0.0042  s
+Matlab:  0.0372 0.0138 0.0083  s
+   function difference 0
+   gradient difference 0
+HS25NE
+********   
+Python:  0.4698 0.0065 0.0053  s
+Matlab:  0.0400 0.0084 0.0070  s
+   function difference 0
+   gradient difference 0
+HS26
+********   
+Python:  0.4333 0.0034 0.0020  s
+Matlab:  0.0078 0.0018 0.0003  s
+   function difference 0
+   gradient difference 0
+HS268
+********   
+Python:  0.4268 0.0040 0.0027  s
+Matlab:  0.0144 0.0020 0.0021  s
+   function difference 0
+   gradient difference 0
+HS27
+********   
+Python:  0.4321 0.0037 0.0023  s
+Matlab:  0.0070 0.0009 0.0002  s
+   function difference 0
+   gradient difference 0
+HS28
+********   
+Python:  0.4251 0.0036 0.0020  s
+Matlab:  0.0079 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HS29
+********   
+Python:  0.4199 0.0035 0.0020  s
+Matlab:  0.0075 0.0014 0.0003  s
+   function difference 0
+   gradient difference 0
+HS2NE
+********   
+Python:  0.4120 0.0033 0.0020  s
+Matlab:  0.0065 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS30
+********   
+Python:  0.4293 0.0035 0.0019  s
+Matlab:  0.0071 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS3
+********   
+Python:  0.5047 0.0032 0.0019  s
+Matlab:  0.0059 0.0008 0.0002  s
+   function difference 0
+   gradient difference 0
+HS31
+********   
+Python:  0.4391 0.0035 0.0020  s
+Matlab:  0.0074 0.0010 0.0003  s
+   function difference 0
+   gradient difference 0
+HS32
+********   
+Python:  0.4269 0.0035 0.0022  s
+Matlab:  0.0074 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+HS33
+********   
+Python:  0.4204 0.0035 0.0022  s
+Matlab:  0.0074 0.0010 0.0004  s
+   function difference 0
+   gradient difference 0
+HS34
+********   
+Python:  0.4321 0.0034 0.0021  s
+Matlab:  0.0071 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HS35
+********   
+Python:  0.4088 0.0036 0.0021  s
+Matlab:  0.0076 0.0008 0.0003  s
+   function difference 0
+   gradient difference 0
+HS35I
+********   
+Python:  0.4242 0.0035 0.0020  s
+Matlab:  0.0078 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS35MOD
+********   
+Python:  0.4260 0.0036 0.0021  s
+Matlab:  0.0075 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS36
+********   
+Python:  0.4773 0.0035 0.0020  s
+Matlab:  0.0066 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS37
+********   
+Python:  0.4344 0.0034 0.0021  s
+Matlab:  0.0068 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS38
+********   
+Python:  0.4246 0.0035 0.0023  s
+Matlab:  0.0073 0.0017 0.0005  s
+   function difference 0
+   gradient difference 0
+HS39
+********   
+Python:  0.4216 0.0033 0.0021  s
+Matlab:  0.0079 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+HS3MOD
+********   
+Python:  0.4371 0.0032 0.0020  s
+Matlab:  0.0056 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS40
+********   
+Python:  0.4103 0.0035 0.0022  s
+Matlab:  0.0086 0.0011 0.0004  s
+   function difference 0
+   gradient difference 0
+HS4
+********   
+Python:  0.4118 0.0032 0.0019  s
+Matlab:  0.0055 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HS41
+********   
+Python:  0.4256 0.0035 0.0020  s
+Matlab:  0.0074 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+HS42
+********   
+Python:  0.4744 0.0035 0.0022  s
+Matlab:  0.0072 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS43
+********   
+Python:  0.4441 0.0036 0.0024  s
+Matlab:  0.0106 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+HS44
+********   
+Python:  0.4285 0.0038 0.0024  s
+Matlab:  0.0084 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS44NEW
+********   
+Python:  0.4261 0.0038 0.0024  s
+Matlab:  0.0081 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+HS45
+********   
+Python:  0.4177 0.0029 0.0018  s
+Matlab:  0.0070 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+HS46
+********   
+Python:  0.4173 0.0035 0.0022  s
+Matlab:  0.0088 0.0012 0.0005  s
+   function difference 0
+   gradient difference 0
+HS47
+********   
+Python:  0.4248 0.0035 0.0022  s
+Matlab:  0.0092 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+HS48
+********   
+Python:  0.4313 0.0034 0.0021  s
+Matlab:  0.0079 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS49
+********   
+Python:  0.4698 0.0034 0.0021  s
+Matlab:  0.0076 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS50
+********   
+Python:  0.4343 0.0034 0.0022  s
+Matlab:  0.0087 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS5
+********   
+Python:  0.4169 0.0032 0.0019  s
+Matlab:  0.0060 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS51
+********   
+Python:  0.4310 0.0035 0.0024  s
+Matlab:  0.0085 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS52
+********   
+Python:  0.4271 0.0035 0.0022  s
+Matlab:  0.0076 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS53
+********   
+Python:  0.4308 0.0036 0.0022  s
+Matlab:  0.0076 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS54
+********   
+Python:  0.4127 0.0037 0.0021  s
+Matlab:  0.0097 0.0014 0.0005  s
+   function difference 0
+   gradient difference 2.7754e-20
+HS55
+********   
+Python:  0.4240 0.0035 0.0023  s
+Matlab:  0.0082 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+HS56
+********   
+Python:  0.4732 0.0036 0.0024  s
+Matlab:  0.0083 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+HS57
+********   
+Python:  0.4424 0.0044 0.0028  s
+Matlab:  0.0158 0.0036 0.0038  s
+   function difference 0
+   gradient difference 0
+HS59
+********   
+Python:  0.4418 0.0037 0.0024  s
+Matlab:  0.0122 0.0017 0.0012  s
+   function difference 0
+   gradient difference 0
+HS60
+********   
+Python:  0.4241 0.0036 0.0020  s
+Matlab:  0.0079 0.0012 0.0005  s
+   function difference 0
+   gradient difference 0
+HS61
+********   
+Python:  0.4290 0.0034 0.0022  s
+Matlab:  0.0071 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+HS6
+********   
+Python:  0.4089 0.0035 0.0020  s
+Matlab:  0.0071 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HS62
+********   
+Python:  0.4273 0.0038 0.0022  s
+Matlab:  0.0090 0.0008 0.0004  s
+   function difference 1.4156e-16
+   gradient difference 6.6223e-16
+HS63
+********   
+Python:  0.4354 0.0035 0.0022  s
+Matlab:  0.0073 0.0008 0.0004  s
+   function difference 0
+   gradient difference 0
+HS64
+********   
+Python:  0.4740 0.0037 0.0021  s
+Matlab:  0.0074 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS65
+********   
+Python:  0.4433 0.0039 0.0023  s
+Matlab:  0.0074 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+HS66
+********   
+Python:  0.4317 0.0036 0.0021  s
+Matlab:  0.0064 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS70
+********   
+Python:  0.4374 0.0080 0.0063  s
+Matlab:  0.0237 0.0136 0.0137  s
+   function difference 0
+   gradient difference 3.2016e-16
+HS71
+********   
+Python:  0.4152 0.0034 0.0022  s
+Matlab:  0.0086 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+HS7
+********   
+Python:  0.4202 0.0038 0.0021  s
+Matlab:  0.0072 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HS72
+********   
+Python:  0.4144 0.0034 0.0021  s
+Matlab:  0.0079 0.0008 0.0004  s
+   function difference 0
+   gradient difference 0
+HS73
+********   
+Python:  0.4364 0.0035 0.0021  s
+Matlab:  0.0078 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+HS74
+********   
+Python:  0.4819 0.0038 0.0024  s
+Matlab:  0.0091 0.0011 0.0005  s
+   function difference 0
+   gradient difference 0
+HS75
+********   
+Python:  0.4390 0.0037 0.0024  s
+Matlab:  0.0090 0.0008 0.0005  s
+   function difference 1.4203e-16
+   gradient difference 0
+HS76
+********   
+Python:  0.4228 0.0036 0.0022  s
+Matlab:  0.0086 0.0006 0.0004  s
+   function difference 0
+   gradient difference 0
+HS76I
+********   
+Python:  0.4347 0.0035 0.0022  s
+Matlab:  0.0086 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+HS77
+********   
+Python:  0.4268 0.0037 0.0023  s
+Matlab:  0.0083 0.0010 0.0005  s
+   function difference 0
+   gradient difference 0
+HS78
+********   
+Python:  0.4294 0.0033 0.0020  s
+Matlab:  0.0091 0.0020 0.0005  s
+   function difference 0
+   gradient difference 0
+HS79
+********   
+Python:  0.4279 0.0035 0.0023  s
+Matlab:  0.0087 0.0016 0.0005  s
+   function difference 0
+   gradient difference 0
+HS80
+********   
+Python:  0.4379 0.0033 0.0020  s
+Matlab:  0.0086 0.0010 0.0005  s
+   function difference 0
+   gradient difference 0
+HS81
+********   
+Python:  0.4705 0.0033 0.0021  s
+Matlab:  0.0104 0.0021 0.0009  s
+   function difference 0
+   gradient difference 0
+HS8
+********   
+Python:  0.4429 0.0032 0.0019  s
+Matlab:  0.0069 0.0012 0.0003  s
+   function difference 0
+   gradient difference 0
+HS83
+********   
+Python:  0.4251 0.0035 0.0022  s
+Matlab:  0.0090 0.0013 0.0006  s
+   function difference 0
+   gradient difference 0
+HS84
+********   
+Python:  0.4278 0.0037 0.0023  s
+Matlab:  0.0102 0.0011 0.0007  s
+   function difference 0
+   gradient difference 0
+HS86
+********   
+Python:  0.4339 0.0042 0.0029  s
+Matlab:  0.0174 0.0016 0.0023  s
+   function difference 0
+   gradient difference 0
+HS87
+********   
+Python:  0.4198 0.0038 0.0024  s
+Matlab:  0.0108 0.0011 0.0006  s
+   function difference 0
+   gradient difference 0
+HS9
+********   
+Python:  0.4233 0.0037 0.0022  s
+Matlab:  0.0067 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+HS93
+********   
+Python:  0.4411 0.0033 0.0021  s
+Matlab:  0.0097 0.0019 0.0007  s
+   function difference 0
+   gradient difference 0
+HS95
+********   
+Python:  0.4814 0.0035 0.0023  s
+Matlab:  0.0092 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+HS96
+********   
+Python:  0.4425 0.0036 0.0026  s
+Matlab:  0.0099 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+HS97
+********   
+Python:  0.4304 0.0037 0.0024  s
+Matlab:  0.0097 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+HS98
+********   
+Python:  0.4335 0.0037 0.0024  s
+Matlab:  0.0107 0.0008 0.0005  s
+   function difference 1.1891e-16
+   gradient difference 0
+HS99
+********   
+Python:  0.4265 0.0033 0.0020  s
+Matlab:  0.0107 0.0020 0.0016  s
+   function difference 0
+   gradient difference 0
+HS99EXP
+********   
+Python:  0.4183 0.0049 0.0037  s
+Matlab:  0.0143 0.0015 0.0010  s
+   function difference 0
+   gradient difference 0
+HUBFIT
+********   
+Python:  0.4145 0.0039 0.0023  s
+Matlab:  0.0068 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+HUESmMOD
+********   
+Python:  0.4254 0.0039 0.0025  s
+Matlab:  0.0108 0.0017 0.0005  s
+   function difference 0
+   gradient difference 0
+HUESTIS
+********   
+Python:  0.4790 0.0034 0.0021  s
+Matlab:  0.0093 0.0009 0.0005  s
+   function difference 0
+   gradient difference 0
+HUMPS
+********   
+Python:  0.4386 0.0030 0.0018  s
+Matlab:  0.0068 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+HYDC20LS
+********   
+Python:  0.4632 0.0180 0.0163  s
+Matlab:  0.2433 0.0899 0.0244  s
+   function difference 0
+   gradient difference 0
+HYDCAR20
+********   
+Python:  0.4489 0.0196 0.0181  s
+Matlab:  0.2495 0.0884 0.0226  s
+   function difference 3.1784e-16
+   gradient difference 0
+HYDCAR6
+********   
+Python:  0.4696 0.0081 0.0064  s
+Matlab:  0.0588 0.0110 0.0111  s
+   function difference 2.7983e-16
+   gradient difference 0
+HYDCAR6LS
+********   
+Python:  0.4248 0.0073 0.0059  s
+Matlab:  0.0559 0.0135 0.0125  s
+   function difference 0
+   gradient difference 0
+HYPCIR
+********   
+Python:  0.4549 0.0033 0.0020  s
+Matlab:  0.0072 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+INDEF
+********   
+Python:  0.4105 0.0041 0.0027  s
+Matlab:  0.0084 0.0007 0.0004  s
+   function difference 0
+   gradient difference 3.3095e-17
+INDEFM
+********   
+Python:  0.5024 0.0042 0.0028  s
+Matlab:  0.0090 0.0010 0.0008  s
+   function difference 0
+   gradient difference 3.3096e-17
+INTEGREQ
+********   
+Python:  0.4423 0.0353 0.0340  s
+Matlab:  0.0687 0.0314 0.0212  s
+   function difference 1.3158e-16
+   gradient difference 0
+INTEQNE
+********   
+Python:  0.4865 0.0052 0.0039  s
+Matlab:  0.0172 0.0052 0.0043  s
+   function difference 0
+   gradient difference 0
+INTEQNELS
+********   
+Python:  0.4104 0.0051 0.0037  s
+Matlab:  0.0150 0.0062 0.0045  s
+   function difference 2.1883e-16
+   gradient difference 2.1082e-16
+JANNSON3
+********   
+Python:  0.4595 0.0040 0.0027  s
+Matlab:  0.0104 0.0013 0.0008  s
+   function difference 0
+   gradient difference 0
+JANNSON4
+********   
+Python:  0.4045 0.0037 0.0024  s
+Matlab:  0.0082 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+JENSMP
+********   
+Python:  0.4517 0.0034 0.0021  s
+Matlab:  0.0096 0.0027 0.0018  s
+   function difference 0
+   gradient difference 0
+JNLBRNG1
+********   
+Python:  0.4130 0.0056 0.0041  s
+Matlab:  0.0231 0.0047 0.0035  s
+   function difference 0
+   gradient difference 0
+JNLBRNG2
+********   
+Python:  0.4696 0.0056 0.0041  s
+Matlab:  0.0226 0.0043 0.0035  s
+   function difference 0
+   gradient difference 0
+JNLBRNGA
+********   
+Python:  0.4161 0.0041 0.0026  s
+Matlab:  0.0158 0.0021 0.0028  s
+   function difference 0
+   gradient difference 0
+JNLBRNGB
+********   
+Python:  0.4037 0.0041 0.0026  s
+Matlab:  0.0158 0.0023 0.0031  s
+   function difference 0
+   gradient difference 0
+JUDGE
+********   
+Python:  0.4330 0.0044 0.0032  s
+Matlab:  0.0102 0.0020 0.0021  s
+   function difference 0
+   gradient difference 0
+JUDGEB
+********   
+Python:  0.4634 0.0043 0.0031  s
+Matlab:  0.0098 0.0017 0.0021  s
+   function difference 0
+   gradient difference 0
+JUNKTURN
+********   
+Python:  0.4213 0.0068 0.0055  s
+Matlab:  0.0319 0.0051 0.0041  s
+   function difference 0
+   gradient difference 0
+KIRBY2LS
+********   
+Python:  0.4200 0.0074 0.0061  s
+Matlab:  0.0597 0.0223 0.0088  s
+   function difference 0
+   gradient difference 0
+KISSING2
+********   
+Python:  0.5031 0.0435 0.0420  s
+Matlab:  0.3649 0.0425 0.0279  s
+   function difference 3.3685e-16
+   gradient difference 0
+KISSING
+********   
+Python:  0.5381 0.0372 0.0358  s
+Matlab:  0.1492 0.0237 0.0105  s
+   function difference 1.2072e-16
+   gradient difference 0
+KIWCRESC
+********   
+Python:  0.3996 0.0035 0.0021  s
+Matlab:  0.0070 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+KOEBHELB
+********   
+Python:  0.4672 0.0072 0.0058  s
+Matlab:  0.0512 0.0229 0.0095  s
+   function difference 0
+   gradient difference 0
+KOEBHELBNE
+********   
+Python:  0.4117 0.0087 0.0072  s
+Matlab:  0.0540 0.0132 0.0087  s
+   function difference 1.115e-16
+   gradient difference 0
+KOWOSB
+********   
+Python:  0.4612 0.0154 0.0021  s
+Matlab:  0.0101 0.0016 0.0013  s
+   function difference 0
+   gradient difference 0
+KOWOSBNE
+********   
+Python:  0.3875 0.0036 0.0023  s
+Matlab:  0.0106 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+KSS
+********   
+Python:  0.4245 0.0041 0.0027  s
+Matlab:  0.0147 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+KSSLS
+********   
+Python:  0.4694 0.0039 0.0025  s
+Matlab:  0.0138 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+LAKES
+********   
+Python:  0.4407 0.0122 0.0107  s
+Matlab:  0.0418 0.0054 0.0041  s
+   function difference 0
+   gradient difference 0
+LANCZOS1
+********   
+Python:  0.4433 0.0045 0.0032  s
+Matlab:  0.0214 0.0047 0.0037  s
+   function difference 1.321e-16
+   gradient difference 1.7688e-17
+LANCZOS1LS
+********   
+Python:  0.4251 0.0041 0.0029  s
+Matlab:  0.0204 0.0060 0.0043  s
+   function difference 0
+   gradient difference 0
+LANCZOS2
+********   
+Python:  0.4653 0.0045 0.0032  s
+Matlab:  0.0201 0.0046 0.0037  s
+   function difference 1.321e-16
+   gradient difference 1.7688e-17
+LANCZOS2LS
+********   
+Python:  0.3985 0.0040 0.0028  s
+Matlab:  0.0191 0.0055 0.0045  s
+   function difference 0
+   gradient difference 0
+LANCZOS3
+********   
+Python:  0.4461 0.0045 0.0032  s
+Matlab:  0.0205 0.0045 0.0038  s
+   function difference 0
+   gradient difference 1.7688e-17
+LANCZOS3LS
+********   
+Python:  0.4148 0.0041 0.0028  s
+Matlab:  0.0185 0.0055 0.0048  s
+   function difference 0
+   gradient difference 0
+LAUNCH
+********   
+Python:  0.4618 0.0059 0.0046  s
+Matlab:  0.0234 0.0041 0.0029  s
+   function difference 8.4352e-16
+   gradient difference 6.1764e-30
+LEAKNET
+********   
+Python:  0.4209 0.0190 0.0174  s
+Matlab:  0.0880 0.0233 0.0135  s
+   function difference 1.3943e-15
+   gradient difference 1.4676e-21
+LEVYMONE
+********   
+Python:  0.4691 0.0042 0.0027  s
+Matlab:  0.0093 0.0009 0.0006  s
+   function difference 2.976e-16
+   gradient difference 0
+LEVYMONE5
+********   
+Python:  0.4334 0.0035 0.0022  s
+Matlab:  0.0076 0.0006 0.0003  s
+   function difference 4.1421e-16
+   gradient difference 4.0677e-17
+LEVYMONE6
+********   
+Python:  0.4773 0.0040 0.0027  s
+Matlab:  0.0096 0.0008 0.0005  s
+   function difference 1.7633e-16
+   gradient difference 8.6278e-17
+LEVYMONE7
+********   
+Python:  0.4007 0.0040 0.0027  s
+Matlab:  0.0092 0.0008 0.0005  s
+   function difference 1.7633e-16
+   gradient difference 8.6278e-17
+LEVYMONE8
+********   
+Python:  0.4524 0.0039 0.0027  s
+Matlab:  0.0083 0.0008 0.0005  s
+   function difference 2.976e-16
+   gradient difference 0
+LEVYMONE9
+********   
+Python:  0.4749 0.0046 0.0032  s
+Matlab:  0.0107 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+LEVYMONE10
+********   
+Python:  0.4169 0.0048 0.0035  s
+Matlab:  0.0106 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+LEVYMONT
+********   
+Python:  0.4620 0.0038 0.0024  s
+Matlab:  0.0089 0.0020 0.0008  s
+   function difference 0
+   gradient difference 0
+LEVYMONT5
+********   
+Python:  0.4555 0.0038 0.0024  s
+Matlab:  0.0084 0.0011 0.0008  s
+   function difference 0
+   gradient difference 2.265e-16
+LEVYMONT6
+********   
+Python:  0.4181 0.0037 0.0024  s
+Matlab:  0.0087 0.0011 0.0008  s
+   function difference 0
+   gradient difference 2.265e-16
+LEVYMONT7
+********   
+Python:  0.4700 0.0037 0.0024  s
+Matlab:  0.0090 0.0012 0.0008  s
+   function difference 0
+   gradient difference 2.265e-16
+LEVYMONT8
+********   
+Python:  0.4471 0.0038 0.0024  s
+Matlab:  0.0085 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+LEVYMONT9
+********   
+Python:  0.4259 0.0041 0.0029  s
+Matlab:  0.0101 0.0016 0.0017  s
+   function difference 0
+   gradient difference 0
+LEVYMONT10
+********   
+Python:  0.4698 0.0046 0.0032  s
+Matlab:  0.0113 0.0020 0.0021  s
+   function difference 0
+   gradient difference 0
+LEWISPOL
+********   
+Python:  0.4574 0.0040 0.0027  s
+Matlab:  0.0105 0.0012 0.0006  s
+   function difference 0
+   gradient difference 0
+LIARWHD
+********   
+Python:  0.4262 0.0042 0.0030  s
+Matlab:  0.0084 0.0014 0.0016  s
+   function difference 0
+   gradient difference 0
+LIARWHDNE
+********   
+Python:  0.4620 0.0046 0.0033  s
+Matlab:  0.0095 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+LIN
+********   
+/Users/sgratton/S2X/S2X/python_problems/LIN.py:476: RuntimeWarning: divide by zero encountered in log
+  LOGX = np.log(EV_[0])
+/Users/sgratton/S2X/S2X/python_problems/LIN.py:477: RuntimeWarning: invalid value encountered in multiply
+  f_   = EV_[0]*LOGX
+Python:  0.4524 0.0052 0.0023  s
+Matlab:  0.0154 0.0022 0.0011  s
+   function difference NaN
+   gradient difference NaN
+LINSPANH
+********   
+Python:  0.4189 0.0054 0.0041  s
+Matlab:  0.0240 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+LINVERSE
+********   
+Python:  0.4119 0.0043 0.0030  s
+Matlab:  0.0296 0.0058 0.0049  s
+   function difference 0
+   gradient difference 2.2621e-16
+LINVERSENE
+********   
+Python:  0.4455 0.0046 0.0032  s
+Matlab:  0.0298 0.0052 0.0039  s
+   function difference 1.8375e-16
+   gradient difference 1.6347e-16
+LIPPERT1
+********   
+Python:  0.4787 0.0163 0.0148  s
+Matlab:  0.0420 0.0100 0.0044  s
+   function difference 0
+   gradient difference 0
+LIPPERT2
+********   
+Python:  0.4008 0.0177 0.0162  s
+Matlab:  0.0472 0.0130 0.0051  s
+   function difference 2.4455e-16
+   gradient difference 0
+LISWET10
+********   
+Python:  0.4682 0.0073 0.0058  s
+Matlab:  0.0370 0.0039 0.0022  s
+   function difference 0
+   gradient difference 2.0425e-17
+LISWET11
+********   
+Python:  0.4488 0.0073 0.0059  s
+Matlab:  0.0368 0.0038 0.0022  s
+   function difference 0
+   gradient difference 6.1057e-17
+LISWET12
+********   
+Python:  0.5078 0.0072 0.0057  s
+Matlab:  0.0367 0.0037 0.0022  s
+   function difference 0
+   gradient difference 2.5309e-17
+LISWET1
+********   
+Python:  0.4523 0.0071 0.0057  s
+Matlab:  0.0364 0.0035 0.0022  s
+   function difference 0
+   gradient difference 1.782e-17
+LISWET2
+********   
+Python:  0.4682 0.0071 0.0057  s
+Matlab:  0.0354 0.0037 0.0022  s
+   function difference 0
+   gradient difference 0
+LISWET3
+********   
+Python:  0.3923 0.0073 0.0059  s
+Matlab:  0.0361 0.0037 0.0023  s
+   function difference 0
+   gradient difference 1.1829e-17
+LISWET4
+********   
+Python:  0.4388 0.0071 0.0057  s
+Matlab:  0.0355 0.0041 0.0025  s
+   function difference 0
+   gradient difference 3.0705e-18
+LISWET5
+********   
+Python:  0.4253 0.0072 0.0058  s
+Matlab:  0.0370 0.0036 0.0023  s
+   function difference 0
+   gradient difference 2.8402e-17
+LISWET6
+********   
+Python:  0.4621 0.0072 0.0058  s
+Matlab:  0.0367 0.0036 0.0022  s
+   function difference 1.5066e-16
+   gradient difference 3.7217e-17
+LISWET7
+********   
+Python:  0.4837 0.0072 0.0057  s
+Matlab:  0.0377 0.0038 0.0025  s
+   function difference 0
+   gradient difference 3.1086e-17
+LISWET8
+********   
+Python:  0.4207 0.0072 0.0058  s
+Matlab:  0.0374 0.0035 0.0022  s
+   function difference 0
+   gradient difference 3.6176e-17
+LISWET9
+********   
+Python:  0.4865 0.0071 0.0057  s
+Matlab:  0.0348 0.0036 0.0021  s
+   function difference 0
+   gradient difference 4.0807e-17
+LMINSURF
+********   
+Python:  0.4279 0.0034 0.0020  s
+Matlab:  0.0124 0.0016 0.0017  s
+   function difference 0
+   gradient difference 0
+LOADBAL
+********   
+Python:  0.4954 0.0089 0.0074  s
+Matlab:  0.0302 0.0057 0.0045  s
+   function difference 1.2993e-16
+   gradient difference 0
+LOGHAIRY
+********   
+Python:  0.3911 0.0031 0.0018  s
+Matlab:  0.0076 0.0022 0.0004  s
+   function difference 0
+   gradient difference 0
+LOGROS
+********   
+Python:  0.4514 0.0030 0.0019  s
+Matlab:  0.0064 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+LOOTSMA
+********   
+Python:  0.4294 0.0035 0.0022  s
+Matlab:  0.0073 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+LOTSCHD
+********   
+Python:  0.4983 0.0040 0.0028  s
+Matlab:  0.0108 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+LSC1
+********   
+Python:  0.3991 0.0037 0.0024  s
+Matlab:  0.0093 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+LSC1LS
+********   
+Python:  0.4600 0.0035 0.0023  s
+Matlab:  0.0080 0.0012 0.0006  s
+   function difference 0
+   gradient difference 0
+LSC2
+********   
+Python:  0.4488 0.0039 0.0025  s
+Matlab:  0.0091 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+LSC2LS
+********   
+Python:  0.4342 0.0037 0.0023  s
+Matlab:  0.0085 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+LSNNODOC
+********   
+Python:  0.4768 0.0036 0.0023  s
+Matlab:  0.0082 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+LSQFIT
+********   
+Python:  0.4006 0.0038 0.0022  s
+Matlab:  0.0067 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+LUBRIF
+********   
+Python:  0.4954 0.0080 0.0066  s
+Matlab:  0.0680 0.0058 0.0069  s
+   function difference 5.578e-16
+   gradient difference 5.6266e-17
+LUBRIFC
+********   
+Python:  0.4473 0.0079 0.0066  s
+Matlab:  0.0667 0.0054 0.0069  s
+   function difference 4.3735e-16
+   gradient difference 0
+LUKSAN11
+********   
+Python:  0.4310 0.0183 0.0168  s
+Matlab:  0.0483 0.0068 0.0049  s
+   function difference 3.2292e-16
+   gradient difference 0
+LUKSAN11LS
+********   
+Python:  0.4828 0.0155 0.0139  s
+Matlab:  0.0445 0.0120 0.0061  s
+   function difference 0
+   gradient difference 0
+LUKSAN12
+********   
+Python:  0.4527 0.0194 0.0180  s
+Matlab:  0.0587 0.0125 0.0126  s
+   function difference 0
+   gradient difference 0
+LUKSAN12LS
+********   
+Python:  0.4206 0.0164 0.0150  s
+Matlab:  0.0558 0.0185 0.0138  s
+   function difference 0
+   gradient difference 0
+LUKSAN13
+********   
+Python:  0.4880 0.0217 0.0202  s
+Matlab:  0.0653 0.0165 0.0081  s
+   function difference 0
+   gradient difference 0
+LUKSAN13LS
+********   
+Python:  0.3979 0.0182 0.0167  s
+Matlab:  0.0631 0.0184 0.0093  s
+   function difference 0
+   gradient difference 0
+LUKSAN14
+********   
+Python:  0.4818 0.0192 0.0177  s
+Matlab:  0.0438 0.0050 0.0040  s
+   function difference 0
+   gradient difference 0
+LUKSAN14LS
+********   
+Python:  0.5201 0.0161 0.0148  s
+Matlab:  0.0400 0.0111 0.0058  s
+   function difference 0
+   gradient difference 0
+LUKSAN17
+********   
+Python:  0.4354 0.0236 0.0221  s
+Matlab:  0.1953 0.0320 0.0134  s
+   function difference 4.3961e-16
+   gradient difference 0
+LUKSAN17LS
+********   
+Python:  0.5184 0.0212 0.0198  s
+Matlab:  0.1911 0.0304 0.0117  s
+   function difference 0
+   gradient difference 0
+LUKSAN21
+********   
+Python:  0.4014 0.0117 0.0101  s
+Matlab:  0.0494 0.0060 0.0047  s
+   function difference 2.8423e-16
+   gradient difference 0
+LUKSAN21LS
+********   
+Python:  0.4641 0.0101 0.0087  s
+Matlab:  0.0479 0.0097 0.0072  s
+   function difference 0
+   gradient difference 0
+LUKSAN22
+********   
+Python:  0.4318 0.0049 0.0035  s
+Matlab:  0.0133 0.0019 0.0019  s
+   function difference 1.2051e-16
+   gradient difference 0
+LUKSAN22LS
+********   
+Python:  0.4944 0.0178 0.0165  s
+Matlab:  0.0896 0.0238 0.0097  s
+   function difference 0
+   gradient difference 0
+LUKVLE10
+********   
+Python:  0.4465 0.0047 0.0033  s
+Matlab:  0.0119 0.0016 0.0010  s
+   function difference 0
+   gradient difference 0
+LUKVLE1
+********   
+Python:  0.4833 0.0054 0.0040  s
+Matlab:  0.0146 0.0033 0.0039  s
+   function difference 0
+   gradient difference 0
+LUKVLE11
+********   
+Python:  0.4076 0.0041 0.0027  s
+Matlab:  0.0106 0.0012 0.0007  s
+   function difference 0
+   gradient difference 0
+LUKVLE12
+********   
+Python:  0.4800 0.0038 0.0026  s
+Matlab:  0.0094 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+LUKVLE13
+********   
+Python:  0.4742 0.0053 0.0039  s
+Matlab:  0.0135 0.0014 0.0017  s
+   function difference 0
+   gradient difference 0
+LUKVLE14
+********   
+Python:  0.4117 0.0055 0.0042  s
+Matlab:  0.0137 0.0016 0.0020  s
+   function difference 0
+   gradient difference 0
+LUKVLE15
+********   
+Python:  0.4429 0.0050 0.0037  s
+Matlab:  0.0131 0.0014 0.0016  s
+   function difference 0
+   gradient difference 0
+LUKVLE16
+********   
+Python:  0.4832 0.0050 0.0037  s
+Matlab:  0.0120 0.0014 0.0016  s
+   function difference 0
+   gradient difference 0
+LUKVLE17
+********   
+Python:  0.4192 0.0051 0.0038  s
+Matlab:  0.0123 0.0014 0.0016  s
+   function difference 0
+   gradient difference 0
+LUKVLE18
+********   
+Python:  0.4940 0.0050 0.0037  s
+Matlab:  0.0118 0.0013 0.0017  s
+   function difference 0
+   gradient difference 0
+LUKVLE2
+********   
+Python:  0.4242 0.0052 0.0039  s
+Matlab:  0.0149 0.0028 0.0027  s
+   function difference 0
+   gradient difference 0
+LUKVLE3
+********   
+Python:  0.4432 0.0043 0.0029  s
+Matlab:  0.0110 0.0013 0.0009  s
+   function difference 0
+   gradient difference 0
+LUKVLE4
+********   
+Python:  0.4740 0.0053 0.0040  s
+Matlab:  0.0139 0.0023 0.0028  s
+   function difference 1.7077e-16
+   gradient difference 2.7804e-17
+LUKVLE5
+********   
+Python:  0.3973 0.0045 0.0032  s
+Matlab:  0.0147 0.0020 0.0055  s
+   function difference 4.1911e-16
+   gradient difference 2.8791e-16
+LUKVLE6
+********   
+Python:  0.4464 0.0076 0.0046  s
+Matlab:  0.0212 0.0046 0.0068  s
+   function difference 0
+   gradient difference 0
+LUKVLE7
+********   
+Python:  0.4577 0.0040 0.0026  s
+Matlab:  0.0132 0.0020 0.0021  s
+   function difference 0
+   gradient difference 0
+LUKVLE8
+********   
+Python:  0.4260 0.0108 0.0093  s
+Matlab:  0.0390 0.0115 0.0099  s
+   function difference 0
+   gradient difference 0
+LUKVLE9
+********   
+Python:  0.4821 0.0045 0.0032  s
+Matlab:  0.0158 0.0017 0.0022  s
+   function difference 0
+   gradient difference 0
+LUKVLI10
+********   
+Python:  0.4196 0.0045 0.0032  s
+Matlab:  0.0113 0.0013 0.0010  s
+   function difference 0
+   gradient difference 0
+LUKVLI1
+********   
+Python:  0.4603 0.0055 0.0040  s
+Matlab:  0.0152 0.0033 0.0038  s
+   function difference 0
+   gradient difference 0
+LUKVLI11
+********   
+Python:  0.4877 0.0041 0.0028  s
+Matlab:  0.0104 0.0011 0.0007  s
+   function difference 0
+   gradient difference 0
+LUKVLI12
+********   
+Python:  0.4051 0.0038 0.0024  s
+Matlab:  0.0094 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+LUKVLI13
+********   
+Python:  0.4616 0.0038 0.0026  s
+Matlab:  0.0091 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+LUKVLI14
+********   
+Python:  0.4318 0.0040 0.0027  s
+Matlab:  0.0094 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+LUKVLI15
+********   
+Python:  0.4833 0.0051 0.0038  s
+Matlab:  0.0132 0.0014 0.0017  s
+   function difference 0
+   gradient difference 0
+LUKVLI16
+********   
+Python:  0.4087 0.0050 0.0037  s
+Matlab:  0.0125 0.0014 0.0016  s
+   function difference 0
+   gradient difference 0
+LUKVLI17
+********   
+Python:  0.4679 0.0051 0.0038  s
+Matlab:  0.0119 0.0014 0.0018  s
+   function difference 0
+   gradient difference 0
+LUKVLI18
+********   
+Python:  0.5113 0.0050 0.0038  s
+Matlab:  0.0122 0.0014 0.0016  s
+   function difference 0
+   gradient difference 0
+LUKVLI2
+********   
+Python:  0.3988 0.0052 0.0039  s
+Matlab:  0.0147 0.0030 0.0028  s
+   function difference 0
+   gradient difference 0
+LUKVLI3
+********   
+Python:  0.4580 0.0042 0.0029  s
+Matlab:  0.0106 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+LUKVLI4
+********   
+Python:  0.4496 0.0051 0.0040  s
+Matlab:  0.0134 0.0022 0.0027  s
+   function difference 1.7077e-16
+   gradient difference 2.7804e-17
+LUKVLI5
+********   
+Python:  0.4656 0.0046 0.0033  s
+Matlab:  0.0142 0.0020 0.0066  s
+   function difference 4.1911e-16
+   gradient difference 2.8791e-16
+LUKVLI6
+********   
+Python:  0.4208 0.0046 0.0033  s
+Matlab:  0.0188 0.0036 0.0034  s
+   function difference 0
+   gradient difference 0
+LUKVLI7
+********   
+Python:  0.4854 0.0041 0.0027  s
+Matlab:  0.0138 0.0020 0.0022  s
+   function difference 0
+   gradient difference 0
+LUKVLI8
+********   
+Python:  0.4401 0.0108 0.0093  s
+Matlab:  0.0396 0.0114 0.0094  s
+   function difference 0
+   gradient difference 0
+LUKVLI9
+********   
+Python:  0.4815 0.0048 0.0033  s
+Matlab:  0.0176 0.0018 0.0021  s
+   function difference 0
+   gradient difference 0
+MADSEN
+********   
+Python:  0.4069 0.0039 0.0025  s
+Matlab:  0.0082 0.0009 0.0005  s
+   function difference 0
+   gradient difference 0
+MADSSCHJ
+********   
+Python:  0.4924 0.0039 0.0025  s
+Matlab:  0.0100 0.0006 0.0004  s
+   function difference 0
+   gradient difference 0
+MAKELA1
+********   
+Python:  0.4246 0.0034 0.0021  s
+Matlab:  0.0069 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+MAKELA2
+********   
+Python:  0.4500 0.0036 0.0023  s
+Matlab:  0.0073 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+MAKELA3
+********   
+Python:  0.4786 0.0050 0.0035  s
+Matlab:  0.0121 0.0011 0.0009  s
+   function difference 0
+   gradient difference 0
+MAKELA4
+********   
+Python:  0.4215 0.0058 0.0045  s
+Matlab:  0.0109 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+MANCINO
+********   
+Python:  0.4880 0.0061 0.0047  s
+Matlab:  0.0330 0.0115 0.0097  s
+   function difference 0
+   gradient difference 2.31e-18
+MANCINONE
+********   
+Python:  0.4168 0.0062 0.0048  s
+Matlab:  0.0338 0.0111 0.0092  s
+   function difference 4.1614e-16
+   gradient difference 0
+MANNE
+********   
+Python:  0.4423 0.0039 0.0026  s
+Matlab:  0.0114 0.0007 0.0004  s
+   function difference 1.2341e-15
+   gradient difference 0
+MARATOS
+********   
+Python:  0.4840 0.0036 0.0021  s
+Matlab:  0.0078 0.0014 0.0003  s
+   function difference 0
+   gradient difference 0
+MARATOSB
+********   
+Python:  0.4230 0.0032 0.0019  s
+Matlab:  0.0063 0.0012 0.0002  s
+   function difference 0
+   gradient difference 0
+MATRIX2
+********   
+Python:  0.4714 0.0035 0.0022  s
+Matlab:  0.0084 0.0020 0.0005  s
+   function difference 0
+   gradient difference 0
+MAXLIKA
+********   
+Python:  0.4317 0.0191 0.0178  s
+Matlab:  0.1456 0.0431 0.0083  s
+   function difference 0
+   gradient difference 0
+MCCORMCK
+********   
+Python:  0.4597 0.0038 0.0025  s
+Matlab:  0.0110 0.0016 0.0010  s
+   function difference 0
+   gradient difference 0
+MCONCON
+********   
+Python:  0.4895 0.0042 0.0029  s
+Matlab:  0.0105 0.0012 0.0007  s
+   function difference 0
+   gradient difference 0
+MDHOLE
+********   
+Python:  0.4279 0.0032 0.0020  s
+Matlab:  0.0066 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+MESH
+********   
+Python:  0.4747 0.0074 0.0060  s
+Matlab:  0.0282 0.0047 0.0039  s
+   function difference 2.7782e-16
+   gradient difference 1.794e-17
+METHANB8
+********   
+Python:  0.4319 0.0080 0.0064  s
+Matlab:  0.0560 0.0108 0.0109  s
+   function difference 4.3801e-16
+   gradient difference 1.8181e-19
+METHANB8LS
+********   
+Python:  0.4729 0.0071 0.0058  s
+Matlab:  0.0547 0.0129 0.0124  s
+   function difference 0
+   gradient difference 8.9476e-19
+METHANL8
+********   
+Python:  0.4353 0.0078 0.0063  s
+Matlab:  0.0540 0.0106 0.0107  s
+   function difference 1.4039e-16
+   gradient difference 1.4807e-16
+METHANL8LS
+********   
+Python:  0.5073 0.0074 0.0059  s
+Matlab:  0.0553 0.0130 0.0120  s
+   function difference 0
+   gradient difference 1.2063e-16
+MEXHAT
+********   
+Python:  0.4273 0.0032 0.0019  s
+Matlab:  0.0061 0.0021 0.0003  s
+   function difference 0
+   gradient difference 0
+MEYER3
+********   
+Python:  0.4977 0.0035 0.0021  s
+Matlab:  0.0106 0.0019 0.0021  s
+   function difference 0
+   gradient difference 0
+MEYER3NE
+********   
+Python:  0.4577 0.0038 0.0024  s
+Matlab:  0.0105 0.0017 0.0011  s
+   function difference 2.1875e-16
+   gradient difference 0
+MGH09
+********   
+Python:  0.4719 0.0038 0.0027  s
+Matlab:  0.0108 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+MGH09LS
+********   
+Python:  0.4649 0.0033 0.0021  s
+Matlab:  0.0099 0.0015 0.0012  s
+   function difference 0
+   gradient difference 0
+MGH10
+********   
+Python:  0.4558 0.0039 0.0025  s
+Matlab:  0.0117 0.0013 0.0010  s
+   function difference 0
+   gradient difference 0
+MGH10
+********   
+Python:  0.3847 0.0022 0.0010  s
+Matlab:  0.0057 0.0017 0.0015  s
+   function difference 0
+   gradient difference 0
+MGH10LS
+********   
+Python:  0.4786 0.0034 0.0021  s
+Matlab:  0.0099 0.0017 0.0021  s
+   function difference 0
+   gradient difference 0
+MGH10SLS
+********   
+Python:  0.4296 0.0035 0.0023  s
+Matlab:  0.0110 0.0019 0.0022  s
+   function difference 0
+   gradient difference 0
+MGH17LS
+********   
+Python:  0.4714 0.0060 0.0046  s
+Matlab:  0.0195 0.0061 0.0056  s
+   function difference 0
+   gradient difference 2.6355e-19
+MGH17SLS
+********   
+Python:  0.4485 0.0061 0.0045  s
+Matlab:  0.0194 0.0058 0.0051  s
+   function difference 0
+   gradient difference 0
+MIFFLIN1
+********   
+Python:  0.4867 0.0037 0.0021  s
+Matlab:  0.0072 0.0008 0.0002  s
+   function difference 0
+   gradient difference 0
+MIFFLIN2
+********   
+Python:  0.4423 0.0039 0.0023  s
+Matlab:  0.0073 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+MINC44
+********   
+Python:  0.4593 0.0070 0.0054  s
+Matlab:  0.0433 0.0049 0.0064  s
+   function difference 0
+   gradient difference 0
+MINMAXBD
+********   
+Python:  0.4334 0.0058 0.0040  s
+Matlab:  0.0160 0.0024 0.0030  s
+   function difference 0
+   gradient difference 0
+MINMAXRB
+********   
+Python:  0.4820 0.0039 0.0022  s
+Matlab:  0.0076 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+MINPERM
+********   
+Python:  0.4279 0.0041 0.0024  s
+Matlab:  0.0097 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+MINSURF
+********   
+Python:  0.4889 0.0050 0.0035  s
+Matlab:  0.0344 0.0100 0.0075  s
+   function difference 0
+   gradient difference 0
+MINSURFO
+********   
+Python:  1.2715 0.3628 0.3630  s
+Matlab:  5.7728 0.2411 0.2159  s
+   function difference 0
+   gradient difference 0
+MISRA1A
+********   
+Python:  0.4929 0.0049 0.0032  s
+Matlab:  0.0112 0.0011 0.0008  s
+   function difference 1.6226e-16
+   gradient difference 4.4367e-23
+MISRA1ALS
+********   
+Python:  0.4186 0.0042 0.0028  s
+Matlab:  0.0098 0.0017 0.0017  s
+   function difference 0
+   gradient difference 4.5144e-23
+MISRA1B
+********   
+Python:  0.4841 0.0049 0.0031  s
+Matlab:  0.0103 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+MISRA1BLS
+********   
+Python:  0.4231 0.0041 0.0028  s
+Matlab:  0.0097 0.0015 0.0018  s
+   function difference 0
+   gradient difference 0
+MISRA1C
+********   
+Python:  0.4801 0.0048 0.0031  s
+Matlab:  0.0110 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+MISRA1CLS
+********   
+Python:  0.4468 0.0043 0.0029  s
+Matlab:  0.0093 0.0016 0.0018  s
+   function difference 0
+   gradient difference 0
+MISRA1D
+********   
+Python:  0.5043 0.0041 0.0023  s
+Matlab:  0.0103 0.0013 0.0009  s
+   function difference 0
+   gradient difference 0
+MISRA1DLS
+********   
+Python:  0.4324 0.0034 0.0023  s
+Matlab:  0.0099 0.0017 0.0020  s
+   function difference 0
+   gradient difference 0
+MISTAKE
+********   
+Python:  0.4760 0.0043 0.0025  s
+Matlab:  0.0130 0.0021 0.0019  s
+   function difference 0
+   gradient difference 0
+MODBEALE
+********   
+Python:  0.4264 0.0044 0.0031  s
+Matlab:  0.0111 0.0018 0.0021  s
+   function difference 0
+   gradient difference 0
+MODBEALENE
+********   
+Python:  0.4711 0.0051 0.0034  s
+Matlab:  0.0114 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+MOREBV
+********   
+Python:  0.4120 0.0038 0.0025  s
+Matlab:  0.0099 0.0013 0.0008  s
+   function difference 3.025e-15
+   gradient difference 1.1031e-14
+MOSARQP1
+********   
+Python:  0.5053 0.0055 0.0037  s
+Matlab:  0.0351 0.0057 0.0083  s
+   function difference 3.2484e-16
+   gradient difference 5.6108e-17
+MOSARQP2
+********   
+Python:  0.4404 0.0056 0.0037  s
+Matlab:  0.0349 0.0047 0.0062  s
+   function difference 0
+   gradient difference 1.0066e-16
+MRIBASIS
+********   
+Python:  0.5134 0.0112 0.0095  s
+Matlab:  0.0579 0.0197 0.0132  s
+   function difference 2.7217e-14
+   gradient difference 0
+MSQRTA
+********   
+Python:  0.4442 0.0056 0.0038  s
+Matlab:  0.0511 0.0066 0.0044  s
+   function difference 1.8456e-16
+   gradient difference 1.843e-16
+MSQRTALS
+********   
+Python:  0.4651 0.0046 0.0033  s
+Matlab:  0.0472 0.0076 0.0072  s
+   function difference 0
+   gradient difference 1.2987e-16
+MSQRTB
+********   
+Python:  0.4443 0.0053 0.0037  s
+Matlab:  0.0499 0.0065 0.0044  s
+   function difference 3.3237e-16
+   gradient difference 1.3871e-16
+MSQRTBLS
+********   
+Python:  0.4287 0.0046 0.0033  s
+Matlab:  0.0482 0.0077 0.0087  s
+   function difference 0
+   gradient difference 1.2267e-16
+MSS1
+********   
+Python:  0.4430 0.0114 0.0098  s
+Matlab:  0.0573 0.0129 0.0060  s
+   function difference 0
+   gradient difference 0
+MUONSINE
+********   
+Python:  0.5055 0.0159 0.0142  s
+Matlab:  0.0751 0.0343 0.0101  s
+   function difference 0
+   gradient difference 0
+MUONSINELS
+********   
+Python:  0.4440 0.0132 0.0117  s
+Matlab:  0.0699 0.0262 0.0108  s
+   function difference 0
+   gradient difference 0
+MWRIGHT
+********   
+Python:  0.4912 0.0042 0.0025  s
+Matlab:  0.0086 0.0010 0.0005  s
+   function difference 0
+   gradient difference 0
+n10FOLDTR
+********   
+Python:  0.4746 0.0048 0.0030  s
+Matlab:  0.0107 0.0016 0.0003  s
+   function difference 0
+   gradient difference 0
+n3PK
+********   
+Python:  0.4424 0.0050 0.0037  s
+Matlab:  0.0202 0.0008 0.0002  s
+   function difference 2.2146e-16
+   gradient difference 0
+NASH
+********   
+Python:  0.4745 0.0053 0.0035  s
+Matlab:  0.0214 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+NCB20
+********   
+Python:  0.4352 0.0056 0.0043  s
+Matlab:  0.0299 0.0061 0.0071  s
+   function difference 0
+   gradient difference 0
+NCB20B
+********   
+Python:  0.4727 0.0046 0.0034  s
+Matlab:  0.0163 0.0023 0.0020  s
+   function difference 0
+   gradient difference 0
+NCVXBQP1
+********   
+Python:  0.4364 0.0037 0.0023  s
+Matlab:  0.0087 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+NCVXBQP2
+********   
+Python:  0.4756 0.0037 0.0024  s
+Matlab:  0.0085 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+NCVXBQP3
+********   
+Python:  0.4662 0.0036 0.0023  s
+Matlab:  0.0089 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+NCVXQP1
+********   
+Python:  0.4441 0.0080 0.0063  s
+Matlab:  0.0263 0.0031 0.0023  s
+   function difference 0
+   gradient difference 0
+NCVXQP2
+********   
+Python:  0.4762 0.0082 0.0063  s
+Matlab:  0.0260 0.0033 0.0021  s
+   function difference 0
+   gradient difference 0
+NCVXQP3
+********   
+Python:  0.4379 0.0081 0.0064  s
+Matlab:  0.0256 0.0032 0.0022  s
+   function difference 0
+   gradient difference 0
+NCVXQP4
+********   
+Python:  0.4812 0.0073 0.0056  s
+Matlab:  0.0236 0.0032 0.0020  s
+   function difference 0
+   gradient difference 0
+NCVXQP5
+********   
+Python:  0.4289 0.0071 0.0054  s
+Matlab:  0.0234 0.0031 0.0021  s
+   function difference 0
+   gradient difference 0
+NCVXQP6
+********   
+Python:  0.4746 0.0073 0.0054  s
+Matlab:  0.0232 0.0031 0.0022  s
+   function difference 0
+   gradient difference 0
+NCVXQP7
+********   
+Python:  0.4393 0.0088 0.0070  s
+Matlab:  0.0275 0.0032 0.0022  s
+   function difference 0
+   gradient difference 0
+NCVXQP8
+********   
+Python:  0.4794 0.0089 0.0071  s
+Matlab:  0.0270 0.0033 0.0022  s
+   function difference 0
+   gradient difference 0
+NCVXQP9
+********   
+Python:  0.4492 0.0089 0.0071  s
+Matlab:  0.0274 0.0033 0.0021  s
+   function difference 0
+   gradient difference 0
+NELSON
+********   
+Python:  0.4679 0.0144 0.0125  s
+Matlab:  0.0494 0.0090 0.0088  s
+   function difference 5.4722e-16
+   gradient difference 0
+NELSONLS
+********   
+Python:  0.4422 0.0119 0.0105  s
+Matlab:  0.0471 0.0152 0.0074  s
+   function difference 0
+   gradient difference 0
+NET1
+********   
+Python:  0.4881 0.0082 0.0065  s
+Matlab:  0.0244 0.0027 0.0022  s
+   function difference 0
+   gradient difference 0
+NOBNDTOR
+********   
+Python:  0.4586 0.0048 0.0034  s
+Matlab:  0.0239 0.0045 0.0035  s
+   function difference 0
+   gradient difference 0
+NONCVXU2
+********   
+Python:  0.4858 0.0033 0.0021  s
+Matlab:  0.0125 0.0017 0.0011  s
+   function difference 0
+   gradient difference 0
+NONCVXUN
+********   
+Python:  0.4452 0.0033 0.0021  s
+Matlab:  0.0116 0.0014 0.0011  s
+   function difference 0
+   gradient difference 0
+NONDIA
+********   
+Python:  0.4916 0.0038 0.0025  s
+Matlab:  0.0097 0.0020 0.0008  s
+   function difference 0
+   gradient difference 0
+NONDQUAR
+********   
+Python:  0.4323 0.0036 0.0023  s
+Matlab:  0.0080 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+NONSCOMP
+********   
+Python:  0.4875 0.0050 0.0037  s
+Matlab:  0.0122 0.0027 0.0023  s
+   function difference 0
+   gradient difference 0
+NONSCOMPNE
+********   
+Python:  0.4348 0.0057 0.0040  s
+Matlab:  0.0138 0.0015 0.0016  s
+   function difference 0
+   gradient difference 0
+NUFFIELD
+********   
+Python:  0.5085 0.0280 0.0259  s
+Matlab:  0.1031 0.0061 0.0064  s
+   function difference 0
+   gradient difference 0
+NYSTROM5
+********   
+Python:  0.4117 0.0061 0.0043  s
+Matlab:  0.0285 0.0049 0.0060  s
+   function difference 1.2057e-16
+   gradient difference 0
+OBSTCLAE
+********   
+Python:  0.4579 0.0039 0.0027  s
+Matlab:  0.0160 0.0021 0.0029  s
+   function difference 0
+   gradient difference 0
+OBSTCLAL
+********   
+Python:  0.4445 0.0040 0.0027  s
+Matlab:  0.0166 0.0022 0.0028  s
+   function difference 0
+   gradient difference 2.4175e-16
+OBSTCLBL
+********   
+Python:  0.4874 0.0041 0.0029  s
+Matlab:  0.0173 0.0021 0.0029  s
+   function difference 4.2653e-16
+   gradient difference 2.6098e-16
+OBSTCLBM
+********   
+Python:  0.4984 0.0040 0.0026  s
+Matlab:  0.0175 0.0021 0.0030  s
+   function difference 0
+   gradient difference 1.8427e-16
+OBSTCLBU
+********   
+Python:  0.4080 0.0040 0.0026  s
+Matlab:  0.0169 0.0021 0.0029  s
+   function difference 0
+   gradient difference 3.5045e-16
+ODFITS
+********   
+Python:  0.4440 0.0047 0.0030  s
+Matlab:  0.0242 0.0012 0.0006  s
+   function difference 0
+   gradient difference 0
+OET1
+********   
+Python:  0.4986 0.0658 0.0635  s
+Matlab:  0.0759 0.0068 0.0063  s
+   function difference 0
+   gradient difference 0
+OET2
+********   
+Python:  0.5222 0.0846 0.0821  s
+Matlab:  0.1416 0.0277 0.0167  s
+   function difference 0
+   gradient difference 0
+OET3
+********   
+Python:  0.4395 0.0662 0.0634  s
+Matlab:  0.0822 0.0076 0.0093  s
+   function difference 0
+   gradient difference 0
+OET4
+********   
+Python:  0.5446 0.0888 0.0864  s
+Matlab:  0.1583 0.0329 0.0194  s
+   function difference 0
+   gradient difference 0
+OET5
+********   
+Python:  0.5581 0.0881 0.0865  s
+Matlab:  0.1690 0.0340 0.0201  s
+   function difference 3.1737e-15
+   gradient difference 0
+OET6
+********   
+Python:  0.5380 0.0988 0.0961  s
+Matlab:  0.2305 0.0380 0.0265  s
+   function difference 0
+   gradient difference 0
+OET7
+********   
+Python:  0.5616 0.1122 0.1093  s
+Matlab:  0.3448 0.0456 0.0322  s
+   function difference 0
+   gradient difference 0
+OPTCNTRL
+********   
+Python:  0.4751 0.0054 0.0038  s
+Matlab:  0.0143 0.0016 0.0010  s
+   function difference 1.1748e-16
+   gradient difference 0
+OPTMASS
+********   
+Python:  0.4432 0.0077 0.0059  s
+Matlab:  0.0224 0.0016 0.0023  s
+   function difference 0
+   gradient difference 0
+OPTPRLOC
+********   
+Python:  0.4745 0.0075 0.0057  s
+Matlab:  0.0446 0.0071 0.0055  s
+   function difference 1.7855e-16
+   gradient difference 0
+ORTHRDS2
+********   
+Python:  0.4354 0.0059 0.0042  s
+Matlab:  0.0169 0.0027 0.0032  s
+   function difference 1.2428e-16
+   gradient difference 9.8589e-17
+ORTHREGA
+********   
+Python:  0.5143 0.0077 0.0059  s
+Matlab:  0.0270 0.0074 0.0064  s
+   function difference 2.2143e-16
+   gradient difference 0
+ORTHREGB
+********   
+Python:  0.4408 0.0059 0.0042  s
+Matlab:  0.0202 0.0040 0.0050  s
+   function difference 0
+   gradient difference 0
+ORTHREGC
+********   
+Python:  0.4614 0.0061 0.0043  s
+Matlab:  0.0198 0.0040 0.0049  s
+   function difference 2.349e-16
+   gradient difference 1.7225e-17
+ORTHREGD
+********   
+Python:  0.4553 0.0061 0.0043  s
+Matlab:  0.0168 0.0027 0.0033  s
+   function difference 0
+   gradient difference 8.7773e-17
+ORTHREGE
+********   
+Python:  0.4870 0.0074 0.0055  s
+Matlab:  0.0199 0.0040 0.0034  s
+   function difference 1.494e-16
+   gradient difference 2.0826e-17
+ORTHREGF
+********   
+Python:  0.5060 0.0110 0.0092  s
+Matlab:  0.0419 0.0119 0.0105  s
+   function difference 0
+   gradient difference 8.9225e-18
+ORTHRGDM
+********   
+Python:  0.4324 0.0059 0.0041  s
+Matlab:  0.0166 0.0026 0.0045  s
+   function difference 0
+   gradient difference 0
+ORTHRGDS
+********   
+Python:  0.4990 0.0081 0.0062  s
+Matlab:  0.0257 0.0055 0.0058  s
+   function difference 0
+   gradient difference 4.4561e-19
+OSBORNE1
+********   
+Python:  0.4275 0.0071 0.0052  s
+Matlab:  0.0203 0.0044 0.0036  s
+   function difference 1.6586e-16
+   gradient difference 1.7818e-16
+OSBORNE2
+********   
+Python:  0.5027 0.0086 0.0067  s
+Matlab:  0.0773 0.0163 0.0093  s
+   function difference 0
+   gradient difference 6.0019e-18
+OSBORNEA
+********   
+Python:  0.4522 0.0063 0.0045  s
+Matlab:  0.0189 0.0060 0.0052  s
+   function difference 0
+   gradient difference 0
+OSBORNEB
+********   
+Python:  0.5061 0.0076 0.0059  s
+Matlab:  0.0754 0.0317 0.0132  s
+   function difference 0
+   gradient difference 1.9663e-16
+OSCIPATH
+********   
+Python:  0.4167 0.0042 0.0025  s
+Matlab:  0.0091 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+OSCIPANE
+********   
+Python:  0.4726 0.0046 0.0028  s
+Matlab:  0.0093 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+OSCIGRAD
+********   
+Python:  0.4348 0.0044 0.0028  s
+Matlab:  0.0113 0.0018 0.0019  s
+   function difference 0
+   gradient difference 0
+OSCIGRNE
+********   
+Python:  0.5357 0.0048 0.0031  s
+Matlab:  0.0120 0.0016 0.0010  s
+   function difference 0
+   gradient difference 0
+OSLBQP
+********   
+Python:  0.4255 0.0036 0.0020  s
+Matlab:  0.0078 0.0008 0.0004  s
+   function difference 0
+   gradient difference 0
+PALMER1
+********   
+Python:  0.4741 0.0057 0.0041  s
+Matlab:  0.0168 0.0037 0.0061  s
+   function difference 0
+   gradient difference 0
+PALMER1
+********   
+Python:  0.4013 0.0036 0.0024  s
+Matlab:  0.0180 0.0036 0.0021  s
+   function difference 0
+   gradient difference 0
+PALMER1A
+********   
+Python:  0.4854 0.0060 0.0043  s
+Matlab:  0.0199 0.0037 0.0057  s
+   function difference 0
+   gradient difference 1.6211e-16
+PALMER1ANE
+********   
+Python:  0.4328 0.0067 0.0050  s
+Matlab:  0.0205 0.0021 0.0029  s
+   function difference 1.3975e-16
+   gradient difference 0
+PALMER1B
+********   
+Python:  0.4779 0.0060 0.0042  s
+Matlab:  0.0179 0.0038 0.0051  s
+   function difference 0
+   gradient difference 0
+PALMER1BNE
+********   
+Python:  0.4374 0.0067 0.0049  s
+Matlab:  0.0179 0.0021 0.0030  s
+   function difference 0
+   gradient difference 0
+PALMER1C
+********   
+Python:  0.4602 0.0054 0.0038  s
+Matlab:  0.0151 0.0016 0.0021  s
+   function difference 0
+   gradient difference 1.1301e-19
+PALMER1D
+********   
+Python:  0.5088 0.0056 0.0039  s
+Matlab:  0.0158 0.0016 0.0021  s
+   function difference 0
+   gradient difference 0
+PALMER1E
+********   
+Python:  0.4879 0.0060 0.0042  s
+Matlab:  0.0218 0.0039 0.0043  s
+   function difference 0
+   gradient difference 0
+PALMER1ENE
+********   
+Python:  0.4628 0.0068 0.0050  s
+Matlab:  0.0233 0.0022 0.0029  s
+   function difference 2.1307e-16
+   gradient difference 4.3707e-19
+PALMER1NE
+********   
+Python:  0.4807 0.0067 0.0047  s
+Matlab:  0.0176 0.0023 0.0069  s
+   function difference 2.2126e-16
+   gradient difference 0
+PALMER2
+********   
+Python:  0.4394 0.0054 0.0036  s
+Matlab:  0.0145 0.0026 0.0030  s
+   function difference 0
+   gradient difference 0
+PALMER2
+********   
+Python:  0.4216 0.0031 0.0019  s
+Matlab:  0.0084 0.0037 0.0023  s
+   function difference 0
+   gradient difference 0
+PALMER2ANE
+********   
+Python:  0.4258 0.0056 0.0039  s
+Matlab:  0.0160 0.0014 0.0012  s
+   function difference 1.7804e-16
+   gradient difference 0
+PALMER2B
+********   
+Python:  0.4870 0.0051 0.0034  s
+Matlab:  0.0136 0.0021 0.0040  s
+   function difference 0
+   gradient difference 0
+PALMER2BNE
+********   
+Python:  0.4965 0.0055 0.0038  s
+Matlab:  0.0147 0.0014 0.0011  s
+   function difference 0
+   gradient difference 0
+PALMER2C
+********   
+Python:  0.4439 0.0048 0.0033  s
+Matlab:  0.0127 0.0011 0.0008  s
+   function difference 2.7703e-16
+   gradient difference 5.0843e-17
+PALMER2E
+********   
+Python:  0.4733 0.0055 0.0037  s
+Matlab:  0.0177 0.0023 0.0028  s
+   function difference 0
+   gradient difference 7.2251e-17
+PALMER2ENE
+********   
+Python:  0.5712 0.0059 0.0041  s
+Matlab:  0.0177 0.0015 0.0012  s
+   function difference 1.2475e-16
+   gradient difference 0
+PALMER3
+********   
+Python:  0.4158 0.0052 0.0036  s
+Matlab:  0.0134 0.0024 0.0029  s
+   function difference 0
+   gradient difference 0
+PALMER3
+********   
+Python:  0.4292 0.0031 0.0019  s
+Matlab:  0.0084 0.0037 0.0022  s
+   function difference 0
+   gradient difference 0
+PALMER3A
+********   
+Python:  0.4246 0.0050 0.0034  s
+Matlab:  0.0155 0.0021 0.0027  s
+   function difference 2.2368e-16
+   gradient difference 0
+PALMER3ANE
+********   
+Python:  0.4613 0.0059 0.0040  s
+Matlab:  0.0156 0.0015 0.0012  s
+   function difference 0
+   gradient difference 0
+PALMER3B
+********   
+Python:  0.4888 0.0052 0.0035  s
+Matlab:  0.0142 0.0022 0.0028  s
+   function difference 0
+   gradient difference 0
+PALMER3BNE
+********   
+Python:  0.4318 0.0058 0.0040  s
+Matlab:  0.0147 0.0015 0.0012  s
+   function difference 1.9896e-16
+   gradient difference 0
+PALMER3C
+********   
+Python:  0.4904 0.0048 0.0033  s
+Matlab:  0.0125 0.0011 0.0008  s
+   function difference 2.2933e-16
+   gradient difference 1.8708e-16
+PALMER3E
+********   
+Python:  0.5208 0.0053 0.0035  s
+Matlab:  0.0171 0.0024 0.0028  s
+   function difference 3.2726e-16
+   gradient difference 1.9435e-16
+PALMER3ENE
+********   
+Python:  0.4464 0.0058 0.0042  s
+Matlab:  0.0178 0.0016 0.0013  s
+   function difference 0
+   gradient difference 0
+PALMER4
+********   
+Python:  0.4854 0.0054 0.0037  s
+Matlab:  0.0145 0.0025 0.0044  s
+   function difference 0
+   gradient difference 0
+PALMER4
+********   
+Python:  0.3740 0.0032 0.0020  s
+Matlab:  0.0088 0.0035 0.0021  s
+   function difference 0
+   gradient difference 0
+PALMER4A
+********   
+Python:  0.4696 0.0052 0.0035  s
+Matlab:  0.0156 0.0022 0.0028  s
+   function difference 0
+   gradient difference 1.6263e-16
+PALMER4ANE
+********   
+Python:  0.5215 0.0059 0.0040  s
+Matlab:  0.0160 0.0015 0.0012  s
+   function difference 3.1217e-16
+   gradient difference 0
+PALMER4B
+********   
+Python:  0.4357 0.0053 0.0035  s
+Matlab:  0.0137 0.0023 0.0027  s
+   function difference 0
+   gradient difference 0
+PALMER4BNE
+********   
+Python:  0.5103 0.0056 0.0039  s
+Matlab:  0.0148 0.0014 0.0012  s
+   function difference 0
+   gradient difference 0
+PALMER4C
+********   
+Python:  0.4315 0.0048 0.0031  s
+Matlab:  0.0127 0.0011 0.0008  s
+   function difference 4.6023e-16
+   gradient difference 1.8401e-16
+PALMER4E
+********   
+Python:  0.4549 0.0052 0.0034  s
+Matlab:  0.0166 0.0022 0.0028  s
+   function difference 1.6934e-16
+   gradient difference 1.9901e-16
+PALMER4ENE
+********   
+Python:  0.5193 0.0057 0.0040  s
+Matlab:  0.0172 0.0015 0.0012  s
+   function difference 0
+   gradient difference 0
+PALMER5A
+********   
+Python:  0.4363 0.0043 0.0028  s
+Matlab:  0.0243 0.0014 0.0015  s
+   function difference 0
+   gradient difference 0
+PALMER5ANE
+********   
+Python:  0.4793 0.0048 0.0031  s
+Matlab:  0.0202 0.0010 0.0007  s
+   function difference 1.4316e-16
+   gradient difference 0
+PALMER5B
+********   
+Python:  0.4568 0.0043 0.0027  s
+Matlab:  0.0128 0.0013 0.0016  s
+   function difference 0
+   gradient difference 0
+PALMER5BNE
+********   
+Python:  0.4965 0.0047 0.0030  s
+Matlab:  0.0131 0.0009 0.0006  s
+   function difference 2.732e-16
+   gradient difference 0
+PALMER5C
+********   
+Python:  0.4540 0.0041 0.0025  s
+Matlab:  0.0169 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+PALMER5E
+********   
+Python:  0.4630 0.0044 0.0027  s
+Matlab:  0.0200 0.0013 0.0016  s
+   function difference 1.1562e-16
+   gradient difference 2.8143e-16
+PALMER5ENE
+********   
+Python:  0.5040 0.0047 0.0029  s
+Matlab:  0.0205 0.0009 0.0007  s
+   function difference 1.3087e-16
+   gradient difference 0
+PALMER6A
+********   
+Python:  0.4230 0.0044 0.0027  s
+Matlab:  0.0118 0.0014 0.0016  s
+   function difference 1.2666e-16
+   gradient difference 1.143e-16
+PALMER6ANE
+********   
+Python:  0.4925 0.0048 0.0030  s
+Matlab:  0.0122 0.0010 0.0007  s
+   function difference 1.4297e-16
+   gradient difference 0
+PALMER6C
+********   
+Python:  0.4739 0.0042 0.0025  s
+Matlab:  0.0100 0.0007 0.0005  s
+   function difference 4.5229e-16
+   gradient difference 2.402e-16
+PALMER6E
+********   
+Python:  0.5072 0.0045 0.0027  s
+Matlab:  0.0127 0.0014 0.0018  s
+   function difference 7.0477e-16
+   gradient difference 3.5253e-16
+PALMER6ENE
+********   
+Python:  0.4472 0.0048 0.0031  s
+Matlab:  0.0133 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+PALMER7A
+********   
+Python:  0.4709 0.0046 0.0028  s
+Matlab:  0.0117 0.0015 0.0017  s
+   function difference 0
+   gradient difference 0
+PALMER7ANE
+********   
+Python:  0.5355 0.0049 0.0031  s
+Matlab:  0.0123 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+PALMER7C
+********   
+Python:  0.4143 0.0043 0.0026  s
+Matlab:  0.0109 0.0008 0.0005  s
+   function difference 2.9057e-16
+   gradient difference 5.0304e-17
+PALMER7E
+********   
+Python:  0.4839 0.0045 0.0027  s
+Matlab:  0.0133 0.0015 0.0018  s
+   function difference 0
+   gradient difference 0
+PALMER7ENE
+********   
+Python:  0.4654 0.0048 0.0031  s
+Matlab:  0.0130 0.0010 0.0007  s
+   function difference 0
+   gradient difference 0
+PALMER8A
+********   
+Python:  0.4908 0.0045 0.0027  s
+Matlab:  0.0111 0.0013 0.0015  s
+   function difference 0
+   gradient difference 1.5036e-16
+PALMER8ANE
+********   
+Python:  0.4437 0.0046 0.0031  s
+Matlab:  0.0118 0.0009 0.0007  s
+   function difference 3.0667e-16
+   gradient difference 0
+PALMER8C
+********   
+Python:  0.5270 0.0042 0.0025  s
+Matlab:  0.0098 0.0007 0.0005  s
+   function difference 4.1075e-16
+   gradient difference 1.9959e-16
+PALMER8E
+********   
+Python:  0.4432 0.0045 0.0028  s
+Matlab:  0.0125 0.0014 0.0017  s
+   function difference 7.4958e-16
+   gradient difference 4.6328e-16
+PALMER8ENE
+********   
+Python:  0.5008 0.0048 0.0030  s
+Matlab:  0.0128 0.0009 0.0007  s
+   function difference 5.8548e-16
+   gradient difference 0
+PDE1
+********   
+Python:  0.4891 0.2197 0.2211  s
+Matlab:  0.3704 0.0784 0.0762  s
+   function difference 7.2997e-14
+   gradient difference 0
+PDE2
+********   
+Python:  0.5202 0.2622 0.2592  s
+Matlab:  0.4693 0.0996 0.0965  s
+   function difference 7.2997e-14
+   gradient difference 0
+PENALTY1
+********   
+Python:  0.4619 0.0044 0.0025  s
+Matlab:  0.0087 0.0014 0.0008  s
+   function difference 0
+   gradient difference 0
+PENALTY2
+********   
+Python:  0.5257 0.0051 0.0034  s
+Matlab:  0.0128 0.0028 0.0027  s
+   function difference 0
+   gradient difference 0
+PENLT1NE
+********   
+Python:  0.4348 0.0046 0.0028  s
+Matlab:  0.0098 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+PENLT2NE
+********   
+Python:  0.5359 0.0057 0.0037  s
+Matlab:  0.0145 0.0017 0.0027  s
+   function difference 0
+   gradient difference 0
+PENTAGON
+********   
+Python:  0.4284 0.0047 0.0030  s
+Matlab:  0.0103 0.0011 0.0004  s
+   function difference 1.1845e-16
+   gradient difference 0
+PENTDI
+********   
+Python:  0.4777 0.0040 0.0023  s
+Matlab:  0.0113 0.0017 0.0017  s
+   function difference 0
+   gradient difference 0
+PFIT1LS
+********   
+Python:  0.4850 0.0037 0.0022  s
+Matlab:  0.0094 0.0012 0.0007  s
+   function difference 0
+   gradient difference 0
+PFIT2LS
+********   
+Python:  0.4713 0.0036 0.0020  s
+Matlab:  0.0087 0.0012 0.0007  s
+   function difference 0
+   gradient difference 0
+PFIT3LS
+********   
+Python:  0.4786 0.0036 0.0019  s
+Matlab:  0.0079 0.0011 0.0007  s
+   function difference 0
+   gradient difference 0
+POLAK1
+********   
+Python:  0.4819 0.0038 0.0022  s
+Matlab:  0.0069 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+POLAK2
+********   
+Python:  0.4805 0.0053 0.0022  s
+Matlab:  0.0090 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+POLAK3
+********   
+Python:  0.4830 0.0056 0.0040  s
+Matlab:  0.0354 0.0069 0.0055  s
+   function difference 0
+   gradient difference 9.8926e-17
+POLAK4
+********   
+Python:  0.4865 0.0040 0.0024  s
+Matlab:  0.0072 0.0007 0.0004  s
+   function difference 1.7324e-16
+   gradient difference 0
+POLAK5
+********   
+Python:  0.4410 0.0039 0.0022  s
+Matlab:  0.0076 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+POLAK6
+********   
+Python:  0.4989 0.0044 0.0027  s
+Matlab:  0.0103 0.0015 0.0017  s
+   function difference 0
+   gradient difference 0
+POROUS1
+********   
+Python:  0.4434 0.0046 0.0029  s
+Matlab:  0.0188 0.0043 0.0031  s
+   function difference 0
+   gradient difference 0
+POROUS2
+********   
+Python:  0.5938 0.0973 0.1016  s
+Matlab:  0.3789 0.0643 0.0467  s
+   function difference 8.273e-16
+   gradient difference 0
+PORTFL1
+********   
+Python:  0.4830 0.0073 0.0056  s
+Matlab:  0.0365 0.0035 0.0023  s
+   function difference 2.7274e-16
+   gradient difference 0
+PORTFL2
+********   
+Python:  0.5170 0.0066 0.0053  s
+Matlab:  0.0359 0.0034 0.0021  s
+   function difference 2.013e-16
+   gradient difference 0
+PORTFL3
+********   
+Python:  0.4540 0.0066 0.0053  s
+Matlab:  0.0356 0.0034 0.0021  s
+   function difference 1.7654e-16
+   gradient difference 6.2496e-17
+PORTFL4
+********   
+Python:  0.4963 0.0068 0.0054  s
+Matlab:  0.0367 0.0034 0.0022  s
+   function difference 1.12e-16
+   gradient difference 0
+PORTFL6
+********   
+Python:  0.4509 0.0067 0.0054  s
+Matlab:  0.0366 0.0033 0.0022  s
+   function difference 1.1383e-16
+   gradient difference 0
+PORTSNQP
+********   
+Python:  0.4794 0.0045 0.0027  s
+Matlab:  0.0096 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+POWELLBC
+********   
+Python:  0.4254 0.0044 0.0027  s
+Matlab:  0.0318 0.0064 0.0045  s
+   function difference 0
+   gradient difference 0
+POWELLBS
+********   
+Python:  0.5254 0.0037 0.0020  s
+Matlab:  0.0077 0.0009 0.0002  s
+   function difference 0
+   gradient difference 0
+POWELLBSLS
+********   
+Python:  0.4346 0.0035 0.0019  s
+Matlab:  0.0069 0.0015 0.0003  s
+   function difference 0
+   gradient difference 0
+POWELLSG
+********   
+Python:  0.5121 0.0041 0.0025  s
+Matlab:  0.0078 0.0007 0.0005  s
+   function difference 0
+   gradient difference 0
+POWELLSQ
+********   
+Python:  0.4655 0.0038 0.0021  s
+Matlab:  0.0070 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+POWELLSQLS
+********   
+Python:  0.5169 0.0035 0.0018  s
+Matlab:  0.0063 0.0011 0.0003  s
+   function difference 0
+   gradient difference 0
+POWER
+********   
+Python:  0.4514 0.0035 0.0018  s
+Matlab:  0.0059 0.0013 0.0003  s
+   function difference 0
+   gradient difference 0
+POWERSUM
+********   
+Python:  0.5765 0.0047 0.0030  s
+Matlab:  0.0278 0.0111 0.0043  s
+   function difference 7.86e-15
+   gradient difference 3.7563e-15
+POWERSUMNE
+********   
+Python:  0.5038 0.0049 0.0033  s
+Matlab:  0.0317 0.0062 0.0049  s
+   function difference 3.6272e-15
+   gradient difference 0
+POWERSUMB
+********   
+Python:  0.5412 0.0046 0.0030  s
+Matlab:  0.0282 0.0062 0.0072  s
+   function difference 7.86e-15
+   gradient difference 3.7563e-15
+PRICE3B
+********   
+Python:  0.4996 0.0037 0.0020  s
+Matlab:  0.0067 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+PRICE3NE
+********   
+Python:  0.5186 0.0037 0.0022  s
+Matlab:  0.0061 0.0008 0.0002  s
+   function difference 0
+   gradient difference 0
+PRICE4B
+********   
+Python:  0.4649 0.0038 0.0021  s
+Matlab:  0.0075 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+PRICE4NE
+********   
+Python:  0.5470 0.0039 0.0021  s
+Matlab:  0.0071 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+PRODPL0
+********   
+Python:  0.4579 0.0059 0.0041  s
+Matlab:  0.0179 0.0012 0.0007  s
+   function difference 0
+   gradient difference 0
+PRODPL1
+********   
+Python:  0.4843 0.0059 0.0042  s
+Matlab:  0.0186 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+PSPDOC
+********   
+Python:  0.4308 0.0035 0.0019  s
+Matlab:  0.0071 0.0015 0.0004  s
+   function difference 0
+   gradient difference 0
+PT
+********   
+Python:  0.4855 0.0349 0.0331  s
+Matlab:  0.0366 0.0020 0.0016  s
+   function difference 1.7053e-16
+   gradient difference 0
+QC
+********   
+Python:  0.5222 0.0053 0.0035  s
+Matlab:  0.0170 0.0030 0.0023  s
+   function difference 0
+   gradient difference 0
+QCNEW
+********   
+Python:  0.4504 0.0050 0.0032  s
+Matlab:  0.0148 0.0018 0.0021  s
+   function difference 0
+   gradient difference 0
+QING
+********   
+Python:  0.5171 0.0035 0.0019  s
+Matlab:  0.0069 0.0010 0.0005  s
+   function difference 0
+   gradient difference 0
+QINGNE
+********   
+Python:  0.4539 0.0039 0.0021  s
+Matlab:  0.0076 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+QINGB
+********   
+Python:  0.5099 0.0036 0.0019  s
+Matlab:  0.0073 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+QPBAND
+********   
+Python:  0.8436 0.0074 0.0058  s
+Matlab:  0.0388 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+QPCBLEND
+********   
+Python:  0.6544 0.0107 0.0095  s
+Matlab:  0.0692 0.0065 0.0052  s
+   function difference 0
+   gradient difference 0
+QPNBLEND
+********   
+Python:  0.5966 0.0108 0.0089  s
+Matlab:  0.0647 0.0058 0.0047  s
+   function difference 0
+   gradient difference 0
+QR3D
+********   
+Python:  0.6745 0.0067 0.0046  s
+Matlab:  0.0594 0.0088 0.0073  s
+   function difference 0
+   gradient difference 0
+QR3DLS
+********   
+Python:  0.5799 0.0058 0.0042  s
+Matlab:  0.0542 0.0109 0.0068  s
+   function difference 0
+   gradient difference 0
+QRTQUAD
+********   
+Python:  0.6534 0.0037 0.0023  s
+Matlab:  0.1266 0.0015 0.0008  s
+   function difference 0
+   gradient difference 0
+QUARTC
+********   
+Python:  0.4746 0.0041 0.0024  s
+Matlab:  0.0063 0.0007 0.0004  s
+   function difference 0
+   gradient difference 0
+QUDLIN
+********   
+Python:  0.4313 0.0037 0.0019  s
+Matlab:  0.0067 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+RAT42
+********   
+Python:  0.4643 0.0040 0.0023  s
+Matlab:  0.0091 0.0009 0.0006  s
+   function difference 1.3763e-16
+   gradient difference 0
+RAT42LS
+********   
+Python:  0.4994 0.0038 0.0020  s
+Matlab:  0.0081 0.0012 0.0010  s
+   function difference 0
+   gradient difference 0
+RAT43
+********   
+Python:  0.4411 0.0044 0.0026  s
+Matlab:  0.0121 0.0017 0.0013  s
+   function difference 0
+   gradient difference 0
+RAT43LS
+********   
+Python:  0.4826 0.0040 0.0022  s
+Matlab:  0.0109 0.0021 0.0025  s
+   function difference 0
+   gradient difference 0
+RAYBENDL
+********   
+Python:  0.4437 0.0036 0.0019  s
+Matlab:  0.0088 0.0015 0.0007  s
+   function difference 0
+   gradient difference 0
+RDW2D51F
+********   
+Python:  0.4698 0.0058 0.0040  s
+Matlab:  0.0583 0.0081 0.0073  s
+   function difference 0
+   gradient difference 0
+RDW2D51U
+********   
+Python:  0.4867 0.0059 0.0040  s
+Matlab:  0.0572 0.0094 0.0072  s
+   function difference 0
+   gradient difference 0
+RDW2D52B
+********   
+Python:  0.5145 0.0059 0.0041  s
+Matlab:  0.0573 0.0076 0.0072  s
+   function difference 0
+   gradient difference 0
+RDW2D52F
+********   
+Python:  0.4498 0.0058 0.0041  s
+Matlab:  0.0573 0.0076 0.0073  s
+   function difference 0
+   gradient difference 0
+RDW2D52U
+********   
+Python:  0.5103 0.0059 0.0041  s
+Matlab:  0.0690 0.0080 0.0194  s
+   function difference 0
+   gradient difference 0
+READING1
+********   
+Python:  0.5126 0.0057 0.0038  s
+Matlab:  0.0291 0.0032 0.0030  s
+   function difference 0
+   gradient difference 0
+READING2
+********   
+Python:  0.4987 0.0055 0.0037  s
+Matlab:  0.0226 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+READING3
+********   
+Python:  0.6109 0.0050 0.0031  s
+Matlab:  0.0112 0.0014 0.0013  s
+   function difference 0
+   gradient difference 0
+READING4
+********   
+Python:  0.5514 0.0037 0.0022  s
+Matlab:  0.0089 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+READING5
+********   
+Python:  0.4544 0.0040 0.0023  s
+Matlab:  0.0092 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+READING9
+********   
+Python:  0.5456 0.0043 0.0033  s
+Matlab:  0.0085 0.0011 0.0004  s
+   function difference 0
+   gradient difference 0
+RECIPE
+********   
+Python:  0.5887 0.0040 0.0022  s
+Matlab:  0.0065 0.0010 0.0002  s
+   function difference 0
+   gradient difference 0
+RECIPELS
+********   
+Python:  0.4463 0.0038 0.0021  s
+Matlab:  0.0051 0.0014 0.0003  s
+   function difference 0
+   gradient difference 0
+RES
+********   
+Python:  0.5388 0.0049 0.0029  s
+Matlab:  0.0109 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+RK23
+********   
+Python:  0.6424 0.0050 0.0032  s
+Matlab:  0.0134 0.0012 0.0007  s
+   function difference 0
+   gradient difference 0
+ROBOT
+********   
+Python:  0.4843 0.0043 0.0026  s
+Matlab:  0.0106 0.0015 0.0012  s
+   function difference 0
+   gradient difference 0
+ROSENBR
+********   
+Python:  0.5963 0.0039 0.0022  s
+Matlab:  0.0076 0.0010 0.0003  s
+   function difference 0
+   gradient difference 0
+ROSENBRTU
+********   
+Python:  0.6046 0.0037 0.0020  s
+Matlab:  0.0059 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+ROSENMMX
+********   
+Python:  0.4559 0.0045 0.0026  s
+Matlab:  0.0072 0.0013 0.0007  s
+   function difference 0
+   gradient difference 0
+ROSEPETAL
+********   
+Python:  0.5158 0.0046 0.0028  s
+Matlab:  0.0072 0.0008 0.0004  s
+   function difference 0
+   gradient difference 0
+ROSEPETAL2
+********   
+Python:  0.5702 0.0056 0.0041  s
+Matlab:  0.0104 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+ROSZMAN1
+********   
+Python:  0.5654 0.0061 0.0042  s
+Matlab:  0.0131 0.0025 0.0031  s
+   function difference 1.3161e-16
+   gradient difference 0
+ROSZMAN1LS
+********   
+Python:  0.6158 0.0053 0.0037  s
+Matlab:  0.0125 0.0038 0.0054  s
+   function difference 0
+   gradient difference 0
+ROTDISC
+********   
+Python:  0.5392 0.1042 0.1021  s
+Matlab:  0.3508 0.0389 0.0298  s
+   function difference 0
+   gradient difference 0
+RSNBRNE
+********   
+Python:  0.5714 0.0040 0.0022  s
+Matlab:  0.0063 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+S268
+********   
+Python:  0.5391 0.0043 0.0027  s
+Matlab:  0.0129 0.0018 0.0027  s
+   function difference 0
+   gradient difference 0
+S308
+********   
+Python:  0.5708 0.0034 0.0019  s
+Matlab:  0.0058 0.0009 0.0003  s
+   function difference 0
+   gradient difference 0
+S316m322
+********   
+Python:  0.5422 0.0040 0.0021  s
+Matlab:  0.0061 0.0013 0.0003  s
+   function difference 0
+   gradient difference 0
+S365
+********   
+/Users/sgratton/S2X/S2X/python_problems/S365.py:470: RuntimeWarning: invalid value encountered in divide
+  g_[0] = EV_[0]/ROOT
+Python:  0.5558 0.0046 0.0023  s
+Matlab:  0.0086 0.0016 0.0009  s
+   function difference 0
+   gradient difference NaN
+S365MOD
+********   
+/Users/sgratton/S2X/S2X/python_problems/S365MOD.py:475: RuntimeWarning: invalid value encountered in divide
+  g_[0] = EV_[0]/ROOT
+Python:  0.5065 0.0049 0.0023  s
+Matlab:  0.0081 0.0013 0.0010  s
+   function difference 0
+   gradient difference NaN
+S368
+********   
+Python:  0.5595 0.0068 0.0051  s
+Matlab:  0.0613 0.0178 0.0050  s
+   function difference 6.528e-16
+   gradient difference 5.7929e-16
+SANTA
+********   
+Python:  0.5382 0.0050 0.0031  s
+Matlab:  0.0195 0.0029 0.0020  s
+   function difference 0
+   gradient difference 1.1563e-16
+SANTALS
+********   
+Python:  0.6087 0.0045 0.0027  s
+Matlab:  0.0178 0.0038 0.0052  s
+   function difference 3.1042e-16
+   gradient difference 2.1534e-16
+SBRYBND
+********   
+Python:  0.5950 0.0051 0.0031  s
+Matlab:  0.0169 0.0051 0.0041  s
+   function difference 0
+   gradient difference 0
+SCHMVETT
+********   
+Python:  0.5925 0.0041 0.0023  s
+Matlab:  0.0117 0.0024 0.0023  s
+   function difference 0
+   gradient difference 0
+SCOND1LS
+********   
+Python:  0.5657 0.0047 0.0028  s
+Matlab:  0.0114 0.0018 0.0020  s
+   function difference 0
+   gradient difference 0
+SCOSINE
+********   
+Python:  0.5944 0.0044 0.0027  s
+Matlab:  0.0101 0.0012 0.0008  s
+   function difference 0
+   gradient difference 0
+SCURLY10
+********   
+Python:  0.5695 0.0045 0.0029  s
+Matlab:  0.0096 0.0009 0.0005  s
+   function difference 0
+   gradient difference 1.5906e-16
+SCURLY20
+********   
+Python:  0.5955 0.0054 0.0035  s
+Matlab:  0.0296 0.0014 0.0021  s
+   function difference 0
+   gradient difference 3.5576e-17
+SCURLY30
+********   
+Python:  0.5744 0.0056 0.0038  s
+Matlab:  0.0384 0.0018 0.0023  s
+   function difference 2.5609e-16
+   gradient difference 5.2825e-16
+SCW1
+********   
+Python:  0.5836 0.0053 0.0034  s
+Matlab:  0.0120 0.0021 0.0024  s
+   function difference 0
+   gradient difference 0
+SCW2
+********   
+Python:  0.5990 0.0053 0.0034  s
+Matlab:  0.0172 0.0025 0.0029  s
+   function difference 0
+   gradient difference 0
+SEMICN2U
+********   
+Python:  0.5840 0.0048 0.0030  s
+Matlab:  0.0120 0.0014 0.0010  s
+   function difference 0
+   gradient difference 0
+SEMICON1
+********   
+Python:  0.5360 0.0047 0.0029  s
+Matlab:  0.0115 0.0013 0.0010  s
+   function difference 0
+   gradient difference 0
+SEMICON2
+********   
+Python:  0.5425 0.0048 0.0030  s
+Matlab:  0.0109 0.0013 0.0010  s
+   function difference 0
+   gradient difference 0
+SENSORS
+********   
+Python:  0.5522 0.0040 0.0025  s
+Matlab:  0.0117 0.0038 0.0049  s
+   function difference 0
+   gradient difference 0
+SIMBQP
+********   
+Python:  0.5611 0.0037 0.0021  s
+Matlab:  0.0047 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+SIMPLLPA
+********   
+Python:  0.5328 0.0039 0.0021  s
+Matlab:  0.0048 0.0004 0.0001  s
+   function difference 0
+   gradient difference 0
+SIMPLLPB
+********   
+Python:  0.5580 0.0040 0.0022  s
+Matlab:  0.0075 0.0004 0.0001  s
+   function difference 0
+   gradient difference 0
+SINEALI
+********   
+Python:  0.5738 0.0042 0.0027  s
+Matlab:  0.0084 0.0012 0.0008  s
+   function difference 0
+   gradient difference 0
+SINEVAL
+********   
+Python:  0.5648 0.0037 0.0022  s
+Matlab:  0.0059 0.0006 0.0003  s
+   function difference 0
+   gradient difference 0
+SINQUAD
+********   
+Python:  0.5504 0.0045 0.0028  s
+Matlab:  0.0090 0.0022 0.0019  s
+   function difference 1.6922e-16
+   gradient difference 0
+SINQUAD2
+********   
+Python:  0.5598 0.0045 0.0029  s
+Matlab:  0.0090 0.0019 0.0022  s
+   function difference 1.6922e-16
+   gradient difference 0
+SINROSNB
+********   
+Python:  0.4878 0.0051 0.0034  s
+Matlab:  0.0099 0.0017 0.0017  s
+   function difference 0
+   gradient difference 0
+SIPOW1
+********   
+Python:  0.5046 0.1275 0.1254  s
+Matlab:  0.1196 0.0156 0.0137  s
+   function difference 2.2732e-16
+   gradient difference 0
+SIPOW2
+********   
+Python:  0.5000 0.1184 0.1164  s
+Matlab:  0.1221 0.0168 0.0171  s
+   function difference 1.8024e-14
+   gradient difference 0
+SIPOW2M
+********   
+Python:  0.5350 0.1212 0.1261  s
+Matlab:  0.1344 0.0164 0.0171  s
+   function difference 1.8187e-14
+   gradient difference 0
+SIPOW3
+********   
+Python:  0.4979 0.1190 0.1177  s
+Matlab:  0.1985 0.0237 0.0230  s
+   function difference 9.6914e-15
+   gradient difference 0
+SIPOW4
+********   
+Python:  0.5438 0.1187 0.1172  s
+Matlab:  0.1850 0.0266 0.0248  s
+   function difference 1.3126e-15
+   gradient difference 0
+SREADIN3
+********   
+Python:  0.4516 0.0055 0.0038  s
+Matlab:  0.0170 0.0029 0.0030  s
+   function difference 2.2318e-16
+   gradient difference 0
+SISSER
+********   
+Python:  0.5101 0.0035 0.0019  s
+Matlab:  0.0062 0.0011 0.0004  s
+   function difference 0
+   gradient difference 0
+SISSER2
+********   
+Python:  0.4485 0.0034 0.0019  s
+Matlab:  0.0061 0.0007 0.0003  s
+   function difference 0
+   gradient difference 0
+SNAIL
+********   
+Python:  0.5139 0.0034 0.0019  s
+Matlab:  0.0073 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+SNAKE
+********   
+Python:  0.4345 0.0039 0.0022  s
+Matlab:  0.0070 0.0005 0.0002  s
+   function difference 0
+   gradient difference 0
+SOSQP1
+********   
+Python:  0.5499 0.0046 0.0029  s
+Matlab:  0.0098 0.0010 0.0005  s
+   function difference 0
+   gradient difference 0
+SOSQP2
+********   
+Python:  0.4665 0.0046 0.0028  s
+Matlab:  0.0108 0.0008 0.0005  s
+   function difference 0
+   gradient difference 0
+SPANHYD
+********   
+Python:  0.4666 0.0063 0.0046  s
+Matlab:  0.0315 0.0033 0.0022  s
+   function difference 0
+   gradient difference 0
+SPARSINE
+********   
+Python:  0.4919 0.0042 0.0024  s
+Matlab:  0.0105 0.0044 0.0029  s
+   function difference 0
+   gradient difference 0
+SPARSQUR
+********   
+Python:  0.5056 0.0041 0.0025  s
+Matlab:  0.0099 0.0042 0.0035  s
+   function difference 0
+   gradient difference 0
+SPECAN
+********   
+Python:  1.6489 0.3479 0.3445  s
+Matlab:  9.7600 0.1997 0.1671  s
+   function difference 0
+   gradient difference 1.0453e-16
+SPECANNE
+********   
+Python:  8.4162 0.5024 0.5024  s
+Matlab:  10.4799 1.3161 1.3392  s
+   function difference 5.5743e-16
+   gradient difference 1.9209e-17
+SPIN2LS
+********   
+Python:  0.5272 0.0044 0.0026  s
+Matlab:  0.0162 0.0048 0.0065  s
+   function difference 0
+   gradient difference 0
+SPINLS
+********   
+Python:  0.4214 0.0081 0.0063  s
+Matlab:  0.0589 0.0244 0.0122  s
+   function difference 0
+   gradient difference 0
+SPINOP
+********   
+Python:  0.4911 0.0040 0.0023  s
+Matlab:  0.0111 0.0020 0.0009  s
+   function difference 0
+   gradient difference 0
+SPIRAL
+********   
+Python:  0.5001 0.0040 0.0023  s
+Matlab:  0.0100 0.0017 0.0005  s
+   function difference 0
+   gradient difference 0
+SSBRYBND
+********   
+Python:  0.4932 0.0047 0.0030  s
+Matlab:  0.0158 0.0038 0.0039  s
+   function difference 0
+   gradient difference 0
+SSBRYBNDNE
+********   
+Python:  0.4975 0.0052 0.0032  s
+Matlab:  0.0170 0.0035 0.0048  s
+   function difference 0
+   gradient difference 0
+SSCOSINE
+********   
+Python:  0.4733 0.0042 0.0024  s
+Matlab:  0.0098 0.0011 0.0008  s
+   function difference 0
+   gradient difference 0
+SSEBNLN
+********   
+Python:  0.4677 0.0104 0.0085  s
+Matlab:  0.0525 0.0020 0.0020  s
+   function difference 0
+   gradient difference 0
+SSI
+********   
+Python:  0.4747 0.0037 0.0020  s
+Matlab:  0.0061 0.0008 0.0003  s
+   function difference 0
+   gradient difference 0
+SSINE
+********   
+Python:  0.4935 0.0039 0.0023  s
+Matlab:  0.0072 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+STANCMIN
+********   
+Python:  0.4858 0.0040 0.0022  s
+Matlab:  0.0070 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+STNQP1
+********   
+Python:  0.4993 0.0060 0.0042  s
+Matlab:  0.0144 0.0016 0.0024  s
+   function difference 0
+   gradient difference 0
+STNQP2
+********   
+Python:  0.4947 0.0062 0.0044  s
+Matlab:  0.0136 0.0016 0.0022  s
+   function difference 0
+   gradient difference 0
+STREG
+********   
+Python:  0.4796 0.0039 0.0020  s
+Matlab:  0.0067 0.0030 0.0003  s
+   function difference 0
+   gradient difference 0
+STREGNE
+********   
+Python:  0.4871 0.0039 0.0022  s
+Matlab:  0.0069 0.0012 0.0002  s
+   function difference 0
+   gradient difference 0
+STRTCHDV
+********   
+Python:  0.5024 0.0041 0.0022  s
+Matlab:  0.0093 0.0019 0.0014  s
+   function difference 0
+   gradient difference 0
+SUPERSIM
+********   
+Python:  0.4719 0.0038 0.0022  s
+Matlab:  0.0062 0.0004 0.0001  s
+   function difference 0
+   gradient difference 0
+SVANBERG
+********   
+Python:  0.4899 0.0047 0.0032  s
+Matlab:  0.0159 0.0066 0.0041  s
+   function difference 0
+   gradient difference 0
+SWOPF
+********   
+Python:  0.4683 0.0108 0.0090  s
+Matlab:  0.0434 0.0070 0.0056  s
+   function difference 3.346e-16
+   gradient difference 0
+SYNTHES1
+********   
+Python:  0.4792 0.0043 0.0025  s
+Matlab:  0.0088 0.0014 0.0004  s
+   function difference 0
+   gradient difference 0
+SYNTHES2
+********   
+Python:  0.4710 0.0048 0.0030  s
+Matlab:  0.0110 0.0013 0.0005  s
+   function difference 0
+   gradient difference 0
+SYNTHES3
+********   
+Python:  0.5246 0.0054 0.0037  s
+Matlab:  0.0138 0.0015 0.0006  s
+   function difference 0
+   gradient difference 0
+TAME
+********   
+Python:  0.4471 0.0038 0.0021  s
+Matlab:  0.0064 0.0005 0.0001  s
+   function difference 0
+   gradient difference 0
+TARGUS
+********   
+Python:  0.5095 0.0078 0.0062  s
+Matlab:  0.0454 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+TAX13322
+********   
+Python:  0.4915 0.1558 0.1541  s
+Matlab:  0.4584 0.1039 0.0388  s
+   function difference 0
+   gradient difference 5.1117e-18
+TENBARS1
+********   
+Python:  0.4681 0.0048 0.0029  s
+Matlab:  0.0127 0.0016 0.0013  s
+   function difference 1.9654e-16
+   gradient difference 0
+TENBARS2
+********   
+Python:  0.4963 0.0046 0.0028  s
+Matlab:  0.0121 0.0015 0.0013  s
+   function difference 0
+   gradient difference 0
+TENBARS3
+********   
+Python:  0.5433 0.0046 0.0029  s
+Matlab:  0.0124 0.0016 0.0013  s
+   function difference 0
+   gradient difference 0
+TENBARS4
+********   
+Python:  0.4600 0.0050 0.0031  s
+Matlab:  0.0121 0.0017 0.0014  s
+   function difference 0
+   gradient difference 0
+TFI1
+********   
+Python:  0.4866 0.0118 0.0098  s
+Matlab:  0.0420 0.0071 0.0059  s
+   function difference 0
+   gradient difference 0
+TFI2
+********   
+Python:  0.4623 0.0097 0.0080  s
+Matlab:  0.0228 0.0006 0.0004  s
+   function difference 0
+   gradient difference 0
+TFI3
+********   
+Python:  0.4847 0.0100 0.0081  s
+Matlab:  0.0260 0.0009 0.0005  s
+   function difference 0
+   gradient difference 0
+THURBER
+********   
+Python:  0.4699 0.0053 0.0036  s
+Matlab:  0.0214 0.0042 0.0048  s
+   function difference 4.7698e-16
+   gradient difference 0
+THURBERLS
+********   
+Python:  0.4850 0.0046 0.0030  s
+Matlab:  0.0204 0.0057 0.0077  s
+   function difference 0
+   gradient difference 0
+TOINTGOR
+********   
+Python:  0.5435 0.0084 0.0065  s
+Matlab:  0.0224 0.0059 0.0054  s
+   function difference 0
+   gradient difference 0
+TOINTGOR
+********   
+Python:  0.4723 0.0060 0.0049  s
+Matlab:  0.0154 0.0037 0.0024  s
+   function difference 0
+   gradient difference 0
+TOINTGSS
+********   
+Python:  0.5418 0.0036 0.0020  s
+Matlab:  0.0091 0.0013 0.0009  s
+   function difference 0
+   gradient difference 0
+TOINTPSP
+********   
+Python:  0.4748 0.0080 0.0061  s
+Matlab:  0.0233 0.0044 0.0042  s
+   function difference 0
+   gradient difference 0
+TOINTQOR
+********   
+Python:  0.4796 0.0078 0.0061  s
+Matlab:  0.0233 0.0043 0.0028  s
+   function difference 0
+   gradient difference 0
+TORSION1
+********   
+Python:  0.4904 0.0040 0.0022  s
+Matlab:  0.0122 0.0018 0.0009  s
+   function difference 0
+   gradient difference 0
+TORSION2
+********   
+Python:  0.4992 0.0041 0.0022  s
+Matlab:  0.0122 0.0011 0.0009  s
+   function difference 0
+   gradient difference 0
+TORSION3
+********   
+Python:  0.4560 0.0041 0.0022  s
+Matlab:  0.0129 0.0011 0.0009  s
+   function difference 0
+   gradient difference 0
+TORSION4
+********   
+Python:  0.5071 0.0039 0.0022  s
+Matlab:  0.0115 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+TORSION5
+********   
+Python:  0.5468 0.0039 0.0022  s
+Matlab:  0.0132 0.0011 0.0009  s
+   function difference 0
+   gradient difference 0
+TORSION6
+********   
+Python:  0.5298 0.0040 0.0023  s
+Matlab:  0.0119 0.0012 0.0009  s
+   function difference 0
+   gradient difference 0
+TORSIONA
+********   
+Python:  0.4686 0.0050 0.0032  s
+Matlab:  0.0167 0.0022 0.0029  s
+   function difference 0
+   gradient difference 0
+TORSIONB
+********   
+Python:  0.4749 0.0050 0.0035  s
+Matlab:  0.0155 0.0022 0.0031  s
+   function difference 0
+   gradient difference 0
+TORSIONC
+********   
+Python:  0.4864 0.0049 0.0032  s
+Matlab:  0.0170 0.0021 0.0029  s
+   function difference 0
+   gradient difference 0
+TORSIOND
+********   
+Python:  0.4878 0.0050 0.0032  s
+Matlab:  0.0156 0.0021 0.0029  s
+   function difference 0
+   gradient difference 0
+TORSIONE
+********   
+Python:  0.4542 0.0048 0.0031  s
+Matlab:  0.0165 0.0022 0.0030  s
+   function difference 0
+   gradient difference 0
+TORSIONF
+********   
+Python:  0.5027 0.0050 0.0033  s
+Matlab:  0.0159 0.0021 0.0030  s
+   function difference 0
+   gradient difference 0
+TQUARTIC
+********   
+Python:  0.5366 0.0042 0.0026  s
+Matlab:  0.0074 0.0017 0.0017  s
+   function difference 0
+   gradient difference 0
+TQUARTICNE
+********   
+Python:  0.4940 0.0045 0.0032  s
+Matlab:  0.0094 0.0010 0.0008  s
+   function difference 0
+   gradient difference 0
+TRAINF
+********   
+Python:  0.4599 0.0058 0.0039  s
+Matlab:  0.0186 0.0021 0.0019  s
+   function difference 1.3073e-16
+   gradient difference 0
+TRAINH
+********   
+Python:  0.4892 0.0062 0.0045  s
+Matlab:  0.0255 0.0045 0.0061  s
+   function difference 0
+   gradient difference 0
+TRIDIA
+********   
+Python:  0.5105 0.0038 0.0021  s
+Matlab:  0.0073 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+TRIGON1
+********   
+Python:  0.4969 0.0046 0.0030  s
+Matlab:  0.0136 0.0091 0.0045  s
+   function difference 4.491e-15
+   gradient difference 2.5033e-15
+TRIGON1B
+********   
+Python:  0.4570 0.0045 0.0030  s
+Matlab:  0.0130 0.0084 0.0032  s
+   function difference 4.491e-15
+   gradient difference 2.5033e-15
+TRIGON2
+********   
+Python:  0.4997 0.0056 0.0039  s
+Matlab:  0.0115 0.0030 0.0027  s
+   function difference 0
+   gradient difference 0
+TRIGON2B
+********   
+Python:  0.5420 0.0056 0.0038  s
+Matlab:  0.0111 0.0028 0.0026  s
+   function difference 0
+   gradient difference 0
+TRO3X3
+********   
+Python:  0.5038 0.0060 0.0042  s
+Matlab:  0.0371 0.0068 0.0058  s
+   function difference 0
+   gradient difference 0
+TRO4X4
+********   
+Python:  0.4558 0.0092 0.0073  s
+Matlab:  0.0864 0.0139 0.0075  s
+   function difference 4.4409e-16
+   gradient difference 0
+TRO6X2
+********   
+Python:  0.5003 0.0077 0.0059  s
+Matlab:  0.0589 0.0130 0.0058  s
+   function difference 0
+   gradient difference 0
+TRUSPYR1
+********   
+Python:  0.4513 0.0049 0.0030  s
+Matlab:  0.0256 0.0044 0.0032  s
+   function difference 2.1835e-16
+   gradient difference 0
+TRUSPYR2
+********   
+Python:  0.5066 0.0053 0.0035  s
+Matlab:  0.0267 0.0043 0.0032  s
+   function difference 4.3551e-16
+   gradient difference 0
+TRYmB
+********   
+Python:  0.5018 0.0038 0.0021  s
+Matlab:  0.0075 0.0012 0.0003  s
+   function difference 0
+   gradient difference 0
+TWIRIMD1
+********   
+Python:  2.6442 0.3949 0.3941  s
+Matlab:  10.4112 0.2040 0.1776  s
+   function difference 1.8529e-15
+   gradient difference 0
+TWOBARS
+********   
+Python:  0.4893 0.0038 0.0022  s
+Matlab:  0.0070 0.0013 0.0004  s
+   function difference 0
+   gradient difference 0
+TWOD
+********   
+Python:  0.5654 0.0043 0.0031  s
+Matlab:  0.0164 0.0009 0.0006  s
+   function difference 0
+   gradient difference 0
+UBH5
+********   
+Python:  0.5302 0.0095 0.0075  s
+Matlab:  0.0356 0.0041 0.0027  s
+   function difference 0
+   gradient difference 0
+VANDERM1
+********   
+Python:  0.5909 0.0081 0.0062  s
+Matlab:  0.0334 0.0097 0.0093  s
+   function difference 0
+   gradient difference 8.0445e-17
+VANDERM2
+********   
+Python:  0.5299 0.0084 0.0065  s
+Matlab:  0.0362 0.0064 0.0049  s
+   function difference 3.2594e-16
+   gradient difference 8.0445e-17
+VANDERM3
+********   
+Python:  0.5225 0.0083 0.0062  s
+Matlab:  0.0358 0.0072 0.0052  s
+   function difference 0
+   gradient difference 4.4157e-17
+VANDERM4
+********   
+Python:  0.4929 0.0085 0.0065  s
+Matlab:  0.0334 0.0063 0.0069  s
+   function difference 2.1324e-16
+   gradient difference 0
+VARDIM
+********   
+Python:  0.5655 0.0043 0.0026  s
+Matlab:  0.0089 0.0009 0.0005  s
+   function difference 0
+   gradient difference 0
+VARDIMNE
+********   
+Python:  0.5443 0.0049 0.0034  s
+Matlab:  0.0092 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+VAREIGVL
+********   
+Python:  0.5617 0.0053 0.0035  s
+Matlab:  0.0318 0.0044 0.0043  s
+   function difference 0
+   gradient difference 4.4678e-17
+VESUVIA
+********   
+Python:  0.6019 0.1134 0.1113  s
+Matlab:  0.3125 0.0485 0.0340  s
+   function difference 1.39e-15
+   gradient difference 7.5914e-16
+VESUVIALS
+********   
+Python:  0.5819 0.0993 0.0969  s
+Matlab:  0.3120 0.0466 0.0236  s
+   function difference 0
+   gradient difference 0
+VESUVIO
+********   
+Python:  0.6243 0.1197 0.1184  s
+Matlab:  0.3101 0.0530 0.0363  s
+   function difference 1.39e-15
+   gradient difference 2.0792e-20
+VESUVIOLS
+********   
+Python:  0.6256 0.1051 0.1048  s
+Matlab:  0.3034 0.0451 0.0240  s
+   function difference 0
+   gradient difference 5.0463e-17
+VESUVIOU
+********   
+Python:  0.5962 0.1176 0.1157  s
+Matlab:  0.2869 0.0481 0.0363  s
+   function difference 1.1737e-15
+   gradient difference 1.721e-26
+VESUVIOULS
+********   
+Python:  0.5748 0.1036 0.1005  s
+Matlab:  0.2816 0.0423 0.0280  s
+   function difference 0
+   gradient difference 0
+VIBRBEAM
+********   
+Python:  0.4877 0.0061 0.0044  s
+Matlab:  0.0583 0.0185 0.0101  s
+   function difference 0
+   gradient difference 0
+VIBRBEAMNE
+********   
+Python:  0.5346 0.0062 0.0048  s
+Matlab:  0.0611 0.0160 0.0086  s
+   function difference 1.3753e-16
+   gradient difference 0
+WACHBIEG
+********   
+Python:  0.5329 0.0036 0.0022  s
+Matlab:  0.0063 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+WATER
+********   
+Python:  0.4751 0.0050 0.0032  s
+Matlab:  0.0129 0.0009 0.0005  s
+   function difference 0
+   gradient difference 0
+WATSON
+********   
+Python:  0.5594 0.0063 0.0045  s
+Matlab:  0.0477 0.0067 0.0093  s
+   function difference 0
+   gradient difference 0
+WATSONNE
+********   
+Python:  0.4426 0.0073 0.0050  s
+Matlab:  0.0501 0.0054 0.0061  s
+   function difference 0
+   gradient difference 2.0663e-17
+WAYSEA1
+********   
+Python:  0.4698 0.0037 0.0020  s
+Matlab:  0.0067 0.0013 0.0003  s
+   function difference 0
+   gradient difference 0
+WAYSEA1B
+********   
+Python:  0.5003 0.0036 0.0020  s
+Matlab:  0.0075 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+WAYSEA1NE
+********   
+Python:  0.5156 0.0036 0.0022  s
+Matlab:  0.0071 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+WAYSEA2B
+********   
+Python:  0.5249 0.0039 0.0021  s
+Matlab:  0.0066 0.0005 0.0003  s
+   function difference 0
+   gradient difference 0
+WAYSEA2NE
+********   
+Python:  0.4842 0.0035 0.0021  s
+Matlab:  0.0072 0.0004 0.0002  s
+   function difference 0
+   gradient difference 0
+WEEDS
+********   
+Python:  0.5564 0.0040 0.0022  s
+Matlab:  0.0097 0.0016 0.0019  s
+   function difference 0
+   gradient difference 0
+WOMFLET
+********   
+Python:  0.4716 0.0037 0.0025  s
+Matlab:  0.0079 0.0009 0.0004  s
+   function difference 0
+   gradient difference 0
+YAO
+********   
+Python:  0.5187 0.0064 0.0045  s
+Matlab:  0.0113 0.0011 0.0009  s
+   function difference 1.3973e-16
+   gradient difference 5.9639e-17
+YATP1LS
+********   
+Python:  0.4589 0.0055 0.0038  s
+Matlab:  0.0299 0.0181 0.0110  s
+   function difference 0
+   gradient difference 0
+YATP1CLS
+********   
+Python:  0.5311 0.0055 0.0038  s
+Matlab:  0.0306 0.0122 0.0110  s
+   function difference 0
+   gradient difference 0
+YATP1CNE
+********   
+Python:  0.5055 0.0057 0.0043  s
+Matlab:  0.0310 0.0122 0.0098  s
+   function difference 1.2589e-16
+   gradient difference 0
+YATP2LS
+********   
+Python:  0.5176 0.0063 0.0046  s
+Matlab:  0.0245 0.0081 0.0058  s
+   function difference 0
+   gradient difference 0
+YATP2CLS
+********   
+Python:  0.4792 0.0064 0.0046  s
+Matlab:  0.0248 0.0078 0.0062  s
+   function difference 0
+   gradient difference 0
+YATP2CNE
+********   
+Python:  0.5091 0.0066 0.0052  s
+Matlab:  0.0259 0.0059 0.0047  s
+   function difference 0
+   gradient difference 0
+YFIT
+********   
+Python:  0.4871 0.0040 0.0023  s
+Matlab:  0.0103 0.0019 0.0024  s
+   function difference 0
+   gradient difference 4.2609e-17
+YFITNE
+********   
+Python:  0.5640 0.0040 0.0025  s
+Matlab:  0.0117 0.0016 0.0012  s
+   function difference 1.1752e-16
+   gradient difference 3.9776e-19
+YFITU
+********   
+Python:  0.4597 0.0043 0.0022  s
+Matlab:  0.0106 0.0019 0.0024  s
+   function difference 0
+   gradient difference 4.2609e-17
+YORKNET
+********   
+Python:  0.9663 0.0316 0.0320  s
+Matlab:  0.1720 0.0213 0.0132  s
+   function difference 1.8457e-16
+   gradient difference 0
+ZAMB2
+********   
+Python:  0.7039 0.0252 0.0244  s
+Matlab:  0.1100 0.0229 0.0132  s
+   function difference 2.0706e-16
+   gradient difference 0
+ZAMB2m10
+********   
+Python:  0.5731 0.0249 0.0240  s
+Matlab:  0.1098 0.0228 0.0137  s
+   function difference 3.7521e-16
+   gradient difference 0
+ZAMB2m11
+********   
+Python:  0.7371 0.0253 0.0238  s
+Matlab:  0.1115 0.0219 0.0135  s
+   function difference 1.1362e-16
+   gradient difference 0
+ZAMB2m8
+********   
+Python:  0.5546 0.0131 0.0112  s
+Matlab:  0.0549 0.0116 0.0097  s
+   function difference 1.103e-15
+   gradient difference 0
+ZAMB2m9
+********   
+Python:  0.5276 0.0132 0.0112  s
+Matlab:  0.0567 0.0115 0.0088  s
+   function difference 3.9683e-16
+   gradient difference 0
+ZANGWIL2
+********   
+Python:  0.4688 0.0037 0.0019  s
+Matlab:  0.0066 0.0013 0.0002  s
+   function difference 0
+   gradient difference 0
+ZANGWIL3
+********   
+Python:  0.5171 0.0041 0.0022  s
+Matlab:  0.0053 0.0004 0.0001  s
+   function difference 0
+   gradient difference 0
+ZECEVIC2
+********   
+Python:  0.4984 0.0038 0.0022  s
+Matlab:  0.0064 0.0007 0.0002  s
+   function difference 0
+   gradient difference 0
+ZECEVIC3
+********   
+Python:  0.5592 0.0039 0.0025  s
+Matlab:  0.0069 0.0011 0.0003  s
+   function difference 0
+   gradient difference 0
+ZECEVIC4
+********   
+Python:  0.5798 0.0035 0.0022  s
+Matlab:  0.0067 0.0006 0.0002  s
+   function difference 0
+   gradient difference 0
+ZY2
+********   
+Python:  0.4920 0.0037 0.0026  s
+Matlab:  0.0067 0.0008 0.0004  s
+   function difference 0
+   gradient difference 0
