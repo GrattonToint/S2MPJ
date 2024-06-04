@@ -68,9 +68,9 @@ else
       end
    end
 
-   system( [ 'ls ',inma.outdir, ' > list_of_matlab_problems' ] )
-   system( [ 'ls ',inpy.outdir, ' > list_of_python_problems' ] )
-   system( [ 'ls ',injl.outdir, ' > list_of_julia_problems' ]  )
+   system( [ 'ls ',inma.outdir, ' > list_of_matlab_problems' ] );
+   system( [ 'ls ',inpy.outdir, ' > list_of_python_problems' ] );
+   system( [ 'ls ',injl.outdir, ' > list_of_julia_problems' ]  );
 
 end
 disp( 'Done.' )
