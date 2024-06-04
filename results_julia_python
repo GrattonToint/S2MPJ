@@ -6219,11 +6219,11 @@
    Julia evaluation  :  0.000173 seconds (1.31 k allocations: 37.734 KiB)
    Julia prod H*v    :  0.000143 seconds (1.21 k allocations: 28.797 KiB)
    Python setup      :  0.531429 seconds (5 allocations: 176 bytes)
-/home/philippe/s2x/LIN.py:476: RuntimeWarning: divide by zero encountered in log
+/home/philippe/s2mpj/LIN.py:476: RuntimeWarning: divide by zero encountered in log
   LOGX = np.log(EV_[0])
-/home/philippe/s2x/LIN.py:477: RuntimeWarning: invalid value encountered in multiply
+/home/philippe/s2mpj/LIN.py:477: RuntimeWarning: invalid value encountered in multiply
   f_   = EV_[0]*LOGX
-/home/philippe/s2x/LIN.py:489: RuntimeWarning: divide by zero encountered in true_divide
+/home/philippe/s2mpj/LIN.py:489: RuntimeWarning: divide by zero encountered in true_divide
   H_[0,0] = 1.0/EV_[0]
    Python evaluation :  0.002951 seconds (82 allocations: 3.609 KiB)
    Python evaluation :  0.002391 seconds (82 allocations: 3.609 KiB)
@@ -10141,9 +10141,9 @@
    Julia evaluation  :  0.000215 seconds (1.47 k allocations: 55.062 KiB)
    Julia prod H*v    :  0.000192 seconds (1.26 k allocations: 33.203 KiB)
    Python setup      :  0.668423 seconds (5 allocations: 176 bytes)
-/home/philippe/s2x/S365.py:470: RuntimeWarning: invalid value encountered in true_divide
+/home/philippe/s2mpj/S365.py:470: RuntimeWarning: invalid value encountered in true_divide
   g_[0] = EV_[0]/ROOT
-/home/philippe/s2x/S365.py:474: RuntimeWarning: invalid value encountered in true_divide
+/home/philippe/s2mpj/S365.py:474: RuntimeWarning: invalid value encountered in true_divide
   H_[0,0] = (1.0-EV_[0]*EV_[0]/X2)/ROOT
    Python evaluation :  0.003435 seconds (82 allocations: 3.625 KiB)
    Python evaluation :  0.002840 seconds (82 allocations: 3.625 KiB)
@@ -10156,9 +10156,9 @@
    Julia evaluation  :  0.000219 seconds (1.47 k allocations: 55.062 KiB)
    Julia prod H*v    :  0.000193 seconds (1.26 k allocations: 33.203 KiB)
    Python setup      :  0.712899 seconds (6 allocations: 480 bytes)
-/home/philippe/s2x/S365MOD.py:475: RuntimeWarning: invalid value encountered in true_divide
+/home/philippe/s2mpj/S365MOD.py:475: RuntimeWarning: invalid value encountered in true_divide
   g_[0] = EV_[0]/ROOT
-/home/philippe/s2x/S365MOD.py:479: RuntimeWarning: invalid value encountered in true_divide
+/home/philippe/s2mpj/S365MOD.py:479: RuntimeWarning: invalid value encountered in true_divide
   H_[0,0] = (1.0-EV_[0]*EV_[0]/X2)/ROOT
    Python evaluation :  0.003524 seconds (82 allocations: 3.625 KiB)
    Python evaluation :  0.003056 seconds (82 allocations: 3.625 KiB)

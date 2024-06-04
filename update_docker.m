@@ -8,7 +8,7 @@
 function update_docker()
 
    system( [ 'cp ./fullproblist /home/philippe/docker/mycute_2/newpy' ] );
-   system( [ 'cp ./s2xlib.py /home/philippe/docker/mycute_2/newpy' ] );
+   system( [ 'cp ./s2mpjlib.py /home/philippe/docker/mycute_2/newpy' ] );
    system( [ 'cp ./test_fortran_python.py /home/philippe/docker/mycute_2/newpy' ] );
 
    theproblems = 'fullproblist';

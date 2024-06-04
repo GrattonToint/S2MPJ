@@ -64,7 +64,7 @@ sifname = replace( sifname,'t','*' );
 sifname = replace( sifname,'d','/' );
 
 fidin    = fopen( ['/home/philippe/problems/sif/', sifname, '.SIF' ], 'r' );
-fidout   = fopen( ['/home/philippe/s2x_local/sif/', okname, '.SIF' ], 'w' );
+fidout   = fopen( ['/home/philippe/s2mpj_local/sif/', okname, '.SIF' ], 'w' );
 nargs    = length( args );
 iarg     = 0;
 assigned = {};
@@ -85,7 +85,7 @@ while( ~feof( fidin ) )
          fprintf( fidout, '%s\n', cline );
          assigned{end+1} = parname;
          line(25:36) = argi;
-         line = [ line(1:strfind( line, '$-PARAMETER' )+10), '     modified for S2X tests' ];
+         line = [ line(1:strfind( line, '$-PARAMETER' )+10), '     modified for S2MPJ tests' ];
       end
    elseif ( ( lline >4 && strcmp(line(1:4),'NAME') ) ||     ...
             ( lline >8 && strcmp(line(1:8),'ELEMENTS') ) || ...
