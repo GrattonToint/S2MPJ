@@ -12,6 +12,10 @@ function varargout = FERRISDC(action,varargin)
 % 
 %    classification = 'QLR2-AN-V-V'
 % 
+%       Alternative values for the SIF file parameters:
+% IE n                   4              $-PARAMETER
+% IE n                   100            $-PARAMETER
+% IE n                   200            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -35,16 +39,14 @@ switch(action)
         else
             v_('n') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE n                   100            $-PARAMETER
-% IE n                   200            $-PARAMETER
 % IE n                   300            $-PARAMETER
+% IE k                   3              $-PARAMETER
+% IE k                   10             $-PARAMETER
         if(nargin<3)
             v_('k') = 3;  %  SIF file default value
         else
             v_('k') = varargin{2};
         end
-% IE k                   10             $-PARAMETER
 % IE k                   20             $-PARAMETER
         v_('0') = 0;
         v_('1') = 1;
@@ -313,19 +315,19 @@ switch(action)
         pb.xnames = {};
         for i=v_('1'):v_('k')
             for j=v_('1'):v_('n')
-                [iv,ix_] = s2xlib('ii',['A',int2str(i),',',int2str(j)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['A',int2str(i),',',int2str(j)],ix_);
                 pb.xnames{iv} = ['A',int2str(i),',',int2str(j)];
             end
         end
         for i=v_('1'):v_('n')
-            [iv,ix_] = s2xlib('ii',['W',int2str(i)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['W',int2str(i)],ix_);
             pb.xnames{iv} = ['W',int2str(i)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for j=v_('1'):v_('n')
             for i=v_('1'):v_('k')
-                [ig,ig_] = s2xlib('ii','OBJ',ig_);
+                [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
                 gtype{ig} = '<>';
                 iv = ix_(['A',int2str(i),',',int2str(j)]);
                 if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -337,7 +339,7 @@ switch(action)
         end
         for i=v_('1'):v_('k')
             for j=v_('1'):v_('n')
-                [ig,ig_] = s2xlib('ii',['C',int2str(i)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['C',int2str(i)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['C',int2str(i)];
                 iv = ix_(['A',int2str(i),',',int2str(j)]);
@@ -355,7 +357,7 @@ switch(action)
             end
         end
         for j=v_('1'):v_('n')
-            [ig,ig_] = s2xlib('ii',['A',int2str(j)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['A',int2str(j)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['A',int2str(j)];
             iv = ix_(['W',int2str(j)]);
@@ -365,7 +367,7 @@ switch(action)
                 pbm.A(ig,iv) = -1.0;
             end
             for i=v_('1'):v_('k')
-                [ig,ig_] = s2xlib('ii',['A',int2str(j)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['A',int2str(j)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['A',int2str(j)];
                 iv = ix_(['A',int2str(i),',',int2str(j)]);
@@ -390,8 +392,6 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = 0.0*ones(pb.n,1);
         pb.xupper = 1.0*ones(pb.n,1);
@@ -439,6 +439,9 @@ switch(action)
             end
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
+% XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -458,7 +461,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

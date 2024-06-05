@@ -29,6 +29,96 @@ function varargout = MOSARQP1(action,varargin)
 %    Except for the first, the instances suggested are those used by Morales
 %    and Sargent.
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   36             $-PARAMETER
+% IE M                   10             $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   100            $-PARAMETER     original value
+% IE M                   10             $-PARAMETER     original value
+% RE COND                3.0            $-PARAMETER     original value
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   30             $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   30             $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   30             $-PARAMETER
+% RE COND                3.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   60             $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   60             $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   60             $-PARAMETER
+% RE COND                3.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   90             $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   90             $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   90             $-PARAMETER
+% RE COND                3.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   120            $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   120            $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   120            $-PARAMETER
+% RE COND                3.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   300            $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   300            $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   300            $-PARAMETER
+% RE COND                3.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   600            $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   600            $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   900            $-PARAMETER
+% IE M                   600            $-PARAMETER
+% RE COND                3.0            $-PARAMETER
+% 
+% IE N                   2500           $-PARAMETER
+% IE M                   700            $-PARAMETER
+% RE COND                1.0            $-PARAMETER
+% 
+% IE N                   2500           $-PARAMETER
+% IE M                   700            $-PARAMETER
+% RE COND                2.0            $-PARAMETER
+% 
+% IE N                   2500           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,83 +142,18 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
+% IE M                   700            $-PARAMETER
         if(nargin<3)
             v_('M') = 10;  %  SIF file default value
         else
             v_('M') = varargin{2};
         end
+% RE COND                3.0            $-PARAMETER
         if(nargin<4)
             v_('COND') = 2.0;  %  SIF file default value
         else
             v_('COND') = varargin{3};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   100            $-PARAMETER     original value
-% IE M                   10             $-PARAMETER     original value
-% RE COND                3.0            $-PARAMETER     original value
-% IE N                   900            $-PARAMETER
-% IE M                   30             $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   30             $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   30             $-PARAMETER
-% RE COND                3.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   60             $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   60             $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   60             $-PARAMETER
-% RE COND                3.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   90             $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   90             $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   90             $-PARAMETER
-% RE COND                3.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   120            $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   120            $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   120            $-PARAMETER
-% RE COND                3.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   300            $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   300            $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   300            $-PARAMETER
-% RE COND                3.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   600            $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   600            $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   900            $-PARAMETER
-% IE M                   600            $-PARAMETER
-% RE COND                3.0            $-PARAMETER
-% IE N                   2500           $-PARAMETER
-% IE M                   700            $-PARAMETER
-% RE COND                1.0            $-PARAMETER
-% IE N                   2500           $-PARAMETER
-% IE M                   700            $-PARAMETER
-% RE COND                2.0            $-PARAMETER
-% IE N                   2500           $-PARAMETER
-% IE M                   700            $-PARAMETER
-% RE COND                3.0            $-PARAMETER
         v_('1') = 1;
         v_('2') = 2;
         v_('N-1') = -1+v_('N');
@@ -223,13 +248,13 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
-            [ig,ig_] = s2xlib('ii','OBJ',ig_);
+            [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -238,7 +263,7 @@ switch(action)
                 pbm.A(ig,iv) = v_(['C',int2str(I)]);
             end
         end
-        [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('1')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('1')))],ig_);
         gtype{ig}  = '>=';
         cnames{ig} = ['CS',int2str(round(v_('1')))];
         iv = ix_(['X',int2str(round(v_('1')))]);
@@ -247,7 +272,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 4.0;
         end
-        [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('1')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('1')))],ig_);
         gtype{ig}  = '>=';
         cnames{ig} = ['CS',int2str(round(v_('1')))];
         iv = ix_(['X',int2str(round(v_('RTN+1')))]);
@@ -266,7 +291,7 @@ switch(action)
             v_('I+1') = 1+I;
             v_('I-1') = -1+I;
             v_('I+RTN') = I+v_('RTN');
-            [ig,ig_] = s2xlib('ii',['CS',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(I)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -294,7 +319,7 @@ switch(action)
                 pbm.A(ig,iv) = -1.0;
             end
         end
-        [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('RTN')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('RTN')))],ig_);
         gtype{ig}  = '>=';
         cnames{ig} = ['CS',int2str(round(v_('RTN')))];
         iv = ix_(['X',int2str(round(v_('RTN')))]);
@@ -303,7 +328,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 4.0;
         end
-        [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('RTN')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('RTN')))],ig_);
         gtype{ig}  = '>=';
         cnames{ig} = ['CS',int2str(round(v_('RTN')))];
         iv = ix_(['X',int2str(round(v_('RTN-1')))]);
@@ -325,7 +350,7 @@ switch(action)
             v_('JS-1') = -1+v_('JS');
             v_('J-RTN') = J-v_('RTN');
             v_('J+RTN') = J+v_('RTN');
-            [ig,ig_] = s2xlib('ii',['CS',int2str(J)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(J)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(J)];
             iv = ix_(['X',int2str(J)]);
@@ -357,7 +382,7 @@ switch(action)
                 v_('I-1') = -1+I;
                 v_('I+RTN') = I+v_('RTN');
                 v_('I-RTN') = I-v_('RTN');
-                [ig,ig_] = s2xlib('ii',['CS',int2str(I)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['CS',int2str(I)],ig_);
                 gtype{ig}  = '>=';
                 cnames{ig} = ['CS',int2str(I)];
                 iv = ix_(['X',int2str(I)]);
@@ -393,7 +418,7 @@ switch(action)
             end
             v_('JS+RTN') = v_('JS')+v_('RTN');
             v_('JS-RTN') = v_('JS')-v_('RTN');
-            [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('JS')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('JS')))],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(round(v_('JS')))];
             iv = ix_(['X',int2str(round(v_('JS')))]);
@@ -408,7 +433,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -1.0;
             end
-            [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('JS')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('JS')))],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(round(v_('JS')))];
             iv = ix_(['X',int2str(round(v_('JS-RTN')))]);
@@ -429,7 +454,7 @@ switch(action)
             v_('K+1') = 1+v_('K');
             v_('K+RTN') = v_('K')+v_('RTN');
             v_('K-RTN') = v_('K')-v_('RTN');
-            [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('K')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('K')))],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(round(v_('K')))];
             iv = ix_(['X',int2str(round(v_('K')))]);
@@ -444,7 +469,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -1.0;
             end
-            [ig,ig_] = s2xlib('ii',['CS',int2str(round(v_('K')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(round(v_('K')))],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(round(v_('K')))];
             iv = ix_(['X',int2str(round(v_('K-RTN')))]);
@@ -466,7 +491,7 @@ switch(action)
             v_('I-1') = -1+I;
             v_('I+RTN') = I+v_('RTN');
             v_('I-RTN') = I-v_('RTN');
-            [ig,ig_] = s2xlib('ii',['CS',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CS',int2str(I)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CS',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -535,9 +560,9 @@ switch(action)
         pb.x0 = 0.5*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eSQ',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSQ',iet_);
         elftv{it}{1} = 'X';
-        [it,iet_] = s2xlib( 'ii', 'en2PR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'en2PR',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -547,11 +572,11 @@ switch(action)
         pbm.elvar   = {};
         for I=v_('1'):v_('N')
             ename = ['XSQ',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSQ';
             ielftype(ie) = iet_('eSQ');
             vname = ['X',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.5);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.5);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
@@ -563,15 +588,15 @@ switch(action)
                 v_('RKJ') = v_(['K',int2str(J)]);
                 v_('KJ') = fix(v_('RKJ'));
                 ename = ['P',int2str(I),',',int2str(J)];
-                [ie,ie_] = s2xlib('ii',ename,ie_);
+                [ie,ie_] = s2mpjlib('ii',ename,ie_);
                 pbm.elftype{ie} = 'en2PR';
                 ielftype(ie) = iet_('en2PR');
                 vname = ['X',int2str(round(v_('KI')))];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.5);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.5);
                 posev = find(strcmp('X',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['X',int2str(round(v_('KJ')))];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.5);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.5);
                 posev = find(strcmp('Y',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
             end
@@ -618,6 +643,28 @@ switch(action)
             pbm.grelw{ig}(posel) = v_('WII');
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN(  36, 10,2)   -24.13768932
+% LO SOLTN( 100, 10,3)   -154.2001028
+% LO SOLTN( 900, 30,1)   -380.0891288
+% LO SOLTN( 900, 30,2)   -711.7109010
+% LO SOLTN( 900, 30,3)   -1424.280649
+% LO SOLTN( 900, 60,1)   -374.7138829
+% LO SOLTN( 900, 60,2)   -706.1411506
+% LO SOLTN( 900, 60,3)   -1418.592879
+% LO SOLTN( 900, 90,1)   -369.8384609
+% LO SOLTN( 900, 90,2)   -700.8243599
+% LO SOLTN( 900, 90,3)   -1412.776689
+% LO SOLTN( 900,120,1)   -364.8603691
+% LO SOLTN( 900,120,2)   -695.2431416
+% LO SOLTN( 900,120,3)   -1406.503648
+% LO SOLTN( 900,300,1)   -331.0120280
+% LO SOLTN( 900,300,2)   -652.2778434
+% LO SOLTN( 900,300,3)   -1351.831332
+% LO SOLTN( 900,600,1)   -257.4400842
+% LO SOLTN( 900,600,2)   -529.6445809
+% LO SOLTN( 900,600,3)   -1145.403000
+% LO SOLTN(2500,700,1)   -952.8754378
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -629,6 +676,10 @@ switch(action)
         pb.pbclass = 'QLR2-AN-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -670,7 +721,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

@@ -14,6 +14,12 @@ function varargout = NCVXBQP1(action,varargin)
 % 
 %    The number of variables
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER
+% IE N                   50             $-PARAMETER
+% IE N                   100            $-PARAMETER
+% IE N                   1000           $-PARAMETER    original value
+% IE N                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -37,11 +43,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   50             $-PARAMETER
-% IE N                   100            $-PARAMETER
-% IE N                   1000           $-PARAMETER    original value
-% IE N                   10000          $-PARAMETER
 % IE N                   100000         $-PARAMETER
         v_('1') = 1;
         v_('2') = 2;
@@ -52,13 +53,13 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
-            [ig,ig_] = s2xlib('ii',['OBJ',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['OBJ',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -96,10 +97,8 @@ switch(action)
         ngrp   = numEntries(ig_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         for I=v_('1'):v_('N')
             pb.xlower(ix_(['X',int2str(I)]),1) = 0.1;
@@ -109,8 +108,8 @@ switch(action)
         pb.x0 = 0.5*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gSQR',igt_);
-        [it,igt_] = s2xlib('ii','gSQR',igt_);
+        [it,igt_] = s2mpjlib('ii','gSQR',igt_);
+        [it,igt_] = s2mpjlib('ii','gSQR',igt_);
         grftp{it}{1} = 'P';
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
@@ -131,12 +130,18 @@ switch(action)
             pbm.grpar{ig}(posgp) = v_('RI');
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN               -1.99558D+06   $ (n=100)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'QBR2-AN-V-0';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -161,7 +166,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

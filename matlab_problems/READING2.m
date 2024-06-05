@@ -24,6 +24,11 @@ function varargout = READING2(action,varargin)
 % 
 %       Alternative values for the SIF file parameters:
 % IE N                   2              $-PARAMETER
+% IE N                   50             $-PARAMETER
+% IE N                   100            $-PARAMETER     original value
+% IE N                   500            $-PARAMETER
+% IE N                   1000           $-PARAMETER
+% IE N                   2000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,11 +52,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-% IE N                   50             $-PARAMETER
-% IE N                   100            $-PARAMETER     original value
-% IE N                   500            $-PARAMETER
-% IE N                   1000           $-PARAMETER
-% IE N                   2000           $-PARAMETER
 % IE N                   5000           $-PARAMETER
         v_('PI') = 3.1415926535;
         v_('2PI') = 2.0*v_('PI');
@@ -78,11 +78,11 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X1u',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X1u',int2str(I)],ix_);
             pb.xnames{iv} = ['X1u',int2str(I)];
-            [iv,ix_] = s2xlib('ii',['X2u',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X2u',int2str(I)],ix_);
             pb.xnames{iv} = ['X2u',int2str(I)];
-            [iv,ix_] = s2xlib('ii',['U',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['U',int2str(I)],ix_);
             pb.xnames{iv} = ['U',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -99,7 +99,7 @@ switch(action)
             v_('2PITI-1') = v_('2PI')*v_('TI-1');
             v_('CTI-1') = cos(v_('2PITI-1'));
             v_('-CCTI-1') = v_('CTI-1')*v_('-H/2');
-            [ig,ig_] = s2xlib('ii','COST',ig_);
+            [ig,ig_] = s2mpjlib('ii','COST',ig_);
             gtype{ig} = '<>';
             iv = ix_(['X1u',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -128,7 +128,7 @@ switch(action)
         end
         for I=v_('1'):v_('N')
             v_('I-1') = -1+I;
-            [ig,ig_] = s2xlib('ii',['C1u',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C1u',int2str(I)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['C1u',int2str(I)];
             iv = ix_(['X1u',int2str(I)]);
@@ -155,7 +155,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -0.5;
             end
-            [ig,ig_] = s2xlib('ii',['C2u',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C2u',int2str(I)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['C2u',int2str(I)];
             iv = ix_(['X2u',int2str(I)]);
@@ -197,10 +197,8 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_(['X1u',int2str(round(v_('0')))]),1) = 0.0;
         pb.xupper(ix_(['X1u',int2str(round(v_('0')))]),1) = 0.0;
@@ -235,7 +233,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

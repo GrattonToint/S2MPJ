@@ -51,14 +51,14 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
             for J=v_('1'):I
-                [ig,ig_] = s2xlib('ii',['E',int2str(I)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['E',int2str(I)],ig_);
                 gtype{ig} = '<>';
                 iv = ix_(['X',int2str(J)]);
                 if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -73,8 +73,6 @@ switch(action)
         ngrp   = numEntries(ig_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -82,8 +80,8 @@ switch(action)
         pb.x0 = 10.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL4',igt_);
-        [it,igt_] = s2xlib('ii','gL10',igt_);
+        [it,igt_] = s2mpjlib('ii','gL4',igt_);
+        [it,igt_] = s2mpjlib('ii','gL10',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -144,7 +142,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

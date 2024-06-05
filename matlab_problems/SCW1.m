@@ -24,6 +24,8 @@ function varargout = SCW1(action,varargin)
 % 
 %    Number of internal knots
 % 
+%       Alternative values for the SIF file parameters:
+% IE K                   1              $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,21 +45,12 @@ switch(action)
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
         if(nargin<2)
-            v_('K') = 1;  %  SIF file default value
-        else
-            v_('K') = varargin{1};
-        end
-        if(nargin<2)
-            v_('K') = 3;  %  SIF file default value
-        else
-            v_('K') = varargin{1};
-        end
-        if(nargin<2)
             v_('K') = 7;  %  SIF file default value
         else
             v_('K') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
+% IE K                   3              $-PARAMETER
+% IE K                   7              $-PARAMETER     original value
 % IE K                   10             $-PARAMETER
 % IE K                   100            $-PARAMETER
         v_('0') = 0;
@@ -72,18 +65,18 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('K+1')
-            [iv,ix_] = s2xlib('ii',['T',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['T',int2str(I)],ix_);
             pb.xnames{iv} = ['T',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','S',ig_);
+        [ig,ig_] = s2mpjlib('ii','S',ig_);
         gtype{ig} = '<>';
-        [ig,ig_] = s2xlib('ii','C',ig_);
+        [ig,ig_] = s2mpjlib('ii','C',ig_);
         gtype{ig} = '<>';
         for I=v_('0'):v_('K')
             v_('I+1') = 1+I;
-            [ig,ig_] = s2xlib('ii',['CON',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['CON',int2str(I)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['CON',int2str(I)];
             iv = ix_(['T',int2str(round(v_('I+1')))]);
@@ -113,10 +106,8 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_(['T',int2str(round(v_('0')))]),1) = 0.0;
         pb.xupper(ix_(['T',int2str(round(v_('0')))]),1) = 0.0;
@@ -145,9 +136,9 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eSINT',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSINT',iet_);
         elftv{it}{1} = 'T';
-        [it,iet_] = s2xlib( 'ii', 'eCOST',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eCOST',iet_);
         elftv{it}{1} = 'T';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -156,25 +147,25 @@ switch(action)
         pbm.elvar   = {};
         for I=v_('0'):v_('K+1')
             ename = ['S',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSINT';
             ielftype(ie) = iet_('eSINT');
             vname = ['T',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('T',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['C',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eCOST';
             ielftype(ie) = iet_('eCOST');
             vname = ['T',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('T',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gMAXSQ',igt_);
+        [it,igt_] = s2mpjlib('ii','gMAXSQ',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -227,6 +218,8 @@ switch(action)
             pbm.grelw{ig}(posel) = -1.0;
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+% LO SCW                 0.0
+%    Solution
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -237,6 +230,10 @@ switch(action)
         pb.pbclass = 'SLR2-MN-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -293,7 +290,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

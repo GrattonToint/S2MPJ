@@ -41,14 +41,14 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
-        [ig,ig_] = s2xlib('ii','C1',ig_);
+        [ig,ig_] = s2mpjlib('ii','C1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C1';
         iv = ix_('X1');
@@ -74,8 +74,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         pbm.gconst(ig_('C1')) = 8.242640687;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = 10.0*ones(pb.n,1);
         pb.xlower = -10.0*ones(pb.n,1);
@@ -83,18 +81,18 @@ switch(action)
         pb.x0 = 2.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eS2V',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eS2V',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'eP2V',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eP2V',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'ePS1VP',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePS1VP',iet_);
         elftv{it}{1} = 'X';
         elftp{it}{1} = 'A';
-        [it,iet_] = s2xlib( 'ii', 'eXF',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eXF',iet_);
         elftv{it}{1} = 'X';
-        [it,iet_] = s2xlib( 'ii', 'ePXY',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePXY',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -104,57 +102,57 @@ switch(action)
         pbm.elvar   = {};
         pbm.elpar   = {};
         ename = 'E1';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePS1VP';
         ielftype(ie) = iet_('ePS1VP');
         vname = 'X1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('A',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1.0;
         ename = 'E2';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eS2V';
         ielftype(ie) = iet_('eS2V');
         vname = 'X1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'X2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'E3';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eP2V';
         ielftype(ie) = iet_('eP2V');
         vname = 'X2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'X3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'E4';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eXF';
         ielftype(ie) = iet_('eXF');
         vname = 'X3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'E5';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePXY';
         ielftype(ie) = iet_('ePXY');
         vname = 'X1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'X2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-10.0,10.0,2.0);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -182,6 +180,8 @@ switch(action)
         pbm.grelw{ig}(posel) = 1.;
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN               0.0325682
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -191,6 +191,10 @@ switch(action)
         pb.pbclass = 'OOR2-AY-3-1';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -283,7 +287,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

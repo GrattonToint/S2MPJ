@@ -44,7 +44,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -59,7 +59,7 @@ switch(action)
             v_('K+5') = 5+v_('K');
             v_('I+1') = 1+v_('I');
             v_('I+2') = 2+v_('I');
-            [ig,ig_] = s2xlib('ii',['E',int2str(round(v_('K')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['E',int2str(round(v_('K')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['E',int2str(round(v_('K')))];
             iv = ix_(['X',int2str(round(v_('I+1')))]);
@@ -68,7 +68,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -10.0e0;
             end
-            [ig,ig_] = s2xlib('ii',['E',int2str(round(v_('K+1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['E',int2str(round(v_('K+1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['E',int2str(round(v_('K+1')))];
             iv = ix_(['X',int2str(round(v_('I+2')))]);
@@ -77,16 +77,16 @@ switch(action)
             else
                 pbm.A(ig,iv) = 1.0e0;
             end
-            [ig,ig_] = s2xlib('ii',['E',int2str(round(v_('K+2')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['E',int2str(round(v_('K+2')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['E',int2str(round(v_('K+2')))];
-            [ig,ig_] = s2xlib('ii',['E',int2str(round(v_('K+3')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['E',int2str(round(v_('K+3')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['E',int2str(round(v_('K+3')))];
-            [ig,ig_] = s2xlib('ii',['E',int2str(round(v_('K+4')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['E',int2str(round(v_('K+4')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['E',int2str(round(v_('K+4')))];
-            [ig,ig_] = s2xlib('ii',['E',int2str(round(v_('K+5')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['E',int2str(round(v_('K+5')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['E',int2str(round(v_('K+5')))];
             iv = ix_(['X',int2str(round(v_('I+1')))]);
@@ -124,8 +124,6 @@ switch(action)
             pbm.gconst(ig_(['E',int2str(round(v_('K+5')))])) = 20.0;
             v_('K') = 6+v_('K');
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -137,19 +135,19 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eE1',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eE1',iet_);
         elftv{it}{1} = 'X0';
-        [it,iet_] = s2xlib( 'ii', 'eE3',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eE3',iet_);
         elftv{it}{1} = 'X3';
-        [it,iet_] = s2xlib( 'ii', 'eE4',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eE4',iet_);
         elftv{it}{1} = 'X4';
-        [it,iet_] = s2xlib( 'ii', 'eE5',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eE5',iet_);
         elftv{it}{1} = 'X0';
         elftv{it}{2} = 'X3';
-        [it,iet_] = s2xlib( 'ii', 'eF5',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eF5',iet_);
         elftv{it}{1} = 'X3';
         elftv{it}{2} = 'X4';
-        [it,iet_] = s2xlib( 'ii', 'eE6',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eE6',iet_);
         elftv{it}{1} = 'X2';
         elftv{it}{2} = 'X3';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -168,81 +166,81 @@ switch(action)
             v_('I+3') = 3+v_('I');
             v_('I+4') = 4+v_('I');
             ename = ['E',int2str(round(v_('K')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eE1';
             ielftype(ie) = iet_('eE1');
             ename = ['E',int2str(round(v_('K')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X0',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+2')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eE3';
             ielftype(ie) = iet_('eE3');
             ename = ['E',int2str(round(v_('K+2')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+3')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X3',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+3')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eE4';
             ielftype(ie) = iet_('eE4');
             ename = ['E',int2str(round(v_('K+3')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+4')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X4',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+4')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eE5';
             ielftype(ie) = iet_('eE5');
             ename = ['E',int2str(round(v_('K+4')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X0',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+4')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+3')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X3',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['F',int2str(round(v_('K+4')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eF5';
             ielftype(ie) = iet_('eF5');
             ename = ['F',int2str(round(v_('K+4')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+3')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X3',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['F',int2str(round(v_('K+4')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+4')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X4',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+5')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eE6';
             ielftype(ie) = iet_('eE6');
             ename = ['E',int2str(round(v_('K+5')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+2')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X2',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+5')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('I+3')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X3',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             v_('I') = 3+v_('I');
@@ -289,6 +287,8 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN                0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -298,6 +298,10 @@ switch(action)
         pb.pbclass = 'NOR2-AN-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -405,7 +409,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

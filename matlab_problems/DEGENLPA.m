@@ -44,12 +44,12 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         iv = ix_('X2');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -105,7 +105,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 100.0;
         end
-        [ig,ig_] = s2xlib('ii','C1',ig_);
+        [ig,ig_] = s2mpjlib('ii','C1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C1';
         iv = ix_('X1');
@@ -168,7 +168,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','C2',ig_);
+        [ig,ig_] = s2mpjlib('ii','C2',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C2';
         iv = ix_('X1');
@@ -195,7 +195,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.03;
         end
-        [ig,ig_] = s2xlib('ii','C3',ig_);
+        [ig,ig_] = s2mpjlib('ii','C3',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C3';
         iv = ix_('X1');
@@ -228,7 +228,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.02;
         end
-        [ig,ig_] = s2xlib('ii','C4',ig_);
+        [ig,ig_] = s2mpjlib('ii','C4',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C4';
         iv = ix_('X1');
@@ -261,7 +261,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.02;
         end
-        [ig,ig_] = s2xlib('ii','C5',ig_);
+        [ig,ig_] = s2mpjlib('ii','C5',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C5';
         iv = ix_('X1');
@@ -294,7 +294,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.02;
         end
-        [ig,ig_] = s2xlib('ii','C6',ig_);
+        [ig,ig_] = s2mpjlib('ii','C6',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C6';
         iv = ix_('X2');
@@ -327,7 +327,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.01;
         end
-        [ig,ig_] = s2xlib('ii','C7',ig_);
+        [ig,ig_] = s2mpjlib('ii','C7',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C7';
         iv = ix_('X2');
@@ -366,7 +366,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.01;
         end
-        [ig,ig_] = s2xlib('ii','C8',ig_);
+        [ig,ig_] = s2mpjlib('ii','C8',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C8';
         iv = ix_('X2');
@@ -405,7 +405,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.01;
         end
-        [ig,ig_] = s2xlib('ii','C9',ig_);
+        [ig,ig_] = s2mpjlib('ii','C9',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C9';
         iv = ix_('X3');
@@ -444,7 +444,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.01;
         end
-        [ig,ig_] = s2xlib('ii','C10',ig_);
+        [ig,ig_] = s2mpjlib('ii','C10',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C10';
         iv = ix_('X3');
@@ -477,7 +477,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.01;
         end
-        [ig,ig_] = s2xlib('ii','C11',ig_);
+        [ig,ig_] = s2mpjlib('ii','C11',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C11';
         iv = ix_('X4');
@@ -510,7 +510,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 0.01;
         end
-        [ig,ig_] = s2xlib('ii','C12',ig_);
+        [ig,ig_] = s2mpjlib('ii','C12',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C12';
         iv = ix_('X11');
@@ -537,7 +537,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.03;
         end
-        [ig,ig_] = s2xlib('ii','C13',ig_);
+        [ig,ig_] = s2mpjlib('ii','C13',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C13';
         iv = ix_('X11');
@@ -564,7 +564,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.09;
         end
-        [ig,ig_] = s2xlib('ii','C14',ig_);
+        [ig,ig_] = s2mpjlib('ii','C14',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C14';
         iv = ix_('X11');
@@ -603,7 +603,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -256.72;
         end
-        [ig,ig_] = s2xlib('ii','C15',ig_);
+        [ig,ig_] = s2mpjlib('ii','C15',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'C15';
         iv = ix_('X12');
@@ -659,15 +659,15 @@ switch(action)
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         pbm.gconst(ig_('C1')) = 0.70785;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = 1.0*ones(pb.n,1);
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         %%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = 1.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN               3.06435
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -685,7 +685,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

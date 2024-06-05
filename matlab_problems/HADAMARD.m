@@ -25,6 +25,12 @@ function varargout = HADAMARD(action,varargin)
 % IE N                   4              $-PARAMETER
 % IE N                   6              $-PARAMETER
 % IE N                   8              $-PARAMETER
+% IE N                   10             $-PARAMETER
+% IE N                   12             $-PARAMETER
+% IE N                   14             $-PARAMETER
+% IE N                   16             $-PARAMETER    original value
+% IE N                   18             $-PARAMETER
+% IE N                   20             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,27 +54,22 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-% IE N                   12             $-PARAMETER
-% IE N                   14             $-PARAMETER
-% IE N                   16             $-PARAMETER    original value
-% IE N                   18             $-PARAMETER
-% IE N                   20             $-PARAMETER
 % IE N                   100            $-PARAMETER
         v_('1') = 1;
         v_('RN') = v_('N');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','MAXABSQ',ix_);
+        [iv,ix_] = s2mpjlib('ii','MAXABSQ',ix_);
         pb.xnames{iv} = 'MAXABSQ';
         for J=v_('1'):v_('N')
             for I=v_('1'):v_('N')
-                [iv,ix_] = s2xlib('ii',['Q',int2str(I),',',int2str(J)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['Q',int2str(I),',',int2str(J)],ix_);
                 pb.xnames{iv} = ['Q',int2str(I),',',int2str(J)];
             end
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJECTIVE',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJECTIVE',ig_);
         gtype{ig} = '<>';
         iv = ix_('MAXABSQ');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -78,14 +79,14 @@ switch(action)
         end
         for J=v_('1'):v_('N')
             for I=v_('1'):J
-                [ig,ig_] = s2xlib('ii',['O',int2str(I),',',int2str(J)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['O',int2str(I),',',int2str(J)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['O',int2str(I),',',int2str(J)];
             end
         end
         for J=v_('1'):v_('N')
             for I=v_('1'):v_('N')
-                [ig,ig_] = s2xlib('ii',['L',int2str(I),',',int2str(J)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['L',int2str(I),',',int2str(J)],ig_);
                 gtype{ig}  = '>=';
                 cnames{ig} = ['L',int2str(I),',',int2str(J)];
                 iv = ix_('MAXABSQ');
@@ -100,7 +101,7 @@ switch(action)
                 else
                     pbm.A(ig,iv) = 1.0;
                 end
-                [ig,ig_] = s2xlib('ii',['U',int2str(I),',',int2str(J)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['U',int2str(I),',',int2str(J)],ig_);
                 gtype{ig}  = '>=';
                 cnames{ig} = ['U',int2str(I),',',int2str(J)];
                 iv = ix_('MAXABSQ');
@@ -136,8 +137,6 @@ switch(action)
         for J=v_('1'):v_('N')
             pbm.gconst(ig_(['O',int2str(J),',',int2str(J)])) = v_('RN');
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -153,7 +152,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'en2PROD',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'en2PROD',iet_);
         elftv{it}{1} = 'Q1';
         elftv{it}{2} = 'Q2';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -165,15 +164,15 @@ switch(action)
             for I=v_('1'):J
                 for K=v_('1'):v_('N')
                     ename = ['O',int2str(I),',',int2str(J),',',int2str(K)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'en2PROD';
                     ielftype(ie) = iet_('en2PROD');
                     vname = ['Q',int2str(K),',',int2str(I)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                     posev = find(strcmp('Q1',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['Q',int2str(K),',',int2str(J)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                     posev = find(strcmp('Q2',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -231,7 +230,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

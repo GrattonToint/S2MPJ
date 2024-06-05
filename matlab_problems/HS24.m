@@ -13,6 +13,7 @@ function varargout = HS24(action,varargin)
 %    Verlag, Heidelberg, 1981.
 % 
 %    SIF input: A.R. Conn, April 1990
+%               modified Nick Gould, May 2024
 % 
 %    classification = 'OLR2-AN-2-3'
 % 
@@ -41,15 +42,15 @@ switch(action)
         v_('C1FAC') = 1.0/v_('RT3');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','X1',ix_);
+        [iv,ix_] = s2mpjlib('ii','X1',ix_);
         pb.xnames{iv} = 'X1';
-        [iv,ix_] = s2xlib('ii','X2',ix_);
+        [iv,ix_] = s2mpjlib('ii','X2',ix_);
         pb.xnames{iv} = 'X2';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
-        [ig,ig_] = s2xlib('ii','CON1',ig_);
+        [ig,ig_] = s2mpjlib('ii','CON1',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'CON1';
         iv = ix_('X1');
@@ -64,7 +65,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','CON2',ig_);
+        [ig,ig_] = s2mpjlib('ii','CON2',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'CON2';
         iv = ix_('X1');
@@ -79,7 +80,7 @@ switch(action)
         else
             pbm.A(ig,iv) = v_('RT3');
         end
-        [ig,ig_] = s2xlib('ii','CON3',ig_);
+        [ig,ig_] = s2mpjlib('ii','CON3',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'CON3';
         iv = ix_('X1');
@@ -126,7 +127,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eOBJ',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eOBJ',iet_);
         elftv{it}{1} = 'V1';
         elftv{it}{2} = 'V2';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -135,15 +136,15 @@ switch(action)
         ielftype    = [];
         pbm.elvar   = {};
         ename = 'E1';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eOBJ';
         ielftype(ie) = iet_('eOBJ');
         vname = 'X1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
         posev = find(strcmp('V1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'X2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
         posev = find(strcmp('V2',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -155,6 +156,8 @@ switch(action)
         nlc = union(nlc,ig);
         pbm.grelw{ig}(posel) = 1.;
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN               -1.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -166,6 +169,10 @@ switch(action)
         pb.pbclass = 'OLR2-AN-2-3';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -176,19 +183,19 @@ switch(action)
         RT3X27 = 1.0e0/(27.0e0*sqrt(3.0e0));
         V2SQ = EV_(2)*EV_(2);
         V2CB = V2SQ*EV_(2);
-        X1M3 = EV_(1)-3.0e0;
-        X1M3M9 = X1M3*X1M3-9.0e0;
+        X1M3 = EV_(1)-3.0;
+        X1M3M9 = X1M3*X1M3-9.0;
         varargout{1} = RT3X27*X1M3M9*V2CB;
         if(nargout>1)
-            g_(1,1) = 2.0e0*X1M3*RT3X27*V2CB;
-            g_(2,1) = 3.0e0*X1M3M9*RT3X27*V2SQ;
+            g_(1,1) = 2.0*X1M3*RT3X27*V2CB;
+            g_(2,1) = 3.0*X1M3M9*RT3X27*V2SQ;
             varargout{2} = g_;
             if(nargout>2)
                 H_ = sparse(2,2);
-                H_(1,1) = 2.0e0*RT3X27*V2CB;
-                H_(1,2) = 6.0e0*X1M3*RT3X27*V2SQ;
+                H_(1,1) = 2.0*RT3X27*V2CB;
+                H_(1,2) = 6.0*X1M3*RT3X27*V2SQ;
                 H_(2,1) = H_(1,2);
-                H_(2,2) = 6.0e0*X1M3M9*RT3X27*EV_(2);
+                H_(2,2) = 6.0*X1M3M9*RT3X27*EV_(2);
                 varargout{3} = H_;
             end
         end
@@ -200,7 +207,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

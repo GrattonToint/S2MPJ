@@ -43,59 +43,59 @@ switch(action)
         ig_ = configureDictionary('string','double');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','AW1',ix_);
+        [iv,ix_] = s2mpjlib('ii','AW1',ix_);
         pb.xnames{iv} = 'AW1';
-        [iv,ix_] = s2xlib('ii','IW1',ix_);
+        [iv,ix_] = s2mpjlib('ii','IW1',ix_);
         pb.xnames{iv} = 'IW1';
-        [iv,ix_] = s2xlib('ii','MF1',ix_);
+        [iv,ix_] = s2mpjlib('ii','MF1',ix_);
         pb.xnames{iv} = 'MF1';
-        [iv,ix_] = s2xlib('ii','TT1',ix_);
+        [iv,ix_] = s2mpjlib('ii','TT1',ix_);
         pb.xnames{iv} = 'TT1';
-        [iv,ix_] = s2xlib('ii','PW1',ix_);
+        [iv,ix_] = s2mpjlib('ii','PW1',ix_);
         pb.xnames{iv} = 'PW1';
-        [iv,ix_] = s2xlib('ii','ET1',ix_);
+        [iv,ix_] = s2mpjlib('ii','ET1',ix_);
         pb.xnames{iv} = 'ET1';
-        [iv,ix_] = s2xlib('ii','S1L',ix_);
+        [iv,ix_] = s2mpjlib('ii','S1L',ix_);
         pb.xnames{iv} = 'S1L';
-        [iv,ix_] = s2xlib('ii','AW2',ix_);
+        [iv,ix_] = s2mpjlib('ii','AW2',ix_);
         pb.xnames{iv} = 'AW2';
-        [iv,ix_] = s2xlib('ii','IW2',ix_);
+        [iv,ix_] = s2mpjlib('ii','IW2',ix_);
         pb.xnames{iv} = 'IW2';
-        [iv,ix_] = s2xlib('ii','MF2',ix_);
+        [iv,ix_] = s2mpjlib('ii','MF2',ix_);
         pb.xnames{iv} = 'MF2';
-        [iv,ix_] = s2xlib('ii','TT2',ix_);
+        [iv,ix_] = s2mpjlib('ii','TT2',ix_);
         pb.xnames{iv} = 'TT2';
-        [iv,ix_] = s2xlib('ii','PW2',ix_);
+        [iv,ix_] = s2mpjlib('ii','PW2',ix_);
         pb.xnames{iv} = 'PW2';
-        [iv,ix_] = s2xlib('ii','ET2',ix_);
+        [iv,ix_] = s2mpjlib('ii','ET2',ix_);
         pb.xnames{iv} = 'ET2';
-        [iv,ix_] = s2xlib('ii','S2L',ix_);
+        [iv,ix_] = s2mpjlib('ii','S2L',ix_);
         pb.xnames{iv} = 'S2L';
-        [iv,ix_] = s2xlib('ii','AW3',ix_);
+        [iv,ix_] = s2mpjlib('ii','AW3',ix_);
         pb.xnames{iv} = 'AW3';
-        [iv,ix_] = s2xlib('ii','IW3',ix_);
+        [iv,ix_] = s2mpjlib('ii','IW3',ix_);
         pb.xnames{iv} = 'IW3';
-        [iv,ix_] = s2xlib('ii','MF3',ix_);
+        [iv,ix_] = s2mpjlib('ii','MF3',ix_);
         pb.xnames{iv} = 'MF3';
-        [iv,ix_] = s2xlib('ii','TT3',ix_);
+        [iv,ix_] = s2mpjlib('ii','TT3',ix_);
         pb.xnames{iv} = 'TT3';
-        [iv,ix_] = s2xlib('ii','PW3',ix_);
+        [iv,ix_] = s2mpjlib('ii','PW3',ix_);
         pb.xnames{iv} = 'PW3';
-        [iv,ix_] = s2xlib('ii','ET3',ix_);
+        [iv,ix_] = s2mpjlib('ii','ET3',ix_);
         pb.xnames{iv} = 'ET3';
-        [iv,ix_] = s2xlib('ii','S3L',ix_);
+        [iv,ix_] = s2mpjlib('ii','S3L',ix_);
         pb.xnames{iv} = 'S3L';
-        [iv,ix_] = s2xlib('ii','INW',ix_);
+        [iv,ix_] = s2mpjlib('ii','INW',ix_);
         pb.xnames{iv} = 'INW';
-        [iv,ix_] = s2xlib('ii','BT1',ix_);
+        [iv,ix_] = s2mpjlib('ii','BT1',ix_);
         pb.xnames{iv} = 'BT1';
-        [iv,ix_] = s2xlib('ii','BT2',ix_);
+        [iv,ix_] = s2mpjlib('ii','BT2',ix_);
         pb.xnames{iv} = 'BT2';
-        [iv,ix_] = s2xlib('ii','BT3',ix_);
+        [iv,ix_] = s2mpjlib('ii','BT3',ix_);
         pb.xnames{iv} = 'BT3';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','STA1',ig_);
+        [ig,ig_] = s2mpjlib('ii','STA1',ig_);
         gtype{ig} = '<>';
         iv = ix_('ET1');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -104,7 +104,7 @@ switch(action)
             pbm.A(ig,iv) = 0.0002587;
         end
         pbm.gscale(ig,1) = 1.0e+8;
-        [ig,ig_] = s2xlib('ii','STA2',ig_);
+        [ig,ig_] = s2mpjlib('ii','STA2',ig_);
         gtype{ig} = '<>';
         iv = ix_('ET2');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -113,7 +113,7 @@ switch(action)
             pbm.A(ig,iv) = 0.0002587;
         end
         pbm.gscale(ig,1) = 1.0e+8;
-        [ig,ig_] = s2xlib('ii','STA3',ig_);
+        [ig,ig_] = s2mpjlib('ii','STA3',ig_);
         gtype{ig} = '<>';
         iv = ix_('ET3');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -122,7 +122,7 @@ switch(action)
             pbm.A(ig,iv) = 0.001958;
         end
         pbm.gscale(ig,1) = 1.0e+8;
-        [ig,ig_] = s2xlib('ii','INST',ig_);
+        [ig,ig_] = s2mpjlib('ii','INST',ig_);
         gtype{ig} = '<>';
         iv = ix_('INW');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -131,7 +131,7 @@ switch(action)
             pbm.A(ig,iv) = 47.040096;
         end
         pbm.gscale(ig,1) = 1.0e+8;
-        [ig,ig_] = s2xlib('ii','LAUN',ig_);
+        [ig,ig_] = s2mpjlib('ii','LAUN',ig_);
         gtype{ig} = '<>';
         iv = ix_('PW1');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -152,7 +152,7 @@ switch(action)
             pbm.A(ig,iv) = 0.003;
         end
         pbm.gscale(ig,1) = 39215686.0;
-        [ig,ig_] = s2xlib('ii','SGTH1',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGTH1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SGTH1';
         iv = ix_('AW1');
@@ -167,7 +167,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SGTH3',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGTH3',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SGTH3';
         iv = ix_('IW2');
@@ -182,7 +182,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SGTH5',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGTH5',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SGTH5';
         iv = ix_('IW3');
@@ -197,7 +197,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SGTH2',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGTH2',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SGTH2';
         iv = ix_('ET1');
@@ -212,7 +212,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SGTH4',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGTH4',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SGTH4';
         iv = ix_('ET2');
@@ -227,7 +227,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SGTH6',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGTH6',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SGTH6';
         iv = ix_('TT3');
@@ -242,7 +242,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SGSI1A',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGSI1A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'SGSI1A';
         iv = ix_('PW1');
@@ -257,7 +257,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -12.0;
         end
-        [ig,ig_] = s2xlib('ii','SGSI1B',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGSI1B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'SGSI1B';
         iv = ix_('PW1');
@@ -272,7 +272,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -17.0;
         end
-        [ig,ig_] = s2xlib('ii','SGSI2A',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGSI2A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'SGSI2A';
         iv = ix_('PW2');
@@ -287,7 +287,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -10.0;
         end
-        [ig,ig_] = s2xlib('ii','SGSI2B',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGSI2B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'SGSI2B';
         iv = ix_('PW2');
@@ -302,7 +302,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -13.0;
         end
-        [ig,ig_] = s2xlib('ii','SGSI3A',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGSI3A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'SGSI3A';
         iv = ix_('PW3');
@@ -317,7 +317,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -7.0;
         end
-        [ig,ig_] = s2xlib('ii','SGSI3B',ig_);
+        [ig,ig_] = s2mpjlib('ii','SGSI3B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'SGSI3B';
         iv = ix_('PW3');
@@ -332,7 +332,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -10.0;
         end
-        [ig,ig_] = s2xlib('ii','TTIW1A',ig_);
+        [ig,ig_] = s2mpjlib('ii','TTIW1A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'TTIW1A';
         iv = ix_('TT1');
@@ -383,7 +383,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.2;
         end
-        [ig,ig_] = s2xlib('ii','TTIW1B',ig_);
+        [ig,ig_] = s2mpjlib('ii','TTIW1B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'TTIW1B';
         iv = ix_('TT1');
@@ -434,7 +434,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.4;
         end
-        [ig,ig_] = s2xlib('ii','TTIW2A',ig_);
+        [ig,ig_] = s2mpjlib('ii','TTIW2A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'TTIW2A';
         iv = ix_('TT2');
@@ -473,7 +473,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -0.6;
         end
-        [ig,ig_] = s2xlib('ii','TTIW2B',ig_);
+        [ig,ig_] = s2mpjlib('ii','TTIW2B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'TTIW2B';
         iv = ix_('TT2');
@@ -512,7 +512,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -0.75;
         end
-        [ig,ig_] = s2xlib('ii','TTIW3A',ig_);
+        [ig,ig_] = s2mpjlib('ii','TTIW3A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'TTIW3A';
         iv = ix_('TT3');
@@ -539,7 +539,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -0.7;
         end
-        [ig,ig_] = s2xlib('ii','TTIW3B',ig_);
+        [ig,ig_] = s2mpjlib('ii','TTIW3B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'TTIW3B';
         iv = ix_('TT3');
@@ -566,7 +566,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -0.9;
         end
-        [ig,ig_] = s2xlib('ii','SMF1',ig_);
+        [ig,ig_] = s2mpjlib('ii','SMF1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SMF1';
         iv = ix_('MF1');
@@ -611,7 +611,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SMF2',ig_);
+        [ig,ig_] = s2mpjlib('ii','SMF2',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SMF2';
         iv = ix_('MF2');
@@ -644,7 +644,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SMF3',ig_);
+        [ig,ig_] = s2mpjlib('ii','SMF3',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SMF3';
         iv = ix_('MF3');
@@ -665,7 +665,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','SI1A',ig_);
+        [ig,ig_] = s2mpjlib('ii','SI1A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'SI1A';
         iv = ix_('PW1');
@@ -674,7 +674,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -240.0;
         end
-        [ig,ig_] = s2xlib('ii','SI1B',ig_);
+        [ig,ig_] = s2mpjlib('ii','SI1B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'SI1B';
         iv = ix_('PW1');
@@ -683,7 +683,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -290.0;
         end
-        [ig,ig_] = s2xlib('ii','SI2A',ig_);
+        [ig,ig_] = s2mpjlib('ii','SI2A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'SI2A';
         iv = ix_('PW2');
@@ -692,7 +692,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -240.0;
         end
-        [ig,ig_] = s2xlib('ii','SI2B',ig_);
+        [ig,ig_] = s2mpjlib('ii','SI2B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'SI2B';
         iv = ix_('PW2');
@@ -701,7 +701,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -290.0;
         end
-        [ig,ig_] = s2xlib('ii','SI3A',ig_);
+        [ig,ig_] = s2mpjlib('ii','SI3A',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'SI3A';
         iv = ix_('PW3');
@@ -710,7 +710,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -340.0;
         end
-        [ig,ig_] = s2xlib('ii','SI3B',ig_);
+        [ig,ig_] = s2mpjlib('ii','SI3B',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'SI3B';
         iv = ix_('PW3');
@@ -719,7 +719,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -375.0;
         end
-        [ig,ig_] = s2xlib('ii','GLGCON',ig_);
+        [ig,ig_] = s2mpjlib('ii','GLGCON',ig_);
         gtype{ig}  = '>=';
         cnames{ig} = 'GLGCON';
         %%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -756,8 +756,6 @@ switch(action)
         grange(legrps,1) = Inf*ones(pb.nle,1);
         grange(gegrps,1) = Inf*ones(pb.nge,1);
         grange(ig_('GLGCON')) = 15000.0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = 1.0e-8*ones(pb.n,1);
         pb.xupper = 1.0e+4*ones(pb.n,1);
@@ -805,22 +803,22 @@ switch(action)
         pb.x0(ix_('BT3'),1) = 403.0;
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'ePROD1',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePROD1',iet_);
         elftv{it}{1} = 'VA';
         elftv{it}{2} = 'VB';
         elftv{it}{3} = 'VC';
         elftv{it}{4} = 'VD';
         elftv{it}{5} = 'VE';
-        [it,iet_] = s2xlib( 'ii', 'ePOWER',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePOWER',iet_);
         elftv{it}{1} = 'XX';
         elftp{it}{1} = 'PWR';
         elftp{it}{2} = 'SC';
-        [it,iet_] = s2xlib( 'ii', 'ePROD2',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePROD2',iet_);
         elftv{it}{1} = 'VA';
         elftv{it}{2} = 'VB';
         elftv{it}{3} = 'VC';
         elftv{it}{4} = 'VD';
-        [it,iet_] = s2xlib( 'ii', 'eX7Y',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eX7Y',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y1';
         elftv{it}{3} = 'Y2';
@@ -829,22 +827,22 @@ switch(action)
         elftv{it}{6} = 'Y5';
         elftv{it}{7} = 'Y6';
         elftv{it}{8} = 'Y7';
-        [it,iet_] = s2xlib( 'ii', 'eX5Y',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eX5Y',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y1';
         elftv{it}{3} = 'Y2';
         elftv{it}{4} = 'Y3';
         elftv{it}{5} = 'Y4';
         elftv{it}{6} = 'Y5';
-        [it,iet_] = s2xlib( 'ii', 'eX3Y',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eX3Y',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y1';
         elftv{it}{3} = 'Y2';
         elftv{it}{4} = 'Y3';
-        [it,iet_] = s2xlib( 'ii', 'en2PR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'en2PR',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'eBIG1',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eBIG1',iet_);
         elftv{it}{1} = 'LH';
         elftv{it}{2} = 'TH';
         elftv{it}{3} = 'LL';
@@ -856,35 +854,35 @@ switch(action)
         pbm.elvar   = {};
         pbm.elpar   = {};
         ename = 'XPROD1';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePROD1';
         ielftype(ie) = iet_('ePROD1');
         vname = 'AW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VA',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VB',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VC',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'TT1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VD',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VE',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XPF';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -892,11 +890,11 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPG';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -904,31 +902,31 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPROD2';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePROD2';
         ielftype(ie) = iet_('ePROD2');
         vname = 'AW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VA',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VB',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VC',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'S1L';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VD',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XPL';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -936,11 +934,11 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPM';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -948,35 +946,35 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPROD3';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePROD1';
         ielftype(ie) = iet_('ePROD1');
         vname = 'AW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VA',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VB',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VC',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'TT2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VD',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VE',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'X2PF';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -984,11 +982,11 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'X2PG';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -996,31 +994,31 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPROD4';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePROD2';
         ielftype(ie) = iet_('ePROD2');
         vname = 'AW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VA',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VB',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VC',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'S2L';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VD',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'X2PL';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -1028,11 +1026,11 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'X2PM';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -1040,35 +1038,35 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPROD5';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePROD1';
         ielftype(ie) = iet_('ePROD1');
         vname = 'AW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VA',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VB',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VC',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'TT3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VD',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VE',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XQF';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -1076,11 +1074,11 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XQG';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -1088,31 +1086,31 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 1000.0;
         ename = 'XPROD6';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePROD2';
         ielftype(ie) = iet_('ePROD2');
         vname = 'AW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VA',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VB',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VC',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'S3L';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('VD',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XQL';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -1120,11 +1118,11 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 100.0;
         ename = 'XQM';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'ePOWER';
         ielftype(ie) = iet_('ePOWER');
         vname = 'ET3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('XX',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         [~,posep] = ismember('PWR',elftp{ielftype(ie)});
@@ -1132,188 +1130,188 @@ switch(action)
         [~,posep] = ismember('SC',elftp{ielftype(ie)});
         pbm.elpar{ie}(posep) = 100.0;
         ename = 'SMFE1';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eX7Y';
         ielftype(ie) = iet_('eX7Y');
         vname = 'MF1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y2',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y3',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y4',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y5',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y6',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'INW';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y7',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'SMFE2';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eX5Y';
         ielftype(ie) = iet_('eX5Y');
         vname = 'MF2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y2',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y3',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y4',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'INW';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y5',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'SMFE3';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eX3Y';
         ielftype(ie) = iet_('eX3Y');
         vname = 'MF3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'IW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y2',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'INW';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y3',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'TT1BT1';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'en2PR';
         ielftype(ie) = iet_('en2PR');
         vname = 'TT1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'BT1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'TT2BT2';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'en2PR';
         ielftype(ie) = iet_('en2PR');
         vname = 'TT2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'BT2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'TT3BT3';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'en2PR';
         ielftype(ie) = iet_('en2PR');
         vname = 'TT3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'BT3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XBIG11';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eBIG1';
         ielftype(ie) = iet_('eBIG1');
         vname = 'TT1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('LH',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'BT1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('TH',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('LL',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('V1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XBIG12';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eBIG1';
         ielftype(ie) = iet_('eBIG1');
         vname = 'TT2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('LH',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'BT2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('TH',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('LL',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('V1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'XBIG13';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eBIG1';
         ielftype(ie) = iet_('eBIG1');
         vname = 'TT3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('LH',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'BT3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('TH',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'PW3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('LL',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'MF3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,1.0e-8,1.0e+4,[]);
         posev = find(strcmp('V1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gSUMM',igt_);
+        [it,igt_] = s2mpjlib('ii','gSUMM',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -1461,6 +1459,10 @@ switch(action)
         pb.pbclass = 'OOR2-MY-25-28';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1741,7 +1743,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

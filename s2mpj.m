@@ -717,7 +717,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 1 VI 2024
+%                started VI 2023, this version 4 VI 2024
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1324,15 +1324,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
    if ( strcmp( pendingkey, 'default' ) && ( length( line ) < 23 || ~strcmp( line(15:23), '''DEFAULT''' ) ) )
       if ( contains( pending{1}, 'BOUNDS' ) )
-         if ( ~has_xlowdef && ~has_xuppdef )
+         if ( ~has_xlowdef && ~has_xuppdef )  % there is no BOUNDS section in the SIF file
             printmline( pending{1},                                                           indlvl, bindent, pbs.fidma );
             printpline( pending{1},                                                           indlvl, bindent, pbs.fidpy );
             printjline( pending{1},                                                           indlvl, bindent, pbs.fidjl );
          end
          if ( ~has_xlowdef )
-            printmline( 'pb.xlower = -Inf*ones(pb.n,1);',                                     indlvl, bindent, pbs.fidma );
-            printpline( 'pb.xlower = np.full((pb.n,1),-float(''inf''))',                      indlvl, bindent, pbs.fidpy );
-            printjline( 'pb.xlower = -1*fill(Inf,pb.n)',                                      indlvl, bindent, pbs.fidjl );
+            printmline( 'pb.xlower = zeros(pb.n,1);',                                         indlvl, bindent, pbs.fidma );
+            printpline( 'pb.xlower = np.zeros((pb.n,1))',                                     indlvl, bindent, pbs.fidpy );
+            printjline( 'pb.xlower = zeros(Float64,pb.n)',                                    indlvl, bindent, pbs.fidjl );
 %            has_xlower  = 1;
             has_xlowdef = 1;
          end
@@ -1571,21 +1571,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       pendingkey     = 'default';
       MPSbounds      = 0; %  the number of satisfied conditions for MPS-style bounds on the variables
       prevlineispass = 0;
-
-      % Set SIF defaults
-      
-      switch ( pbs.lang )
-      case 'matlab'
-         printmline( 'pb.xlower = zeros(pb.n,1);',                                            indlvl, bindent, pbs.fidma );
-         printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                                        indlvl, bindent, pbs.fidma );
-      case 'python'
-         printpline( 'pb.xlower = np.zeros((pb.n,1))',                                        indlvl, bindent, pbs.fidpy );
-         printpline( 'pb.xupper = np.full((pb.n,1),+float(''Inf''))',                         indlvl, bindent, pbs.fidpy );
-      case 'julia'
-         printjline( 'pb.xlower = zeros(Float64,pb.n)',                                       indlvl, bindent, pbs.fidjl );
-         printjline( 'pb.xupper =    fill(Inf,pb.n)',                                         indlvl, bindent, pbs.fidjl );
-      end
-      has_bounds = 1;
+      has_bounds     = 1;
 
    %  Starting values for the variables
       
@@ -2960,7 +2946,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
         %  The defaults
 
          if ( strcmp( f{3}, '''DEFAULT''' ) )
-            if ( ~ has_xlowdef && ~has_xuppdef )
+            if ( ~has_xlowdef && ~has_xuppdef )
                printmline( '%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%',              indlvl, bindent, pbs.fidma );
                printpline( '#%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%',              indlvl, bindent, pbs.fidpy );
                printjline( '#%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%',              indlvl, bindent, pbs.fidjl );
@@ -2989,14 +2975,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( 'pb.xlower =  np.full((pb.n,1),-float(''Inf''))',                  indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xlower =  -1*fill(Inf,pb.n)',                                  indlvl, bindent, pbs.fidjl );
 %               has_xlower  = 1;
-               has_xlowdef = 1;
+%              has_xlowdef = 1;
             case { 'PL', 'XP' }
                printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                                  indlvl, bindent, pbs.fidma );
                printpline( 'pb.xupper = np.full((pb.n,1),+float(''Inf''))',                   indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xupper =    fill(Inf,pb.n)',                                   indlvl, bindent, pbs.fidjl );
                MPSbounds   = MPSbounds + 1;
 %               has_xupper  = 1;
-               has_xuppdef = 1;
+%               has_xuppdef = 1;
             case { 'LO', 'XL', 'ZL' }
                xlowdef = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.xlower = %s*ones(pb.n,1);', xlowdef ),                indlvl, bindent, pbs.fidma );
@@ -3037,11 +3023,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             if ( ~has_xlowdef )
                switch ( pbs.lang )
                case 'matlab'
-                  pending{1} = 'pb.xlower = -Inf*ones(pb.n,1);';
+                  pending{1} = 'pb.xlower = zeros(pb.n,1);';
                case 'python'
-                  pending{1} = 'pb.xlower =  np.full((pb.n,1),-float(''Inf''))';
+                  pending{1} = 'pb.xlower = np.zeros((pb.n,1))';
                case 'julia'
-                  pending{1} = 'pb.xlower =  -1*fill(Inf,pb.n)';
+                  pending{1} = 'pb.xlower = zeros(Float64,pb.n)';
                end
                pendingkey = 'default';
             elseif ( ~has_xuppdef )

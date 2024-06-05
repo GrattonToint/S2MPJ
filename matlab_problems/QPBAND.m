@@ -8,9 +8,13 @@ function varargout = QPBAND(action,varargin)
 % 
 %    A banded QP
 %    SIF input: Nick Gould, December 1999.
+%               correction by S. Gratton & Ph. Toint, May 2024
 % 
 %    classification = 'QLR2-AN-V-V'
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10000          $-PARAMETER
+% IE N                   50000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,9 +38,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   10000          $-PARAMETER
-% IE N                   50000          $-PARAMETER
 % IE N                   100000         $-PARAMETER
 % IE N                   200000         $-PARAMETER
 % IE N                   400000         $-PARAMETER
@@ -50,7 +51,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -59,7 +60,7 @@ switch(action)
             v_('RI') = I;
             v_('RI/RN') = v_('RI')/v_('RN');
             v_('-RI/RN') = -1.0*v_('RI/RN');
-            [ig,ig_] = s2xlib('ii','OBJ',ig_);
+            [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -70,7 +71,7 @@ switch(action)
         end
         for I=v_('1'):v_('M')
             v_('M+I') = v_('M')+I;
-            [ig,ig_] = s2xlib('ii',['C',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C',int2str(I)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['C',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -105,8 +106,6 @@ switch(action)
         for I=v_('1'):v_('M')
             pbm.gconst(ig_(['C',int2str(I)])) = 1.0;
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = 0.0*ones(pb.n,1);
         pb.xupper = 2.0*ones(pb.n,1);
@@ -144,7 +143,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

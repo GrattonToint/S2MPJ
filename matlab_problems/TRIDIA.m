@@ -25,6 +25,15 @@ function varargout = TRIDIA(action,varargin)
 % 
 %    N is the number of variables
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER
+% IE N                   20             $-PARAMETER
+% IE N                   30             $-PARAMETER     original value
+% IE N                   50             $-PARAMETER
+% IE N                   100            $-PARAMETER
+% IE N                   500            $-PARAMETER
+% IE N                   1000           $-PARAMETER
+% IE N                   5000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,15 +57,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   10             $-PARAMETER
-% IE N                   20             $-PARAMETER
-% IE N                   30             $-PARAMETER     original value
-% IE N                   50             $-PARAMETER
-% IE N                   100            $-PARAMETER
-% IE N                   500            $-PARAMETER
-% IE N                   1000           $-PARAMETER
-% IE N                   5000           $-PARAMETER
 % IE N                   10000          $-PARAMETER
         if(nargin<3)
             v_('ALPHA') = 2.0;  %  SIF file default value
@@ -85,12 +85,12 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii',['G',int2str(round(v_('1')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['G',int2str(round(v_('1')))],ig_);
         gtype{ig} = '<>';
         iv = ix_(['X',int2str(round(v_('1')))]);
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -98,14 +98,14 @@ switch(action)
         else
             pbm.A(ig,iv) = v_('DELTA');
         end
-        [ig,ig_] = s2xlib('ii',['G',int2str(round(v_('1')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['G',int2str(round(v_('1')))],ig_);
         gtype{ig} = '<>';
         pbm.gscale(ig,1) = v_('1/GAMMA');
         for I=v_('2'):v_('N')
             v_('REALI') = I;
             v_('1/I') = 1.0/v_('REALI');
             v_('I-1') = -1+I;
-            [ig,ig_] = s2xlib('ii',['G',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['G',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(round(v_('I-1')))]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -129,8 +129,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         pbm.gconst(ig_(['G',int2str(round(v_('1')))])) = 1.0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -138,7 +136,7 @@ switch(action)
         pb.x0 = 1.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gL2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -146,12 +144,19 @@ switch(action)
             pbm.grftype{ig} = 'gL2';
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Least square problems are bounded below by zero
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'QUR2-AN-V-0';
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -176,7 +181,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

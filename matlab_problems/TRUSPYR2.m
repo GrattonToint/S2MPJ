@@ -103,17 +103,17 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for J=v_('1'):v_('NBAR')
-            [iv,ix_] = s2xlib('ii',['XAREA',int2str(J)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['XAREA',int2str(J)],ix_);
             pb.xnames{iv} = ['XAREA',int2str(J)];
         end
         for I=v_('1'):v_('NDIM')
-            [iv,ix_] = s2xlib('ii',['DISPL',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['DISPL',int2str(I)],ix_);
             pb.xnames{iv} = ['DISPL',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for J=v_('1'):v_('NBAR')
-            [ig,ig_] = s2xlib('ii','WEIGHT',ig_);
+            [ig,ig_] = s2mpjlib('ii','WEIGHT',ig_);
             gtype{ig} = '<>';
             iv = ix_(['XAREA',int2str(J)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -123,13 +123,13 @@ switch(action)
             end
         end
         for K=v_('1'):v_('NDIM')
-            [ig,ig_] = s2xlib('ii',['EQUIL',int2str(K)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['EQUIL',int2str(K)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['EQUIL',int2str(K)];
         end
         for I=v_('1'):v_('NDIM')
             for J=v_('1'):v_('NBAR')
-                [ig,ig_] = s2xlib('ii',['STRES',int2str(J)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['STRES',int2str(J)],ig_);
                 gtype{ig}  = '<=';
                 cnames{ig} = ['STRES',int2str(J)];
                 iv = ix_(['DISPL',int2str(I)]);
@@ -162,10 +162,8 @@ switch(action)
         for J=v_('1'):v_('NBAR')
             pbm.gconst(ig_(['STRES',int2str(J)])) = v_(['STRUP',int2str(J)]);
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         for J=v_('1'):v_('NBAR')
             pb.xlower(ix_(['XAREA',int2str(J)]),1) = 1.0;
@@ -176,7 +174,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'en2PR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'en2PR',iet_);
         elftv{it}{1} = 'U';
         elftv{it}{2} = 'X';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -187,15 +185,15 @@ switch(action)
         for I=v_('1'):v_('NDIM')
             for J=v_('1'):v_('NBAR')
                 ename = ['UX',int2str(I),',',int2str(J)];
-                [ie,ie_] = s2xlib('ii',ename,ie_);
+                [ie,ie_] = s2mpjlib('ii',ename,ie_);
                 pbm.elftype{ie} = 'en2PR';
                 ielftype(ie) = iet_('en2PR');
                 vname = ['DISPL',int2str(I)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('U',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['XAREA',int2str(J)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('X',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
             end
@@ -215,6 +213,7 @@ switch(action)
             end
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Objective function value corresponding to the local minimizer above
         pb.objlower = 1.2287408808;
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -228,6 +227,10 @@ switch(action)
         pb.x0          = zeros(pb.n,1);
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -255,7 +258,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

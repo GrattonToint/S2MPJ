@@ -36,15 +36,15 @@ switch(action)
         ig_ = configureDictionary('string','double');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','X1',ix_);
+        [iv,ix_] = s2mpjlib('ii','X1',ix_);
         pb.xnames{iv} = 'X1';
-        [iv,ix_] = s2xlib('ii','X2',ix_);
+        [iv,ix_] = s2mpjlib('ii','X2',ix_);
         pb.xnames{iv} = 'X2';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
-        [ig,ig_] = s2xlib('ii','CON1',ig_);
+        [ig,ig_] = s2mpjlib('ii','CON1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'CON1';
         iv = ix_('X1');
@@ -73,8 +73,6 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -82,7 +80,7 @@ switch(action)
         pb.x0 = 0.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eSNCS',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSNCS',iet_);
         elftv{it}{1} = 'V1';
         elftv{it}{2} = 'V2';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -91,15 +89,15 @@ switch(action)
         ielftype    = [];
         pbm.elvar   = {};
         ename = 'E1';
-        [ie,ie_] = s2xlib('ii',ename,ie_);
+        [ie,ie_] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eSNCS';
         ielftype(ie) = iet_('eSNCS');
         vname = 'X1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
         posev = find(strcmp('V1',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = 'X2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.0);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.0);
         posev = find(strcmp('V2',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -111,6 +109,8 @@ switch(action)
         nlc = union(nlc,ig);
         pbm.grelw{ig}(posel) = 1.;
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN               -0.5
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -121,6 +121,10 @@ switch(action)
         pb.pbclass = 'OLR2-AN-2-1';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -128,17 +132,17 @@ switch(action)
 
         EV_  = varargin{1};
         iel_ = varargin{2};
-        PI = 4.0*atan(1.0e0);
-        varargout{1} = sin(PI*EV_(1)/12.0)*cos(PI*EV_(2)/16.0);
+        PI = 4.0e0*atan(1.0e0);
+        varargout{1} = sin(PI*EV_(1)/12.0e0)*cos(PI*EV_(2)/16.0e0);
         if(nargout>1)
-            g_(1,1) = cos(PI*EV_(1)/12.0)*cos(PI*EV_(2)/16.0)*PI/12.0;
-            g_(2,1) = -sin(PI*EV_(1)/12.0)*sin(PI*EV_(2)/16.0)*PI/16.0;
+            g_(1,1) = cos(PI*EV_(1)/12.0e0)*cos(PI*EV_(2)/16.0e0)*PI/12.0e0;
+            g_(2,1) = -sin(PI*EV_(1)/12.0e0)*sin(PI*EV_(2)/16.0e0)*PI/16.0e0;
             varargout{2} = g_;
             if(nargout>2)
                 H_ = sparse(2,2);
-                H_(1,1) = -sin(PI*EV_(1)/12.0)*cos(PI*EV_(2)/16.0)*PI*PI/144.0;
-                H_(2,2) = -sin(PI*EV_(1)/12.0)*cos(PI*EV_(2)/16.0)*PI*PI/256.0;
-                H_(1,2) = -cos(PI*EV_(1)/12.0)*sin(PI*EV_(2)/16.0)*PI*PI/192.0;
+                H_(1,1) = -sin(PI*EV_(1)/12.0e0)*cos(PI*EV_(2)/16.0e0)*PI*PI/144.0e0;
+                H_(2,2) = -sin(PI*EV_(1)/12.0e0)*cos(PI*EV_(2)/16.0e0)*PI*PI/256.0e0;
+                H_(1,2) = -cos(PI*EV_(1)/12.0e0)*sin(PI*EV_(2)/16.0e0)*PI*PI/192.0e0;
                 H_(2,1) = H_(1,2);
                 varargout{3} = H_;
             end
@@ -151,7 +155,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

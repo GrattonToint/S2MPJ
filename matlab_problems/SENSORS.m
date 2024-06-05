@@ -22,6 +22,8 @@ function varargout = SENSORS(action,varargin)
 %       Alternative values for the SIF file parameters:
 % IE N                   2              $-PARAMETER
 % IE N                   3              $-PARAMETER
+% IE N                   10             $-PARAMETER
+% IE N                   100            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,22 +47,20 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-% IE N                   10             $-PARAMETER
-% IE N                   100            $-PARAMETER
 % IE N                   1000           $-PARAMETER
         v_('1') = 1;
         v_('RN') = v_('N');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['THETA',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['THETA',int2str(I)],ix_);
             pb.xnames{iv} = ['THETA',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for J=v_('1'):v_('N')
             for I=v_('1'):v_('N')
-                [ig,ig_] = s2xlib('ii',['S',int2str(I),',',int2str(J)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['S',int2str(I),',',int2str(J)],ig_);
                 gtype{ig} = '<>';
             end
         end
@@ -69,8 +69,6 @@ switch(action)
         ngrp   = numEntries(ig_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -83,7 +81,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eSINFUN',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSINFUN',iet_);
         elftv{it}{1} = 'THETAI';
         elftv{it}{2} = 'THETAJ';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -94,24 +92,24 @@ switch(action)
         for J=v_('1'):v_('N')
             for I=v_('1'):v_('N')
                 ename = ['S',int2str(I),',',int2str(J)];
-                [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+                [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
                 if(newelt)
                     pbm.elftype{ie} = 'eSINFUN';
                     ielftype(ie) = iet_('eSINFUN');
                 end
                 vname = ['THETA',int2str(I)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('THETAI',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['THETA',int2str(J)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('THETAJ',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
             end
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gmL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gmL2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -186,7 +184,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

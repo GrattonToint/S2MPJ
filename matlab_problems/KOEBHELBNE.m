@@ -15,7 +15,7 @@ function varargout = KOEBHELBNE(action,varargin)
 %    SIF input: Ph. Toint, June 2005.
 %    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 % 
-%    classification = 'NOR2-RN-3-0'
+%    classification = 'NOR2-RN-3-156'
 % 
 %    Useful constants
 % 
@@ -353,16 +353,16 @@ switch(action)
         v_('Y156') = 0.039112388;
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','N',ix_);
+        [iv,ix_] = s2mpjlib('ii','N',ix_);
         pb.xnames{iv} = 'N';
-        [iv,ix_] = s2xlib('ii','A',ix_);
+        [iv,ix_] = s2mpjlib('ii','A',ix_);
         pb.xnames{iv} = 'A';
-        [iv,ix_] = s2xlib('ii','B',ix_);
+        [iv,ix_] = s2mpjlib('ii','B',ix_);
         pb.xnames{iv} = 'B';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('M')
-            [ig,ig_] = s2xlib('ii',['O',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['O',int2str(I)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['O',int2str(I)];
         end
@@ -385,10 +385,8 @@ switch(action)
         for I=v_('1'):v_('M')
             pbm.gconst(ig_(['O',int2str(I)])) = v_(['Y',int2str(I)]);
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_('A')) = -Inf;
         pb.xupper(ix_('A'),1) = +Inf;
@@ -413,7 +411,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eKHE',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eKHE',iet_);
         elftv{it}{1} = 'VN';
         elftv{it}{2} = 'VA';
         elftv{it}{3} = 'VB';
@@ -426,21 +424,21 @@ switch(action)
         pbm.elpar   = {};
         for I=v_('1'):v_('M')
             ename = ['E',int2str(I)];
-            [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+            [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
             if(newelt)
                 pbm.elftype{ie} = 'eKHE';
                 ielftype(ie) = iet_('eKHE');
             end
             vname = 'N';
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('VN',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = 'A';
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('VA',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = 'B';
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('VB',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             [~,posep] = ismember('XX',elftp{ielftype(ie)});
@@ -457,15 +455,22 @@ switch(action)
             pbm.grelw{ig}(posel) = 1.;
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+% LO                       0.0
+%    Solution
+% LO SOLTN                 77.516347286
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'NOR2-RN-3-0';
+        pb.pbclass = 'NOR2-RN-3-156';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -504,7 +509,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

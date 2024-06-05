@@ -135,20 +135,20 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for K=v_('-LGSG'):v_('LGTR')
-            [iv,ix_] = s2xlib('ii',['C',int2str(K)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['C',int2str(K)],ix_);
             pb.xnames{iv} = ['C',int2str(K)];
         end
         for I=v_('1'):v_('LGSG')
-            [iv,ix_] = s2xlib('ii',['SG',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['SG',int2str(I)],ix_);
             pb.xnames{iv} = ['SG',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for K=v_('1'):v_('LGTR')
-            [ig,ig_] = s2xlib('ii',['R',int2str(K)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['R',int2str(K)],ig_);
             gtype{ig} = '<>';
         end
-        [ig,ig_] = s2xlib('ii','ENERG',ig_);
+        [ig,ig_] = s2mpjlib('ii','ENERG',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'ENERG';
         %%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -171,10 +171,8 @@ switch(action)
             pbm.gconst(ig_(['R',int2str(K)])) = v_(['TR',int2str(K)]);
         end
         pbm.gconst(ig_('ENERG')) = v_('PIC');
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         for K=v_('-LGSG'):v_('0')
             pb.xlower(ix_(['C',int2str(K)]),1) = 0.0;
@@ -191,11 +189,11 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'ePR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePR',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
         elftp{it}{1} = 'IDX';
-        [it,iet_] = s2xlib( 'ii', 'eSQ',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSQ',iet_);
         elftv{it}{1} = 'X';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -209,15 +207,15 @@ switch(action)
                 v_('K-I+1') = 1+v_('K-I');
                 v_('RIDX') = v_('K-I+1');
                 ename = ['PROD',int2str(K),',',int2str(I)];
-                [ie,ie_] = s2xlib('ii',ename,ie_);
+                [ie,ie_] = s2mpjlib('ii',ename,ie_);
                 pbm.elftype{ie} = 'ePR';
                 ielftype(ie) = iet_('ePR');
                 vname = ['SG',int2str(I)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('X',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['C',int2str(round(v_('K-I+1')))];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('Y',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 [~,posep] = ismember('IDX',elftp{ielftype(ie)});
@@ -226,17 +224,17 @@ switch(action)
         end
         for I=v_('1'):v_('LGSG')
             ename = ['ESQ',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSQ';
             ielftype(ie) = iet_('eSQ');
             vname = ['SG',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gSQ',igt_);
+        [it,igt_] = s2mpjlib('ii','gSQ',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -331,7 +329,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

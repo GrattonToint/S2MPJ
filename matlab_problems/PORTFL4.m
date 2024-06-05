@@ -869,14 +869,14 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('NS')
-            [iv,ix_] = s2xlib('ii',['S',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['S',int2str(I)],ix_);
             pb.xnames{iv} = ['S',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('NR')
             for J=v_('1'):v_('NS')
-                [ig,ig_] = s2xlib('ii',['A',int2str(I)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['A',int2str(I)],ig_);
                 gtype{ig} = '<>';
                 iv = ix_(['S',int2str(J)]);
                 if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -887,7 +887,7 @@ switch(action)
             end
         end
         for I=v_('1'):v_('NS')
-            [ig,ig_] = s2xlib('ii','SUM',ig_);
+            [ig,ig_] = s2mpjlib('ii','SUM',ig_);
             gtype{ig}  = '==';
             cnames{ig} = 'SUM';
             iv = ix_(['S',int2str(I)]);
@@ -917,8 +917,6 @@ switch(action)
             pbm.gconst(ig_(['A',int2str(I)])) = v_(['R',int2str(I)]);
         end
         pbm.gconst(ig_('SUM')) = 1.0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = 0.0*ones(pb.n,1);
         pb.xupper = 1.0*ones(pb.n,1);
@@ -931,7 +929,7 @@ switch(action)
         pb.x0 = v_('SINI')*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gL2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -941,6 +939,8 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN                2.63069364D-2
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -950,6 +950,10 @@ switch(action)
         pb.pbclass = 'SLR2-MN-12-1';
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -974,7 +978,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

@@ -23,6 +23,13 @@ function varargout = HAGER4(action,varargin)
 % 
 %    Number of discretized points in [0,1]
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER     original value
+% IE N                   50             $-PARAMETER
+% IE N                   100            $-PARAMETER
+% IE N                   500            $-PARAMETER
+% IE N                   1000           $-PARAMETER
+% IE N                   2500           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,12 +53,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   50             $-PARAMETER
-% IE N                   100            $-PARAMETER
-% IE N                   500            $-PARAMETER
-% IE N                   1000           $-PARAMETER
-% IE N                   2500           $-PARAMETER
 % IE N                   5000           $-PARAMETER
         v_('1/H') = v_('N');
         v_('H') = 1.0/v_('1/H');
@@ -94,20 +95,20 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['U',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['U',int2str(I)],ix_);
             pb.xnames{iv} = ['U',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         for I=v_('1'):v_('N')
             v_('I-1') = -1+I;
-            [ig,ig_] = s2xlib('ii',['S',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['S',int2str(I)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['S',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -145,8 +146,6 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -161,13 +160,13 @@ switch(action)
         pb.x0(ix_(['X',int2str(round(v_('0')))]),1) = v_('XX0');
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eELT',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eELT',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
         elftp{it}{1} = 'D';
         elftp{it}{2} = 'E';
         elftp{it}{3} = 'F';
-        [it,iet_] = s2xlib( 'ii', 'eSQ',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSQ',iet_);
         elftv{it}{1} = 'X';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -178,15 +177,15 @@ switch(action)
         for I=v_('1'):v_('N')
             v_('I-1') = -1+I;
             ename = ['EL',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eELT';
             ielftype(ie) = iet_('eELT');
             vname = ['X',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = ['X',int2str(round(v_('I-1')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('Y',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             v_('DD') = v_('SCDA')*v_(['Z',int2str(round(v_('I-1')))]);
@@ -199,11 +198,11 @@ switch(action)
             [~,posep] = ismember('F',elftp{ielftype(ie)});
             pbm.elpar{ie}(posep) = v_('FF');
             ename = ['U',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSQ';
             ielftype(ie) = iet_('eSQ');
             vname = ['U',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
@@ -222,6 +221,13 @@ switch(action)
             pbm.grelw{ig}(posel) = v_('H/2');
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN(10)           2.833914199
+% LO SOLTN(50)           2.799810928
+% LO SOLTN(100)          2.796761851
+% LO SOLTN(500)          2.794513229
+% LO SOLTN(1000)         2.794244187
+% LO SOLTN(5000)         ???
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -232,6 +238,10 @@ switch(action)
         pb.pbclass = 'OLR2-AN-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -277,7 +287,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

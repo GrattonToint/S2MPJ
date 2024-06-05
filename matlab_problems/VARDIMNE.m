@@ -26,6 +26,8 @@ function varargout = VARDIMNE(action,varargin)
 % 
 %    N is the number of free variables
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER     original value
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,7 +51,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
 % IE N                   50             $-PARAMETER
 % IE N                   100            $-PARAMETER
 % IE N                   200            $-PARAMETER
@@ -64,13 +65,13 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
-            [ig,ig_] = s2xlib('ii',['G',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['G',int2str(I)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['G',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -82,7 +83,7 @@ switch(action)
         end
         for I=v_('1'):v_('N')
             v_('REALI') = I;
-            [ig,ig_] = s2xlib('ii',['G',int2str(round(v_('N+1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['G',int2str(round(v_('N+1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['G',int2str(round(v_('N+1')))];
             iv = ix_(['X',int2str(I)]);
@@ -91,7 +92,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = v_('REALI');
             end
-            [ig,ig_] = s2xlib('ii',['G',int2str(round(v_('N+2')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['G',int2str(round(v_('N+2')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['G',int2str(round(v_('N+2')))];
             iv = ix_(['X',int2str(I)]);
@@ -122,8 +123,6 @@ switch(action)
         end
         pbm.gconst(ig_(['G',int2str(round(v_('N+1')))])) = v_('SUMJ');
         pbm.gconst(ig_(['G',int2str(round(v_('N+2')))])) = v_('SUMJ');
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -143,14 +142,17 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gL2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
         ig = ig_(['G',int2str(round(v_('N+2')))]);
         pbm.grftype{ig} = 'gL2';
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Least square problems are bounded below by zero
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -160,6 +162,10 @@ switch(action)
         pb.pbclass = 'NOR2-AN-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -184,7 +190,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

@@ -36,13 +36,13 @@ switch(action)
         ig_ = configureDictionary('string','double');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','x',ix_);
+        [iv,ix_] = s2mpjlib('ii','x',ix_);
         pb.xnames{iv} = 'x';
-        [iv,ix_] = s2xlib('ii','y',ix_);
+        [iv,ix_] = s2mpjlib('ii','y',ix_);
         pb.xnames{iv} = 'y';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','Object',ig_);
+        [ig,ig_] = s2mpjlib('ii','Object',ig_);
         gtype{ig} = '<>';
         iv = ix_('x');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -56,7 +56,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -2.0;
         end
-        [ig,ig_] = s2xlib('ii','Constr',ig_);
+        [ig,ig_] = s2mpjlib('ii','Constr',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'Constr';
         iv = ix_('x');
@@ -88,10 +88,8 @@ switch(action)
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         pbm.gconst(ig_('Constr')) = 1.0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_('x'),1) = -2.0;
         pb.xupper(ix_('x')) = 2.0;
@@ -99,8 +97,8 @@ switch(action)
         pb.xupper(ix_('y')) = 1.5;
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gEXPN',igt_);
-        [it,igt_] = s2xlib('ii','gSINE',igt_);
+        [it,igt_] = s2mpjlib('ii','gEXPN',igt_);
+        [it,igt_] = s2mpjlib('ii','gSINE',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -158,7 +156,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

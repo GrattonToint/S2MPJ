@@ -29,6 +29,14 @@ function varargout = RAYBENDL(action,varargin)
 %    number of  knots  ( >= 4 )
 %    ( n = 2( NKNOTS - 1 ) ) 
 % 
+%       Alternative values for the SIF file parameters:
+% IE NKNOTS              4              $-PARAMETER n = 6
+% IE NKNOTS              11             $-PARAMETER n = 20
+% IE NKNOTS              21             $-PARAMETER n = 40     original value
+% IE NKNOTS              32             $-PARAMETER n = 62
+% IE NKNOTS              64             $-PARAMETER n = 126
+% IE NKNOTS              512            $-PARAMETER n = 1022
+% IE NKNOTS              1024           $-PARAMETER n = 2046
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,13 +60,6 @@ switch(action)
         else
             v_('NKNOTS') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE NKNOTS              11             $-PARAMETER n = 20
-% IE NKNOTS              21             $-PARAMETER n = 40     original value
-% IE NKNOTS              32             $-PARAMETER n = 62
-% IE NKNOTS              64             $-PARAMETER n = 126
-% IE NKNOTS              512            $-PARAMETER n = 1022
-% IE NKNOTS              1024           $-PARAMETER n = 2046
         v_('XSRC') = 0.0;
         v_('ZSRC') = 0.0;
         v_('XRCV') = 100.0;
@@ -72,15 +73,15 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('NKNOTS')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
-            [iv,ix_] = s2xlib('ii',['Z',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['Z',int2str(I)],ix_);
             pb.xnames{iv} = ['Z',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('NKNOTS')
-            [ig,ig_] = s2xlib('ii',['TIME',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['TIME',int2str(I)],ig_);
             gtype{ig} = '<>';
             pbm.gscale(ig,1) = 2.0;
         end
@@ -89,8 +90,6 @@ switch(action)
         ngrp   = numEntries(ig_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -119,7 +118,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eTT',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eTT',iet_);
         elftv{it}{1} = 'X1';
         elftv{it}{2} = 'X2';
         elftv{it}{3} = 'Z1';
@@ -132,25 +131,25 @@ switch(action)
         for I=v_('1'):v_('NKNOTS')
             v_('I-1') = -1+I;
             ename = ['T',int2str(I)];
-            [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+            [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
             if(newelt)
                 pbm.elftype{ie} = 'eTT';
                 ielftype(ie) = iet_('eTT');
             end
             vname = ['X',int2str(round(v_('I-1')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X1',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = ['X',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('X2',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = ['Z',int2str(round(v_('I-1')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('Z1',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             vname = ['Z',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('Z2',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
@@ -164,12 +163,18 @@ switch(action)
             pbm.grelw{ig}(posel) = 1.;
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%   Solution of the continuous problem
+% LO RAYBENDL            96.2424
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'OXR2-MY-V-0';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -239,7 +244,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [1,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

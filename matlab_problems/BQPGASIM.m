@@ -32,12 +32,12 @@ switch(action)
         ig_ = configureDictionary('string','double');
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','LINGROUP',ig_);
+        [ig,ig_] = s2mpjlib('ii','LINGROUP',ig_);
         gtype{ig} = '<>';
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         ngrp   = numEntries(ig_);
-        [iv,ix_] = s2xlib('ii','1',ix_);
+        [iv,ix_] = s2mpjlib('ii','1',ix_);
         pb.xnames{iv} = '1';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -45,7 +45,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 5.6987e-02;
         end
-        [iv,ix_] = s2xlib('ii','2',ix_);
+        [iv,ix_] = s2mpjlib('ii','2',ix_);
         pb.xnames{iv} = '2';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -53,7 +53,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -6.1847e-03;
         end
-        [iv,ix_] = s2xlib('ii','3',ix_);
+        [iv,ix_] = s2mpjlib('ii','3',ix_);
         pb.xnames{iv} = '3';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -61,7 +61,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 5.2516e-03;
         end
-        [iv,ix_] = s2xlib('ii','4',ix_);
+        [iv,ix_] = s2mpjlib('ii','4',ix_);
         pb.xnames{iv} = '4';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -69,7 +69,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.1729e-02;
         end
-        [iv,ix_] = s2xlib('ii','5',ix_);
+        [iv,ix_] = s2mpjlib('ii','5',ix_);
         pb.xnames{iv} = '5';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -77,7 +77,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 4.9596e-03;
         end
-        [iv,ix_] = s2xlib('ii','6',ix_);
+        [iv,ix_] = s2mpjlib('ii','6',ix_);
         pb.xnames{iv} = '6';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -85,7 +85,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -4.9271e-03;
         end
-        [iv,ix_] = s2xlib('ii','7',ix_);
+        [iv,ix_] = s2mpjlib('ii','7',ix_);
         pb.xnames{iv} = '7';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -93,7 +93,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.2185e-02;
         end
-        [iv,ix_] = s2xlib('ii','8',ix_);
+        [iv,ix_] = s2mpjlib('ii','8',ix_);
         pb.xnames{iv} = '8';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -101,7 +101,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.3238e-02;
         end
-        [iv,ix_] = s2xlib('ii','9',ix_);
+        [iv,ix_] = s2mpjlib('ii','9',ix_);
         pb.xnames{iv} = '9';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -109,7 +109,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.5134e-02;
         end
-        [iv,ix_] = s2xlib('ii','10',ix_);
+        [iv,ix_] = s2mpjlib('ii','10',ix_);
         pb.xnames{iv} = '10';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -117,7 +117,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.2247e-02;
         end
-        [iv,ix_] = s2xlib('ii','11',ix_);
+        [iv,ix_] = s2mpjlib('ii','11',ix_);
         pb.xnames{iv} = '11';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -125,7 +125,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 2.3741e-02;
         end
-        [iv,ix_] = s2xlib('ii','12',ix_);
+        [iv,ix_] = s2mpjlib('ii','12',ix_);
         pb.xnames{iv} = '12';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -133,7 +133,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -9.7666e-02;
         end
-        [iv,ix_] = s2xlib('ii','13',ix_);
+        [iv,ix_] = s2mpjlib('ii','13',ix_);
         pb.xnames{iv} = '13';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -141,7 +141,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 9.8702e-02;
         end
-        [iv,ix_] = s2xlib('ii','14',ix_);
+        [iv,ix_] = s2mpjlib('ii','14',ix_);
         pb.xnames{iv} = '14';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -149,7 +149,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 7.8901e-04;
         end
-        [iv,ix_] = s2xlib('ii','15',ix_);
+        [iv,ix_] = s2mpjlib('ii','15',ix_);
         pb.xnames{iv} = '15';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -157,7 +157,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 5.1663e-04;
         end
-        [iv,ix_] = s2xlib('ii','16',ix_);
+        [iv,ix_] = s2mpjlib('ii','16',ix_);
         pb.xnames{iv} = '16';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -165,7 +165,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.7477e-04;
         end
-        [iv,ix_] = s2xlib('ii','17',ix_);
+        [iv,ix_] = s2mpjlib('ii','17',ix_);
         pb.xnames{iv} = '17';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -173,7 +173,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.1795e-03;
         end
-        [iv,ix_] = s2xlib('ii','18',ix_);
+        [iv,ix_] = s2mpjlib('ii','18',ix_);
         pb.xnames{iv} = '18';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -181,7 +181,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.7351e-02;
         end
-        [iv,ix_] = s2xlib('ii','19',ix_);
+        [iv,ix_] = s2mpjlib('ii','19',ix_);
         pb.xnames{iv} = '19';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -189,7 +189,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.3439e-03;
         end
-        [iv,ix_] = s2xlib('ii','20',ix_);
+        [iv,ix_] = s2mpjlib('ii','20',ix_);
         pb.xnames{iv} = '20';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -197,7 +197,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -5.6977e-02;
         end
-        [iv,ix_] = s2xlib('ii','21',ix_);
+        [iv,ix_] = s2mpjlib('ii','21',ix_);
         pb.xnames{iv} = '21';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -205,7 +205,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0040e-02;
         end
-        [iv,ix_] = s2xlib('ii','22',ix_);
+        [iv,ix_] = s2mpjlib('ii','22',ix_);
         pb.xnames{iv} = '22';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -213,7 +213,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -8.3380e-02;
         end
-        [iv,ix_] = s2xlib('ii','23',ix_);
+        [iv,ix_] = s2mpjlib('ii','23',ix_);
         pb.xnames{iv} = '23';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -221,7 +221,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -3.7526e-03;
         end
-        [iv,ix_] = s2xlib('ii','24',ix_);
+        [iv,ix_] = s2mpjlib('ii','24',ix_);
         pb.xnames{iv} = '24';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -229,7 +229,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -9.4555e-04;
         end
-        [iv,ix_] = s2xlib('ii','25',ix_);
+        [iv,ix_] = s2mpjlib('ii','25',ix_);
         pb.xnames{iv} = '25';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -237,7 +237,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -4.9258e-03;
         end
-        [iv,ix_] = s2xlib('ii','26',ix_);
+        [iv,ix_] = s2mpjlib('ii','26',ix_);
         pb.xnames{iv} = '26';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -245,7 +245,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.3959e-03;
         end
-        [iv,ix_] = s2xlib('ii','27',ix_);
+        [iv,ix_] = s2mpjlib('ii','27',ix_);
         pb.xnames{iv} = '27';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -253,7 +253,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -4.3749e-03;
         end
-        [iv,ix_] = s2xlib('ii','28',ix_);
+        [iv,ix_] = s2mpjlib('ii','28',ix_);
         pb.xnames{iv} = '28';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -261,7 +261,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -4.3677e-03;
         end
-        [iv,ix_] = s2xlib('ii','29',ix_);
+        [iv,ix_] = s2mpjlib('ii','29',ix_);
         pb.xnames{iv} = '29';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -269,7 +269,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -2.7985e-02;
         end
-        [iv,ix_] = s2xlib('ii','30',ix_);
+        [iv,ix_] = s2mpjlib('ii','30',ix_);
         pb.xnames{iv} = '30';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -277,7 +277,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.8839e-03;
         end
-        [iv,ix_] = s2xlib('ii','31',ix_);
+        [iv,ix_] = s2mpjlib('ii','31',ix_);
         pb.xnames{iv} = '31';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -285,7 +285,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.2340e-03;
         end
-        [iv,ix_] = s2xlib('ii','32',ix_);
+        [iv,ix_] = s2mpjlib('ii','32',ix_);
         pb.xnames{iv} = '32';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -293,7 +293,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -6.8139e-04;
         end
-        [iv,ix_] = s2xlib('ii','33',ix_);
+        [iv,ix_] = s2mpjlib('ii','33',ix_);
         pb.xnames{iv} = '33';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -301,7 +301,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -3.5838e-02;
         end
-        [iv,ix_] = s2xlib('ii','34',ix_);
+        [iv,ix_] = s2mpjlib('ii','34',ix_);
         pb.xnames{iv} = '34';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -309,7 +309,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -3.4857e-02;
         end
-        [iv,ix_] = s2xlib('ii','35',ix_);
+        [iv,ix_] = s2mpjlib('ii','35',ix_);
         pb.xnames{iv} = '35';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -317,7 +317,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 2.8724e-03;
         end
-        [iv,ix_] = s2xlib('ii','36',ix_);
+        [iv,ix_] = s2mpjlib('ii','36',ix_);
         pb.xnames{iv} = '36';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -325,7 +325,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.6625e-02;
         end
-        [iv,ix_] = s2xlib('ii','37',ix_);
+        [iv,ix_] = s2mpjlib('ii','37',ix_);
         pb.xnames{iv} = '37';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -333,7 +333,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.3571e-02;
         end
-        [iv,ix_] = s2xlib('ii','38',ix_);
+        [iv,ix_] = s2mpjlib('ii','38',ix_);
         pb.xnames{iv} = '38';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -341,7 +341,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -7.2447e-03;
         end
-        [iv,ix_] = s2xlib('ii','39',ix_);
+        [iv,ix_] = s2mpjlib('ii','39',ix_);
         pb.xnames{iv} = '39';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -349,7 +349,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -4.6034e-04;
         end
-        [iv,ix_] = s2xlib('ii','40',ix_);
+        [iv,ix_] = s2mpjlib('ii','40',ix_);
         pb.xnames{iv} = '40';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -357,7 +357,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.6225e-02;
         end
-        [iv,ix_] = s2xlib('ii','41',ix_);
+        [iv,ix_] = s2mpjlib('ii','41',ix_);
         pb.xnames{iv} = '41';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -365,7 +365,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 2.2034e-05;
         end
-        [iv,ix_] = s2xlib('ii','42',ix_);
+        [iv,ix_] = s2mpjlib('ii','42',ix_);
         pb.xnames{iv} = '42';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -373,7 +373,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 5.8844e-02;
         end
-        [iv,ix_] = s2xlib('ii','43',ix_);
+        [iv,ix_] = s2mpjlib('ii','43',ix_);
         pb.xnames{iv} = '43';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -381,7 +381,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 3.0725e-03;
         end
-        [iv,ix_] = s2xlib('ii','44',ix_);
+        [iv,ix_] = s2mpjlib('ii','44',ix_);
         pb.xnames{iv} = '44';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -389,7 +389,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 2.8227e-03;
         end
-        [iv,ix_] = s2xlib('ii','45',ix_);
+        [iv,ix_] = s2mpjlib('ii','45',ix_);
         pb.xnames{iv} = '45';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -397,7 +397,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -2.0681e-02;
         end
-        [iv,ix_] = s2xlib('ii','46',ix_);
+        [iv,ix_] = s2mpjlib('ii','46',ix_);
         pb.xnames{iv} = '46';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -405,7 +405,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -5.4952e-03;
         end
-        [iv,ix_] = s2xlib('ii','47',ix_);
+        [iv,ix_] = s2mpjlib('ii','47',ix_);
         pb.xnames{iv} = '47';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -413,7 +413,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 6.2552e-04;
         end
-        [iv,ix_] = s2xlib('ii','48',ix_);
+        [iv,ix_] = s2mpjlib('ii','48',ix_);
         pb.xnames{iv} = '48';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -421,7 +421,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 3.3782e-02;
         end
-        [iv,ix_] = s2xlib('ii','49',ix_);
+        [iv,ix_] = s2mpjlib('ii','49',ix_);
         pb.xnames{iv} = '49';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -429,7 +429,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -4.8584e-03;
         end
-        [iv,ix_] = s2xlib('ii','50',ix_);
+        [iv,ix_] = s2mpjlib('ii','50',ix_);
         pb.xnames{iv} = '50';
         ig = ig_('LINGROUP');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -441,8 +441,6 @@ switch(action)
         pb.n   = numEntries(ix_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -0.1*ones(pb.n,1);
         pb.xupper = 0.1*ones(pb.n,1);
@@ -511,10 +509,10 @@ switch(action)
         pb.xupper(ix_('49')) = 2.4305e-02;
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eOFFDIAG',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eOFFDIAG',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'eDIAG',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eDIAG',iet_);
         elftv{it}{1} = 'X';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -522,2125 +520,2125 @@ switch(action)
         ielftype    = [];
         pbm.elvar   = {};
         ename = 'D   1   1';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  11  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  12';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '12';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  12';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '12';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  12  12';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '12';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  20  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  21';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '21';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  21';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '21';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  21  21';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '21';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  29  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  36  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  37';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '37';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  36  37';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '37';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  37  37';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '37';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  41  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  42';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '42';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  42';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '42';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  42  42';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '42';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   1  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '1';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  49  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   2   2';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  13';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '13';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  13';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '13';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  13  13';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '13';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  22';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '22';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  22';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '22';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  22  22';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '22';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  30';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '30';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  29  30';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '30';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  30  30';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '30';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  38';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '38';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  36  38';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '38';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  38  38';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '38';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   2  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '2';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   3   3';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  23';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '23';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  23';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '23';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  23  23';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '23';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  43';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '43';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  43';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '43';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  43  43';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '43';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   3  50';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '3';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '50';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  49  50';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '50';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  50  50';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '50';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   4   4';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  14';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '14';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  14';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '14';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  14  14';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '14';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  31';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '31';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  29  31';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '31';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  31  31';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '31';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  44';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '44';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  44';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '44';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  44  44';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '44';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   4  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '4';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   5   5';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  15';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '15';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  15';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '15';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  15  15';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '15';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  24';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '24';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  24';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '24';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  24  24';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '24';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  32';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '32';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  29  32';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '32';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  32  32';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '32';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  39';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '39';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  36  39';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '39';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  39  39';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '39';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  45';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '45';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  45';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '45';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  45  45';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '45';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   5  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '5';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   6   6';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  16';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '16';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  16';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '16';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  16  16';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '16';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  25';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '25';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  25';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '25';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  25  25';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '25';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  33';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '33';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  29  33';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '33';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  33  33';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '33';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  46';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '46';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  46';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '46';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  46  46';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '46';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   6  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '6';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   7   7';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  17';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '17';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  17';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '17';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  17  17';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '17';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  34';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '34';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  29  34';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '34';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  34  34';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '34';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   7  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '7';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   8   8';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  40';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '40';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  36  40';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '40';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  40  40';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '40';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   8  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '8';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D   9   9';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  26';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '26';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  26';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '26';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  26  26';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '26';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  35';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '35';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  29  35';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '35';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  35  35';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '35';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O   9  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '9';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  10  10';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  11';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  20';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  29';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '29';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  36';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '36';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  41';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  47';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '47';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  47';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '47';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  47  47';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '47';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  10  49';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '10';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '49';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  18';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '18';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  18  18';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '18';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  27';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '27';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  27  27';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '27';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  11  19';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '11';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '19';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  19  19';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '19';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  20  28';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '20';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '28';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  28  28';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '28';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'O  41  48';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         if(newelt)
             pbm.elftype{ie} = 'eOFFDIAG';
             ielftype(ie) = iet_('eOFFDIAG');
         end
         vname = '41';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         vname = '48';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         ename = 'D  48  48';
-        [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+        [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
         pbm.elftype{ie} = 'eDIAG';
         ielftype(ie) = iet_('eDIAG');
         vname = '48';
-        [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
+        [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,-0.1,0.1,[]);
         posev = find(strcmp('X',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -3164,6 +3162,7 @@ switch(action)
         pbm.grelt{ig}(posel) = ie_('D  48  48');
         pbm.grelw{ig}(posel) = 1.0000e+02;
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+% LO BQPGASIM             -5.519814D-5
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
@@ -3171,6 +3170,10 @@ switch(action)
         pb.x0          = zeros(pb.n,1);
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -3212,7 +3215,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

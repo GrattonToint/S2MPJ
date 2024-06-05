@@ -17,6 +17,10 @@ function varargout = CURLY30(action,varargin)
 % 
 %    Number of variables
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   100            $-PARAMETER
+% IE N                   1000           $-PARAMETER     original value
+% IE N                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,10 +44,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   100            $-PARAMETER
-% IE N                   1000           $-PARAMETER     original value
-% IE N                   10000          $-PARAMETER
         v_('K') = 30;
         v_('1') = 1;
         v_('N-K') = v_('N')-v_('K');
@@ -53,7 +53,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -61,7 +61,7 @@ switch(action)
         for I=v_('1'):v_('N-K')
             v_('I+K') = I+v_('K');
             for J=I:v_('I+K')
-                [ig,ig_] = s2xlib('ii',['Q',int2str(I)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['Q',int2str(I)],ig_);
                 gtype{ig} = '<>';
                 iv = ix_(['X',int2str(J)]);
                 if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -73,7 +73,7 @@ switch(action)
         end
         for I=v_('N-K+1'):v_('N')
             for J=I:v_('N')
-                [ig,ig_] = s2xlib('ii',['Q',int2str(I)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['Q',int2str(I)],ig_);
                 gtype{ig} = '<>';
                 iv = ix_(['X',int2str(J)]);
                 if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -88,8 +88,6 @@ switch(action)
         ngrp   = numEntries(ig_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -103,7 +101,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gP4',igt_);
+        [it,igt_] = s2mpjlib('ii','gP4',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -111,12 +109,18 @@ switch(action)
             pbm.grftype{ig} = 'gP4';
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% ZL SOLTN               -1.003163D+5   $ (n=1000)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'OUR2-AN-V-0';
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -142,7 +146,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

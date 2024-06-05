@@ -25,6 +25,8 @@ function varargout = SCOND1LS(action,varargin)
 %    LN = Index of the last negative discretization point
 %         (the interest is in the negative part)
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER     original value
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,7 +55,6 @@ switch(action)
         else
             v_('LN') = varargin{2};
         end
-%       Alternative values for the SIF file parameters:
 % IE N                   50             $-PARAMETER
 % IE LN                  45             $-PARAMETER
 % IE N                   100            $-PARAMETER
@@ -63,7 +64,11 @@ switch(action)
 % IE N                   1000           $-PARAMETER
 % IE LN                  900            $-PARAMETER
 % IE N                   5000           $-PARAMETER
-% IE LN                  4500           $-PARAMETER
+        if(nargin<3)
+            v_('LN') = 4500;  %  SIF file default value
+        else
+            v_('LN') = varargin{2};
+        end
         if(nargin<4)
             v_('LAMBDA') = 1.0;  %  SIF file default value
         else
@@ -101,7 +106,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('N+1')
-            [iv,ix_] = s2xlib('ii',['U',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['U',int2str(I)],ix_);
             pb.xnames{iv} = ['U',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -109,7 +114,7 @@ switch(action)
         for I=v_('1'):v_('N')
             v_('I+1') = 1+I;
             v_('I-1') = -1+I;
-            [ig,ig_] = s2xlib('ii',['G',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['G',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['U',int2str(round(v_('I-1')))]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -143,8 +148,6 @@ switch(action)
         for I=v_('LN+1'):v_('N')
             pbm.gconst(ig_(['G',int2str(I)])) = v_('-LH2CB');
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = v_('UUP')*ones(pb.n,1);
         pb.xlower = v_('ULW')*ones(pb.n,1);
@@ -158,7 +161,7 @@ switch(action)
         pb.x0(ix_(['U',int2str(round(v_('N+1')))]),1) = v_('LUB');
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eWE1',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eWE1',iet_);
         elftv{it}{1} = 'X';
         elftp{it}{1} = 'LAC';
         elftp{it}{2} = 'LAB';
@@ -171,11 +174,11 @@ switch(action)
         pbm.elpar   = {};
         for I=v_('1'):v_('N')
             ename = ['EA',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eWE1';
             ielftype(ie) = iet_('eWE1');
             vname = ['U',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,v_('ULW'),v_('UUP'),0.0);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,v_('ULW'),v_('UUP'),0.0);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             [~,posep] = ismember('LAC',elftp{ielftype(ie)});
@@ -185,11 +188,11 @@ switch(action)
             [~,posep] = ismember('LU',elftp{ielftype(ie)});
             pbm.elpar{ie}(posep) = v_('LUA');
             ename = ['EB',int2str(I)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eWE1';
             ielftype(ie) = iet_('eWE1');
             vname = ['U',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,v_('ULW'),v_('UUP'),0.0);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,v_('ULW'),v_('UUP'),0.0);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             [~,posep] = ismember('LAC',elftp{ielftype(ie)});
@@ -201,7 +204,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gL2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -264,7 +267,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

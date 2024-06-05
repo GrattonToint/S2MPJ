@@ -21,6 +21,10 @@ function varargout = YAO(action,varargin)
 % 
 %   Number of discretization points
 % 
+%       Alternative values for the SIF file parameters:
+% IE P                   20             $-PARAMETER
+% IE P                   200            $-PARAMETER
+% IE P                   2000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,9 +48,7 @@ switch(action)
         else
             v_('P') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE P                   200            $-PARAMETER
-% IE P                   2000           $-PARAMETER
+% IE k                   2              $-PARAMETER
         if(nargin<3)
             v_('k') = 2;  %  SIF file default value
         else
@@ -63,13 +65,13 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for i=v_('1'):v_('P+k')
-            [iv,ix_] = s2xlib('ii',['X',int2str(i)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(i)],ix_);
             pb.xnames{iv} = ['X',int2str(i)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for i=v_('1'):v_('P+k')
-            [ig,ig_] = s2xlib('ii',['S',int2str(i)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['S',int2str(i)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(i)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -81,7 +83,7 @@ switch(action)
         end
         for i=v_('1'):v_('P')
             v_('i+1') = 1+i;
-            [ig,ig_] = s2xlib('ii',['B',int2str(i)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['B',int2str(i)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['B',int2str(i)];
             iv = ix_(['X',int2str(i)]);
@@ -126,8 +128,6 @@ switch(action)
             v_('SINI') = sin(v_('iOVP'));
             pbm.gconst(ig_(['S',int2str(i)])) = v_('SINI');
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -138,7 +138,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gSQ',igt_);
+        [it,igt_] = s2mpjlib('ii','gSQ',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -147,6 +147,10 @@ switch(action)
             pbm.grftype{ig} = 'gSQ';
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% XL SOLUTION             2.39883D+00   $ (p=20)
+% XL SOLUTION             2.01517D+01   $ (p=200)
+% XL SOLUTION             1.97705D+02   $ (p=2000)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
@@ -157,6 +161,10 @@ switch(action)
         pb.x0          = zeros(pb.n,1);
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -181,7 +189,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

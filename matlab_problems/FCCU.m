@@ -196,47 +196,47 @@ switch(action)
         v_('M19') = 6.5;
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','Feed',ix_);
+        [iv,ix_] = s2mpjlib('ii','Feed',ix_);
         pb.xnames{iv} = 'Feed';
-        [iv,ix_] = s2xlib('ii','Effluent',ix_);
+        [iv,ix_] = s2mpjlib('ii','Effluent',ix_);
         pb.xnames{iv} = 'Effluent';
-        [iv,ix_] = s2xlib('ii','MFuohd',ix_);
+        [iv,ix_] = s2mpjlib('ii','MFuohd',ix_);
         pb.xnames{iv} = 'MFuohd';
-        [iv,ix_] = s2xlib('ii','HCN',ix_);
+        [iv,ix_] = s2mpjlib('ii','HCN',ix_);
         pb.xnames{iv} = 'HCN';
-        [iv,ix_] = s2xlib('ii','LCO',ix_);
+        [iv,ix_] = s2mpjlib('ii','LCO',ix_);
         pb.xnames{iv} = 'LCO';
-        [iv,ix_] = s2xlib('ii','HCO',ix_);
+        [iv,ix_] = s2mpjlib('ii','HCO',ix_);
         pb.xnames{iv} = 'HCO';
-        [iv,ix_] = s2xlib('ii','MFubtms',ix_);
+        [iv,ix_] = s2mpjlib('ii','MFubtms',ix_);
         pb.xnames{iv} = 'MFubtms';
-        [iv,ix_] = s2xlib('ii','Decant',ix_);
+        [iv,ix_] = s2mpjlib('ii','Decant',ix_);
         pb.xnames{iv} = 'Decant';
-        [iv,ix_] = s2xlib('ii','Decurecy',ix_);
+        [iv,ix_] = s2mpjlib('ii','Decurecy',ix_);
         pb.xnames{iv} = 'Decurecy';
-        [iv,ix_] = s2xlib('ii','Offugas',ix_);
+        [iv,ix_] = s2mpjlib('ii','Offugas',ix_);
         pb.xnames{iv} = 'Offugas';
-        [iv,ix_] = s2xlib('ii','DC4ufeed',ix_);
+        [iv,ix_] = s2mpjlib('ii','DC4ufeed',ix_);
         pb.xnames{iv} = 'DC4ufeed';
-        [iv,ix_] = s2xlib('ii','DC3ufeed',ix_);
+        [iv,ix_] = s2mpjlib('ii','DC3ufeed',ix_);
         pb.xnames{iv} = 'DC3ufeed';
-        [iv,ix_] = s2xlib('ii','DC4ubtms',ix_);
+        [iv,ix_] = s2mpjlib('ii','DC4ubtms',ix_);
         pb.xnames{iv} = 'DC4ubtms';
-        [iv,ix_] = s2xlib('ii','Leanuoil',ix_);
+        [iv,ix_] = s2mpjlib('ii','Leanuoil',ix_);
         pb.xnames{iv} = 'Leanuoil';
-        [iv,ix_] = s2xlib('ii','Propane',ix_);
+        [iv,ix_] = s2mpjlib('ii','Propane',ix_);
         pb.xnames{iv} = 'Propane';
-        [iv,ix_] = s2xlib('ii','Butane',ix_);
+        [iv,ix_] = s2mpjlib('ii','Butane',ix_);
         pb.xnames{iv} = 'Butane';
-        [iv,ix_] = s2xlib('ii','C8splufd',ix_);
+        [iv,ix_] = s2mpjlib('ii','C8splufd',ix_);
         pb.xnames{iv} = 'C8splufd';
-        [iv,ix_] = s2xlib('ii','LCN',ix_);
+        [iv,ix_] = s2mpjlib('ii','LCN',ix_);
         pb.xnames{iv} = 'LCN';
-        [iv,ix_] = s2xlib('ii','MCN',ix_);
+        [iv,ix_] = s2mpjlib('ii','MCN',ix_);
         pb.xnames{iv} = 'MCN';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','F1',ig_);
+        [ig,ig_] = s2mpjlib('ii','F1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F1';
         iv = ix_('Feed');
@@ -257,7 +257,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F2',ig_);
+        [ig,ig_] = s2mpjlib('ii','F2',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F2';
         iv = ix_('Effluent');
@@ -296,7 +296,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F3',ig_);
+        [ig,ig_] = s2mpjlib('ii','F3',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F3';
         iv = ix_('MFubtms');
@@ -317,7 +317,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F4',ig_);
+        [ig,ig_] = s2mpjlib('ii','F4',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F4';
         iv = ix_('MFuohd');
@@ -344,7 +344,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F5',ig_);
+        [ig,ig_] = s2mpjlib('ii','F5',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F5';
         iv = ix_('DC4ufeed');
@@ -365,7 +365,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F6',ig_);
+        [ig,ig_] = s2mpjlib('ii','F6',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F6';
         iv = ix_('DC4ubtms');
@@ -386,7 +386,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F7',ig_);
+        [ig,ig_] = s2mpjlib('ii','F7',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F7';
         iv = ix_('DC3ufeed');
@@ -407,7 +407,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','F8',ig_);
+        [ig,ig_] = s2mpjlib('ii','F8',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'F8';
         iv = ix_('C8splufd');
@@ -428,7 +428,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','Obj1',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj1',ig_);
         gtype{ig} = '<>';
         iv = ix_('Feed');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -437,7 +437,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W1');
-        [ig,ig_] = s2xlib('ii','Obj2',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj2',ig_);
         gtype{ig} = '<>';
         iv = ix_('Effluent');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -446,7 +446,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W2');
-        [ig,ig_] = s2xlib('ii','Obj3',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj3',ig_);
         gtype{ig} = '<>';
         iv = ix_('MFuohd');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -455,7 +455,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W3');
-        [ig,ig_] = s2xlib('ii','Obj4',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj4',ig_);
         gtype{ig} = '<>';
         iv = ix_('HCN');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -464,7 +464,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W4');
-        [ig,ig_] = s2xlib('ii','Obj5',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj5',ig_);
         gtype{ig} = '<>';
         iv = ix_('LCO');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -473,7 +473,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W5');
-        [ig,ig_] = s2xlib('ii','Obj6',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj6',ig_);
         gtype{ig} = '<>';
         iv = ix_('HCO');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -482,7 +482,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W6');
-        [ig,ig_] = s2xlib('ii','Obj7',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj7',ig_);
         gtype{ig} = '<>';
         iv = ix_('MFubtms');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -491,7 +491,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W7');
-        [ig,ig_] = s2xlib('ii','Obj8',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj8',ig_);
         gtype{ig} = '<>';
         iv = ix_('Decant');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -500,7 +500,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W8');
-        [ig,ig_] = s2xlib('ii','Obj9',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj9',ig_);
         gtype{ig} = '<>';
         iv = ix_('Decurecy');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -509,7 +509,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W9');
-        [ig,ig_] = s2xlib('ii','Obj10',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj10',ig_);
         gtype{ig} = '<>';
         iv = ix_('Offugas');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -518,7 +518,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W10');
-        [ig,ig_] = s2xlib('ii','Obj11',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj11',ig_);
         gtype{ig} = '<>';
         iv = ix_('DC4ufeed');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -527,7 +527,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W11');
-        [ig,ig_] = s2xlib('ii','Obj12',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj12',ig_);
         gtype{ig} = '<>';
         iv = ix_('DC3ufeed');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -536,7 +536,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W12');
-        [ig,ig_] = s2xlib('ii','Obj13',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj13',ig_);
         gtype{ig} = '<>';
         iv = ix_('DC4ubtms');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -545,7 +545,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W13');
-        [ig,ig_] = s2xlib('ii','Obj14',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj14',ig_);
         gtype{ig} = '<>';
         iv = ix_('Leanuoil');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -554,7 +554,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W14');
-        [ig,ig_] = s2xlib('ii','Obj15',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj15',ig_);
         gtype{ig} = '<>';
         iv = ix_('Propane');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -563,7 +563,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W15');
-        [ig,ig_] = s2xlib('ii','Obj16',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj16',ig_);
         gtype{ig} = '<>';
         iv = ix_('Butane');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -572,7 +572,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W16');
-        [ig,ig_] = s2xlib('ii','Obj17',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj17',ig_);
         gtype{ig} = '<>';
         iv = ix_('C8splufd');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -581,7 +581,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W17');
-        [ig,ig_] = s2xlib('ii','Obj18',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj18',ig_);
         gtype{ig} = '<>';
         iv = ix_('LCN');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -590,7 +590,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = v_('W18');
-        [ig,ig_] = s2xlib('ii','Obj19',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj19',ig_);
         gtype{ig} = '<>';
         iv = ix_('MCN');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -658,7 +658,7 @@ switch(action)
         pb.x0(ix_('MCN'),1) = 1.0;
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gSQUARE',igt_);
+        [it,igt_] = s2mpjlib('ii','gSQUARE',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -735,7 +735,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

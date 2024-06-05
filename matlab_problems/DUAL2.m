@@ -36,15 +36,15 @@ switch(action)
         v_('N') = 96;
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','obj',ig_);
+        [ig,ig_] = s2mpjlib('ii','obj',ig_);
         gtype{ig} = '<>';
-        [ig,ig_] = s2xlib('ii','c1',ig_);
+        [ig,ig_] = s2mpjlib('ii','c1',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'c1';
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         ngrp   = numEntries(ig_);
-        [iv,ix_] = s2xlib('ii','x1',ix_);
+        [iv,ix_] = s2mpjlib('ii','x1',ix_);
         pb.xnames{iv} = 'x1';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -58,7 +58,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x2',ix_);
+        [iv,ix_] = s2mpjlib('ii','x2',ix_);
         pb.xnames{iv} = 'x2';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -72,7 +72,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x3',ix_);
+        [iv,ix_] = s2mpjlib('ii','x3',ix_);
         pb.xnames{iv} = 'x3';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -86,7 +86,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x4',ix_);
+        [iv,ix_] = s2mpjlib('ii','x4',ix_);
         pb.xnames{iv} = 'x4';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -100,7 +100,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x5',ix_);
+        [iv,ix_] = s2mpjlib('ii','x5',ix_);
         pb.xnames{iv} = 'x5';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -114,7 +114,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x6',ix_);
+        [iv,ix_] = s2mpjlib('ii','x6',ix_);
         pb.xnames{iv} = 'x6';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -128,7 +128,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x7',ix_);
+        [iv,ix_] = s2mpjlib('ii','x7',ix_);
         pb.xnames{iv} = 'x7';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -142,7 +142,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x8',ix_);
+        [iv,ix_] = s2mpjlib('ii','x8',ix_);
         pb.xnames{iv} = 'x8';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -156,7 +156,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x9',ix_);
+        [iv,ix_] = s2mpjlib('ii','x9',ix_);
         pb.xnames{iv} = 'x9';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -170,7 +170,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x10',ix_);
+        [iv,ix_] = s2mpjlib('ii','x10',ix_);
         pb.xnames{iv} = 'x10';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -184,7 +184,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x11',ix_);
+        [iv,ix_] = s2mpjlib('ii','x11',ix_);
         pb.xnames{iv} = 'x11';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -198,7 +198,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x12',ix_);
+        [iv,ix_] = s2mpjlib('ii','x12',ix_);
         pb.xnames{iv} = 'x12';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -212,7 +212,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x13',ix_);
+        [iv,ix_] = s2mpjlib('ii','x13',ix_);
         pb.xnames{iv} = 'x13';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -226,7 +226,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x14',ix_);
+        [iv,ix_] = s2mpjlib('ii','x14',ix_);
         pb.xnames{iv} = 'x14';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -240,7 +240,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x15',ix_);
+        [iv,ix_] = s2mpjlib('ii','x15',ix_);
         pb.xnames{iv} = 'x15';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -254,7 +254,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x16',ix_);
+        [iv,ix_] = s2mpjlib('ii','x16',ix_);
         pb.xnames{iv} = 'x16';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -268,7 +268,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x17',ix_);
+        [iv,ix_] = s2mpjlib('ii','x17',ix_);
         pb.xnames{iv} = 'x17';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -282,7 +282,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x18',ix_);
+        [iv,ix_] = s2mpjlib('ii','x18',ix_);
         pb.xnames{iv} = 'x18';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -296,7 +296,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x19',ix_);
+        [iv,ix_] = s2mpjlib('ii','x19',ix_);
         pb.xnames{iv} = 'x19';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -310,7 +310,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x20',ix_);
+        [iv,ix_] = s2mpjlib('ii','x20',ix_);
         pb.xnames{iv} = 'x20';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -324,7 +324,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x21',ix_);
+        [iv,ix_] = s2mpjlib('ii','x21',ix_);
         pb.xnames{iv} = 'x21';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -338,7 +338,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x22',ix_);
+        [iv,ix_] = s2mpjlib('ii','x22',ix_);
         pb.xnames{iv} = 'x22';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -352,7 +352,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x23',ix_);
+        [iv,ix_] = s2mpjlib('ii','x23',ix_);
         pb.xnames{iv} = 'x23';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -366,7 +366,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x24',ix_);
+        [iv,ix_] = s2mpjlib('ii','x24',ix_);
         pb.xnames{iv} = 'x24';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -380,7 +380,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x25',ix_);
+        [iv,ix_] = s2mpjlib('ii','x25',ix_);
         pb.xnames{iv} = 'x25';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -394,7 +394,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x26',ix_);
+        [iv,ix_] = s2mpjlib('ii','x26',ix_);
         pb.xnames{iv} = 'x26';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -408,7 +408,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x27',ix_);
+        [iv,ix_] = s2mpjlib('ii','x27',ix_);
         pb.xnames{iv} = 'x27';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -422,7 +422,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x28',ix_);
+        [iv,ix_] = s2mpjlib('ii','x28',ix_);
         pb.xnames{iv} = 'x28';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -436,7 +436,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x29',ix_);
+        [iv,ix_] = s2mpjlib('ii','x29',ix_);
         pb.xnames{iv} = 'x29';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -450,7 +450,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x30',ix_);
+        [iv,ix_] = s2mpjlib('ii','x30',ix_);
         pb.xnames{iv} = 'x30';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -464,7 +464,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x31',ix_);
+        [iv,ix_] = s2mpjlib('ii','x31',ix_);
         pb.xnames{iv} = 'x31';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -478,7 +478,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x32',ix_);
+        [iv,ix_] = s2mpjlib('ii','x32',ix_);
         pb.xnames{iv} = 'x32';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -492,7 +492,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x33',ix_);
+        [iv,ix_] = s2mpjlib('ii','x33',ix_);
         pb.xnames{iv} = 'x33';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -506,7 +506,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x34',ix_);
+        [iv,ix_] = s2mpjlib('ii','x34',ix_);
         pb.xnames{iv} = 'x34';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -520,7 +520,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x35',ix_);
+        [iv,ix_] = s2mpjlib('ii','x35',ix_);
         pb.xnames{iv} = 'x35';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -534,7 +534,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x36',ix_);
+        [iv,ix_] = s2mpjlib('ii','x36',ix_);
         pb.xnames{iv} = 'x36';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -548,7 +548,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x37',ix_);
+        [iv,ix_] = s2mpjlib('ii','x37',ix_);
         pb.xnames{iv} = 'x37';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -562,7 +562,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x38',ix_);
+        [iv,ix_] = s2mpjlib('ii','x38',ix_);
         pb.xnames{iv} = 'x38';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -576,7 +576,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x39',ix_);
+        [iv,ix_] = s2mpjlib('ii','x39',ix_);
         pb.xnames{iv} = 'x39';
         ig = ig_('c1');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -584,7 +584,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x40',ix_);
+        [iv,ix_] = s2mpjlib('ii','x40',ix_);
         pb.xnames{iv} = 'x40';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -598,7 +598,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x41',ix_);
+        [iv,ix_] = s2mpjlib('ii','x41',ix_);
         pb.xnames{iv} = 'x41';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -612,7 +612,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x42',ix_);
+        [iv,ix_] = s2mpjlib('ii','x42',ix_);
         pb.xnames{iv} = 'x42';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -626,7 +626,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x43',ix_);
+        [iv,ix_] = s2mpjlib('ii','x43',ix_);
         pb.xnames{iv} = 'x43';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -640,7 +640,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x44',ix_);
+        [iv,ix_] = s2mpjlib('ii','x44',ix_);
         pb.xnames{iv} = 'x44';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -654,7 +654,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x45',ix_);
+        [iv,ix_] = s2mpjlib('ii','x45',ix_);
         pb.xnames{iv} = 'x45';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -668,7 +668,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x46',ix_);
+        [iv,ix_] = s2mpjlib('ii','x46',ix_);
         pb.xnames{iv} = 'x46';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -682,7 +682,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x47',ix_);
+        [iv,ix_] = s2mpjlib('ii','x47',ix_);
         pb.xnames{iv} = 'x47';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -696,7 +696,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x48',ix_);
+        [iv,ix_] = s2mpjlib('ii','x48',ix_);
         pb.xnames{iv} = 'x48';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -710,7 +710,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x49',ix_);
+        [iv,ix_] = s2mpjlib('ii','x49',ix_);
         pb.xnames{iv} = 'x49';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -724,7 +724,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x50',ix_);
+        [iv,ix_] = s2mpjlib('ii','x50',ix_);
         pb.xnames{iv} = 'x50';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -738,7 +738,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x51',ix_);
+        [iv,ix_] = s2mpjlib('ii','x51',ix_);
         pb.xnames{iv} = 'x51';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -752,7 +752,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x52',ix_);
+        [iv,ix_] = s2mpjlib('ii','x52',ix_);
         pb.xnames{iv} = 'x52';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -766,7 +766,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x53',ix_);
+        [iv,ix_] = s2mpjlib('ii','x53',ix_);
         pb.xnames{iv} = 'x53';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -780,7 +780,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x54',ix_);
+        [iv,ix_] = s2mpjlib('ii','x54',ix_);
         pb.xnames{iv} = 'x54';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -794,7 +794,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x55',ix_);
+        [iv,ix_] = s2mpjlib('ii','x55',ix_);
         pb.xnames{iv} = 'x55';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -808,7 +808,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x56',ix_);
+        [iv,ix_] = s2mpjlib('ii','x56',ix_);
         pb.xnames{iv} = 'x56';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -822,7 +822,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x57',ix_);
+        [iv,ix_] = s2mpjlib('ii','x57',ix_);
         pb.xnames{iv} = 'x57';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -836,7 +836,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x58',ix_);
+        [iv,ix_] = s2mpjlib('ii','x58',ix_);
         pb.xnames{iv} = 'x58';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -850,7 +850,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x59',ix_);
+        [iv,ix_] = s2mpjlib('ii','x59',ix_);
         pb.xnames{iv} = 'x59';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -864,7 +864,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x60',ix_);
+        [iv,ix_] = s2mpjlib('ii','x60',ix_);
         pb.xnames{iv} = 'x60';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -878,7 +878,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x61',ix_);
+        [iv,ix_] = s2mpjlib('ii','x61',ix_);
         pb.xnames{iv} = 'x61';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -892,7 +892,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x62',ix_);
+        [iv,ix_] = s2mpjlib('ii','x62',ix_);
         pb.xnames{iv} = 'x62';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -906,7 +906,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x63',ix_);
+        [iv,ix_] = s2mpjlib('ii','x63',ix_);
         pb.xnames{iv} = 'x63';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -920,7 +920,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x64',ix_);
+        [iv,ix_] = s2mpjlib('ii','x64',ix_);
         pb.xnames{iv} = 'x64';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -934,7 +934,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x65',ix_);
+        [iv,ix_] = s2mpjlib('ii','x65',ix_);
         pb.xnames{iv} = 'x65';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -948,7 +948,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x66',ix_);
+        [iv,ix_] = s2mpjlib('ii','x66',ix_);
         pb.xnames{iv} = 'x66';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -962,7 +962,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x67',ix_);
+        [iv,ix_] = s2mpjlib('ii','x67',ix_);
         pb.xnames{iv} = 'x67';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -976,7 +976,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x68',ix_);
+        [iv,ix_] = s2mpjlib('ii','x68',ix_);
         pb.xnames{iv} = 'x68';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -990,7 +990,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x69',ix_);
+        [iv,ix_] = s2mpjlib('ii','x69',ix_);
         pb.xnames{iv} = 'x69';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1004,7 +1004,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x70',ix_);
+        [iv,ix_] = s2mpjlib('ii','x70',ix_);
         pb.xnames{iv} = 'x70';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1018,7 +1018,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x71',ix_);
+        [iv,ix_] = s2mpjlib('ii','x71',ix_);
         pb.xnames{iv} = 'x71';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1032,7 +1032,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x72',ix_);
+        [iv,ix_] = s2mpjlib('ii','x72',ix_);
         pb.xnames{iv} = 'x72';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1046,7 +1046,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x73',ix_);
+        [iv,ix_] = s2mpjlib('ii','x73',ix_);
         pb.xnames{iv} = 'x73';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1060,7 +1060,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x74',ix_);
+        [iv,ix_] = s2mpjlib('ii','x74',ix_);
         pb.xnames{iv} = 'x74';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1074,7 +1074,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x75',ix_);
+        [iv,ix_] = s2mpjlib('ii','x75',ix_);
         pb.xnames{iv} = 'x75';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1088,7 +1088,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x76',ix_);
+        [iv,ix_] = s2mpjlib('ii','x76',ix_);
         pb.xnames{iv} = 'x76';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1102,7 +1102,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x77',ix_);
+        [iv,ix_] = s2mpjlib('ii','x77',ix_);
         pb.xnames{iv} = 'x77';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1116,7 +1116,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x78',ix_);
+        [iv,ix_] = s2mpjlib('ii','x78',ix_);
         pb.xnames{iv} = 'x78';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1130,7 +1130,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x79',ix_);
+        [iv,ix_] = s2mpjlib('ii','x79',ix_);
         pb.xnames{iv} = 'x79';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1144,7 +1144,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x80',ix_);
+        [iv,ix_] = s2mpjlib('ii','x80',ix_);
         pb.xnames{iv} = 'x80';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1158,7 +1158,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x81',ix_);
+        [iv,ix_] = s2mpjlib('ii','x81',ix_);
         pb.xnames{iv} = 'x81';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1172,7 +1172,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x82',ix_);
+        [iv,ix_] = s2mpjlib('ii','x82',ix_);
         pb.xnames{iv} = 'x82';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1186,7 +1186,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x83',ix_);
+        [iv,ix_] = s2mpjlib('ii','x83',ix_);
         pb.xnames{iv} = 'x83';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1200,7 +1200,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x84',ix_);
+        [iv,ix_] = s2mpjlib('ii','x84',ix_);
         pb.xnames{iv} = 'x84';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1214,7 +1214,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x85',ix_);
+        [iv,ix_] = s2mpjlib('ii','x85',ix_);
         pb.xnames{iv} = 'x85';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1228,7 +1228,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x86',ix_);
+        [iv,ix_] = s2mpjlib('ii','x86',ix_);
         pb.xnames{iv} = 'x86';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1242,7 +1242,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x87',ix_);
+        [iv,ix_] = s2mpjlib('ii','x87',ix_);
         pb.xnames{iv} = 'x87';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1256,7 +1256,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x88',ix_);
+        [iv,ix_] = s2mpjlib('ii','x88',ix_);
         pb.xnames{iv} = 'x88';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1270,7 +1270,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x89',ix_);
+        [iv,ix_] = s2mpjlib('ii','x89',ix_);
         pb.xnames{iv} = 'x89';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1284,7 +1284,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x90',ix_);
+        [iv,ix_] = s2mpjlib('ii','x90',ix_);
         pb.xnames{iv} = 'x90';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1298,7 +1298,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x91',ix_);
+        [iv,ix_] = s2mpjlib('ii','x91',ix_);
         pb.xnames{iv} = 'x91';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1312,7 +1312,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x92',ix_);
+        [iv,ix_] = s2mpjlib('ii','x92',ix_);
         pb.xnames{iv} = 'x92';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1326,7 +1326,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x93',ix_);
+        [iv,ix_] = s2mpjlib('ii','x93',ix_);
         pb.xnames{iv} = 'x93';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1340,7 +1340,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x94',ix_);
+        [iv,ix_] = s2mpjlib('ii','x94',ix_);
         pb.xnames{iv} = 'x94';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1354,7 +1354,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x95',ix_);
+        [iv,ix_] = s2mpjlib('ii','x95',ix_);
         pb.xnames{iv} = 'x95';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1368,7 +1368,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','x96',ix_);
+        [iv,ix_] = s2mpjlib('ii','x96',ix_);
         pb.xnames{iv} = 'x96';
         ig = ig_('obj');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1398,17 +1398,15 @@ switch(action)
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         pbm.gconst(ig_('c1')) = 1;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = 1*ones(pb.n,1);
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eOFFDIAG',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eOFFDIAG',iet_);
         elftv{it}{1} = 'X';
         elftv{it}{2} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'eDIAG',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eDIAG',iet_);
         elftv{it}{1} = 'X';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -1417,27 +1415,27 @@ switch(action)
         pbm.elvar   = {};
         for i=v_('1'):v_('N')
             ename = ['x',int2str(i),',',int2str(i)];
-            [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+            [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eDIAG';
             ielftype(ie) = iet_('eDIAG');
             vname = ['x',int2str(i)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],1,[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],1,[]);
             posev = find(strcmp('X',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             v_('i+1') = 1+i;
             for j=v_('i+1'):v_('N')
                 ename = ['x',int2str(i),',',int2str(j)];
-                [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+                [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
                 if(newelt)
                     pbm.elftype{ie} = 'eOFFDIAG';
                     ielftype(ie) = iet_('eOFFDIAG');
                 end
                 vname = ['x',int2str(i)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],1,[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],1,[]);
                 posev = find(strcmp('X',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['x',int2str(j)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],1,[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],1,[]);
                 posev = find(strcmp('Y',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
             end
@@ -19479,6 +19477,8 @@ switch(action)
         nlc = union(nlc,ig);
         pbm.grelw{ig}(posel) = 90.;
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% XL SOLUTION             3.37337D-02
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -19489,6 +19489,10 @@ switch(action)
         pb.x0          = zeros(pb.n,1);
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -19530,7 +19534,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

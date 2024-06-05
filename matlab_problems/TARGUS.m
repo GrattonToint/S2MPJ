@@ -41,201 +41,201 @@ switch(action)
         ig_ = configureDictionary('string','double');
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','R0001',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0001',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0001';
-        [ig,ig_] = s2xlib('ii','R0002',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0002',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0002';
-        [ig,ig_] = s2xlib('ii','R0003',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0003',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0003';
-        [ig,ig_] = s2xlib('ii','R0004',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0004',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0004';
-        [ig,ig_] = s2xlib('ii','R0005',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0005',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0005';
-        [ig,ig_] = s2xlib('ii','R0006',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0006',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0006';
-        [ig,ig_] = s2xlib('ii','R0007',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0007',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0007';
-        [ig,ig_] = s2xlib('ii','R0008',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0008',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0008';
-        [ig,ig_] = s2xlib('ii','R0009',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0009',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0009';
-        [ig,ig_] = s2xlib('ii','R0010',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0010',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0010';
-        [ig,ig_] = s2xlib('ii','R0011',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0011',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0011';
-        [ig,ig_] = s2xlib('ii','R0012',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0012',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0012';
-        [ig,ig_] = s2xlib('ii','R0013',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0013',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0013';
-        [ig,ig_] = s2xlib('ii','R0014',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0014',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0014';
-        [ig,ig_] = s2xlib('ii','R0015',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0015',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0015';
-        [ig,ig_] = s2xlib('ii','R0016',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0016',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0016';
-        [ig,ig_] = s2xlib('ii','R0017',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0017',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0017';
-        [ig,ig_] = s2xlib('ii','R0018',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0018',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0018';
-        [ig,ig_] = s2xlib('ii','R0019',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0019',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0019';
-        [ig,ig_] = s2xlib('ii','R0020',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0020',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0020';
-        [ig,ig_] = s2xlib('ii','R0021',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0021',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0021';
-        [ig,ig_] = s2xlib('ii','R0022',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0022',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0022';
-        [ig,ig_] = s2xlib('ii','R0023',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0023',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0023';
-        [ig,ig_] = s2xlib('ii','R0024',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0024',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0024';
-        [ig,ig_] = s2xlib('ii','R0025',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0025',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0025';
-        [ig,ig_] = s2xlib('ii','R0026',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0026',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0026';
-        [ig,ig_] = s2xlib('ii','R0027',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0027',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0027';
-        [ig,ig_] = s2xlib('ii','R0028',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0028',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0028';
-        [ig,ig_] = s2xlib('ii','R0029',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0029',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0029';
-        [ig,ig_] = s2xlib('ii','R0030',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0030',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0030';
-        [ig,ig_] = s2xlib('ii','R0031',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0031',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0031';
-        [ig,ig_] = s2xlib('ii','R0032',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0032',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0032';
-        [ig,ig_] = s2xlib('ii','R0033',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0033',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0033';
-        [ig,ig_] = s2xlib('ii','R0034',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0034',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0034';
-        [ig,ig_] = s2xlib('ii','R0035',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0035',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0035';
-        [ig,ig_] = s2xlib('ii','R0036',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0036',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0036';
-        [ig,ig_] = s2xlib('ii','R0037',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0037',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0037';
-        [ig,ig_] = s2xlib('ii','R0038',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0038',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0038';
-        [ig,ig_] = s2xlib('ii','R0039',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0039',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0039';
-        [ig,ig_] = s2xlib('ii','R0040',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0040',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0040';
-        [ig,ig_] = s2xlib('ii','R0041',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0041',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0041';
-        [ig,ig_] = s2xlib('ii','R0042',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0042',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0042';
-        [ig,ig_] = s2xlib('ii','R0043',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0043',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0043';
-        [ig,ig_] = s2xlib('ii','R0044',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0044',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0044';
-        [ig,ig_] = s2xlib('ii','R0045',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0045',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0045';
-        [ig,ig_] = s2xlib('ii','R0046',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0046',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0046';
-        [ig,ig_] = s2xlib('ii','R0047',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0047',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0047';
-        [ig,ig_] = s2xlib('ii','R0048',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0048',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0048';
-        [ig,ig_] = s2xlib('ii','R0049',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0049',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0049';
-        [ig,ig_] = s2xlib('ii','R0050',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0050',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0050';
-        [ig,ig_] = s2xlib('ii','R0051',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0051',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0051';
-        [ig,ig_] = s2xlib('ii','R0052',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0052',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0052';
-        [ig,ig_] = s2xlib('ii','R0053',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0053',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0053';
-        [ig,ig_] = s2xlib('ii','R0054',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0054',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0054';
-        [ig,ig_] = s2xlib('ii','R0055',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0055',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0055';
-        [ig,ig_] = s2xlib('ii','R0056',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0056',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0056';
-        [ig,ig_] = s2xlib('ii','R0057',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0057',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0057';
-        [ig,ig_] = s2xlib('ii','R0058',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0058',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0058';
-        [ig,ig_] = s2xlib('ii','R0059',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0059',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0059';
-        [ig,ig_] = s2xlib('ii','R0060',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0060',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0060';
-        [ig,ig_] = s2xlib('ii','R0061',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0061',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0061';
-        [ig,ig_] = s2xlib('ii','R0062',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0062',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0062';
-        [ig,ig_] = s2xlib('ii','R0063',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0063',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'R0063';
-        [ig,ig_] = s2xlib('ii','R0064',ig_);
+        [ig,ig_] = s2mpjlib('ii','R0064',ig_);
         gtype{ig} = '<>';
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         ngrp   = numEntries(ig_);
-        [iv,ix_] = s2xlib('ii','C0001',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0001',ix_);
         pb.xnames{iv} = 'C0001';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -243,7 +243,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0001',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0001',ix_);
         pb.xnames{iv} = 'C0001';
         ig = ig_('R0019');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -251,7 +251,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0002',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0002',ix_);
         pb.xnames{iv} = 'C0002';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -259,7 +259,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0002',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0002',ix_);
         pb.xnames{iv} = 'C0002';
         ig = ig_('R0019');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -267,7 +267,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0002',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0002',ix_);
         pb.xnames{iv} = 'C0002';
         ig = ig_('R0020');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -275,7 +275,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0003',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0003',ix_);
         pb.xnames{iv} = 'C0003';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -283,7 +283,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0003',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0003',ix_);
         pb.xnames{iv} = 'C0003';
         ig = ig_('R0020');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -291,7 +291,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0004',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0004',ix_);
         pb.xnames{iv} = 'C0004';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -299,7 +299,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0004',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0004',ix_);
         pb.xnames{iv} = 'C0004';
         ig = ig_('R0020');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -307,7 +307,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0005',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0005',ix_);
         pb.xnames{iv} = 'C0005';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -315,7 +315,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0005',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0005',ix_);
         pb.xnames{iv} = 'C0005';
         ig = ig_('R0020');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -323,7 +323,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0006',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0006',ix_);
         pb.xnames{iv} = 'C0006';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -331,7 +331,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0006',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0006',ix_);
         pb.xnames{iv} = 'C0006';
         ig = ig_('R0019');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -339,7 +339,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0006',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0006',ix_);
         pb.xnames{iv} = 'C0006';
         ig = ig_('R0021');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -347,7 +347,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0007',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0007',ix_);
         pb.xnames{iv} = 'C0007';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -355,7 +355,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0007',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0007',ix_);
         pb.xnames{iv} = 'C0007';
         ig = ig_('R0021');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -363,7 +363,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0008',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0008',ix_);
         pb.xnames{iv} = 'C0008';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -371,7 +371,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0008',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0008',ix_);
         pb.xnames{iv} = 'C0008';
         ig = ig_('R0021');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -379,7 +379,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0009',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0009',ix_);
         pb.xnames{iv} = 'C0009';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -387,7 +387,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0009',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0009',ix_);
         pb.xnames{iv} = 'C0009';
         ig = ig_('R0021');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -395,7 +395,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0010',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0010',ix_);
         pb.xnames{iv} = 'C0010';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -403,7 +403,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0010',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0010',ix_);
         pb.xnames{iv} = 'C0010';
         ig = ig_('R0021');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -411,7 +411,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0011',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0011',ix_);
         pb.xnames{iv} = 'C0011';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -419,7 +419,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0011',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0011',ix_);
         pb.xnames{iv} = 'C0011';
         ig = ig_('R0019');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -427,7 +427,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0011',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0011',ix_);
         pb.xnames{iv} = 'C0011';
         ig = ig_('R0022');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -435,7 +435,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0012',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0012',ix_);
         pb.xnames{iv} = 'C0012';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -443,7 +443,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0012',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0012',ix_);
         pb.xnames{iv} = 'C0012';
         ig = ig_('R0022');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -451,7 +451,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0013',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0013',ix_);
         pb.xnames{iv} = 'C0013';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -459,7 +459,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0013',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0013',ix_);
         pb.xnames{iv} = 'C0013';
         ig = ig_('R0022');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -467,7 +467,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0014',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0014',ix_);
         pb.xnames{iv} = 'C0014';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -475,7 +475,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0014',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0014',ix_);
         pb.xnames{iv} = 'C0014';
         ig = ig_('R0022');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -483,7 +483,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0015',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0015',ix_);
         pb.xnames{iv} = 'C0015';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -491,7 +491,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0015',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0015',ix_);
         pb.xnames{iv} = 'C0015';
         ig = ig_('R0019');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -499,7 +499,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0015',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0015',ix_);
         pb.xnames{iv} = 'C0015';
         ig = ig_('R0023');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -507,7 +507,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0016',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0016',ix_);
         pb.xnames{iv} = 'C0016';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -515,7 +515,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0016',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0016',ix_);
         pb.xnames{iv} = 'C0016';
         ig = ig_('R0023');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -523,7 +523,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0017',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0017',ix_);
         pb.xnames{iv} = 'C0017';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -531,7 +531,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0017',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0017',ix_);
         pb.xnames{iv} = 'C0017';
         ig = ig_('R0023');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -539,7 +539,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0018',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0018',ix_);
         pb.xnames{iv} = 'C0018';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -547,7 +547,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0018',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0018',ix_);
         pb.xnames{iv} = 'C0018';
         ig = ig_('R0019');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -555,7 +555,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0019',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0019',ix_);
         pb.xnames{iv} = 'C0019';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -563,7 +563,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0019',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0019',ix_);
         pb.xnames{iv} = 'C0019';
         ig = ig_('R0024');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -571,7 +571,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0020',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0020',ix_);
         pb.xnames{iv} = 'C0020';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -579,7 +579,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0020',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0020',ix_);
         pb.xnames{iv} = 'C0020';
         ig = ig_('R0024');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -587,7 +587,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0020',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0020',ix_);
         pb.xnames{iv} = 'C0020';
         ig = ig_('R0025');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -595,7 +595,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0021',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0021',ix_);
         pb.xnames{iv} = 'C0021';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -603,7 +603,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0021',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0021',ix_);
         pb.xnames{iv} = 'C0021';
         ig = ig_('R0025');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -611,7 +611,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0022',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0022',ix_);
         pb.xnames{iv} = 'C0022';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -619,7 +619,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0022',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0022',ix_);
         pb.xnames{iv} = 'C0022';
         ig = ig_('R0025');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -627,7 +627,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0023',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0023',ix_);
         pb.xnames{iv} = 'C0023';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -635,7 +635,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0023',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0023',ix_);
         pb.xnames{iv} = 'C0023';
         ig = ig_('R0025');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -643,7 +643,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0024',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0024',ix_);
         pb.xnames{iv} = 'C0024';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -651,7 +651,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0024',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0024',ix_);
         pb.xnames{iv} = 'C0024';
         ig = ig_('R0024');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -659,7 +659,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0024',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0024',ix_);
         pb.xnames{iv} = 'C0024';
         ig = ig_('R0026');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -667,7 +667,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0025',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0025',ix_);
         pb.xnames{iv} = 'C0025';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -675,7 +675,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0025',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0025',ix_);
         pb.xnames{iv} = 'C0025';
         ig = ig_('R0026');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -683,7 +683,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0026',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0026',ix_);
         pb.xnames{iv} = 'C0026';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -691,7 +691,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0026',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0026',ix_);
         pb.xnames{iv} = 'C0026';
         ig = ig_('R0026');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -699,7 +699,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0027',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0027',ix_);
         pb.xnames{iv} = 'C0027';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -707,7 +707,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0027',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0027',ix_);
         pb.xnames{iv} = 'C0027';
         ig = ig_('R0026');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -715,7 +715,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0028',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0028',ix_);
         pb.xnames{iv} = 'C0028';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -723,7 +723,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0028',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0028',ix_);
         pb.xnames{iv} = 'C0028';
         ig = ig_('R0026');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -731,7 +731,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0029',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0029',ix_);
         pb.xnames{iv} = 'C0029';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -739,7 +739,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0029',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0029',ix_);
         pb.xnames{iv} = 'C0029';
         ig = ig_('R0024');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -747,7 +747,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0029',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0029',ix_);
         pb.xnames{iv} = 'C0029';
         ig = ig_('R0027');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -755,7 +755,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0030',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0030',ix_);
         pb.xnames{iv} = 'C0030';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -763,7 +763,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0030',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0030',ix_);
         pb.xnames{iv} = 'C0030';
         ig = ig_('R0027');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -771,7 +771,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0031',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0031',ix_);
         pb.xnames{iv} = 'C0031';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -779,7 +779,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0031',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0031',ix_);
         pb.xnames{iv} = 'C0031';
         ig = ig_('R0027');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -787,7 +787,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0032',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0032',ix_);
         pb.xnames{iv} = 'C0032';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -795,7 +795,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0032',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0032',ix_);
         pb.xnames{iv} = 'C0032';
         ig = ig_('R0027');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -803,7 +803,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0033',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0033',ix_);
         pb.xnames{iv} = 'C0033';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -811,7 +811,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0033',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0033',ix_);
         pb.xnames{iv} = 'C0033';
         ig = ig_('R0024');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -819,7 +819,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0033',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0033',ix_);
         pb.xnames{iv} = 'C0033';
         ig = ig_('R0028');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -827,7 +827,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0034',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0034',ix_);
         pb.xnames{iv} = 'C0034';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -835,7 +835,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0034',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0034',ix_);
         pb.xnames{iv} = 'C0034';
         ig = ig_('R0028');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -843,7 +843,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0035',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0035',ix_);
         pb.xnames{iv} = 'C0035';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -851,7 +851,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0035',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0035',ix_);
         pb.xnames{iv} = 'C0035';
         ig = ig_('R0028');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -859,7 +859,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0036',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0036',ix_);
         pb.xnames{iv} = 'C0036';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -867,7 +867,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0036',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0036',ix_);
         pb.xnames{iv} = 'C0036';
         ig = ig_('R0024');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -875,7 +875,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0037',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0037',ix_);
         pb.xnames{iv} = 'C0037';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -883,7 +883,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0037',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0037',ix_);
         pb.xnames{iv} = 'C0037';
         ig = ig_('R0029');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -891,7 +891,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0038',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0038',ix_);
         pb.xnames{iv} = 'C0038';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -899,7 +899,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0038',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0038',ix_);
         pb.xnames{iv} = 'C0038';
         ig = ig_('R0029');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -907,7 +907,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0038',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0038',ix_);
         pb.xnames{iv} = 'C0038';
         ig = ig_('R0030');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -915,7 +915,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0039',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0039',ix_);
         pb.xnames{iv} = 'C0039';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -923,7 +923,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0039',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0039',ix_);
         pb.xnames{iv} = 'C0039';
         ig = ig_('R0030');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -931,7 +931,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0040',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0040',ix_);
         pb.xnames{iv} = 'C0040';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -939,7 +939,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0040',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0040',ix_);
         pb.xnames{iv} = 'C0040';
         ig = ig_('R0030');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -947,7 +947,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0041',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0041',ix_);
         pb.xnames{iv} = 'C0041';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -955,7 +955,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0041',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0041',ix_);
         pb.xnames{iv} = 'C0041';
         ig = ig_('R0030');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -963,7 +963,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0042',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0042',ix_);
         pb.xnames{iv} = 'C0042';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -971,7 +971,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0042',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0042',ix_);
         pb.xnames{iv} = 'C0042';
         ig = ig_('R0029');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -979,7 +979,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0042',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0042',ix_);
         pb.xnames{iv} = 'C0042';
         ig = ig_('R0031');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -987,7 +987,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0043',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0043',ix_);
         pb.xnames{iv} = 'C0043';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -995,7 +995,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0043',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0043',ix_);
         pb.xnames{iv} = 'C0043';
         ig = ig_('R0031');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1003,7 +1003,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0044',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0044',ix_);
         pb.xnames{iv} = 'C0044';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1011,7 +1011,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0044',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0044',ix_);
         pb.xnames{iv} = 'C0044';
         ig = ig_('R0031');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1019,7 +1019,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0045',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0045',ix_);
         pb.xnames{iv} = 'C0045';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1027,7 +1027,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0045',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0045',ix_);
         pb.xnames{iv} = 'C0045';
         ig = ig_('R0031');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1035,7 +1035,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0046',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0046',ix_);
         pb.xnames{iv} = 'C0046';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1043,7 +1043,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0046',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0046',ix_);
         pb.xnames{iv} = 'C0046';
         ig = ig_('R0031');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1051,7 +1051,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0047',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0047',ix_);
         pb.xnames{iv} = 'C0047';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1059,7 +1059,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0047',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0047',ix_);
         pb.xnames{iv} = 'C0047';
         ig = ig_('R0029');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1067,7 +1067,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0047',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0047',ix_);
         pb.xnames{iv} = 'C0047';
         ig = ig_('R0032');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1075,7 +1075,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0048',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0048',ix_);
         pb.xnames{iv} = 'C0048';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1083,7 +1083,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0048',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0048',ix_);
         pb.xnames{iv} = 'C0048';
         ig = ig_('R0032');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1091,7 +1091,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0049',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0049',ix_);
         pb.xnames{iv} = 'C0049';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1099,7 +1099,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0049',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0049',ix_);
         pb.xnames{iv} = 'C0049';
         ig = ig_('R0032');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1107,7 +1107,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0050',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0050',ix_);
         pb.xnames{iv} = 'C0050';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1115,7 +1115,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0050',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0050',ix_);
         pb.xnames{iv} = 'C0050';
         ig = ig_('R0032');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1123,7 +1123,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0051',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0051',ix_);
         pb.xnames{iv} = 'C0051';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1131,7 +1131,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0051',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0051',ix_);
         pb.xnames{iv} = 'C0051';
         ig = ig_('R0029');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1139,7 +1139,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0051',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0051',ix_);
         pb.xnames{iv} = 'C0051';
         ig = ig_('R0033');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1147,7 +1147,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0052',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0052',ix_);
         pb.xnames{iv} = 'C0052';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1155,7 +1155,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0052',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0052',ix_);
         pb.xnames{iv} = 'C0052';
         ig = ig_('R0033');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1163,7 +1163,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0053',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0053',ix_);
         pb.xnames{iv} = 'C0053';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1171,7 +1171,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0053',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0053',ix_);
         pb.xnames{iv} = 'C0053';
         ig = ig_('R0033');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1179,7 +1179,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0054',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0054',ix_);
         pb.xnames{iv} = 'C0054';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1187,7 +1187,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0054',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0054',ix_);
         pb.xnames{iv} = 'C0054';
         ig = ig_('R0029');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1195,7 +1195,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0055',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0055',ix_);
         pb.xnames{iv} = 'C0055';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1203,7 +1203,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0055',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0055',ix_);
         pb.xnames{iv} = 'C0055';
         ig = ig_('R0034');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1211,7 +1211,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0056',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0056',ix_);
         pb.xnames{iv} = 'C0056';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1219,7 +1219,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0056',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0056',ix_);
         pb.xnames{iv} = 'C0056';
         ig = ig_('R0034');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1227,7 +1227,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0056',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0056',ix_);
         pb.xnames{iv} = 'C0056';
         ig = ig_('R0035');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1235,7 +1235,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0057',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0057',ix_);
         pb.xnames{iv} = 'C0057';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1243,7 +1243,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0057',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0057',ix_);
         pb.xnames{iv} = 'C0057';
         ig = ig_('R0035');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1251,7 +1251,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0058',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0058',ix_);
         pb.xnames{iv} = 'C0058';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1259,7 +1259,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0058',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0058',ix_);
         pb.xnames{iv} = 'C0058';
         ig = ig_('R0035');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1267,7 +1267,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0059',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0059',ix_);
         pb.xnames{iv} = 'C0059';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1275,7 +1275,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0059',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0059',ix_);
         pb.xnames{iv} = 'C0059';
         ig = ig_('R0035');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1283,7 +1283,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0060',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0060',ix_);
         pb.xnames{iv} = 'C0060';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1291,7 +1291,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0060',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0060',ix_);
         pb.xnames{iv} = 'C0060';
         ig = ig_('R0034');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1299,7 +1299,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0060',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0060',ix_);
         pb.xnames{iv} = 'C0060';
         ig = ig_('R0036');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1307,7 +1307,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0061',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0061',ix_);
         pb.xnames{iv} = 'C0061';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1315,7 +1315,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0061',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0061',ix_);
         pb.xnames{iv} = 'C0061';
         ig = ig_('R0036');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1323,7 +1323,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0062',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0062',ix_);
         pb.xnames{iv} = 'C0062';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1331,7 +1331,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0062',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0062',ix_);
         pb.xnames{iv} = 'C0062';
         ig = ig_('R0036');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1339,7 +1339,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0063',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0063',ix_);
         pb.xnames{iv} = 'C0063';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1347,7 +1347,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0063',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0063',ix_);
         pb.xnames{iv} = 'C0063';
         ig = ig_('R0036');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1355,7 +1355,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0064',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0064',ix_);
         pb.xnames{iv} = 'C0064';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1363,7 +1363,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0064',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0064',ix_);
         pb.xnames{iv} = 'C0064';
         ig = ig_('R0036');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1371,7 +1371,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0065',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0065',ix_);
         pb.xnames{iv} = 'C0065';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1379,7 +1379,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0065',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0065',ix_);
         pb.xnames{iv} = 'C0065';
         ig = ig_('R0034');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1387,7 +1387,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0065',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0065',ix_);
         pb.xnames{iv} = 'C0065';
         ig = ig_('R0037');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1395,7 +1395,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0066',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0066',ix_);
         pb.xnames{iv} = 'C0066';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1403,7 +1403,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0066',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0066',ix_);
         pb.xnames{iv} = 'C0066';
         ig = ig_('R0037');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1411,7 +1411,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0067',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0067',ix_);
         pb.xnames{iv} = 'C0067';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1419,7 +1419,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0067',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0067',ix_);
         pb.xnames{iv} = 'C0067';
         ig = ig_('R0037');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1427,7 +1427,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0068',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0068',ix_);
         pb.xnames{iv} = 'C0068';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1435,7 +1435,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0068',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0068',ix_);
         pb.xnames{iv} = 'C0068';
         ig = ig_('R0037');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1443,7 +1443,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0069',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0069',ix_);
         pb.xnames{iv} = 'C0069';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1451,7 +1451,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0069',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0069',ix_);
         pb.xnames{iv} = 'C0069';
         ig = ig_('R0034');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1459,7 +1459,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0069',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0069',ix_);
         pb.xnames{iv} = 'C0069';
         ig = ig_('R0038');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1467,7 +1467,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0070',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0070',ix_);
         pb.xnames{iv} = 'C0070';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1475,7 +1475,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0070',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0070',ix_);
         pb.xnames{iv} = 'C0070';
         ig = ig_('R0038');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1483,7 +1483,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0071',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0071',ix_);
         pb.xnames{iv} = 'C0071';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1491,7 +1491,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0071',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0071',ix_);
         pb.xnames{iv} = 'C0071';
         ig = ig_('R0038');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1499,7 +1499,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0072',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0072',ix_);
         pb.xnames{iv} = 'C0072';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1507,7 +1507,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0072',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0072',ix_);
         pb.xnames{iv} = 'C0072';
         ig = ig_('R0034');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1515,7 +1515,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0073',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0073',ix_);
         pb.xnames{iv} = 'C0073';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1523,7 +1523,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0073',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0073',ix_);
         pb.xnames{iv} = 'C0073';
         ig = ig_('R0039');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1531,7 +1531,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0074',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0074',ix_);
         pb.xnames{iv} = 'C0074';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1539,7 +1539,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0074',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0074',ix_);
         pb.xnames{iv} = 'C0074';
         ig = ig_('R0039');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1547,7 +1547,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0074',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0074',ix_);
         pb.xnames{iv} = 'C0074';
         ig = ig_('R0040');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1555,7 +1555,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0075',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0075',ix_);
         pb.xnames{iv} = 'C0075';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1563,7 +1563,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0075',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0075',ix_);
         pb.xnames{iv} = 'C0075';
         ig = ig_('R0040');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1571,7 +1571,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0076',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0076',ix_);
         pb.xnames{iv} = 'C0076';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1579,7 +1579,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0076',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0076',ix_);
         pb.xnames{iv} = 'C0076';
         ig = ig_('R0040');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1587,7 +1587,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0077',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0077',ix_);
         pb.xnames{iv} = 'C0077';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1595,7 +1595,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0077',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0077',ix_);
         pb.xnames{iv} = 'C0077';
         ig = ig_('R0040');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1603,7 +1603,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0078',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0078',ix_);
         pb.xnames{iv} = 'C0078';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1611,7 +1611,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0078',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0078',ix_);
         pb.xnames{iv} = 'C0078';
         ig = ig_('R0039');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1619,7 +1619,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0078',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0078',ix_);
         pb.xnames{iv} = 'C0078';
         ig = ig_('R0041');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1627,7 +1627,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0079',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0079',ix_);
         pb.xnames{iv} = 'C0079';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1635,7 +1635,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0079',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0079',ix_);
         pb.xnames{iv} = 'C0079';
         ig = ig_('R0041');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1643,7 +1643,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0080',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0080',ix_);
         pb.xnames{iv} = 'C0080';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1651,7 +1651,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0080',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0080',ix_);
         pb.xnames{iv} = 'C0080';
         ig = ig_('R0041');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1659,7 +1659,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0081',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0081',ix_);
         pb.xnames{iv} = 'C0081';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1667,7 +1667,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0081',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0081',ix_);
         pb.xnames{iv} = 'C0081';
         ig = ig_('R0041');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1675,7 +1675,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0082',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0082',ix_);
         pb.xnames{iv} = 'C0082';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1683,7 +1683,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0082',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0082',ix_);
         pb.xnames{iv} = 'C0082';
         ig = ig_('R0041');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1691,7 +1691,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0083',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0083',ix_);
         pb.xnames{iv} = 'C0083';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1699,7 +1699,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0083',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0083',ix_);
         pb.xnames{iv} = 'C0083';
         ig = ig_('R0039');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1707,7 +1707,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0083',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0083',ix_);
         pb.xnames{iv} = 'C0083';
         ig = ig_('R0042');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1715,7 +1715,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0084',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0084',ix_);
         pb.xnames{iv} = 'C0084';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1723,7 +1723,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0084',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0084',ix_);
         pb.xnames{iv} = 'C0084';
         ig = ig_('R0042');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1731,7 +1731,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0085',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0085',ix_);
         pb.xnames{iv} = 'C0085';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1739,7 +1739,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0085',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0085',ix_);
         pb.xnames{iv} = 'C0085';
         ig = ig_('R0042');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1747,7 +1747,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0086',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0086',ix_);
         pb.xnames{iv} = 'C0086';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1755,7 +1755,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0086',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0086',ix_);
         pb.xnames{iv} = 'C0086';
         ig = ig_('R0042');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1763,7 +1763,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0087',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0087',ix_);
         pb.xnames{iv} = 'C0087';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1771,7 +1771,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0087',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0087',ix_);
         pb.xnames{iv} = 'C0087';
         ig = ig_('R0039');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1779,7 +1779,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0087',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0087',ix_);
         pb.xnames{iv} = 'C0087';
         ig = ig_('R0043');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1787,7 +1787,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0088',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0088',ix_);
         pb.xnames{iv} = 'C0088';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1795,7 +1795,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0088',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0088',ix_);
         pb.xnames{iv} = 'C0088';
         ig = ig_('R0043');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1803,7 +1803,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0089',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0089',ix_);
         pb.xnames{iv} = 'C0089';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1811,7 +1811,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0089',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0089',ix_);
         pb.xnames{iv} = 'C0089';
         ig = ig_('R0043');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1819,7 +1819,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0090',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0090',ix_);
         pb.xnames{iv} = 'C0090';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1827,7 +1827,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0090',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0090',ix_);
         pb.xnames{iv} = 'C0090';
         ig = ig_('R0039');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1835,7 +1835,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0091',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0091',ix_);
         pb.xnames{iv} = 'C0091';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1843,7 +1843,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0091',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0091',ix_);
         pb.xnames{iv} = 'C0091';
         ig = ig_('R0044');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1851,7 +1851,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0092',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0092',ix_);
         pb.xnames{iv} = 'C0092';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1859,7 +1859,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0092',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0092',ix_);
         pb.xnames{iv} = 'C0092';
         ig = ig_('R0044');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1867,7 +1867,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0092',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0092',ix_);
         pb.xnames{iv} = 'C0092';
         ig = ig_('R0045');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1875,7 +1875,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0093',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0093',ix_);
         pb.xnames{iv} = 'C0093';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1883,7 +1883,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0093',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0093',ix_);
         pb.xnames{iv} = 'C0093';
         ig = ig_('R0045');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1891,7 +1891,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0094',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0094',ix_);
         pb.xnames{iv} = 'C0094';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1899,7 +1899,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0094',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0094',ix_);
         pb.xnames{iv} = 'C0094';
         ig = ig_('R0045');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1907,7 +1907,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0095',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0095',ix_);
         pb.xnames{iv} = 'C0095';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1915,7 +1915,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0095',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0095',ix_);
         pb.xnames{iv} = 'C0095';
         ig = ig_('R0045');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1923,7 +1923,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0096',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0096',ix_);
         pb.xnames{iv} = 'C0096';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1931,7 +1931,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0096',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0096',ix_);
         pb.xnames{iv} = 'C0096';
         ig = ig_('R0044');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1939,7 +1939,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0096',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0096',ix_);
         pb.xnames{iv} = 'C0096';
         ig = ig_('R0046');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1947,7 +1947,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0097',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0097',ix_);
         pb.xnames{iv} = 'C0097';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1955,7 +1955,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0097',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0097',ix_);
         pb.xnames{iv} = 'C0097';
         ig = ig_('R0046');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1963,7 +1963,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0098',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0098',ix_);
         pb.xnames{iv} = 'C0098';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1971,7 +1971,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0098',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0098',ix_);
         pb.xnames{iv} = 'C0098';
         ig = ig_('R0046');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1979,7 +1979,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0099',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0099',ix_);
         pb.xnames{iv} = 'C0099';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1987,7 +1987,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0099',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0099',ix_);
         pb.xnames{iv} = 'C0099';
         ig = ig_('R0046');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -1995,7 +1995,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0100',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0100',ix_);
         pb.xnames{iv} = 'C0100';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2003,7 +2003,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0100',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0100',ix_);
         pb.xnames{iv} = 'C0100';
         ig = ig_('R0046');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2011,7 +2011,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0101',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0101',ix_);
         pb.xnames{iv} = 'C0101';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2019,7 +2019,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0101',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0101',ix_);
         pb.xnames{iv} = 'C0101';
         ig = ig_('R0044');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2027,7 +2027,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0101',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0101',ix_);
         pb.xnames{iv} = 'C0101';
         ig = ig_('R0047');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2035,7 +2035,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0102',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0102',ix_);
         pb.xnames{iv} = 'C0102';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2043,7 +2043,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0102',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0102',ix_);
         pb.xnames{iv} = 'C0102';
         ig = ig_('R0047');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2051,7 +2051,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0103',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0103',ix_);
         pb.xnames{iv} = 'C0103';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2059,7 +2059,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0103',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0103',ix_);
         pb.xnames{iv} = 'C0103';
         ig = ig_('R0047');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2067,7 +2067,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0104',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0104',ix_);
         pb.xnames{iv} = 'C0104';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2075,7 +2075,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0104',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0104',ix_);
         pb.xnames{iv} = 'C0104';
         ig = ig_('R0047');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2083,7 +2083,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0105',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0105',ix_);
         pb.xnames{iv} = 'C0105';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2091,7 +2091,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0105',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0105',ix_);
         pb.xnames{iv} = 'C0105';
         ig = ig_('R0044');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2099,7 +2099,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0105',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0105',ix_);
         pb.xnames{iv} = 'C0105';
         ig = ig_('R0048');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2107,7 +2107,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0106',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0106',ix_);
         pb.xnames{iv} = 'C0106';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2115,7 +2115,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0106',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0106',ix_);
         pb.xnames{iv} = 'C0106';
         ig = ig_('R0048');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2123,7 +2123,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0107',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0107',ix_);
         pb.xnames{iv} = 'C0107';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2131,7 +2131,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0107',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0107',ix_);
         pb.xnames{iv} = 'C0107';
         ig = ig_('R0048');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2139,7 +2139,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0108',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0108',ix_);
         pb.xnames{iv} = 'C0108';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2147,7 +2147,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0108',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0108',ix_);
         pb.xnames{iv} = 'C0108';
         ig = ig_('R0044');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2155,7 +2155,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0109',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0109',ix_);
         pb.xnames{iv} = 'C0109';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2163,7 +2163,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0109',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0109',ix_);
         pb.xnames{iv} = 'C0109';
         ig = ig_('R0049');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2171,7 +2171,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0110',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0110',ix_);
         pb.xnames{iv} = 'C0110';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2179,7 +2179,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0110',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0110',ix_);
         pb.xnames{iv} = 'C0110';
         ig = ig_('R0049');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2187,7 +2187,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0110',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0110',ix_);
         pb.xnames{iv} = 'C0110';
         ig = ig_('R0050');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2195,7 +2195,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0111',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0111',ix_);
         pb.xnames{iv} = 'C0111';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2203,7 +2203,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0111',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0111',ix_);
         pb.xnames{iv} = 'C0111';
         ig = ig_('R0050');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2211,7 +2211,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0112',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0112',ix_);
         pb.xnames{iv} = 'C0112';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2219,7 +2219,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0112',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0112',ix_);
         pb.xnames{iv} = 'C0112';
         ig = ig_('R0050');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2227,7 +2227,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0113',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0113',ix_);
         pb.xnames{iv} = 'C0113';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2235,7 +2235,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0113',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0113',ix_);
         pb.xnames{iv} = 'C0113';
         ig = ig_('R0050');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2243,7 +2243,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0114',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0114',ix_);
         pb.xnames{iv} = 'C0114';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2251,7 +2251,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0114',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0114',ix_);
         pb.xnames{iv} = 'C0114';
         ig = ig_('R0049');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2259,7 +2259,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0114',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0114',ix_);
         pb.xnames{iv} = 'C0114';
         ig = ig_('R0051');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2267,7 +2267,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0115',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0115',ix_);
         pb.xnames{iv} = 'C0115';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2275,7 +2275,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0115',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0115',ix_);
         pb.xnames{iv} = 'C0115';
         ig = ig_('R0051');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2283,7 +2283,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0116',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0116',ix_);
         pb.xnames{iv} = 'C0116';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2291,7 +2291,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0116',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0116',ix_);
         pb.xnames{iv} = 'C0116';
         ig = ig_('R0051');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2299,7 +2299,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0117',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0117',ix_);
         pb.xnames{iv} = 'C0117';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2307,7 +2307,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0117',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0117',ix_);
         pb.xnames{iv} = 'C0117';
         ig = ig_('R0051');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2315,7 +2315,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0118',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0118',ix_);
         pb.xnames{iv} = 'C0118';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2323,7 +2323,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0118',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0118',ix_);
         pb.xnames{iv} = 'C0118';
         ig = ig_('R0051');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2331,7 +2331,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0119',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0119',ix_);
         pb.xnames{iv} = 'C0119';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2339,7 +2339,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0119',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0119',ix_);
         pb.xnames{iv} = 'C0119';
         ig = ig_('R0049');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2347,7 +2347,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0119',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0119',ix_);
         pb.xnames{iv} = 'C0119';
         ig = ig_('R0052');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2355,7 +2355,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0120',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0120',ix_);
         pb.xnames{iv} = 'C0120';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2363,7 +2363,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0120',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0120',ix_);
         pb.xnames{iv} = 'C0120';
         ig = ig_('R0052');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2371,7 +2371,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0121',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0121',ix_);
         pb.xnames{iv} = 'C0121';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2379,7 +2379,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0121',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0121',ix_);
         pb.xnames{iv} = 'C0121';
         ig = ig_('R0052');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2387,7 +2387,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0122',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0122',ix_);
         pb.xnames{iv} = 'C0122';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2395,7 +2395,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0122',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0122',ix_);
         pb.xnames{iv} = 'C0122';
         ig = ig_('R0052');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2403,7 +2403,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0123',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0123',ix_);
         pb.xnames{iv} = 'C0123';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2411,7 +2411,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0123',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0123',ix_);
         pb.xnames{iv} = 'C0123';
         ig = ig_('R0049');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2419,7 +2419,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0123',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0123',ix_);
         pb.xnames{iv} = 'C0123';
         ig = ig_('R0053');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2427,7 +2427,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0124',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0124',ix_);
         pb.xnames{iv} = 'C0124';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2435,7 +2435,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0124',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0124',ix_);
         pb.xnames{iv} = 'C0124';
         ig = ig_('R0053');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2443,7 +2443,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0125',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0125',ix_);
         pb.xnames{iv} = 'C0125';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2451,7 +2451,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0125',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0125',ix_);
         pb.xnames{iv} = 'C0125';
         ig = ig_('R0053');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2459,7 +2459,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0126',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0126',ix_);
         pb.xnames{iv} = 'C0126';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2467,7 +2467,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0126',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0126',ix_);
         pb.xnames{iv} = 'C0126';
         ig = ig_('R0049');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2475,7 +2475,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0127',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0127',ix_);
         pb.xnames{iv} = 'C0127';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2483,7 +2483,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0127',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0127',ix_);
         pb.xnames{iv} = 'C0127';
         ig = ig_('R0054');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2491,7 +2491,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0128',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0128',ix_);
         pb.xnames{iv} = 'C0128';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2499,7 +2499,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0128',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0128',ix_);
         pb.xnames{iv} = 'C0128';
         ig = ig_('R0054');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2507,7 +2507,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0128',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0128',ix_);
         pb.xnames{iv} = 'C0128';
         ig = ig_('R0055');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2515,7 +2515,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0129',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0129',ix_);
         pb.xnames{iv} = 'C0129';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2523,7 +2523,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0129',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0129',ix_);
         pb.xnames{iv} = 'C0129';
         ig = ig_('R0055');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2531,7 +2531,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0130',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0130',ix_);
         pb.xnames{iv} = 'C0130';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2539,7 +2539,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0130',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0130',ix_);
         pb.xnames{iv} = 'C0130';
         ig = ig_('R0055');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2547,7 +2547,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0131',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0131',ix_);
         pb.xnames{iv} = 'C0131';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2555,7 +2555,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0131',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0131',ix_);
         pb.xnames{iv} = 'C0131';
         ig = ig_('R0055');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2563,7 +2563,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0132',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0132',ix_);
         pb.xnames{iv} = 'C0132';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2571,7 +2571,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0132',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0132',ix_);
         pb.xnames{iv} = 'C0132';
         ig = ig_('R0054');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2579,7 +2579,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0132',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0132',ix_);
         pb.xnames{iv} = 'C0132';
         ig = ig_('R0056');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2587,7 +2587,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0133',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0133',ix_);
         pb.xnames{iv} = 'C0133';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2595,7 +2595,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0133',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0133',ix_);
         pb.xnames{iv} = 'C0133';
         ig = ig_('R0056');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2603,7 +2603,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0134',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0134',ix_);
         pb.xnames{iv} = 'C0134';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2611,7 +2611,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0134',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0134',ix_);
         pb.xnames{iv} = 'C0134';
         ig = ig_('R0056');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2619,7 +2619,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0135',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0135',ix_);
         pb.xnames{iv} = 'C0135';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2627,7 +2627,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0135',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0135',ix_);
         pb.xnames{iv} = 'C0135';
         ig = ig_('R0056');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2635,7 +2635,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0136',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0136',ix_);
         pb.xnames{iv} = 'C0136';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2643,7 +2643,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0136',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0136',ix_);
         pb.xnames{iv} = 'C0136';
         ig = ig_('R0056');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2651,7 +2651,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0137',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0137',ix_);
         pb.xnames{iv} = 'C0137';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2659,7 +2659,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0137',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0137',ix_);
         pb.xnames{iv} = 'C0137';
         ig = ig_('R0054');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2667,7 +2667,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0137',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0137',ix_);
         pb.xnames{iv} = 'C0137';
         ig = ig_('R0057');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2675,7 +2675,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0138',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0138',ix_);
         pb.xnames{iv} = 'C0138';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2683,7 +2683,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0138',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0138',ix_);
         pb.xnames{iv} = 'C0138';
         ig = ig_('R0057');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2691,7 +2691,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0139',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0139',ix_);
         pb.xnames{iv} = 'C0139';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2699,7 +2699,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0139',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0139',ix_);
         pb.xnames{iv} = 'C0139';
         ig = ig_('R0057');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2707,7 +2707,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0140',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0140',ix_);
         pb.xnames{iv} = 'C0140';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2715,7 +2715,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0140',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0140',ix_);
         pb.xnames{iv} = 'C0140';
         ig = ig_('R0057');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2723,7 +2723,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0141',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0141',ix_);
         pb.xnames{iv} = 'C0141';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2731,7 +2731,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0141',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0141',ix_);
         pb.xnames{iv} = 'C0141';
         ig = ig_('R0054');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2739,7 +2739,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0141',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0141',ix_);
         pb.xnames{iv} = 'C0141';
         ig = ig_('R0058');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2747,7 +2747,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0142',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0142',ix_);
         pb.xnames{iv} = 'C0142';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2755,7 +2755,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0142',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0142',ix_);
         pb.xnames{iv} = 'C0142';
         ig = ig_('R0058');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2763,7 +2763,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0143',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0143',ix_);
         pb.xnames{iv} = 'C0143';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2771,7 +2771,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0143',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0143',ix_);
         pb.xnames{iv} = 'C0143';
         ig = ig_('R0058');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2779,7 +2779,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0144',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0144',ix_);
         pb.xnames{iv} = 'C0144';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2787,7 +2787,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0144',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0144',ix_);
         pb.xnames{iv} = 'C0144';
         ig = ig_('R0054');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2795,7 +2795,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0145',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0145',ix_);
         pb.xnames{iv} = 'C0145';
         ig = ig_('R0001');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2803,7 +2803,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0145',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0145',ix_);
         pb.xnames{iv} = 'C0145';
         ig = ig_('R0059');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2811,7 +2811,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0146',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0146',ix_);
         pb.xnames{iv} = 'C0146';
         ig = ig_('R0002');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2819,7 +2819,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0146',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0146',ix_);
         pb.xnames{iv} = 'C0146';
         ig = ig_('R0059');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2827,7 +2827,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0146',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0146',ix_);
         pb.xnames{iv} = 'C0146';
         ig = ig_('R0060');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2835,7 +2835,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0147',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0147',ix_);
         pb.xnames{iv} = 'C0147';
         ig = ig_('R0003');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2843,7 +2843,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0147',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0147',ix_);
         pb.xnames{iv} = 'C0147';
         ig = ig_('R0060');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2851,7 +2851,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0148',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0148',ix_);
         pb.xnames{iv} = 'C0148';
         ig = ig_('R0004');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2859,7 +2859,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0148',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0148',ix_);
         pb.xnames{iv} = 'C0148';
         ig = ig_('R0060');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2867,7 +2867,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0149',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0149',ix_);
         pb.xnames{iv} = 'C0149';
         ig = ig_('R0005');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2875,7 +2875,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0149',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0149',ix_);
         pb.xnames{iv} = 'C0149';
         ig = ig_('R0060');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2883,7 +2883,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0150',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0150',ix_);
         pb.xnames{iv} = 'C0150';
         ig = ig_('R0006');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2891,7 +2891,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0150',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0150',ix_);
         pb.xnames{iv} = 'C0150';
         ig = ig_('R0059');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2899,7 +2899,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0150',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0150',ix_);
         pb.xnames{iv} = 'C0150';
         ig = ig_('R0061');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2907,7 +2907,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0151',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0151',ix_);
         pb.xnames{iv} = 'C0151';
         ig = ig_('R0007');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2915,7 +2915,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0151',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0151',ix_);
         pb.xnames{iv} = 'C0151';
         ig = ig_('R0061');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2923,7 +2923,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0152',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0152',ix_);
         pb.xnames{iv} = 'C0152';
         ig = ig_('R0008');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2931,7 +2931,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0152',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0152',ix_);
         pb.xnames{iv} = 'C0152';
         ig = ig_('R0061');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2939,7 +2939,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0153',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0153',ix_);
         pb.xnames{iv} = 'C0153';
         ig = ig_('R0009');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2947,7 +2947,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0153',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0153',ix_);
         pb.xnames{iv} = 'C0153';
         ig = ig_('R0061');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2955,7 +2955,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0154',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0154',ix_);
         pb.xnames{iv} = 'C0154';
         ig = ig_('R0010');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2963,7 +2963,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0154',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0154',ix_);
         pb.xnames{iv} = 'C0154';
         ig = ig_('R0061');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2971,7 +2971,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0155',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0155',ix_);
         pb.xnames{iv} = 'C0155';
         ig = ig_('R0011');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2979,7 +2979,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0155',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0155',ix_);
         pb.xnames{iv} = 'C0155';
         ig = ig_('R0059');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2987,7 +2987,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0155',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0155',ix_);
         pb.xnames{iv} = 'C0155';
         ig = ig_('R0062');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -2995,7 +2995,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0156',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0156',ix_);
         pb.xnames{iv} = 'C0156';
         ig = ig_('R0012');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3003,7 +3003,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0156',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0156',ix_);
         pb.xnames{iv} = 'C0156';
         ig = ig_('R0062');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3011,7 +3011,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0157',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0157',ix_);
         pb.xnames{iv} = 'C0157';
         ig = ig_('R0013');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3019,7 +3019,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0157',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0157',ix_);
         pb.xnames{iv} = 'C0157';
         ig = ig_('R0062');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3027,7 +3027,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0158',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0158',ix_);
         pb.xnames{iv} = 'C0158';
         ig = ig_('R0014');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3035,7 +3035,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0158',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0158',ix_);
         pb.xnames{iv} = 'C0158';
         ig = ig_('R0062');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3043,7 +3043,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0159',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0159',ix_);
         pb.xnames{iv} = 'C0159';
         ig = ig_('R0015');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3051,7 +3051,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0159',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0159',ix_);
         pb.xnames{iv} = 'C0159';
         ig = ig_('R0059');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3059,7 +3059,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0159',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0159',ix_);
         pb.xnames{iv} = 'C0159';
         ig = ig_('R0063');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3067,7 +3067,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1;
         end
-        [iv,ix_] = s2xlib('ii','C0160',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0160',ix_);
         pb.xnames{iv} = 'C0160';
         ig = ig_('R0016');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3075,7 +3075,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0160',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0160',ix_);
         pb.xnames{iv} = 'C0160';
         ig = ig_('R0063');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3083,7 +3083,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0161',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0161',ix_);
         pb.xnames{iv} = 'C0161';
         ig = ig_('R0017');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3091,7 +3091,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0161',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0161',ix_);
         pb.xnames{iv} = 'C0161';
         ig = ig_('R0063');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3099,7 +3099,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0162',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0162',ix_);
         pb.xnames{iv} = 'C0162';
         ig = ig_('R0018');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3107,7 +3107,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1;
         end
-        [iv,ix_] = s2xlib('ii','C0162',ix_);
+        [iv,ix_] = s2mpjlib('ii','C0162',ix_);
         pb.xnames{iv} = 'C0162';
         ig = ig_('R0059');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -3130,10 +3130,8 @@ switch(action)
         pbm.objgrps = find(strcmp(gtype,'<>'));
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_('C0001'),1) = -8423670;
         pb.xupper(ix_('C0001')) = 8423600;
@@ -4081,7 +4079,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

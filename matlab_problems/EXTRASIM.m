@@ -37,13 +37,13 @@ switch(action)
         ig_ = configureDictionary('string','double');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','X',ix_);
+        [iv,ix_] = s2mpjlib('ii','X',ix_);
         pb.xnames{iv} = 'X';
-        [iv,ix_] = s2xlib('ii','Y',ix_);
+        [iv,ix_] = s2mpjlib('ii','Y',ix_);
         pb.xnames{iv} = 'Y';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','Object',ig_);
+        [ig,ig_] = s2mpjlib('ii','Object',ig_);
         gtype{ig} = '<>';
         iv = ix_('X');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -51,7 +51,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','Cautious',ig_);
+        [ig,ig_] = s2mpjlib('ii','Cautious',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'Cautious';
         iv = ix_('X');
@@ -84,10 +84,8 @@ switch(action)
         pbm.gconst = zeros(ngrp,1);
         pbm.gconst(ig_('Object')) = -1.0;
         pbm.gconst(ig_('Cautious')) = 2.0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_('Y')) = -Inf;
         pb.xupper(ix_('Y'),1) = +Inf;
@@ -109,7 +107,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

@@ -23,6 +23,8 @@ function varargout = TAX13322(action,varargin)
 % 
 %    parameters
 % 
+%       Alternative values for the SIF file parameters:
+% IE NA                  1              $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,21 +48,25 @@ switch(action)
         else
             v_('NA') = varargin{1};
         end
+% IE NB                  3              $-PARAMETER
         if(nargin<3)
             v_('NB') = 3;  %  SIF file default value
         else
             v_('NB') = varargin{2};
         end
+% IE NC                  3              $-PARAMETER
         if(nargin<4)
             v_('NC') = 3;  %  SIF file default value
         else
             v_('NC') = varargin{3};
         end
+% IE ND                  2              $-PARAMETER
         if(nargin<5)
             v_('ND') = 2;  %  SIF file default value
         else
             v_('ND') = varargin{4};
         end
+% IE NE                  2              $-PARAMETER
         if(nargin<6)
             v_('NE') = 2;  %  SIF file default value
         else
@@ -157,19 +163,21 @@ switch(action)
         for I=v_('1'):v_('NA')
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
-                    [iv,ix_] = s2xlib('ii',['C',int2str(I),',',int2str(P),',',int2str(Q)],ix_);
+                    [iv,ix_] =...
+                          s2mpjlib('ii',['C',int2str(I),',',int2str(P),',',int2str(Q)],ix_);
                     pb.xnames{iv} = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_] = s2xlib('ii',['Y',int2str(I),',',int2str(P),',',int2str(Q)],ix_);
+                    [iv,ix_] =...
+                          s2mpjlib('ii',['Y',int2str(I),',',int2str(P),',',int2str(Q)],ix_);
                     pb.xnames{iv} = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
                 end
             end
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         for L=v_('1'):v_('M')
-            [ig,ig_] = s2xlib('ii',['I',int2str(L)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['I',int2str(L)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['I',int2str(L)];
         end
@@ -178,7 +186,7 @@ switch(action)
                 for Q=v_('1'):v_('NCE')
                     v_('LAMBDA') = v_(['LAM',int2str(I),',',int2str(P),',',int2str(Q)]);
                     v_('-LAMBDA') = -1.0e0*v_('LAMBDA');
-                    [ig,ig_] = s2xlib('ii','T',ig_);
+                    [ig,ig_] = s2mpjlib('ii','T',ig_);
                     gtype{ig}  = '>=';
                     cnames{ig} = 'T';
                     iv = ix_(['Y',int2str(I),',',int2str(P),',',int2str(Q)]);
@@ -210,8 +218,6 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -228,23 +234,23 @@ switch(action)
         pb.y0 = 0.1e0*ones(pb.m,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eA1',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eA1',iet_);
         elftv{it}{1} = 'C';
-        [it,iet_] = s2xlib( 'ii', 'eA2',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eA2',iet_);
         elftv{it}{1} = 'C';
-        [it,iet_] = s2xlib( 'ii', 'eA3',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eA3',iet_);
         elftv{it}{1} = 'C';
-        [it,iet_] = s2xlib( 'ii', 'eA4',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eA4',iet_);
         elftv{it}{1} = 'C';
-        [it,iet_] = s2xlib( 'ii', 'eA5',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eA5',iet_);
         elftv{it}{1} = 'C';
-        [it,iet_] = s2xlib( 'ii', 'eA6',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eA6',iet_);
         elftv{it}{1} = 'C';
-        [it,iet_] = s2xlib( 'ii', 'eB1',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eB1',iet_);
         elftv{it}{1} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'eB2',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eB2',iet_);
         elftv{it}{1} = 'Y';
-        [it,iet_] = s2xlib( 'ii', 'eB3',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eB3',iet_);
         elftv{it}{1} = 'Y';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -255,11 +261,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['A1-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eA1';
                     ielftype(ie) = iet_('eA1');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -269,11 +275,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['A2-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eA2';
                     ielftype(ie) = iet_('eA2');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -283,11 +289,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['A3-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eA3';
                     ielftype(ie) = iet_('eA3');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -297,11 +303,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['A4-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eA4';
                     ielftype(ie) = iet_('eA4');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -311,11 +317,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['A5-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eA5';
                     ielftype(ie) = iet_('eA5');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -325,11 +331,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['A6-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eA6';
                     ielftype(ie) = iet_('eA6');
                     vname = ['C',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('C',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -339,11 +345,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['B1-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eB1';
                     ielftype(ie) = iet_('eB1');
                     vname = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('Y',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -353,11 +359,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['B2-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eB2';
                     ielftype(ie) = iet_('eB2');
                     vname = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('Y',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -367,11 +373,11 @@ switch(action)
             for P=v_('1'):v_('NBD')
                 for Q=v_('1'):v_('NCE')
                     ename = ['B3-',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'eB3';
                     ielftype(ie) = iet_('eB3');
                     vname = ['Y',int2str(I),',',int2str(P),',',int2str(Q)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],0.1e0);
                     posev = find(strcmp('Y',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -636,7 +642,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -646,7 +652,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -657,7 +663,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -667,7 +673,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -678,7 +684,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -688,7 +694,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -699,7 +705,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -709,7 +715,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -720,7 +726,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -730,7 +736,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -741,7 +747,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -751,7 +757,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -767,22 +773,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -793,22 +799,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -818,22 +824,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -845,7 +851,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -855,7 +861,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -866,7 +872,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -876,7 +882,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -887,7 +893,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -897,7 +903,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -908,7 +914,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -918,7 +924,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -929,7 +935,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -939,7 +945,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -950,7 +956,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -960,7 +966,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -976,7 +982,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -986,7 +992,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -997,7 +1003,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1007,7 +1013,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1018,7 +1024,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1028,7 +1034,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1039,7 +1045,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1049,7 +1055,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1060,7 +1066,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1070,7 +1076,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1081,7 +1087,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1091,7 +1097,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1107,22 +1113,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -1133,22 +1139,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -1158,22 +1164,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -1182,22 +1188,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -1209,7 +1215,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1219,7 +1225,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1230,7 +1236,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1240,7 +1246,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1251,7 +1257,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1261,7 +1267,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1272,7 +1278,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1282,7 +1288,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1293,7 +1299,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1303,7 +1309,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1314,7 +1320,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1324,7 +1330,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1340,7 +1346,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1350,7 +1356,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1361,7 +1367,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1371,7 +1377,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1382,7 +1388,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1392,7 +1398,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1403,7 +1409,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1413,7 +1419,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1424,7 +1430,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1434,7 +1440,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1445,7 +1451,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1455,7 +1461,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1471,22 +1477,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -1497,22 +1503,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -1522,22 +1528,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -1546,22 +1552,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -1573,7 +1579,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1583,7 +1589,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1594,7 +1600,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1604,7 +1610,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1615,7 +1621,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1625,7 +1631,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1636,7 +1642,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1646,7 +1652,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1657,7 +1663,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1667,7 +1673,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1678,7 +1684,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1688,7 +1694,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1704,7 +1710,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1714,7 +1720,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1725,7 +1731,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1735,7 +1741,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1746,7 +1752,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1756,7 +1762,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1767,7 +1773,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1777,7 +1783,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1788,7 +1794,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1798,7 +1804,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1809,7 +1815,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1819,7 +1825,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1835,22 +1841,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -1861,22 +1867,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -1886,22 +1892,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -1910,22 +1916,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -1937,7 +1943,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1947,7 +1953,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1958,7 +1964,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1968,7 +1974,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -1979,7 +1985,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -1989,7 +1995,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2000,7 +2006,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2010,7 +2016,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2021,7 +2027,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2031,7 +2037,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2042,7 +2048,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2052,7 +2058,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2068,7 +2074,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2078,7 +2084,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2089,7 +2095,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2099,7 +2105,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2110,7 +2116,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2120,7 +2126,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2131,7 +2137,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2141,7 +2147,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2152,7 +2158,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2162,7 +2168,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2173,7 +2179,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2183,7 +2189,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2199,22 +2205,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -2225,22 +2231,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -2250,22 +2256,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -2274,22 +2280,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -2301,7 +2307,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2311,7 +2317,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2322,7 +2328,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2332,7 +2338,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2343,7 +2349,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2353,7 +2359,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2364,7 +2370,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2374,7 +2380,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2385,7 +2391,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2395,7 +2401,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2406,7 +2412,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2416,7 +2422,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2432,7 +2438,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2442,7 +2448,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2453,7 +2459,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2463,7 +2469,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2474,7 +2480,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2484,7 +2490,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2495,7 +2501,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2505,7 +2511,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2516,7 +2522,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2526,7 +2532,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2537,7 +2543,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2547,7 +2553,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2563,22 +2569,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -2589,22 +2595,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -2614,22 +2620,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -2777,7 +2783,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2787,7 +2793,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2798,7 +2804,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2808,7 +2814,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2819,7 +2825,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2829,7 +2835,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2840,7 +2846,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2850,7 +2856,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2861,7 +2867,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2871,7 +2877,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2882,7 +2888,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2892,7 +2898,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -2908,22 +2914,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -2934,22 +2940,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -2959,22 +2965,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -2986,7 +2992,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -2996,7 +3002,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3007,7 +3013,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3017,7 +3023,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3028,7 +3034,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3038,7 +3044,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3049,7 +3055,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3059,7 +3065,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3070,7 +3076,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3080,7 +3086,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3091,7 +3097,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3101,7 +3107,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3117,7 +3123,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3127,7 +3133,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3138,7 +3144,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3148,7 +3154,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3159,7 +3165,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3169,7 +3175,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3180,7 +3186,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3190,7 +3196,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3201,7 +3207,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3211,7 +3217,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3222,7 +3228,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3232,7 +3238,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3248,22 +3254,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -3274,22 +3280,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -3299,22 +3305,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -3323,22 +3329,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -3350,7 +3356,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3360,7 +3366,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3371,7 +3377,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3381,7 +3387,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3392,7 +3398,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3402,7 +3408,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3413,7 +3419,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3423,7 +3429,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3434,7 +3440,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3444,7 +3450,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3455,7 +3461,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3465,7 +3471,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3481,7 +3487,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3491,7 +3497,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3502,7 +3508,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3512,7 +3518,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3523,7 +3529,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3533,7 +3539,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3544,7 +3550,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3554,7 +3560,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3565,7 +3571,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3575,7 +3581,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3586,7 +3592,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3596,7 +3602,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3612,22 +3618,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -3638,22 +3644,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -3663,22 +3669,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -3687,22 +3693,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -3714,7 +3720,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3724,7 +3730,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3735,7 +3741,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3745,7 +3751,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3756,7 +3762,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3766,7 +3772,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3777,7 +3783,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3787,7 +3793,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3798,7 +3804,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3808,7 +3814,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3819,7 +3825,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3829,7 +3835,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3845,7 +3851,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3855,7 +3861,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3866,7 +3872,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3876,7 +3882,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3887,7 +3893,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3897,7 +3903,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3908,7 +3914,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3918,7 +3924,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3929,7 +3935,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3939,7 +3945,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3950,7 +3956,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -3960,7 +3966,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -3976,22 +3982,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -4002,22 +4008,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -4027,22 +4033,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -4051,22 +4057,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -4078,7 +4084,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4088,7 +4094,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4099,7 +4105,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4109,7 +4115,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4120,7 +4126,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4130,7 +4136,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4141,7 +4147,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4151,7 +4157,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4162,7 +4168,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4172,7 +4178,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4183,7 +4189,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4193,7 +4199,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4209,7 +4215,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4219,7 +4225,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4230,7 +4236,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4240,7 +4246,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4251,7 +4257,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4261,7 +4267,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4272,7 +4278,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4282,7 +4288,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4293,7 +4299,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4303,7 +4309,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4314,7 +4320,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4324,7 +4330,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4340,22 +4346,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -4366,22 +4372,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -4391,22 +4397,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -4415,22 +4421,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -4442,7 +4448,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4452,7 +4458,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4463,7 +4469,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4473,7 +4479,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4484,7 +4490,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4494,7 +4500,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4505,7 +4511,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4515,7 +4521,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4526,7 +4532,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4536,7 +4542,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4547,7 +4553,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4557,7 +4563,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4573,7 +4579,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4583,7 +4589,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4594,7 +4600,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4604,7 +4610,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4615,7 +4621,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4625,7 +4631,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4636,7 +4642,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4646,7 +4652,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4657,7 +4663,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4667,7 +4673,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4678,7 +4684,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4688,7 +4694,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4704,22 +4710,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -4730,22 +4736,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -4755,22 +4761,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -4918,7 +4924,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4928,7 +4934,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4939,7 +4945,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4949,7 +4955,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4960,7 +4966,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4970,7 +4976,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -4981,7 +4987,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -4991,7 +4997,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5002,7 +5008,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5012,7 +5018,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5023,7 +5029,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5033,7 +5039,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5049,22 +5055,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -5075,22 +5081,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -5100,22 +5106,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -5127,7 +5133,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5137,7 +5143,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5148,7 +5154,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5158,7 +5164,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5169,7 +5175,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5179,7 +5185,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5190,7 +5196,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5200,7 +5206,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5211,7 +5217,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5221,7 +5227,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5232,7 +5238,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5242,7 +5248,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5258,7 +5264,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5268,7 +5274,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5279,7 +5285,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5289,7 +5295,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5300,7 +5306,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5310,7 +5316,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5321,7 +5327,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5331,7 +5337,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5342,7 +5348,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5352,7 +5358,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5363,7 +5369,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5373,7 +5379,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5389,22 +5395,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -5415,22 +5421,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -5440,22 +5446,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -5464,22 +5470,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -5491,7 +5497,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5501,7 +5507,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5512,7 +5518,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5522,7 +5528,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5533,7 +5539,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5543,7 +5549,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5554,7 +5560,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5564,7 +5570,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5575,7 +5581,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5585,7 +5591,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5596,7 +5602,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5606,7 +5612,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5622,7 +5628,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5632,7 +5638,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5643,7 +5649,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5653,7 +5659,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5664,7 +5670,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5674,7 +5680,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5685,7 +5691,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5695,7 +5701,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5706,7 +5712,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5716,7 +5722,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5727,7 +5733,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5737,7 +5743,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5753,22 +5759,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -5779,22 +5785,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -5804,22 +5810,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -5828,22 +5834,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -5855,7 +5861,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5865,7 +5871,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5876,7 +5882,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5886,7 +5892,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5897,7 +5903,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5907,7 +5913,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5918,7 +5924,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5928,7 +5934,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5939,7 +5945,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5949,7 +5955,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5960,7 +5966,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5970,7 +5976,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -5986,7 +5992,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -5996,7 +6002,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6007,7 +6013,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6017,7 +6023,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6028,7 +6034,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6038,7 +6044,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6049,7 +6055,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6059,7 +6065,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6070,7 +6076,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6080,7 +6086,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6091,7 +6097,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6101,7 +6107,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6117,22 +6123,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -6143,22 +6149,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -6168,22 +6174,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -6192,22 +6198,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -6219,7 +6225,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6229,7 +6235,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6240,7 +6246,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6250,7 +6256,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6261,7 +6267,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6271,7 +6277,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6282,7 +6288,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6292,7 +6298,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6303,7 +6309,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6313,7 +6319,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6324,7 +6330,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6334,7 +6340,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6350,7 +6356,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6360,7 +6366,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6371,7 +6377,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6381,7 +6387,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6392,7 +6398,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6402,7 +6408,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6413,7 +6419,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6423,7 +6429,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6434,7 +6440,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6444,7 +6450,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6455,7 +6461,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6465,7 +6471,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6481,22 +6487,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -6507,22 +6513,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -6532,22 +6538,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -6556,22 +6562,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -6583,7 +6589,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6593,7 +6599,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6604,7 +6610,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6614,7 +6620,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6625,7 +6631,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6635,7 +6641,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6646,7 +6652,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6656,7 +6662,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6667,7 +6673,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6677,7 +6683,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6688,7 +6694,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6698,7 +6704,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6714,7 +6720,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6724,7 +6730,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6735,7 +6741,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6745,7 +6751,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6756,7 +6762,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6766,7 +6772,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6777,7 +6783,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6787,7 +6793,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6798,7 +6804,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6808,7 +6814,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6819,7 +6825,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -6829,7 +6835,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -6845,22 +6851,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -6871,22 +6877,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -6896,22 +6902,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -7059,7 +7065,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7069,7 +7075,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7080,7 +7086,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7090,7 +7096,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7101,7 +7107,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7111,7 +7117,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7122,7 +7128,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7132,7 +7138,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7143,7 +7149,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7153,7 +7159,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7164,7 +7170,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7174,7 +7180,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7190,22 +7196,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -7216,22 +7222,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -7241,22 +7247,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -7268,7 +7274,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7278,7 +7284,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7289,7 +7295,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7299,7 +7305,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7310,7 +7316,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7320,7 +7326,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7331,7 +7337,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7341,7 +7347,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7352,7 +7358,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7362,7 +7368,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7373,7 +7379,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7383,7 +7389,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7399,7 +7405,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7409,7 +7415,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7420,7 +7426,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7430,7 +7436,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7441,7 +7447,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7451,7 +7457,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7462,7 +7468,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7472,7 +7478,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7483,7 +7489,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7493,7 +7499,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7504,7 +7510,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7514,7 +7520,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7530,22 +7536,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -7556,22 +7562,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -7581,22 +7587,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -7605,22 +7611,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -7632,7 +7638,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7642,7 +7648,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7653,7 +7659,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7663,7 +7669,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7674,7 +7680,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7684,7 +7690,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7695,7 +7701,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7705,7 +7711,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7716,7 +7722,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7726,7 +7732,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7737,7 +7743,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7747,7 +7753,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7763,7 +7769,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7773,7 +7779,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7784,7 +7790,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7794,7 +7800,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7805,7 +7811,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7815,7 +7821,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7826,7 +7832,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7836,7 +7842,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7847,7 +7853,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7857,7 +7863,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7868,7 +7874,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -7878,7 +7884,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -7894,22 +7900,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -7920,22 +7926,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -7945,22 +7951,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -7969,22 +7975,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -7996,7 +8002,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8006,7 +8012,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8017,7 +8023,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8027,7 +8033,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8038,7 +8044,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8048,7 +8054,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8059,7 +8065,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8069,7 +8075,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8080,7 +8086,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8090,7 +8096,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8101,7 +8107,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8111,7 +8117,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8127,7 +8133,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8137,7 +8143,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8148,7 +8154,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8158,7 +8164,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8169,7 +8175,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8179,7 +8185,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8190,7 +8196,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8200,7 +8206,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8211,7 +8217,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8221,7 +8227,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8232,7 +8238,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8242,7 +8248,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8258,22 +8264,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -8284,22 +8290,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -8309,22 +8315,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -8333,22 +8339,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -8360,7 +8366,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8370,7 +8376,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8381,7 +8387,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8391,7 +8397,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8402,7 +8408,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8412,7 +8418,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8423,7 +8429,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8433,7 +8439,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8444,7 +8450,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8454,7 +8460,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8465,7 +8471,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8475,7 +8481,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8491,7 +8497,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8501,7 +8507,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8512,7 +8518,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8522,7 +8528,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8533,7 +8539,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8543,7 +8549,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8554,7 +8560,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8564,7 +8570,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8575,7 +8581,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8585,7 +8591,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8596,7 +8602,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8606,7 +8612,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8622,22 +8628,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -8648,22 +8654,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -8673,22 +8679,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -8697,22 +8703,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -8724,7 +8730,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8734,7 +8740,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8745,7 +8751,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8755,7 +8761,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8766,7 +8772,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8776,7 +8782,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8787,7 +8793,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8797,7 +8803,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8808,7 +8814,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8818,7 +8824,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8829,7 +8835,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8839,7 +8845,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8855,7 +8861,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8865,7 +8871,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8876,7 +8882,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8886,7 +8892,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8897,7 +8903,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8907,7 +8913,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8918,7 +8924,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8928,7 +8934,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8939,7 +8945,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8949,7 +8955,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8960,7 +8966,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -8970,7 +8976,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -8986,22 +8992,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -9012,22 +9018,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -9037,22 +9043,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -9200,7 +9206,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9210,7 +9216,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9221,7 +9227,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9231,7 +9237,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9242,7 +9248,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9252,7 +9258,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9263,7 +9269,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9273,7 +9279,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9284,7 +9290,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9294,7 +9300,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9305,7 +9311,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9315,7 +9321,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9331,22 +9337,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -9357,22 +9363,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -9382,22 +9388,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -9409,7 +9415,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9419,7 +9425,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9430,7 +9436,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9440,7 +9446,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9451,7 +9457,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9461,7 +9467,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9472,7 +9478,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9482,7 +9488,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9493,7 +9499,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9503,7 +9509,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9514,7 +9520,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9524,7 +9530,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9540,7 +9546,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9550,7 +9556,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9561,7 +9567,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9571,7 +9577,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9582,7 +9588,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9592,7 +9598,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9603,7 +9609,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9613,7 +9619,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9624,7 +9630,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9634,7 +9640,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9645,7 +9651,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9655,7 +9661,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9671,22 +9677,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -9697,22 +9703,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -9722,22 +9728,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -9746,22 +9752,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -9773,7 +9779,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9783,7 +9789,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9794,7 +9800,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9804,7 +9810,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9815,7 +9821,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9825,7 +9831,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9836,7 +9842,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9846,7 +9852,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9857,7 +9863,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9867,7 +9873,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9878,7 +9884,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9888,7 +9894,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9904,7 +9910,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9914,7 +9920,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9925,7 +9931,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9935,7 +9941,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9946,7 +9952,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9956,7 +9962,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9967,7 +9973,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9977,7 +9983,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -9988,7 +9994,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -9998,7 +10004,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10009,7 +10015,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10019,7 +10025,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10035,22 +10041,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -10061,22 +10067,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -10086,22 +10092,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -10110,22 +10116,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -10137,7 +10143,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10147,7 +10153,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10158,7 +10164,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10168,7 +10174,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10179,7 +10185,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10189,7 +10195,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10200,7 +10206,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10210,7 +10216,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10221,7 +10227,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10231,7 +10237,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10242,7 +10248,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10252,7 +10258,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10268,7 +10274,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10278,7 +10284,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10289,7 +10295,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10299,7 +10305,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10310,7 +10316,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10320,7 +10326,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10331,7 +10337,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10341,7 +10347,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10352,7 +10358,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10362,7 +10368,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10373,7 +10379,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10383,7 +10389,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10399,22 +10405,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -10425,22 +10431,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -10450,22 +10456,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -10474,22 +10480,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -10501,7 +10507,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10511,7 +10517,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10522,7 +10528,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10532,7 +10538,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10543,7 +10549,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10553,7 +10559,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10564,7 +10570,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10574,7 +10580,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10585,7 +10591,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10595,7 +10601,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10606,7 +10612,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10616,7 +10622,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10632,7 +10638,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10642,7 +10648,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10653,7 +10659,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10663,7 +10669,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10674,7 +10680,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10684,7 +10690,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10695,7 +10701,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10705,7 +10711,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10716,7 +10722,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10726,7 +10732,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10737,7 +10743,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10747,7 +10753,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10763,22 +10769,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -10789,22 +10795,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -10814,22 +10820,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -10838,22 +10844,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -10865,7 +10871,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10875,7 +10881,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10886,7 +10892,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10896,7 +10902,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10907,7 +10913,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10917,7 +10923,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10928,7 +10934,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10938,7 +10944,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10949,7 +10955,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10959,7 +10965,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10970,7 +10976,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -10980,7 +10986,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -10996,7 +11002,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11006,7 +11012,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11017,7 +11023,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11027,7 +11033,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11038,7 +11044,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11048,7 +11054,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11059,7 +11065,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11069,7 +11075,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11080,7 +11086,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11090,7 +11096,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11101,7 +11107,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11111,7 +11117,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11127,22 +11133,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -11153,22 +11159,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -11178,22 +11184,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -11341,7 +11347,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11351,7 +11357,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11362,7 +11368,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11372,7 +11378,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11383,7 +11389,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11393,7 +11399,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11404,7 +11410,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11414,7 +11420,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11425,7 +11431,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11435,7 +11441,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11446,7 +11452,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11456,7 +11462,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11472,22 +11478,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -11498,22 +11504,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A1-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A1-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -11523,22 +11529,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A1-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A1-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('1')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('1')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -11550,7 +11556,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11560,7 +11566,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11571,7 +11577,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11581,7 +11587,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11592,7 +11598,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11602,7 +11608,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11613,7 +11619,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11623,7 +11629,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11634,7 +11640,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11644,7 +11650,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11655,7 +11661,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11665,7 +11671,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11681,7 +11687,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11691,7 +11697,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11702,7 +11708,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11712,7 +11718,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11723,7 +11729,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11733,7 +11739,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11744,7 +11750,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11754,7 +11760,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11765,7 +11771,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11775,7 +11781,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11786,7 +11792,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11796,7 +11802,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11812,22 +11818,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -11838,22 +11844,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A2-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A2-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -11863,22 +11869,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -11887,22 +11893,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A2-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A2-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('2')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('2')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -11914,7 +11920,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11924,7 +11930,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11935,7 +11941,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11945,7 +11951,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11956,7 +11962,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11966,7 +11972,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11977,7 +11983,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -11987,7 +11993,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -11998,7 +12004,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12008,7 +12014,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12019,7 +12025,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12029,7 +12035,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12045,7 +12051,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12055,7 +12061,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12066,7 +12072,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12076,7 +12082,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12087,7 +12093,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12097,7 +12103,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12108,7 +12114,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12118,7 +12124,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12129,7 +12135,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12139,7 +12145,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12150,7 +12156,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12160,7 +12166,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12176,22 +12182,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -12202,22 +12208,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -12227,22 +12233,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -12251,22 +12257,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('3')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('3')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -12278,7 +12284,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12288,7 +12294,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12299,7 +12305,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12309,7 +12315,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12320,7 +12326,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12330,7 +12336,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12341,7 +12347,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12351,7 +12357,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12362,7 +12368,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12372,7 +12378,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12383,7 +12389,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12393,7 +12399,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12409,7 +12415,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12419,7 +12425,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12430,7 +12436,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12440,7 +12446,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12451,7 +12457,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12461,7 +12467,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12472,7 +12478,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12482,7 +12488,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12493,7 +12499,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12503,7 +12509,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12514,7 +12520,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12524,7 +12530,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12540,22 +12546,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -12566,22 +12572,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A4-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A4-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -12591,22 +12597,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -12615,22 +12621,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A4-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A4-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('4')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('4')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -12642,7 +12648,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12652,7 +12658,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12663,7 +12669,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12673,7 +12679,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12684,7 +12690,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12694,7 +12700,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12705,7 +12711,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12715,7 +12721,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12726,7 +12732,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12736,7 +12742,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12747,7 +12753,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12757,7 +12763,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12773,7 +12779,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12783,7 +12789,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12794,7 +12800,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12804,7 +12810,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12815,7 +12821,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12825,7 +12831,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12836,7 +12842,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12846,7 +12852,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12857,7 +12863,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12867,7 +12873,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12878,7 +12884,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -12888,7 +12894,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -12904,22 +12910,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -12930,22 +12936,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A5-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A5-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -12955,22 +12961,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -12979,22 +12985,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A5-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A5-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('5')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('5')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -13006,7 +13012,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13016,7 +13022,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13027,7 +13033,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13037,7 +13043,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13048,7 +13054,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13058,7 +13064,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13069,7 +13075,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13079,7 +13085,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13090,7 +13096,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13100,7 +13106,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13111,7 +13117,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13121,7 +13127,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13137,7 +13143,7 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13147,7 +13153,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13158,7 +13164,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13168,7 +13174,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13179,7 +13185,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13189,7 +13195,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13200,7 +13206,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13210,7 +13216,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13221,7 +13227,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13231,7 +13237,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13242,7 +13248,7 @@ switch(action)
                     v_('L') = v_('L')+v_('1');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
@@ -13252,7 +13258,7 @@ switch(action)
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
@@ -13268,22 +13274,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -13294,22 +13300,22 @@ switch(action)
                     ig = ig_(['I',int2str(round(v_('L')))]);
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['A6-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['A6-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RA');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                          ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('RB');
                     posel = length(pbm.grelt{ig})+1;
                     pbm.grelt{ig}(posel) =...
-                          ie_(['B3-',int2str(R),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                          ie_(['B3-',int2str(R),',',int2str(round(v_('P'))),',',int2str(T)]);
                     nlc = union(nlc,ig);
                     pbm.grelw{ig}(posel) = v_('-RB');
                 end
@@ -13319,22 +13325,22 @@ switch(action)
                 ig = ig_(['I',int2str(round(v_('L')))]);
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['A6-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['A6-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RA');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(round(v_('6')))]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(round(v_('6')))]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('RB');
                 posel = length(pbm.grelt{ig})+1;
                 pbm.grelt{ig}(posel) =...
-                      ie_(['B3-',int2str(I),',',int2str(round(v_('NBD'))),',',int2str(T)]);
+                      ie_(['B3-',int2str(I),',',int2str(round(v_('P'))),',',int2str(T)]);
                 nlc = union(nlc,ig);
                 pbm.grelw{ig}(posel) = v_('-RB');
             end
@@ -13681,7 +13687,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [1,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

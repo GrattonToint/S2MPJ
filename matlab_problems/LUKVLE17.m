@@ -19,6 +19,10 @@ function varargout = LUKVLE17(action,varargin)
 % 
 %    some useful parameters, including N, the number of variables.
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   97             $-PARAMETER
+% IE N                   997            $-PARAMETER
+% IE N                   9997           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,10 +46,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
-% IE N                   97             $-PARAMETER
-% IE N                   997            $-PARAMETER
-% IE N                   9997           $-PARAMETER
 % IE N                   99997          $-PARAMETER
         v_('1') = 1;
         v_('2') = 2;
@@ -58,7 +58,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -71,7 +71,7 @@ switch(action)
             v_('J+3') = 3+v_('J');
             v_('J+4') = 4+v_('J');
             v_('J+5') = 5+v_('J');
-            [ig,ig_] = s2xlib('ii',['OBJ1',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['OBJ1',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(round(v_('J+1')))]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -85,7 +85,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -1.0;
             end
-            [ig,ig_] = s2xlib('ii',['OBJ2',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['OBJ2',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(round(v_('J+2')))]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -99,7 +99,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = 1.0;
             end
-            [ig,ig_] = s2xlib('ii',['OBJ3',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['OBJ3',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(round(v_('J+4')))]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -107,7 +107,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = 1.0;
             end
-            [ig,ig_] = s2xlib('ii',['OBJ4',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['OBJ4',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(round(v_('J+5')))]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -121,7 +121,7 @@ switch(action)
             v_('K+2') = 2+K;
             v_('K+3') = 3+K;
             v_('K+4') = 4+K;
-            [ig,ig_] = s2xlib('ii',['C',int2str(K)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C',int2str(K)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['C',int2str(K)];
             iv = ix_(['X',int2str(round(v_('K+1')))]);
@@ -130,7 +130,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = 3.0;
             end
-            [ig,ig_] = s2xlib('ii',['C',int2str(round(v_('K+1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C',int2str(round(v_('K+1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['C',int2str(round(v_('K+1')))];
             iv = ix_(['X',int2str(round(v_('K+3')))]);
@@ -145,7 +145,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -2.0;
             end
-            [ig,ig_] = s2xlib('ii',['C',int2str(round(v_('K+2')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C',int2str(round(v_('K+2')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['C',int2str(round(v_('K+2')))];
             iv = ix_(['X',int2str(round(v_('K+4')))]);
@@ -176,8 +176,6 @@ switch(action)
             pbm.gconst(ig_(['OBJ3',int2str(I)])) = 1.0;
             pbm.gconst(ig_(['OBJ4',int2str(I)])) = 1.0;
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -185,7 +183,7 @@ switch(action)
         pb.x0 = 2.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eSQR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSQR',iet_);
         elftv{it}{1} = 'V';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -196,38 +194,38 @@ switch(action)
             v_('K+1') = 1+K;
             v_('K+2') = 2+K;
             ename = ['E',int2str(K)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSQR';
             ielftype(ie) = iet_('eSQR');
             vname = ['X',int2str(K)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],2.0);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],2.0);
             posev = find(strcmp('V',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+1')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSQR';
             ielftype(ie) = iet_('eSQR');
             ename = ['E',int2str(round(v_('K+1')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('K+2')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],2.0);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],2.0);
             posev = find(strcmp('V',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             ename = ['E',int2str(round(v_('K+2')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eSQR';
             ielftype(ie) = iet_('eSQR');
             ename = ['E',int2str(round(v_('K+2')))];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             vname = ['X',int2str(round(v_('K+1')))];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],2.0);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],2.0);
             posev = find(strcmp('V',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL2',igt_);
-        [it,igt_] = s2xlib('ii','gL4',igt_);
+        [it,igt_] = s2mpjlib('ii','gL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gL4',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -262,6 +260,8 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN               3.06371E+3
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -271,6 +271,10 @@ switch(action)
         pb.pbclass = 'OQR2-AY-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -325,7 +329,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

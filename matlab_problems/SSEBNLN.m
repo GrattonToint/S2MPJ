@@ -218,30 +218,30 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         [iv,ix_] =...
-              s2xlib('ii',['V',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))],ix_);
+              s2mpjlib('ii',['V',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))],ix_);
         pb.xnames{iv} =...
               ['V',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))];
         [iv,ix_] =...
-              s2xlib('ii',['R',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))],ix_);
+              s2mpjlib('ii',['R',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))],ix_);
         pb.xnames{iv} =...
               ['R',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))];
         for ID=v_('1'):v_('DAYS')
             for IH=v_('1'):v_('HOURS')
-                [iv,ix_] = s2xlib('ii',['P1',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['P1',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['P1',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['P2',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['P2',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['P2',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['QH',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['QH',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['QH',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['S',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['S',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['S',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['QG',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['QG',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['QG',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['QP',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['QP',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['QP',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['V',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['V',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['V',int2str(ID),',',int2str(IH)];
-                [iv,ix_] = s2xlib('ii',['R',int2str(ID),',',int2str(IH)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['R',int2str(ID),',',int2str(IH)],ix_);
                 pb.xnames{iv} = ['R',int2str(ID),',',int2str(IH)];
             end
         end
@@ -249,7 +249,7 @@ switch(action)
         pbm.A = sparse(0,0);
         for ID=v_('1'):v_('DAYS')
             for IH=v_('1'):v_('HOURS')
-                [ig,ig_] = s2xlib('ii','OBJ',ig_);
+                [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
                 gtype{ig} = '<>';
                 iv = ix_(['P1',int2str(ID),',',int2str(IH)]);
                 if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -291,7 +291,7 @@ switch(action)
         end
         for ID=v_('1'):v_('DAYS')
             v_('P') = -1+ID;
-            [ig,ig_] = s2xlib('ii',['H',int2str(ID),',',int2str(round(v_('1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['H',int2str(ID),',',int2str(round(v_('1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['H',int2str(ID),',',int2str(round(v_('1')))];
             iv = ix_(['V',int2str(ID),',',int2str(round(v_('1')))]);
@@ -306,7 +306,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -1.0;
             end
-            [ig,ig_] = s2xlib('ii',['H',int2str(ID),',',int2str(round(v_('1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['H',int2str(ID),',',int2str(round(v_('1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['H',int2str(ID),',',int2str(round(v_('1')))];
             iv = ix_(['S',int2str(ID),',',int2str(round(v_('1')))]);
@@ -325,7 +325,7 @@ switch(action)
         for ID=v_('1'):v_('DAYS')
             for IH=v_('2'):v_('HOURS')
                 v_('IH-1') = -1+IH;
-                [ig,ig_] = s2xlib('ii',['H',int2str(ID),',',int2str(IH)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['H',int2str(ID),',',int2str(IH)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['H',int2str(ID),',',int2str(IH)];
                 iv = ix_(['V',int2str(ID),',',int2str(IH)]);
@@ -356,7 +356,7 @@ switch(action)
         end
         for ID=v_('1'):v_('DAYS')
             v_('P') = -1+ID;
-            [ig,ig_] = s2xlib('ii',['R',int2str(ID),',',int2str(round(v_('1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['R',int2str(ID),',',int2str(round(v_('1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['R',int2str(ID),',',int2str(round(v_('1')))];
             iv = ix_(['R',int2str(ID),',',int2str(round(v_('1')))]);
@@ -371,7 +371,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = -1.0;
             end
-            [ig,ig_] = s2xlib('ii',['R',int2str(ID),',',int2str(round(v_('1')))],ig_);
+            [ig,ig_] = s2mpjlib('ii',['R',int2str(ID),',',int2str(round(v_('1')))],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['R',int2str(ID),',',int2str(round(v_('1')))];
             iv = ix_(['QG',int2str(ID),',',int2str(round(v_('1')))]);
@@ -390,7 +390,7 @@ switch(action)
         for ID=v_('1'):v_('DAYS')
             for IH=v_('2'):v_('HOURS')
                 v_('IH-1') = -1+IH;
-                [ig,ig_] = s2xlib('ii',['R',int2str(ID),',',int2str(IH)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['R',int2str(ID),',',int2str(IH)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['R',int2str(ID),',',int2str(IH)];
                 iv = ix_(['R',int2str(ID),',',int2str(IH)]);
@@ -421,7 +421,7 @@ switch(action)
         end
         for ID=v_('1'):v_('DAYS')
             for IH=v_('1'):v_('HOURS')
-                [ig,ig_] = s2xlib('ii',['D',int2str(ID),',',int2str(IH)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['D',int2str(ID),',',int2str(IH)],ig_);
                 gtype{ig}  = '>=';
                 cnames{ig} = ['D',int2str(ID),',',int2str(IH)];
                 iv = ix_(['P1',int2str(ID),',',int2str(IH)]);
@@ -458,7 +458,7 @@ switch(action)
         end
         for D=v_('1'):v_('DAYS')
             for H=v_('1'):v_('HOURS')
-                [ig,ig_] = s2xlib('ii',['QG*QP',int2str(D),',',int2str(H)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['QG*QP',int2str(D),',',int2str(H)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['QG*QP',int2str(D),',',int2str(H)];
             end
@@ -496,10 +496,8 @@ switch(action)
                       v_(['D',int2str(ID),',',int2str(IH)]);
             end
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_(['V',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))]),1) = 240000.0;
         pb.xupper(ix_(['V',int2str(round(v_('0'))),',',int2str(round(v_('HOURS')))]),1) = 240000.0;
@@ -575,7 +573,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'ePROD',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'ePROD',iet_);
         elftv{it}{1} = 'QP';
         elftv{it}{2} = 'QG';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -586,15 +584,15 @@ switch(action)
         for ID=v_('1'):v_('DAYS')
             for IH=v_('1'):v_('HOURS')
                 ename = ['P',int2str(ID),',',int2str(IH)];
-                [ie,ie_] = s2xlib('ii',ename,ie_);
+                [ie,ie_] = s2mpjlib('ii',ename,ie_);
                 pbm.elftype{ie} = 'ePROD';
                 ielftype(ie) = iet_('ePROD');
                 vname = ['QP',int2str(ID),',',int2str(IH)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('QP',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
                 vname = ['QG',int2str(ID),',',int2str(IH)];
-                [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                 posev = find(strcmp('QG',elftv{ielftype(ie)}));
                 pbm.elvar{ie}(posev) = iv;
             end
@@ -612,6 +610,8 @@ switch(action)
             end
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN               1.617060D+07
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -623,6 +623,10 @@ switch(action)
         pb.pbclass = 'LQR2-RN-194-96';
         varargout{1} = pb;
         varargout{2} = pbm;
+% **********************
+%  SET UP THE FUNCTION *
+%  AND RANGE ROUTINES  *
+% **********************
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -650,7 +654,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

@@ -21,7 +21,6 @@ function varargout = SIPOW1(action,varargin)
 % 
 %    Problem variants: they are identified by the values of M
 % 
-% IE M                   2
 % IE M                   20 
 % IE M                   100 
 % IE M                   500 
@@ -53,13 +52,13 @@ switch(action)
         v_('2PI/M') = v_('2PI')*v_('1/RM');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','X1',ix_);
+        [iv,ix_] = s2mpjlib('ii','X1',ix_);
         pb.xnames{iv} = 'X1';
-        [iv,ix_] = s2xlib('ii','X2',ix_);
+        [iv,ix_] = s2mpjlib('ii','X2',ix_);
         pb.xnames{iv} = 'X2';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         iv = ix_('X2');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -72,7 +71,7 @@ switch(action)
             v_('2PIJ/M') = v_('2PI/M')*v_('RJ');
             v_('COS') = cos(v_('2PIJ/M'));
             v_('SIN') = sin(v_('2PIJ/M'));
-            [ig,ig_] = s2xlib('ii',['C',int2str(J)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['C',int2str(J)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['C',int2str(J)];
             iv = ix_('X1');
@@ -107,8 +106,6 @@ switch(action)
         for J=v_('1'):v_('M')
             pbm.gconst(ig_(['C',int2str(J)])) = -1.0;
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -126,6 +123,7 @@ switch(action)
             pb.y0(find(pbm.congrps==ig_('X2')),1) = 0.5;
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+% LO SOLUTION            -1.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
@@ -143,7 +141,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

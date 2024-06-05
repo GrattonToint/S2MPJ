@@ -162,13 +162,13 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
-            [ig,ig_] = s2xlib('ii',['GA',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['GA',int2str(I)],ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -179,7 +179,7 @@ switch(action)
             v_('SCALE') = 1.0/v_(['ALPH',int2str(I)]);
             pbm.gscale(ig,1) = v_('SCALE');
         end
-        [ig,ig_] = s2xlib('ii','GB1',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB1',ig_);
         gtype{ig} = '<>';
         iv = ix_('X31');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -193,7 +193,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB2',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB2',ig_);
         gtype{ig} = '<>';
         iv = ix_('X1');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -213,7 +213,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB3',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB3',ig_);
         gtype{ig} = '<>';
         iv = ix_('X2');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -233,7 +233,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB4',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB4',ig_);
         gtype{ig} = '<>';
         iv = ix_('X4');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -253,7 +253,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB5',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB5',ig_);
         gtype{ig} = '<>';
         iv = ix_('X6');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -273,7 +273,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB6',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB6',ig_);
         gtype{ig} = '<>';
         iv = ix_('X8');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -293,7 +293,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB7',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB7',ig_);
         gtype{ig} = '<>';
         iv = ix_('X10');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -313,7 +313,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB8',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB8',ig_);
         gtype{ig} = '<>';
         iv = ix_('X12');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -333,7 +333,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB9',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB9',ig_);
         gtype{ig} = '<>';
         iv = ix_('X11');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -365,7 +365,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB10',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB10',ig_);
         gtype{ig} = '<>';
         iv = ix_('X16');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -385,7 +385,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB11',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB11',ig_);
         gtype{ig} = '<>';
         iv = ix_('X9');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -405,7 +405,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB12',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB12',ig_);
         gtype{ig} = '<>';
         iv = ix_('X5');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -425,7 +425,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB13',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB13',ig_);
         gtype{ig} = '<>';
         iv = ix_('X19');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -451,7 +451,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB14',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB14',ig_);
         gtype{ig} = '<>';
         iv = ix_('X23');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -471,7 +471,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB15',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB15',ig_);
         gtype{ig} = '<>';
         iv = ix_('X7');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -497,7 +497,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB16',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB16',ig_);
         gtype{ig} = '<>';
         iv = ix_('X28');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -517,7 +517,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB17',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB17',ig_);
         gtype{ig} = '<>';
         iv = ix_('X29');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -537,7 +537,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB18',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB18',ig_);
         gtype{ig} = '<>';
         iv = ix_('X32');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -557,7 +557,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB19',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB19',ig_);
         gtype{ig} = '<>';
         iv = ix_('X3');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -577,7 +577,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB20',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB20',ig_);
         gtype{ig} = '<>';
         iv = ix_('X35');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -597,7 +597,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB21',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB21',ig_);
         gtype{ig} = '<>';
         iv = ix_('X36');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -617,7 +617,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB22',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB22',ig_);
         gtype{ig} = '<>';
         iv = ix_('X30');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -637,7 +637,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB23',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB23',ig_);
         gtype{ig} = '<>';
         iv = ix_('X38');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -657,7 +657,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB24',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB24',ig_);
         gtype{ig} = '<>';
         iv = ix_('X40');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -677,7 +677,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB25',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB25',ig_);
         gtype{ig} = '<>';
         iv = ix_('X41');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -703,7 +703,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB26',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB26',ig_);
         gtype{ig} = '<>';
         iv = ix_('X44');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -729,7 +729,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB27',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB27',ig_);
         gtype{ig} = '<>';
         iv = ix_('X46');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -743,7 +743,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB28',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB28',ig_);
         gtype{ig} = '<>';
         iv = ix_('X42');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -775,7 +775,7 @@ switch(action)
         else
             pbm.A(ig,iv) = 1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB29',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB29',ig_);
         gtype{ig} = '<>';
         iv = ix_('X26');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -795,7 +795,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB30',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB30',ig_);
         gtype{ig} = '<>';
         iv = ix_('X15');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -821,7 +821,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB31',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB31',ig_);
         gtype{ig} = '<>';
         iv = ix_('X49');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -829,7 +829,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB32',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB32',ig_);
         gtype{ig} = '<>';
         iv = ix_('X22');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -837,7 +837,7 @@ switch(action)
         else
             pbm.A(ig,iv) = -1.0;
         end
-        [ig,ig_] = s2xlib('ii','GB33',ig_);
+        [ig,ig_] = s2mpjlib('ii','GB33',ig_);
         gtype{ig} = '<>';
         iv = ix_('X27');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -847,7 +847,7 @@ switch(action)
         end
         for I=v_('1'):v_('33')
             v_('SCALE') = 1.0/v_(['BETA',int2str(I)]);
-            [ig,ig_] = s2xlib('ii',['GB',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['GB',int2str(I)],ig_);
             gtype{ig} = '<>';
             pbm.gscale(ig,1) = v_('SCALE');
         end
@@ -861,15 +861,13 @@ switch(action)
         for I=v_('1'):v_('33')
             pbm.gconst(ig_(['GB',int2str(I)])) = v_(['D',int2str(I)]);
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gACT',igt_);
-        [it,igt_] = s2xlib('ii','gBBT',igt_);
+        [it,igt_] = s2mpjlib('ii','gACT',igt_);
+        [it,igt_] = s2mpjlib('ii','gBBT',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -882,12 +880,18 @@ switch(action)
             pbm.grftype{ig} = 'gBBT';
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
+% LO SOLTN             1373.90546067
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'OUR2-MN-50-0';
         pb.x0          = zeros(pb.n,1);
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -944,7 +948,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,2];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

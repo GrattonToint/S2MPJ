@@ -65,13 +65,13 @@ switch(action)
         v_('H') = v_('DIFF')/v_('RM');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','U',ix_);
+        [iv,ix_] = s2mpjlib('ii','U',ix_);
         pb.xnames{iv} = 'U';
-        [iv,ix_] = s2xlib('ii','X',ix_);
+        [iv,ix_] = s2mpjlib('ii','X',ix_);
         pb.xnames{iv} = 'X';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         iv = ix_('U');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -89,7 +89,7 @@ switch(action)
             v_('2W**2') = 2.0*v_('W**2');
             v_('2W**2-1') = v_('2W**2')-v_('ONE');
             v_('XCOEFF') = v_('W(1-W)')-v_('2W**2-1');
-            [ig,ig_] = s2xlib('ii',['LO',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['LO',int2str(I)],ig_);
             gtype{ig}  = '>=';
             cnames{ig} = ['LO',int2str(I)];
             iv = ix_('U');
@@ -129,8 +129,6 @@ switch(action)
             v_('W-W**2') = v_('W')*v_('1-W');
             pbm.gconst(ig_(['LO',int2str(I)])) = v_('W-W**2');
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -152,7 +150,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

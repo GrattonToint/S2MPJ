@@ -23,6 +23,10 @@ function varargout = MSQRTB(action,varargin)
 % 
 %       Alternative values for the SIF file parameters:
 % IE P                   3              $-PARAMETER n = 9     original value
+% IE P                   7              $-PARAMETER n = 49
+% IE P                   10             $-PARAMETER n = 100
+% IE P                   23             $-PARAMETER n = 529
+% IE P                   32             $-PARAMETER n = 1024
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,10 +50,6 @@ switch(action)
         else
             v_('P') = varargin{1};
         end
-% IE P                   7              $-PARAMETER n = 49
-% IE P                   10             $-PARAMETER n = 100
-% IE P                   23             $-PARAMETER n = 529
-% IE P                   32             $-PARAMETER n = 1024
 % IE P                   70             $-PARAMETER n = 4900
         v_('N') = v_('P')*v_('P');
         v_('1') = 1;
@@ -77,7 +77,7 @@ switch(action)
         pb.xnames = {};
         for I=v_('1'):v_('P')
             for J=v_('1'):v_('P')
-                [iv,ix_] = s2xlib('ii',['X',int2str(I),',',int2str(J)],ix_);
+                [iv,ix_] = s2mpjlib('ii',['X',int2str(I),',',int2str(J)],ix_);
                 pb.xnames{iv} = ['X',int2str(I),',',int2str(J)];
             end
         end
@@ -85,7 +85,7 @@ switch(action)
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('P')
             for J=v_('1'):v_('P')
-                [ig,ig_] = s2xlib('ii',['G',int2str(I),',',int2str(J)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['G',int2str(I),',',int2str(J)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['G',int2str(I),',',int2str(J)];
             end
@@ -112,8 +112,6 @@ switch(action)
                       v_(['A',int2str(I),',',int2str(J)]);
             end
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -138,7 +136,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'en2PR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'en2PR',iet_);
         elftv{it}{1} = 'XIT';
         elftv{it}{2} = 'XTJ';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -150,15 +148,15 @@ switch(action)
             for J=v_('1'):v_('P')
                 for T=v_('1'):v_('P')
                     ename = ['E',int2str(I),',',int2str(J),',',int2str(T)];
-                    [ie,ie_] = s2xlib('ii',ename,ie_);
+                    [ie,ie_] = s2mpjlib('ii',ename,ie_);
                     pbm.elftype{ie} = 'en2PR';
                     ielftype(ie) = iet_('en2PR');
                     vname = ['X',int2str(I),',',int2str(T)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                     posev = find(strcmp('XIT',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                     vname = ['X',int2str(T),',',int2str(J)];
-                    [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+                    [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
                     posev = find(strcmp('XTJ',elftv{ielftype(ie)}));
                     pbm.elvar{ie}(posev) = iv;
                 end
@@ -214,7 +212,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

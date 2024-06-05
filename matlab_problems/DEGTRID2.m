@@ -15,6 +15,11 @@ function varargout = DEGTRID2(action,varargin)
 % 
 %    The number of variables - 1
 % 
+% IE N                   10
+% IE N                   50
+% IE N                   100
+% IE N                   1000
+% IE N                   10000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -33,17 +38,7 @@ switch(action)
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
-            v_('N') = 10;  %  SIF file default value
-        else
-            v_('N') = varargin{1};
-        end
-%       Alternative values for the SIF file parameters:
-% IE N                   50             $-PARAMETER      
-% IE N                   100            $-PARAMETER      
-% IE N                   1000           $-PARAMETER      
-% IE N                   10000          $-PARAMETER      
-% IE N                   100000         $-PARAMETER      
+        v_('N') = 100000;
         v_('0') = 0;
         v_('1') = 1;
         v_('2') = 2;
@@ -52,12 +47,12 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         iv = ix_(['X',int2str(round(v_('0')))]);
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -72,7 +67,7 @@ switch(action)
             pbm.A(ig,iv) = -1.5;
         end
         for I=v_('2'):v_('N-1')
-            [ig,ig_] = s2xlib('ii','OBJ',ig_);
+            [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -81,7 +76,7 @@ switch(action)
                 pbm.A(ig,iv) = -2.0;
             end
         end
-        [ig,ig_] = s2xlib('ii','OBJ',ig_);
+        [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
         gtype{ig} = '<>';
         iv = ix_(['X',int2str(round(v_('N')))]);
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -94,8 +89,6 @@ switch(action)
         ngrp   = numEntries(ig_);
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = 1.0*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -120,6 +113,7 @@ switch(action)
             pbm.H(ix2,ix1) = pbm.H(ix1,ix2);
         end
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    Solution
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
@@ -134,7 +128,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

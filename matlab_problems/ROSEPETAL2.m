@@ -20,6 +20,10 @@ function varargout = ROSEPETAL2(action,varargin)
 % 
 %       Alternative values for the SIF file parameters:
 % IE N                   2              $-PARAMETER
+% IE N                   10             $-PARAMETER
+% IE N                   100            $-PARAMETER
+% IE N                   1000           $-PARAMETER
+% IE N                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,9 +47,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-% IE N                   100            $-PARAMETER
-% IE N                   1000           $-PARAMETER
-% IE N                   10000          $-PARAMETER
 % IE N                   100000         $-PARAMETER
 % RE R                   1.0            $-PARAMETER
         if(nargin<3)
@@ -61,16 +62,16 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
-        [iv,ix_] = s2xlib('ii','S',ix_);
+        [iv,ix_] = s2mpjlib('ii','S',ix_);
         pb.xnames{iv} = 'S';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
             v_('RI') = I;
-            [ig,ig_] = s2xlib('ii','OBJ',ig_);
+            [ig,ig_] = s2mpjlib('ii','OBJ',ig_);
             gtype{ig} = '<>';
             iv = ix_(['X',int2str(I)]);
             if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -78,7 +79,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = v_('RI');
             end
-            [ig,ig_] = s2xlib('ii',['M',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['M',int2str(I)],ig_);
             gtype{ig}  = '<=';
             cnames{ig} = ['M',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -93,7 +94,7 @@ switch(action)
             else
                 pbm.A(ig,iv) = 1.0;
             end
-            [ig,ig_] = s2xlib('ii',['P',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['P',int2str(I)],ig_);
             gtype{ig}  = '<=';
             cnames{ig} = ['P',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -109,7 +110,7 @@ switch(action)
                 pbm.A(ig,iv) = 1.0;
             end
         end
-        [ig,ig_] = s2xlib('ii','SUM',ig_);
+        [ig,ig_] = s2mpjlib('ii','SUM',ig_);
         gtype{ig}  = '==';
         cnames{ig} = 'SUM';
         iv = ix_('S');
@@ -138,8 +139,6 @@ switch(action)
             pbm.gconst(ig_(['M',int2str(I)])) = v_('R2-1');
             pbm.gconst(ig_(['P',int2str(I)])) = v_('R2-1');
         end
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -148,7 +147,7 @@ switch(action)
         pb.x0(ix_('S'),1) = v_('NR2');
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eSQR',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eSQR',iet_);
         elftv{it}{1} = 'V';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = configureDictionary('string','double');
@@ -157,13 +156,13 @@ switch(action)
         pbm.elvar   = {};
         for I=v_('1'):v_('N')
             ename = ['Q',int2str(I)];
-            [ie,ie_,newelt] = s2xlib('ii',ename,ie_);
+            [ie,ie_,newelt] = s2mpjlib('ii',ename,ie_);
             if(newelt)
                 pbm.elftype{ie} = 'eSQR';
                 ielftype(ie) = iet_('eSQR');
             end
             vname = ['X',int2str(I)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],v_('R2'));
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],v_('R2'));
             posev = find(strcmp('V',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
         end
@@ -212,7 +211,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

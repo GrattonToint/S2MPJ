@@ -49,13 +49,13 @@ switch(action)
         v_('C') = 0.85;
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        [iv,ix_] = s2xlib('ii','a',ix_);
+        [iv,ix_] = s2mpjlib('ii','a',ix_);
         pb.xnames{iv} = 'a';
-        [iv,ix_] = s2xlib('ii','b',ix_);
+        [iv,ix_] = s2mpjlib('ii','b',ix_);
         pb.xnames{iv} = 'b';
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii','Obj1',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj1',ig_);
         gtype{ig} = '<>';
         iv = ix_('a');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -70,7 +70,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = 2.0;
-        [ig,ig_] = s2xlib('ii','Obj2',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj2',ig_);
         gtype{ig} = '<>';
         iv = ix_('a');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -85,7 +85,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = 2.0;
-        [ig,ig_] = s2xlib('ii','Obj3',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj3',ig_);
         gtype{ig} = '<>';
         iv = ix_('a');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -100,7 +100,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = 2.0;
-        [ig,ig_] = s2xlib('ii','Obj4',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj4',ig_);
         gtype{ig} = '<>';
         iv = ix_('a');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -115,7 +115,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = 2.0;
-        [ig,ig_] = s2xlib('ii','Obj5',ig_);
+        [ig,ig_] = s2mpjlib('ii','Obj5',ig_);
         gtype{ig} = '<>';
         iv = ix_('a');
         if(size(pbm.A,1)>=ig&&size(pbm.A,2)>=iv)
@@ -130,7 +130,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         pbm.gscale(ig,1) = 2.0;
-        [ig,ig_] = s2xlib('ii','Cons',ig_);
+        [ig,ig_] = s2mpjlib('ii','Cons',ig_);
         gtype{ig}  = '<=';
         cnames{ig} = 'Cons';
         iv = ix_('a');
@@ -167,16 +167,14 @@ switch(action)
         pbm.gconst(ig_('Obj4')) = v_('Y4');
         pbm.gconst(ig_('Obj5')) = v_('Y5');
         pbm.gconst(ig_('Cons')) = v_('C');
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xupper = Inf*ones(pb.n,1);
         pb.xlower(ix_('b')) = -Inf;
         pb.xupper(ix_('b'),1) = +Inf;
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gHUBER',igt_);
+        [it,igt_] = s2mpjlib('ii','gHUBER',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -250,7 +248,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

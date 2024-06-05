@@ -17,11 +17,15 @@ function varargout = n10FOLDTR(action,varargin)
 % 
 %    SIF input: Nick Gould, Jan 2012.
 % 
-%    classification = 'NOR2-AN-V-0'
+%    classification = 'NOR2-AN-V-V'
 % 
 %    Problem dimension
 % 
-% IE N                   4              $ original value
+%       Alternative values for the SIF file parameters:
+% IE N                   4              $-PARAMETER original value
+% IE N                   10             $-PARAMETER
+% IE N                   100            $-PARAMETER
+% IE N                   1000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,21 +44,25 @@ switch(action)
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        v_('N') = 10;
+        if(nargin<2)
+            v_('N') = 10;  %  SIF file default value
+        else
+            v_('N') = varargin{1};
+        end
         v_('1') = 1;
         v_('N-2') = -2+v_('N');
         v_('N-1') = -1+v_('N');
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('1'):v_('N')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         for I=v_('1'):v_('N')
             for J=v_('1'):I
-                [ig,ig_] = s2xlib('ii',['E',int2str(I)],ig_);
+                [ig,ig_] = s2mpjlib('ii',['E',int2str(I)],ig_);
                 gtype{ig}  = '==';
                 cnames{ig} = ['E',int2str(I)];
                 iv = ix_(['X',int2str(J)]);
@@ -79,8 +87,6 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -89,8 +95,8 @@ switch(action)
         pb.y0 = 10.0*ones(pb.m,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = configureDictionary('string','double');
-        [it,igt_] = s2xlib('ii','gL2',igt_);
-        [it,igt_] = s2xlib('ii','gL5',igt_);
+        [it,igt_] = s2mpjlib('ii','gL2',igt_);
+        [it,igt_] = s2mpjlib('ii','gL5',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
         nlc = [];
@@ -99,7 +105,10 @@ switch(action)
         ig = ig_(['E',int2str(round(v_('N')))]);
         pbm.grftype{ig} = 'gL5';
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+%    no objective
         pb.objlower = 0.0;
+%    Solution
+% LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -107,9 +116,13 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'NOR2-AN-V-0';
+        pb.pbclass = 'NOR2-AN-V-V';
         varargout{1} = pb;
         varargout{2} = pbm;
+% ********************
+%  SET UP THE GROUPS *
+%  ROUTINE           *
+% ********************
 
     %%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -148,7 +161,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));

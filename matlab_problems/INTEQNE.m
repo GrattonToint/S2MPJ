@@ -20,6 +20,8 @@ function varargout = INTEQNE(action,varargin)
 %    N+2 is the number of discretization points .
 %    The number of free variables is N.
 % 
+%       Alternative values for the SIF file parameters:
+% IE N                   10             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,7 +45,6 @@ switch(action)
         else
             v_('N') = varargin{1};
         end
-%       Alternative values for the SIF file parameters:
 % IE N                   50             $-PARAMETER     original value
 % IE N                   100            $-PARAMETER
 % IE N                   500            $-PARAMETER
@@ -56,12 +57,12 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
         for I=v_('0'):v_('N+1')
-            [iv,ix_] = s2xlib('ii',['X',int2str(I)],ix_);
+            [iv,ix_] = s2mpjlib('ii',['X',int2str(I)],ix_);
             pb.xnames{iv} = ['X',int2str(I)];
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
-        [ig,ig_] = s2xlib('ii',['G',int2str(round(v_('0')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['G',int2str(round(v_('0')))],ig_);
         gtype{ig}  = '==';
         cnames{ig} = ['G',int2str(round(v_('0')))];
         iv = ix_(['X',int2str(round(v_('0')))]);
@@ -71,7 +72,7 @@ switch(action)
             pbm.A(ig,iv) = 1.0;
         end
         for I=v_('1'):v_('N')
-            [ig,ig_] = s2xlib('ii',['G',int2str(I)],ig_);
+            [ig,ig_] = s2mpjlib('ii',['G',int2str(I)],ig_);
             gtype{ig}  = '==';
             cnames{ig} = ['G',int2str(I)];
             iv = ix_(['X',int2str(I)]);
@@ -81,7 +82,7 @@ switch(action)
                 pbm.A(ig,iv) = 1.0;
             end
         end
-        [ig,ig_] = s2xlib('ii',['G',int2str(round(v_('N+1')))],ig_);
+        [ig,ig_] = s2mpjlib('ii',['G',int2str(round(v_('N+1')))],ig_);
         gtype{ig}  = '==';
         cnames{ig} = ['G',int2str(round(v_('N+1')))];
         iv = ix_(['X',int2str(round(v_('N+1')))]);
@@ -104,8 +105,6 @@ switch(action)
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
-        pb.xlower = zeros(pb.n,1);
-        pb.xupper = +Inf*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
@@ -135,7 +134,7 @@ switch(action)
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_ = configureDictionary('string','double');
-        [it,iet_] = s2xlib( 'ii', 'eVBCUBE',iet_);
+        [it,iet_] = s2mpjlib( 'ii', 'eVBCUBE',iet_);
         elftv{it}{1} = 'V';
         elftp{it}{1} = 'B';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -149,11 +148,11 @@ switch(action)
             v_('TJ') = v_('REALJ')*v_('H');
             v_('1+TJ') = 1.0+v_('TJ');
             ename = ['A',int2str(J)];
-            [ie,ie_] = s2xlib('ii',ename,ie_);
+            [ie,ie_] = s2mpjlib('ii',ename,ie_);
             pbm.elftype{ie} = 'eVBCUBE';
             ielftype(ie) = iet_('eVBCUBE');
             vname = ['X',int2str(J)];
-            [iv,ix_,pb] = s2xlib('nlx',vname,ix_,pb,1,[],[],[]);
+            [iv,ix_,pb] = s2mpjlib('nlx',vname,ix_,pb,1,[],[],[]);
             posev = find(strcmp('V',elftv{ielftype(ie)}));
             pbm.elvar{ie}(posev) = iv;
             [~,posep] = ismember('B',elftp{ielftype(ie)});
@@ -228,7 +227,7 @@ switch(action)
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
-            [varargout{1:max(1,nargout)}] = s2xlib(action,pbm,varargin{:});
+            [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
         [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
