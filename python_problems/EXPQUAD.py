@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  EXPQUAD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -14,6 +14,14 @@ class  EXPQUAD(CUTEst_problem):
 # 
 #    classification = "OBR2-AN-V-V"
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   12             $-PARAMETER
+# IE M                   6              $-PARAMETER
+# 
+# IE N                   120            $-PARAMETER     original value
+# IE M                   10             $-PARAMETER     original value
+# 
+# IE N                   1200           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -36,15 +44,11 @@ class  EXPQUAD(CUTEst_problem):
             v_['N'] = int(12);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE M                   100            $-PARAMETER
         if nargin<2:
             v_['M'] = int(6);  #  SIF file default value
         else:
             v_['M'] = int(args[1])
-#           Alternative values for the SIF file parameters:
-# IE N                   120            $-PARAMETER     original value
-# IE M                   10             $-PARAMETER     original value
-# IE N                   1200           $-PARAMETER
-# IE M                   100            $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
         v_['2'] = 2
@@ -56,7 +60,7 @@ class  EXPQUAD(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -68,7 +72,7 @@ class  EXPQUAD(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['RI'] = float(I)
             v_['C'] = - 10.0*v_['RI']
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['C'])+pbm.A[ig,iv]
@@ -79,8 +83,6 @@ class  EXPQUAD(CUTEst_problem):
         pb.m        = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -92,12 +94,12 @@ class  EXPQUAD(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEXP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXP', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftp = []
         elftp = loaset(elftp,it,0,'P')
-        [it,iet_,_] = s2x_ii( 'eQUAD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eQUAD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -112,31 +114,31 @@ class  EXPQUAD(CUTEst_problem):
             v_['C'] = v_['RI']/v_['RM']
             v_['I+1'] = I+v_['1']
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
             ielftype = arrset(ielftype, ie, iet_["eEXP"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['C']))
         for I in range(int(v_['M+1']),int(v_['N-1'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eQUAD')
                 ielftype = arrset( ielftype,ie,iet_['eQUAD'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['N']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -153,6 +155,7 @@ class  EXPQUAD(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -164,6 +167,10 @@ class  EXPQUAD(CUTEst_problem):
         pb.pbclass = "OBR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

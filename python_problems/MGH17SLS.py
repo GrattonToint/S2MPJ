@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MGH17SLS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,7 +120,7 @@ class  MGH17SLS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('B'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('B'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'B'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -130,7 +130,7 @@ class  MGH17SLS(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('F'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['B1']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -143,8 +143,6 @@ class  MGH17SLS(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['F'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -159,7 +157,7 @@ class  MGH17SLS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eE2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eE2', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftp = []
@@ -172,36 +170,36 @@ class  MGH17SLS(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'EA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eE2')
             ielftype = arrset(ielftype, ie, iet_["eE2"])
             vname = 'B2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'B4'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='X')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['X'+str(I)]))
             ename = 'EB'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eE2')
             ielftype = arrset(ielftype, ie, iet_["eE2"])
             vname = 'B3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'B5'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='X')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['X'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -220,7 +218,10 @@ class  MGH17SLS(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['EB'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -230,6 +231,10 @@ class  MGH17SLS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "NOR2-MN-5-33"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

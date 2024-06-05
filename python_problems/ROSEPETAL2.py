@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ROSEPETAL2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,6 +21,10 @@ class  ROSEPETAL2(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,9 +47,6 @@ class  ROSEPETAL2(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
 # RE R                   1.0            $-PARAMETER
         if nargin<2:
@@ -63,9 +64,9 @@ class  ROSEPETAL2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-        [iv,ix_,_] = s2x_ii('S',ix_)
+        [iv,ix_,_] = s2mpj_ii('S',ix_)
         pb.xnames=arrset(pb.xnames,iv,'S')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -76,25 +77,25 @@ class  ROSEPETAL2(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['RI'] = float(I)
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['RI'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('M'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('M'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'M'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
             iv = ix_['S']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('P'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('P'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'P'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
             iv = ix_['S']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('SUM',ig_)
+        [ig,ig_,_] = s2mpj_ii('SUM',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'SUM')
         iv = ix_['S']
@@ -118,8 +119,6 @@ class  ROSEPETAL2(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['M'+str(I)],float(v_['R2-1']))
             pbm.gconst = arrset(pbm.gconst,ig_['P'+str(I)],float(v_['R2-1']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -129,7 +128,7 @@ class  ROSEPETAL2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'V')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -138,12 +137,12 @@ class  ROSEPETAL2(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'Q'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
                 ielftype = arrset( ielftype,ie,iet_['eSQR'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,v_['R2'])
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,v_['R2'])
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

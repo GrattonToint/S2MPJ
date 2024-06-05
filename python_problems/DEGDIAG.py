@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DEGDIAG(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,6 +16,13 @@ class  DEGDIAG(CUTEst_problem):
 # 
 #    The number of variables - 1
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,12 +45,6 @@ class  DEGDIAG(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
-# IE N                   100000         $-PARAMETER
         v_['0'] = 0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
@@ -51,7 +52,7 @@ class  DEGDIAG(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -65,10 +66,8 @@ class  DEGDIAG(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         v_['RN'] = float(v_['N'])
         v_['RN'] = 1.0+v_['RN']
@@ -86,6 +85,7 @@ class  DEGDIAG(CUTEst_problem):
             pbm.H[ix1,ix2] = float(1.0)+pbm.H[ix1,ix2]
             pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )

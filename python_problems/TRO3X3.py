@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TRO3X3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,10 +53,10 @@ class  TRO3X3(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -65,16 +65,16 @@ class  TRO3X3(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U8']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(I))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('BALANCE',ig_)
+            [ig,ig_,_] = s2mpj_ii('BALANCE',ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'BALANCE')
             iv = ix_['X'+str(I)]
@@ -97,10 +97,8 @@ class  TRO3X3(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['BALANCE'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['C8'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pb.xlower[ix_['U'+str(I)]] = -float('Inf')
@@ -113,7 +111,7 @@ class  TRO3X3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'U')
         elftp = []
@@ -125,1666 +123,1666 @@ class  TRO3X3(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E1'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E2'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E3'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E4'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E5'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E6'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E7'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E8'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E9'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E10'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E11'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E12'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E13'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E14'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E15'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E16'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E17'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E18'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E19'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E20'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E21'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E22'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E23'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E24'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E25'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E26'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E27'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E28'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E29'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E30'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E31'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E32'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E33'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E34'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E35'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E36'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E37'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E38'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E39'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E40'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E41'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E42'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E43'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E44'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E45'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E46'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E47'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E48'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E49'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E50'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E51'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E52'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E53'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E54'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E55'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E56'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E57'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E58'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E59'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E60'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E61'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E62'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E63'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E64'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E65'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E66'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E67'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X13'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E68'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X13'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E69'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X13'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E70'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X13'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E71'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E72'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E73'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E74'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E75'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E76'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E77'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E78'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E79'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E80'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E81'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E82'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E83'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E84'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E85'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E86'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E87'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X15'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E88'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X15'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E89'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X15'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E90'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X15'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E91'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E92'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E93'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E94'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E95'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E96'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E97'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E98'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E99'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E100'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E101'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E102'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E103'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E104'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E105'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.000000))
         ename = 'E106'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000))
         ename = 'E107'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X17'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E108'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X18'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.000000))
         ename = 'E109'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X18'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E110'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X18'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-4.000000))
         ename = 'E111'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset( ielftype,ie,iet_['ePROD'])
         vname = 'X18'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='U')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P')
@@ -2351,6 +2349,8 @@ class  TRO3X3(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -2367,6 +2367,10 @@ class  TRO3X3(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LOR2-RN-30-13"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

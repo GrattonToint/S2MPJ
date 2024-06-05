@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS118(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,7 +49,7 @@ class  HS118(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['15'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -63,7 +63,7 @@ class  HS118(CUTEst_problem):
             v_['3K+1'] = 1+v_['3K']
             v_['3K+2'] = 2+v_['3K']
             v_['3K+3'] = 3+v_['3K']
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['3K+1']))]
             pbm.A[ig,iv] = float(2.3)+pbm.A[ig,iv]
@@ -78,28 +78,28 @@ class  HS118(CUTEst_problem):
             v_['3K+3'] = 3+v_['3K']
             v_['3K-2'] = -2+v_['3K']
             v_['3K-1'] = -1+v_['3K']
-            [ig,ig_,_] = s2x_ii('A'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('A'+str(K),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'A'+str(K))
             iv = ix_['X'+str(int(v_['3K+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['3K-2']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('B'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(K),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'B'+str(K))
             iv = ix_['X'+str(int(v_['3K+3']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['3K']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(K))
             iv = ix_['X'+str(int(v_['3K+2']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['3K-1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('D1',ig_)
+        [ig,ig_,_] = s2mpj_ii('D1',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'D1')
         iv = ix_['X1']
@@ -108,7 +108,7 @@ class  HS118(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('D2',ig_)
+        [ig,ig_,_] = s2mpj_ii('D2',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'D2')
         iv = ix_['X4']
@@ -117,7 +117,7 @@ class  HS118(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X6']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('D3',ig_)
+        [ig,ig_,_] = s2mpj_ii('D3',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'D3')
         iv = ix_['X7']
@@ -126,7 +126,7 @@ class  HS118(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('D4',ig_)
+        [ig,ig_,_] = s2mpj_ii('D4',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'D4')
         iv = ix_['X10']
@@ -135,7 +135,7 @@ class  HS118(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X12']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('D5',ig_)
+        [ig,ig_,_] = s2mpj_ii('D5',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'D5')
         iv = ix_['X13']
@@ -176,8 +176,6 @@ class  HS118(CUTEst_problem):
             grange = arrset(grange,ig_['A'+str(K)],float(13.0))
             grange = arrset(grange,ig_['B'+str(K)],float(13.0))
             grange = arrset(grange,ig_['C'+str(K)],float(14.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.0)
         pb.xupper = np.full((pb.n,1),+float('inf'))
@@ -230,7 +228,7 @@ class  HS118(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -239,11 +237,11 @@ class  HS118(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['15'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.0,None,20.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,None,20.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -271,6 +269,8 @@ class  HS118(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.00015))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               664.82045
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -286,6 +286,10 @@ class  HS118(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QLR2-AN-15-17"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HAGER3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,13 @@ class  HAGER3(CUTEst_problem):
 # 
 #    Number of discretized points in [0,1]
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,13 +49,6 @@ class  HAGER3(CUTEst_problem):
             v_['N'] = int(5);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER     original value
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   2500           $-PARAMETER
 # IE N                   5000           $-PARAMETER
         v_['N-1'] = -1+v_['N']
         v_['RN'] = float(v_['N'])
@@ -66,10 +66,10 @@ class  HAGER3(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -79,17 +79,17 @@ class  HAGER3(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('OX'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OX'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['8/H']))
-            [ig,ig_,_] = s2x_ii('U'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('U'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['4/H']))
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('S'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'S'+str(I))
             iv = ix_['X'+str(I)]
@@ -112,8 +112,6 @@ class  HAGER3(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -126,10 +124,10 @@ class  HAGER3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eLINSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLINSQ', iet_)
         elftv = loaset(elftv,it,0,'XA')
         elftv = loaset(elftv,it,1,'XB')
-        [it,iet_,_] = s2x_ii( 'eLINU', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLINU', iet_)
         elftv = loaset(elftv,it,0,'XA')
         elftv = loaset(elftv,it,1,'XB')
         elftv = loaset(elftv,it,2,'U')
@@ -141,36 +139,36 @@ class  HAGER3(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eLINSQ')
             ielftype = arrset(ielftype, ie, iet_["eLINSQ"])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XA')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XB')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'UX'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eLINU')
             ielftype = arrset(ielftype, ie, iet_["eLINU"])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XA')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XB')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -190,6 +188,13 @@ class  HAGER3(CUTEst_problem):
             ig = ig_['U'+str(I)]
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           0.14103316577
+# LO SOLTN(50)           0.14096413824
+# LO SOLTN(100)          0.14096197328
+# LO SOLTN(500)          0.14096128049
+# LO SOLTN(1000)         0.14096125887
+# LO SOLTN(5000)         0.14096125191
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -206,6 +211,10 @@ class  HAGER3(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "SLR2-AY-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

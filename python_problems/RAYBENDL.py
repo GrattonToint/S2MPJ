@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  RAYBENDL(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,6 +30,14 @@ class  RAYBENDL(CUTEst_problem):
 #    number of  knots  ( >= 4 )
 #    ( n = 2( NKNOTS - 1 ) ) 
 # 
+#           Alternative values for the SIF file parameters:
+# IE NKNOTS              4              $-PARAMETER n = 6
+# IE NKNOTS              11             $-PARAMETER n = 20
+# IE NKNOTS              21             $-PARAMETER n = 40     original value
+# IE NKNOTS              32             $-PARAMETER n = 62
+# IE NKNOTS              64             $-PARAMETER n = 126
+# IE NKNOTS              512            $-PARAMETER n = 1022
+# IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,13 +60,6 @@ class  RAYBENDL(CUTEst_problem):
             v_['NKNOTS'] = int(4);  #  SIF file default value
         else:
             v_['NKNOTS'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE NKNOTS              11             $-PARAMETER n = 20
-# IE NKNOTS              21             $-PARAMETER n = 40     original value
-# IE NKNOTS              32             $-PARAMETER n = 62
-# IE NKNOTS              64             $-PARAMETER n = 126
-# IE NKNOTS              512            $-PARAMETER n = 1022
-# IE NKNOTS              1024           $-PARAMETER n = 2046
         v_['XSRC'] = 0.0
         v_['ZSRC'] = 0.0
         v_['XRCV'] = 100.0
@@ -75,9 +76,9 @@ class  RAYBENDL(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['NKNOTS'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Z'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Z'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Z'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -87,7 +88,7 @@ class  RAYBENDL(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NKNOTS'])+1):
-            [ig,ig_,_] = s2x_ii('TIME'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('TIME'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -95,8 +96,6 @@ class  RAYBENDL(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -125,7 +124,7 @@ class  RAYBENDL(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eTT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eTT', iet_)
         elftv = loaset(elftv,it,0,'X1')
         elftv = loaset(elftv,it,1,'X2')
         elftv = loaset(elftv,it,2,'Z1')
@@ -138,24 +137,24 @@ class  RAYBENDL(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NKNOTS'])+1):
             v_['I-1'] = -1+I
             ename = 'T'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eTT')
                 ielftype = arrset( ielftype,ie,iet_['eTT'])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Z'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Z'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -171,12 +170,18 @@ class  RAYBENDL(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['T'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#   Solution of the continuous problem
+# LO RAYBENDL            96.2424
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OXR2-MY-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BROYDNBDLS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,13 @@ class  BROYDNBDLS(CUTEst_problem):
 # 
 #    N is the number of equations and variables (variable).
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,12 +51,6 @@ class  BROYDNBDLS(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
         if nargin<2:
             v_['KAPPA1'] = float(2.0);  #  SIF file default value
@@ -84,7 +85,7 @@ class  BROYDNBDLS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -98,16 +99,16 @@ class  BROYDNBDLS(CUTEst_problem):
             v_['I+1'] = 1+I
             v_['I+UB'] = I+v_['UB']
             for J in range(int(v_['1']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-KAPPA3'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['KAPPA1'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['I+UB'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-KAPPA3'])+pbm.A[ig,iv]
@@ -117,16 +118,16 @@ class  BROYDNBDLS(CUTEst_problem):
             v_['I+1'] = 1+I
             v_['I+UB'] = I+v_['UB']
             for J in range(int(v_['I-LB']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-KAPPA3'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['KAPPA1'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['I+UB'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-KAPPA3'])+pbm.A[ig,iv]
@@ -135,16 +136,16 @@ class  BROYDNBDLS(CUTEst_problem):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
             for J in range(int(v_['I-LB']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-KAPPA3'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['KAPPA1'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-KAPPA3'])+pbm.A[ig,iv]
@@ -153,8 +154,6 @@ class  BROYDNBDLS(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -163,9 +162,9 @@ class  BROYDNBDLS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'V')
-        [it,iet_,_] = s2x_ii( 'eCB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCB', iet_)
         elftv = loaset(elftv,it,0,'V')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -174,24 +173,24 @@ class  BROYDNBDLS(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'Q'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCB')
             ielftype = arrset(ielftype, ie, iet_["eCB"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -257,6 +256,8 @@ class  BROYDNBDLS(CUTEst_problem):
                 pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(J)])
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-KAPPA3']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -267,6 +268,10 @@ class  BROYDNBDLS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

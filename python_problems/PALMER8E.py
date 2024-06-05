@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PALMER8E(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,21 +73,21 @@ class  PALMER8E(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('A0',ix_)
+        [iv,ix_,_] = s2mpj_ii('A0',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A0')
-        [iv,ix_,_] = s2x_ii('A2',ix_)
+        [iv,ix_,_] = s2mpj_ii('A2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A2')
-        [iv,ix_,_] = s2x_ii('A4',ix_)
+        [iv,ix_,_] = s2mpj_ii('A4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A4')
-        [iv,ix_,_] = s2x_ii('A6',ix_)
+        [iv,ix_,_] = s2mpj_ii('A6',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A6')
-        [iv,ix_,_] = s2x_ii('A8',ix_)
+        [iv,ix_,_] = s2mpj_ii('A8',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A8')
-        [iv,ix_,_] = s2x_ii('A10',ix_)
+        [iv,ix_,_] = s2mpj_ii('A10',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A10')
-        [iv,ix_,_] = s2x_ii('K',ix_)
+        [iv,ix_,_] = s2mpj_ii('K',ix_)
         pb.xnames=arrset(pb.xnames,iv,'K')
-        [iv,ix_,_] = s2x_ii('L',ix_)
+        [iv,ix_,_] = s2mpj_ii('L',ix_)
         pb.xnames=arrset(pb.xnames,iv,'L')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -104,7 +104,7 @@ class  PALMER8E(CUTEst_problem):
             v_['X**10'] = v_['XSQR']*v_['X**8']
             v_['X**12'] = v_['XSQR']*v_['X**10']
             v_['X**14'] = v_['XSQR']*v_['X**12']
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['A0']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -127,10 +127,8 @@ class  PALMER8E(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['12']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['A0']] = -float('Inf')
         pb.xupper[ix_['A0']] = +float('Inf')
@@ -151,7 +149,7 @@ class  PALMER8E(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'K')
         elftv = loaset(elftv,it,1,'L')
         elftp = []
@@ -165,22 +163,22 @@ class  PALMER8E(CUTEst_problem):
         for I in range(int(v_['12']),int(v_['M'])+1):
             v_['XSQR'] = v_['X'+str(I)]*v_['X'+str(I)]
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'K'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='K')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'L'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='L')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='XSQR')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['XSQR']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -195,7 +193,10 @@ class  PALMER8E(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN              1.48003482D-04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -205,6 +206,10 @@ class  PALMER8E(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SBR2-RN-8-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

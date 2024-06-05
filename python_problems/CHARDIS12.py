@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CHARDIS12(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,12 @@ class  CHARDIS12(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE NP1                 5              $-PARAMETER
 # IE NP1                 8              $-PARAMETER
+# IE NP1                 20             $-PARAMETER     original value
+# IE NP1                 50             $-PARAMETER
+# IE NP1                 100            $-PARAMETER
+# IE NP1                 200            $-PARAMETER
+# IE NP1                 500            $-PARAMETER
+# IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,11 +48,6 @@ class  CHARDIS12(CUTEst_problem):
             v_['NP1'] = int(20);  #  SIF file default value
         else:
             v_['NP1'] = int(args[0])
-# IE NP1                 50             $-PARAMETER
-# IE NP1                 100            $-PARAMETER
-# IE NP1                 200            $-PARAMETER
-# IE NP1                 500            $-PARAMETER
-# IE NP1                 1000           $-PARAMETER
 # IE NP1                 2000           $-PARAMETER
 # IE NP1                 5000           $-PARAMETER
         v_['R'] = 1.0
@@ -70,9 +71,9 @@ class  CHARDIS12(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NP1'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -84,10 +85,10 @@ class  CHARDIS12(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NP1'])+1):
             v_['I+'] = 1+I
             for J in range(int(v_['I+']),int(v_['NP1'])+1):
-                [ig,ig_,_] = s2x_ii('O'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('O'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['2']),int(v_['NP1'])+1):
-            [ig,ig_,_] = s2x_ii('RES'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('RES'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'RES'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -108,10 +109,8 @@ class  CHARDIS12(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['2']),int(v_['NP1'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['RES'+str(I)],float(v_['R2']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['2']),int(v_['NP1'])+1):
             pb.xlower[ix_['X'+str(I)]] = -float('Inf')
@@ -142,9 +141,9 @@ class  CHARDIS12(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'V1')
-        [it,iet_,_] = s2x_ii( 'eDIFSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eDIFSQR', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -156,49 +155,49 @@ class  CHARDIS12(CUTEst_problem):
             v_['I+'] = 1+I
             for J in range(int(v_['I+']),int(v_['NP1'])+1):
                 ename = 'X'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eDIFSQR')
                 ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'Y'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eDIFSQR')
                 ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
                 vname = 'Y'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['NP1'])+1):
             ename = 'RX'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'RY'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'Y'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gREZIP',igt_)
+        [it,igt_,_] = s2mpj_ii('gREZIP',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

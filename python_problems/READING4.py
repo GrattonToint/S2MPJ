@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  READING4(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,13 @@ class  READING4(CUTEst_problem):
 # 
 #    Number of discretized points in [0,1] (n = N+1, m = N )
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER n=3, m=2     original value
+# IE N                   50             $-PARAMETER n=51, m=50
+# IE N                   100            $-PARAMETER n=101, m=100
+# IE N                   500            $-PARAMETER n=501, m=500
+# IE N                   1000           $-PARAMETER n=1001, m=1000
+# IE N                   5000           $-PARAMETER n=5001, m=5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,12 +52,6 @@ class  READING4(CUTEst_problem):
             v_['N'] = int(2);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER n=51, m=50
-# IE N                   100            $-PARAMETER n=101, m=100
-# IE N                   500            $-PARAMETER n=501, m=500
-# IE N                   1000           $-PARAMETER n=1001, m=1000
-# IE N                   5000           $-PARAMETER n=5001, m=5000
         v_['N-1'] = -1+v_['N']
         v_['RN'] = float(v_['N'])
         v_['H'] = 1.0/v_['RN']
@@ -74,10 +75,10 @@ class  READING4(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X'+str(int(v_['0'])),ix_)
+        [iv,ix_,_] = s2mpj_ii('X'+str(int(v_['0'])),ix_)
         pb.xnames=arrset(pb.xnames,iv,'X'+str(int(v_['0'])))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -86,11 +87,11 @@ class  READING4(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('J',ig_)
+        [ig,ig_,_] = s2mpj_ii('J',ig_)
         gtype = arrset(gtype,ig,'<>')
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/A']))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('U'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('U'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'U'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -112,10 +113,8 @@ class  READING4(CUTEst_problem):
         grange[gegrps] = np.full((pb.nge,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             grange = arrset(grange,ig_['U'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = 0.25
         pb.xupper[ix_['X'+str(int(v_['0']))]] = 0.25
@@ -125,12 +124,12 @@ class  READING4(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eUC', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eUC', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'XP')
         elftp = []
         elftp = loaset(elftp,it,0,'T')
-        [it,iet_,_] = s2x_ii( 'eENERGY', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eENERGY', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'XP')
         elftp = loaset(elftp,it,0,'T')
@@ -145,30 +144,30 @@ class  READING4(CUTEst_problem):
             v_['TI'] = v_['RI']*v_['H']
             v_['I-1'] = -1+I
             ename = 'I'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eENERGY')
             ielftype = arrset(ielftype, ie, iet_["eENERGY"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XP')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='T')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['TI']))
             ename = 'UC'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eUC')
             ielftype = arrset(ielftype, ie, iet_["eUC"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XP')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='T')

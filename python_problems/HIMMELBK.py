@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HIMMELBK(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,7 +107,7 @@ class  HIMMELBK(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for K in range(int(v_['1']),int(v_['24'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(K),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(K),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(K))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -116,7 +116,7 @@ class  HIMMELBK(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(0.0693)+pbm.A[ig,iv]
@@ -167,11 +167,11 @@ class  HIMMELBK(CUTEst_problem):
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.09)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['12'])+1):
-            [ig,ig_,_] = s2x_ii('CA'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CA'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CA'+str(I))
         for I in range(int(v_['1']),int(v_['24'])+1):
-            [ig,ig_,_] = s2x_ii('CA13',ig_)
+            [ig,ig_,_] = s2mpj_ii('CA13',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CA13')
             iv = ix_['X'+str(I)]
@@ -179,7 +179,7 @@ class  HIMMELBK(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['12'])+1):
             v_['I+12'] = 12+I
             v_['1/DI'] = 1.0/v_['D'+str(I)]
-            [ig,ig_,_] = s2x_ii('CA14',ig_)
+            [ig,ig_,_] = s2mpj_ii('CA14',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CA14')
             iv = ix_['X'+str(I)]
@@ -210,7 +210,7 @@ class  HIMMELBK(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -222,28 +222,28 @@ class  HIMMELBK(CUTEst_problem):
             v_['I+12'] = 12+I
             for J in range(int(v_['1']),int(v_['12'])+1):
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
                 vname = 'X'+str(int(v_['I+12']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.04)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.04)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.04)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.04)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['13']),int(v_['24'])+1):
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.04)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.04)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.04)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.04)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -273,6 +273,8 @@ class  HIMMELBK(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-CB+/BJ']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN                0.0893344
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -290,6 +292,10 @@ class  HIMMELBK(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LOR2-MN-24-14"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

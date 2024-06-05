@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CBRATU2D(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,6 +24,8 @@ class  CBRATU2D(CUTEst_problem):
 #    P is the number of points in one side of the unit square (variable).
 #    There are 2*P**2 variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE P                   4              $-PARAMETER n = 32     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,7 +48,6 @@ class  CBRATU2D(CUTEst_problem):
             v_['P'] = int(4);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
-#           Alternative values for the SIF file parameters:
 # IE P                   7              $-PARAMETER n = 98
 # IE P                   16             $-PARAMETER n = 512
 # IE P                   23             $-PARAMETER n = 1058
@@ -71,9 +72,9 @@ class  CBRATU2D(CUTEst_problem):
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
-                [iv,ix_,_] = s2x_ii('U'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'U'+str(I)+','+str(J))
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -88,7 +89,7 @@ class  CBRATU2D(CUTEst_problem):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 v_['V'] = 1+J
                 v_['W'] = -1+J
-                [ig,ig_,_] = s2x_ii('G'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I)+','+str(J))
                 iv = ix_['U'+str(I)+','+str(J)]
@@ -101,7 +102,7 @@ class  CBRATU2D(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
                 iv = ix_['U'+str(I)+','+str(int(v_['W']))]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('F'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('F'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'F'+str(I)+','+str(J))
                 iv = ix_['X'+str(I)+','+str(J)]
@@ -128,8 +129,6 @@ class  CBRATU2D(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -156,10 +155,10 @@ class  CBRATU2D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eRPART', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eRPART', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'V')
-        [it,iet_,_] = s2x_ii( 'eCPART', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCPART', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'V')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -170,27 +169,27 @@ class  CBRATU2D(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['P-1'])+1):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 ename = 'A'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eRPART')
                 ielftype = arrset(ielftype, ie, iet_["eRPART"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'B'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eCPART')
                 ielftype = arrset(ielftype, ie, iet_["eCPART"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -214,6 +213,8 @@ class  CBRATU2D(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-C']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -230,6 +231,10 @@ class  CBRATU2D(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

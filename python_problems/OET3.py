@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  OET3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,13 +68,13 @@ class  OET3(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('U',ix_)
+        [iv,ix_,_] = s2mpj_ii('U',ix_)
         pb.xnames=arrset(pb.xnames,iv,'U')
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -83,7 +83,7 @@ class  OET3(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -94,7 +94,7 @@ class  OET3(CUTEst_problem):
             v_['-W'] = -1.0*v_['W']
             v_['W**2'] = v_['W']*v_['W']
             v_['-W**2'] = -1.0*v_['W**2']
-            [ig,ig_,_] = s2x_ii('LO'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('LO'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'LO'+str(I))
             iv = ix_['U']
@@ -105,7 +105,7 @@ class  OET3(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-W'])+pbm.A[ig,iv]
             iv = ix_['X3']
             pbm.A[ig,iv] = float(v_['-W**2'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('UP'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('UP'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'UP'+str(I))
             iv = ix_['U']
@@ -140,8 +140,6 @@ class  OET3(CUTEst_problem):
             v_['-SINW'] = -1.0*v_['SINW']
             pbm.gconst = arrset(pbm.gconst,ig_['LO'+str(I)],float(v_['-SINW']))
             pbm.gconst = arrset(pbm.gconst,ig_['UP'+str(I)],float(v_['SINW']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))

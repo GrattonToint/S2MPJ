@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  OPTPRLOC(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -375,10 +375,10 @@ class  OPTPRLOC(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['K'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -387,7 +387,7 @@ class  OPTPRLOC(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('PROFIT',ig_)
+        [ig,ig_,_] = s2mpj_ii('PROFIT',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Y1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -446,12 +446,12 @@ class  OPTPRLOC(CUTEst_problem):
         iv = ix_['X5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('ELLI'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ELLI'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'ELLI'+str(I))
             iv = ix_['Y'+str(I)]
             pbm.A[ig,iv] = float(v_['H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('LIN1',ig_)
+        [ig,ig_,_] = s2mpj_ii('LIN1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'LIN1')
         iv = ix_['X1']
@@ -464,7 +464,7 @@ class  OPTPRLOC(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('LIN2',ig_)
+        [ig,ig_,_] = s2mpj_ii('LIN2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'LIN2')
         iv = ix_['X1']
@@ -477,7 +477,7 @@ class  OPTPRLOC(CUTEst_problem):
         pbm.A[ig,iv] = float(0.1)+pbm.A[ig,iv]
         iv = ix_['X5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('LIN3',ig_)
+        [ig,ig_,_] = s2mpj_ii('LIN3',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'LIN3')
         iv = ix_['X1']
@@ -490,14 +490,14 @@ class  OPTPRLOC(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('LIN4',ig_)
+        [ig,ig_,_] = s2mpj_ii('LIN4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'LIN4')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(0.157)+pbm.A[ig,iv]
         iv = ix_['X2']
         pbm.A[ig,iv] = float(0.05)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('LIN5',ig_)
+        [ig,ig_,_] = s2mpj_ii('LIN5',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'LIN5')
         iv = ix_['X2']
@@ -529,10 +529,8 @@ class  OPTPRLOC(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['LIN3'],float(0.69))
         pbm.gconst = arrset(pbm.gconst,ig_['LIN4'],float(1.5))
         pbm.gconst = arrset(pbm.gconst,ig_['LIN5'],float(4.5))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['X1']] = 2.0
         pb.xupper[ix_['X1']] = 4.5
@@ -547,7 +545,7 @@ class  OPTPRLOC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eXMBS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eXMBS', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'B')
@@ -558,22 +556,22 @@ class  OPTPRLOC(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'OBJSQ1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eXMBS')
         ielftype = arrset(ielftype, ie, iet_["eXMBS"])
         pb.x0 = np.zeros((pb.n,1))
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='B')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.0))
         ename = 'OBJSQ2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eXMBS')
         ielftype = arrset(ielftype, ie, iet_["eXMBS"])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='B')
@@ -581,11 +579,11 @@ class  OPTPRLOC(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             for L in range(int(v_['1']),int(v_['K'])+1):
                 ename = 'SQ'+str(I)+','+str(L)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXMBS')
                 ielftype = arrset(ielftype, ie, iet_["eXMBS"])
                 vname = 'X'+str(L)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='B')
@@ -613,6 +611,7 @@ class  OPTPRLOC(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['W'+str(I)+','+str(L)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -629,6 +628,10 @@ class  OPTPRLOC(CUTEst_problem):
         pb.pbclass = "QQR2-AN-30-30"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

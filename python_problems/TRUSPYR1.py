@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TRUSPYR1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,10 +107,10 @@ class  TRUSPYR1(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
-            [iv,ix_,_] = s2x_ii('XAREA'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('XAREA'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'XAREA'+str(J))
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
-            [iv,ix_,_] = s2x_ii('DISPL'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('DISPL'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'DISPL'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -120,16 +120,16 @@ class  TRUSPYR1(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
-            [ig,ig_,_] = s2x_ii('WEIGHT',ig_)
+            [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['XAREA'+str(J)]
             pbm.A[ig,iv] = float(v_['W'+str(J)])+pbm.A[ig,iv]
         for K in range(int(v_['1']),int(v_['NDIM'])+1):
-            [ig,ig_,_] = s2x_ii('EQUIL'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('EQUIL'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EQUIL'+str(K))
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
-            [ig,ig_,_] = s2x_ii('STREN',ig_)
+            [ig,ig_,_] = s2mpj_ii('STREN',ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'STREN')
             iv = ix_['DISPL'+str(I)]
@@ -153,10 +153,8 @@ class  TRUSPYR1(CUTEst_problem):
         for K in range(int(v_['1']),int(v_['NDIM'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['EQUIL'+str(K)],float(v_['P'+str(K)]))
         pbm.gconst = arrset(pbm.gconst,ig_['STREN'],float(v_['ALPHA']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
             pb.xlower[ix_['XAREA'+str(J)]] = 1.0
@@ -166,7 +164,7 @@ class  TRUSPYR1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -177,16 +175,16 @@ class  TRUSPYR1(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
             for J in range(int(v_['1']),int(v_['NBAR'])+1):
                 ename = 'UX'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
                 pb.x0 = np.zeros((pb.n,1))
                 vname = 'DISPL'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'XAREA'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -206,6 +204,7 @@ class  TRUSPYR1(CUTEst_problem):
                     pbm.grelw  = (
                           loaset(pbm.grelw,ig,posel,float(v_['RR'+str(I)+','+str(J)+','+str(K)])))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Objective function value corresponding to the global minimizer above
         pb.objlower = 1.2287408808
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -224,6 +223,10 @@ class  TRUSPYR1(CUTEst_problem):
         pb.pbclass = "LQR2-MN-11-4"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

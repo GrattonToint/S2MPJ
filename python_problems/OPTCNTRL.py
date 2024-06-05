@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  OPTCNTRL(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,12 +47,12 @@ class  OPTCNTRL(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for t in range(int(v_['0']),int(v_['T'])+1):
-            [iv,ix_,_] = s2x_ii('x'+str(t),ix_)
+            [iv,ix_,_] = s2mpj_ii('x'+str(t),ix_)
             pb.xnames=arrset(pb.xnames,iv,'x'+str(t))
-            [iv,ix_,_] = s2x_ii('y'+str(t),ix_)
+            [iv,ix_,_] = s2mpj_ii('y'+str(t),ix_)
             pb.xnames=arrset(pb.xnames,iv,'y'+str(t))
         for t in range(int(v_['0']),int(v_['T-1'])+1):
-            [iv,ix_,_] = s2x_ii('u'+str(t),ix_)
+            [iv,ix_,_] = s2mpj_ii('u'+str(t),ix_)
             pb.xnames=arrset(pb.xnames,iv,'u'+str(t))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -61,11 +61,11 @@ class  OPTCNTRL(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for t in range(int(v_['0']),int(v_['T-1'])+1):
             v_['t+1'] = 1+t
-            [ig,ig_,_] = s2x_ii('B'+str(t),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(t),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'B'+str(t))
             iv = ix_['x'+str(int(v_['t+1']))]
@@ -74,7 +74,7 @@ class  OPTCNTRL(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['y'+str(t)]
             pbm.A[ig,iv] = float(-0.2)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(t),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(t),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(t))
             iv = ix_['y'+str(int(v_['t+1']))]
@@ -99,10 +99,8 @@ class  OPTCNTRL(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for t in range(int(v_['0']),int(v_['T-1'])+1):
             pb.xlower[ix_['x'+str(t)]] = -float('Inf')
@@ -128,7 +126,7 @@ class  OPTCNTRL(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -137,20 +135,20 @@ class  OPTCNTRL(CUTEst_problem):
         pbm.elvar   = []
         for t in range(int(v_['0']),int(v_['T'])+1):
             ename = 'o'+str(t)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'x'+str(t)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for t in range(int(v_['0']),int(v_['T-1'])+1):
             ename = 'c'+str(t)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'y'+str(t)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -173,7 +171,10 @@ class  OPTCNTRL(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.01))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               549.9999869
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -190,6 +191,10 @@ class  OPTCNTRL(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-AN-32-20"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

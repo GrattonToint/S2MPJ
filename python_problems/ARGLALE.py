@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ARGLALE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,12 @@ class  ARGLALE(CUTEst_problem):
 #    N is the number of free variables
 #    M is the number of equations ( M.ge.N)
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   4              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER 
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,19 +51,15 @@ class  ARGLALE(CUTEst_problem):
             v_['N'] = int(4);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER
-# IE N                   50             $-PARAMETER 
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
-        if nargin<2:
-            v_['M'] = int(6);  #  SIF file default value
-        else:
-            v_['M'] = int(args[1])
+# IE M                   6              $-PARAMETER .ge. N
 # IE M                   20             $-PARAMETER .ge. N
 # IE M                   100            $-PARAMETER .ge. N
 # IE M                   200            $-PARAMETER .ge. N
 # IE M                   400            $-PARAMETER .ge. N
+        if nargin<2:
+            v_['M'] = int(6);  #  SIF file default value
+        else:
+            v_['M'] = int(args[1])
         v_['1'] = 1
         v_['-2.0'] = -2.0
         v_['N+1'] = 1+v_['N']
@@ -70,7 +72,7 @@ class  ARGLALE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -83,25 +85,25 @@ class  ARGLALE(CUTEst_problem):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-2/M'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['1-2/M'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['-2/M'])+pbm.A[ig,iv]
         for I in range(int(v_['N+1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
@@ -122,8 +124,6 @@ class  ARGLALE(CUTEst_problem):
         pbm.objgrps = find(gtype,lambda x:x=='<>')
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.full((ngrp,1),1.0)
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ROSZMAN1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -101,7 +101,7 @@ class  ROSZMAN1(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('B'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('B'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'B'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -111,7 +111,7 @@ class  ROSZMAN1(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('F'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'F'+str(I))
             iv = ix_['B1']
@@ -137,8 +137,6 @@ class  ROSZMAN1(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['F'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -169,7 +167,7 @@ class  ROSZMAN1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eE7', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eE7', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftp = []
@@ -182,15 +180,15 @@ class  ROSZMAN1(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eE7')
             ielftype = arrset(ielftype, ie, iet_["eE7"])
             vname = 'B3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'B4'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='X')
@@ -209,7 +207,10 @@ class  ROSZMAN1(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -225,6 +226,10 @@ class  ROSZMAN1(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-4-25"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

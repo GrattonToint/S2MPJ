@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PRICE3NE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,7 +50,7 @@ class  PRICE3NE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -59,13 +59,13 @@ class  PRICE3NE(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('F1',ig_)
+        [ig,ig_,_] = s2mpj_ii('F1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F1')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(0.1))
-        [ig,ig_,_] = s2x_ii('F2',ig_)
+        [ig,ig_,_] = s2mpj_ii('F2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F2')
         iv = ix_['X1']
@@ -87,8 +87,6 @@ class  PRICE3NE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['F2'],float(0.6))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -108,9 +106,9 @@ class  PRICE3NE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eSSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -118,19 +116,19 @@ class  PRICE3NE(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'E1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
         ielftype = arrset(ielftype, ie, iet_["eSQR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSSQR')
         ielftype = arrset(ielftype, ie, iet_["eSSQR"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -151,7 +149,10 @@ class  PRICE3NE(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(6.4))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -167,6 +168,10 @@ class  PRICE3NE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-2-2"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

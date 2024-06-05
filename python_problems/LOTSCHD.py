@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LOTSCHD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,9 +66,9 @@ class  LOTSCHD(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['6'])+1):
-            [iv,ix_,_] = s2x_ii('T'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('T'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'T'+str(I))
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -78,18 +78,18 @@ class  LOTSCHD(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['6'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['T'+str(I)]
             pbm.A[ig,iv] = float(v_['X'+str(I)])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('CONS7',ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS7',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS7')
             iv = ix_['T'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('CONS'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS'+str(I))
             iv = ix_['T'+str(I)]
@@ -97,14 +97,14 @@ class  LOTSCHD(CUTEst_problem):
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['4'])+1):
-            [ig,ig_,_] = s2x_ii('CONS'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS'+str(I))
             iv = ix_['T'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CONS2',ig_)
+        [ig,ig_,_] = s2mpj_ii('CONS2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CONS2')
         iv = ix_['T3']
@@ -112,7 +112,7 @@ class  LOTSCHD(CUTEst_problem):
         iv = ix_['U3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['2'])+1):
-            [ig,ig_,_] = s2x_ii('CONS3',ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS3',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS3')
             iv = ix_['T'+str(I)]
@@ -120,14 +120,14 @@ class  LOTSCHD(CUTEst_problem):
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['4']),int(v_['6'])+1):
-            [ig,ig_,_] = s2x_ii('CONS3',ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS3',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS3')
             iv = ix_['T'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CONS4',ig_)
+        [ig,ig_,_] = s2mpj_ii('CONS4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CONS4')
         iv = ix_['T1']
@@ -135,14 +135,14 @@ class  LOTSCHD(CUTEst_problem):
         iv = ix_['U1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['5']),int(v_['6'])+1):
-            [ig,ig_,_] = s2x_ii('CONS4',ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS4',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS4')
             iv = ix_['T'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CONS5',ig_)
+        [ig,ig_,_] = s2mpj_ii('CONS5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CONS5')
         iv = ix_['T1']
@@ -150,7 +150,7 @@ class  LOTSCHD(CUTEst_problem):
         iv = ix_['U1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CONS6',ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS6',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CONS6')
             iv = ix_['T'+str(I)]
@@ -177,7 +177,7 @@ class  LOTSCHD(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['CONS'+str(I)],float(v_['C'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQUARE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQUARE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

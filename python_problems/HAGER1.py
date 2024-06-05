@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HAGER1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,13 @@ class  HAGER1(CUTEst_problem):
 # 
 #    Number of discretized points in [0,1]
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,12 +49,6 @@ class  HAGER1(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   2500           $-PARAMETER
 # IE N                   5000           $-PARAMETER
         v_['N-1'] = -1+v_['N']
         v_['RN'] = float(v_['N'])
@@ -64,10 +65,10 @@ class  HAGER1(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -76,20 +77,20 @@ class  HAGER1(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('XNSQ',ig_)
+        [ig,ig_,_] = s2mpj_ii('XNSQ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('U'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('U'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['2/H']))
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('S'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'S'+str(I))
             iv = ix_['X'+str(I)]
@@ -112,8 +113,6 @@ class  HAGER1(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -125,7 +124,7 @@ class  HAGER1(CUTEst_problem):
         pb.x0[ix_['X'+str(int(v_['0']))]] = float(1.0)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -140,6 +139,13 @@ class  HAGER1(CUTEst_problem):
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(10)           0.88097222455
+# LO SOLTN(50)           0.88080408397
+# LO SOLTN(100)          0.88079882866
+# LO SOLTN(500)          0.88079714798
+# LO SOLTN(1000)         0.88079709548
+# LO SOLTN(5000)         0.88079708841
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -156,6 +162,10 @@ class  HAGER1(CUTEst_problem):
         pb.lincons   = np.arange(len(pbm.congrps))
         pb.pbclass = "SLR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

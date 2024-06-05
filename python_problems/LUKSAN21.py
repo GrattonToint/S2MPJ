@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LUKSAN21(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,7 +54,7 @@ class  LUKSAN21(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -63,7 +63,7 @@ class  LUKSAN21(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('E'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E'+str(int(v_['1'])))
         iv = ix_['X'+str(int(v_['1']))]
@@ -73,7 +73,7 @@ class  LUKSAN21(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['M-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('E'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'E'+str(I))
             iv = ix_['X'+str(I)]
@@ -82,7 +82,7 @@ class  LUKSAN21(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E'+str(int(v_['M'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['M'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E'+str(int(v_['M'])))
         iv = ix_['X'+str(int(v_['N']))]
@@ -107,8 +107,6 @@ class  LUKSAN21(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['E'+str(I)],float(-1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -124,7 +122,7 @@ class  LUKSAN21(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCUBE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCUBE', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'HI')
@@ -138,12 +136,12 @@ class  LUKSAN21(CUTEst_problem):
             v_['RI'] = float(I)
             v_['HI'] = v_['RI']*v_['H']
             ename = 'L'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eCUBE')
                 ielftype = arrset( ielftype,ie,iet_['eCUBE'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='HI')
@@ -163,6 +161,8 @@ class  LUKSAN21(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['H2/2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -178,6 +178,10 @@ class  LUKSAN21(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

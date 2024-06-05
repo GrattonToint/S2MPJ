@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ENGVAL2NE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -17,7 +17,7 @@ class  ENGVAL2NE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Nonlinear-equations version of ENGVAL2.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "NOR2-AN-3-3"
+#    classification = "NOR2-AN-3-5"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,11 +42,11 @@ class  ENGVAL2NE(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -55,13 +55,13 @@ class  ENGVAL2NE(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('G1',ig_)
+        [ig,ig_,_] = s2mpj_ii('G1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'G1')
-        [ig,ig_,_] = s2x_ii('G2',ig_)
+        [ig,ig_,_] = s2mpj_ii('G2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'G2')
-        [ig,ig_,_] = s2x_ii('G3',ig_)
+        [ig,ig_,_] = s2mpj_ii('G3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'G3')
         iv = ix_['X1']
@@ -70,7 +70,7 @@ class  ENGVAL2NE(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G4',ig_)
+        [ig,ig_,_] = s2mpj_ii('G4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'G4')
         iv = ix_['X1']
@@ -79,7 +79,7 @@ class  ENGVAL2NE(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G5',ig_)
+        [ig,ig_,_] = s2mpj_ii('G5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'G5')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -103,8 +103,6 @@ class  ENGVAL2NE(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['G3'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['G4'],float(-1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['G5'],float(36.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -129,13 +127,13 @@ class  ENGVAL2NE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eSSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'S')
-        [it,iet_,_] = s2x_ii( 'eELT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eELT', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -145,59 +143,59 @@ class  ENGVAL2NE(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E1'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset( ielftype,ie,iet_['eSQ'])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E2'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset( ielftype,ie,iet_['eSQ'])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E3'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset( ielftype,ie,iet_['eSQ'])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E4'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset( ielftype,ie,iet_['eSQ'])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E5'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eELT')
         ielftype = arrset(ielftype, ie, iet_["eELT"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E6'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
         ielftype = arrset(ielftype, ie, iet_["eSSQ"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='S')
@@ -243,6 +241,8 @@ class  ENGVAL2NE(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -256,8 +256,12 @@ class  ENGVAL2NE(CUTEst_problem):
         pbm.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-AN-3-3"
+        pb.pbclass = "NOR2-AN-3-5"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

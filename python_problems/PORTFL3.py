@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PORTFL3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -871,7 +871,7 @@ class  PORTFL3(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NS'])+1):
-            [iv,ix_,_] = s2x_ii('S'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('S'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'S'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -882,12 +882,12 @@ class  PORTFL3(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NR'])+1):
             for J in range(int(v_['1']),int(v_['NS'])+1):
-                [ig,ig_,_] = s2x_ii('A'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('A'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['S'+str(J)]
                 pbm.A[ig,iv] = float(v_['F'+str(J)+','+str(I)])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['NS'])+1):
-            [ig,ig_,_] = s2x_ii('SUM',ig_)
+            [ig,ig_,_] = s2mpj_ii('SUM',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SUM')
             iv = ix_['S'+str(I)]
@@ -911,8 +911,6 @@ class  PORTFL3(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NR'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['A'+str(I)],float(v_['R'+str(I)]))
         pbm.gconst = arrset(pbm.gconst,ig_['SUM'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.0)
         pb.xupper = np.full((pb.n,1),1.0)
@@ -925,7 +923,7 @@ class  PORTFL3(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(v_['SINI']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -938,6 +936,8 @@ class  PORTFL3(CUTEst_problem):
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                3.27497293D-2
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -953,6 +953,10 @@ class  PORTFL3(CUTEst_problem):
         pb.lincons   = np.arange(len(pbm.congrps))
         pb.pbclass = "SLR2-MN-12-1"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

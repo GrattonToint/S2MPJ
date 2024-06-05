@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DTOC2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,6 +34,24 @@ class  DTOC2(CUTEst_problem):
 #    The problem has (N-1)*NX+N*NY  variables (of which NY are fixed),
 #    and (N-1)*NY constraints
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER # periods  } original value
+# IE NX                  2              $-PARAMETER # controls } n=   58, m=  36
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   50             $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   100            $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   500            $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,27 +74,16 @@ class  DTOC2(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
         if nargin<2:
             v_['NX'] = int(2);  #  SIF file default value
         else:
             v_['NX'] = int(args[1])
+# IE NY                  4              $-PARAMETER # states   }
         if nargin<3:
             v_['NY'] = int(4);  #  SIF file default value
         else:
             v_['NY'] = int(args[2])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   100            $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   500            $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   1000           $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
-# IE NY                  4              $-PARAMETER # states   }
 # IE N                   10             $-PARAMETER # periods  }
 # IE NX                  5              $-PARAMETER # controls } n=  145, m=  90
 # IE NY                  10             $-PARAMETER # states   }
@@ -113,11 +120,11 @@ class  DTOC2(CUTEst_problem):
         binvars   = np.array([])
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             for I in range(int(v_['1']),int(v_['NX'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(T)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(T)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(T)+','+str(I))
         for T in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['NY'])+1):
-                [iv,ix_,_] = s2x_ii('Y'+str(T)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('Y'+str(T)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Y'+str(T)+','+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -127,12 +134,12 @@ class  DTOC2(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for T in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('O'+str(T),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(T),ig_)
             gtype = arrset(gtype,ig,'<>')
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             v_['T+1'] = 1+T
             for J in range(int(v_['1']),int(v_['NY'])+1):
-                [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'TT'+str(T)+','+str(J))
                 iv = ix_['Y'+str(int(v_['T+1']))+','+str(J)]
@@ -151,8 +158,6 @@ class  DTOC2(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -171,16 +176,16 @@ class  DTOC2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eOEL', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eOEL', iet_)
         elftv = loaset(elftv,it,0,'YY1')
         elftv = loaset(elftv,it,1,'YY2')
         elftv = loaset(elftv,it,2,'YY3')
         elftv = loaset(elftv,it,3,'YY4')
         elftv = loaset(elftv,it,4,'XX1')
         elftv = loaset(elftv,it,5,'XX2')
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'YY')
-        [it,iet_,_] = s2x_ii( 'eSINE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSINE', iet_)
         elftv = loaset(elftv,it,0,'ZZ')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -189,58 +194,58 @@ class  DTOC2(CUTEst_problem):
         pbm.elvar   = []
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             ename = 'EO'+str(T)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eOEL')
             ielftype = arrset(ielftype, ie, iet_["eOEL"])
             vname = 'Y'+str(T)+','+str(int(v_['1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='YY1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Y'+str(T)+','+str(int(v_['2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='YY2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Y'+str(T)+','+str(int(v_['3']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='YY3')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Y'+str(T)+','+str(int(v_['4']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='YY4')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(T)+','+str(int(v_['1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XX1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(T)+','+str(int(v_['2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XX2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['1']),int(v_['NY'])+1):
                 ename = 'SY'+str(T)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSINE')
                 ielftype = arrset(ielftype, ie, iet_["eSINE"])
                 vname = 'Y'+str(T)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ZZ')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for I in range(int(v_['1']),int(v_['NX'])+1):
                 ename = 'SX'+str(T)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSINE')
                 ielftype = arrset(ielftype, ie, iet_["eSINE"])
                 vname = 'X'+str(T)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ZZ')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for J in range(int(v_['1']),int(v_['NY'])+1):
             ename = 'YNSQ'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'Y'+str(int(v_['N']))+','+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -277,6 +282,14 @@ class  DTOC2(CUTEst_problem):
                     pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['C'+str(J)+','+str(I)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLUTION(  10)      0.485983918948
+# LO SOLUTION(  20)      0.486212213803
+# LO SOLUTION(  30)      0.486383392574
+# LO SOLUTION(  40)      0.486572686778
+# LO SOLUTION(  50)      0.486884900389
+# LO SOLUTION( 100)      0.487532342563
+# LO SOLUTION( 500)      0.490996540460
+# LO SOLUTION(1000)      0.490200910983
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -293,6 +306,10 @@ class  DTOC2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

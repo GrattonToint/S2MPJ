@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  VARDIM(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,11 @@ class  VARDIM(CUTEst_problem):
 # 
 #    N is the number of free variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,10 +52,6 @@ class  VARDIM(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
         v_['N+2'] = 2+v_['N']
         v_['1'] = 1
         v_['N+1'] = 1+v_['N']
@@ -65,7 +66,7 @@ class  VARDIM(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -75,17 +76,17 @@ class  VARDIM(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['REALI'] = float(I)
-            [ig,ig_,_] = s2x_ii('G'+str(int(v_['N+1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+1'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['REALI'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('G'+str(int(v_['N+2'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+2'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['REALI'])+pbm.A[ig,iv]
@@ -102,8 +103,6 @@ class  VARDIM(CUTEst_problem):
               arrset(pbm.gconst,ig_['G'+str(int(v_['N+1']))],float(v_['SUMJ'])))
         pbm.gconst  = (
               arrset(pbm.gconst,ig_['G'+str(int(v_['N+2']))],float(v_['SUMJ'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -117,8 +116,8 @@ class  VARDIM(CUTEst_problem):
             pb.x0[ix_['X'+str(I)]] = float(v_['XI'])
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
-        [it,igt_,_] = s2x_ii('gL4',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL4',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -132,7 +131,10 @@ class  VARDIM(CUTEst_problem):
         ig = ig_['G'+str(int(v_['N+2']))]
         pbm.grftype = arrset(pbm.grftype,ig,'gL4')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -142,6 +144,10 @@ class  VARDIM(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

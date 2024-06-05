@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS32(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +45,7 @@ class  HS32(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -54,16 +54,16 @@ class  HS32(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('C1',ig_)
+        [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C1')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(6.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(4.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C2',ig_)
+        [ig,ig_,_] = s2mpj_ii('C2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C2')
         iv = ix_['X1']
@@ -111,14 +111,14 @@ class  HS32(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eI3SQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eI3SQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
-        [it,iet_,_] = s2x_ii( 'eISQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eISQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
-        [it,iet_,_] = s2x_ii( 'eCB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCB', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -126,39 +126,39 @@ class  HS32(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'E1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eI3SQ')
         ielftype = arrset(ielftype, ie, iet_["eI3SQ"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
         ielftype = arrset(ielftype, ie, iet_["eISQ"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eCB')
         ielftype = arrset(ielftype, ie, iet_["eCB"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -183,6 +183,8 @@ class  HS32(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -201,6 +203,10 @@ class  HS32(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "SOR2-AY-3-2"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

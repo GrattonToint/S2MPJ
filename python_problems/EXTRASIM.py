@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  EXTRASIM(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,9 +41,9 @@ class  EXTRASIM(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X',ix_)
+        [iv,ix_,_] = s2mpj_ii('X',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X')
-        [iv,ix_,_] = s2x_ii('Y',ix_)
+        [iv,ix_,_] = s2mpj_ii('Y',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Y')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -52,11 +52,11 @@ class  EXTRASIM(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('Object',ig_)
+        [ig,ig_,_] = s2mpj_ii('Object',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Cautious',ig_)
+        [ig,ig_,_] = s2mpj_ii('Cautious',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'Cautious')
         iv = ix_['X']
@@ -81,10 +81,8 @@ class  EXTRASIM(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['Object'],float(-1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['Cautious'],float(2.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['Y']] = -float('Inf')
         pb.xupper[ix_['Y']] = +float('Inf')

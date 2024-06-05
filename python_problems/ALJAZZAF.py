@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ALJAZZAF(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,6 +21,8 @@ class  ALJAZZAF(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   3              $-PARAMETER     original value
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,15 +45,14 @@ class  ALJAZZAF(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
+# IE N1                  2               $-PARAMETER  .lt. N  original value
+# IE N1                  50              $-PARAMETER  .lt. N
+# IE N1                  500             $-PARAMETER  .lt. N
         if nargin<2:
             v_['N1'] = int(2);  #  SIF file default value
         else:
             v_['N1'] = int(args[1])
-# IE N1                  50              $-PARAMETER  .lt. N
-# IE N1                  500             $-PARAMETER  .lt. N
 # IE N1                  5000            $-PARAMETER  .lt. N
         v_['BIGA'] = 100.0
         v_['1'] = 1
@@ -77,7 +78,7 @@ class  ALJAZZAF(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -86,9 +87,9 @@ class  ALJAZZAF(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('H',ig_)
+        [ig,ig_,_] = s2mpj_ii('H',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'H')
         iv = ix_['X1']
@@ -115,7 +116,7 @@ class  ALJAZZAF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'SHIFT')
@@ -126,16 +127,16 @@ class  ALJAZZAF(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E'+str(int(v_['1']))
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
             ielftype = arrset( ielftype,ie,iet_['eSSQ'])
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['1']))
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
             ielftype = arrset( ielftype,ie,iet_['eSSQ'])
@@ -143,48 +144,48 @@ class  ALJAZZAF(CUTEst_problem):
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.5))
         for I in range(int(v_['2']),int(v_['N1'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
                 ielftype = arrset( ielftype,ie,iet_['eSSQ'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='SHIFT')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.0))
         for I in range(int(v_['N1+1']),int(v_['N'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
                 ielftype = arrset( ielftype,ie,iet_['eSSQ'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='SHIFT')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         for I in range(int(v_['2']),int(v_['N1'])+1):
             ename = 'C'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
                 ielftype = arrset( ielftype,ie,iet_['eSSQ'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='SHIFT')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.0))
         for I in range(int(v_['N1+1']),int(v_['N'])+1):
             ename = 'C'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eSSQ')
                 ielftype = arrset( ielftype,ie,iet_['eSSQ'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='SHIFT')
@@ -214,6 +215,8 @@ class  ALJAZZAF(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['B'+str(I)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               75.004996
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -231,6 +234,10 @@ class  ALJAZZAF(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

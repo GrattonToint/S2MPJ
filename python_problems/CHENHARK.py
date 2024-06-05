@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CHENHARK(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,6 +31,11 @@ class  CHENHARK(CUTEst_problem):
 # 
 #    Number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,28 +58,26 @@ class  CHENHARK(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # IE N                   50000          $-PARAMETER
+# IE NFREE               5              $-PARAMETER
+# IE NFREE               50             $-PARAMETER
+# IE NFREE               500            $-PARAMETER     original value
+# IE NFREE               2500           $-PARAMETER
         if nargin<2:
             v_['NFREE'] = int(5);  #  SIF file default value
         else:
             v_['NFREE'] = int(args[1])
-# IE NFREE               50             $-PARAMETER
-# IE NFREE               500            $-PARAMETER     original value
-# IE NFREE               2500           $-PARAMETER
 # IE NFREE               5000           $-PARAMETER
 # IE NFREE               10000          $-PARAMETER
+# IE NDEGEN              2              $-PARAMETER
+# IE NDEGEN              20             $-PARAMETER
+# IE NDEGEN              200            $-PARAMETER     original value
+# IE NDEGEN              500            $-PARAMETER
         if nargin<3:
             v_['NDEGEN'] = int(2);  #  SIF file default value
         else:
             v_['NDEGEN'] = int(args[2])
-# IE NDEGEN              20             $-PARAMETER
-# IE NDEGEN              200            $-PARAMETER     original value
-# IE NDEGEN              500            $-PARAMETER
 # IE NDEGEN              1000           $-PARAMETER
 # IE NDEGEN              2000           $-PARAMETER
         v_['-1'] = -1
@@ -99,7 +102,7 @@ class  CHENHARK(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -111,7 +114,7 @@ class  CHENHARK(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('Q'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('Q'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -119,23 +122,23 @@ class  CHENHARK(CUTEst_problem):
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q'+str(int(v_['0'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
         iv = ix_['X'+str(int(v_['2']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
         iv = ix_['X'+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q'+str(int(v_['N+1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['N+1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -153,7 +156,7 @@ class  CHENHARK(CUTEst_problem):
             v_['Q'] = v_['Q']+v_['Q3']
             v_['Q'] = v_['Q']+v_['Q4']
             v_['Q'] = v_['Q']+v_['Q5']
-            [ig,ig_,_] = s2x_ii('L',ig_)
+            [ig,ig_,_] = s2mpj_ii('L',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['Q'])+pbm.A[ig,iv]
@@ -172,7 +175,7 @@ class  CHENHARK(CUTEst_problem):
             v_['Q'] = v_['Q']+v_['Q4']
             v_['Q'] = v_['Q']+v_['Q5']
             v_['Q'] = 1.0+v_['Q']
-            [ig,ig_,_] = s2x_ii('L',ig_)
+            [ig,ig_,_] = s2mpj_ii('L',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['Q'])+pbm.A[ig,iv]
@@ -187,7 +190,7 @@ class  CHENHARK(CUTEst_problem):
             pb.x0[ix_['X'+str(I)]] = float(0.5)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gHALFL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gHALFL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -200,6 +203,8 @@ class  CHENHARK(CUTEst_problem):
             pbm.grftype = arrset(pbm.grftype,ig,'gHALFL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 1.0
+#    Solution
+# LO SOLTN               -0.5
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pb.xlower = np.zeros((pb.n,1))
@@ -212,6 +217,10 @@ class  CHENHARK(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "QBR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

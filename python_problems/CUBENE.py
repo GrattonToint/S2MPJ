@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CUBENE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,7 +50,7 @@ class  CUBENE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -59,13 +59,13 @@ class  CUBENE(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('SQ'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('SQ'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'SQ'+str(int(v_['1'])))
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('SQ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('SQ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SQ'+str(I))
             pbm.gscale = arrset(pbm.gscale,ig,float(0.1))
@@ -88,8 +88,6 @@ class  CUBENE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['SQ1'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -109,7 +107,7 @@ class  CUBENE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eETYPE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eETYPE', iet_)
         elftv = loaset(elftv,it,0,'V1')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -119,12 +117,12 @@ class  CUBENE(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             ename = 'ELA'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eETYPE')
                 ielftype = arrset( ielftype,ie,iet_['eETYPE'])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -142,6 +140,8 @@ class  CUBENE(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -157,6 +157,10 @@ class  CUBENE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-2-2"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

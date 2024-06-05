@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  GILBERT(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,14 @@ class  GILBERT(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
 # IE N                   5              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   20             $-PARAMETER
+# IE N                   50             $-PARAMETER     original value
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,13 +55,6 @@ class  GILBERT(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   20             $-PARAMETER
-# IE N                   50             $-PARAMETER     original value
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
@@ -61,7 +62,7 @@ class  GILBERT(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -76,12 +77,12 @@ class  GILBERT(CUTEst_problem):
             v_['N+1-I'] = v_['N+1']-I
             v_['RD'] = float(v_['N+1-I'])
             v_['AI'] = v_['RD']/v_['RN']
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['AI'])+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
-        [ig,ig_,_] = s2x_ii('SPHERE',ig_)
+        [ig,ig_,_] = s2mpj_ii('SPHERE',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'SPHERE')
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
@@ -104,8 +105,6 @@ class  GILBERT(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['SPHERE'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -120,7 +119,7 @@ class  GILBERT(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'XX')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -129,16 +128,16 @@ class  GILBERT(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'XSQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -155,6 +154,16 @@ class  GILBERT(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(2)            0.2516255986
+# LO SOLTN(5)            1.3397104096
+# LO SOLTN(10)           3.3451956841
+# LO SOLTN(20)           7.6216246637
+# LO SOLTN(50)           21.153509646
+# LO SOLTN(100)          44.801301992
+# LO SOLTN(200)          92.101619216
+# LO SOLTN(500)          237.36861141
+# LO SOLTN(1000)         482.02730043
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -170,6 +179,10 @@ class  GILBERT(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-AN-V-1"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  OPTMASS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,6 +36,11 @@ class  OPTMASS(CUTEst_problem):
 #    Number of discretization steps in the time interval
 #    The number of variables is 6 * (N + 2) -2 , 4 of which are fixed.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER n = 70    original value
+# IE N                   100            $-PARAMETER n = 610
+# IE N                   200            $-PARAMETER n = 1210
+# IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,10 +63,6 @@ class  OPTMASS(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER n = 610
-# IE N                   200            $-PARAMETER n = 1210
-# IE N                   500            $-PARAMETER n = 3010
 # IE N                   1000           $-PARAMETER n = 6010
 # IE N                   5000           $-PARAMETER n = 30010
         v_['SPEED'] = 0.01
@@ -82,16 +83,16 @@ class  OPTMASS(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['2'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(J)+','+str(I))
-                [iv,ix_,_] = s2x_ii('V'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('V'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'V'+str(J)+','+str(I))
-                [iv,ix_,_] = s2x_ii('F'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('F'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'F'+str(J)+','+str(I))
         for J in range(int(v_['1']),int(v_['2'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(J)+','+str(int(v_['N+1'])),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(J)+','+str(int(v_['N+1'])),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(J)+','+str(int(v_['N+1'])))
-            [iv,ix_,_] = s2x_ii('V'+str(J)+','+str(int(v_['N+1'])),ix_)
+            [iv,ix_,_] = s2mpj_ii('V'+str(J)+','+str(int(v_['N+1'])),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V'+str(J)+','+str(int(v_['N+1'])))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -100,12 +101,12 @@ class  OPTMASS(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('F',ig_)
+        [ig,ig_,_] = s2mpj_ii('F',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['N+1'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['2'])+1):
-                [ig,ig_,_] = s2x_ii('A'+str(J)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('A'+str(J)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'A'+str(J)+','+str(I))
                 iv = ix_['X'+str(J)+','+str(I)]
@@ -116,7 +117,7 @@ class  OPTMASS(CUTEst_problem):
                 pbm.A[ig,iv] = float(v_['-1/N'])+pbm.A[ig,iv]
                 iv = ix_['F'+str(J)+','+str(int(v_['I-1']))]
                 pbm.A[ig,iv] = float(v_['-1/2N2'])+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('B'+str(J)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('B'+str(J)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'B'+str(J)+','+str(I))
                 iv = ix_['V'+str(J)+','+str(I)]
@@ -126,7 +127,7 @@ class  OPTMASS(CUTEst_problem):
                 iv = ix_['F'+str(J)+','+str(int(v_['I-1']))]
                 pbm.A[ig,iv] = float(v_['-1/N'])+pbm.A[ig,iv]
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -147,8 +148,6 @@ class  OPTMASS(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['0']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -170,7 +169,7 @@ class  OPTMASS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -178,45 +177,45 @@ class  OPTMASS(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'O1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['N+1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'O2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['N+1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'O3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'V'+str(int(v_['1']))+','+str(int(v_['N+1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'O4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'V'+str(int(v_['2']))+','+str(int(v_['N+1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['2'])+1):
                 ename = 'D'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
                 ielftype = arrset(ielftype, ie, iet_["eSQ"])
                 vname = 'F'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -252,6 +251,11 @@ class  OPTMASS(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['D'+str(int(v_['2']))+','+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           -0.04647
+# LO SOLTN(100)          ???
+# LO SOLTN(200)          ???
+# LO SOLTN(500)          ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -268,6 +272,10 @@ class  OPTMASS(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

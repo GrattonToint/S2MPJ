@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SUPERSIM(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,9 +40,9 @@ class  SUPERSIM(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('x',ix_)
+        [iv,ix_,_] = s2mpj_ii('x',ix_)
         pb.xnames=arrset(pb.xnames,iv,'x')
-        [iv,ix_,_] = s2x_ii('y',ix_)
+        [iv,ix_,_] = s2mpj_ii('y',ix_)
         pb.xnames=arrset(pb.xnames,iv,'y')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -51,18 +51,18 @@ class  SUPERSIM(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('Object',ig_)
+        [ig,ig_,_] = s2mpj_ii('Object',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['x']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Cautious',ig_)
+        [ig,ig_,_] = s2mpj_ii('Cautious',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'Cautious')
         iv = ix_['x']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['y']
         pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Daring',ig_)
+        [ig,ig_,_] = s2mpj_ii('Daring',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'Daring')
         iv = ix_['x']
@@ -88,10 +88,8 @@ class  SUPERSIM(CUTEst_problem):
         v_['Level'] = 2.0
         pbm.gconst = arrset(pbm.gconst,ig_['Cautious'],float(v_['Level']))
         pbm.gconst = arrset(pbm.gconst,ig_['Daring'],float(v_['Level']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['y']] = -float('Inf')
         pb.xupper[ix_['y']] = +float('Inf')

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  FREURONE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,8 @@ class  FREURONE(CUTEst_problem):
 # 
 #    N is the number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,14 +44,9 @@ class  FREURONE(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         if nargin<1:
-            v_['N'] = int(2);  #  SIF file default value
-        else:
-            v_['N'] = int(args[0])
-        if nargin<1:
             v_['N'] = int(4);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER
 # IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
@@ -65,7 +62,7 @@ class  FREURONE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -76,14 +73,14 @@ class  FREURONE(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('S'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'S'+str(I))
             iv = ix_['X'+str(I)]
@@ -110,8 +107,6 @@ class  FREURONE(CUTEst_problem):
             v_['I+1'] = 1+I
             pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(13.0))
             pbm.gconst = arrset(pbm.gconst,ig_['S'+str(I)],float(29.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -131,7 +126,7 @@ class  FREURONE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eFRDRTH', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFRDRTH', iet_)
         elftv = loaset(elftv,it,0,'ELV')
         elftp = []
         elftp = loaset(elftp,it,0,'COEFF')
@@ -145,12 +140,12 @@ class  FREURONE(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             v_['I+1'] = 1+I
             ename = 'A'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eFRDRTH')
                 ielftype = arrset( ielftype,ie,iet_['eFRDRTH'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='ELV')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -158,12 +153,12 @@ class  FREURONE(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='XCOEFF')
             loaset(pbm.elpar,ie,posep[0],float(-1.0))
             ename = 'B'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eFRDRTH')
                 ielftype = arrset( ielftype,ie,iet_['eFRDRTH'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='ELV')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -190,6 +185,15 @@ class  FREURONE(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(2)            0.0
+# LO SOLTN(2)            4.8984D+01
+# LO SOLTN(10)           1.0141D+03
+# LO SOLTN(50)           5.8810D+03
+# LO SOLTN(100)          1.1965D+04
+# LO SOLTN(500)          6.0634D+04
+# LO SOLTN(1000)         1.2147D+05
+# LO SOLTN(5000)         6.0816D+05
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -205,6 +209,10 @@ class  FREURONE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

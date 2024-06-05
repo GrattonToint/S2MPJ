@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  JENSMP(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,9 +48,9 @@ class  JENSMP(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -60,7 +60,7 @@ class  JENSMP(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -74,8 +74,6 @@ class  JENSMP(CUTEst_problem):
             v_['T'] = 2*v_['I+1']
             v_['2+2I'] = float(v_['T'])
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['2+2I']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -86,7 +84,7 @@ class  JENSMP(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePEXP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePEXP', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftp = []
         elftp = loaset(elftp,it,0,'P')
@@ -99,30 +97,30 @@ class  JENSMP(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['REALI'] = float(I)
             ename = 'A'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'ePEXP')
                 ielftype = arrset( ielftype,ie,iet_['ePEXP'])
             vname = 'X1'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['REALI']))
             ename = 'B'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'ePEXP')
                 ielftype = arrset( ielftype,ie,iet_['ePEXP'])
             vname = 'X2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['REALI']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -140,12 +138,19 @@ class  JENSMP(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['B'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#   Solution
+# LO SOLTN               124.362
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SUR2-AN-2-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

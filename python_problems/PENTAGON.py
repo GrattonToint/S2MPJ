@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PENTAGON(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,9 +56,9 @@ class  PENTAGON(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['3'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -67,11 +67,11 @@ class  PENTAGON(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['3'])+1):
             for J in range(int(v_['0']),int(v_['4'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'C'+str(I)+','+str(J))
                 iv = ix_['X'+str(I)]
@@ -95,8 +95,6 @@ class  PENTAGON(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.full((ngrp,1),1.0)
         pbm.gconst = arrset(pbm.gconst,ig_['OBJ'],float(0.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -136,7 +134,7 @@ class  PENTAGON(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eIDIST', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eIDIST', iet_)
         elftv = loaset(elftv,it,0,'XA')
         elftv = loaset(elftv,it,1,'YA')
         elftv = loaset(elftv,it,2,'XB')
@@ -147,63 +145,63 @@ class  PENTAGON(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'D12'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eIDIST')
         ielftype = arrset(ielftype, ie, iet_["eIDIST"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XA')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'Y1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YA')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XB')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'Y2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YB')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'D13'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eIDIST')
         ielftype = arrset(ielftype, ie, iet_["eIDIST"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XA')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'Y1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YA')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XB')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'Y3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YB')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'D32'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eIDIST')
         ielftype = arrset(ielftype, ie, iet_["eIDIST"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XA')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'Y3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YA')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XB')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'Y2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YB')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -227,6 +225,8 @@ class  PENTAGON(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+#  LO SOLTN              1.36521631D-04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -241,6 +241,10 @@ class  PENTAGON(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-AY-6-15"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

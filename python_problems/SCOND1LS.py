@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SCOND1LS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,8 @@ class  SCOND1LS(CUTEst_problem):
 #    LN = Index of the last negative discretization point
 #         (the interest is in the negative part)
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,7 +54,6 @@ class  SCOND1LS(CUTEst_problem):
             v_['LN'] = int(9);  #  SIF file default value
         else:
             v_['LN'] = int(args[1])
-#           Alternative values for the SIF file parameters:
 # IE N                   50             $-PARAMETER
 # IE LN                  45             $-PARAMETER
 # IE N                   100            $-PARAMETER
@@ -62,7 +63,10 @@ class  SCOND1LS(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE LN                  900            $-PARAMETER
 # IE N                   5000           $-PARAMETER
-# IE LN                  4500           $-PARAMETER
+        if nargin<2:
+            v_['LN'] = int(4500);  #  SIF file default value
+        else:
+            v_['LN'] = int(args[1])
         if nargin<3:
             v_['LAMBDA'] = float(1.0);  #  SIF file default value
         else:
@@ -102,7 +106,7 @@ class  SCOND1LS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N+1'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -114,7 +118,7 @@ class  SCOND1LS(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['U'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -133,8 +137,6 @@ class  SCOND1LS(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['LH2CA']))
         for I in range(int(v_['LN+1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['-LH2CB']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = np.full((pb.n,1),v_['UUP'])
         pb.xlower = np.full((pb.n,1),v_['ULW'])
@@ -149,7 +151,7 @@ class  SCOND1LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eWE1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eWE1', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'LAC')
@@ -163,11 +165,11 @@ class  SCOND1LS(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'EA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eWE1')
             ielftype = arrset(ielftype, ie, iet_["eWE1"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,v_['ULW'],v_['UUP'],0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,v_['ULW'],v_['UUP'],0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='LAC')
@@ -177,11 +179,11 @@ class  SCOND1LS(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='LU')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LUA']))
             ename = 'EB'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eWE1')
             ielftype = arrset(ielftype, ie, iet_["eWE1"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,v_['ULW'],v_['UUP'],0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,v_['ULW'],v_['UUP'],0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='LAC')
@@ -192,7 +194,7 @@ class  SCOND1LS(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LUB']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

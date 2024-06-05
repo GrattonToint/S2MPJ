@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HUESmMOD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -18,6 +18,11 @@ class  HUESmMOD(CUTEst_problem):
 # 
 #    Number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE K                   10             $-PARAMETER
+# IE K                   100            $-PARAMETER
+# IE K                   1000           $-PARAMETER    original value
+# IE K                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,10 +45,6 @@ class  HUESmMOD(CUTEst_problem):
             v_['K'] = int(10);  #  SIF file default value
         else:
             v_['K'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE K                   100            $-PARAMETER
-# IE K                   1000           $-PARAMETER    original value
-# IE K                   5000           $-PARAMETER
 # IE K                   10000          $-PARAMETER
         v_['1'] = 1
         v_['RANGE'] = 1.0
@@ -62,7 +63,7 @@ class  HUESmMOD(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['K'])+1):
-            [iv,ix_,_] = s2x_ii('M'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('M'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'M'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -72,7 +73,7 @@ class  HUESmMOD(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['K'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['K'])+1):
             v_['I-1'] = -1+I
@@ -88,12 +89,12 @@ class  HUESmMOD(CUTEst_problem):
             v_['DIFF5'] = v_['RI5']-v_['RI-15']
             v_['COEFF1'] = v_['DIFF3']*v_['DELTAX3/3']
             v_['COEFF2'] = v_['DIFF5']*v_['DELTAX5/5']
-            [ig,ig_,_] = s2x_ii('E1',ig_)
+            [ig,ig_,_] = s2mpj_ii('E1',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'E1')
             iv = ix_['M'+str(I)]
             pbm.A[ig,iv] = float(v_['COEFF1'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E2',ig_)
+            [ig,ig_,_] = s2mpj_ii('E2',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'E2')
             iv = ix_['M'+str(I)]
@@ -124,7 +125,7 @@ class  HUESmMOD(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'U1')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -133,12 +134,12 @@ class  HUESmMOD(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['K'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
                 ielftype = arrset( ielftype,ie,iet_['eSQ'])
             vname = 'M'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -156,6 +157,8 @@ class  HUESmMOD(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/RK']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -173,6 +176,10 @@ class  HUESmMOD(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QLR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

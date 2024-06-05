@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS38(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,7 +52,7 @@ class  HS38(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -62,27 +62,27 @@ class  HS38(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G2',ig_)
+        [ig,ig_,_] = s2mpj_ii('G2',ig_)
         gtype = arrset(gtype,ig,'<>')
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/P1']))
-        [ig,ig_,_] = s2x_ii('G4',ig_)
+        [ig,ig_,_] = s2mpj_ii('G4',ig_)
         gtype = arrset(gtype,ig,'<>')
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/P1']))
-        [ig,ig_,_] = s2x_ii('G5',ig_)
+        [ig,ig_,_] = s2mpj_ii('G5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(0.01))
-        [ig,ig_,_] = s2x_ii('G6',ig_)
+        [ig,ig_,_] = s2mpj_ii('G6',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X4']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/P2']))
-        [ig,ig_,_] = s2x_ii('G7',ig_)
+        [ig,ig_,_] = s2mpj_ii('G7',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -93,8 +93,6 @@ class  HS38(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-10.0)
         pb.xupper = np.full((pb.n,1),10.0)
@@ -107,9 +105,9 @@ class  HS38(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eMSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eMSQ', iet_)
         elftv = loaset(elftv,it,0,'V1')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -118,36 +116,36 @@ class  HS38(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'E1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eMSQ')
         ielftype = arrset(ielftype, ie, iet_["eMSQ"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eMSQ')
         ielftype = arrset(ielftype, ie, iet_["eMSQ"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
         ielftype = arrset(ielftype, ie, iet_["ePROD"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -174,6 +172,8 @@ class  HS38(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(19.8))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = -99.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -183,6 +183,10 @@ class  HS38(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AN-4-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

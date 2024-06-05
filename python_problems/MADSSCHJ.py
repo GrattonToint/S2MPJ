@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MADSSCHJ(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,19 @@ class  MADSSCHJ(CUTEst_problem):
 #    N is the number of variables - 1, and must be even and at least 4.
 #    The number of inequality constraints is 2*N - 2.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   4              $-PARAMETER  n=  5, m=  6
+# IE N                   10             $-PARAMETER  n= 11, m= 18  original value
+# IE N                   20             $-PARAMETER  n= 21, m= 38
+# IE N                   30             $-PARAMETER  n= 31, m= 58
+# IE N                   40             $-PARAMETER  n= 41, m= 78
+# IE N                   50             $-PARAMETER  n= 51, m= 98
+# IE N                   60             $-PARAMETER  n= 61, m=118
+# IE N                   70             $-PARAMETER  n= 71, m=138
+# IE N                   80             $-PARAMETER  n= 81, m=158
+# IE N                   90             $-PARAMETER  n= 91, m=178
+# IE N                   100            $-PARAMETER  n=101, m=198
+# IE N                   200            $-PARAMETER  n=201, m=398
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,18 +57,6 @@ class  MADSSCHJ(CUTEst_problem):
             v_['N'] = int(4);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER  n= 11, m= 18  original value
-# IE N                   20             $-PARAMETER  n= 21, m= 38
-# IE N                   30             $-PARAMETER  n= 31, m= 58
-# IE N                   40             $-PARAMETER  n= 41, m= 78
-# IE N                   50             $-PARAMETER  n= 51, m= 98
-# IE N                   60             $-PARAMETER  n= 61, m=118
-# IE N                   70             $-PARAMETER  n= 71, m=138
-# IE N                   80             $-PARAMETER  n= 81, m=158
-# IE N                   90             $-PARAMETER  n= 91, m=178
-# IE N                   100            $-PARAMETER  n=101, m=198
-# IE N                   200            $-PARAMETER  n=201, m=398
         v_['1'] = 1
         v_['2'] = 2
         v_['3'] = 3
@@ -70,9 +71,9 @@ class  MADSSCHJ(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-        [iv,ix_,_] = s2x_ii('Z',ix_)
+        [iv,ix_,_] = s2mpj_ii('Z',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Z')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -81,22 +82,22 @@ class  MADSSCHJ(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Z']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C1',ig_)
+        [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C1')
         iv = ix_['Z']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('C1',ig_)
+            [ig,ig_,_] = s2mpj_ii('C1',ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C1')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C2',ig_)
+        [ig,ig_,_] = s2mpj_ii('C2',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C2')
         iv = ix_['Z']
@@ -104,12 +105,12 @@ class  MADSSCHJ(CUTEst_problem):
         iv = ix_['X1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['3']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('C2',ig_)
+            [ig,ig_,_] = s2mpj_ii('C2',ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C2')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C3',ig_)
+        [ig,ig_,_] = s2mpj_ii('C3',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C3')
         iv = ix_['Z']
@@ -117,7 +118,7 @@ class  MADSSCHJ(CUTEst_problem):
         iv = ix_['X1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['3']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('C3',ig_)
+            [ig,ig_,_] = s2mpj_ii('C3',ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C3')
             iv = ix_['X'+str(I)]
@@ -128,45 +129,45 @@ class  MADSSCHJ(CUTEst_problem):
             v_['J'] = int(np.fix(v_['K+2']/v_['2']))
             v_['J-1'] = -1+v_['J']
             v_['J+1'] = 1+v_['J']
-            [ig,ig_,_] = s2x_ii('C'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(K))
             iv = ix_['Z']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['K+1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['K+1'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['K+1'])))
             iv = ix_['Z']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             for I in range(int(v_['1']),int(v_['J-1'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(K),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(K))
                 iv = ix_['X'+str(I)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('C'+str(int(v_['K+1'])),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['K+1'])),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(int(v_['K+1'])))
                 iv = ix_['X'+str(I)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             for I in range(int(v_['J+1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(K),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(K))
                 iv = ix_['X'+str(I)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('C'+str(int(v_['K+1'])),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['K+1'])),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(int(v_['K+1'])))
                 iv = ix_['X'+str(I)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C'+str(int(v_['M'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['M'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C'+str(int(v_['M'])))
         iv = ix_['Z']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['M'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['M'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['M'])))
             iv = ix_['X'+str(I)]
@@ -189,8 +190,6 @@ class  MADSSCHJ(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for K in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(K)],float(-1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -200,7 +199,7 @@ class  MADSSCHJ(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -209,11 +208,11 @@ class  MADSSCHJ(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'XSQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,10.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,10.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -258,6 +257,19 @@ class  MADSSCHJ(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(4)             -2.6121094144
+# LO SOLTN(10)            -12.814452425
+# LO SOLTN(20)            -49.869888156
+# LO SOLTN(30)            -111.93545559
+# LO SOLTN(40)            -199.00371592
+# LO SOLTN(50)            -311.07308068
+# LO SOLTN(60)            -448.14300524
+# LO SOLTN(70)            -610.21325256
+# LO SOLTN(80)            -797.28370289
+# LO SOLTN(90)            -1009.3542892
+# LO SOLTN(100)           -1246.4249710
+# LO SOLTN(200)           -4992.1339031
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -272,6 +284,10 @@ class  MADSSCHJ(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LQR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

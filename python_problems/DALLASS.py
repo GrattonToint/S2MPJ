@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DALLASS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,7 +49,7 @@ class  DALLASS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -58,7 +58,7 @@ class  DALLASS(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X42']
         pbm.A[ig,iv] = float(-6.38400e+02)+pbm.A[ig,iv]
@@ -70,7 +70,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-5.05000e+02)+pbm.A[ig,iv]
         iv = ix_['X46']
         pbm.A[ig,iv] = float(-4.36900e+02)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N1',ig_)
+        [ig,ig_,_] = s2mpj_ii('N1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N1')
         iv = ix_['X46']
@@ -79,26 +79,26 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N2',ig_)
+        [ig,ig_,_] = s2mpj_ii('N2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N2')
         iv = ix_['X45']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N3',ig_)
+        [ig,ig_,_] = s2mpj_ii('N3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N3')
         iv = ix_['X44']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N4',ig_)
+        [ig,ig_,_] = s2mpj_ii('N4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N4')
         iv = ix_['X4']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N5',ig_)
+        [ig,ig_,_] = s2mpj_ii('N5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N5')
         iv = ix_['X16']
@@ -109,7 +109,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X5']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N6',ig_)
+        [ig,ig_,_] = s2mpj_ii('N6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N6')
         iv = ix_['X7']
@@ -118,14 +118,14 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X8']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N7',ig_)
+        [ig,ig_,_] = s2mpj_ii('N7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N7')
         iv = ix_['X9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X10']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N8',ig_)
+        [ig,ig_,_] = s2mpj_ii('N8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N8')
         iv = ix_['X10']
@@ -136,7 +136,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X11']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N9',ig_)
+        [ig,ig_,_] = s2mpj_ii('N9',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N9')
         iv = ix_['X12']
@@ -145,7 +145,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X13']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N10',ig_)
+        [ig,ig_,_] = s2mpj_ii('N10',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N10')
         iv = ix_['X4']
@@ -156,7 +156,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X14']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N11',ig_)
+        [ig,ig_,_] = s2mpj_ii('N11',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N11')
         iv = ix_['X15']
@@ -167,7 +167,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X17']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N12',ig_)
+        [ig,ig_,_] = s2mpj_ii('N12',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N12')
         iv = ix_['X20']
@@ -180,7 +180,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X18']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N13',ig_)
+        [ig,ig_,_] = s2mpj_ii('N13',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N13')
         iv = ix_['X42']
@@ -189,21 +189,21 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X19']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N14',ig_)
+        [ig,ig_,_] = s2mpj_ii('N14',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N14')
         iv = ix_['X21']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N15',ig_)
+        [ig,ig_,_] = s2mpj_ii('N15',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N15')
         iv = ix_['X43']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X21']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N16',ig_)
+        [ig,ig_,_] = s2mpj_ii('N16',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N16')
         iv = ix_['X14']
@@ -214,7 +214,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X22']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N17',ig_)
+        [ig,ig_,_] = s2mpj_ii('N17',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N17')
         iv = ix_['X23']
@@ -223,7 +223,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N18',ig_)
+        [ig,ig_,_] = s2mpj_ii('N18',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N18')
         iv = ix_['X31']
@@ -234,7 +234,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X26']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N19',ig_)
+        [ig,ig_,_] = s2mpj_ii('N19',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N19')
         iv = ix_['X26']
@@ -245,12 +245,12 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X27']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N20',ig_)
+        [ig,ig_,_] = s2mpj_ii('N20',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N20')
         iv = ix_['X28']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N21',ig_)
+        [ig,ig_,_] = s2mpj_ii('N21',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N21')
         iv = ix_['X31']
@@ -259,21 +259,21 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X29']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N22',ig_)
+        [ig,ig_,_] = s2mpj_ii('N22',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N22')
         iv = ix_['X30']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X27']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N23',ig_)
+        [ig,ig_,_] = s2mpj_ii('N23',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N23')
         iv = ix_['X24']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X32']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N24',ig_)
+        [ig,ig_,_] = s2mpj_ii('N24',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N24')
         iv = ix_['X38']
@@ -284,14 +284,14 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X33']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N25',ig_)
+        [ig,ig_,_] = s2mpj_ii('N25',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N25')
         iv = ix_['X32']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X35']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N26',ig_)
+        [ig,ig_,_] = s2mpj_ii('N26',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N26')
         iv = ix_['X35']
@@ -300,14 +300,14 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X36']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N27',ig_)
+        [ig,ig_,_] = s2mpj_ii('N27',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N27')
         iv = ix_['X37']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X34']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N28',ig_)
+        [ig,ig_,_] = s2mpj_ii('N28',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N28')
         iv = ix_['X36']
@@ -318,7 +318,7 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X38']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N29',ig_)
+        [ig,ig_,_] = s2mpj_ii('N29',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N29')
         iv = ix_['X39']
@@ -327,14 +327,14 @@ class  DALLASS(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N30',ig_)
+        [ig,ig_,_] = s2mpj_ii('N30',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N30')
         iv = ix_['X40']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X41']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N31',ig_)
+        [ig,ig_,_] = s2mpj_ii('N31',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'N31')
         iv = ix_['X46']
@@ -380,8 +380,6 @@ class  DALLASS(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['N26'],float(5.27000e-01))
         pbm.gconst = arrset(pbm.gconst,ig_['N29'],float(1.00000e-03))
         pbm.gconst = arrset(pbm.gconst,ig_['N31'],float(-1.01960e+01))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-2.00000e+02)
         pb.xupper = np.full((pb.n,1),2.00000e+02)
@@ -595,13 +593,13 @@ class  DALLASS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eT1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eT1', iet_)
         elftv = loaset(elftv,it,0,'ARC')
         elftp = []
         elftp = loaset(elftp,it,0,'C1')
         elftp = loaset(elftp,it,1,'C2')
         elftp = loaset(elftp,it,2,'C3')
-        [it,iet_,_] = s2x_ii( 'eT4', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eT4', iet_)
         elftv = loaset(elftv,it,0,'ARC')
         elftp = loaset(elftp,it,0,'C1')
         elftp = loaset(elftp,it,1,'C2')
@@ -612,11 +610,12 @@ class  DALLASS(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E1'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eT4')
         ielftype = arrset(ielftype, ie, iet_["eT4"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -624,11 +623,12 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C2')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.51200e+02))
         ename = 'E2'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eT4')
         ielftype = arrset(ielftype, ie, iet_["eT4"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -636,11 +636,12 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C2')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.46300e+01))
         ename = 'E3'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eT4')
         ielftype = arrset(ielftype, ie, iet_["eT4"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -648,12 +649,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C2')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.81400e+01))
         ename = 'E4'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -663,12 +665,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.22000e+02))
         ename = 'E5'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -678,12 +681,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.00000e+02))
         ename = 'E6'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -693,12 +697,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.20000e+02))
         ename = 'E7'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -708,12 +713,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.22000e+02))
         ename = 'E8'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X8'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -723,12 +729,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.20000e+02))
         ename = 'E9'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X9'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -738,12 +745,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.22000e+02))
         ename = 'E10'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -753,12 +761,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.50000e+01))
         ename = 'E11'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -768,12 +777,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.07000e+02))
         ename = 'E12'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X12'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -783,12 +793,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E13'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X13'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -798,12 +809,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E14'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -813,12 +825,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.00000e+02))
         ename = 'E15'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X15'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -828,12 +841,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.30000e+02))
         ename = 'E16'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X16'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -843,12 +857,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.22000e+02))
         ename = 'E17'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X17'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -858,12 +873,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E18'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X18'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -873,11 +889,12 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.18000e+02))
         ename = 'E19'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eT4')
         ielftype = arrset(ielftype, ie, iet_["eT4"])
         vname = 'X19'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -885,12 +902,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C2')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.12970e+02))
         ename = 'E20'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X20'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -900,11 +918,12 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E21'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eT4')
         ielftype = arrset(ielftype, ie, iet_["eT4"])
         vname = 'X21'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -912,12 +931,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C2')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.60610e+02))
         ename = 'E22'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X22'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -927,12 +947,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.30000e+02))
         ename = 'E23'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X23'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -942,12 +963,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.50000e+01))
         ename = 'E24'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X24'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -957,12 +979,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.50000e+01))
         ename = 'E25'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X25'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -972,12 +995,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E26'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X26'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -987,12 +1011,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E27'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X27'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1002,12 +1027,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.24000e+02))
         ename = 'E28'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X28'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1017,12 +1043,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E29'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X29'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1032,12 +1059,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.13000e+02))
         ename = 'E30'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X30'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1047,12 +1075,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.13000e+02))
         ename = 'E31'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X31'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1062,12 +1091,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E32'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X32'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1077,12 +1107,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.50000e+01))
         ename = 'E33'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X33'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1092,12 +1123,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.00000e+02))
         ename = 'E34'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X34'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1107,12 +1139,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.13000e+02))
         ename = 'E35'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X35'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1122,12 +1155,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.50000e+01))
         ename = 'E36'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X36'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1137,12 +1171,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E37'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X37'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1152,12 +1187,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.10000e+02))
         ename = 'E38'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X38'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1167,12 +1203,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.00000e+02))
         ename = 'E39'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X39'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1182,12 +1219,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.20000e+02))
         ename = 'E40'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X40'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1197,12 +1235,13 @@ class  DALLASS(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.20000e+02))
         ename = 'E41'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eT1')
             ielftype = arrset( ielftype,ie,iet_['eT1'])
         vname = 'X41'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_,pb]  = (
+              s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02))
         posev = find(elftv[ielftype[ie]],lambda x:x=='ARC')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C1')
@@ -1364,6 +1403,8 @@ class  DALLASS(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.2393D+04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -1379,6 +1420,10 @@ class  DALLASS(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "ONR2-MN-46-31"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1388,7 +1433,7 @@ class  DALLASS(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TMP = 850559.0e0/2.85e0*pbm.elpar[iel_][0]
+        TMP = 850559.0e0/2.85*pbm.elpar[iel_][0]
         TMP = TMP/(pbm.elpar[iel_][2]**1.85)
         TMP = TMP/(pbm.elpar[iel_][1]**4.87)
         X = np.absolute(EV_[0])
@@ -1402,10 +1447,10 @@ class  DALLASS(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.85e0*TMP*EV_[0]*XEXP
+            g_[0] = 2.85*TMP*EV_[0]*XEXP
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 5.2725e0*TMP*XEXP
+                H_[0,0] = 5.2725*TMP*XEXP
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -1425,7 +1470,7 @@ class  DALLASS(CUTEst_problem):
         TMP = pbm.elpar[iel_][1]*(pbm.elpar[iel_][0]-X*X)
         TMP = np.sqrt(max(TMP,EPS2))
         TMP2 = np.sqrt(pbm.elpar[iel_][1])*np.arcsin(X/SQC1)
-        f_   = 0.5e0*(-X*TMP-pbm.elpar[iel_][0]*TMP2)
+        f_   = 0.5*(-X*TMP-pbm.elpar[iel_][0]*TMP2)
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:

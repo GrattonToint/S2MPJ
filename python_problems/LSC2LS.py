@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LSC2LS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,11 +56,11 @@ class  LSC2LS(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X',ix_)
+        [iv,ix_,_] = s2mpj_ii('X',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X')
-        [iv,ix_,_] = s2x_ii('Y',ix_)
+        [iv,ix_,_] = s2mpj_ii('Y',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Y')
-        [iv,ix_,_] = s2x_ii('R',ix_)
+        [iv,ix_,_] = s2mpj_ii('R',ix_)
         pb.xnames=arrset(pb.xnames,iv,'R')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -70,7 +70,7 @@ class  LSC2LS(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['R']
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -79,8 +79,6 @@ class  LSC2LS(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -93,7 +91,7 @@ class  LSC2LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eS', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftp = []
@@ -107,15 +105,15 @@ class  LSC2LS(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'S'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eS')
             ielftype = arrset(ielftype, ie, iet_["eS"])
             vname = 'X'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Y'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='PX')
@@ -124,7 +122,7 @@ class  LSC2LS(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['Y'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -140,7 +138,10 @@ class  LSC2LS(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -151,6 +152,10 @@ class  LSC2LS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SUR2-MN-3-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LEVYMONT8(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -8,11 +8,6 @@ class  LEVYMONT8(CUTEst_problem):
 #    *********
 #    A global optimization example due to Levy & Montalvo 
 #    This problem is one of the parameterised set LEVYMONT5-LEVYMONT10
-#    f(x_1,...,x_n) = \sum_{i=1}^n (pi/n)*(L*x_i)^2 +
-#                     ( K*pi/n) * [ s(x1,L,C)^2 + \sum_{i=2}^n  p(x_{i-1},x_i,L,C,A)^2 ]
-#    where
-#    s(x,L,C )     = sin( pi( L*x + C ) )
-#    p(x,y,L,C,A ) = ( L* y + C - A) * sin( pi( L*x + C ) )
 # 
 #    Source:  problem 8 in
 # 
@@ -23,10 +18,12 @@ class  LEVYMONT8(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "SBR2-AY-V-0"
+#    classification = "SBR2-AY-5-0"
 # 
 #    N is the number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   5              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -70,7 +67,7 @@ class  LEVYMONT8(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -80,12 +77,12 @@ class  LEVYMONT8(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('Q'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('Q'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['L'])+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['N/PI']))
-            [ig,ig_,_] = s2x_ii('N'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('N'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -96,8 +93,6 @@ class  LEVYMONT8(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['Q'+str(I)],float(v_['A-C']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-10.0)
         pb.xupper = np.full((pb.n,1),10.0)
@@ -109,12 +104,12 @@ class  LEVYMONT8(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eS2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eS2', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'L')
         elftp = loaset(elftp,it,1,'C')
-        [it,iet_,_] = s2x_ii( 'ePS2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePS2', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Z')
         elftp = loaset(elftp,it,0,'L')
@@ -127,35 +122,35 @@ class  LEVYMONT8(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E'+str(int(v_['1']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eS2')
         ielftype = arrset(ielftype, ie, iet_["eS2"])
         ename = 'E'+str(int(v_['1']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['1']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         posep = find(elftp[ielftype[ie]],lambda x:x=='L')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['L']))
         ename = 'E'+str(int(v_['1']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         posep = find(elftp[ielftype[ie]],lambda x:x=='C')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['C']))
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['I-1'] = I-v_['1']
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePS2')
             ielftype = arrset(ielftype, ie, iet_["ePS2"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='L')
@@ -166,7 +161,7 @@ class  LEVYMONT8(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['A']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -184,6 +179,8 @@ class  LEVYMONT8(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['ROOTKPI/N']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -191,8 +188,12 @@ class  LEVYMONT8(CUTEst_problem):
         sA1,sA2    = pbm.A.shape
         pbm.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SBR2-AY-V-0"
+        pb.pbclass = "SBR2-AY-5-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

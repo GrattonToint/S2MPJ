@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PORTSNQP(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,10 @@ class  PORTSNQP(CUTEst_problem):
 # 
 #    The number of equality constraints
 # 
+# IE N                   10
+# IE N                   100
+# IE N                   1000
+# IE N                   10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,6 +44,7 @@ class  PORTSNQP(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
+        v_['N'] = 100000
         v_['N'] = 10
         v_['1'] = 1
         v_['RN'] = float(v_['N'])
@@ -49,7 +54,7 @@ class  PORTSNQP(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -63,21 +68,21 @@ class  PORTSNQP(CUTEst_problem):
             v_['2I'] = 2.0*v_['RI']
             v_['2I-N'] = v_['2I']-v_['RN']
             v_['C'] = v_['2I-N']/v_['RN']
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E',ig_)
+            [ig,ig_,_] = s2mpj_ii('E',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'E')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E2',ig_)
+            [ig,ig_,_] = s2mpj_ii('E2',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'E2')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['C'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('O',ig_)
+        [ig,ig_,_] = s2mpj_ii('O',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -106,10 +111,8 @@ class  PORTSNQP(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['C']))
         pbm.gconst = arrset(pbm.gconst,ig_['E'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['E2'],float(0.5))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pb.xlower[ix_['X'+str(I)]] = 0.0
@@ -117,7 +120,7 @@ class  PORTSNQP(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(0.5))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -131,6 +134,7 @@ class  PORTSNQP(CUTEst_problem):
         ig = ig_['O']
         pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -146,6 +150,10 @@ class  PORTSNQP(CUTEst_problem):
         pb.lincons   = np.arange(len(pbm.congrps))
         pb.pbclass = "QLR2-AN-V-1"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -159,7 +167,7 @@ class  PORTSNQP(CUTEst_problem):
             g_ = GVAR_+GVAR_
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = 2.0e0
+                H_ = 2.0
         if nargout == 1:
             return f_
         elif nargout == 2:

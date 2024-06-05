@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CHEMRCTA(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,6 +27,13 @@ class  CHEMRCTA(CUTEst_problem):
 #    Number of discretized point for the interval [0,1].
 #    The number of variables is 2N.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   5              $-PARAMETER n = 10
+# IE N                   25             $-PARAMETER n = 50
+# IE N                   50             $-PARAMETER n = 100
+# IE N                   250            $-PARAMETER n = 500    original value
+# IE N                   500            $-PARAMETER n = 1000
+# IE N                   2500           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,12 +56,6 @@ class  CHEMRCTA(CUTEst_problem):
             v_['N'] = int(5);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   25             $-PARAMETER n = 50
-# IE N                   50             $-PARAMETER n = 100
-# IE N                   250            $-PARAMETER n = 500    original value
-# IE N                   500            $-PARAMETER n = 1000
-# IE N                   2500           $-PARAMETER n = 5000
         if nargin<2:
             v_['PEM'] = float(1.0);  #  SIF file default value
         else:
@@ -115,10 +116,10 @@ class  CHEMRCTA(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('T'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('T'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'T'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -127,22 +128,22 @@ class  CHEMRCTA(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('GU'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['1'])))
         iv = ix_['U'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GU'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['1'])))
         iv = ix_['U'+str(int(v_['2']))]
         pbm.A[ig,iv] = float(v_['CU1'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GT'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['1'])))
         iv = ix_['T'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GT'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['1'])))
         iv = ix_['T'+str(int(v_['2']))]
@@ -150,7 +151,7 @@ class  CHEMRCTA(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('GU'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('GU'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'GU'+str(I))
             iv = ix_['U'+str(int(v_['I-1']))]
@@ -159,7 +160,7 @@ class  CHEMRCTA(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['CUI'])+pbm.A[ig,iv]
             iv = ix_['U'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(v_['1/H2PEM'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('GT'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('GT'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'GT'+str(I))
             iv = ix_['T'+str(I)]
@@ -170,22 +171,22 @@ class  CHEMRCTA(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['CTI'])+pbm.A[ig,iv]
             iv = ix_['T'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(v_['1/H2PEH'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GU'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['N'])))
         iv = ix_['U'+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GU'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GU'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GU'+str(int(v_['N'])))
         iv = ix_['U'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GT'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['N'])))
         iv = ix_['T'+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GT'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('GT'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'GT'+str(int(v_['N'])))
         iv = ix_['T'+str(int(v_['N']))]
@@ -210,10 +211,8 @@ class  CHEMRCTA(CUTEst_problem):
               arrset(pbm.gconst,ig_['GU'+str(int(v_['1']))],float(v_['-HPEM'])))
         pbm.gconst  = (
               arrset(pbm.gconst,ig_['GT'+str(int(v_['1']))],float(v_['-HPEH'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pb.xlower[ix_['T'+str(I)]] = 0.0000001
@@ -222,7 +221,7 @@ class  CHEMRCTA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eREAC', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eREAC', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'T')
         elftp = []
@@ -235,31 +234,31 @@ class  CHEMRCTA(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             ename = 'EU'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eREAC')
                 ielftype = arrset( ielftype,ie,iet_['eREAC'])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'T'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='G')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['GAMMA']))
             ename = 'ET'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eREAC')
                 ielftype = arrset( ielftype,ie,iet_['eREAC'])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'T'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='G')
@@ -283,6 +282,8 @@ class  CHEMRCTA(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['BD']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -298,6 +299,10 @@ class  CHEMRCTA(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

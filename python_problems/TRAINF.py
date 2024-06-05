@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TRAINF(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,6 +33,7 @@ class  TRAINF(CUTEst_problem):
 # RE TIME                2.0            $-PARAMETER  travel time
 # RE LENGTH              2.0            $-PARAMETER  length of track
 # 
+# RE TIME                1.5            $-PARAMETER  travel time
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -55,19 +56,21 @@ class  TRAINF(CUTEst_problem):
             v_['TIME'] = float(1.5);  #  SIF file default value
         else:
             v_['TIME'] = float(args[0])
+# RE LENGTH              2.0            $-PARAMETER  length of track
         if nargin<2:
-            v_['LENGTH'] = float(2.0);  #  SIF file default value
+            v_['LENGTH'] = float(2);  #  SIF file default value
         else:
             v_['LENGTH'] = float(args[1])
-        if nargin<3:
-            v_['N'] = int(11);  #  SIF file default value
-        else:
-            v_['N'] = int(args[2])
+# IE N                   11             $-PARAMETER
 # IE N                   51             $-PARAMETER
 # IE N                   101            $-PARAMETER     original value
 # IE N                   201            $-PARAMETER
 # IE N                   501            $-PARAMETER
 # IE N                   1001           $-PARAMETER
+        if nargin<3:
+            v_['N'] = int(11);  #  SIF file default value
+        else:
+            v_['N'] = int(args[2])
 # IE N                   5001           $-PARAMETER
 # IE N                   10001          $-PARAMETER
         v_['N-1'] = -1+v_['N']
@@ -96,16 +99,16 @@ class  TRAINF(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('V'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('V'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('UA'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UA'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UA'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('UB'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UB'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UB'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -114,11 +117,11 @@ class  TRAINF(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('ENERGY',ig_)
+        [ig,ig_,_] = s2mpj_ii('ENERGY',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('XEQ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('XEQ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'XEQ'+str(I))
             iv = ix_['X'+str(int(v_['I+1']))]
@@ -129,7 +132,7 @@ class  TRAINF(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-H/2'])+pbm.A[ig,iv]
             iv = ix_['V'+str(I)]
             pbm.A[ig,iv] = float(v_['-H/2'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VEQ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('VEQ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'VEQ'+str(I))
             iv = ix_['V'+str(int(v_['I+1']))]
@@ -162,10 +165,8 @@ class  TRAINF(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['VEQ'+str(I)],float(v_['-AH']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['X'+str(int(v_['0']))]] = 0.0
@@ -213,10 +214,10 @@ class  TRAINF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'UU')
         elftv = loaset(elftv,it,1,'VV')
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'VVV')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -226,24 +227,24 @@ class  TRAINF(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['N'])+1):
             v_['I+1'] = 1+I
             ename = 'VISQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'V'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VVV')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             ename = 'UV'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'UA'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='UU')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VV')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -272,6 +273,7 @@ class  TRAINF(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['H']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLUTION            3.09751881012
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -287,6 +289,10 @@ class  TRAINF(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

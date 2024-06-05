@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MSQRTBLS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,10 @@ class  MSQRTBLS(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE P                   3              $-PARAMETER n = 9     original value
+# IE P                   7              $-PARAMETER n = 49
+# IE P                   10             $-PARAMETER n = 100
+# IE P                   23             $-PARAMETER n = 529
+# IE P                   32             $-PARAMETER n = 1024
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,10 +51,6 @@ class  MSQRTBLS(CUTEst_problem):
             v_['P'] = int(5);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
-# IE P                   7              $-PARAMETER n = 49
-# IE P                   10             $-PARAMETER n = 100
-# IE P                   23             $-PARAMETER n = 529
-# IE P                   32             $-PARAMETER n = 1024
 # IE P                   70             $-PARAMETER n = 4900
         v_['N'] = v_['P']*v_['P']
         v_['1'] = 1
@@ -74,7 +74,7 @@ class  MSQRTBLS(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -85,7 +85,7 @@ class  MSQRTBLS(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -98,8 +98,6 @@ class  MSQRTBLS(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 pbm.gconst  = (
                       arrset(pbm.gconst,ig_['G'+str(I)+','+str(J)],float(v_['A'+str(I)+','+str(J)])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -117,7 +115,7 @@ class  MSQRTBLS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'XIT')
         elftv = loaset(elftv,it,1,'XTJ')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -129,20 +127,20 @@ class  MSQRTBLS(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 for T in range(int(v_['1']),int(v_['P'])+1):
                     ename = 'E'+str(I)+','+str(J)+','+str(T)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     vname = 'X'+str(I)+','+str(T)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='XIT')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'X'+str(T)+','+str(J)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='XTJ')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

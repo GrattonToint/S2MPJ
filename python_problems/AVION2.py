@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  AVION2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,103 +42,103 @@ class  AVION2(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('SR',ix_)
+        [iv,ix_,_] = s2mpj_ii('SR',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SR')
-        [iv,ix_,_] = s2x_ii('LR',ix_)
+        [iv,ix_,_] = s2mpj_ii('LR',ix_)
         pb.xnames=arrset(pb.xnames,iv,'LR')
-        [iv,ix_,_] = s2x_ii('PK',ix_)
+        [iv,ix_,_] = s2mpj_ii('PK',ix_)
         pb.xnames=arrset(pb.xnames,iv,'PK')
-        [iv,ix_,_] = s2x_ii('EF',ix_)
+        [iv,ix_,_] = s2mpj_ii('EF',ix_)
         pb.xnames=arrset(pb.xnames,iv,'EF')
-        [iv,ix_,_] = s2x_ii('SX',ix_)
+        [iv,ix_,_] = s2mpj_ii('SX',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SX')
-        [iv,ix_,_] = s2x_ii('LX',ix_)
+        [iv,ix_,_] = s2mpj_ii('LX',ix_)
         pb.xnames=arrset(pb.xnames,iv,'LX')
-        [iv,ix_,_] = s2x_ii('SD',ix_)
+        [iv,ix_,_] = s2mpj_ii('SD',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SD')
-        [iv,ix_,_] = s2x_ii('SK',ix_)
+        [iv,ix_,_] = s2mpj_ii('SK',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SK')
-        [iv,ix_,_] = s2x_ii('ST',ix_)
+        [iv,ix_,_] = s2mpj_ii('ST',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ST')
-        [iv,ix_,_] = s2x_ii('SF',ix_)
+        [iv,ix_,_] = s2mpj_ii('SF',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SF')
-        [iv,ix_,_] = s2x_ii('LF',ix_)
+        [iv,ix_,_] = s2mpj_ii('LF',ix_)
         pb.xnames=arrset(pb.xnames,iv,'LF')
-        [iv,ix_,_] = s2x_ii('AM',ix_)
+        [iv,ix_,_] = s2mpj_ii('AM',ix_)
         pb.xnames=arrset(pb.xnames,iv,'AM')
-        [iv,ix_,_] = s2x_ii('CA',ix_)
+        [iv,ix_,_] = s2mpj_ii('CA',ix_)
         pb.xnames=arrset(pb.xnames,iv,'CA')
-        [iv,ix_,_] = s2x_ii('CB',ix_)
+        [iv,ix_,_] = s2mpj_ii('CB',ix_)
         pb.xnames=arrset(pb.xnames,iv,'CB')
-        [iv,ix_,_] = s2x_ii('SO',ix_)
+        [iv,ix_,_] = s2mpj_ii('SO',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SO')
-        [iv,ix_,_] = s2x_ii('SS',ix_)
+        [iv,ix_,_] = s2mpj_ii('SS',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SS')
-        [iv,ix_,_] = s2x_ii('IMPDER',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPDER',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPDER')
-        [iv,ix_,_] = s2x_ii('IMPK',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPK',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPK')
-        [iv,ix_,_] = s2x_ii('IMPFUS',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPFUS',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPFUS')
-        [iv,ix_,_] = s2x_ii('QI',ix_)
+        [iv,ix_,_] = s2mpj_ii('QI',ix_)
         pb.xnames=arrset(pb.xnames,iv,'QI')
-        [iv,ix_,_] = s2x_ii('PT',ix_)
+        [iv,ix_,_] = s2mpj_ii('PT',ix_)
         pb.xnames=arrset(pb.xnames,iv,'PT')
-        [iv,ix_,_] = s2x_ii('MV',ix_)
+        [iv,ix_,_] = s2mpj_ii('MV',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MV')
-        [iv,ix_,_] = s2x_ii('MC',ix_)
+        [iv,ix_,_] = s2mpj_ii('MC',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MC')
-        [iv,ix_,_] = s2x_ii('MD',ix_)
+        [iv,ix_,_] = s2mpj_ii('MD',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MD')
-        [iv,ix_,_] = s2x_ii('PD',ix_)
+        [iv,ix_,_] = s2mpj_ii('PD',ix_)
         pb.xnames=arrset(pb.xnames,iv,'PD')
-        [iv,ix_,_] = s2x_ii('NS',ix_)
+        [iv,ix_,_] = s2mpj_ii('NS',ix_)
         pb.xnames=arrset(pb.xnames,iv,'NS')
-        [iv,ix_,_] = s2x_ii('VS',ix_)
+        [iv,ix_,_] = s2mpj_ii('VS',ix_)
         pb.xnames=arrset(pb.xnames,iv,'VS')
-        [iv,ix_,_] = s2x_ii('CR',ix_)
+        [iv,ix_,_] = s2mpj_ii('CR',ix_)
         pb.xnames=arrset(pb.xnames,iv,'CR')
-        [iv,ix_,_] = s2x_ii('PM',ix_)
+        [iv,ix_,_] = s2mpj_ii('PM',ix_)
         pb.xnames=arrset(pb.xnames,iv,'PM')
-        [iv,ix_,_] = s2x_ii('DV',ix_)
+        [iv,ix_,_] = s2mpj_ii('DV',ix_)
         pb.xnames=arrset(pb.xnames,iv,'DV')
-        [iv,ix_,_] = s2x_ii('MZ',ix_)
+        [iv,ix_,_] = s2mpj_ii('MZ',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MZ')
-        [iv,ix_,_] = s2x_ii('VN',ix_)
+        [iv,ix_,_] = s2mpj_ii('VN',ix_)
         pb.xnames=arrset(pb.xnames,iv,'VN')
-        [iv,ix_,_] = s2x_ii('QV',ix_)
+        [iv,ix_,_] = s2mpj_ii('QV',ix_)
         pb.xnames=arrset(pb.xnames,iv,'QV')
-        [iv,ix_,_] = s2x_ii('QF',ix_)
+        [iv,ix_,_] = s2mpj_ii('QF',ix_)
         pb.xnames=arrset(pb.xnames,iv,'QF')
-        [iv,ix_,_] = s2x_ii('IMPTRAIN',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPTRAIN',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPTRAIN')
-        [iv,ix_,_] = s2x_ii('IMPMOT',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPMOT',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPMOT')
-        [iv,ix_,_] = s2x_ii('IMPNMOT',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPNMOT',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPNMOT')
-        [iv,ix_,_] = s2x_ii('IMPPET',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPPET',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPPET')
-        [iv,ix_,_] = s2x_ii('IMPPIL',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPPIL',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPPIL')
-        [iv,ix_,_] = s2x_ii('IMPCAN',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPCAN',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPCAN')
-        [iv,ix_,_] = s2x_ii('IMPSNA',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPSNA',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPSNA')
-        [iv,ix_,_] = s2x_ii('MS',ix_)
+        [iv,ix_,_] = s2mpj_ii('MS',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MS')
-        [iv,ix_,_] = s2x_ii('EL',ix_)
+        [iv,ix_,_] = s2mpj_ii('EL',ix_)
         pb.xnames=arrset(pb.xnames,iv,'EL')
-        [iv,ix_,_] = s2x_ii('DE',ix_)
+        [iv,ix_,_] = s2mpj_ii('DE',ix_)
         pb.xnames=arrset(pb.xnames,iv,'DE')
-        [iv,ix_,_] = s2x_ii('DS',ix_)
+        [iv,ix_,_] = s2mpj_ii('DS',ix_)
         pb.xnames=arrset(pb.xnames,iv,'DS')
-        [iv,ix_,_] = s2x_ii('IMPVOIL',ix_)
+        [iv,ix_,_] = s2mpj_ii('IMPVOIL',ix_)
         pb.xnames=arrset(pb.xnames,iv,'IMPVOIL')
-        [iv,ix_,_] = s2x_ii('NM',ix_)
+        [iv,ix_,_] = s2mpj_ii('NM',ix_)
         pb.xnames=arrset(pb.xnames,iv,'NM')
-        [iv,ix_,_] = s2x_ii('NP',ix_)
+        [iv,ix_,_] = s2mpj_ii('NP',ix_)
         pb.xnames=arrset(pb.xnames,iv,'NP')
-        [iv,ix_,_] = s2x_ii('NG',ix_)
+        [iv,ix_,_] = s2mpj_ii('NG',ix_)
         pb.xnames=arrset(pb.xnames,iv,'NG')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -147,32 +147,32 @@ class  AVION2(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('E1',ig_)
+        [ig,ig_,_] = s2mpj_ii('E1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E1')
         iv = ix_['SD']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['SR']
         pbm.A[ig,iv] = float(-0.13)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E2',ig_)
+        [ig,ig_,_] = s2mpj_ii('E2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E2')
         iv = ix_['SX']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['SR']
         pbm.A[ig,iv] = float(-0.7)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E3',ig_)
+        [ig,ig_,_] = s2mpj_ii('E3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E3')
         iv = ix_['LX']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['LR']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E4',ig_)
+        [ig,ig_,_] = s2mpj_ii('E4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['SK']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E5',ig_)
+        [ig,ig_,_] = s2mpj_ii('E5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E5')
         iv = ix_['SF']
@@ -185,11 +185,11 @@ class  AVION2(CUTEst_problem):
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
         iv = ix_['SK']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E6',ig_)
+        [ig,ig_,_] = s2mpj_ii('E6',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['CA']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E7',ig_)
+        [ig,ig_,_] = s2mpj_ii('E7',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['AM']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
@@ -197,45 +197,45 @@ class  AVION2(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['SS']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E8',ig_)
+        [ig,ig_,_] = s2mpj_ii('E8',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['AM']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E9',ig_)
+        [ig,ig_,_] = s2mpj_ii('E9',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['IMPDER']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['SD']
         pbm.A[ig,iv] = float(-27.5)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E10',ig_)
+        [ig,ig_,_] = s2mpj_ii('E10',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['IMPK']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['SK']
         pbm.A[ig,iv] = float(-70.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E11',ig_)
+        [ig,ig_,_] = s2mpj_ii('E11',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E11')
         iv = ix_['IMPFUS']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['SF']
         pbm.A[ig,iv] = float(-20.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E12',ig_)
+        [ig,ig_,_] = s2mpj_ii('E12',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E12')
         iv = ix_['MD']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['MV']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E13',ig_)
+        [ig,ig_,_] = s2mpj_ii('E13',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['QI']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E14',ig_)
+        [ig,ig_,_] = s2mpj_ii('E14',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['PT']
         pbm.A[ig,iv] = float(1000.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E15',ig_)
+        [ig,ig_,_] = s2mpj_ii('E15',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E15')
         iv = ix_['QF']
@@ -244,7 +244,7 @@ class  AVION2(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['QV']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E16',ig_)
+        [ig,ig_,_] = s2mpj_ii('E16',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['VN']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -252,53 +252,53 @@ class  AVION2(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['QF']
         pbm.A[ig,iv] = float(v_['1/790'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E17',ig_)
+        [ig,ig_,_] = s2mpj_ii('E17',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E17')
         iv = ix_['IMPTRAIN']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['MV']
         pbm.A[ig,iv] = float(-0.137)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E18',ig_)
+        [ig,ig_,_] = s2mpj_ii('E18',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['IMPMOT']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E19',ig_)
+        [ig,ig_,_] = s2mpj_ii('E19',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E19')
         iv = ix_['IMPNMOT']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['NM']
         pbm.A[ig,iv] = float(-35.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E20',ig_)
+        [ig,ig_,_] = s2mpj_ii('E20',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E20')
         iv = ix_['IMPPET']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['QI']
         pbm.A[ig,iv] = float(-0.043)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E21',ig_)
+        [ig,ig_,_] = s2mpj_ii('E21',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E21')
         iv = ix_['IMPPIL']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['NP']
         pbm.A[ig,iv] = float(-200.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E22',ig_)
+        [ig,ig_,_] = s2mpj_ii('E22',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E22')
         iv = ix_['IMPCAN']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['NG']
         pbm.A[ig,iv] = float(-120.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E23',ig_)
+        [ig,ig_,_] = s2mpj_ii('E23',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E23')
         iv = ix_['IMPSNA']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['NS']
         pbm.A[ig,iv] = float(-300.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E24',ig_)
+        [ig,ig_,_] = s2mpj_ii('E24',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E24')
         iv = ix_['MC']
@@ -313,7 +313,7 @@ class  AVION2(CUTEst_problem):
         pbm.A[ig,iv] = float(660.0)+pbm.A[ig,iv]
         iv = ix_['QI']
         pbm.A[ig,iv] = float(0.5)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E25',ig_)
+        [ig,ig_,_] = s2mpj_ii('E25',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E25')
         iv = ix_['MZ']
@@ -330,31 +330,31 @@ class  AVION2(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['IMPSNA']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E26',ig_)
+        [ig,ig_,_] = s2mpj_ii('E26',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['ST']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E27',ig_)
+        [ig,ig_,_] = s2mpj_ii('E27',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['SR']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E28',ig_)
+        [ig,ig_,_] = s2mpj_ii('E28',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['QV']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E29',ig_)
+        [ig,ig_,_] = s2mpj_ii('E29',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['SO']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E30',ig_)
+        [ig,ig_,_] = s2mpj_ii('E30',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['SS']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E31',ig_)
+        [ig,ig_,_] = s2mpj_ii('E31',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['CB']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E32',ig_)
+        [ig,ig_,_] = s2mpj_ii('E32',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['IMPVOIL']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -379,10 +379,8 @@ class  AVION2(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['E23'],float(400.0))
         pbm.gconst = arrset(pbm.gconst,ig_['E24'],float(380.0))
         pbm.gconst = arrset(pbm.gconst,ig_['E25'],float(-290.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['SR']] = 10.0
         pb.xlower[ix_['LR']] = 0.0
@@ -537,44 +535,44 @@ class  AVION2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
-        [it,iet_,_] = s2x_ii( 'eQDdSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eQDdSQ', iet_)
         elftv = loaset(elftv,it,0,'W')
         elftv = loaset(elftv,it,1,'X')
         elftv = loaset(elftv,it,2,'Y')
         elftv = loaset(elftv,it,3,'Z')
-        [it,iet_,_] = s2x_ii( 'en12', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en12', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
-        [it,iet_,_] = s2x_ii( 'en12d1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en12d1', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'Z')
-        [it,iet_,_] = s2x_ii( 'eQT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eQT', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
-        [it,iet_,_] = s2x_ii( 'en1dLIN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en1dLIN', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
-        [it,iet_,_] = s2x_ii( 'eSQRT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQRT', iet_)
         elftv = loaset(elftv,it,0,'Z')
-        [it,iet_,_] = s2x_ii( 'eSURD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSURD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
-        [it,iet_,_] = s2x_ii( 'eSQPRD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQPRD', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
-        [it,iet_,_] = s2x_ii( 'eCBdSQQD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCBdSQQD', iet_)
         elftv = loaset(elftv,it,0,'W')
         elftv = loaset(elftv,it,1,'X')
         elftv = loaset(elftv,it,2,'Y')
         elftv = loaset(elftv,it,3,'Z')
-        [it,iet_,_] = s2x_ii( 'eSREL', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSREL', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftv = loaset(elftv,it,1,'W')
         elftv = loaset(elftv,it,2,'X')
@@ -586,256 +584,256 @@ class  AVION2(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'EL1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
         ielftype = arrset(ielftype, ie, iet_["en2PR"])
         vname = 'PK'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SR'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eQDdSQ')
         ielftype = arrset(ielftype, ie, iet_["eQDdSQ"])
         vname = 'SS'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='W')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SO'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'CB'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LF'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en12')
         ielftype = arrset(ielftype, ie, iet_["en12"])
         vname = 'EF'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LF'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en12d1')
         ielftype = arrset(ielftype, ie, iet_["en12d1"])
         vname = 'SO'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'CB'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'CA'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL5'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'SD'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL6'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'SK'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL7'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'MV'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL8'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
         ielftype = arrset(ielftype, ie, iet_["en2PR"])
         vname = 'MD'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PD'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL9'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eQT')
         ielftype = arrset(ielftype, ie, iet_["eQT"])
         vname = 'MZ'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'CR'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL10'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
         ielftype = arrset(ielftype, ie, iet_["en2PR"])
         vname = 'DV'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL11'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en1dLIN')
         ielftype = arrset(ielftype, ie, iet_["en1dLIN"])
         vname = 'PT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PM'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL12'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQRT')
         ielftype = arrset(ielftype, ie, iet_["eSQRT"])
         vname = 'PT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL13'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
         ielftype = arrset(ielftype, ie, iet_["en2PR"])
         vname = 'SR'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'NM'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL14'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eQT')
         ielftype = arrset(ielftype, ie, iet_["eQT"])
         vname = 'MD'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'MS'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL15'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSURD')
         ielftype = arrset(ielftype, ie, iet_["eSURD"])
         vname = 'SX'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'EL'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LX'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL16'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQPRD')
         ielftype = arrset(ielftype, ie, iet_["eSQPRD"])
         vname = 'DE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL17'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQPRD')
         ielftype = arrset(ielftype, ie, iet_["eSQPRD"])
         vname = 'DS'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL18'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eCBdSQQD')
         ielftype = arrset(ielftype, ie, iet_["eCBdSQQD"])
         vname = 'VN'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='W')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'CA'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LF'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SO'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EL19'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSREL')
         ielftype = arrset(ielftype, ie, iet_["eSREL"])
         vname = 'SX'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'MC'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='W')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LX'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SR'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'EL'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQUARE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQUARE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -952,6 +950,8 @@ class  AVION2(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.15))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               9.46801297093018D+07
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -967,6 +967,9 @@ class  AVION2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-RN-49-15"
         self.pb = pb; self.pbm = pbm
+# ***********************
+#  SET UP THE FUNCTIONS *
+# ***********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

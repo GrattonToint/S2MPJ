@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PDE2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -12,6 +12,7 @@ class  PDE2(CUTEst_problem):
 #    See: http://plato.asu.edu/ftp/barrier/
 # 
 #    SIF input: Nick Gould, April 25th 2012
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "LLR2-AN-V-V"
 # 
@@ -19,6 +20,7 @@ class  PDE2(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   3              $-PARAMETER
+# IE N                   299            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,7 +43,6 @@ class  PDE2(CUTEst_problem):
             v_['N'] = int(29);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   299            $-PARAMETER
 # IE N                   2999           $-PARAMETER     pde_2.mod value
 # IE N                   2099           $-PARAMETER     pde_20.mod value
 # IE N                   1299           $-PARAMETER     pde_200.mod value
@@ -65,11 +66,11 @@ class  PDE2(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N1'])+1):
             for J in range(int(v_['0']),int(v_['N1'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(v_['N1'])+1):
-                [iv,ix_,_] = s2x_ii('T'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('T'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'T'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -80,7 +81,7 @@ class  PDE2(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(v_['N1'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ',ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['T'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -90,7 +91,7 @@ class  PDE2(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['N'])+1):
                 v_['J+'] = 1+J
                 v_['J-'] = -1+J
-                [ig,ig_,_] = s2x_ii('P'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('P'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'P'+str(I)+','+str(J))
                 iv = ix_['X'+str(I)+','+str(J)]
@@ -105,14 +106,14 @@ class  PDE2(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('A'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('A'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'A'+str(I)+','+str(J))
                 iv = ix_['T'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
                 iv = ix_['X'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['H'])+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('B'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('B'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'B'+str(I)+','+str(J))
                 iv = ix_['T'+str(I)+','+str(J)]
@@ -120,82 +121,82 @@ class  PDE2(CUTEst_problem):
                 iv = ix_['X'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['H'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(int(v_['0'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(int(v_['0'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I)+','+str(int(v_['0'])))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(int(v_['0'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(int(v_['0'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I)+','+str(int(v_['0'])))
             iv = ix_['X'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('D'+str(I)+','+str(int(v_['0'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('D'+str(I)+','+str(int(v_['0'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'D'+str(I)+','+str(int(v_['0'])))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('D'+str(I)+','+str(int(v_['0'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('D'+str(I)+','+str(int(v_['0'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'D'+str(I)+','+str(int(v_['0'])))
             iv = ix_['X'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(int(v_['N1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(int(v_['N1'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I)+','+str(int(v_['N1'])))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(int(v_['N1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(int(v_['N1'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I)+','+str(int(v_['N1'])))
             iv = ix_['X'+str(I)+','+str(int(v_['N1']))]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('D'+str(I)+','+str(int(v_['N1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('D'+str(I)+','+str(int(v_['N1'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'D'+str(I)+','+str(int(v_['N1'])))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('D'+str(I)+','+str(int(v_['N1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('D'+str(I)+','+str(int(v_['N1'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'D'+str(I)+','+str(int(v_['N1'])))
             iv = ix_['X'+str(I)+','+str(int(v_['N1']))]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['0']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['0']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'E'+str(int(v_['0']))+','+str(I))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['0']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['0']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'E'+str(int(v_['0']))+','+str(I))
             iv = ix_['X'+str(int(v_['0']))+','+str(I)]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('F'+str(int(v_['0']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(int(v_['0']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'F'+str(int(v_['0']))+','+str(I))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('F'+str(int(v_['0']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(int(v_['0']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'F'+str(int(v_['0']))+','+str(I))
             iv = ix_['X'+str(int(v_['0']))+','+str(I)]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['N1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['N1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'E'+str(int(v_['N1']))+','+str(I))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['N1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['N1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'E'+str(int(v_['N1']))+','+str(I))
             iv = ix_['X'+str(int(v_['N1']))+','+str(I)]
             pbm.A[ig,iv] = float(v_['SQRTAH'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('F'+str(int(v_['N1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(int(v_['N1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'F'+str(int(v_['N1']))+','+str(I))
             iv = ix_['T'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('F'+str(int(v_['N1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(int(v_['N1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'F'+str(int(v_['N1']))+','+str(I))
             iv = ix_['X'+str(int(v_['N1']))+','+str(I)]
@@ -236,8 +237,6 @@ class  PDE2(CUTEst_problem):
                 v_['-YD'] = -1.0*v_['YD']
                 pbm.gconst = arrset(pbm.gconst,ig_['A'+str(I)+','+str(J)],float(v_['YD']))
                 pbm.gconst = arrset(pbm.gconst,ig_['B'+str(I)+','+str(J)],float(v_['-YD']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.0)
         pb.xupper = np.full((pb.n,1),3.5)

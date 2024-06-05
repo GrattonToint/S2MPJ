@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DISC2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -79,15 +79,15 @@ class  DISC2(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('EPSILON',ix_)
+        [iv,ix_,_] = s2mpj_ii('EPSILON',ix_)
         pb.xnames=arrset(pb.xnames,iv,'EPSILON')
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
-            [iv,ix_,_] = s2x_ii('V'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('V'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V'+str(I))
         for I in range(int(v_['1']),int(v_['NLINES'])+1):
-            [iv,ix_,_] = s2x_ii('ALPHA'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('ALPHA'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'ALPHA'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -96,96 +96,96 @@ class  DISC2(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['EPSILON']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('B'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'B'+str(I))
         for I in range(int(v_['6']),int(v_['NNODES'])+1):
-            [ig,ig_,_] = s2x_ii('B'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'B'+str(I))
-        [ig,ig_,_] = s2x_ii('B162',ig_)
+        [ig,ig_,_] = s2mpj_ii('B162',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B162')
         iv = ix_['U6']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C162',ig_)
+        [ig,ig_,_] = s2mpj_ii('C162',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C162')
         iv = ix_['V6']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['V1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('B273',ig_)
+        [ig,ig_,_] = s2mpj_ii('B273',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B273')
         iv = ix_['U7']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C273',ig_)
+        [ig,ig_,_] = s2mpj_ii('C273',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C273')
         iv = ix_['V7']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['V2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('B384',ig_)
+        [ig,ig_,_] = s2mpj_ii('B384',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B384')
         iv = ix_['U8']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C384',ig_)
+        [ig,ig_,_] = s2mpj_ii('C384',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C384')
         iv = ix_['V8']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['V3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('B495',ig_)
+        [ig,ig_,_] = s2mpj_ii('B495',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B495')
         iv = ix_['U9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U4']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C495',ig_)
+        [ig,ig_,_] = s2mpj_ii('C495',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C495')
         iv = ix_['V9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['V4']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('B5101',ig_)
+        [ig,ig_,_] = s2mpj_ii('B5101',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B5101')
         iv = ix_['U10']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U5']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C5101',ig_)
+        [ig,ig_,_] = s2mpj_ii('C5101',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C5101')
         iv = ix_['V10']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['V5']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('B5111',ig_)
+        [ig,ig_,_] = s2mpj_ii('B5111',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B5111')
         iv = ix_['U11']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U5']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C5111',ig_)
+        [ig,ig_,_] = s2mpj_ii('C5111',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C5111')
         iv = ix_['V11']
@@ -206,8 +206,6 @@ class  DISC2(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -230,14 +228,14 @@ class  DISC2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCIRCLE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCIRCLE', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
         elftp = []
         elftp = loaset(elftp,it,0,'P1')
         elftp = loaset(elftp,it,1,'P2')
-        [it,iet_,_] = s2x_ii( 'eLINE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLINE', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
@@ -248,212 +246,212 @@ class  DISC2(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'b162'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'c162'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'V2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'V1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'b273'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'c273'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'V3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'V2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'b384'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'c384'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'V4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'V3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'b495'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'c495'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'V5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'V4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'b5101'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'c5101'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'V1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'V5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'b5111'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'U1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'U5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'c5111'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLINE')
         ielftype = arrset(ielftype, ie, iet_["eLINE"])
         vname = 'V1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'V5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ALPHA5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
             ename = 'b'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCIRCLE')
             ielftype = arrset(ielftype, ie, iet_["eCIRCLE"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'EPSILON'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -534,6 +532,9 @@ class  DISC2(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# ZL DISC2                              RNODES
+#    Solution
+# LO SOLTN(12)           20.46122911
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -551,6 +552,10 @@ class  DISC2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LQR2-MY-29-23"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

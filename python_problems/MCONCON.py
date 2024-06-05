@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MCONCON(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,14 +39,14 @@ class  MCONCON(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [iv,ix_,_] = s2x_ii('P'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
-            [iv,ix_,_] = s2x_ii('Q'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Q'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Q'+str(I))
-            [iv,ix_,_] = s2x_ii('F'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('F'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'F'+str(I))
         for I in range(int(v_['M+1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('P'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -56,57 +56,57 @@ class  MCONCON(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('OBJECT',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJECT',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['P'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('PAN'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('PAN'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PAN'+str(I))
-        [ig,ig_,_] = s2x_ii('MBAL1',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL1')
         iv = ix_['Q1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['F3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('MBAL2',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL2')
         iv = ix_['Q1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['F1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('MBAL3',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL3')
         iv = ix_['Q2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['F1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('MBAL4',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL4')
         iv = ix_['Q2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['Q3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('MBAL5',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL5')
         iv = ix_['Q3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['F2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('MBAL6',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL6')
         iv = ix_['Q4']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['F2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('MBAL7',ig_)
+        [ig,ig_,_] = s2mpj_ii('MBAL7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'MBAL7')
         iv = ix_['Q4']
@@ -131,8 +131,6 @@ class  MCONCON(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         v_['DEMAND'] = -1000.0
         pbm.gconst = arrset(pbm.gconst,ig_['MBAL4'],float(v_['DEMAND']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -159,9 +157,9 @@ class  MCONCON(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eFORQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFORQ', iet_)
         elftv = loaset(elftv,it,0,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -170,20 +168,20 @@ class  MCONCON(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'PSQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'QTO'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFORQ')
             ielftype = arrset(ielftype, ie, iet_["eFORQ"])
             vname = 'Q'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

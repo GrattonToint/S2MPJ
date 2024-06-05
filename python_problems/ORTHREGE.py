@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ORTHREGE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,6 +27,9 @@ class  ORTHREGE(CUTEst_problem):
 #    Number of data points
 #    (number of variables = 3 NPTS + 6 )
 # 
+#           Alternative values for the SIF file parameters:
+# IE NPTS                10             $-PARAMETER n= 36    original valu
+# IE NPTS                2500           $-PARAMETER n= 7506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,8 +52,6 @@ class  ORTHREGE(CUTEst_problem):
             v_['NPTS'] = int(10);  #  SIF file default value
         else:
             v_['NPTS'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE NPTS                2500           $-PARAMETER n= 7506
         v_['TP4'] = 1.7
         v_['TP5'] = 0.8
         v_['TP6'] = 2.0
@@ -85,14 +86,14 @@ class  ORTHREGE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['6'])+1):
-            [iv,ix_,_] = s2x_ii('P'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
         for I in range(int(v_['1']),int(v_['NPTS'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
-            [iv,ix_,_] = s2x_ii('Z'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Z'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Z'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -102,26 +103,26 @@ class  ORTHREGE(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NPTS'])+1):
-            [ig,ig_,_] = s2x_ii('OX'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OX'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('OY'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OY'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['Y'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('OZ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OZ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['Z'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('A'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('A'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'A'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['P1']
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('B'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'B'+str(I))
             iv = ix_['Y'+str(I)]
@@ -148,8 +149,6 @@ class  ORTHREGE(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['OX'+str(I)],float(v_['XD'+str(I)]))
             pbm.gconst = arrset(pbm.gconst,ig_['OY'+str(I)],float(v_['YD'+str(I)]))
             pbm.gconst = arrset(pbm.gconst,ig_['OZ'+str(I)],float(v_['ZD'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -206,7 +205,7 @@ class  ORTHREGE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEHX', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEHX', iet_)
         elftv = loaset(elftv,it,0,'Z')
         elftv = loaset(elftv,it,1,'A')
         elftv = loaset(elftv,it,2,'B')
@@ -218,48 +217,48 @@ class  ORTHREGE(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['NPTS'])+1):
             ename = 'EA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEHX')
             ielftype = arrset(ielftype, ie, iet_["eEHX"])
             vname = 'Z'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P4'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='A')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='B')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P6'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='C')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EB'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEHX')
             ielftype = arrset(ielftype, ie, iet_["eEHX"])
             vname = 'Z'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P5'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='A')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='B')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P6'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='C')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -286,6 +285,8 @@ class  ORTHREGE(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(10)           ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -301,6 +302,10 @@ class  ORTHREGE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QOR2-AY-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

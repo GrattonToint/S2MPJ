@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  EIGENA2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,10 @@ class  EIGENA2(CUTEst_problem):
 # 
 #    The dimension of the matrix.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,9 +51,6 @@ class  EIGENA2(CUTEst_problem):
             v_['N'] = int(2);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER     original value
-# IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
         v_['1'] = 1
         for J in range(int(v_['1']),int(v_['N'])+1):
@@ -63,10 +64,10 @@ class  EIGENA2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('D'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('D'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'D'+str(J))
             for I in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('Q'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('Q'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Q'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -77,13 +78,13 @@ class  EIGENA2(CUTEst_problem):
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(J)+1):
-                [ig,ig_,_] = s2x_ii('O'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('O'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'O'+str(I)+','+str(J))
             for I in range(int(v_['1']),int(v_['N'])+1):
                 for K in range(int(v_['1']),int(v_['N'])+1):
                     v_['-AIK'] = -1.0*v_['A'+str(I)+','+str(K)]
-                    [ig,ig_,_] = s2x_ii('E'+str(I)+','+str(J),ig_)
+                    [ig,ig_,_] = s2mpj_ii('E'+str(I)+','+str(J),ig_)
                     gtype = arrset(gtype,ig,'<>')
                     iv = ix_['Q'+str(J)+','+str(K)]
                     pbm.A[ig,iv] = float(v_['-AIK'])+pbm.A[ig,iv]
@@ -105,8 +106,6 @@ class  EIGENA2(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for J in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(J)+','+str(J)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -119,7 +118,7 @@ class  EIGENA2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PROD', iet_)
         elftv = loaset(elftv,it,0,'Q1')
         elftv = loaset(elftv,it,1,'Q2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -130,36 +129,36 @@ class  EIGENA2(CUTEst_problem):
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['N'])+1):
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PROD')
                     ielftype = arrset( ielftype,ie,iet_['en2PROD'])
                 vname = 'Q'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Q1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'D'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Q2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for I in range(int(v_['1']),int(J)+1):
                 for K in range(int(v_['1']),int(v_['N'])+1):
                     ename = 'O'+str(I)+','+str(J)+','+str(K)
-                    [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                    [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         pbm.elftype = arrset(pbm.elftype,ie,'en2PROD')
                         ielftype = arrset( ielftype,ie,iet_['en2PROD'])
                     vname = 'Q'+str(K)+','+str(I)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='Q1')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(K)+','+str(J)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='Q2')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

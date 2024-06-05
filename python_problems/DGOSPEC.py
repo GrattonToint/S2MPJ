@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DGOSPEC(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,11 +42,11 @@ class  DGOSPEC(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -55,21 +55,21 @@ class  DGOSPEC(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('Q1',ig_)
+        [ig,ig_,_] = s2mpj_ii('Q1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q2',ig_)
+        [ig,ig_,_] = s2mpj_ii('Q2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N1',ig_)
+        [ig,ig_,_] = s2mpj_ii('N1',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('L1',ig_)
+        [ig,ig_,_] = s2mpj_ii('L1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -85,8 +85,6 @@ class  DGOSPEC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['Q1'],float(-4.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-1.0)
         pb.xupper = np.full((pb.n,1),0.5)
@@ -96,7 +94,7 @@ class  DGOSPEC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCOS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCOS', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'F')
@@ -107,18 +105,18 @@ class  DGOSPEC(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eCOS')
         ielftype = arrset(ielftype, ie, iet_["eCOS"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1.0,0.5,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1.0,0.5,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='F')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['FREQ']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -136,6 +134,8 @@ class  DGOSPEC(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['MAG']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -145,6 +145,10 @@ class  DGOSPEC(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AN-3-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

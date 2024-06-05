@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MODBEALENE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,10 @@ class  MODBEALENE(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE N/2                 1              $-PARAMETER     original value
 # IE N/2                 2              $-PARAMETER
+# IE N/2                 5              $-PARAMETER
+# IE N/2                 100            $-PARAMETER
+# IE N/2                 1000           $-PARAMETER
+# IE N/2                 10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,9 +51,6 @@ class  MODBEALENE(CUTEst_problem):
             v_['N/2'] = int(5);  #  SIF file default value
         else:
             v_['N/2'] = int(args[0])
-# IE N/2                 100            $-PARAMETER
-# IE N/2                 1000           $-PARAMETER
-# IE N/2                 10000          $-PARAMETER
         if nargin<2:
             v_['ALPHA'] = float(50.0);  #  SIF file default value
         else:
@@ -65,7 +66,7 @@ class  MODBEALENE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -80,16 +81,16 @@ class  MODBEALENE(CUTEst_problem):
             v_['J'] = 1+v_['2I-1']
             v_['J+1'] = 1+v_['J']
             v_['J+2'] = 2+v_['J']
-            [ig,ig_,_] = s2x_ii('BA'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('BA'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'BA'+str(I))
-            [ig,ig_,_] = s2x_ii('BB'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('BB'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'BB'+str(I))
-            [ig,ig_,_] = s2x_ii('BC'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('BC'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'BC'+str(I))
-            [ig,ig_,_] = s2x_ii('L'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('L'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'L'+str(I))
             iv = ix_['X'+str(int(v_['J+1']))]
@@ -97,13 +98,13 @@ class  MODBEALENE(CUTEst_problem):
             iv = ix_['X'+str(int(v_['J+2']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['RALPHINV']))
-        [ig,ig_,_] = s2x_ii('BA'+str(int(v_['N/2'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('BA'+str(int(v_['N/2'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'BA'+str(int(v_['N/2'])))
-        [ig,ig_,_] = s2x_ii('BB'+str(int(v_['N/2'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('BB'+str(int(v_['N/2'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'BB'+str(int(v_['N/2'])))
-        [ig,ig_,_] = s2x_ii('BC'+str(int(v_['N/2'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('BC'+str(int(v_['N/2'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'BC'+str(int(v_['N/2'])))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -126,8 +127,6 @@ class  MODBEALENE(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['BA'+str(I)],float(1.5))
             pbm.gconst = arrset(pbm.gconst,ig_['BB'+str(I)],float(2.25))
             pbm.gconst = arrset(pbm.gconst,ig_['BC'+str(I)],float(2.625))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -136,7 +135,7 @@ class  MODBEALENE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePRODB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePRODB', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftp = []
@@ -153,46 +152,46 @@ class  MODBEALENE(CUTEst_problem):
             v_['J'] = 1+v_['2I-1']
             v_['J+1'] = 1+v_['J']
             ename = 'AE'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
                 ielftype = arrset( ielftype,ie,iet_['ePRODB'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['J+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
             ename = 'BE'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
                 ielftype = arrset( ielftype,ie,iet_['ePRODB'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['J+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.0))
             ename = 'CE'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
                 ielftype = arrset( ielftype,ie,iet_['ePRODB'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['J+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
@@ -222,6 +221,8 @@ class  MODBEALENE(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -237,6 +238,10 @@ class  MODBEALENE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

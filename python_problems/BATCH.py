@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BATCH(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,20 +141,20 @@ class  BATCH(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['M'])+1):
-            [iv,ix_,_] = s2x_ii('N'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('N'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'N'+str(J))
         for J in range(int(v_['1']),int(v_['M'])+1):
-            [iv,ix_,_] = s2x_ii('V'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('V'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V'+str(J))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('B'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('B'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'B'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('TL'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('TL'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'TL'+str(I))
         for J in range(int(v_['1']),int(v_['M'])+1):
             for K in range(int(v_['1']),int(v_['NU'])+1):
-                [iv,ix_,_] = s2x_ii('Y'+str(K)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('Y'+str(K)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Y'+str(K)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -163,11 +163,11 @@ class  BATCH(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('COST',ig_)
+        [ig,ig_,_] = s2mpj_ii('COST',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('VOL'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VOL'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'VOL'+str(I)+','+str(J))
                 iv = ix_['V'+str(J)]
@@ -176,31 +176,31 @@ class  BATCH(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('CYCL'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('CYCL'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'CYCL'+str(I)+','+str(J))
                 iv = ix_['N'+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
                 iv = ix_['TL'+str(I)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('HORIZON',ig_)
+        [ig,ig_,_] = s2mpj_ii('HORIZON',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'HORIZON')
         for J in range(int(v_['1']),int(v_['M'])+1):
             for K in range(int(v_['1']),int(v_['NU'])+1):
-                [ig,ig_,_] = s2x_ii('NPAR'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('NPAR'+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'NPAR'+str(J))
                 iv = ix_['Y'+str(K)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['LOGI'+str(K)])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('NPAR'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('NPAR'+str(J),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'NPAR'+str(J))
             iv = ix_['N'+str(J)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for J in range(int(v_['1']),int(v_['M'])+1):
             for K in range(int(v_['1']),int(v_['NU'])+1):
-                [ig,ig_,_] = s2x_ii('SOS1'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('SOS1'+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'SOS1'+str(J))
                 iv = ix_['Y'+str(K)+','+str(J)]
@@ -232,10 +232,8 @@ class  BATCH(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['HORIZON'],float(v_['H']))
         for J in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['SOS1'+str(J)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for J in range(int(v_['1']),int(v_['M'])+1):
             pb.xupper[ix_['N'+str(J)]] = v_['LOGNU']
@@ -252,7 +250,7 @@ class  BATCH(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEXPXAY', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXPXAY', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftp = []
@@ -265,31 +263,31 @@ class  BATCH(CUTEst_problem):
         pbm.elpar   = []
         for J in range(int(v_['1']),int(v_['M'])+1):
             ename = 'EXPO'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEXPXAY')
             ielftype = arrset(ielftype, ie, iet_["eEXPXAY"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'N'+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V'+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['BETA'+str(J)]))
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'EXPC'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEXPXAY')
             ielftype = arrset(ielftype, ie, iet_["eEXPXAY"])
             vname = 'TL'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'B'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -314,6 +312,7 @@ class  BATCH(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['Q'+str(I)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -332,6 +331,10 @@ class  BATCH(CUTEst_problem):
         pb.pbclass = "OOR2-AN-46-73"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

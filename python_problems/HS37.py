@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS37(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,11 +40,11 @@ class  HS37(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -53,9 +53,9 @@ class  HS37(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('CON1',ig_)
+        [ig,ig_,_] = s2mpj_ii('CON1',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CON1')
         iv = ix_['X1']
@@ -64,7 +64,7 @@ class  HS37(CUTEst_problem):
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CON2',ig_)
+        [ig,ig_,_] = s2mpj_ii('CON2',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CON2')
         iv = ix_['X1']
@@ -90,17 +90,15 @@ class  HS37(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['CON1'],float(-72.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = np.full((pb.n,1),42.0)
-        pb.xlower =  np.full((pb.n,1),-float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.full((pb.n,1),float(10.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD3', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD3', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -110,19 +108,19 @@ class  HS37(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'E1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'ePROD3')
         ielftype = arrset(ielftype, ie, iet_["ePROD3"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,42.0,10.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,42.0,10.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,42.0,10.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,42.0,10.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,42.0,10.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,42.0,10.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -138,6 +136,8 @@ class  HS37(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#   Solution
+# LO SOLTN               -3456.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -152,6 +152,10 @@ class  HS37(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-AN-3-2"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

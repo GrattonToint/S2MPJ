@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ARGLINB(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,11 @@ class  ARGLINB(CUTEst_problem):
 #    N is the number of free variables
 #    M is the number of equations ( M .ge. N)
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER 
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,10 +50,6 @@ class  ARGLINB(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER 
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
 # IE M                   20             $-PARAMETER .ge. N
 # IE M                   100            $-PARAMETER .ge. N
 # IE M                   200            $-PARAMETER .ge. N
@@ -63,7 +64,7 @@ class  ARGLINB(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -77,7 +78,7 @@ class  ARGLINB(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['N'])+1):
                 v_['RJ'] = float(J)
                 v_['IJ'] = v_['RI']*v_['RJ']
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['IJ'])+pbm.A[ig,iv]
@@ -88,8 +89,6 @@ class  ARGLINB(CUTEst_problem):
         pb.m        = 0
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.full((ngrp,1),1.0)
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -97,7 +96,7 @@ class  ARGLINB(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -108,6 +107,10 @@ class  ARGLINB(CUTEst_problem):
         for ig in range(0,ngrp):
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)          4.6341D+00
+# LO SOLTN(50)          24.6268657
+# LO SOLTN(100)         49.6259352
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -117,6 +120,10 @@ class  ARGLINB(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

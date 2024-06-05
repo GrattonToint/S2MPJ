@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  EG2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,7 +48,7 @@ class  EG2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['ONE']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -58,11 +58,11 @@ class  EG2(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['ONE']),int(v_['NM1'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['ONE']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -72,15 +72,13 @@ class  EG2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.full((ngrp,1),1.0)
         pbm.gconst = arrset(pbm.gconst,ig_['G'+str(int(v_['N']))],float(0.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQUARE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQUARE', iet_)
         elftv = loaset(elftv,it,0,'V')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -89,18 +87,18 @@ class  EG2(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['ONE']),int(v_['N'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQUARE')
             ielftype = arrset(ielftype, ie, iet_["eSQUARE"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSINE',igt_)
-        [it,igt_,_] = s2x_ii('gSINE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSINE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSINE',igt_)
         grftp = []
         grftp = loaset(grftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TOINTGOR(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,7 +166,7 @@ class  TOINTGOR(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -176,19 +176,19 @@ class  TOINTGOR(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('GA'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('GA'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             v_['SCALE'] = 1.0/v_['ALPH'+str(I)]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['SCALE']))
-        [ig,ig_,_] = s2x_ii('GB1',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X31']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB2',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -196,7 +196,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB3',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -204,7 +204,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB4',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X4']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -212,7 +212,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X7']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB5',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X6']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -220,7 +220,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB6',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB6',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X8']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -228,7 +228,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X11']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB7',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB7',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X10']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -236,7 +236,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X13']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB8',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB8',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X12']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -244,7 +244,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X15']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB9',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB9',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X11']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -256,7 +256,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X17']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB10',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB10',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X16']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -264,7 +264,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X19']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB11',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB11',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X9']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -272,7 +272,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB12',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB12',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X5']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -280,7 +280,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X21']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB13',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB13',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X19']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -290,7 +290,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB14',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB14',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X23']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -298,7 +298,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X26']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB15',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB15',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X7']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -308,7 +308,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X28']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB16',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB16',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X28']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -316,7 +316,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X30']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB17',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB17',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X29']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -324,7 +324,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X32']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB18',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB18',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X32']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -332,7 +332,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X34']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB19',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB19',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -340,7 +340,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X35']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB20',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB20',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X35']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -348,7 +348,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X36']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB21',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB21',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X36']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -356,7 +356,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X38']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB22',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB22',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X30']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -364,7 +364,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X39']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB23',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB23',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X38']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -372,7 +372,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X40']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB24',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB24',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X40']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -380,7 +380,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X42']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB25',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB25',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X41']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -390,7 +390,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X50']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB26',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB26',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X44']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -400,13 +400,13 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X47']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB27',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB27',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X46']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X48']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB28',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB28',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X42']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -418,7 +418,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X49']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB29',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB29',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X26']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -426,7 +426,7 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X43']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB30',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB30',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X15']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -436,21 +436,21 @@ class  TOINTGOR(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X47']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB31',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB31',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X49']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB32',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB32',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X22']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('GB33',ig_)
+        [ig,ig_,_] = s2mpj_ii('GB33',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X27']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['33'])+1):
             v_['SCALE'] = 1.0/v_['BETA'+str(I)]
-            [ig,ig_,_] = s2x_ii('GB'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('GB'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['SCALE']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -462,15 +462,13 @@ class  TOINTGOR(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['33'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['GB'+str(I)],float(v_['D'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gACT',igt_)
-        [it,igt_,_] = s2x_ii('gBBT',igt_)
+        [it,igt_,_] = s2mpj_ii('gACT',igt_)
+        [it,igt_,_] = s2mpj_ii('gBBT',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -485,6 +483,8 @@ class  TOINTGOR(CUTEst_problem):
             ig = ig_['GB'+str(I)]
             pbm.grftype = arrset(pbm.grftype,ig,'gBBT')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN             1373.90546067
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -495,6 +495,10 @@ class  TOINTGOR(CUTEst_problem):
         pb.pbclass = "OUR2-MN-50-0"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

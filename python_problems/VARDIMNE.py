@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  VARDIMNE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,6 +27,8 @@ class  VARDIMNE(CUTEst_problem):
 # 
 #    N is the number of free variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,7 +51,6 @@ class  VARDIMNE(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
 # IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # IE N                   200            $-PARAMETER
@@ -67,7 +68,7 @@ class  VARDIMNE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -77,19 +78,19 @@ class  VARDIMNE(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['REALI'] = float(I)
-            [ig,ig_,_] = s2x_ii('G'+str(int(v_['N+1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(int(v_['N+1'])))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['REALI'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('G'+str(int(v_['N+2'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+2'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(int(v_['N+2'])))
             iv = ix_['X'+str(I)]
@@ -116,8 +117,6 @@ class  VARDIMNE(CUTEst_problem):
               arrset(pbm.gconst,ig_['G'+str(int(v_['N+1']))],float(v_['SUMJ'])))
         pbm.gconst  = (
               arrset(pbm.gconst,ig_['G'+str(int(v_['N+2']))],float(v_['SUMJ'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -136,7 +135,7 @@ class  VARDIMNE(CUTEst_problem):
                       arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['X'+str(I)]),float(v_['XI'])))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -147,7 +146,10 @@ class  VARDIMNE(CUTEst_problem):
         ig = ig_['G'+str(int(v_['N+2']))]
         pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -163,6 +165,10 @@ class  VARDIMNE(CUTEst_problem):
         pb.lincons   = np.arange(len(pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

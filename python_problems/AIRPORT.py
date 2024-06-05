@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  AIRPORT(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -181,9 +181,9 @@ class  AIRPORT(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -195,20 +195,20 @@ class  AIRPORT(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = I+v_['1']
             for J in range(int(v_['I+1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ1'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ1'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('OBJ2'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ2'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['Y'+str(I)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
                 iv = ix_['Y'+str(J)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('CONS'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CONS'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'CONS'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -229,10 +229,8 @@ class  AIRPORT(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['CONS'+str(I)],float(v_['R'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pb.xlower[ix_['X'+str(I)]] = -10
@@ -242,7 +240,7 @@ class  AIRPORT(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eDIFSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eDIFSQR', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftp = []
         elftp = loaset(elftp,it,0,'W')
@@ -254,30 +252,30 @@ class  AIRPORT(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'A'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eDIFSQR')
             ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='W')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['CX'+str(I)]))
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'B'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eDIFSQR')
             ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
             vname = 'Y'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='W')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['CY'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQUARE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQUARE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -303,6 +301,8 @@ class  AIRPORT(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = .0
+#    Solution
+# LO SOLTN              47952.695811
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -318,6 +318,10 @@ class  AIRPORT(CUTEst_problem):
         pb.pbclass = "SQR2-MN-84-42"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

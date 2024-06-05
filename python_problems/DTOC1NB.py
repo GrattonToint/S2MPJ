@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DTOC1NB(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,6 +36,24 @@ class  DTOC1NB(CUTEst_problem):
 #    The problem has (N-1)*NX+N*NY  variables (of which NY are fixed),
 #    and (N-1)*NY constraints
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER # periods  } original value
+# IE NX                  2              $-PARAMETER # controls } n=   58, m=  36
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   50             $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   100            $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   500            $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,27 +76,16 @@ class  DTOC1NB(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
         if nargin<2:
             v_['NX'] = int(2);  #  SIF file default value
         else:
             v_['NX'] = int(args[1])
+# IE NY                  4              $-PARAMETER # states   }
         if nargin<3:
             v_['NY'] = int(4);  #  SIF file default value
         else:
             v_['NY'] = int(args[2])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   100            $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   500            $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   1000           $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
-# IE NY                  4              $-PARAMETER # states   }
 # IE N                   10             $-PARAMETER # periods  }
 # IE NX                  5              $-PARAMETER # controls } n=  145, m=  90
 # IE NY                  10             $-PARAMETER # states   }
@@ -124,11 +131,11 @@ class  DTOC1NB(CUTEst_problem):
         binvars   = np.array([])
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             for I in range(int(v_['1']),int(v_['NX'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(T)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(T)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(T)+','+str(I))
         for T in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['NY'])+1):
-                [iv,ix_,_] = s2x_ii('Y'+str(T)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('Y'+str(T)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Y'+str(T)+','+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -139,24 +146,24 @@ class  DTOC1NB(CUTEst_problem):
         gtype       = np.array([])
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             for I in range(int(v_['1']),int(v_['NX'])+1):
-                [ig,ig_,_] = s2x_ii('OX'+str(T)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('OX'+str(T)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(T)+','+str(I)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for T in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['NY'])+1):
-                [ig,ig_,_] = s2x_ii('OY'+str(T)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('OY'+str(T)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['Y'+str(T)+','+str(I)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             v_['T+1'] = 1+T
-            [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'TT'+str(T)+','+str(int(v_['1'])))
             iv = ix_['Y'+str(int(v_['T+1']))+','+str(int(v_['1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'TT'+str(T)+','+str(int(v_['1'])))
             iv = ix_['Y'+str(T)+','+str(int(v_['1']))]
@@ -164,7 +171,7 @@ class  DTOC1NB(CUTEst_problem):
             iv = ix_['Y'+str(T)+','+str(int(v_['2']))]
             pbm.A[ig,iv] = float(0.25)+pbm.A[ig,iv]
             for I in range(int(v_['1']),int(v_['NX'])+1):
-                [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(int(v_['1'])),ig_)
+                [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(int(v_['1'])),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'TT'+str(T)+','+str(int(v_['1'])))
                 iv = ix_['X'+str(T)+','+str(I)]
@@ -172,7 +179,7 @@ class  DTOC1NB(CUTEst_problem):
             for J in range(int(v_['2']),int(v_['NY-1'])+1):
                 v_['J-1'] = -1+J
                 v_['J+1'] = 1+J
-                [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'TT'+str(T)+','+str(J))
                 iv = ix_['Y'+str(int(v_['T+1']))+','+str(J)]
@@ -184,17 +191,17 @@ class  DTOC1NB(CUTEst_problem):
                 iv = ix_['Y'+str(T)+','+str(int(v_['J+1']))]
                 pbm.A[ig,iv] = float(0.25)+pbm.A[ig,iv]
                 for I in range(int(v_['1']),int(v_['NX'])+1):
-                    [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(J),ig_)
+                    [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(J),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'TT'+str(T)+','+str(J))
                     iv = ix_['X'+str(T)+','+str(I)]
                     pbm.A[ig,iv] = float(v_['B'+str(J)+','+str(I)])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(int(v_['NY'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(int(v_['NY'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'TT'+str(T)+','+str(int(v_['NY'])))
             iv = ix_['Y'+str(int(v_['T+1']))+','+str(int(v_['NY']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(int(v_['NY'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(int(v_['NY'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'TT'+str(T)+','+str(int(v_['NY'])))
             iv = ix_['Y'+str(T)+','+str(int(v_['NY']))]
@@ -202,7 +209,7 @@ class  DTOC1NB(CUTEst_problem):
             iv = ix_['Y'+str(T)+','+str(int(v_['NY-1']))]
             pbm.A[ig,iv] = float(-0.25)+pbm.A[ig,iv]
             for I in range(int(v_['1']),int(v_['NX'])+1):
-                [ig,ig_,_] = s2x_ii('TT'+str(T)+','+str(int(v_['NY'])),ig_)
+                [ig,ig_,_] = s2mpj_ii('TT'+str(T)+','+str(int(v_['NY'])),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'TT'+str(T)+','+str(int(v_['NY'])))
                 iv = ix_['X'+str(T)+','+str(I)]
@@ -229,8 +236,6 @@ class  DTOC1NB(CUTEst_problem):
         for T in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['NY'])+1):
                 pbm.gconst = arrset(pbm.gconst,ig_['OY'+str(T)+','+str(I)],float(-0.25))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -240,7 +245,7 @@ class  DTOC1NB(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftp = []
@@ -259,16 +264,16 @@ class  DTOC1NB(CUTEst_problem):
                 v_['I'] = 1+v_['I']
                 v_['J'] = 1+v_['J']
                 ename = 'E'+str(T)+','+str(K)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'ePR')
                 ielftype = arrset(ielftype, ie, iet_["ePR"])
                 pb.x0 = np.zeros((pb.n,1))
                 vname = 'Y'+str(T)+','+str(int(v_['I']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(T)+','+str(int(v_['J']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='MUC')
@@ -276,7 +281,7 @@ class  DTOC1NB(CUTEst_problem):
                       loaset(pbm.elpar,ie,posep[0],float(v_['C'+str(int(v_['I']))+','+str(int(v_['J']))])))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL4',igt_)
+        [it,igt_,_] = s2mpj_ii('gL4',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -302,6 +307,14 @@ class  DTOC1NB(CUTEst_problem):
                     pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO S(  10,2, 4)        0.09848124993
+# LO S(  50,2, 4)        0.38293273441
+# LO S( 100,2, 4)        0.73850718221
+# LO S( 500,2, 4)        3.58309876144
+# LO S(1000,2, 4)        7.13884991815
+# LO S(  10,5,10)        1.40183631317
+# LO S(  50,5,10)        7.86232111363
+# LO S( 100,5,10)        15.9377918009
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -318,6 +331,10 @@ class  DTOC1NB(CUTEst_problem):
         pb.pbclass = "OQR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

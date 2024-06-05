@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  KISSING2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,6 +42,7 @@ class  KISSING2(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE m                   24             $-PARAMETER  number of points
+# IE m                   25             $-PARAMETER  number of points
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -65,6 +66,7 @@ class  KISSING2(CUTEst_problem):
         else:
             v_['m'] = int(args[0])
 # IE m                   100            $-PARAMETER  number of points
+# IE n                    4             $-PARAMETER  dimension of sphere
         if nargin<2:
             v_['n'] = int(4);  #  SIF file default value
         else:
@@ -88,7 +90,7 @@ class  KISSING2(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['n'])+1):
-                [iv,ix_,_] = s2x_ii('P'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('P'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'P'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -97,11 +99,11 @@ class  KISSING2(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['m'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -124,10 +126,8 @@ class  KISSING2(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['m'])+1):
                 pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)+','+str(J)],float(4.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['n'])+1):
@@ -166,9 +166,9 @@ class  KISSING2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD1', iet_)
         elftv = loaset(elftv,it,0,'P')
-        [it,iet_,_] = s2x_ii( 'ePROD2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD2', iet_)
         elftv = loaset(elftv,it,0,'Q')
         elftv = loaset(elftv,it,1,'R')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -182,38 +182,38 @@ class  KISSING2(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['I-'])+1):
                 for K in range(int(v_['1']),int(v_['n'])+1):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'ePROD2')
                     ielftype = arrset(ielftype, ie, iet_["ePROD2"])
                     vname = 'P'+str(I)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'P'+str(J)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='R')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for K in range(int(v_['1']),int(v_['n'])+1):
                 ename = 'E'+str(I)+','+str(I)+','+str(K)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'ePROD1')
                 ielftype = arrset(ielftype, ie, iet_["ePROD1"])
                 vname = 'P'+str(I)+','+str(K)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['I+']),int(v_['m'])+1):
                 for K in range(int(v_['1']),int(v_['n'])+1):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'ePROD2')
                     ielftype = arrset(ielftype, ie, iet_["ePROD2"])
                     vname = 'P'+str(I)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'P'+str(J)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='R')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -239,6 +239,9 @@ class  KISSING2(CUTEst_problem):
                     nlc = np.union1d(nlc,np.array([ig]))
                     pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION             0.00000D+00   $ n=4, m = 24
+# XL SOLUTION             6.48030D+00   $ n=4, m = 25 one of many local solutions
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -249,6 +252,10 @@ class  KISSING2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-RN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

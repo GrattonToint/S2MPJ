@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  AIRCRFTB(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,21 +49,21 @@ class  AIRCRFTB(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('ROLLRATE',ix_)
+        [iv,ix_,_] = s2mpj_ii('ROLLRATE',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ROLLRATE')
-        [iv,ix_,_] = s2x_ii('PITCHRAT',ix_)
+        [iv,ix_,_] = s2mpj_ii('PITCHRAT',ix_)
         pb.xnames=arrset(pb.xnames,iv,'PITCHRAT')
-        [iv,ix_,_] = s2x_ii('YAWRATE',ix_)
+        [iv,ix_,_] = s2mpj_ii('YAWRATE',ix_)
         pb.xnames=arrset(pb.xnames,iv,'YAWRATE')
-        [iv,ix_,_] = s2x_ii('ATTCKANG',ix_)
+        [iv,ix_,_] = s2mpj_ii('ATTCKANG',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ATTCKANG')
-        [iv,ix_,_] = s2x_ii('SSLIPANG',ix_)
+        [iv,ix_,_] = s2mpj_ii('SSLIPANG',ix_)
         pb.xnames=arrset(pb.xnames,iv,'SSLIPANG')
-        [iv,ix_,_] = s2x_ii('ELEVATOR',ix_)
+        [iv,ix_,_] = s2mpj_ii('ELEVATOR',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ELEVATOR')
-        [iv,ix_,_] = s2x_ii('AILERON',ix_)
+        [iv,ix_,_] = s2mpj_ii('AILERON',ix_)
         pb.xnames=arrset(pb.xnames,iv,'AILERON')
-        [iv,ix_,_] = s2x_ii('RUDDERDF',ix_)
+        [iv,ix_,_] = s2mpj_ii('RUDDERDF',ix_)
         pb.xnames=arrset(pb.xnames,iv,'RUDDERDF')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -72,7 +72,7 @@ class  AIRCRFTB(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('G1',ig_)
+        [ig,ig_,_] = s2mpj_ii('G1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['ROLLRATE']
         pbm.A[ig,iv] = float(-3.933)+pbm.A[ig,iv]
@@ -86,7 +86,7 @@ class  AIRCRFTB(CUTEst_problem):
         pbm.A[ig,iv] = float(-45.83)+pbm.A[ig,iv]
         iv = ix_['RUDDERDF']
         pbm.A[ig,iv] = float(-7.64)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G2',ig_)
+        [ig,ig_,_] = s2mpj_ii('G2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['PITCHRAT']
         pbm.A[ig,iv] = float(-0.987)+pbm.A[ig,iv]
@@ -94,7 +94,7 @@ class  AIRCRFTB(CUTEst_problem):
         pbm.A[ig,iv] = float(-22.95)+pbm.A[ig,iv]
         iv = ix_['ELEVATOR']
         pbm.A[ig,iv] = float(-28.37)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G3',ig_)
+        [ig,ig_,_] = s2mpj_ii('G3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['ROLLRATE']
         pbm.A[ig,iv] = float(0.002)+pbm.A[ig,iv]
@@ -106,7 +106,7 @@ class  AIRCRFTB(CUTEst_problem):
         pbm.A[ig,iv] = float(-0.921)+pbm.A[ig,iv]
         iv = ix_['RUDDERDF']
         pbm.A[ig,iv] = float(-6.51)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G4',ig_)
+        [ig,ig_,_] = s2mpj_ii('G4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['PITCHRAT']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -114,7 +114,7 @@ class  AIRCRFTB(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['ELEVATOR']
         pbm.A[ig,iv] = float(-1.168)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G5',ig_)
+        [ig,ig_,_] = s2mpj_ii('G5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['YAWRATE']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -127,8 +127,6 @@ class  AIRCRFTB(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -146,7 +144,7 @@ class  AIRCRFTB(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -155,151 +153,151 @@ class  AIRCRFTB(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'E1A'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'YAWRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E1B'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'YAWRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E1C'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ATTCKANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E1D'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E2A'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'YAWRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E2B'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E3A'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PITCHRAT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E3B'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E3C'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E4'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E5'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset( ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -349,6 +347,8 @@ class  AIRCRFTB(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               6.4099D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -359,6 +359,10 @@ class  AIRCRFTB(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SXR2-RN-8-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

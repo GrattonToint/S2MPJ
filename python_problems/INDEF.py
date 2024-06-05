@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  INDEF(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,6 +16,12 @@ class  INDEF(CUTEst_problem):
 # 
 #    The number of variables is N.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,11 +44,6 @@ class  INDEF(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   5000           $-PARAMETER
         if nargin<2:
             v_['ALPHA'] = float(0.5);  #  SIF file default value
         else:
@@ -62,7 +63,7 @@ class  INDEF(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -72,12 +73,12 @@ class  INDEF(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('L2'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('L2'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('COS'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('COS'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
@@ -90,8 +91,6 @@ class  INDEF(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -104,9 +103,9 @@ class  INDEF(CUTEst_problem):
         pass
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
-        [it,igt_,_] = s2x_ii('gCOS',igt_)
-        [it,igt_,_] = s2x_ii('gCOS',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gCOS',igt_)
+        [it,igt_,_] = s2mpj_ii('gCOS',igt_)
         grftp = []
         grftp = loaset(grftp,it,0,'ALPHA')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -123,6 +122,8 @@ class  INDEF(CUTEst_problem):
             posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='ALPHA')
             pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['ALPHA']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -133,6 +134,10 @@ class  INDEF(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

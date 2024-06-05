@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TWIRIMD1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,7 @@ class  TWIRIMD1(CUTEst_problem):
 #    classification = "LOI2-RN-1247-544"
 # 
 #    SIF input: Arie Quist, Delft, 1998.
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #  Some useful constants
 # 
@@ -1076,18 +1077,18 @@ class  TWIRIMD1(CUTEst_problem):
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for l in range(int(v_['1']),int(v_['Nage'])+1):
                 for m in range(int(v_['1']),int(v_['Ntra'])+1):
-                    [iv,ix_,_] = s2x_ii('x'+str(i)+','+str(l)+','+str(m),ix_)
+                    [iv,ix_,_] = s2mpj_ii('x'+str(i)+','+str(l)+','+str(m),ix_)
                     pb.xnames=arrset(pb.xnames,iv,'x'+str(i)+','+str(l)+','+str(m))
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for t in range(int(v_['1']),int(v_['Ntim'])+1):
-                [iv,ix_,_] = s2x_ii('k'+str(i)+','+str(t),ix_)
+                [iv,ix_,_] = s2mpj_ii('k'+str(i)+','+str(t),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'k'+str(i)+','+str(t))
-                [iv,ix_,_] = s2x_ii('phi'+str(i)+','+str(t),ix_)
+                [iv,ix_,_] = s2mpj_ii('phi'+str(i)+','+str(t),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'phi'+str(i)+','+str(t))
         for t in range(int(v_['1']),int(v_['Ntim'])+1):
-            [iv,ix_,_] = s2x_ii('keff'+str(t),ix_)
+            [iv,ix_,_] = s2mpj_ii('keff'+str(t),ix_)
             pb.xnames=arrset(pb.xnames,iv,'keff'+str(t))
-        [iv,ix_,_] = s2x_ii('epsilon',ix_)
+        [iv,ix_,_] = s2mpj_ii('epsilon',ix_)
         pb.xnames=arrset(pb.xnames,iv,'epsilon')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -1097,7 +1098,7 @@ class  TWIRIMD1(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         v_['t'] = 1*v_['Ntim']
-        [ig,ig_,_] = s2x_ii('Object',ig_)
+        [ig,ig_,_] = s2mpj_ii('Object',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['keff'+str(int(v_['t']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -1106,26 +1107,26 @@ class  TWIRIMD1(CUTEst_problem):
         for l in range(int(v_['1']),int(v_['Nage'])+1):
             for m in range(int(v_['1']),int(v_['Ntra'])+1):
                 for i in range(int(v_['1']),int(v_['Nnod'])+1):
-                    [ig,ig_,_] = s2x_ii('sumi'+str(l)+','+str(m),ig_)
+                    [ig,ig_,_] = s2mpj_ii('sumi'+str(l)+','+str(m),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'sumi'+str(l)+','+str(m))
                     iv = ix_['x'+str(i)+','+str(l)+','+str(m)]
                     pbm.A[ig,iv] = float(v_['V'+str(i)])+pbm.A[ig,iv]
-                    [ig,ig_,_] = s2x_ii('sumlm'+str(i),ig_)
+                    [ig,ig_,_] = s2mpj_ii('sumlm'+str(i),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'sumlm'+str(i))
                     iv = ix_['x'+str(i)+','+str(l)+','+str(m)]
                     pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for t in range(int(v_['1']),int(v_['Ntim'])+1):
-            [ig,ig_,_] = s2x_ii('Norm'+str(t),ig_)
+            [ig,ig_,_] = s2mpj_ii('Norm'+str(t),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'Norm'+str(t))
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for t in range(int(v_['1']),int(v_['Ntim'])+1):
-                [ig,ig_,_] = s2x_ii('Kern'+str(i)+','+str(t),ig_)
+                [ig,ig_,_] = s2mpj_ii('Kern'+str(i)+','+str(t),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'Kern'+str(i)+','+str(t))
-                [ig,ig_,_] = s2x_ii('Peak'+str(i)+','+str(t),ig_)
+                [ig,ig_,_] = s2mpj_ii('Peak'+str(i)+','+str(t),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'Peak'+str(i)+','+str(t))
                 iv = ix_['epsilon']
@@ -1133,7 +1134,7 @@ class  TWIRIMD1(CUTEst_problem):
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for t in range(int(v_['1']),int(v_['Ntim-1'])+1):
                 v_['t+1'] = 1+t
-                [ig,ig_,_] = s2x_ii('Burn'+str(i)+','+str(t),ig_)
+                [ig,ig_,_] = s2mpj_ii('Burn'+str(i)+','+str(t),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'Burn'+str(i)+','+str(t))
                 iv = ix_['k'+str(i)+','+str(int(v_['t+1']))]
@@ -1141,20 +1142,20 @@ class  TWIRIMD1(CUTEst_problem):
                 iv = ix_['k'+str(i)+','+str(t)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
-            [ig,ig_,_] = s2x_ii('Plac'+str(i),ig_)
+            [ig,ig_,_] = s2mpj_ii('Plac'+str(i),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'Plac'+str(i))
             iv = ix_['k'+str(i)+','+str(int(v_['1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             for m in range(int(v_['1']),int(v_['Ntra'])+1):
-                [ig,ig_,_] = s2x_ii('Plac'+str(i),ig_)
+                [ig,ig_,_] = s2mpj_ii('Plac'+str(i),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'Plac'+str(i))
                 iv = ix_['x'+str(i)+','+str(int(v_['1']))+','+str(m)]
                 pbm.A[ig,iv] = float(v_['-Kfresh'])+pbm.A[ig,iv]
         for t in range(int(v_['1']),int(v_['Ntim-1'])+1):
             v_['t+1'] = 1+t
-            [ig,ig_,_] = s2x_ii('Kefford'+str(t),ig_)
+            [ig,ig_,_] = s2mpj_ii('Kefford'+str(t),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'Kefford'+str(t))
             iv = ix_['keff'+str(int(v_['t+1']))]
@@ -1168,7 +1169,7 @@ class  TWIRIMD1(CUTEst_problem):
             v_['d2'] = int(np.fix(v_['d2']))
             for l in range(int(v_['1']),int(v_['Nage'])+1):
                 for m in range(int(v_['1']),int(v_['Ntra'])+1):
-                    [ig,ig_,_] = s2x_ii('Dia'+str(d)+','+str(l)+','+str(m),ig_)
+                    [ig,ig_,_] = s2mpj_ii('Dia'+str(d)+','+str(l)+','+str(m),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'Dia'+str(d)+','+str(l)+','+str(m))
                     iv = ix_['x'+str(int(v_['d1']))+','+str(l)+','+str(m)]
@@ -1202,10 +1203,8 @@ class  TWIRIMD1(CUTEst_problem):
             for t in range(int(v_['1']),int(v_['Ntim'])+1):
                 pbm.gconst  = (
                       arrset(pbm.gconst,ig_['Peak'+str(i)+','+str(t)],float(v_['FluNred'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for l in range(int(v_['1']),int(v_['Nage'])+1):
@@ -7460,10 +7459,10 @@ class  TWIRIMD1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eBILIN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eBILIN', iet_)
         elftv = loaset(elftv,it,0,'u')
         elftv = loaset(elftv,it,1,'v')
-        [it,iet_,_] = s2x_ii( 'eTRILIN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eTRILIN', iet_)
         elftv = loaset(elftv,it,0,'u')
         elftv = loaset(elftv,it,1,'v')
         elftv = loaset(elftv,it,2,'w')
@@ -7475,29 +7474,29 @@ class  TWIRIMD1(CUTEst_problem):
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for t in range(int(v_['1']),int(v_['Ntim'])+1):
                 ename = 'kphi'+str(i)+','+str(t)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eBILIN')
                 ielftype = arrset(ielftype, ie, iet_["eBILIN"])
                 vname = 'k'+str(i)+','+str(t)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='u')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'phi'+str(i)+','+str(t)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='v')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for i in range(int(v_['1']),int(v_['Nnod'])+1):
             for t in range(int(v_['1']),int(v_['Ntim'])+1):
                 ename = 'kefph'+str(i)+','+str(t)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eBILIN')
                 ielftype = arrset(ielftype, ie, iet_["eBILIN"])
                 vname = 'keff'+str(t)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='u')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'phi'+str(i)+','+str(t)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='v')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         v_['t'] = 1*v_['Ntim']
@@ -7505,51 +7504,51 @@ class  TWIRIMD1(CUTEst_problem):
             for j in range(int(v_['1']),int(v_['Nnod'])+1):
                 for m in range(int(v_['1']),int(v_['Ntra'])+1):
                     ename = 'xa'+str(i)+','+str(j)+','+str(m)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'eTRILIN')
                     ielftype = arrset(ielftype, ie, iet_["eTRILIN"])
                     vname = 'x'+str(i)+','+str(int(v_['2']))+','+str(m)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='u')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'x'+str(j)+','+str(int(v_['1']))+','+str(m)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='v')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'k'+str(j)+','+str(int(v_['t']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='w')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'xb'+str(i)+','+str(j)+','+str(m)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'eTRILIN')
                     ielftype = arrset(ielftype, ie, iet_["eTRILIN"])
                     vname = 'x'+str(i)+','+str(int(v_['3']))+','+str(m)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='u')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'x'+str(j)+','+str(int(v_['2']))+','+str(m)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='v')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'k'+str(j)+','+str(int(v_['t']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='w')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'xc'+str(i)+','+str(j)+','+str(m)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'eTRILIN')
                     ielftype = arrset(ielftype, ie, iet_["eTRILIN"])
                     vname = 'x'+str(i)+','+str(int(v_['4']))+','+str(m)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='u')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'x'+str(j)+','+str(int(v_['3']))+','+str(m)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='v')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'k'+str(j)+','+str(int(v_['t']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='w')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

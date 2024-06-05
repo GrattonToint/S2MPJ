@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HUBFIT(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,9 +53,9 @@ class  HUBFIT(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('a',ix_)
+        [iv,ix_,_] = s2mpj_ii('a',ix_)
         pb.xnames=arrset(pb.xnames,iv,'a')
-        [iv,ix_,_] = s2x_ii('b',ix_)
+        [iv,ix_,_] = s2mpj_ii('b',ix_)
         pb.xnames=arrset(pb.xnames,iv,'b')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -64,42 +64,42 @@ class  HUBFIT(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('Obj1',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
         pbm.A[ig,iv] = float(v_['X1'])+pbm.A[ig,iv]
         iv = ix_['b']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
-        [ig,ig_,_] = s2x_ii('Obj2',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
         pbm.A[ig,iv] = float(v_['X2'])+pbm.A[ig,iv]
         iv = ix_['b']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
-        [ig,ig_,_] = s2x_ii('Obj3',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
         pbm.A[ig,iv] = float(v_['X3'])+pbm.A[ig,iv]
         iv = ix_['b']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
-        [ig,ig_,_] = s2x_ii('Obj4',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
         pbm.A[ig,iv] = float(v_['X4'])+pbm.A[ig,iv]
         iv = ix_['b']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
-        [ig,ig_,_] = s2x_ii('Obj5',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
         pbm.A[ig,iv] = float(v_['X5'])+pbm.A[ig,iv]
         iv = ix_['b']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
-        [ig,ig_,_] = s2x_ii('Cons',ig_)
+        [ig,ig_,_] = s2mpj_ii('Cons',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'Cons')
         iv = ix_['a']
@@ -128,16 +128,14 @@ class  HUBFIT(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['Obj4'],float(v_['Y4']))
         pbm.gconst = arrset(pbm.gconst,ig_['Obj5'],float(v_['Y5']))
         pbm.gconst = arrset(pbm.gconst,ig_['Cons'],float(v_['C']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['b']] = -float('Inf')
         pb.xupper[ix_['b']] = +float('Inf')
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gHUBER',igt_)
+        [it,igt_,_] = s2mpj_ii('gHUBER',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

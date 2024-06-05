@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MOSARQP2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,6 +32,96 @@ class  MOSARQP2(CUTEst_problem):
 #    Except for the first, the instances suggested are those used by Morales
 #    and Sargent.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   36             $-PARAMETER
+# IE M                   10             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER     original value
+# IE M                   10             $-PARAMETER     original value
+# RE COND                3.0            $-PARAMETER     original value
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   30             $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   30             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   30             $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   60             $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   60             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   60             $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   90             $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   90             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   90             $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   120            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   120            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   120            $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   300            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   300            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   300            $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   600            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   600            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   600            $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   2500           $-PARAMETER
+# IE M                   700            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   2500           $-PARAMETER
+# IE M                   700            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -54,81 +144,16 @@ class  MOSARQP2(CUTEst_problem):
             v_['N'] = int(36);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE M                   700            $-PARAMETER
         if nargin<2:
             v_['M'] = int(10);  #  SIF file default value
         else:
             v_['M'] = int(args[1])
+# RE COND                3.0            $-PARAMETER
         if nargin<3:
             v_['COND'] = float(2.0);  #  SIF file default value
         else:
             v_['COND'] = float(args[2])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER     original value
-# IE M                   10             $-PARAMETER     original value
-# RE COND                3.0            $-PARAMETER     original value
-# IE N                   900            $-PARAMETER
-# IE M                   30             $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   30             $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   30             $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   60             $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   60             $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   60             $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   90             $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   90             $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   90             $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   120            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   120            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   120            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   300            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   300            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   300            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   600            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   600            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   600            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   2500           $-PARAMETER
-# IE M                   700            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   2500           $-PARAMETER
-# IE M                   700            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   2500           $-PARAMETER
-# IE M                   700            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
         v_['1'] = 1
         v_['2'] = 2
         v_['3'] = 3
@@ -223,7 +248,7 @@ class  MOSARQP2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -233,16 +258,16 @@ class  MOSARQP2(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['C'+str(I)])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CS'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['1'])))
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(4.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CS'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['1'])))
         iv = ix_['X'+str(int(v_['RTN+1']))]
@@ -253,7 +278,7 @@ class  MOSARQP2(CUTEst_problem):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
             v_['I+RTN'] = I+v_['RTN']
-            [ig,ig_,_] = s2x_ii('CS'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(I))
             iv = ix_['X'+str(I)]
@@ -264,12 +289,12 @@ class  MOSARQP2(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CS'+str(int(v_['RTN'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['RTN'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['RTN'])))
         iv = ix_['X'+str(int(v_['RTN']))]
         pbm.A[ig,iv] = float(4.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CS'+str(int(v_['RTN'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['RTN'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CS'+str(int(v_['RTN'])))
         iv = ix_['X'+str(int(v_['RTN-1']))]
@@ -283,7 +308,7 @@ class  MOSARQP2(CUTEst_problem):
             v_['JS-1'] = -1+v_['JS']
             v_['J-RTN'] = J-v_['RTN']
             v_['J+RTN'] = J+v_['RTN']
-            [ig,ig_,_] = s2x_ii('CS'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(J))
             iv = ix_['X'+str(J)]
@@ -299,7 +324,7 @@ class  MOSARQP2(CUTEst_problem):
                 v_['I-1'] = -1+I
                 v_['I+RTN'] = I+v_['RTN']
                 v_['I-RTN'] = I-v_['RTN']
-                [ig,ig_,_] = s2x_ii('CS'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('CS'+str(I),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'CS'+str(I))
                 iv = ix_['X'+str(I)]
@@ -314,14 +339,14 @@ class  MOSARQP2(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             v_['JS+RTN'] = v_['JS']+v_['RTN']
             v_['JS-RTN'] = v_['JS']-v_['RTN']
-            [ig,ig_,_] = s2x_ii('CS'+str(int(v_['JS'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['JS'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['JS'])))
             iv = ix_['X'+str(int(v_['JS']))]
             pbm.A[ig,iv] = float(4.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['JS-1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('CS'+str(int(v_['JS'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['JS'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['JS'])))
             iv = ix_['X'+str(int(v_['JS-RTN']))]
@@ -333,14 +358,14 @@ class  MOSARQP2(CUTEst_problem):
             v_['K+1'] = 1+v_['K']
             v_['K+RTN'] = v_['K']+v_['RTN']
             v_['K-RTN'] = v_['K']-v_['RTN']
-            [ig,ig_,_] = s2x_ii('CS'+str(int(v_['K'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['K'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['K'])))
             iv = ix_['X'+str(int(v_['K']))]
             pbm.A[ig,iv] = float(4.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['K+1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('CS'+str(int(v_['K'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(int(v_['K'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(int(v_['K'])))
             iv = ix_['X'+str(int(v_['K-RTN']))]
@@ -353,7 +378,7 @@ class  MOSARQP2(CUTEst_problem):
             v_['I-1'] = -1+I
             v_['I+RTN'] = I+v_['RTN']
             v_['I-RTN'] = I-v_['RTN']
-            [ig,ig_,_] = s2x_ii('CS'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CS'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CS'+str(I))
             iv = ix_['X'+str(I)]
@@ -399,9 +424,9 @@ class  MOSARQP2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -411,11 +436,11 @@ class  MOSARQP2(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'XSQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.5)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.5)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NNZ'])+1):
@@ -426,15 +451,15 @@ class  MOSARQP2(CUTEst_problem):
                 v_['RKJ'] = v_['K'+str(J)]
                 v_['KJ'] = int(np.fix(v_['RKJ']))
                 ename = 'P'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
                 vname = 'X'+str(int(v_['KI']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.5)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.5)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['KJ']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.5)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.5)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -480,6 +505,26 @@ class  MOSARQP2(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['WII']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(  36, 10,2)   -35.69811798
+# LO SOLTN( 900, 30,1)   -509.8245900
+# LO SOLTN( 900, 30,2)   -950.8404853
+# LO SOLTN( 900, 30,3)   -1896.596722
+# LO SOLTN( 900, 60,1)   -504.3600140
+# LO SOLTN( 900, 60,2)   -945.1134463
+# LO SOLTN( 900, 60,3)   -1890.602184
+# LO SOLTN( 900, 90,1)   -498.9518964
+# LO SOLTN( 900, 90,2)   -939.2704526
+# LO SOLTN( 900, 90,3)   -1884.291256
+# LO SOLTN( 900,120,1)   -493.5058050
+# LO SOLTN( 900,120,2)   -933.1963138
+# LO SOLTN( 900,120,3)   -1877.513644
+# LO SOLTN( 900,300,1)   -457.1185630
+# LO SOLTN( 900,300,2)   -887.3869230
+# LO SOLTN( 900,300,3)   -1819.655008
+# LO SOLTN( 900,600,1)   -377.5813314
+# LO SOLTN( 900,600,2)   -755.0919955
+# LO SOLTN( 900,600,3)   -1597.482277
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -496,6 +541,10 @@ class  MOSARQP2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QLR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

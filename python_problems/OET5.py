@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  OET5(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,15 +69,15 @@ class  OET5(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('U',ix_)
+        [iv,ix_,_] = s2mpj_ii('U',ix_)
         pb.xnames=arrset(pb.xnames,iv,'U')
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
-        [iv,ix_,_] = s2x_ii('X4',ix_)
+        [iv,ix_,_] = s2mpj_ii('X4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X4')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -86,19 +86,19 @@ class  OET5(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['0']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('LO'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('LO'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'LO'+str(I))
             iv = ix_['U']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X4']
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('UP'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('UP'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'UP'+str(I))
             iv = ix_['U']
@@ -129,8 +129,6 @@ class  OET5(CUTEst_problem):
             v_['-SQRTW'] = -1.0*v_['SQRTW']
             pbm.gconst = arrset(pbm.gconst,ig_['LO'+str(I)],float(v_['-SQRTW']))
             pbm.gconst = arrset(pbm.gconst,ig_['UP'+str(I)],float(v_['SQRTW']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -139,7 +137,7 @@ class  OET5(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eQUAD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eQUAD', iet_)
         elftv = loaset(elftv,it,0,'X1')
         elftv = loaset(elftv,it,1,'X2')
         elftv = loaset(elftv,it,2,'X3')
@@ -156,29 +154,29 @@ class  OET5(CUTEst_problem):
             v_['W'] = v_['RI']*v_['H']
             v_['W'] = v_['W']+v_['LOWER']
             ename = 'E'+str(int(v_['1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eQUAD')
             ielftype = arrset(ielftype, ie, iet_["eQUAD"])
             ename = 'E'+str(int(v_['1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X3')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             posep = find(elftp[ielftype[ie]],lambda x:x=='W')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['W']))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

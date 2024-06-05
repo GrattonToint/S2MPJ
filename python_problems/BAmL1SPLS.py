@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BAmL1SPLS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -10,7 +10,7 @@ class  BAmL1SPLS(CUTEst_problem):
 #    A small undertermined set of quadratic equations from a
 #    bundle adjustment subproblem
 # 
-#    least-squares version of BAmL1SP
+#    least-squares version of BA-L1SP
 # 
 #    SIF input: Nick Gould, Nov 2016
 # 
@@ -45,7 +45,7 @@ class  BAmL1SPLS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -54,7 +54,7 @@ class  BAmL1SPLS(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('C1',ig_)
+        [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X4']
         pbm.A[ig,iv] = float(-283.5120115)+pbm.A[ig,iv]
@@ -80,7 +80,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(-490.2705298)+pbm.A[ig,iv]
         iv = ix_['X12']
         pbm.A[ig,iv] = float(-.8547064923)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C2',ig_)
+        [ig,ig_,_] = s2mpj_ii('C2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X4']
         pbm.A[ig,iv] = float(1234.7454956)+pbm.A[ig,iv]
@@ -106,7 +106,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(392.14243755)+pbm.A[ig,iv]
         iv = ix_['X12']
         pbm.A[ig,iv] = float(.68363621076)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C3',ig_)
+        [ig,ig_,_] = s2mpj_ii('C3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X13']
         pbm.A[ig,iv] = float(-107.0193513)+pbm.A[ig,iv]
@@ -132,7 +132,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(-38.04282609)+pbm.A[ig,iv]
         iv = ix_['X21']
         pbm.A[ig,iv] = float(-.5014538225)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C4',ig_)
+        [ig,ig_,_] = s2mpj_ii('C4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X13']
         pbm.A[ig,iv] = float(740.42840621)+pbm.A[ig,iv]
@@ -158,7 +158,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(32.449722244)+pbm.A[ig,iv]
         iv = ix_['X21']
         pbm.A[ig,iv] = float(.42772945465)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C5',ig_)
+        [ig,ig_,_] = s2mpj_ii('C5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X22']
         pbm.A[ig,iv] = float(-168.2771917)+pbm.A[ig,iv]
@@ -184,7 +184,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(-121.2420785)+pbm.A[ig,iv]
         iv = ix_['X30']
         pbm.A[ig,iv] = float(-.6428351473)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C6',ig_)
+        [ig,ig_,_] = s2mpj_ii('C6',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X22']
         pbm.A[ig,iv] = float(921.07415044)+pbm.A[ig,iv]
@@ -210,7 +210,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(98.560653819)+pbm.A[ig,iv]
         iv = ix_['X30']
         pbm.A[ig,iv] = float(.52257642872)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C7',ig_)
+        [ig,ig_,_] = s2mpj_ii('C7',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X31']
         pbm.A[ig,iv] = float(-144.7289642)+pbm.A[ig,iv]
@@ -236,7 +236,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(.07566110172)+pbm.A[ig,iv]
         iv = ix_['X39']
         pbm.A[ig,iv] = float(.14143107787)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C8',ig_)
+        [ig,ig_,_] = s2mpj_ii('C8',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X31']
         pbm.A[ig,iv] = float(620.43380046)+pbm.A[ig,iv]
@@ -262,7 +262,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(.06819699123)+pbm.A[ig,iv]
         iv = ix_['X39']
         pbm.A[ig,iv] = float(.12747863508)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C9',ig_)
+        [ig,ig_,_] = s2mpj_ii('C9',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X40']
         pbm.A[ig,iv] = float(-32.98148952)+pbm.A[ig,iv]
@@ -288,7 +288,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(27.161405788)+pbm.A[ig,iv]
         iv = ix_['X48']
         pbm.A[ig,iv] = float(.57708943686)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C10',ig_)
+        [ig,ig_,_] = s2mpj_ii('C10',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X40']
         pbm.A[ig,iv] = float(536.26711278)+pbm.A[ig,iv]
@@ -314,7 +314,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(4.0712344877)+pbm.A[ig,iv]
         iv = ix_['X48']
         pbm.A[ig,iv] = float(.08650017735)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C11',ig_)
+        [ig,ig_,_] = s2mpj_ii('C11',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X49']
         pbm.A[ig,iv] = float(5.7198974673)+pbm.A[ig,iv]
@@ -340,7 +340,7 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.A[ig,iv] = float(112.10170813)+pbm.A[ig,iv]
         iv = ix_['X57']
         pbm.A[ig,iv] = float(.77126151439)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C12',ig_)
+        [ig,ig_,_] = s2mpj_ii('C12',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X49']
         pbm.A[ig,iv] = float(499.62967221)+pbm.A[ig,iv]
@@ -385,17 +385,15 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['C10'],float(202.2580513))
         pbm.gconst = arrset(pbm.gconst,ig_['C11'],float(5.392772211))
         pbm.gconst = arrset(pbm.gconst,ig_['C12'],float(194.2376052))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -406,30 +404,30 @@ class  BAmL1SPLS(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['IP1'] = 1+I
             ename = 'P'+str(I)+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['IP1']),int(v_['N'])+1):
                 ename = 'P'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
                 ielftype = arrset(ielftype, ie, iet_["ePROD"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -15410,7 +15408,10 @@ class  BAmL1SPLS(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['P57,57'])
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(.06649371711))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -15421,6 +15422,10 @@ class  BAmL1SPLS(CUTEst_problem):
         pb.pbclass = "SUR2-MN-57-0"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -15490,7 +15495,7 @@ class  BAmL1SPLS(CUTEst_problem):
             g_ = GVAR_+GVAR_
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = 2.0e0
+                H_ = 2.0
         if nargout == 1:
             return f_
         elif nargout == 2:

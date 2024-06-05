@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HILBERTA(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,9 +24,6 @@ class  HILBERTA(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER Schittkowski 274
-# IE N                   4              $-PARAMETER Schittkowski 275
-# IE N                   5              $-PARAMETER Buckley 19
-# IE N                   6              $-PARAMETER Schittkowski 276
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,6 +46,10 @@ class  HILBERTA(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE N                   4              $-PARAMETER Schittkowski 275
+# IE N                   5              $-PARAMETER Buckley 19
+# IE N                   6              $-PARAMETER Schittkowski 276
+# IE N                   10             $-PARAMETER
         if nargin<2:
             v_['D'] = float(0.0);  #  SIF file default value
         else:
@@ -60,7 +61,7 @@ class  HILBERTA(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -71,15 +72,13 @@ class  HILBERTA(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(I)+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -88,10 +87,10 @@ class  HILBERTA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -102,23 +101,23 @@ class  HILBERTA(CUTEst_problem):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,-3.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-3.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,-3.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-3.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(I)+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,-3.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-3.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -150,12 +149,18 @@ class  HILBERTA(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['COEFF']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "QUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SSBRYBNDNE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,6 +33,13 @@ class  SSBRYBNDNE(CUTEst_problem):
 # 
 #    N is the number of equations and variables (variable).
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -55,12 +62,6 @@ class  SSBRYBNDNE(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   5000           $-PARAMETER
         v_['ONE'] = 1.0
         v_['KAPPA1'] = 2.0
         v_['KAPPA2'] = 5.0
@@ -88,7 +89,7 @@ class  SSBRYBNDNE(CUTEst_problem):
             v_['RAT'] = v_['RI-1']/v_['RN-1']
             v_['ARG'] = v_['RAT']*v_['SCAL']
             v_['SCALE'+str(I)] = np.exp(v_['ARG'])
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -103,20 +104,20 @@ class  SSBRYBNDNE(CUTEst_problem):
             v_['I+UB'] = I+v_['UB']
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 v_['KAP'] = v_['-KAPPA3']*v_['SCALE'+str(J)]
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['KAP'])+pbm.A[ig,iv]
             v_['KAP'] = v_['KAPPA1']*v_['SCALE'+str(I)]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['KAP'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['I+UB'])+1):
                 v_['KAP'] = v_['-KAPPA3']*v_['SCALE'+str(J)]
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
@@ -128,20 +129,20 @@ class  SSBRYBNDNE(CUTEst_problem):
             v_['I+UB'] = I+v_['UB']
             for J in range(int(v_['I-LB']),int(v_['I-1'])+1):
                 v_['KAP'] = v_['-KAPPA3']*v_['SCALE'+str(J)]
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['KAP'])+pbm.A[ig,iv]
             v_['KAP'] = v_['KAPPA1']*v_['SCALE'+str(I)]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['KAP'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['I+UB'])+1):
                 v_['KAP'] = v_['-KAPPA3']*v_['SCALE'+str(J)]
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
@@ -152,20 +153,20 @@ class  SSBRYBNDNE(CUTEst_problem):
             v_['I+1'] = 1+I
             for J in range(int(v_['I-LB']),int(v_['I-1'])+1):
                 v_['KAP'] = v_['-KAPPA3']*v_['SCALE'+str(J)]
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['KAP'])+pbm.A[ig,iv]
             v_['KAP'] = v_['KAPPA1']*v_['SCALE'+str(I)]
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['KAP'])+pbm.A[ig,iv]
             for J in range(int(v_['I+1']),int(v_['N'])+1):
                 v_['KAP'] = v_['-KAPPA3']*v_['SCALE'+str(J)]
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
@@ -184,8 +185,6 @@ class  SSBRYBNDNE(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -198,11 +197,11 @@ class  SSBRYBNDNE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftp = []
         elftp = loaset(elftp,it,0,'P')
-        [it,iet_,_] = s2x_ii( 'eCB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCB', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftp = loaset(elftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -213,21 +212,21 @@ class  SSBRYBNDNE(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['SCALE'+str(I)]))
             ename = 'Q'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCB')
             ielftype = arrset(ielftype, ie, iet_["eCB"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P')
@@ -304,6 +303,8 @@ class  SSBRYBNDNE(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-KAPPA3']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -320,6 +321,10 @@ class  SSBRYBNDNE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

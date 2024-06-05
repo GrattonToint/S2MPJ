@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SINEALI(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,10 @@ class  SINEALI(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   4              $-PARAMETER
+# IE N                   10             $-PARAMETER     original value
+# IE N                   20             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,9 +48,6 @@ class  SINEALI(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   20             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
         v_['PI'] = 3.1415926535
         v_['PI/2'] = 0.5*v_['PI']
         v_['2PI'] = 2.0*v_['PI']
@@ -59,7 +60,7 @@ class  SINEALI(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -68,12 +69,12 @@ class  SINEALI(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('SQ1',ig_)
+        [ig,ig_,_] = s2mpj_ii('SQ1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('SQ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('SQ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -86,10 +87,8 @@ class  SINEALI(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['SQ1'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         v_['UB'] = 0.5*v_['PI']
         pb.xupper[ix_['X1']] = v_['UB']
@@ -106,7 +105,7 @@ class  SINEALI(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eETYPE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eETYPE', iet_)
         elftv = loaset(elftv,it,0,'V1')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -115,17 +114,17 @@ class  SINEALI(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             ename = 'XSQ'+str(I)
-            [ie,ie_,newelt] = s2x_ii(ename,ie_)
+            [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 pbm.elftype = arrset(pbm.elftype,ie,'eETYPE')
                 ielftype = arrset( ielftype,ie,iet_['eETYPE'])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSIN',igt_)
+        [it,igt_,_] = s2mpj_ii('gSIN',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -142,6 +141,10 @@ class  SINEALI(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['XSQ'+str(int(v_['I-1']))])
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution = - 100 * ( N - 1 ) - 1
+# LO SOLTN(4)            -301.0
+# LO SOLTN(10)           -901.0
+# LO SOLTN(20)           -1901.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -151,6 +154,10 @@ class  SINEALI(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

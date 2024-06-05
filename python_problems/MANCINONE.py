@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MANCINONE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,6 +21,7 @@ class  MANCINONE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #               correction by Ph. Shott, January, 1995.
 #               Nick Gould (nonlinear equation version), Jan 2019
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "NOR2-AN-V-V"
 # 
@@ -31,6 +32,12 @@ class  MANCINONE(CUTEst_problem):
 # 
 #    Number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   20             $-PARAMETER
+# IE N                   30             $-PARAMETER Schittkowski #391
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,11 +60,6 @@ class  MANCINONE(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   20             $-PARAMETER
-# IE N                   30             $-PARAMETER Schittkowski #391
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
         if nargin<2:
             v_['ALPHA'] = int(5);  #  SIF file default value
         else:
@@ -93,7 +95,7 @@ class  MANCINONE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -103,7 +105,7 @@ class  MANCINONE(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['X'+str(I)]
@@ -131,8 +133,6 @@ class  MANCINONE(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['GAMMA'])+1):
                 v_['CI'] = v_['CI']*v_['I-N/2']
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['CI']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -190,7 +190,7 @@ class  MANCINONE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eMANC', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eMANC', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'II')
@@ -208,11 +208,11 @@ class  MANCINONE(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 v_['RJ'] = float(J)
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eMANC')
                 ielftype = arrset(ielftype, ie, iet_["eMANC"])
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='II')
@@ -225,11 +225,11 @@ class  MANCINONE(CUTEst_problem):
             for J in range(int(v_['I+1']),int(v_['N'])+1):
                 v_['RJ'] = float(J)
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eMANC')
                 ielftype = arrset(ielftype, ie, iet_["eMANC"])
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='II')
@@ -261,7 +261,10 @@ class  MANCINONE(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -277,6 +280,10 @@ class  MANCINONE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ODFITS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -113,16 +113,16 @@ class  ODFITS(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('T13',ix_)
+        [iv,ix_,_] = s2mpj_ii('T13',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T13')
-        [iv,ix_,_] = s2x_ii('T14',ix_)
+        [iv,ix_,_] = s2mpj_ii('T14',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T14')
-        [iv,ix_,_] = s2x_ii('T23',ix_)
+        [iv,ix_,_] = s2mpj_ii('T23',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T23')
-        [iv,ix_,_] = s2x_ii('T24',ix_)
+        [iv,ix_,_] = s2mpj_ii('T24',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T24')
         for I in range(int(v_['1']),int(v_['ARCS'])+1):
-            [iv,ix_,_] = s2x_ii('F'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('F'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'F'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -131,34 +131,34 @@ class  ODFITS(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('AP13',ig_)
+        [ig,ig_,_] = s2mpj_ii('AP13',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['T13']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/MU13']))
-        [ig,ig_,_] = s2x_ii('AP14',ig_)
+        [ig,ig_,_] = s2mpj_ii('AP14',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['T14']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/MU14']))
-        [ig,ig_,_] = s2x_ii('AP23',ig_)
+        [ig,ig_,_] = s2mpj_ii('AP23',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['T23']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/MU23']))
-        [ig,ig_,_] = s2x_ii('AP24',ig_)
+        [ig,ig_,_] = s2mpj_ii('AP24',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['T24']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/ENTR']))
         for I in range(int(v_['1']),int(v_['ARCS'])+1):
-            [ig,ig_,_] = s2x_ii('CP'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CP'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['F'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['G/QLT'+str(I)]))
         for I in range(int(v_['1']),int(v_['ARCS'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(I))
             iv = ix_['F'+str(I)]
@@ -185,8 +185,6 @@ class  ODFITS(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.1)
         pb.xupper = np.full((pb.n,1),+float('inf'))
@@ -202,7 +200,7 @@ class  ODFITS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eXLOGX', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eXLOGX', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'DEN')
@@ -213,52 +211,52 @@ class  ODFITS(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'TFIT13'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eXLOGX')
         ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
         vname = 'T13'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='DEN')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['APV13']))
         ename = 'TFIT23'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eXLOGX')
         ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
         vname = 'T23'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='DEN')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['APV23']))
         ename = 'TFIT14'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eXLOGX')
         ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
         vname = 'T14'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='DEN')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['APV14']))
         ename = 'TFIT24'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eXLOGX')
         ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
         vname = 'T24'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='DEN')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         for I in range(int(v_['1']),int(v_['ARCS'])+1):
             ename = 'CFIT'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eXLOGX')
             ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
             vname = 'F'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='DEN')
@@ -297,6 +295,8 @@ class  ODFITS(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO ODFITS             -2380.026775
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -313,6 +313,10 @@ class  ODFITS(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-MN-10-6"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

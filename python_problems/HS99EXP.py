@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS99EXP(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,19 +69,19 @@ class  HS99EXP(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['7'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('R'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('R'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'R'+str(I))
-            [iv,ix_,_] = s2x_ii('Q'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Q'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Q'+str(I))
-            [iv,ix_,_] = s2x_ii('S'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('S'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'S'+str(I))
-        [iv,ix_,_] = s2x_ii('R'+str(int(v_['8'])),ix_)
+        [iv,ix_,_] = s2mpj_ii('R'+str(int(v_['8'])),ix_)
         pb.xnames=arrset(pb.xnames,iv,'R'+str(int(v_['8'])))
-        [iv,ix_,_] = s2x_ii('Q'+str(int(v_['8'])),ix_)
+        [iv,ix_,_] = s2mpj_ii('Q'+str(int(v_['8'])),ix_)
         pb.xnames=arrset(pb.xnames,iv,'Q'+str(int(v_['8'])))
-        [iv,ix_,_] = s2x_ii('S'+str(int(v_['8'])),ix_)
+        [iv,ix_,_] = s2mpj_ii('S'+str(int(v_['8'])),ix_)
         pb.xnames=arrset(pb.xnames,iv,'S'+str(int(v_['8'])))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -92,14 +92,14 @@ class  HS99EXP(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['2']),int(v_['8'])+1):
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(I))
             iv = ix_['R'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['R'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('Q'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('Q'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'Q'+str(I))
             iv = ix_['Q'+str(I)]
@@ -108,14 +108,14 @@ class  HS99EXP(CUTEst_problem):
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['S'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(v_['DT'+str(I)])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('S'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'S'+str(I))
             iv = ix_['S'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['S'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['R'+str(int(v_['8']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -143,8 +143,6 @@ class  HS99EXP(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['S'+str(I)],float(v_['RHS']))
         pbm.gconst = arrset(pbm.gconst,ig_['Q'+str(int(v_['8']))],float(100000.0))
         pbm.gconst = arrset(pbm.gconst,ig_['S'+str(int(v_['8']))],float(1000.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -165,9 +163,9 @@ class  HS99EXP(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSN', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eCS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCS', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -176,24 +174,24 @@ class  HS99EXP(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['7'])+1):
             ename = 'SNX'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSN')
             ielftype = arrset(ielftype, ie, iet_["eSN"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'CSX'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCS')
             ielftype = arrset(ielftype, ie, iet_["eCS"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -223,6 +221,8 @@ class  HS99EXP(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['W']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -831079892.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -238,6 +238,10 @@ class  HS99EXP(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-AN-31-21"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

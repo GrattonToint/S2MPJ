@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  QPBAND(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,9 +9,13 @@ class  QPBAND(CUTEst_problem):
 # 
 #    A banded QP
 #    SIF input: Nick Gould, December 1999.
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "QLR2-AN-V-V"
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10000          $-PARAMETER
+# IE N                   50000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,9 +38,6 @@ class  QPBAND(CUTEst_problem):
             v_['N'] = int(100);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10000          $-PARAMETER
-# IE N                   50000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
 # IE N                   200000         $-PARAMETER
 # IE N                   400000         $-PARAMETER
@@ -53,7 +54,7 @@ class  QPBAND(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -66,13 +67,13 @@ class  QPBAND(CUTEst_problem):
             v_['RI'] = float(I)
             v_['RI/RN'] = v_['RI']/v_['RN']
             v_['-RI/RN'] = -1.0*v_['RI/RN']
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['-RI/RN'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['M+I'] = v_['M']+I
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I))
             iv = ix_['X'+str(I)]
@@ -97,8 +98,6 @@ class  QPBAND(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.0)
         pb.xupper = np.full((pb.n,1),2.0)

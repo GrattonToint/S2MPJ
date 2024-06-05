@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  JANNSON3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,6 +16,9 @@ class  JANNSON3(CUTEst_problem):
 # 
 #    classification = "OQR2-AN-V-3"
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   3              $-PARAMETER
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,8 +41,6 @@ class  JANNSON3(CUTEst_problem):
             v_['N'] = int(3);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10000          $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
         v_['2'] = 2
@@ -54,7 +55,7 @@ class  JANNSON3(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['2N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -63,28 +64,28 @@ class  JANNSON3(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('G',ig_)
+        [ig,ig_,_] = s2mpj_ii('G',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G0',ig_)
+        [ig,ig_,_] = s2mpj_ii('G0',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['2N'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('L',ig_)
+            [ig,ig_,_] = s2mpj_ii('L',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'L')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q',ig_)
+        [ig,ig_,_] = s2mpj_ii('Q',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'Q')
-        [ig,ig_,_] = s2x_ii('P',ig_)
+        [ig,ig_,_] = s2mpj_ii('P',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'P')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -109,17 +110,15 @@ class  JANNSON3(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['L'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['Q'],float(0.75))
         pbm.gconst = arrset(pbm.gconst,ig_['P'],float(v_['1/5N']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-1.0)
         pb.xupper = np.full((pb.n,1),1.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -129,32 +128,32 @@ class  JANNSON3(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['2N'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['N+I'] = v_['N']+I
             ename = 'P'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['N+I']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
-        [it,igt_,_] = s2x_ii('gL22',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL22',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -184,7 +183,10 @@ class  JANNSON3(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# XL SOLUTION             1.99985D+04    $ n = 10000
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -202,6 +204,10 @@ class  JANNSON3(CUTEst_problem):
         pb.pbclass = "OQR2-AN-V-3"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

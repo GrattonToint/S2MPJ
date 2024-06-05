@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PT(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,9 +69,9 @@ class  PT(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('U',ix_)
+        [iv,ix_,_] = s2mpj_ii('U',ix_)
         pb.xnames=arrset(pb.xnames,iv,'U')
-        [iv,ix_,_] = s2x_ii('X',ix_)
+        [iv,ix_,_] = s2mpj_ii('X',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -80,7 +80,7 @@ class  PT(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -94,7 +94,7 @@ class  PT(CUTEst_problem):
             v_['2W**2'] = 2.0*v_['W**2']
             v_['2W**2-1'] = v_['2W**2']-v_['ONE']
             v_['XCOEFF'] = v_['W(1-W)']-v_['2W**2-1']
-            [ig,ig_,_] = s2x_ii('LO'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('LO'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'LO'+str(I))
             iv = ix_['U']
@@ -124,8 +124,6 @@ class  PT(CUTEst_problem):
             v_['1-W'] = 1.0-v_['W']
             v_['W-W**2'] = v_['W']*v_['1-W']
             pbm.gconst = arrset(pbm.gconst,ig_['LO'+str(I)],float(v_['W-W**2']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))

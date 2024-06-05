@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SANTA(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,12 +173,12 @@ class  SANTA(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('PHI1',ix_)
+        [iv,ix_,_] = s2mpj_ii('PHI1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'PHI1')
         for I in range(int(v_['2']),int(v_['S-1'])+1):
-            [iv,ix_,_] = s2x_ii('PHI'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('PHI'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'PHI'+str(I))
-            [iv,ix_,_] = s2x_ii('LAM'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('LAM'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'LAM'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -187,16 +187,16 @@ class  SANTA(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('R0,1',ig_)
+        [ig,ig_,_] = s2mpj_ii('R0,1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'R0,1')
         for I in range(int(v_['2']),int(v_['S'])+1):
             v_['I1'] = -1+I
             v_['I2'] = -2+I
-            [ig,ig_,_] = s2x_ii('R'+str(int(v_['I2']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(int(v_['I2']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(int(v_['I2']))+','+str(I))
-            [ig,ig_,_] = s2x_ii('R'+str(int(v_['I1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(int(v_['I1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(int(v_['I1']))+','+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -229,8 +229,6 @@ class  SANTA(CUTEst_problem):
             v_['CD/RAD'] = np.cos(v_['D/RAD'])
             pbm.gconst  = (
                   arrset(pbm.gconst,ig_['R'+str(int(v_['I1']))+','+str(I)],float(v_['CD/RAD'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-1000.0)
         pb.xupper = np.full((pb.n,1),1000.0)
@@ -271,23 +269,23 @@ class  SANTA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eE', iet_)
         elftv = loaset(elftv,it,0,'PHI1')
         elftv = loaset(elftv,it,1,'PHI2')
         elftv = loaset(elftv,it,2,'LAM1')
         elftv = loaset(elftv,it,3,'LAM2')
-        [it,iet_,_] = s2x_ii( 'eE3', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eE3', iet_)
         elftv = loaset(elftv,it,0,'PHI1')
         elftv = loaset(elftv,it,1,'PHI2')
         elftv = loaset(elftv,it,2,'LAM1')
         elftp = []
         elftp = loaset(elftp,it,0,'LAMF')
-        [it,iet_,_] = s2x_ii( 'eE2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eE2', iet_)
         elftv = loaset(elftv,it,0,'PHI1')
         elftv = loaset(elftv,it,1,'LAM1')
         elftp = loaset(elftp,it,0,'PHIF')
         elftp = loaset(elftp,it,1,'LAMF')
-        [it,iet_,_] = s2x_ii( 'eE1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eE1', iet_)
         elftv = loaset(elftv,it,0,'PHI1')
         elftp = loaset(elftp,it,0,'PHIF')
         elftp = loaset(elftp,it,1,'LAMF')
@@ -299,11 +297,11 @@ class  SANTA(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E0,1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE1')
         ielftype = arrset(ielftype, ie, iet_["eE1"])
         vname = 'PHI1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='PHIF')
@@ -313,15 +311,15 @@ class  SANTA(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='LAMS')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LAM1']))
         ename = 'E0,2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE2')
         ielftype = arrset(ielftype, ie, iet_["eE2"])
         vname = 'PHI2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='PHIF')
@@ -329,130 +327,130 @@ class  SANTA(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='LAMF')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LAM0']))
         ename = 'E1,2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE3')
         ielftype = arrset(ielftype, ie, iet_["eE3"])
         vname = 'PHI1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PHI2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='LAMF')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LAM1']))
         ename = 'E1,3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE3')
         ielftype = arrset(ielftype, ie, iet_["eE3"])
         vname = 'PHI1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PHI3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='LAMF')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LAM1']))
         ename = 'E2,3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE')
         ielftype = arrset(ielftype, ie, iet_["eE"])
         vname = 'PHI2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'PHI3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['4']),int(v_['S-1'])+1):
             v_['I2'] = -2+I
             ename = 'E'+str(int(v_['I2']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eE')
             ielftype = arrset(ielftype, ie, iet_["eE"])
             ename = 'E'+str(int(v_['I2']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(int(v_['I2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I2']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='PHI2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I2']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(int(v_['I2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I2']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='LAM2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['I1'] = -1+I
             ename = 'E'+str(int(v_['I1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eE')
             ielftype = arrset(ielftype, ie, iet_["eE"])
             ename = 'E'+str(int(v_['I1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(int(v_['I1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='PHI2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(int(v_['I1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I1']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='LAM2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'E10,12'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE2')
         ielftype = arrset(ielftype, ie, iet_["eE2"])
         vname = 'PHI10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM10'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='PHIF')
@@ -460,15 +458,15 @@ class  SANTA(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='LAMF')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LAM12']))
         ename = 'E11,12'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eE2')
         ielftype = arrset(ielftype, ie, iet_["eE2"])
         vname = 'PHI11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='PHI1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'LAM11'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='LAM1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='PHIF')
@@ -503,6 +501,8 @@ class  SANTA(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SANTA               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -514,6 +514,10 @@ class  SANTA(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-21-23"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

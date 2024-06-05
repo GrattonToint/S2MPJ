@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  FERRISDC(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -13,6 +13,10 @@ class  FERRISDC(CUTEst_problem):
 # 
 #    classification = "QLR2-AN-V-V"
 # 
+#           Alternative values for the SIF file parameters:
+# IE n                   4              $-PARAMETER
+# IE n                   100            $-PARAMETER
+# IE n                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -35,15 +39,13 @@ class  FERRISDC(CUTEst_problem):
             v_['n'] = int(4);  #  SIF file default value
         else:
             v_['n'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE n                   100            $-PARAMETER
-# IE n                   200            $-PARAMETER
 # IE n                   300            $-PARAMETER
+# IE k                   3              $-PARAMETER
+# IE k                   10             $-PARAMETER
         if nargin<2:
             v_['k'] = int(3);  #  SIF file default value
         else:
             v_['k'] = int(args[1])
-# IE k                   10             $-PARAMETER
 # IE k                   20             $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
@@ -298,10 +300,10 @@ class  FERRISDC(CUTEst_problem):
         binvars   = np.array([])
         for i in range(int(v_['1']),int(v_['k'])+1):
             for j in range(int(v_['1']),int(v_['n'])+1):
-                [iv,ix_,_] = s2x_ii('A'+str(i)+','+str(j),ix_)
+                [iv,ix_,_] = s2mpj_ii('A'+str(i)+','+str(j),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'A'+str(i)+','+str(j))
         for i in range(int(v_['1']),int(v_['n'])+1):
-            [iv,ix_,_] = s2x_ii('W'+str(i),ix_)
+            [iv,ix_,_] = s2mpj_ii('W'+str(i),ix_)
             pb.xnames=arrset(pb.xnames,iv,'W'+str(i))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -312,13 +314,13 @@ class  FERRISDC(CUTEst_problem):
         gtype       = np.array([])
         for j in range(int(v_['1']),int(v_['n'])+1):
             for i in range(int(v_['1']),int(v_['k'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ',ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['A'+str(i)+','+str(j)]
                 pbm.A[ig,iv] = float(v_['Y'+str(i)+','+str(j)])+pbm.A[ig,iv]
         for i in range(int(v_['1']),int(v_['k'])+1):
             for j in range(int(v_['1']),int(v_['n'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(i),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(i),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'C'+str(i))
                 iv = ix_['A'+str(i)+','+str(j)]
@@ -326,13 +328,13 @@ class  FERRISDC(CUTEst_problem):
                 iv = ix_['W'+str(j)]
                 pbm.A[ig,iv] = float(v_['-1/k'])+pbm.A[ig,iv]
         for j in range(int(v_['1']),int(v_['n'])+1):
-            [ig,ig_,_] = s2x_ii('A'+str(j),ig_)
+            [ig,ig_,_] = s2mpj_ii('A'+str(j),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'A'+str(j))
             iv = ix_['W'+str(j)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             for i in range(int(v_['1']),int(v_['k'])+1):
-                [ig,ig_,_] = s2x_ii('A'+str(j),ig_)
+                [ig,ig_,_] = s2mpj_ii('A'+str(j),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'A'+str(j))
                 iv = ix_['A'+str(i)+','+str(j)]
@@ -351,8 +353,6 @@ class  FERRISDC(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.0)
         pb.xupper = np.full((pb.n,1),1.0)
@@ -391,6 +391,9 @@ class  FERRISDC(CUTEst_problem):
                 pbm.H[ix1,ix2] = float(v_['coef'])+pbm.H[ix1,ix2]
                 pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
+# XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%

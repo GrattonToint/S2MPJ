@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TRIDIA(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,15 @@ class  TRIDIA(CUTEst_problem):
 # 
 #    N is the number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   20             $-PARAMETER
+# IE N                   30             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,15 +57,6 @@ class  TRIDIA(CUTEst_problem):
             v_['N'] = int(5);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER
-# IE N                   20             $-PARAMETER
-# IE N                   30             $-PARAMETER     original value
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
         if nargin<2:
             v_['ALPHA'] = float(2.0);  #  SIF file default value
@@ -84,7 +84,7 @@ class  TRIDIA(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -93,18 +93,18 @@ class  TRIDIA(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('G'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(v_['DELTA'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/GAMMA']))
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['REALI'] = float(I)
             v_['1/I'] = 1.0/v_['REALI']
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(v_['MBETA'])+pbm.A[ig,iv]
@@ -119,8 +119,6 @@ class  TRIDIA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['G'+str(int(v_['1']))],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -128,7 +126,7 @@ class  TRIDIA(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -139,7 +137,10 @@ class  TRIDIA(CUTEst_problem):
         for ig in range(0,ngrp):
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -149,6 +150,10 @@ class  TRIDIA(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "QUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

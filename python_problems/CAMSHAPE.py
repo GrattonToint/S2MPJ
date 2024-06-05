@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CAMSHAPE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -21,6 +21,11 @@ class  CAMSHAPE(CUTEst_problem):
 # 
 #    The number of discretization points
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
+# IE N                   400            $-PARAMETER
+# IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,11 +48,6 @@ class  CAMSHAPE(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
-# IE N                   400            $-PARAMETER
-# IE N                   800            $-PARAMETER
         v_['RV'] = 1.0
         v_['RMAX'] = 2.0
         v_['RMIN'] = 1.0
@@ -86,7 +86,7 @@ class  CAMSHAPE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('R'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('R'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'R'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -96,15 +96,15 @@ class  CAMSHAPE(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('AREA',ig_)
+            [ig,ig_,_] = s2mpj_ii('AREA',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['R'+str(I)]
             pbm.A[ig,iv] = float(v_['-PIRV/N'])+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('CO'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CO'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'CO'+str(I))
-        [ig,ig_,_] = s2x_ii('E1',ig_)
+        [ig,ig_,_] = s2mpj_ii('E1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E1')
         iv = ix_['R'+str(int(v_['1']))]
@@ -112,38 +112,38 @@ class  CAMSHAPE(CUTEst_problem):
         iv = ix_['R'+str(int(v_['2']))]
         pbm.A[ig,iv] = float(v_['RMIN2CD'])+pbm.A[ig,iv]
         v_['R'] = v_['RMIN2CD']-v_['RMIN']
-        [ig,ig_,_] = s2x_ii('E2',ig_)
+        [ig,ig_,_] = s2mpj_ii('E2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E2')
         iv = ix_['R'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(v_['R'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E3',ig_)
+        [ig,ig_,_] = s2mpj_ii('E3',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E3')
         iv = ix_['R'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['-RMAX'])+pbm.A[ig,iv]
         iv = ix_['R'+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(v_['RMAX2CD'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E4',ig_)
+        [ig,ig_,_] = s2mpj_ii('E4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'E4')
         iv = ix_['R'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['-2RMAX'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CU'+str(int(v_['0'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CU'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CU'+str(int(v_['0'])))
         iv = ix_['R'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('CU'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CU'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CU'+str(I))
             iv = ix_['R'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['R'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CU'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CU'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'CU'+str(int(v_['N'])))
         iv = ix_['R'+str(int(v_['N']))]
@@ -177,10 +177,8 @@ class  CAMSHAPE(CUTEst_problem):
         grange[gegrps] = np.full((pb.nge,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
             grange = arrset(grange,ig_['CU'+str(I)],float(v_['2ADTHETA']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pb.xlower[ix_['R'+str(I)]] = v_['RMIN']
@@ -193,9 +191,9 @@ class  CAMSHAPE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -207,51 +205,51 @@ class  CAMSHAPE(CUTEst_problem):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
             ename = 'RA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'R'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'R'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'RB'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'R'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'R'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'RA'+str(int(v_['N']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
         ielftype = arrset(ielftype, ie, iet_["ePROD"])
         ename = 'RA'+str(int(v_['N']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'R'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'RA'+str(int(v_['N']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'R'+str(int(v_['N-1']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'R2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
         ielftype = arrset(ielftype, ie, iet_["eSQR"])
         vname = 'R'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -291,6 +289,11 @@ class  CAMSHAPE(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['2CDTHETA']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION             -4.2841D+00   $ (NH=100)
+# LO SOLUTION             -4.2785D+00   $ (NH=200)
+# LO SOLUTION             -4.2757D+00   $ (NH=400)
+# LO SOLUTION             -4.2743D+00   $ (NH=800)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -308,6 +311,10 @@ class  CAMSHAPE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

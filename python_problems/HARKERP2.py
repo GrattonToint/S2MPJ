@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HARKERP2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,11 @@ class  HARKERP2(CUTEst_problem):
 # 
 #    Number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER     original value
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,10 +50,6 @@ class  HARKERP2(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER     original value
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
         v_['0'] = 0
@@ -60,7 +61,7 @@ class  HARKERP2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -70,28 +71,28 @@ class  HARKERP2(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('S'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(-1.0))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('Q'+str(int(v_['0'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['0'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('Q'+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Q'+str(int(v_['1'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('Q'+str(int(v_['1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         pbm.gscale = arrset(pbm.gscale,ig,float(0.5))
         for J in range(int(v_['2']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('Q'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('Q'+str(J),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(0.25))
             for I in range(int(J),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('Q'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('Q'+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -107,7 +108,7 @@ class  HARKERP2(CUTEst_problem):
             pb.x0[ix_['X'+str(I)]] = float(v_['RI'])
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gHALFL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gHALFL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -122,6 +123,8 @@ class  HARKERP2(CUTEst_problem):
             pbm.grftype = arrset(pbm.grftype,ig,'gHALFL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 1.0
+#    Solution
+# LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pb.xlower = np.zeros((pb.n,1))
@@ -134,6 +137,10 @@ class  HARKERP2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "QBR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

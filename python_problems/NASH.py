@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  NASH(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,7 +39,7 @@ class  NASH(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -48,7 +48,7 @@ class  NASH(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X56']
         pbm.A[ig,iv] = float(1000.0)+pbm.A[ig,iv]
@@ -56,7 +56,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(500.0)+pbm.A[ig,iv]
         iv = ix_['X58']
         pbm.A[ig,iv] = float(1000.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C1',ig_)
+        [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C1')
         iv = ix_['X25']
@@ -77,7 +77,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X7']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C2',ig_)
+        [ig,ig_,_] = s2mpj_ii('C2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C2')
         iv = ix_['X26']
@@ -100,7 +100,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.263887)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.447486)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C3',ig_)
+        [ig,ig_,_] = s2mpj_ii('C3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C3')
         iv = ix_['X27']
@@ -123,7 +123,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.263887)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.447486)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C4',ig_)
+        [ig,ig_,_] = s2mpj_ii('C4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C4')
         iv = ix_['X28']
@@ -146,7 +146,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.263887)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.447486)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C5',ig_)
+        [ig,ig_,_] = s2mpj_ii('C5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C5')
         iv = ix_['X29']
@@ -169,7 +169,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.263887)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.447486)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C6',ig_)
+        [ig,ig_,_] = s2mpj_ii('C6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C6')
         iv = ix_['X30']
@@ -192,7 +192,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.263887)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.447486)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C7',ig_)
+        [ig,ig_,_] = s2mpj_ii('C7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C7')
         iv = ix_['X31']
@@ -215,7 +215,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.263887)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(0.447486)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C8',ig_)
+        [ig,ig_,_] = s2mpj_ii('C8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C8')
         iv = ix_['X32']
@@ -226,7 +226,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X22']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C9',ig_)
+        [ig,ig_,_] = s2mpj_ii('C9',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C9')
         iv = ix_['X33']
@@ -237,7 +237,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X23']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C10',ig_)
+        [ig,ig_,_] = s2mpj_ii('C10',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C10')
         iv = ix_['X34']
@@ -248,7 +248,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X23']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C11',ig_)
+        [ig,ig_,_] = s2mpj_ii('C11',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C11')
         iv = ix_['X35']
@@ -265,7 +265,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C12',ig_)
+        [ig,ig_,_] = s2mpj_ii('C12',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C12')
         iv = ix_['X36']
@@ -280,7 +280,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X10']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C13',ig_)
+        [ig,ig_,_] = s2mpj_ii('C13',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C13')
         iv = ix_['X37']
@@ -293,7 +293,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-.33)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(0.33)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C14',ig_)
+        [ig,ig_,_] = s2mpj_ii('C14',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C14')
         iv = ix_['X38']
@@ -306,7 +306,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-.67)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(-.33)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C15',ig_)
+        [ig,ig_,_] = s2mpj_ii('C15',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C15')
         iv = ix_['X39']
@@ -319,7 +319,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-.33)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(-.67)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C16',ig_)
+        [ig,ig_,_] = s2mpj_ii('C16',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C16')
         iv = ix_['X40']
@@ -328,7 +328,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X13']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C17',ig_)
+        [ig,ig_,_] = s2mpj_ii('C17',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C17')
         iv = ix_['X41']
@@ -337,7 +337,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X14']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C18',ig_)
+        [ig,ig_,_] = s2mpj_ii('C18',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C18')
         iv = ix_['X42']
@@ -346,7 +346,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X15']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C19',ig_)
+        [ig,ig_,_] = s2mpj_ii('C19',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C19')
         iv = ix_['X43']
@@ -361,7 +361,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.33)+pbm.A[ig,iv]
         iv = ix_['X22']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C20',ig_)
+        [ig,ig_,_] = s2mpj_ii('C20',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C20')
         iv = ix_['X44']
@@ -376,7 +376,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(0.67)+pbm.A[ig,iv]
         iv = ix_['X23']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C21',ig_)
+        [ig,ig_,_] = s2mpj_ii('C21',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C21')
         iv = ix_['X45']
@@ -385,7 +385,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C22',ig_)
+        [ig,ig_,_] = s2mpj_ii('C22',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C22')
         iv = ix_['X46']
@@ -404,7 +404,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(-3.298588)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(-5.593581)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C23',ig_)
+        [ig,ig_,_] = s2mpj_ii('C23',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C23')
         iv = ix_['X47']
@@ -425,7 +425,7 @@ class  NASH(CUTEst_problem):
         pbm.A[ig,iv] = float(8.412719)+pbm.A[ig,iv]
         iv = ix_['X24']
         pbm.A[ig,iv] = float(-5.114131)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C24',ig_)
+        [ig,ig_,_] = s2mpj_ii('C24',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C24')
         iv = ix_['X48']
@@ -470,8 +470,6 @@ class  NASH(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['C22'],float(61.241589))
         pbm.gconst = arrset(pbm.gconst,ig_['C23'],float(-1.150548))
         pbm.gconst = arrset(pbm.gconst,ig_['C24'],float(-60.091041))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.E+00)
         pb.xupper = np.full((pb.n,1),0.E+00)

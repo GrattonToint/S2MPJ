@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SCW1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,8 @@ class  SCW1(CUTEst_problem):
 # 
 #    Number of internal knots
 # 
+#           Alternative values for the SIF file parameters:
+# IE K                   1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,18 +46,11 @@ class  SCW1(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         if nargin<1:
-            v_['K'] = int(1);  #  SIF file default value
-        else:
-            v_['K'] = int(args[0])
-        if nargin<1:
-            v_['K'] = int(3);  #  SIF file default value
-        else:
-            v_['K'] = int(args[0])
-        if nargin<1:
             v_['K'] = int(7);  #  SIF file default value
         else:
             v_['K'] = int(args[0])
-#           Alternative values for the SIF file parameters:
+# IE K                   3              $-PARAMETER
+# IE K                   7              $-PARAMETER     original value
 # IE K                   10             $-PARAMETER
 # IE K                   100            $-PARAMETER
         v_['0'] = 0
@@ -73,7 +68,7 @@ class  SCW1(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['K+1'])+1):
-            [iv,ix_,_] = s2x_ii('T'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('T'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'T'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -82,13 +77,13 @@ class  SCW1(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('S',ig_)
+        [ig,ig_,_] = s2mpj_ii('S',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('C',ig_)
+        [ig,ig_,_] = s2mpj_ii('C',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['0']),int(v_['K'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('CON'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CON'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CON'+str(I))
             iv = ix_['T'+str(int(v_['I+1']))]
@@ -109,10 +104,8 @@ class  SCW1(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['T'+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['T'+str(int(v_['0']))]] = 0.0
@@ -140,9 +133,9 @@ class  SCW1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSINT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSINT', iet_)
         elftv = loaset(elftv,it,0,'T')
-        [it,iet_,_] = s2x_ii( 'eCOST', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCOST', iet_)
         elftv = loaset(elftv,it,0,'T')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -151,24 +144,24 @@ class  SCW1(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['0']),int(v_['K+1'])+1):
             ename = 'S'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSINT')
             ielftype = arrset(ielftype, ie, iet_["eSINT"])
             vname = 'T'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'C'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCOST')
             ielftype = arrset(ielftype, ie, iet_["eCOST"])
             vname = 'T'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gMAXSQ',igt_)
+        [it,igt_,_] = s2mpj_ii('gMAXSQ',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -221,6 +214,8 @@ class  SCW1(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['C'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SCW                 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -236,6 +231,10 @@ class  SCW1(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "SLR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

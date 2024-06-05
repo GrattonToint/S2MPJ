@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  FCCU(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -200,43 +200,43 @@ class  FCCU(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('Feed',ix_)
+        [iv,ix_,_] = s2mpj_ii('Feed',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Feed')
-        [iv,ix_,_] = s2x_ii('Effluent',ix_)
+        [iv,ix_,_] = s2mpj_ii('Effluent',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Effluent')
-        [iv,ix_,_] = s2x_ii('MFuohd',ix_)
+        [iv,ix_,_] = s2mpj_ii('MFuohd',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MFuohd')
-        [iv,ix_,_] = s2x_ii('HCN',ix_)
+        [iv,ix_,_] = s2mpj_ii('HCN',ix_)
         pb.xnames=arrset(pb.xnames,iv,'HCN')
-        [iv,ix_,_] = s2x_ii('LCO',ix_)
+        [iv,ix_,_] = s2mpj_ii('LCO',ix_)
         pb.xnames=arrset(pb.xnames,iv,'LCO')
-        [iv,ix_,_] = s2x_ii('HCO',ix_)
+        [iv,ix_,_] = s2mpj_ii('HCO',ix_)
         pb.xnames=arrset(pb.xnames,iv,'HCO')
-        [iv,ix_,_] = s2x_ii('MFubtms',ix_)
+        [iv,ix_,_] = s2mpj_ii('MFubtms',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MFubtms')
-        [iv,ix_,_] = s2x_ii('Decant',ix_)
+        [iv,ix_,_] = s2mpj_ii('Decant',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Decant')
-        [iv,ix_,_] = s2x_ii('Decurecy',ix_)
+        [iv,ix_,_] = s2mpj_ii('Decurecy',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Decurecy')
-        [iv,ix_,_] = s2x_ii('Offugas',ix_)
+        [iv,ix_,_] = s2mpj_ii('Offugas',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Offugas')
-        [iv,ix_,_] = s2x_ii('DC4ufeed',ix_)
+        [iv,ix_,_] = s2mpj_ii('DC4ufeed',ix_)
         pb.xnames=arrset(pb.xnames,iv,'DC4ufeed')
-        [iv,ix_,_] = s2x_ii('DC3ufeed',ix_)
+        [iv,ix_,_] = s2mpj_ii('DC3ufeed',ix_)
         pb.xnames=arrset(pb.xnames,iv,'DC3ufeed')
-        [iv,ix_,_] = s2x_ii('DC4ubtms',ix_)
+        [iv,ix_,_] = s2mpj_ii('DC4ubtms',ix_)
         pb.xnames=arrset(pb.xnames,iv,'DC4ubtms')
-        [iv,ix_,_] = s2x_ii('Leanuoil',ix_)
+        [iv,ix_,_] = s2mpj_ii('Leanuoil',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Leanuoil')
-        [iv,ix_,_] = s2x_ii('Propane',ix_)
+        [iv,ix_,_] = s2mpj_ii('Propane',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Propane')
-        [iv,ix_,_] = s2x_ii('Butane',ix_)
+        [iv,ix_,_] = s2mpj_ii('Butane',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Butane')
-        [iv,ix_,_] = s2x_ii('C8splufd',ix_)
+        [iv,ix_,_] = s2mpj_ii('C8splufd',ix_)
         pb.xnames=arrset(pb.xnames,iv,'C8splufd')
-        [iv,ix_,_] = s2x_ii('LCN',ix_)
+        [iv,ix_,_] = s2mpj_ii('LCN',ix_)
         pb.xnames=arrset(pb.xnames,iv,'LCN')
-        [iv,ix_,_] = s2x_ii('MCN',ix_)
+        [iv,ix_,_] = s2mpj_ii('MCN',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MCN')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -245,7 +245,7 @@ class  FCCU(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('F1',ig_)
+        [ig,ig_,_] = s2mpj_ii('F1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F1')
         iv = ix_['Feed']
@@ -254,7 +254,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Effluent']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F2',ig_)
+        [ig,ig_,_] = s2mpj_ii('F2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F2')
         iv = ix_['Effluent']
@@ -269,7 +269,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['MFubtms']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F3',ig_)
+        [ig,ig_,_] = s2mpj_ii('F3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F3')
         iv = ix_['MFubtms']
@@ -278,7 +278,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['Decurecy']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F4',ig_)
+        [ig,ig_,_] = s2mpj_ii('F4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F4')
         iv = ix_['MFuohd']
@@ -289,7 +289,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['DC4ufeed']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F5',ig_)
+        [ig,ig_,_] = s2mpj_ii('F5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F5')
         iv = ix_['DC4ufeed']
@@ -298,7 +298,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['DC4ubtms']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F6',ig_)
+        [ig,ig_,_] = s2mpj_ii('F6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F6')
         iv = ix_['DC4ubtms']
@@ -307,7 +307,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['C8splufd']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F7',ig_)
+        [ig,ig_,_] = s2mpj_ii('F7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F7')
         iv = ix_['DC3ufeed']
@@ -316,7 +316,7 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['Butane']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F8',ig_)
+        [ig,ig_,_] = s2mpj_ii('F8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'F8')
         iv = ix_['C8splufd']
@@ -325,97 +325,97 @@ class  FCCU(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['MCN']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Obj1',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Feed']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W1']))
-        [ig,ig_,_] = s2x_ii('Obj2',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Effluent']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W2']))
-        [ig,ig_,_] = s2x_ii('Obj3',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['MFuohd']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W3']))
-        [ig,ig_,_] = s2x_ii('Obj4',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['HCN']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W4']))
-        [ig,ig_,_] = s2x_ii('Obj5',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['LCO']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W5']))
-        [ig,ig_,_] = s2x_ii('Obj6',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj6',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['HCO']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W6']))
-        [ig,ig_,_] = s2x_ii('Obj7',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj7',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['MFubtms']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W7']))
-        [ig,ig_,_] = s2x_ii('Obj8',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj8',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Decant']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W8']))
-        [ig,ig_,_] = s2x_ii('Obj9',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj9',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Decurecy']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W9']))
-        [ig,ig_,_] = s2x_ii('Obj10',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj10',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Offugas']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W10']))
-        [ig,ig_,_] = s2x_ii('Obj11',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj11',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['DC4ufeed']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W11']))
-        [ig,ig_,_] = s2x_ii('Obj12',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj12',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['DC3ufeed']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W12']))
-        [ig,ig_,_] = s2x_ii('Obj13',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj13',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['DC4ubtms']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W13']))
-        [ig,ig_,_] = s2x_ii('Obj14',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj14',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Leanuoil']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W14']))
-        [ig,ig_,_] = s2x_ii('Obj15',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj15',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Propane']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W15']))
-        [ig,ig_,_] = s2x_ii('Obj16',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj16',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Butane']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W16']))
-        [ig,ig_,_] = s2x_ii('Obj17',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj17',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['C8splufd']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W17']))
-        [ig,ig_,_] = s2x_ii('Obj18',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj18',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['LCN']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['W18']))
-        [ig,ig_,_] = s2x_ii('Obj19',ig_)
+        [ig,ig_,_] = s2mpj_ii('Obj19',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['MCN']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -479,7 +479,7 @@ class  FCCU(CUTEst_problem):
         pb.x0[ix_['MCN']] = float(1.0)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQUARE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQUARE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SYNTHES1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,10 +42,10 @@ class  SYNTHES1(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['3'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['1']),int(v_['3'])+1):
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -54,7 +54,7 @@ class  SYNTHES1(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Y1']
         pbm.A[ig,iv] = float(5.0)+pbm.A[ig,iv]
@@ -66,33 +66,33 @@ class  SYNTHES1(CUTEst_problem):
         pbm.A[ig,iv] = float(10.0)+pbm.A[ig,iv]
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-7.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N1',ig_)
+        [ig,ig_,_] = s2mpj_ii('N1',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'N1')
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-0.8)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N2',ig_)
+        [ig,ig_,_] = s2mpj_ii('N2',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'N2')
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['Y3']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L3',ig_)
+        [ig,ig_,_] = s2mpj_ii('L3',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L3')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X1']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L4',ig_)
+        [ig,ig_,_] = s2mpj_ii('L4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L4')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y1']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L5',ig_)
+        [ig,ig_,_] = s2mpj_ii('L5',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L5')
         iv = ix_['X2']
@@ -101,7 +101,7 @@ class  SYNTHES1(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y2']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L6',ig_)
+        [ig,ig_,_] = s2mpj_ii('L6',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L6')
         iv = ix_['Y1']
@@ -127,10 +127,8 @@ class  SYNTHES1(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['OBJ'],float(-10.0))
         pbm.gconst = arrset(pbm.gconst,ig_['N2'],float(-2.0))
         pbm.gconst = arrset(pbm.gconst,ig_['L6'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xupper[ix_['X1']] = 2.0
         pb.xupper[ix_['X2']] = 2.0
@@ -141,9 +139,9 @@ class  SYNTHES1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eLOGXP1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLOGXP1', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eLOGDIFF', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLOGDIFF', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -152,24 +150,24 @@ class  SYNTHES1(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'LOGX2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLOGXP1')
         ielftype = arrset(ielftype, ie, iet_["eLOGXP1"])
         pb.x0 = np.zeros((pb.n,1))
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'LOGX1X2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLOGDIFF')
         ielftype = arrset(ielftype, ie, iet_["eLOGDIFF"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -204,6 +202,7 @@ class  SYNTHES1(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['LOGX1X2'])
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.2))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -220,6 +219,10 @@ class  SYNTHES1(CUTEst_problem):
         pb.pbclass = "OOR2-AN-6-6"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

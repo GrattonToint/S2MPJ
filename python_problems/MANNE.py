@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MANNE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,11 @@ class  MANNE(CUTEst_problem):
 #    Number of periods
 #    The number of variables in the problem N = 3*T
 # 
+#           Alternative values for the SIF file parameters:
+# IE T                   100            $-PARAMETER n = 300    original value
+# IE T                   365            $-PARAMETER n = 995
+# IE T                   1000           $-PARAMETER n = 3000
+# IE T                   2000           $-PARAMETER n = 6000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,11 +49,6 @@ class  MANNE(CUTEst_problem):
             v_['T'] = int(4);  #  SIF file default value
         else:
             v_['T'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE T                   100            $-PARAMETER n = 300    original value
-# IE T                   365            $-PARAMETER n = 995
-# IE T                   1000           $-PARAMETER n = 3000
-# IE T                   2000           $-PARAMETER n = 6000
         v_['GROW'] = 0.03
         v_['BETA'] = 0.95
         v_['XK0'] = 3.0
@@ -85,11 +85,11 @@ class  MANNE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['T'])+1):
-            [iv,ix_,_] = s2x_ii('C'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('C'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'C'+str(I))
-            [iv,ix_,_] = s2x_ii('I'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('I'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'I'+str(I))
-            [iv,ix_,_] = s2x_ii('K'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('K'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'K'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -98,10 +98,10 @@ class  MANNE(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['T'])+1):
-            [ig,ig_,_] = s2x_ii('NL'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('NL'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'NL'+str(I))
             iv = ix_['C'+str(I)]
@@ -110,7 +110,7 @@ class  MANNE(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['T-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('L'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('L'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'L'+str(I))
             iv = ix_['K'+str(int(v_['I+1']))]
@@ -119,12 +119,12 @@ class  MANNE(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['I'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L'+str(int(v_['T'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('L'+str(int(v_['T'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L'+str(int(v_['T'])))
         iv = ix_['K'+str(int(v_['T']))]
         pbm.A[ig,iv] = float(v_['GROW'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L'+str(int(v_['T'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('L'+str(int(v_['T'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L'+str(int(v_['T'])))
         iv = ix_['I'+str(int(v_['T']))]
@@ -147,10 +147,8 @@ class  MANNE(CUTEst_problem):
         grange = np.full((ngrp,1),None)
         grange[legrps] = np.full((pb.nle,1),float('inf'))
         grange[gegrps] = np.full((pb.nge,1),float('inf'))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['K1']] = 3.05
         pb.xupper[ix_['K1']] = 3.05
@@ -194,9 +192,9 @@ class  MANNE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eLOGS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLOGS', iet_)
         elftv = loaset(elftv,it,0,'C')
-        [it,iet_,_] = s2x_ii( 'ePOWER', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePOWER', iet_)
         elftv = loaset(elftv,it,0,'K')
         elftp = []
         elftp = loaset(elftp,it,0,'B')
@@ -208,19 +206,19 @@ class  MANNE(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['T'])+1):
             ename = 'LOGC'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eLOGS')
             ielftype = arrset(ielftype, ie, iet_["eLOGS"])
             vname = 'C'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='C')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'KS'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePOWER')
             ielftype = arrset(ielftype, ie, iet_["ePOWER"])
             vname = 'K'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='K')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='B')
@@ -244,6 +242,8 @@ class  MANNE(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['AT'+str(I)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -9.7457259D-01
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -260,6 +260,10 @@ class  MANNE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

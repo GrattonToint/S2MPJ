@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MINC44(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,6 +28,12 @@ class  MINC44(CUTEst_problem):
 # IE N                   2              $-PARAMETER n = 5
 # IE N                   3              $-PARAMETER n = 13
 # IE N                   4              $-PARAMETER n = 27
+# IE N                   5              $-PARAMETER n = 51
+# IE N                   6              $-PARAMETER n = 93
+# IE N                   7              $-PARAMETER n = 169
+# IE N                   8              $-PARAMETER n = 311
+# IE N                   9              $-PARAMETER n = 583
+# IE N                   10             $-PARAMETER n = 1113
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -50,11 +56,6 @@ class  MINC44(CUTEst_problem):
             v_['N'] = int(5);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   6              $-PARAMETER n = 93
-# IE N                   7              $-PARAMETER n = 169
-# IE N                   8              $-PARAMETER n = 311
-# IE N                   9              $-PARAMETER n = 583
-# IE N                   10             $-PARAMETER n = 1113
         v_['0'] = 0
         v_['1'] = 1
         v_['2'] = 2
@@ -81,11 +82,11 @@ class  MINC44(CUTEst_problem):
             v_['K1'] = 1+v_['K1']
             v_['K2'] = - 1+v_['K2']
             for K in range(int(v_['K1']),int(v_['K2'])+1):
-                [iv,ix_,_] = s2x_ii('P'+str(K),ix_)
+                [iv,ix_,_] = s2mpj_ii('P'+str(K),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'P'+str(K))
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('A'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('A'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'A'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -94,7 +95,7 @@ class  MINC44(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['P'+str(int(v_['2**N-1']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -105,21 +106,21 @@ class  MINC44(CUTEst_problem):
             v_['K1'] = 1+v_['K1']
             v_['K2'] = - 1+v_['K2']
             for K in range(int(v_['K1']),int(v_['K2'])+1):
-                [ig,ig_,_] = s2x_ii('PE'+str(K),ig_)
+                [ig,ig_,_] = s2mpj_ii('PE'+str(K),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'PE'+str(K))
                 iv = ix_['P'+str(K)]
                 pbm.A[ig,iv] = float(- 1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'C'+str(J))
                 iv = ix_['A'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'R'+str(I))
                 iv = ix_['A'+str(I)+','+str(J)]
@@ -144,10 +145,8 @@ class  MINC44(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(J)],float(1.0))
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
@@ -161,7 +160,7 @@ class  MINC44(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'A')
         elftv = loaset(elftv,it,1,'P')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -202,15 +201,15 @@ class  MINC44(CUTEst_problem):
                     v_['ISI'] = int(np.fix(v_['SI']))
                     v_['IPP'] = K-v_['ISI']
                     ename = 'E'+str(K)+','+str(I)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     vname = 'A'+str(int(v_['ID']))+','+str(int(v_['J']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='A')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'P'+str(int(v_['IPP']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 for I in range(int(v_['1']),int(v_['I2'])+1):
@@ -219,35 +218,35 @@ class  MINC44(CUTEst_problem):
                     v_['RJJ'] = v_['RNZ'+str(int(v_['2']))]
                     v_['JJ'] = int(np.fix(v_['RJJ']))
                     ename = 'E'+str(K)+','+str(int(v_['1']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     ename = 'E'+str(K)+','+str(int(v_['1']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['J']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='A')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['1']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['1']))+','+str(int(v_['JJ']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['2']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     ename = 'E'+str(K)+','+str(int(v_['2']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['JJ']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='A')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['2']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['1']))+','+str(int(v_['J']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 v_['RD'] = float(v_['ID'])
@@ -276,6 +275,16 @@ class  MINC44(CUTEst_problem):
                     pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(2)           1.0
+# LO SOLTN(3)           0.25
+# LO SOLTN(4)           0.11111111
+# LO SOLTN(5)           0.04296835
+# LO SOLTN(6)           0.01695926
+# LO SOLTN(7)           6.62293832D-03
+# LO SOLTN(8)           2.57309338D-03
+# LO SOLTN(9)           9.94617795D-04
+# LO SOLTN(10)          3.83144655D-04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -292,6 +301,10 @@ class  MINC44(CUTEst_problem):
         pb.pbclass = "LQR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DEGTRID(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,6 +16,11 @@ class  DEGTRID(CUTEst_problem):
 # 
 #    The number of variables - 1
 # 
+# IE N                   10
+# IE N                   50
+# IE N                   100
+# IE N                   1000
+# IE N                   10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,16 +39,7 @@ class  DEGTRID(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        if nargin<1:
-            v_['N'] = int(10);  #  SIF file default value
-        else:
-            v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
-# IE N                   100000         $-PARAMETER
+        v_['N'] = 100000
         v_['0'] = 0
         v_['1'] = 1
         v_['2'] = 2
@@ -55,7 +51,7 @@ class  DEGTRID(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -64,18 +60,18 @@ class  DEGTRID(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['0']))]
         pbm.A[ig,iv] = float(-0.5)+pbm.A[ig,iv]
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(-1.5)+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(-1.5)+pbm.A[ig,iv]
@@ -84,10 +80,8 @@ class  DEGTRID(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.full((pb.n,1),float(2.0))
@@ -108,6 +102,7 @@ class  DEGTRID(CUTEst_problem):
             pbm.H[ix1,ix2] = float(0.5)+pbm.H[ix1,ix2]
             pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%

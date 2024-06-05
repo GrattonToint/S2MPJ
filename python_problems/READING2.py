@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  READING2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,11 @@ class  READING2(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER     original value
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,11 +52,6 @@ class  READING2(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER     original value
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   2000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
         v_['PI'] = 3.1415926535
         v_['2PI'] = 2.0*v_['PI']
@@ -81,11 +81,11 @@ class  READING2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X1u'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X1u'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X1u'+str(I))
-            [iv,ix_,_] = s2x_ii('X2u'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X2u'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X2u'+str(I))
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -106,7 +106,7 @@ class  READING2(CUTEst_problem):
             v_['2PITI-1'] = v_['2PI']*v_['TI-1']
             v_['CTI-1'] = np.cos(v_['2PITI-1'])
             v_['-CCTI-1'] = v_['CTI-1']*v_['-H/2']
-            [ig,ig_,_] = s2x_ii('COST',ig_)
+            [ig,ig_,_] = s2mpj_ii('COST',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X1u'+str(I)]
             pbm.A[ig,iv] = float(v_['-CCTI'])+pbm.A[ig,iv]
@@ -118,7 +118,7 @@ class  READING2(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['H/8PI**2'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('C1u'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C1u'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C1u'+str(I))
             iv = ix_['X1u'+str(I)]
@@ -129,7 +129,7 @@ class  READING2(CUTEst_problem):
             pbm.A[ig,iv] = float(-0.5)+pbm.A[ig,iv]
             iv = ix_['X2u'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(-0.5)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C2u'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C2u'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C2u'+str(I))
             iv = ix_['X2u'+str(I)]
@@ -154,10 +154,8 @@ class  READING2(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['X1u'+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['X1u'+str(int(v_['0']))]] = 0.0

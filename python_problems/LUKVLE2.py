@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LUKVLE2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,10 @@ class  LUKVLE2(CUTEst_problem):
 # 
 #    some useful parameters, including N, the number of variables.
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,10 +46,6 @@ class  LUKVLE2(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
@@ -65,7 +65,7 @@ class  LUKVLE2(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -79,32 +79,32 @@ class  LUKVLE2(CUTEst_problem):
             v_['2I-1'] = -1+v_['2I']
             v_['2I+1'] = 1+v_['2I']
             v_['2I+2'] = 2+v_['2I']
-            [ig,ig_,_] = s2x_ii('A'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('A'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(0.01))
-            [ig,ig_,_] = s2x_ii('B'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I-1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I+2']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/90']))
-            [ig,ig_,_] = s2x_ii('D'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('D'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I+1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['2I+2']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(0.1))
-            [ig,ig_,_] = s2x_ii('F'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -114,13 +114,13 @@ class  LUKVLE2(CUTEst_problem):
         for K in range(int(v_['6']),int(v_['N-2'])+1):
             v_['K+1'] = 1+K
             v_['K-5'] = -5+K
-            [ig,ig_,_] = s2x_ii('C'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(K))
             iv = ix_['X'+str(K)]
             pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
             for I in range(int(v_['K-5']),int(v_['K+1'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(K),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(K),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'C'+str(K))
                 iv = ix_['X'+str(I)]
@@ -147,8 +147,6 @@ class  LUKVLE2(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['E'+str(I)],float(2.0))
         for K in range(int(v_['6']),int(v_['N-2'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(K)],float(-1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -162,9 +160,9 @@ class  LUKVLE2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'V')
-        [it,iet_,_] = s2x_ii( 'eCUBE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCUBE', iet_)
         elftv = loaset(elftv,it,0,'V')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -176,42 +174,42 @@ class  LUKVLE2(CUTEst_problem):
             v_['2I-1'] = -1+v_['2I']
             v_['2I+1'] = 1+v_['2I']
             ename = 'A'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'X'+str(int(v_['2I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'C'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'X'+str(int(v_['2I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for K in range(int(v_['6']),int(v_['N-2'])+1):
             ename = 'U'+str(K)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCUBE')
             ielftype = arrset(ielftype, ie, iet_["eCUBE"])
             vname = 'X'+str(K)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for K in range(int(v_['1']),int(v_['N-1'])+1):
             ename = 'S'+str(K)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             vname = 'X'+str(K)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -256,6 +254,8 @@ class  LUKVLE2(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               2.61332E+04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -271,6 +271,10 @@ class  LUKVLE2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-AY-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

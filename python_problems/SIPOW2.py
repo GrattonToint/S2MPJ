@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SIPOW2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,9 +61,9 @@ class  SIPOW2(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -72,7 +72,7 @@ class  SIPOW2(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -81,7 +81,7 @@ class  SIPOW2(CUTEst_problem):
             v_['4PIJ/M'] = v_['4PI/M']*v_['RJ']
             v_['COS'] = np.cos(v_['4PIJ/M'])
             v_['SIN'] = np.sin(v_['4PIJ/M'])
-            [ig,ig_,_] = s2x_ii('C'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(J))
             iv = ix_['X1']
@@ -89,7 +89,7 @@ class  SIPOW2(CUTEst_problem):
             iv = ix_['X2']
             pbm.A[ig,iv] = float(v_['SIN'])+pbm.A[ig,iv]
         for J in range(int(v_['M/2+1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(J))
             iv = ix_['X1']
@@ -112,8 +112,6 @@ class  SIPOW2(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for J in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(J)],float(-1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -131,6 +129,7 @@ class  SIPOW2(CUTEst_problem):
             pb.y0  = (
                   arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['X2']),float(0.5)))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOLUTION            -1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))

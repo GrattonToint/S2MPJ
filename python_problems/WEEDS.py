@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  WEEDS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,11 +61,11 @@ class  WEEDS(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('B1',ix_)
+        [iv,ix_,_] = s2mpj_ii('B1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'B1')
-        [iv,ix_,_] = s2x_ii('B2',ix_)
+        [iv,ix_,_] = s2mpj_ii('B2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'B2')
-        [iv,ix_,_] = s2x_ii('B3',ix_)
+        [iv,ix_,_] = s2mpj_ii('B3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'B3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -75,7 +75,7 @@ class  WEEDS(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -86,10 +86,8 @@ class  WEEDS(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xupper[ix_['B3']] = 3.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
@@ -97,7 +95,7 @@ class  WEEDS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eLOGIS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLOGIS', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
@@ -111,19 +109,19 @@ class  WEEDS(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eLOGIS')
             ielftype = arrset(ielftype, ie, iet_["eLOGIS"])
             vname = 'B1'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'B2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'B3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['T'] = float(I)
@@ -131,7 +129,7 @@ class  WEEDS(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['T']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -146,12 +144,19 @@ class  WEEDS(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                  2.587
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SBR2-RN-3-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MINPERM(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,6 +16,16 @@ class  MINPERM(CUTEst_problem):
 # 
 #    Size of matrix
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER
+# IE N                   3              $-PARAMETER
+# IE N                   4              $-PARAMETER
+# IE N                   5              $-PARAMETER     original value
+# IE N                   6              $-PARAMETER
+# IE N                   7              $-PARAMETER
+# IE N                   8              $-PARAMETER
+# IE N                   9              $-PARAMETER
+# IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,15 +48,6 @@ class  MINPERM(CUTEst_problem):
             v_['N'] = int(2);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   3              $-PARAMETER
-# IE N                   4              $-PARAMETER
-# IE N                   5              $-PARAMETER     original value
-# IE N                   6              $-PARAMETER
-# IE N                   7              $-PARAMETER
-# IE N                   8              $-PARAMETER
-# IE N                   9              $-PARAMETER
-# IE N                   10             $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
         v_['2'] = 2
@@ -73,11 +74,11 @@ class  MINPERM(CUTEst_problem):
             v_['K1'] = 1+v_['K1']
             v_['K2'] = - 1+v_['K2']
             for K in range(int(v_['K1']),int(v_['K2'])+1):
-                [iv,ix_,_] = s2x_ii('P'+str(K),ix_)
+                [iv,ix_,_] = s2mpj_ii('P'+str(K),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'P'+str(K))
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('A'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('A'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'A'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -86,7 +87,7 @@ class  MINPERM(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['P'+str(int(v_['2**N-1']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -97,19 +98,19 @@ class  MINPERM(CUTEst_problem):
             v_['K1'] = 1+v_['K1']
             v_['K2'] = - 1+v_['K2']
             for K in range(int(v_['K1']),int(v_['K2'])+1):
-                [ig,ig_,_] = s2x_ii('PE'+str(K),ig_)
+                [ig,ig_,_] = s2mpj_ii('PE'+str(K),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'PE'+str(K))
                 iv = ix_['P'+str(K)]
                 pbm.A[ig,iv] = float(- 1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'R'+str(I))
                 iv = ix_['A'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('C'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'C'+str(J))
                 iv = ix_['A'+str(I)+','+str(J)]
@@ -133,10 +134,8 @@ class  MINPERM(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(1.0))
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
@@ -147,7 +146,7 @@ class  MINPERM(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'A')
         elftv = loaset(elftv,it,1,'P')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -188,15 +187,15 @@ class  MINPERM(CUTEst_problem):
                     v_['ISI'] = int(np.fix(v_['SI']))
                     v_['IPP'] = K-v_['ISI']
                     ename = 'E'+str(K)+','+str(I)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     vname = 'A'+str(int(v_['ID']))+','+str(int(v_['J']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='A')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'P'+str(int(v_['IPP']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 for I in range(int(v_['1']),int(v_['I2'])+1):
@@ -205,35 +204,35 @@ class  MINPERM(CUTEst_problem):
                     v_['RJJ'] = v_['RNZ'+str(int(v_['2']))]
                     v_['JJ'] = int(np.fix(v_['RJJ']))
                     ename = 'E'+str(K)+','+str(int(v_['1']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     ename = 'E'+str(K)+','+str(int(v_['1']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['J']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='A')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['1']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['1']))+','+str(int(v_['JJ']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['2']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     ename = 'E'+str(K)+','+str(int(v_['2']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['JJ']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='A')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     ename = 'E'+str(K)+','+str(int(v_['2']))
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['1']))+','+str(int(v_['J']))
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='P')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 v_['RD'] = float(v_['ID'])
@@ -262,6 +261,26 @@ class  MINPERM(CUTEst_problem):
                     pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(2)            5.0D-1
+# LO SOLTN(3)            2.22222222D-1
+# LO SOLTN(4)            9.375-2
+# LO SOLTN(5)            3.84D-2
+# LO SOLTN(6)            1.54321098D-2
+# LO SOLTN(7)            6.11989902D-3
+# LO SOLTN(8)            2.40325927D-3
+# LO SOLTN(9)            9.36656708D-4
+# LO SOLTN(10)           3.6288D-4
+# LO SOLTN(11)           1.39905948D-4
+# LO SOLTN(12)           5.37232170D-5
+# LO SOLTN(13)           2.05596982D-5
+# LO SOLTN(14)           7.84541375D-6
+# LO SOLTN(15)           2.98628137D-6
+# LO SOLTN(16)           1.13422671D-6
+# LO SOLTN(17)           4.29968709D-7
+# LO SOLTN(18)           1.62718123D-7
+# LO SOLTN(19)           6.14859946D-8
+# LO SOLTN(20)           2.32019615D-8
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -278,6 +297,10 @@ class  MINPERM(CUTEst_problem):
         pb.pbclass = "LQR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

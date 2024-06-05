@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  POROUS2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -30,6 +30,10 @@ class  POROUS2(CUTEst_problem):
 #    P is the number of points in one side of the unit square.
 #    There are P*P variables.
 # 
+#           Alternative values for the SIF file parameters:
+# IE P                   32             $-PARAMETER      original value
+# IE P                   64             $-PARAMETER 
+# IE P                   72             $-PARAMETER 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,9 +56,6 @@ class  POROUS2(CUTEst_problem):
             v_['P'] = int(32);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE P                   64             $-PARAMETER 
-# IE P                   72             $-PARAMETER 
         if nargin<2:
             v_['D'] = float(-50.0);  #  SIF file default value
         else:
@@ -77,7 +78,7 @@ class  POROUS2(CUTEst_problem):
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
-                [iv,ix_,_] = s2x_ii('U'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'U'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -88,7 +89,7 @@ class  POROUS2(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['2']),int(v_['P-1'])+1):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
-                [ig,ig_,_] = s2x_ii('G'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -109,8 +110,6 @@ class  POROUS2(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst  = (
               arrset(pbm.gconst,ig_['G'+str(int(v_['P-1']))+','+str(int(v_['P-1']))],float(-50.0)))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -142,9 +141,9 @@ class  POROUS2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'U')
-        [it,iet_,_] = s2x_ii( 'eCB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCB', iet_)
         elftv = loaset(elftv,it,0,'U')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -154,19 +153,19 @@ class  POROUS2(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 ename = 'US'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
                 ielftype = arrset(ielftype, ie, iet_["eSQ"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'UC'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eCB')
                 ielftype = arrset(ielftype, ie, iet_["eCB"])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -219,6 +218,8 @@ class  POROUS2(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-D/2H']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -230,6 +231,10 @@ class  POROUS2(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

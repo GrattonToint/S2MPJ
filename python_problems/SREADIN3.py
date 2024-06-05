@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SREADIN3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,11 @@ class  SREADIN3(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER n=6, m=3
 # IE N                   5              $-PARAMETER n=12, m=6
+# IE N                   50             $-PARAMETER n=102, m=51
+# IE N                   100            $-PARAMETER n=202, m=101   original value
+# IE N                   500            $-PARAMETER n=1002, m=501
+# IE N                   1000           $-PARAMETER n=2002, m=1001
+# IE N                   2000           $-PARAMETER n=4002, m=2001
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,11 +47,6 @@ class  SREADIN3(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   50             $-PARAMETER n=102, m=51
-# IE N                   100            $-PARAMETER n=202, m=101   original value
-# IE N                   500            $-PARAMETER n=1002, m=501
-# IE N                   1000           $-PARAMETER n=2002, m=1001
-# IE N                   2000           $-PARAMETER n=4002, m=2001
 # IE N                   5000           $-PARAMETER n=10002, m=5001
         v_['PI'] = 3.1415926535
         v_['2PI'] = 2.0*v_['PI']
@@ -71,9 +71,9 @@ class  SREADIN3(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
             xscale = arrset(xscale,iv,v_['RN'])
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -84,7 +84,7 @@ class  SREADIN3(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('I'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('I'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['RI'] = float(I)
@@ -98,7 +98,7 @@ class  SREADIN3(CUTEst_problem):
             v_['2PITI-1'] = v_['2PI']*v_['TI-1']
             v_['CTI-1'] = np.cos(v_['2PITI-1'])
             v_['CCTI-1'] = v_['CTI-1']*v_['-1/2A']
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'C'+str(I))
             iv = ix_['X'+str(I)]
@@ -109,7 +109,7 @@ class  SREADIN3(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['CCTI'])+pbm.A[ig,iv]
             iv = ix_['U'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(v_['CCTI-1'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('PERIOD',ig_)
+        [ig,ig_,_] = s2mpj_ii('PERIOD',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'PERIOD')
         iv = ix_['X'+str(int(v_['0']))]
@@ -131,10 +131,8 @@ class  SREADIN3(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
             pb.xlower[ix_['X'+str(I)]] = -0.5
@@ -147,12 +145,12 @@ class  SREADIN3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'P')
-        [it,iet_,_] = s2x_ii( 'eENERGY', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eENERGY', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'X')
         elftp = loaset(elftp,it,0,'T')
@@ -167,15 +165,15 @@ class  SREADIN3(CUTEst_problem):
             v_['RI'] = float(I)
             v_['TI'] = v_['RI']*v_['H']
             ename = 'I'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eENERGY')
             ielftype = arrset(ielftype, ie, iet_["eENERGY"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.25)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.25)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.25)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.25)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='T')
@@ -184,15 +182,15 @@ class  SREADIN3(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['H/2']))
         for I in range(int(v_['0']),int(v_['N'])+1):
             ename = 'NC'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.25)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.25)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.25)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.25)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='P')
@@ -249,6 +247,10 @@ class  SREADIN3(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

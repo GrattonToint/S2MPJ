@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PALMER1D(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -118,19 +118,19 @@ class  PALMER1D(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('A0',ix_)
+        [iv,ix_,_] = s2mpj_ii('A0',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A0')
-        [iv,ix_,_] = s2x_ii('A2',ix_)
+        [iv,ix_,_] = s2mpj_ii('A2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A2')
-        [iv,ix_,_] = s2x_ii('A4',ix_)
+        [iv,ix_,_] = s2mpj_ii('A4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A4')
-        [iv,ix_,_] = s2x_ii('A6',ix_)
+        [iv,ix_,_] = s2mpj_ii('A6',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A6')
-        [iv,ix_,_] = s2x_ii('A8',ix_)
+        [iv,ix_,_] = s2mpj_ii('A8',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A8')
-        [iv,ix_,_] = s2x_ii('A10',ix_)
+        [iv,ix_,_] = s2mpj_ii('A10',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A10')
-        [iv,ix_,_] = s2x_ii('A12',ix_)
+        [iv,ix_,_] = s2mpj_ii('A12',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A12')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -147,7 +147,7 @@ class  PALMER1D(CUTEst_problem):
             v_['X**10'] = v_['XSQR']*v_['X**8']
             v_['X**12'] = v_['XSQR']*v_['X**10']
             v_['X**14'] = v_['XSQR']*v_['X**12']
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['A0']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -172,10 +172,8 @@ class  PALMER1D(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['A0']] = -float('Inf')
         pb.xupper[ix_['A0']] = +float('Inf')
@@ -195,7 +193,7 @@ class  PALMER1D(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -207,7 +205,10 @@ class  PALMER1D(CUTEst_problem):
             ig = ig_['O'+str(I)]
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN              0.652673985
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -217,6 +218,10 @@ class  PALMER1D(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "QUR2-RN-7-0"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

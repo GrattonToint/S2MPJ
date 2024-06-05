@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ZAMB2m8(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1396,32 +1396,32 @@ class  ZAMB2m8(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for k in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('V1'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('V1'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V1'+str(k))
-            [iv,ix_,_] = s2x_ii('V2'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('V2'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V2'+str(k))
-            [iv,ix_,_] = s2x_ii('V3'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('V3'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V3'+str(k))
-            [iv,ix_,_] = s2x_ii('V4'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('V4'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V4'+str(k))
         for k in range(int(v_['0']),int(v_['N-1'])+1):
-            [iv,ix_,_] = s2x_ii('Q1'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('Q1'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Q1'+str(k))
-            [iv,ix_,_] = s2x_ii('Q3'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('Q3'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Q3'+str(k))
-            [iv,ix_,_] = s2x_ii('Q4'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('Q4'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Q4'+str(k))
-            [iv,ix_,_] = s2x_ii('F1'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('F1'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'F1'+str(k))
-            [iv,ix_,_] = s2x_ii('F2'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('F2'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'F2'+str(k))
-            [iv,ix_,_] = s2x_ii('F3'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('F3'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'F3'+str(k))
-            [iv,ix_,_] = s2x_ii('F4'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('F4'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'F4'+str(k))
-        [iv,ix_,_] = s2x_ii('F2-1',ix_)
+        [iv,ix_,_] = s2mpj_ii('F2-1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'F2-1')
-        [iv,ix_,_] = s2x_ii('F2-2',ix_)
+        [iv,ix_,_] = s2mpj_ii('F2-2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'F2-2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -1433,33 +1433,33 @@ class  ZAMB2m8(CUTEst_problem):
         for k in range(int(v_['0']),int(v_['N-1'])+1):
             v_['k+1'] = 1+k
             v_['k-2'] = -2+k
-            [ig,ig_,_] = s2x_ii('F0E1G'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0E1G'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
-            [ig,ig_,_] = s2x_ii('F0E3G'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0E3G'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
-            [ig,ig_,_] = s2x_ii('F0E4G'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0E4G'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
-            [ig,ig_,_] = s2x_ii('F0Q1'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0Q1'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['Q1'+str(k)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPSI']))
-            [ig,ig_,_] = s2x_ii('F0F2'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0F2'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['F2'+str(k)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPSI']))
-            [ig,ig_,_] = s2x_ii('F0Q3'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0Q3'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['Q3'+str(k)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPSI']))
-            [ig,ig_,_] = s2x_ii('F0Q4'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('F0Q4'+str(k),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['Q4'+str(k)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPSI']))
-            [ig,ig_,_] = s2x_ii('SE1'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SE1'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SE1'+str(k))
             iv = ix_['V1'+str(k)]
@@ -1470,7 +1470,7 @@ class  ZAMB2m8(CUTEst_problem):
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['V1'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('SE2'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SE2'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SE2'+str(k))
             iv = ix_['V2'+str(k)]
@@ -1479,7 +1479,7 @@ class  ZAMB2m8(CUTEst_problem):
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['V2'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('SE3'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SE3'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SE3'+str(k))
             iv = ix_['V3'+str(k)]
@@ -1492,7 +1492,7 @@ class  ZAMB2m8(CUTEst_problem):
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['V3'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('SE4'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SE4'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SE4'+str(k))
             iv = ix_['V4'+str(k)]
@@ -1511,33 +1511,33 @@ class  ZAMB2m8(CUTEst_problem):
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['V4'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('V1END',ig_)
+        [ig,ig_,_] = s2mpj_ii('V1END',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['V1'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPHI']))
-        [ig,ig_,_] = s2x_ii('V2END',ig_)
+        [ig,ig_,_] = s2mpj_ii('V2END',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['V2'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPHI']))
-        [ig,ig_,_] = s2x_ii('V3END',ig_)
+        [ig,ig_,_] = s2mpj_ii('V3END',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['V3'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPHI3']))
-        [ig,ig_,_] = s2x_ii('V4END',ig_)
+        [ig,ig_,_] = s2mpj_ii('V4END',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['V4'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['SPHI']))
-        [ig,ig_,_] = s2x_ii('V1E',ig_)
+        [ig,ig_,_] = s2mpj_ii('V1E',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('V2E',ig_)
+        [ig,ig_,_] = s2mpj_ii('V2E',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('V3E',ig_)
+        [ig,ig_,_] = s2mpj_ii('V3E',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('V4E',ig_)
+        [ig,ig_,_] = s2mpj_ii('V4E',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -1575,8 +1575,6 @@ class  ZAMB2m8(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['V2END'],float(v_['V2REF']))
         pbm.gconst = arrset(pbm.gconst,ig_['V3END'],float(v_['V3REF']))
         pbm.gconst = arrset(pbm.gconst,ig_['V4END'],float(v_['V4REF']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -1656,18 +1654,18 @@ class  ZAMB2m8(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eFE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFE', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftp = []
         elftp = loaset(elftp,it,0,'A')
         elftp = loaset(elftp,it,1,'B')
         elftp = loaset(elftp,it,2,'C')
-        [it,iet_,_] = s2x_ii( 'eFA', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFA', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftp = loaset(elftp,it,0,'A')
         elftp = loaset(elftp,it,1,'B')
         elftp = loaset(elftp,it,2,'C')
-        [it,iet_,_] = s2x_ii( 'eFHQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFHQ', iet_)
         elftv = loaset(elftv,it,0,'Q')
         elftv = loaset(elftv,it,1,'V')
         elftv = loaset(elftv,it,2,'VN')
@@ -1681,11 +1679,11 @@ class  ZAMB2m8(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'FE1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eFE')
         ielftype = arrset(ielftype, ie, iet_["eFE"])
         vname = 'V1'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1695,11 +1693,11 @@ class  ZAMB2m8(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-161.32))
         ename = 'FE2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eFE')
         ielftype = arrset(ielftype, ie, iet_["eFE"])
         vname = 'V2'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1709,11 +1707,11 @@ class  ZAMB2m8(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-156.01))
         ename = 'FE3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eFE')
         ielftype = arrset(ielftype, ie, iet_["eFE"])
         vname = 'V3'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1723,11 +1721,11 @@ class  ZAMB2m8(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='C')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-156.01))
         ename = 'FE4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eFE')
         ielftype = arrset(ielftype, ie, iet_["eFE"])
         vname = 'V4'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1738,11 +1736,11 @@ class  ZAMB2m8(CUTEst_problem):
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-154.73))
         for k in range(int(v_['0']),int(v_['N-1'])+1):
             ename = 'FA1'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFA')
             ielftype = arrset(ielftype, ie, iet_["eFA"])
             vname = 'V1'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1752,11 +1750,11 @@ class  ZAMB2m8(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='C')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.361))
             ename = 'FA2'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFA')
             ielftype = arrset(ielftype, ie, iet_["eFA"])
             vname = 'V2'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1766,11 +1764,11 @@ class  ZAMB2m8(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='C')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.036))
             ename = 'FA3'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFA')
             ielftype = arrset(ielftype, ie, iet_["eFA"])
             vname = 'V3'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1780,11 +1778,11 @@ class  ZAMB2m8(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='C')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.214))
             ename = 'FA4'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFA')
             ielftype = arrset(ielftype, ie, iet_["eFA"])
             vname = 'V4'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1795,19 +1793,19 @@ class  ZAMB2m8(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.861))
             v_['k+1'] = 1+k
             ename = 'F0E1'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFHQ')
             ielftype = arrset(ielftype, ie, iet_["eFHQ"])
             vname = 'Q1'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V1'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V1'+str(int(v_['k+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VN')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1817,19 +1815,19 @@ class  ZAMB2m8(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='C')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(97.559))
             ename = 'F0E3'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFHQ')
             ielftype = arrset(ielftype, ie, iet_["eFHQ"])
             vname = 'Q3'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V3'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V3'+str(int(v_['k+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VN')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1839,19 +1837,19 @@ class  ZAMB2m8(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='C')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(393.914))
             ename = 'F0E4'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFHQ')
             ielftype = arrset(ielftype, ie, iet_["eFHQ"])
             vname = 'Q4'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V4'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V4'+str(int(v_['k+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VN')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -1862,7 +1860,7 @@ class  ZAMB2m8(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(90.576))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQUARE',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQUARE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -1947,6 +1945,8 @@ class  ZAMB2m8(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['MALFA']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#   Solution
+# XL SOLUTION            -1.52936D-01
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -1962,6 +1962,10 @@ class  ZAMB2m8(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-RN-138-48"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

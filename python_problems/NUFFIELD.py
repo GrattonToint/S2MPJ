@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  NUFFIELD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,6 +66,8 @@ class  NUFFIELD(CUTEst_problem):
 # 
 #    The parameter a
 # 
+#           Alternative values for the SIF file parameters:
+# RE A                   5.0            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -88,14 +90,14 @@ class  NUFFIELD(CUTEst_problem):
             v_['A'] = float(5.0);  #  SIF file default value
         else:
             v_['A'] = float(args[0])
+# IE N                   10            $-PARAMETER
+# IE N                   20            $-PARAMETER
+# IE N                   30            $-PARAMETER
+# IE N                   40            $-PARAMETER
         if nargin<2:
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[1])
-#           Alternative values for the SIF file parameters:
-# IE N                   20            $-PARAMETER
-# IE N                   30            $-PARAMETER
-# IE N                   40            $-PARAMETER
 # IE N                   100           $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
@@ -133,7 +135,7 @@ class  NUFFIELD(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(I)+1):
-                [iv,ix_,_] = s2x_ii('V'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('V'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'V'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -143,28 +145,28 @@ class  NUFFIELD(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['V'+str(int(v_['N']))+','+str(J)]
             pbm.A[ig,iv] = float(v_['C1'])+pbm.A[ig,iv]
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ',ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['V'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['C2'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['V'+str(I)+','+str(I)]
             pbm.A[ig,iv] = float(v_['C3'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['V'+str(I)+','+str(int(v_['0']))]
             pbm.A[ig,iv] = float(v_['C4'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['0']))]
         pbm.A[ig,iv] = float(v_['C5'])+pbm.A[ig,iv]
@@ -173,14 +175,14 @@ class  NUFFIELD(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             for J in range(int(v_['0']),int(I)+1):
-                [ig,ig_,_] = s2x_ii('VX'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VX'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'VX'+str(I)+','+str(J))
                 iv = ix_['V'+str(int(v_['I+1']))+','+str(J)]
                 pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
                 iv = ix_['V'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('VV'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VV'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'VV'+str(I)+','+str(J))
                 iv = ix_['V'+str(int(v_['I+1']))+','+str(J)]
@@ -188,42 +190,42 @@ class  NUFFIELD(CUTEst_problem):
                 iv = ix_['V'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
         for J in range(int(v_['0']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('VX'+str(int(v_['N']))+','+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('VX'+str(int(v_['N']))+','+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'VX'+str(int(v_['N']))+','+str(J))
             iv = ix_['V'+str(int(v_['N']))+','+str(J)]
             pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VX'+str(int(v_['N']))+','+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('VX'+str(int(v_['N']))+','+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'VX'+str(int(v_['N']))+','+str(J))
             iv = ix_['V'+str(int(v_['N-1']))+','+str(J)]
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VV'+str(int(v_['N']))+','+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('VV'+str(int(v_['N']))+','+str(J),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'VV'+str(int(v_['N']))+','+str(J))
             iv = ix_['V'+str(int(v_['N']))+','+str(J)]
             pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VV'+str(int(v_['N']))+','+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('VV'+str(int(v_['N']))+','+str(J),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'VV'+str(int(v_['N']))+','+str(J))
             iv = ix_['V'+str(int(v_['N-1']))+','+str(J)]
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VX'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VX'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'VX'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VX'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VX'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'VX'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'VV'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'VV'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N-1']))]
@@ -232,14 +234,14 @@ class  NUFFIELD(CUTEst_problem):
             v_['I-1'] = -1+I
             for J in range(int(v_['0']),int(v_['I-1'])+1):
                 v_['J+1'] = 1+J
-                [ig,ig_,_] = s2x_ii('VY'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VY'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'VY'+str(I)+','+str(J))
                 iv = ix_['V'+str(I)+','+str(int(v_['J+1']))]
                 pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
                 iv = ix_['V'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('VV'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VV'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'VV'+str(I)+','+str(J))
                 iv = ix_['V'+str(I)+','+str(int(v_['J+1']))]
@@ -248,36 +250,36 @@ class  NUFFIELD(CUTEst_problem):
                 pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('VY'+str(I)+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('VY'+str(I)+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'VY'+str(I)+','+str(I))
             iv = ix_['V'+str(int(v_['I+1']))+','+str(I)]
             pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
             iv = ix_['V'+str(I)+','+str(I)]
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VV'+str(I)+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('VV'+str(I)+','+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'VV'+str(I)+','+str(I))
             iv = ix_['V'+str(int(v_['I+1']))+','+str(I)]
             pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
             iv = ix_['V'+str(I)+','+str(I)]
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VY'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VY'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'VY'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VY'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VY'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'VY'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'VV'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['1/H'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('VV'+str(int(v_['N']))+','+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'VV'+str(int(v_['N']))+','+str(int(v_['N'])))
         iv = ix_['V'+str(int(v_['N']))+','+str(int(v_['N-1']))]
@@ -286,7 +288,7 @@ class  NUFFIELD(CUTEst_problem):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
             for J in range(int(v_['0']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('VXX'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VXX'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'VXX'+str(I)+','+str(J))
                 iv = ix_['V'+str(int(v_['I+1']))+','+str(J)]
@@ -300,7 +302,7 @@ class  NUFFIELD(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 v_['J-1'] = -1+J
                 v_['J+1'] = 1+J
-                [ig,ig_,_] = s2x_ii('VYY'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('VYY'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'VYY'+str(I)+','+str(J))
                 iv = ix_['V'+str(I)+','+str(int(v_['J+1']))]
@@ -312,7 +314,7 @@ class  NUFFIELD(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('VXX'+str(I)+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('VXX'+str(I)+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'VXX'+str(I)+','+str(I))
             iv = ix_['V'+str(int(v_['I+1']))+','+str(I)]
@@ -321,7 +323,7 @@ class  NUFFIELD(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-2/H**2'])+pbm.A[ig,iv]
             iv = ix_['V'+str(I)+','+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(v_['1/H**2'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VYY'+str(I)+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('VYY'+str(I)+','+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'VYY'+str(I)+','+str(I))
             iv = ix_['V'+str(int(v_['I+1']))+','+str(I)]
@@ -332,7 +334,7 @@ class  NUFFIELD(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['1/H**2'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             for J in range(int(v_['1']),int(I)+1):
-                [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -354,8 +356,6 @@ class  NUFFIELD(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(I)+1):
                 pbm.gconst = arrset(pbm.gconst,ig_['VV'+str(I)+','+str(J)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -364,7 +364,7 @@ class  NUFFIELD(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCONVEX', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCONVEX', iet_)
         elftv = loaset(elftv,it,0,'VIP1J')
         elftv = loaset(elftv,it,1,'VIJP1')
         elftv = loaset(elftv,it,2,'VIJ')
@@ -386,44 +386,44 @@ class  NUFFIELD(CUTEst_problem):
                 v_['J+1'] = 1+J
                 v_['J-1'] = -1+J
                 ename = 'C'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eCONVEX')
                 ielftype = arrset(ielftype, ie, iet_["eCONVEX"])
                 pb.x0 = np.zeros((pb.n,1))
                 vname = 'V'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIP1J')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIM1J')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIJP1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(int(v_['J-1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIJM1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIJ')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I+1']))+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIPJP')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))+','+str(int(v_['J-1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIMJM')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I+1']))+','+str(int(v_['J-1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIPJM')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(int(v_['I-1']))+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='VIMJP')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -441,6 +441,9 @@ class  NUFFIELD(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/H**4']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solutions (may be local!)
+# LO SOLTN               -2.512312500   $ (n=10)
+# LO SOLTN               -2.512359371   $ (n=20)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -457,6 +460,10 @@ class  NUFFIELD(CUTEst_problem):
         pb.pbclass = "LQR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

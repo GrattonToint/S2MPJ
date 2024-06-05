@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HADAMARD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,12 @@ class  HADAMARD(CUTEst_problem):
 # IE N                   4              $-PARAMETER
 # IE N                   6              $-PARAMETER
 # IE N                   8              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   12             $-PARAMETER
+# IE N                   14             $-PARAMETER
+# IE N                   16             $-PARAMETER    original value
+# IE N                   18             $-PARAMETER
+# IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,11 +54,6 @@ class  HADAMARD(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   12             $-PARAMETER
-# IE N                   14             $-PARAMETER
-# IE N                   16             $-PARAMETER    original value
-# IE N                   18             $-PARAMETER
-# IE N                   20             $-PARAMETER
 # IE N                   100            $-PARAMETER
         v_['1'] = 1
         v_['RN'] = float(v_['N'])
@@ -61,11 +62,11 @@ class  HADAMARD(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('MAXABSQ',ix_)
+        [iv,ix_,_] = s2mpj_ii('MAXABSQ',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MAXABSQ')
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('Q'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('Q'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Q'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -74,25 +75,25 @@ class  HADAMARD(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJECTIVE',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJECTIVE',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['MAXABSQ']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(J)+1):
-                [ig,ig_,_] = s2x_ii('O'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('O'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'O'+str(I)+','+str(J))
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('L'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('L'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'L'+str(I)+','+str(J))
                 iv = ix_['MAXABSQ']
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
                 iv = ix_['Q'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('U'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('U'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'U'+str(I)+','+str(J))
                 iv = ix_['MAXABSQ']
@@ -117,8 +118,6 @@ class  HADAMARD(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for J in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(J)+','+str(J)],float(v_['RN']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -133,7 +132,7 @@ class  HADAMARD(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PROD', iet_)
         elftv = loaset(elftv,it,0,'Q1')
         elftv = loaset(elftv,it,1,'Q2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -145,15 +144,15 @@ class  HADAMARD(CUTEst_problem):
             for I in range(int(v_['1']),int(J)+1):
                 for K in range(int(v_['1']),int(v_['N'])+1):
                     ename = 'O'+str(I)+','+str(J)+','+str(K)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PROD')
                     ielftype = arrset(ielftype, ie, iet_["en2PROD"])
                     vname = 'Q'+str(K)+','+str(I)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='Q1')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(K)+','+str(J)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='Q2')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ARGLBLE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,12 @@ class  ARGLBLE(CUTEst_problem):
 #    N is the number of free variables
 #    M is the number of equations ( M .ge. N)
 # 
+# IE N                   2
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER 
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,17 +47,18 @@ class  ARGLBLE(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        v_['N'] = 4
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER
-# IE N                   50             $-PARAMETER 
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
-        v_['M'] = 6
+        if nargin<1:
+            v_['N'] = int(4);  #  SIF file default value
+        else:
+            v_['N'] = int(args[0])
 # IE M                   20             $-PARAMETER .ge. N
 # IE M                   100            $-PARAMETER .ge. N
 # IE M                   200            $-PARAMETER .ge. N
 # IE M                   400            $-PARAMETER .ge. N
+        if nargin<2:
+            v_['M'] = int(6);  #  SIF file default value
+        else:
+            v_['M'] = int(args[1])
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
@@ -59,7 +66,7 @@ class  ARGLBLE(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -73,7 +80,7 @@ class  ARGLBLE(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['N'])+1):
                 v_['RJ'] = float(J)
                 v_['IJ'] = v_['RI']*v_['RJ']
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I))
                 iv = ix_['X'+str(J)]
@@ -94,14 +101,16 @@ class  ARGLBLE(CUTEst_problem):
         pbm.objgrps = find(gtype,lambda x:x=='<>')
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.full((ngrp,1),1.0)
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.full((pb.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)          4.6341D+00
+# LO SOLTN(50)          24.6268657
+# LO SOLTN(100)         49.6259352
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))

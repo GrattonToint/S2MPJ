@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  YAO(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,10 @@ class  YAO(CUTEst_problem):
 # 
 #   Number of discretization points
 # 
+#           Alternative values for the SIF file parameters:
+# IE P                   20             $-PARAMETER
+# IE P                   200            $-PARAMETER
+# IE P                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,9 +48,7 @@ class  YAO(CUTEst_problem):
             v_['P'] = int(20);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE P                   200            $-PARAMETER
-# IE P                   2000           $-PARAMETER
+# IE k                   2              $-PARAMETER
         if nargin<2:
             v_['k'] = int(2);  #  SIF file default value
         else:
@@ -65,7 +67,7 @@ class  YAO(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for i in range(int(v_['1']),int(v_['P+k'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(i),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(i),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(i))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -75,14 +77,14 @@ class  YAO(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for i in range(int(v_['1']),int(v_['P+k'])+1):
-            [ig,ig_,_] = s2x_ii('S'+str(i),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(i),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(i)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
         for i in range(int(v_['1']),int(v_['P'])+1):
             v_['i+1'] = 1+i
-            [ig,ig_,_] = s2x_ii('B'+str(i),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(i),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'B'+str(i))
             iv = ix_['X'+str(i)]
@@ -113,8 +115,6 @@ class  YAO(CUTEst_problem):
             v_['iOVP'] = v_['Ri']*v_['OVP']
             v_['SINI'] = np.sin(v_['iOVP'])
             pbm.gconst = arrset(pbm.gconst,ig_['S'+str(i)],float(v_['SINI']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -124,7 +124,7 @@ class  YAO(CUTEst_problem):
             pb.xupper[ix_['X'+str(i)]] = 0.0
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQ',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQ',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -136,6 +136,10 @@ class  YAO(CUTEst_problem):
             ig = ig_['S'+str(i)]
             pbm.grftype = arrset(pbm.grftype,ig,'gSQ')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION             2.39883D+00   $ (p=20)
+# XL SOLUTION             2.01517D+01   $ (p=200)
+# XL SOLUTION             1.97705D+02   $ (p=2000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -151,6 +155,10 @@ class  YAO(CUTEst_problem):
         pb.pbclass = "QLR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

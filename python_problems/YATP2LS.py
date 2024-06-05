@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  YATP2LS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,13 @@ class  YATP2LS(CUTEst_problem):
 # 
 #    The dimension of the matrix
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER n = 8
+# IE N                   10             $-PARAMETER n = 120
+# IE N                   50             $-PARAMETER n = 2600
+# IE N                   100            $-PARAMETER n = 10200
+# IE N                   200            $-PARAMETER n = 40400
+# IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,12 +55,7 @@ class  YATP2LS(CUTEst_problem):
             v_['N'] = int(5);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER n = 120
-# IE N                   50             $-PARAMETER n = 2600
-# IE N                   100            $-PARAMETER n = 10200
-# IE N                   200            $-PARAMETER n = 40400
-# IE N                   350            $-PARAMETER n = 123200
+# IE N                   2              $-PARAMETER n = 8
         v_['A'] = 1.0
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
@@ -63,12 +65,12 @@ class  YATP2LS(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
-            [iv,ix_,_] = s2x_ii('Z'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Z'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Z'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -79,7 +81,7 @@ class  YATP2LS(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('E'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('E'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -87,11 +89,11 @@ class  YATP2LS(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
                 iv = ix_['Z'+str(J)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('ER'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('ER'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('EC'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('EC'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -107,8 +109,6 @@ class  YATP2LS(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['EC'+str(I)],float(1.0))
             for J in range(int(v_['1']),int(v_['N'])+1):
                 pbm.gconst = arrset(pbm.gconst,ig_['E'+str(I)+','+str(J)],float(v_['A']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -120,11 +120,11 @@ class  YATP2LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eATP2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eATP2', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
-        [it,iet_,_] = s2x_ii( 'eSINX', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSINX', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -134,32 +134,32 @@ class  YATP2LS(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
                 ename = 'DC'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eATP2')
                 ielftype = arrset(ielftype, ie, iet_["eATP2"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'SX'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSINX')
                 ielftype = arrset(ielftype, ie, iet_["eSINX"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -277,7 +277,7 @@ class  YATP2LS(CUTEst_problem):
             g_ = GVAR_+GVAR_
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = 2.0e0
+                H_ = 2.0
         if nargout == 1:
             return f_
         elif nargout == 2:

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  JNLBRNG2(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,6 +33,22 @@ class  JNLBRNG2(CUTEst_problem):
 # IE PT                  4              $-PARAMETER  n=16
 # IE PY                  4              $-PARAMETER
 # 
+# IE PT                  10             $-PARAMETER  n=100
+# IE PY                  10             $-PARAMETER
+# 
+# IE PT                  23             $-PARAMETER  n=529
+# IE PY                  23             $-PARAMETER
+# 
+# IE PT                  32             $-PARAMETER  n=1024
+# IE PY                  32             $-PARAMETER
+# 
+# IE PT                  34             $-PARAMETER  n=1156
+# IE PY                  34             $-PARAMETER
+# 
+# IE PT                  75             $-PARAMETER  n=5625   original value
+# IE PY                  75             $-PARAMETER           original value
+# 
+# IE PT                  100            $-PARAMETER  n=10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -55,22 +71,11 @@ class  JNLBRNG2(CUTEst_problem):
             v_['PT'] = int(5);  #  SIF file default value
         else:
             v_['PT'] = int(args[0])
+# IE PY                  100            $-PARAMETER
         if nargin<2:
             v_['PY'] = int(5);  #  SIF file default value
         else:
             v_['PY'] = int(args[1])
-# IE PT                  10             $-PARAMETER  n=100
-# IE PY                  10             $-PARAMETER
-# IE PT                  23             $-PARAMETER  n=529
-# IE PY                  23             $-PARAMETER
-# IE PT                  32             $-PARAMETER  n=1024
-# IE PY                  32             $-PARAMETER
-# IE PT                  34             $-PARAMETER  n=1156
-# IE PY                  34             $-PARAMETER
-# IE PT                  75             $-PARAMETER  n=5625   original value
-# IE PY                  75             $-PARAMETER           original value
-# IE PT                  100            $-PARAMETER  n=10000
-# IE PY                  100            $-PARAMETER
 # IE PT                  125            $-PARAMETER  n=15625
 # IE PY                  125            $-PARAMETER
         if nargin<3:
@@ -105,7 +110,7 @@ class  JNLBRNG2(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['PT'])+1):
             for J in range(int(v_['1']),int(v_['PY'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -121,18 +126,18 @@ class  JNLBRNG2(CUTEst_problem):
             v_['SXI1'] = np.sin(v_['XI1'])
             v_['COEFF'] = v_['SXI1']*v_['CLINC']
             for J in range(int(v_['2']),int(v_['PY-1'])+1):
-                [ig,ig_,_] = s2x_ii('G',ig_)
+                [ig,ig_,_] = s2mpj_ii('G',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(v_['COEFF'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['PT-1'])+1):
             for J in range(int(v_['1']),int(v_['PY-1'])+1):
-                [ig,ig_,_] = s2x_ii('GR'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('GR'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
         for I in range(int(v_['2']),int(v_['PT'])+1):
             for J in range(int(v_['2']),int(v_['PY'])+1):
-                [ig,ig_,_] = s2x_ii('GL'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('GL'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -140,10 +145,8 @@ class  JNLBRNG2(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for J in range(int(v_['1']),int(v_['PY'])+1):
             pb.xlower[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
@@ -167,7 +170,7 @@ class  JNLBRNG2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eISQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eISQ', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -180,27 +183,27 @@ class  JNLBRNG2(CUTEst_problem):
             for J in range(int(v_['1']),int(v_['PY-1'])+1):
                 v_['J+1'] = 1+J
                 ename = 'A'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'B'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['PT'])+1):
@@ -208,27 +211,27 @@ class  JNLBRNG2(CUTEst_problem):
             for J in range(int(v_['2']),int(v_['PY'])+1):
                 v_['J-1'] = -1+J
                 ename = 'C'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'D'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J-1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -296,6 +299,14 @@ class  JNLBRNG2(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['MU/HY2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(4)            -0.4764000 
+# LO SOLTN(10)           -0.3952800
+# LO SOLTN(23)           -0.4102400
+# LO SOLTN(32)           -0.4124900
+# LO SOLTN(75)           -0.4146600
+# LO SOLTN(100)          -0.4148700
+# LO SOLTN(125)          -0.4149600
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -306,6 +317,10 @@ class  JNLBRNG2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "QBR2-AY-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

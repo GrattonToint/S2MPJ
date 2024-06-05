@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ROSENMMX(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,15 +41,15 @@ class  ROSENMMX(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
-        [iv,ix_,_] = s2x_ii('X4',ix_)
+        [iv,ix_,_] = s2mpj_ii('X4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X4')
-        [iv,ix_,_] = s2x_ii('U',ix_)
+        [iv,ix_,_] = s2mpj_ii('U',ix_)
         pb.xnames=arrset(pb.xnames,iv,'U')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -58,11 +58,11 @@ class  ROSENMMX(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F1',ig_)
+        [ig,ig_,_] = s2mpj_ii('F1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'F1')
         iv = ix_['U']
@@ -75,7 +75,7 @@ class  ROSENMMX(CUTEst_problem):
         pbm.A[ig,iv] = float(-21.0)+pbm.A[ig,iv]
         iv = ix_['X4']
         pbm.A[ig,iv] = float(7.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F2',ig_)
+        [ig,ig_,_] = s2mpj_ii('F2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'F2')
         iv = ix_['U']
@@ -88,7 +88,7 @@ class  ROSENMMX(CUTEst_problem):
         pbm.A[ig,iv] = float(-11.0)+pbm.A[ig,iv]
         iv = ix_['X4']
         pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F3',ig_)
+        [ig,ig_,_] = s2mpj_ii('F3',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'F3')
         iv = ix_['U']
@@ -101,7 +101,7 @@ class  ROSENMMX(CUTEst_problem):
         pbm.A[ig,iv] = float(-21.0)+pbm.A[ig,iv]
         iv = ix_['X4']
         pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('F4',ig_)
+        [ig,ig_,_] = s2mpj_ii('F4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'F4')
         iv = ix_['U']
@@ -133,15 +133,13 @@ class  ROSENMMX(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['F2'],float(80.0))
         pbm.gconst = arrset(pbm.gconst,ig_['F3'],float(100.0))
         pbm.gconst = arrset(pbm.gconst,ig_['F4'],float(50.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'V')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -149,36 +147,36 @@ class  ROSENMMX(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'X1SQ'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         pb.x0 = np.zeros((pb.n,1))
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'X2SQ'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'X3SQ'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'X4SQ'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -249,6 +247,8 @@ class  ROSENMMX(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['X4SQ'])
         pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -44.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -264,6 +264,10 @@ class  ROSENMMX(CUTEst_problem):
         pb.pbclass = "LQR2-AN-5-4"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

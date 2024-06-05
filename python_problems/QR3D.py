@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  QR3D(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,10 @@ class  QR3D(CUTEst_problem):
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
 # 
+#           Alternative values for the SIF file parameters:
+# IE M                   5              $-PARAMETER  n =  40
+# IE M                   10             $-PARAMETER  n = 155  original value
+# IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,9 +52,6 @@ class  QR3D(CUTEst_problem):
             v_['M'] = int(5);  #  SIF file default value
         else:
             v_['M'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE M                   10             $-PARAMETER  n = 155  original value
-# IE M                   20             $-PARAMETER  n = 610
         v_['1'] = 1
         v_['2'] = 2
         v_['M-1'] = -1+v_['M']
@@ -83,11 +84,11 @@ class  QR3D(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['M'])+1):
-                [iv,ix_,_] = s2x_ii('Q'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('Q'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Q'+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(I),int(v_['M'])+1):
-                [iv,ix_,_] = s2x_ii('R'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('R'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'R'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -98,12 +99,12 @@ class  QR3D(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(I),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('O'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('O'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'O'+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('F'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('F'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'F'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -141,8 +142,6 @@ class  QR3D(CUTEst_problem):
               arrset(pbm.gconst,ig_['F'+str(int(v_['M']))+','+str(int(v_['M-1']))],float(v_['A'+str(int(v_['M']))+','+str(int(v_['M-1']))])))
         pbm.gconst  = (
               arrset(pbm.gconst,ig_['F'+str(int(v_['M']))+','+str(int(v_['M']))],float(v_['A'+str(int(v_['M']))+','+str(int(v_['M']))])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -163,7 +162,7 @@ class  QR3D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -175,32 +174,32 @@ class  QR3D(CUTEst_problem):
             for J in range(int(I),int(v_['M'])+1):
                 for K in range(int(v_['1']),int(v_['M'])+1):
                     ename = 'C'+str(I)+','+str(J)+','+str(K)
-                    [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                    [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                         ielftype = arrset( ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(J)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['M'])+1):
                 for K in range(int(v_['1']),int(J)+1):
                     ename = 'B'+str(I)+','+str(J)+','+str(K)
-                    [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                    [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                         ielftype = arrset( ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'R'+str(K)+','+str(J)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -229,6 +228,8 @@ class  QR3D(CUTEst_problem):
                     nlc = np.union1d(nlc,np.array([ig]))
                     pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -240,6 +241,10 @@ class  QR3D(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NQR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

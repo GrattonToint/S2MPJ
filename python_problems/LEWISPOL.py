@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LEWISPOL(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +53,7 @@ class  LEWISPOL(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['0']),int(v_['N-1'])+1):
-            [iv,ix_,_] = s2x_ii('A'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('A'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'A'+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -62,11 +62,11 @@ class  LEWISPOL(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for J in range(int(v_['0']),int(v_['N-1'])+1):
             v_['C'+str(int(v_['0']))+','+str(J)] = 1.0
-            [ig,ig_,_] = s2x_ii('D0',ig_)
+            [ig,ig_,_] = s2mpj_ii('D0',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'D0')
             iv = ix_['A'+str(J)]
@@ -76,13 +76,13 @@ class  LEWISPOL(CUTEst_problem):
             for J in range(int(I),int(v_['N-1'])+1):
                 v_['RJ'] = float(J)
                 v_['C'+str(I)+','+str(J)] = v_['C'+str(int(v_['I-1']))+','+str(J)]*v_['RJ']
-                [ig,ig_,_] = s2x_ii('D'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('D'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'D'+str(I))
                 iv = ix_['A'+str(J)]
                 pbm.A[ig,iv] = float(v_['C'+str(I)+','+str(J)])+pbm.A[ig,iv]
         for J in range(int(v_['0']),int(v_['N-1'])+1):
-            [ig,ig_,_] = s2x_ii('INT'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('INT'+str(J),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'INT'+str(J))
             iv = ix_['A'+str(J)]
@@ -113,8 +113,6 @@ class  LEWISPOL(CUTEst_problem):
             v_['VAL'] = float(v_['N+1-I'])
             v_['CT'+str(I)] = v_['CT'+str(int(v_['I-1']))]*v_['VAL']
             pbm.gconst = arrset(pbm.gconst,ig_['D'+str(I)],float(v_['CT'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-10.0)
         pb.xupper = np.full((pb.n,1),10.0)
@@ -154,9 +152,9 @@ class  LEWISPOL(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eCB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCB', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -165,19 +163,19 @@ class  LEWISPOL(CUTEst_problem):
         pbm.elvar   = []
         for J in range(int(v_['0']),int(v_['N-1'])+1):
             ename = 'O'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'A'+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCB')
             ielftype = arrset(ielftype, ie, iet_["eCB"])
             vname = 'A'+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -200,6 +198,8 @@ class  LEWISPOL(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -215,6 +215,10 @@ class  LEWISPOL(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QOR2-AN-6-9"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

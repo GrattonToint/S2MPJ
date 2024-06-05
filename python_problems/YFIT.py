@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  YFIT(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,11 +60,11 @@ class  YFIT(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('alpha',ix_)
+        [iv,ix_,_] = s2mpj_ii('alpha',ix_)
         pb.xnames=arrset(pb.xnames,iv,'alpha')
-        [iv,ix_,_] = s2x_ii('beta',ix_)
+        [iv,ix_,_] = s2mpj_ii('beta',ix_)
         pb.xnames=arrset(pb.xnames,iv,'beta')
-        [iv,ix_,_] = s2x_ii('dist',ix_)
+        [iv,ix_,_] = s2mpj_ii('dist',ix_)
         pb.xnames=arrset(pb.xnames,iv,'dist')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -74,7 +74,7 @@ class  YFIT(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for i in range(int(v_['zero']),int(v_['p'])+1):
-            [ig,ig_,_] = s2x_ii('diff'+str(i),ig_)
+            [ig,ig_,_] = s2mpj_ii('diff'+str(i),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -85,10 +85,8 @@ class  YFIT(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for i in range(int(v_['zero']),int(v_['p'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['diff'+str(i)],float(v_['y'+str(i)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['alpha']] = -float('Inf')
         pb.xupper[ix_['alpha']] = +float('Inf')
@@ -103,7 +101,7 @@ class  YFIT(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'etanab', iet_)
+        [it,iet_,_] = s2mpj_ii( 'etanab', iet_)
         elftv = loaset(elftv,it,0,'a1')
         elftv = loaset(elftv,it,1,'b1')
         elftv = loaset(elftv,it,2,'d1')
@@ -119,19 +117,19 @@ class  YFIT(CUTEst_problem):
         for i in range(int(v_['zero']),int(v_['p'])+1):
             v_['index'] = float(i)
             ename = 'est'+str(i)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'etanab')
             ielftype = arrset(ielftype, ie, iet_["etanab"])
             vname = 'alpha'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='a1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'beta'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='b1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'dist'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='d1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='point')
@@ -140,7 +138,7 @@ class  YFIT(CUTEst_problem):
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['realp']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gsquare',igt_)
+        [it,igt_,_] = s2mpj_ii('gsquare',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -155,11 +153,16 @@ class  YFIT(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['est'+str(i)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SBR2-MN-3-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

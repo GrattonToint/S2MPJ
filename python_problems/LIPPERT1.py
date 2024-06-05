@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LIPPERT1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,6 +36,10 @@ class  LIPPERT1(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE NX                  2              $-PARAMETER
+# IE NX                  3              $-PARAMETER
+# IE NX                  10             $-PARAMETER
+# IE NX                  40             $-PARAMETER
+# IE NX                  100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,17 +62,15 @@ class  LIPPERT1(CUTEst_problem):
             v_['NX'] = int(3);  #  SIF file default value
         else:
             v_['NX'] = int(args[0])
-# IE NX                  10             $-PARAMETER
-# IE NX                  40             $-PARAMETER
-# IE NX                  100            $-PARAMETER
 # IE NY                  2              $-PARAMETER
 # IE NY                  3              $-PARAMETER
+# IE NY                  10             $-PARAMETER 
+# IE NY                  40             $-PARAMETER
+# IE NY                  100            $-PARAMETER
         if nargin<2:
             v_['NY'] = int(10);  #  SIF file default value
         else:
             v_['NY'] = int(args[1])
-# IE NY                  40             $-PARAMETER
-# IE NY                  100            $-PARAMETER
         v_['X+'] = 1+v_['NX']
         v_['X-'] = -1+v_['NX']
         v_['Y+'] = 1+v_['NY']
@@ -90,15 +92,15 @@ class  LIPPERT1(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('T',ix_)
+        [iv,ix_,_] = s2mpj_ii('T',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T')
         for I in range(int(v_['0']),int(v_['NX'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
-                [iv,ix_,_] = s2x_ii('U'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'U'+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['NX'])+1):
             for J in range(int(v_['0']),int(v_['NY'])+1):
-                [iv,ix_,_] = s2x_ii('V'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('V'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'V'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -107,7 +109,7 @@ class  LIPPERT1(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['T']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
@@ -115,7 +117,7 @@ class  LIPPERT1(CUTEst_problem):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['NY'])+1):
                 v_['J-1'] = -1+J
-                [ig,ig_,_] = s2x_ii('O'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('O'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'O'+str(I)+','+str(J))
                 pbm.gscale = arrset(pbm.gscale,ig,float(v_['DX']))
@@ -131,16 +133,16 @@ class  LIPPERT1(CUTEst_problem):
                 pbm.A[ig,iv] = float(v_['-S'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['NX'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
-                [ig,ig_,_] = s2x_ii('A'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('A'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'A'+str(I)+','+str(J))
-                [ig,ig_,_] = s2x_ii('B'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('B'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'B'+str(I)+','+str(J))
-                [ig,ig_,_] = s2x_ii('C'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'C'+str(I)+','+str(J))
-                [ig,ig_,_] = s2x_ii('D'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('D'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'D'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -165,8 +167,6 @@ class  LIPPERT1(CUTEst_problem):
                 pbm.gconst = arrset(pbm.gconst,ig_['B'+str(I)+','+str(J)],float(1.0))
                 pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)+','+str(J)],float(1.0))
                 pbm.gconst = arrset(pbm.gconst,ig_['D'+str(I)+','+str(J)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -177,7 +177,7 @@ class  LIPPERT1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'ALPHA')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -187,23 +187,23 @@ class  LIPPERT1(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['NX'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
                 ename = 'P'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
                     ielftype = arrset( ielftype,ie,iet_['eSQR'])
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NX'])+1):
             for J in range(int(v_['0']),int(v_['NY'])+1):
                 ename = 'Q'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
                     ielftype = arrset( ielftype,ie,iet_['eSQR'])
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -258,6 +258,8 @@ class  LIPPERT1(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.77245385
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -275,6 +277,10 @@ class  LIPPERT1(CUTEst_problem):
         pb.pbclass = "LQR2-MN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

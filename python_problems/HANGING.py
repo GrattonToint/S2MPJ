@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HANGING(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,6 +19,20 @@ class  HANGING(CUTEst_problem):
 # 
 #    dimension of the grid
 # 
+#           Alternative values for the SIF file parameters:
+# IE NX                  3              $-PARAMETER n = 27
+# IE NY                  3              $-PARAMETER
+# 
+# IE NX                  5              $-PARAMETER n = 90
+# IE NY                  6              $-PARAMETER
+# 
+# IE NX                  10             $-PARAMETER n = 300  original value
+# IE NY                  10             $-PARAMETER
+# 
+# IE NX                  20             $-PARAMETER n = 1800
+# IE NY                  30             $-PARAMETER
+# 
+# IE NX                  40             $-PARAMETER n = 3600
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,19 +55,11 @@ class  HANGING(CUTEst_problem):
             v_['NX'] = int(3);  #  SIF file default value
         else:
             v_['NX'] = int(args[0])
+# IE NY                  30             $-PARAMETER
         if nargin<2:
             v_['NY'] = int(3);  #  SIF file default value
         else:
             v_['NY'] = int(args[1])
-#           Alternative values for the SIF file parameters:
-# IE NX                  5              $-PARAMETER n = 90
-# IE NY                  6              $-PARAMETER
-# IE NX                  10             $-PARAMETER n = 300  original value
-# IE NY                  10             $-PARAMETER
-# IE NX                  20             $-PARAMETER n = 1800
-# IE NY                  30             $-PARAMETER
-# IE NX                  40             $-PARAMETER n = 3600
-# IE NY                  30             $-PARAMETER
         v_['LX'] = 1.8
         v_['LY'] = 1.8
         v_['1'] = 1
@@ -70,11 +76,11 @@ class  HANGING(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NX'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
-                [iv,ix_,_] = s2x_ii('Y'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('Y'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Y'+str(I)+','+str(J))
-                [iv,ix_,_] = s2x_ii('Z'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('Z'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'Z'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -85,18 +91,18 @@ class  HANGING(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NX'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ',ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['Z'+str(I)+','+str(J)]
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['NX'])+1):
             for J in range(int(v_['1']),int(v_['NY-1'])+1):
-                [ig,ig_,_] = s2x_ii('RC'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('RC'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'RC'+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['NX-1'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
-                [ig,ig_,_] = s2x_ii('DC'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('DC'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'DC'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -121,8 +127,6 @@ class  HANGING(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NX-1'])+1):
             for J in range(int(v_['1']),int(v_['NY'])+1):
                 pbm.gconst = arrset(pbm.gconst,ig_['DC'+str(I)+','+str(J)],float(v_['LY2']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -164,7 +168,7 @@ class  HANGING(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eISQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eISQ', iet_)
         elftv = loaset(elftv,it,0,'XX')
         elftv = loaset(elftv,it,1,'YY')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -176,84 +180,84 @@ class  HANGING(CUTEst_problem):
             v_['J+1'] = 1+J
             for I in range(int(v_['1']),int(v_['NX'])+1):
                 ename = 'RX'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                     ielftype = arrset( ielftype,ie,iet_['eISQ'])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'RY'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                     ielftype = arrset( ielftype,ie,iet_['eISQ'])
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'RZ'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                     ielftype = arrset( ielftype,ie,iet_['eISQ'])
                 vname = 'Z'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NX-1'])+1):
             v_['I+1'] = 1+I
             for J in range(int(v_['1']),int(v_['NY'])+1):
                 ename = 'DX'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                     ielftype = arrset( ielftype,ie,iet_['eISQ'])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'DY'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                     ielftype = arrset( ielftype,ie,iet_['eISQ'])
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'DZ'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                     ielftype = arrset( ielftype,ie,iet_['eISQ'])
                 vname = 'Z'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Z'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -292,6 +296,11 @@ class  HANGING(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(3,3)          -6.1184107487
+# LO SOLTN(5,6)          -77.260229515
+# LO SOLTN(10,10)        -620.17603242
+# LO SOLTN(20,30)        -1025.4292887
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -306,6 +315,10 @@ class  HANGING(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LQR2-AY-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

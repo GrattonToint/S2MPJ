@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SIPOW4(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,13 +73,13 @@ class  SIPOW4(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        [iv,ix_,_] = s2x_ii('X3',ix_)
+        [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
-        [iv,ix_,_] = s2x_ii('X4',ix_)
+        [iv,ix_,_] = s2mpj_ii('X4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X4')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -88,12 +88,12 @@ class  SIPOW4(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X4']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for J in range(int(v_['1']),int(v_['M/2'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(J),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(J))
             iv = ix_['X1']
@@ -106,17 +106,17 @@ class  SIPOW4(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['ETA'+str(J)])+pbm.A[ig,iv]
         for J in range(int(v_['1']),int(v_['M/2'])+1):
             v_['J+'] = v_['M/2']+J
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['J+'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['J+'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['J+'])))
             iv = ix_['X1']
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['J+'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['J+'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['J+'])))
             iv = ix_['X2']
             pbm.A[ig,iv] = float(v_['XI'+str(J)])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['J+'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['J+'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['J+'])))
             iv = ix_['X3']
@@ -144,8 +144,6 @@ class  SIPOW4(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(J)],float(v_['XIXIETA']))
             pbm.gconst  = (
                   arrset(pbm.gconst,ig_['C'+str(int(v_['J+']))],float(v_['XIXIETA'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -173,6 +171,10 @@ class  SIPOW4(CUTEst_problem):
             pb.y0  = (
                   arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['X4']),float(1.2)))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOLUTION            2.0704432D-1 ! m = 20
+# LO SOLUTION            2.6110334D-1 ! m = 100
+# LO SOLUTION            2.7060094D-1 ! m = 500
+# LO SOLUTION            2.7236200D-1 ! m = 2000
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))

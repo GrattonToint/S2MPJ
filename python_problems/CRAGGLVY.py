@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CRAGGLVY(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,12 @@ class  CRAGGLVY(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE M                   1              $-PARAMETER n = 4     original value
+# IE M                   4              $-PARAMETER n = 10
+# IE M                   24             $-PARAMETER n = 50
+# IE M                   49             $-PARAMETER n = 100
+# IE M                   249            $-PARAMETER n = 500
+# IE M                   499            $-PARAMETER n = 1000
+# IE M                   2499           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,11 +53,6 @@ class  CRAGGLVY(CUTEst_problem):
             v_['M'] = int(4);  #  SIF file default value
         else:
             v_['M'] = int(args[0])
-# IE M                   24             $-PARAMETER n = 50
-# IE M                   49             $-PARAMETER n = 100
-# IE M                   249            $-PARAMETER n = 500
-# IE M                   499            $-PARAMETER n = 1000
-# IE M                   2499           $-PARAMETER n = 5000
         v_['2M'] = 2*v_['M']
         v_['N'] = 2+v_['2M']
         v_['1'] = 1
@@ -61,7 +62,7 @@ class  CRAGGLVY(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -75,28 +76,28 @@ class  CRAGGLVY(CUTEst_problem):
             v_['2I-1'] = -1+v_['2I']
             v_['2I+1'] = 1+v_['2I']
             v_['2I+2'] = 2+v_['2I']
-            [ig,ig_,_] = s2x_ii('A'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('A'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('B'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(0.01))
             iv = ix_['X'+str(int(v_['2I']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['2I+1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['2I+2']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('D'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('D'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I-1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('F'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('F'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I+2']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -109,8 +110,6 @@ class  CRAGGLVY(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['F'+str(I)],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -120,9 +119,9 @@ class  CRAGGLVY(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEXPN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXPN', iet_)
         elftv = loaset(elftv,it,0,'V')
-        [it,iet_,_] = s2x_ii( 'eTANG', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eTANG', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -136,31 +135,31 @@ class  CRAGGLVY(CUTEst_problem):
             v_['2I+1'] = 1+v_['2I']
             v_['2I+2'] = 2+v_['2I']
             ename = 'AE'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEXPN')
             ielftype = arrset(ielftype, ie, iet_["eEXPN"])
             vname = 'X'+str(int(v_['2I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,2.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,2.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'CE'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eTANG')
             ielftype = arrset(ielftype, ie, iet_["eTANG"])
             vname = 'X'+str(int(v_['2I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,2.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,2.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2I+2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,2.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,2.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
-        [it,igt_,_] = s2x_ii('gL4',igt_)
-        [it,igt_,_] = s2x_ii('gL6',igt_)
-        [it,igt_,_] = s2x_ii('gL8',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL4',igt_)
+        [it,igt_,_] = s2mpj_ii('gL6',igt_)
+        [it,igt_,_] = s2mpj_ii('gL8',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -187,6 +186,14 @@ class  CRAGGLVY(CUTEst_problem):
             pbm.grftype = arrset(pbm.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(2)            0.0
+# LO SOLTN(4)            1.886566
+# LO SOLTN(24)           1.5372D+01
+# LO SOLTN(29)           3.2270D+01
+# LO SOLTN(249)          1.6745D+02
+# LO SOLTN(499)          3.3642D+02
+# LO SOLTN(2499)         1.6882D+03
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -196,6 +203,10 @@ class  CRAGGLVY(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OUR2-AY-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

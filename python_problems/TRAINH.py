@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TRAINH(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,6 +41,13 @@ class  TRAINH(CUTEst_problem):
 # 
 #    Number of discretized points in the interval
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   11             $-PARAMETER n=48, m=22
+# IE N                   51             $-PARAMETER n=208, m=102
+# IE N                   101            $-PARAMETER n=408, m=202  original value
+# IE N                   201            $-PARAMETER n=808, m=402
+# IE N                   501            $-PARAMETER n=2008, m=1002 
+# IE N                   1001           $-PARAMETER n=4008, m=2002
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -63,12 +70,6 @@ class  TRAINH(CUTEst_problem):
             v_['N'] = int(11);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   51             $-PARAMETER n=208, m=102
-# IE N                   101            $-PARAMETER n=408, m=202  original value
-# IE N                   201            $-PARAMETER n=808, m=402
-# IE N                   501            $-PARAMETER n=2008, m=1002 
-# IE N                   1001           $-PARAMETER n=4008, m=2002
 # IE N                   5001           $-PARAMETER n=20008, m=10002
         if nargin<2:
             v_['TIME'] = float(4.8);  #  SIF file default value
@@ -136,16 +137,16 @@ class  TRAINH(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('V'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('V'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'V'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('UA'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UA'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UA'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('UB'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UB'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UB'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -154,11 +155,11 @@ class  TRAINH(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('ENERGY',ig_)
+        [ig,ig_,_] = s2mpj_ii('ENERGY',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('XEQ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('XEQ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'XEQ'+str(I))
             iv = ix_['X'+str(int(v_['I+1']))]
@@ -169,7 +170,7 @@ class  TRAINH(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-H/2'])+pbm.A[ig,iv]
             iv = ix_['V'+str(I)]
             pbm.A[ig,iv] = float(v_['-H/2'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('VEQ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('VEQ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'VEQ'+str(I))
             iv = ix_['V'+str(int(v_['I+1']))]
@@ -202,10 +203,8 @@ class  TRAINH(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['VEQ'+str(I)],float(v_['CNST']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['X'+str(int(v_['0']))]] = 0.0
@@ -253,12 +252,12 @@ class  TRAINH(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'UU')
         elftv = loaset(elftv,it,1,'VV')
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'VVV')
-        [it,iet_,_] = s2x_ii( 'eATAN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eATAN', iet_)
         elftv = loaset(elftv,it,0,'XX')
         elftp = []
         elftp = loaset(elftp,it,0,'ZZ')
@@ -272,20 +271,20 @@ class  TRAINH(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['N'])+1):
             v_['I+1'] = 1+I
             ename = 'VISQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'V'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VVV')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['1']),int(v_['NS-1'])+1):
                 ename = 'A'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eATAN')
                 ielftype = arrset(ielftype, ie, iet_["eATAN"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='ZZ')
@@ -294,15 +293,15 @@ class  TRAINH(CUTEst_problem):
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['EPS']))
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             ename = 'UV'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'UA'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='UU')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'V'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='VV')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -345,6 +344,12 @@ class  TRAINH(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['H']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLUTION(11)        12.423025536
+# LO SOLUTION(51)        12.295777964
+# LO SOLUTION(101)       12.306399739
+# LO SOLUTION(201)       12.309848614
+# LO SOLUTION(1001)      12.307801327
+# LO SOLUTION(5001)      12.221148056
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -360,6 +365,10 @@ class  TRAINH(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

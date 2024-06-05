@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS86(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,7 +141,7 @@ class  HS86(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -151,13 +151,13 @@ class  HS86(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(J)]
             pbm.A[ig,iv] = float(v_['E'+str(J)])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(I))
                 iv = ix_['X'+str(J)]
@@ -192,9 +192,9 @@ class  HS86(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCUBE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCUBE', iet_)
         elftv = loaset(elftv,it,0,'XJ')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'XI')
         elftv = loaset(elftv,it,1,'XJ')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -204,24 +204,24 @@ class  HS86(CUTEst_problem):
         pbm.elvar   = []
         for J in range(int(v_['1']),int(v_['N'])+1):
             ename = 'D'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCUBE')
             ielftype = arrset(ielftype, ie, iet_["eCUBE"])
             vname = 'X'+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='XJ')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for I in range(int(v_['1']),int(v_['N'])+1):
                 ename = 'C'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
                 ielftype = arrset(ielftype, ie, iet_["ePROD"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XI')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='XJ')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -244,6 +244,8 @@ class  HS86(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['C'+str(I)+','+str(J)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -32.34867897
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -260,6 +262,10 @@ class  HS86(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-AN-5-10"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

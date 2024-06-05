@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SVANBERG(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +20,20 @@ class  SVANBERG(CUTEst_problem):
 # 
 #    Number of variables (must be even and >= 10)
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   20             $-PARAMETER
+# IE N                   30             $-PARAMETER
+# IE N                   40             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   60             $-PARAMETER
+# IE N                   70             $-PARAMETER
+# IE N                   80             $-PARAMETER
+# IE N                   90             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,19 +56,6 @@ class  SVANBERG(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   20             $-PARAMETER
-# IE N                   30             $-PARAMETER
-# IE N                   40             $-PARAMETER
-# IE N                   50             $-PARAMETER
-# IE N                   60             $-PARAMETER
-# IE N                   70             $-PARAMETER
-# IE N                   80             $-PARAMETER
-# IE N                   90             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
         v_['1'] = 1
         v_['2'] = 2
         v_['3'] = 3
@@ -93,7 +94,7 @@ class  SVANBERG(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -103,9 +104,9 @@ class  SVANBERG(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -126,17 +127,15 @@ class  SVANBERG(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)],float(v_['B'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-0.8)
         pb.xupper = np.full((pb.n,1),0.8)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEP', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eEM', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEM', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -145,20 +144,20 @@ class  SVANBERG(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'Q'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEP')
             ielftype = arrset(ielftype, ie, iet_["eEP"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-0.8,0.8,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-0.8,0.8,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'P'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEM')
             ielftype = arrset(ielftype, ie, iet_["eEM"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-0.8,0.8,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-0.8,0.8,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -521,6 +520,21 @@ class  SVANBERG(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           15.7315
+# LO SOLTN(20)           32.4279
+# LO SOLTN(30)           49.1425
+# LO SOLTN(40)           65.8611
+# LO SOLTN(50)           82.5819
+# LO SOLTN(60)           99.3039
+# LO SOLTN(70)           116.0266
+# LO SOLTN(80)           132.7498
+# LO SOLTN(90)           149.4734
+# LO SOLTN(100)          166.1972
+# LO SOLTN(500)          ???
+# LO SOLTN(1000)         ???
+# LO SOLTN(5000)         ???
+# LO SOLTN(10000)        ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -532,6 +546,10 @@ class  SVANBERG(CUTEst_problem):
         pb.pbclass = "OOR2-MN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

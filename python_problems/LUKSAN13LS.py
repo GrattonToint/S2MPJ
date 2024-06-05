@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LUKSAN13LS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,7 +50,7 @@ class  LUKSAN13LS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -71,31 +71,31 @@ class  LUKSAN13LS(CUTEst_problem):
             v_['I+1'] = 1+v_['I']
             v_['I+2'] = 2+v_['I']
             v_['I+3'] = 3+v_['I']
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(-10.0e0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K+1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K+1'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['I+2']))]
             pbm.A[ig,iv] = float(-10.0e0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K+2'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K+2'])),ig_)
             gtype = arrset(gtype,ig,'<>')
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K+3'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K+3'])),ig_)
             gtype = arrset(gtype,ig,'<>')
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K+4'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K+4'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['I']))]
             pbm.A[ig,iv] = float(1.0e0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+2']))]
             pbm.A[ig,iv] = float(1.0e0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K+5'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K+5'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(1.0e0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+3']))]
             pbm.A[ig,iv] = float(1.0e0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('E'+str(int(v_['K+6'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['K+6'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             v_['I'] = 3+v_['I']
             v_['K'] = 7+v_['K']
@@ -115,8 +115,6 @@ class  LUKSAN13LS(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['E'+str(int(v_['K+5']))],float(10.0))
             pbm.gconst = arrset(pbm.gconst,ig_['E'+str(int(v_['K+6']))],float(10.0))
             v_['K'] = 7+v_['K']
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -127,12 +125,12 @@ class  LUKSAN13LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eSQRDIF', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQRDIF', iet_)
         elftv = loaset(elftv,it,0,'X1')
         elftv = loaset(elftv,it,1,'X2')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X1')
         elftv = loaset(elftv,it,1,'X2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -154,88 +152,88 @@ class  LUKSAN13LS(CUTEst_problem):
             v_['I+3'] = 3+v_['I']
             v_['I+4'] = 4+v_['I']
             ename = 'E'+str(int(v_['K']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             ename = 'E'+str(int(v_['K']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+1']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             ename = 'E'+str(int(v_['K+1']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+2']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQRDIF')
             ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
             ename = 'E'+str(int(v_['K+2']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+2']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+3']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQRDIF')
             ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
             ename = 'E'+str(int(v_['K+3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+3']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+4']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+5']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             ename = 'E'+str(int(v_['K+5']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+6']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             ename = 'E'+str(int(v_['K+6']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['K+6']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+4']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['I'] = 3+v_['I']
             v_['K'] = 7+v_['K']
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -284,6 +282,8 @@ class  LUKSAN13LS(CUTEst_problem):
             v_['K'] = 7+v_['K']
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -293,6 +293,10 @@ class  LUKSAN13LS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

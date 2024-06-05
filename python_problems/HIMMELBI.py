@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HIMMELBI(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -193,7 +193,7 @@ class  HIMMELBI(CUTEst_problem):
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['NT'])+1):
             for I in range(int(v_['1']),int(v_['5'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -203,62 +203,62 @@ class  HIMMELBI(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['NT'])+1):
-            [ig,ig_,_] = s2x_ii('P'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('P'+str(J),ig_)
             gtype = arrset(gtype,ig,'<>')
             v_['1/UJ'] = 1.0/v_['U'+str(J)]
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/UJ']))
         v_['J'] = 1
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['J'] = 6
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['J'] = 10
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['J'] = 14
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['J'] = 15
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['J'] = 16
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['J'] = 20
         for I in range(int(v_['1']),int(v_['5'])+1):
-            [ig,ig_,_] = s2x_ii('CB'+str(int(v_['J'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('CB'+str(int(v_['J'])),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'CB'+str(int(v_['J'])))
             iv = ix_['X'+str(I)+','+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['5'])+1):
             for J in range(int(v_['1']),int(v_['NT'])+1):
-                [ig,ig_,_] = s2x_ii('CC'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('CC'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'CC'+str(I))
                 iv = ix_['X'+str(I)+','+str(J)]
@@ -304,15 +304,13 @@ class  HIMMELBI(CUTEst_problem):
               arrset(pbm.gconst,ig_['CB'+str(int(v_['J']))],float(v_['B'+str(int(v_['J']))])))
         for I in range(int(v_['1']),int(v_['5'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['CC'+str(I)],float(v_['C'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = np.full((pb.n,1),v_['NW'])
-        pb.xlower =  np.full((pb.n,1),-float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en5PEXP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en5PEXP', iet_)
         elftv = loaset(elftv,it,0,'Y1')
         elftv = loaset(elftv,it,1,'Y2')
         elftv = loaset(elftv,it,2,'Y3')
@@ -332,28 +330,28 @@ class  HIMMELBI(CUTEst_problem):
         pbm.elpar   = []
         for J in range(int(v_['1']),int(v_['NT'])+1):
             ename = 'PP'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en5PEXP')
             ielftype = arrset(ielftype, ie, iet_["en5PEXP"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(int(v_['1']))+','+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,v_['NW'],None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,v_['NW'],None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2']))+','+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,v_['NW'],None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,v_['NW'],None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['3']))+','+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,v_['NW'],None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,v_['NW'],None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y3')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['4']))+','+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,v_['NW'],None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,v_['NW'],None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y4')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,v_['NW'],None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,v_['NW'],None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y5')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A1')
@@ -385,6 +383,8 @@ class  HIMMELBI(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -1735.56958
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -401,6 +401,10 @@ class  HIMMELBI(CUTEst_problem):
         pb.pbclass = "OLR2-MN-100-12"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

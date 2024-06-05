@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SEMICN2U(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,6 +26,23 @@ class  SEMICN2U(CUTEst_problem):
 #    LN = Index of the last negative discretization point
 #         (the interest is in the negative part)
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE LN                  9              $-PARAMETER     original value
+# 
+# IE N                   50             $-PARAMETER
+# IE LN                  45             $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER
+# IE LN                  90             $-PARAMETER
+# 
+# IE N                   500            $-PARAMETER
+# IE LN                  450            $-PARAMETER
+# 
+# IE N                   1000           $-PARAMETER
+# IE LN                  900            $-PARAMETER
+# 
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,21 +65,11 @@ class  SEMICN2U(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE LN                  4500           $-PARAMETER
         if nargin<2:
             v_['LN'] = int(9);  #  SIF file default value
         else:
             v_['LN'] = int(args[1])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE LN                  45             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE LN                  90             $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE LN                  450            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE LN                  900            $-PARAMETER
-# IE N                   5000           $-PARAMETER
-# IE LN                  4500           $-PARAMETER
         if nargin<3:
             v_['LAMBDA'] = float(0.2);  #  SIF file default value
         else:
@@ -102,7 +109,7 @@ class  SEMICN2U(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N+1'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -114,7 +121,7 @@ class  SEMICN2U(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'G'+str(I))
             iv = ix_['U'+str(int(v_['I-1']))]
@@ -143,8 +150,6 @@ class  SEMICN2U(CUTEst_problem):
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['LH2CA']))
         for I in range(int(v_['LN+1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['-LH2CB']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -159,7 +164,7 @@ class  SEMICN2U(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eWE1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eWE1', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'LAC')
@@ -173,11 +178,11 @@ class  SEMICN2U(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'EA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eWE1')
             ielftype = arrset(ielftype, ie, iet_["eWE1"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='LAC')
@@ -187,11 +192,11 @@ class  SEMICN2U(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='LU')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['LUA']))
             ename = 'EB'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eWE1')
             ielftype = arrset(ielftype, ie, iet_["eWE1"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='LAC')
@@ -217,7 +222,10 @@ class  SEMICN2U(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['EB'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -233,6 +241,10 @@ class  SEMICN2U(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LISWET12(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,6 +41,29 @@ class  LISWET12(CUTEst_problem):
 # 
 #    classification = "QLR2-AN-V-V"
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER 103 variables original value 
+# IE K                   3              $-PARAMETER original value
+# 
+# IE N                   100            $-PARAMETER 104 variables    
+# IE K                   4              $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER 105 variables    
+# IE K                   5              $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER 106 variables    
+# IE K                   6              $-PARAMETER
+# 
+# IE N                   400            $-PARAMETER 402 variables    
+# IE K                   2              $-PARAMETER
+# 
+# IE N                   400            $-PARAMETER 403 variables    
+# IE K                   3              $-PARAMETER
+# 
+# IE N                   2000           $-PARAMETER 2001 variables    
+# IE K                   1              $-PARAMETER
+# 
+# IE N                   2000           $-PARAMETER 2002 variables    
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -63,27 +86,11 @@ class  LISWET12(CUTEst_problem):
             v_['N'] = int(50);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE K                   2              $-PARAMETER
         if nargin<2:
             v_['K'] = int(3);  #  SIF file default value
         else:
             v_['K'] = int(args[1])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER 103 variables original value 
-# IE K                   3              $-PARAMETER original value
-# IE N                   100            $-PARAMETER 104 variables    
-# IE K                   4              $-PARAMETER
-# IE N                   100            $-PARAMETER 105 variables    
-# IE K                   5              $-PARAMETER
-# IE N                   100            $-PARAMETER 106 variables    
-# IE K                   6              $-PARAMETER
-# IE N                   400            $-PARAMETER 402 variables    
-# IE K                   2              $-PARAMETER
-# IE N                   400            $-PARAMETER 403 variables    
-# IE K                   3              $-PARAMETER
-# IE N                   2000           $-PARAMETER 2001 variables    
-# IE K                   1              $-PARAMETER
-# IE N                   2000           $-PARAMETER 2002 variables    
-# IE K                   2              $-PARAMETER
 # IE N                   10000          $-PARAMETER 10001 variables    
 # IE K                   1              $-PARAMETER
 # IE N                   10000          $-PARAMETER 10002 variables    
@@ -115,7 +122,7 @@ class  LISWET12(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N+K'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -139,7 +146,7 @@ class  LISWET12(CUTEst_problem):
             v_['-CI'] = -1.0*v_['CI']
             v_['-CI*CI'] = v_['-CI']*v_['CI']
             v_['CONST'] = v_['CONST']+v_['-CI*CI']
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(v_['-CI'])+pbm.A[ig,iv]
@@ -147,7 +154,7 @@ class  LISWET12(CUTEst_problem):
             v_['J+K'] = J+v_['K']
             for I in range(int(v_['0']),int(v_['K'])+1):
                 v_['J+K-I'] = v_['J+K']-I
-                [ig,ig_,_] = s2x_ii('CON'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('CON'+str(J),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'CON'+str(J))
                 iv = ix_['X'+str(int(v_['J+K-I']))]
@@ -170,15 +177,13 @@ class  LISWET12(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         v_['CONST'] = v_['HALF']*v_['CONST']
         pbm.gconst = arrset(pbm.gconst,ig_['OBJ'],float(v_['CONST']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -187,12 +192,12 @@ class  LISWET12(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N+K'])+1):
             ename = 'XSQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -209,6 +214,8 @@ class  LISWET12(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -224,6 +231,10 @@ class  LISWET12(CUTEst_problem):
         pb.pbclass = "QLR2-AN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

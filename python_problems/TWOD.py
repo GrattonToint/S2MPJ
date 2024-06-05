@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TWOD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,6 +16,9 @@ class  TWOD(CUTEst_problem):
 # 
 #    the x-y discretization 
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                    2             $-PARAMETER
+# IE N                   40             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,8 +41,6 @@ class  TWOD(CUTEst_problem):
             v_['N'] = int(2);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   40             $-PARAMETER
 # IE N                   79             $-PARAMETER     twod_000.mod value
 # IE N                   99             $-PARAMETER     twod_0.mod value
         v_['M'] = v_['N']
@@ -91,11 +92,11 @@ class  TWOD(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(v_['N'])+1):
                 for K in range(int(v_['0']),int(v_['M'])+1):
-                    [iv,ix_,_] = s2x_ii('Y'+str(K)+','+str(I)+','+str(J),ix_)
+                    [iv,ix_,_] = s2mpj_ii('Y'+str(K)+','+str(I)+','+str(J),ix_)
                     pb.xnames=arrset(pb.xnames,iv,'Y'+str(K)+','+str(I)+','+str(J))
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['0']),int(v_['N1'])+1):
-                [iv,ix_,_] = s2x_ii('U'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'U'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -104,7 +105,7 @@ class  TWOD(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['N1'])+1):
             v_['I+'] = 1+I
@@ -114,7 +115,7 @@ class  TWOD(CUTEst_problem):
                 v_['J-'] = -1+J
                 for K in range(int(v_['0']),int(v_['M1'])+1):
                     v_['K+'] = 1+K
-                    [ig,ig_,_] = s2x_ii('P'+str(K)+','+str(I)+','+str(J),ig_)
+                    [ig,ig_,_] = s2mpj_ii('P'+str(K)+','+str(I)+','+str(J),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'P'+str(K)+','+str(I)+','+str(J))
                     iv = ix_['Y'+str(int(v_['K+']))+','+str(I)+','+str(J)]
@@ -139,7 +140,7 @@ class  TWOD(CUTEst_problem):
                     pbm.A[ig,iv] = float(v_['-.1/2H2'])+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N1'])+1):
             for K in range(int(v_['1']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('B1'+str(K)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('B1'+str(K)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'B1'+str(K)+','+str(I))
                 iv = ix_['Y'+str(K)+','+str(I)+','+str(int(v_['N2']))]
@@ -150,7 +151,7 @@ class  TWOD(CUTEst_problem):
                 pbm.A[ig,iv] = float(v_['3/2DY+1'])+pbm.A[ig,iv]
                 iv = ix_['U'+str(K)+','+str(I)]
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('B2'+str(K)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('B2'+str(K)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'B2'+str(K)+','+str(I))
                 iv = ix_['Y'+str(K)+','+str(I)+','+str(int(v_['2']))]
@@ -161,7 +162,7 @@ class  TWOD(CUTEst_problem):
                 pbm.A[ig,iv] = float(v_['3/2DY+1'])+pbm.A[ig,iv]
         for J in range(int(v_['1']),int(v_['N1'])+1):
             for K in range(int(v_['1']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('B3'+str(K)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('B3'+str(K)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'B3'+str(K)+','+str(J))
                 iv = ix_['Y'+str(K)+','+str(int(v_['2']))+','+str(J)]
@@ -170,7 +171,7 @@ class  TWOD(CUTEst_problem):
                 pbm.A[ig,iv] = float(v_['-2/DX'])+pbm.A[ig,iv]
                 iv = ix_['Y'+str(K)+','+str(int(v_['0']))+','+str(J)]
                 pbm.A[ig,iv] = float(v_['3/2DX+1'])+pbm.A[ig,iv]
-                [ig,ig_,_] = s2x_ii('B4'+str(K)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('B4'+str(K)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'B4'+str(K)+','+str(J))
                 iv = ix_['Y'+str(K)+','+str(int(v_['N2']))+','+str(J)]
@@ -193,10 +194,8 @@ class  TWOD(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
             for J in range(int(v_['0']),int(v_['N'])+1):
@@ -224,9 +223,9 @@ class  TWOD(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'U')
-        [it,iet_,_] = s2x_ii( 'eSQD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQD', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftp = []
         elftp = loaset(elftp,it,0,'YP')
@@ -244,27 +243,27 @@ class  TWOD(CUTEst_problem):
                 v_['.5DXDYIJ'] = v_['.5DXDYI']*v_['RJ']
                 v_['YP'] = 0.25+v_['.5DXDYIJ']
                 ename = 'E'+str(int(v_['M']))+','+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQD')
                 ielftype = arrset(ielftype, ie, iet_["eSQD"])
                 ename = 'E'+str(int(v_['M']))+','+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 vname = 'Y'+str(int(v_['M']))+','+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'E'+str(int(v_['M']))+','+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='YP')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['YP']))
         for K in range(int(v_['1']),int(v_['M'])+1):
             for I in range(int(v_['1']),int(v_['N1'])+1):
                 ename = 'E'+str(K)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
                 ielftype = arrset(ielftype, ie, iet_["eSQ"])
                 vname = 'U'+str(K)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CHEBYQAD(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,6 +31,10 @@ class  CHEBYQAD(CUTEst_problem):
 # IE N                   7              $-PARAMETER
 # IE N                   8              $-PARAMETER
 # IE N                   9              $-PARAMETER
+# IE N                   10             $-PARAMETER     original value
+# IE N                   20             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,9 +57,6 @@ class  CHEBYQAD(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   20             $-PARAMETER
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
         v_['M'] = v_['N']
         v_['N+1'] = 1+v_['N']
         v_['1'] = 1
@@ -70,7 +71,7 @@ class  CHEBYQAD(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -80,7 +81,7 @@ class  CHEBYQAD(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -95,11 +96,9 @@ class  CHEBYQAD(CUTEst_problem):
             v_['RLAST'] = float(v_['I**2-1'])
             v_['-1/LAST'] = -1.0/v_['RLAST']
             pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(v_['-1/LAST']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = np.full((pb.n,1),1.0)
-        pb.xlower =  np.full((pb.n,1),-float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.zeros((pb.n,1))
         for J in range(int(v_['1']),int(v_['N'])+1):
@@ -109,7 +108,7 @@ class  CHEBYQAD(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCHEBYPOL', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCHEBYPOL', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'RI')
@@ -123,19 +122,19 @@ class  CHEBYQAD(CUTEst_problem):
             v_['RI'] = float(I)
             for J in range(int(v_['1']),int(v_['N'])+1):
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eCHEBYPOL')
                     ielftype = arrset( ielftype,ie,iet_['eCHEBYPOL'])
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,1.0,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,1.0,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='RI')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['RI']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -152,11 +151,26 @@ class  CHEBYQAD(CUTEst_problem):
                 pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/N']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(2)            0.0
+# LO SOLTN(4)            0.0
+# LO SOLTN(5)            0.0
+# LO SOLTN(6)            0.0
+# LO SOLTN(7)            0.0
+# LO SOLTN(8)            3.516874D-3
+# LO SOLTN(9)            0.0
+# LO SOLTN(10)           4.772713D-3
+# LO SOLTN(20)           4.572955D-3
+# LO SOLTN(50)           5.386315D-3
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SBR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  n10FOLDTR(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -18,11 +18,15 @@ class  n10FOLDTR(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Jan 2012.
 # 
-#    classification = "NOR2-AN-V-0"
+#    classification = "NOR2-AN-V-V"
 # 
 #    Problem dimension
 # 
-# IE N                   4              $ original value
+#           Alternative values for the SIF file parameters:
+# IE N                   4              $-PARAMETER original value
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,7 +45,10 @@ class  n10FOLDTR(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        v_['N'] = 10
+        if nargin<1:
+            v_['N'] = int(10);  #  SIF file default value
+        else:
+            v_['N'] = int(args[0])
         v_['1'] = 1
         v_['N-2'] = -2+v_['N']
         v_['N-1'] = -1+v_['N']
@@ -51,7 +58,7 @@ class  n10FOLDTR(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -62,7 +69,7 @@ class  n10FOLDTR(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(I)+1):
-                [ig,ig_,_] = s2x_ii('E'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('E'+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'E'+str(I))
                 iv = ix_['X'+str(J)]
@@ -81,8 +88,6 @@ class  n10FOLDTR(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -91,8 +96,8 @@ class  n10FOLDTR(CUTEst_problem):
         pb.y0 = np.full((pb.m,1),float(10.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
-        [it,igt_,_] = s2x_ii('gL5',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL5',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -105,7 +110,10 @@ class  n10FOLDTR(CUTEst_problem):
         ig = ig_['E'+str(int(v_['N']))]
         pbm.grftype = arrset(pbm.grftype,ig,'gL5')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    no objective
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -120,8 +128,12 @@ class  n10FOLDTR(CUTEst_problem):
         pbm.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.lincons   = np.arange(len(pbm.congrps))
-        pb.pbclass = "NOR2-AN-V-0"
+        pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

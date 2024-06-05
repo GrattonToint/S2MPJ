@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SPINOP(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,6 +25,19 @@ class  SPINOP(CUTEst_problem):
 # 
 #    Number of particles n
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER matrix dimension
+# IE N                   3              $-PARAMETER matrix dimension
+# IE N                   5              $-PARAMETER matrix dimension
+# IE N                   10             $-PARAMETER matrix dimension
+# IE N                   15             $-PARAMETER matrix dimension
+# IE N                   20             $-PARAMETER matrix dimension
+# IE N                   25             $-PARAMETER matrix dimension
+# IE N                   30             $-PARAMETER matrix dimension
+# IE N                   35             $-PARAMETER matrix dimension
+# IE N                   40             $-PARAMETER matrix dimension
+# IE N                   45             $-PARAMETER matrix dimension
+# IE N                   50             $-PARAMETER matrix dimension
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,18 +60,6 @@ class  SPINOP(CUTEst_problem):
             v_['N'] = int(2);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   3              $-PARAMETER matrix dimension
-# IE N                   5              $-PARAMETER matrix dimension
-# IE N                   10             $-PARAMETER matrix dimension
-# IE N                   15             $-PARAMETER matrix dimension
-# IE N                   20             $-PARAMETER matrix dimension
-# IE N                   25             $-PARAMETER matrix dimension
-# IE N                   30             $-PARAMETER matrix dimension
-# IE N                   35             $-PARAMETER matrix dimension
-# IE N                   40             $-PARAMETER matrix dimension
-# IE N                   45             $-PARAMETER matrix dimension
-# IE N                   50             $-PARAMETER matrix dimension
         v_['1'] = 1
         v_['2'] = 2
         v_['RN'] = float(v_['N'])
@@ -70,19 +71,19 @@ class  SPINOP(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('MU',ix_)
+        [iv,ix_,_] = s2mpj_ii('MU',ix_)
         pb.xnames=arrset(pb.xnames,iv,'MU')
-        [iv,ix_,_] = s2x_ii('OMEGA',ix_)
+        [iv,ix_,_] = s2mpj_ii('OMEGA',ix_)
         pb.xnames=arrset(pb.xnames,iv,'OMEGA')
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
-                [iv,ix_,_] = s2x_ii('V'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('V'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'V'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -91,20 +92,20 @@ class  SPINOP(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(I))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('I'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('I'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'I'+str(I))
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
-                [ig,ig_,_] = s2x_ii('M'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('M'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'M'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -121,8 +122,6 @@ class  SPINOP(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -138,16 +137,16 @@ class  SPINOP(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
-        [it,iet_,_] = s2x_ii( 'eRATIO', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eRATIO', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
         elftv = loaset(elftv,it,2,'V')
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eSQR2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR2', iet_)
         elftv = loaset(elftv,it,0,'Y')
         elftv = loaset(elftv,it,1,'Z')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -157,121 +156,121 @@ class  SPINOP(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'MX'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'MU'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'MY'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'Y'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'MU'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'OX'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'OMEGA'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'OY'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'Y'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'OMEGA'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 ename = 'RX'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eRATIO')
                 ielftype = arrset(ielftype, ie, iet_["eRATIO"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'RY'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eRATIO')
                 ielftype = arrset(ielftype, ie, iet_["eRATIO"])
                 vname = 'Y'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 ename = 'V'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
                 ielftype = arrset(ielftype, ie, iet_["eSQR"])
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'X'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQR2')
                 ielftype = arrset(ielftype, ie, iet_["eSQR2"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'Y'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eSQR2')
                 ielftype = arrset(ielftype, ie, iet_["eSQR2"])
                 vname = 'Y'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

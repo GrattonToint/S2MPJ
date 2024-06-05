@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DECONVU(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -138,10 +138,10 @@ class  DECONVU(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for K in range(int(v_['-LGSG']),int(v_['LGTR'])+1):
-            [iv,ix_,_] = s2x_ii('C'+str(K),ix_)
+            [iv,ix_,_] = s2mpj_ii('C'+str(K),ix_)
             pb.xnames=arrset(pb.xnames,iv,'C'+str(K))
         for I in range(int(v_['1']),int(v_['LGSG'])+1):
-            [iv,ix_,_] = s2x_ii('SG'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('SG'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'SG'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -151,7 +151,7 @@ class  DECONVU(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for K in range(int(v_['1']),int(v_['LGTR'])+1):
-            [ig,ig_,_] = s2x_ii('R'+str(K),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(K),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -162,8 +162,6 @@ class  DECONVU(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for K in range(int(v_['1']),int(v_['LGTR'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['R'+str(K)],float(v_['TR'+str(K)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -179,7 +177,7 @@ class  DECONVU(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftp = []
@@ -196,22 +194,22 @@ class  DECONVU(CUTEst_problem):
                 v_['K-I+1'] = 1+v_['K-I']
                 v_['RIDX'] = float(v_['K-I+1'])
                 ename = 'PROD'+str(K)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'ePR')
                 ielftype = arrset(ielftype, ie, iet_["ePR"])
                 vname = 'SG'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C'+str(int(v_['K-I+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='IDX')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['RIDX']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQ',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQ',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

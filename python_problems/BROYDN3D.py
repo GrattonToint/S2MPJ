@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BROYDN3D(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -7,7 +7,7 @@ class  BROYDN3D(CUTEst_problem):
 #    Problem : BROYDN3D
 #    *********
 # 
-#    Broyden tridiagonal system of nonlinear equations
+#    Broyden tridiagonal system on nonlinear equations
 # 
 #    Source:  problem 30 in
 #    J.J. More', B.S. Garbow and K.E. Hillstrom,
@@ -21,6 +21,13 @@ class  BROYDN3D(CUTEst_problem):
 # 
 #    N is the number of variables (variable).
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,12 +50,6 @@ class  BROYDN3D(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
         if nargin<2:
             v_['KAPPA1'] = float(2.0);  #  SIF file default value
@@ -68,7 +69,7 @@ class  BROYDN3D(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -77,7 +78,7 @@ class  BROYDN3D(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('E1',ig_)
+        [ig,ig_,_] = s2mpj_ii('E1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E1')
         iv = ix_['X'+str(int(v_['2']))]
@@ -85,14 +86,14 @@ class  BROYDN3D(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['N-1'])+1):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('E'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('E'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'E'+str(I))
             iv = ix_['X'+str(int(v_['I-1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('E'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('E'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'E'+str(int(v_['N'])))
         iv = ix_['X'+str(int(v_['N-1']))]
@@ -115,8 +116,6 @@ class  BROYDN3D(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['E'+str(I)],float(v_['-K2']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -125,7 +124,7 @@ class  BROYDN3D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eBROY', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eBROY', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftp = []
         elftp = loaset(elftp,it,0,'K1')
@@ -137,11 +136,11 @@ class  BROYDN3D(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'B'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eBROY')
             ielftype = arrset(ielftype, ie, iet_["eBROY"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,-1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='K1')
@@ -160,6 +159,8 @@ class  BROYDN3D(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -175,6 +176,10 @@ class  BROYDN3D(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NQR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

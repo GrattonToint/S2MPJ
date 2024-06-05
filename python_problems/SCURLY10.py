@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SCURLY10(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,6 +19,11 @@ class  SCURLY10(CUTEst_problem):
 # 
 #    Number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,10 +46,6 @@ class  SCURLY10(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
 # IE N                   1000000        $-PARAMETER
         v_['K'] = 10
@@ -66,7 +67,7 @@ class  SCURLY10(CUTEst_problem):
             v_['RAT'] = v_['RI-1']/v_['RN-1']
             v_['ARG'] = v_['RAT']*v_['SCAL']
             v_['S'+str(I)] = np.exp(v_['ARG'])
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -78,13 +79,13 @@ class  SCURLY10(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N-K'])+1):
             v_['I+K'] = I+v_['K']
             for J in range(int(I),int(v_['I+K'])+1):
-                [ig,ig_,_] = s2x_ii('Q'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('Q'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['S'+str(J)])+pbm.A[ig,iv]
         for I in range(int(v_['N-K+1']),int(v_['N'])+1):
             for J in range(int(I),int(v_['N'])+1):
-                [ig,ig_,_] = s2x_ii('Q'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('Q'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['S'+str(J)])+pbm.A[ig,iv]
@@ -93,8 +94,6 @@ class  SCURLY10(CUTEst_problem):
         ngrp   = len(ig_)
         pbm.objgrps = np.arange(ngrp)
         pb.m        = 0
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -108,7 +107,7 @@ class  SCURLY10(CUTEst_problem):
             pb.x0[ix_['X'+str(I)]] = float(v_['T'])
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gP4',igt_)
+        [it,igt_,_] = s2mpj_ii('gP4',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -119,6 +118,8 @@ class  SCURLY10(CUTEst_problem):
         for ig in range(0,ngrp):
             pbm.grftype = arrset(pbm.grftype,ig,'gP4')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# ZL SOLTN               -1.003163D+5   $ (n=1000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
@@ -129,6 +130,10 @@ class  SCURLY10(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

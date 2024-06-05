@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DRUGDIS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,11 +28,14 @@ class  DRUGDIS(CUTEst_problem):
 #    Optimal Control Applications and Methods 13, pp. 43-55, 1992.
 # 
 #    SIF input: Ph. Toint, Nov 1993.
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "LOR2-MN-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
+#           Alternative values for the SIF file parameters:
+# IE NI                  10             $-PARAMETER n=  34, m= 20 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -55,7 +58,6 @@ class  DRUGDIS(CUTEst_problem):
             v_['NI'] = int(10);  #  SIF file default value
         else:
             v_['NI'] = int(args[0])
-#           Alternative values for the SIF file parameters:
 # IE NI                  50             $-PARAMETER n= 154, m=100 
 # IE NI                  100            $-PARAMETER n= 304, m=200  original value
 # IE NI                  200            $-PARAMETER n= 604, m=400 
@@ -93,18 +95,18 @@ class  DRUGDIS(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('TF',ix_)
+        [iv,ix_,_] = s2mpj_ii('TF',ix_)
         pb.xnames=arrset(pb.xnames,iv,'TF')
         xscale = arrset(xscale,iv,200.0)
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            [iv,ix_,_] = s2x_ii('W'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('W'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'W'+str(I))
             xscale = arrset(xscale,iv,0.02)
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            [iv,ix_,_] = s2x_ii('P'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -113,14 +115,14 @@ class  DRUGDIS(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('TFINAL',ig_)
+        [ig,ig_,_] = s2mpj_ii('TFINAL',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['TF']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         pbm.gscale = arrset(pbm.gscale,ig,float(100.0))
         for I in range(int(v_['0']),int(v_['NI-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('EW'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EW'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EW'+str(I))
             iv = ix_['W'+str(int(v_['I+1']))]
@@ -128,7 +130,7 @@ class  DRUGDIS(CUTEst_problem):
             iv = ix_['W'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             pbm.gscale = arrset(pbm.gscale,ig,float(0.02))
-            [ig,ig_,_] = s2x_ii('EP'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EP'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EP'+str(I))
             iv = ix_['P'+str(int(v_['I+1']))]
@@ -149,10 +151,8 @@ class  DRUGDIS(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['TF']] = 200.0
         for I in range(int(v_['0']),int(v_['NI'])+1):
@@ -184,12 +184,12 @@ class  DRUGDIS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEW', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEW', iet_)
         elftv = loaset(elftv,it,0,'T')
         elftv = loaset(elftv,it,1,'W')
         elftv = loaset(elftv,it,2,'P')
         elftv = loaset(elftv,it,3,'U')
-        [it,iet_,_] = s2x_ii( 'eEP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEP', iet_)
         elftv = loaset(elftv,it,0,'T')
         elftv = loaset(elftv,it,1,'W')
         elftv = loaset(elftv,it,2,'P')
@@ -201,43 +201,43 @@ class  DRUGDIS(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['0']),int(v_['NI'])+1):
             ename = 'WA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEW')
             ielftype = arrset(ielftype, ie, iet_["eEW"])
             vname = 'TF'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'W'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='W')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'PA'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEP')
             ielftype = arrset(ielftype, ie, iet_["eEP"])
             vname = 'TF'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'W'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='W')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -268,6 +268,14 @@ class  DRUGDIS(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-1/2NI']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 200.0
+#    Solution
+# LO SOLTN(10)           3.82432
+# LO SOLTN(50)           4.19953
+# LO SOLTN(100)          4.23934
+# LO SOLTN(200)          4.25762
+# LO SOLTN(500)
+# LO SOLTN(1000)
+# LO SOLTN(Maurer)       2.62637
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -290,6 +298,10 @@ class  DRUGDIS(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

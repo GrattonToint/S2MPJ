@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DTOC5(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,6 +34,13 @@ class  DTOC5(CUTEst_problem):
 #    The problem has 2N-1  variables (of which 1 is fixed),
 #    and N-1 constraints
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER n =    19, m =     9
+# IE N                   50             $-PARAMETER n =    99, m =    49
+# IE N                   100            $-PARAMETER n =   199, m =    99
+# IE N                   500            $-PARAMETER n =   999, m =   499
+# IE N                   1000           $-PARAMETER n =  1999, m =   999
+# IE N                   5000           $-PARAMETER n =  9999, m =  4999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,12 +63,6 @@ class  DTOC5(CUTEst_problem):
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER n =    99, m =    49
-# IE N                   100            $-PARAMETER n =   199, m =    99
-# IE N                   500            $-PARAMETER n =   999, m =   499
-# IE N                   1000           $-PARAMETER n =  1999, m =   999
-# IE N                   5000           $-PARAMETER n =  9999, m =  4999
 # IE N                   10000          $-PARAMETER n = 19999, m =  9999
 # IE N                   50000          $-PARAMETER n = 99999, m = 49999
         v_['N-1'] = -1+v_['N']
@@ -75,10 +76,10 @@ class  DTOC5(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for T in range(int(v_['1']),int(v_['N-1'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(T),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(T),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(T))
         for T in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('Y'+str(T),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(T),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(T))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -87,12 +88,12 @@ class  DTOC5(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         pbm.gscale = arrset(pbm.gscale,ig,float(v_['RN']))
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             v_['T+1'] = 1+T
-            [ig,ig_,_] = s2x_ii('TT'+str(T),ig_)
+            [ig,ig_,_] = s2mpj_ii('TT'+str(T),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'TT'+str(T))
             iv = ix_['Y'+str(int(v_['T+1']))]
@@ -115,8 +116,6 @@ class  DTOC5(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -129,7 +128,7 @@ class  DTOC5(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'Z')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -138,19 +137,19 @@ class  DTOC5(CUTEst_problem):
         pbm.elvar   = []
         for T in range(int(v_['1']),int(v_['N-1'])+1):
             ename = 'YSQ'+str(T)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'Y'+str(T)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'XSQ'+str(T)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(T)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -176,6 +175,12 @@ class  DTOC5(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['H']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLUTION(  10)      1.451893900588
+# LO SOLUTION(  50)      1.528586458855
+# LO SOLUTION( 100)      1.532552633518
+# LO SOLUTION( 500)      1.530860973890
+# LO SOLUTION(1000)      1.527434119271
+# LO SOLUTION(5000)      1.531611890390
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -192,6 +197,10 @@ class  DTOC5(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QQR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

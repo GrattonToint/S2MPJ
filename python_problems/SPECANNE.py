@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SPECANNE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -14,13 +14,14 @@ class  SPECANNE(CUTEst_problem):
 #    SIF input: Michael Ferris, July 1993
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-AN-V-0"
+#    classification = "NOR2-AN-V-V"
 # 
 #    Number of Gaussians
 # 
 #           Alternative values for the SIF file parameters:
 # IE K                   1              $-PARAMETER
 # IE K                   2              $-PARAMETER
+# IE K                   3              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -59,7 +60,7 @@ class  SPECANNE(CUTEst_problem):
         binvars   = np.array([])
         for p in range(int(v_['1']),int(v_['K'])+1):
             for j in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(p)+','+str(j),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(p)+','+str(j),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(p)+','+str(j))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -70,7 +71,7 @@ class  SPECANNE(CUTEst_problem):
         gtype       = np.array([])
         for p in range(int(v_['1']),int(v_['K'])+1):
             for I in range(int(v_['1']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ'+str(p)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ'+str(p)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'OBJ'+str(p)+','+str(I))
                 pbm.gscale = arrset(pbm.gscale,ig,float(v_['ROOTP5']))
@@ -127,10 +128,8 @@ class  SPECANNE(CUTEst_problem):
             for p in range(int(v_['1']),int(v_['K'])+1):
                 pbm.gconst  = (
                       arrset(pbm.gconst,ig_['OBJ'+str(p)+','+str(I)],float(v_['Yi'+str(p)])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         v_['LOWER1,1'] = 15.0
         v_['LOWER1,2'] = 3.5
@@ -172,7 +171,7 @@ class  SPECANNE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEXPSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXPSQ', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'V')
         elftv = loaset(elftv,it,2,'W')
@@ -187,19 +186,19 @@ class  SPECANNE(CUTEst_problem):
         for p in range(int(v_['1']),int(v_['K'])+1):
             for I in range(int(v_['1']),int(v_['M'])+1):
                 ename = 'E'+str(p)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eEXPSQ')
                 ielftype = arrset(ielftype, ie, iet_["eEXPSQ"])
                 vname = 'X'+str(p)+','+str(int(v_['1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(p)+','+str(int(v_['2']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(p)+','+str(int(v_['3']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='W')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 v_['RI'] = float(I)
@@ -223,6 +222,7 @@ class  SPECANNE(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -232,8 +232,12 @@ class  SPECANNE(CUTEst_problem):
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-AN-V-0"
+        pb.pbclass = "NOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

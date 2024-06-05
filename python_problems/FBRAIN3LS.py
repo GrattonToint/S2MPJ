@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  FBRAIN3LS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -8895,17 +8895,17 @@ class  FBRAIN3LS(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('ALPHA1',ix_)
+        [iv,ix_,_] = s2mpj_ii('ALPHA1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ALPHA1')
-        [iv,ix_,_] = s2x_ii('C01',ix_)
+        [iv,ix_,_] = s2mpj_ii('C01',ix_)
         pb.xnames=arrset(pb.xnames,iv,'C01')
-        [iv,ix_,_] = s2x_ii('ALPHA2',ix_)
+        [iv,ix_,_] = s2mpj_ii('ALPHA2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ALPHA2')
-        [iv,ix_,_] = s2x_ii('C02',ix_)
+        [iv,ix_,_] = s2mpj_ii('C02',ix_)
         pb.xnames=arrset(pb.xnames,iv,'C02')
-        [iv,ix_,_] = s2x_ii('ALPHA3',ix_)
+        [iv,ix_,_] = s2mpj_ii('ALPHA3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'ALPHA3')
-        [iv,ix_,_] = s2x_ii('C03',ix_)
+        [iv,ix_,_] = s2mpj_ii('C03',ix_)
         pb.xnames=arrset(pb.xnames,iv,'C03')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -8916,7 +8916,7 @@ class  FBRAIN3LS(CUTEst_problem):
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['0']),int(v_['M'])+1):
-                [ig,ig_,_] = s2x_ii('R'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('R'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = len(ix_)
@@ -11136,8 +11136,6 @@ class  FBRAIN3LS(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['R198,11'],float(1.5504359e-1))
         pbm.gconst = arrset(pbm.gconst,ig_['R199,11'],float(1.5748296e-1))
         pbm.gconst = arrset(pbm.gconst,ig_['R200,11'],float(1.6075537e-1))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -11153,7 +11151,7 @@ class  FBRAIN3LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eFBRAIN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFBRAIN', iet_)
         elftv = loaset(elftv,it,0,'ALPHA')
         elftv = loaset(elftv,it,1,'C0')
         elftp = []
@@ -11168,16 +11166,16 @@ class  FBRAIN3LS(CUTEst_problem):
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['0']),int(v_['M'])+1):
                 ename = 'A'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eFBRAIN')
                     ielftype = arrset( ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA1'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C01'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='C0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -11185,16 +11183,16 @@ class  FBRAIN3LS(CUTEst_problem):
                 posep = find(elftp[ielftype[ie]],lambda x:x=='LAMBDA')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['AL'+str(I)+','+str(J)]))
                 ename = 'B'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eFBRAIN')
                     ielftype = arrset( ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA1'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C01'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='C0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -11202,16 +11200,16 @@ class  FBRAIN3LS(CUTEst_problem):
                 posep = find(elftp[ielftype[ie]],lambda x:x=='LAMBDA')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['BL'+str(I)+','+str(J)]))
                 ename = 'C'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eFBRAIN')
                     ielftype = arrset( ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA2'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C02'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='C0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -11219,16 +11217,16 @@ class  FBRAIN3LS(CUTEst_problem):
                 posep = find(elftp[ielftype[ie]],lambda x:x=='LAMBDA')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['AL'+str(I)+','+str(J)]))
                 ename = 'D'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eFBRAIN')
                     ielftype = arrset( ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA2'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C02'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='C0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -11236,16 +11234,16 @@ class  FBRAIN3LS(CUTEst_problem):
                 posep = find(elftp[ielftype[ie]],lambda x:x=='LAMBDA')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['BL'+str(I)+','+str(J)]))
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eFBRAIN')
                     ielftype = arrset( ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA3'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C03'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='C0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -11253,16 +11251,16 @@ class  FBRAIN3LS(CUTEst_problem):
                 posep = find(elftp[ielftype[ie]],lambda x:x=='LAMBDA')
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['AL'+str(I)+','+str(J)]))
                 ename = 'F'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eFBRAIN')
                     ielftype = arrset( ielftype,ie,iet_['eFBRAIN'])
                 vname = 'ALPHA3'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='ALPHA')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'C03'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='C0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
@@ -11271,7 +11269,7 @@ class  FBRAIN3LS(CUTEst_problem):
                 pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['BL'+str(I)+','+str(J)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

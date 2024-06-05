@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SYNTHES3(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,10 +43,10 @@ class  SYNTHES3(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['9'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['1']),int(v_['8'])+1):
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -55,7 +55,7 @@ class  SYNTHES3(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['Y1']
         pbm.A[ig,iv] = float(5.0)+pbm.A[ig,iv]
@@ -91,25 +91,25 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(15.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(-35.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N1',ig_)
+        [ig,ig_,_] = s2mpj_ii('N1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'N1')
         iv = ix_['X8']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N2',ig_)
+        [ig,ig_,_] = s2mpj_ii('N2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'N2')
-        [ig,ig_,_] = s2x_ii('N3',ig_)
+        [ig,ig_,_] = s2mpj_ii('N3',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'N3')
         iv = ix_['Y1']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('N4',ig_)
+        [ig,ig_,_] = s2mpj_ii('N4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'N4')
         iv = ix_['Y2']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L1',ig_)
+        [ig,ig_,_] = s2mpj_ii('L1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L1')
         iv = ix_['X1']
@@ -130,7 +130,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L2',ig_)
+        [ig,ig_,_] = s2mpj_ii('L2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L2')
         iv = ix_['X1']
@@ -149,7 +149,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L3',ig_)
+        [ig,ig_,_] = s2mpj_ii('L3',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L3')
         iv = ix_['X4']
@@ -164,7 +164,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L4',ig_)
+        [ig,ig_,_] = s2mpj_ii('L4',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L4')
         iv = ix_['X5']
@@ -173,7 +173,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(-0.8)+pbm.A[ig,iv]
         iv = ix_['X8']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L5',ig_)
+        [ig,ig_,_] = s2mpj_ii('L5',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L5')
         iv = ix_['X4']
@@ -182,7 +182,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L6',ig_)
+        [ig,ig_,_] = s2mpj_ii('L6',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L6')
         iv = ix_['X5']
@@ -191,7 +191,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(-0.4)+pbm.A[ig,iv]
         iv = ix_['X8']
         pbm.A[ig,iv] = float(1.5)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L7',ig_)
+        [ig,ig_,_] = s2mpj_ii('L7',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L7')
         iv = ix_['X5']
@@ -200,28 +200,28 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(0.16)+pbm.A[ig,iv]
         iv = ix_['X8']
         pbm.A[ig,iv] = float(-1.2)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L8',ig_)
+        [ig,ig_,_] = s2mpj_ii('L8',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L8')
         iv = ix_['X3']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['X4']
         pbm.A[ig,iv] = float(-0.8)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L9',ig_)
+        [ig,ig_,_] = s2mpj_ii('L9',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L9')
         iv = ix_['X3']
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         iv = ix_['X4']
         pbm.A[ig,iv] = float(0.4)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L10',ig_)
+        [ig,ig_,_] = s2mpj_ii('L10',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L10')
         iv = ix_['X7']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y3']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L11',ig_)
+        [ig,ig_,_] = s2mpj_ii('L11',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L11')
         iv = ix_['X5']
@@ -230,7 +230,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(0.8)+pbm.A[ig,iv]
         iv = ix_['Y4']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L12',ig_)
+        [ig,ig_,_] = s2mpj_ii('L12',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L12')
         iv = ix_['X4']
@@ -241,21 +241,21 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
         iv = ix_['Y5']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L13',ig_)
+        [ig,ig_,_] = s2mpj_ii('L13',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L13')
         iv = ix_['X5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y6']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L14',ig_)
+        [ig,ig_,_] = s2mpj_ii('L14',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L14')
         iv = ix_['X6']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y7']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L15',ig_)
+        [ig,ig_,_] = s2mpj_ii('L15',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L15')
         iv = ix_['X3']
@@ -264,21 +264,21 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y8']
         pbm.A[ig,iv] = float(-10.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L16',ig_)
+        [ig,ig_,_] = s2mpj_ii('L16',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'L16')
         iv = ix_['Y1']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y2']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L17',ig_)
+        [ig,ig_,_] = s2mpj_ii('L17',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L17')
         iv = ix_['Y4']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y5']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L18',ig_)
+        [ig,ig_,_] = s2mpj_ii('L18',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'L18')
         iv = ix_['Y4']
@@ -287,7 +287,7 @@ class  SYNTHES3(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['Y7']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('L19',ig_)
+        [ig,ig_,_] = s2mpj_ii('L19',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'L19')
         iv = ix_['Y3']
@@ -315,10 +315,8 @@ class  SYNTHES3(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['N4'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['L16'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['L17'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xupper[ix_['X1']] = 2.0
         pb.xupper[ix_['X2']] = 2.0
@@ -334,12 +332,12 @@ class  SYNTHES3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eLOGSUM', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLOGSUM', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
-        [it,iet_,_] = s2x_ii( 'eLOGXP1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLOGXP1', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eEXPA', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXPA', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'A')
@@ -350,50 +348,50 @@ class  SYNTHES3(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'LOGX3X4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLOGSUM')
         ielftype = arrset(ielftype, ie, iet_["eLOGSUM"])
         pb.x0 = np.zeros((pb.n,1))
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'LOGX5P1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLOGXP1')
         ielftype = arrset(ielftype, ie, iet_["eLOGXP1"])
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'LOGX6P1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eLOGXP1')
         ielftype = arrset(ielftype, ie, iet_["eLOGXP1"])
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'EXPX1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eEXPA')
         ielftype = arrset(ielftype, ie, iet_["eEXPA"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='A')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'EXPX2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eEXPA')
         ielftype = arrset(ielftype, ie, iet_["eEXPA"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='A')
@@ -448,6 +446,7 @@ class  SYNTHES3(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -465,6 +464,10 @@ class  SYNTHES3(CUTEst_problem):
         pb.pbclass = "OOR2-AN-17-19"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

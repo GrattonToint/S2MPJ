@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  YORKNET(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -15,6 +15,7 @@ class  YORKNET(CUTEst_problem):
 #    SIF input: B. Ulanicki, Water Software Systems,De Montfort University,
 #               The Gateway, Leicester LE1 9BH, UK.
 #               e-mail: bul@uk.ac.dmu * Tel no.0533 577070
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "SOR2-AY-312-256"
 # 
@@ -254,19 +255,19 @@ class  YORKNET(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['ONE']),int(v_['NSTEP'])+1):
             for J in range(int(v_['ONE']),int(v_['NEL'])+1):
-                [iv,ix_,_] = s2x_ii('q'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('q'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'q'+str(J)+','+str(I))
             for J in range(int(v_['ONE']),int(v_['NND'])+1):
-                [iv,ix_,_] = s2x_ii('h'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('h'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'h'+str(J)+','+str(I))
             for J in range(int(v_['SuRES']),int(v_['EuRES'])+1):
-                [iv,ix_,_] = s2x_ii('qr'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('qr'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'qr'+str(J)+','+str(I))
             for J in range(int(v_['SuTW']),int(v_['EuTW'])+1):
-                [iv,ix_,_] = s2x_ii('qs'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('qs'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'qs'+str(J)+','+str(I))
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
-                [iv,ix_,_] = s2x_ii('u'+str(J)+','+str(I),ix_)
+                [iv,ix_,_] = s2mpj_ii('u'+str(J)+','+str(I),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'u'+str(J)+','+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -276,135 +277,135 @@ class  YORKNET(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['ONE']),int(v_['NSTEP'])+1):
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['1']))+','+str(I))
             iv = ix_['qr'+str(int(v_['1']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['qs'+str(int(v_['1']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['1']))+','+str(I))
             iv = ix_['q'+str(int(v_['13']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['2']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['2']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['2']))+','+str(I))
             iv = ix_['qr'+str(int(v_['2']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['qs'+str(int(v_['2']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['2']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['2']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['2']))+','+str(I))
             iv = ix_['q'+str(int(v_['14']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['15']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['3']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['3']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['3']))+','+str(I))
             iv = ix_['qr'+str(int(v_['3']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['5']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['3']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['3']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['3']))+','+str(I))
             iv = ix_['q'+str(int(v_['6']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['4']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['4']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['4']))+','+str(I))
             iv = ix_['qr'+str(int(v_['4']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['12']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['4']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['4']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['4']))+','+str(I))
             iv = ix_['q'+str(int(v_['8']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['9']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['5']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['5']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['5']))+','+str(I))
             iv = ix_['q'+str(int(v_['13']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['1']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['6']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['6']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['6']))+','+str(I))
             iv = ix_['q'+str(int(v_['2']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['3']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['6']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['6']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['6']))+','+str(I))
             iv = ix_['q'+str(int(v_['12']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['7']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['7']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['7']))+','+str(I))
             iv = ix_['q'+str(int(v_['2']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['7']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['7']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['7']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['7']))+','+str(I))
             iv = ix_['q'+str(int(v_['11']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['8']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['8']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['8']))+','+str(I))
             iv = ix_['q'+str(int(v_['3']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['7']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['9']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['9']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['9']))+','+str(I))
             iv = ix_['q'+str(int(v_['4']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['5']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['9']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['9']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['9']))+','+str(I))
             iv = ix_['q'+str(int(v_['11']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['10']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['10']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['10']))+','+str(I))
             iv = ix_['q'+str(int(v_['4']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['6']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['11']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['11']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['11']))+','+str(I))
             iv = ix_['q'+str(int(v_['10']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['14']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['11']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['11']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['11']))+','+str(I))
             iv = ix_['q'+str(int(v_['15']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['12']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['12']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['12']))+','+str(I))
             iv = ix_['q'+str(int(v_['8']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['q'+str(int(v_['10']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ND'+str(int(v_['13']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ND'+str(int(v_['13']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ND'+str(int(v_['13']))+','+str(I))
             iv = ix_['q'+str(int(v_['9']))+','+str(I)]
@@ -412,70 +413,70 @@ class  YORKNET(CUTEst_problem):
             iv = ix_['q'+str(int(v_['1']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['NSTEP'])+1):
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['1']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['1']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['1']))+','+str(I))
             iv = ix_['h'+str(int(v_['13']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['5']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['2']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['2']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['2']))+','+str(I))
             iv = ix_['h'+str(int(v_['7']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['6']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['3']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['3']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['3']))+','+str(I))
             iv = ix_['h'+str(int(v_['8']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['6']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['4']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['4']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['4']))+','+str(I))
             iv = ix_['h'+str(int(v_['10']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['9']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['5']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['5']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['5']))+','+str(I))
             iv = ix_['h'+str(int(v_['3']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['9']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['6']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['6']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['6']))+','+str(I))
             iv = ix_['h'+str(int(v_['10']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['3']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['7']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['7']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['7']))+','+str(I))
             iv = ix_['h'+str(int(v_['7']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['8']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['8']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['8']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['8']))+','+str(I))
             iv = ix_['h'+str(int(v_['4']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['12']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['9']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['9']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['9']))+','+str(I))
             iv = ix_['h'+str(int(v_['4']))+','+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['h'+str(int(v_['13']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('EL'+str(int(v_['10']))+','+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EL'+str(int(v_['10']))+','+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EL'+str(int(v_['10']))+','+str(I))
             iv = ix_['h'+str(int(v_['12']))+','+str(I)]
@@ -483,25 +484,25 @@ class  YORKNET(CUTEst_problem):
             iv = ix_['h'+str(int(v_['11']))+','+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
-                [ig,ig_,_] = s2x_ii('EL'+str(J)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('EL'+str(J)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'EL'+str(J)+','+str(I))
         for I in range(int(v_['ONE']),int(v_['NSTEP'])+1):
             for J in range(int(v_['SuTW']),int(v_['EuTW'])+1):
-                [ig,ig_,_] = s2x_ii('TWC'+str(J)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('TWC'+str(J)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['qs'+str(J)+','+str(I)]
                 pbm.A[ig,iv] = float(v_['CTW'+str(J)+','+str(I)])+pbm.A[ig,iv]
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
-                [ig,ig_,_] = s2x_ii('PC'+str(J)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('PC'+str(J)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
         for J in range(int(v_['SuRES']),int(v_['EuRES'])+1):
-            [ig,ig_,_] = s2x_ii('RD'+str(J)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('RD'+str(J)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'RD'+str(J)+','+str(int(v_['1'])))
             iv = ix_['h'+str(J)+','+str(int(v_['1']))]
             pbm.A[ig,iv] = float(v_['MXAR'+str(J)])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('RD'+str(J)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('RD'+str(J)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'RD'+str(J)+','+str(int(v_['1'])))
             iv = ix_['qr'+str(J)+','+str(int(v_['1']))]
@@ -509,7 +510,7 @@ class  YORKNET(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['NSTEP'])+1):
             for J in range(int(v_['SuRES']),int(v_['EuRES'])+1):
                 v_['A'] = -1+I
-                [ig,ig_,_] = s2x_ii('RD'+str(J)+','+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('RD'+str(J)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'RD'+str(J)+','+str(I))
                 iv = ix_['h'+str(J)+','+str(I)]
@@ -541,10 +542,8 @@ class  YORKNET(CUTEst_problem):
         for J in range(int(v_['SuRES']),int(v_['EuRES'])+1):
             pbm.gconst  = (
                   arrset(pbm.gconst,ig_['RD'+str(J)+','+str(int(v_['1']))],float(v_['MSTVOL'+str(J)])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['ONE']),int(v_['NSTEP'])+1):
             for J in range(int(v_['SuRES']),int(v_['EuRES'])+1):
@@ -579,24 +578,24 @@ class  YORKNET(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eXSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eXSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eXZ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eXZ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Z')
-        [it,iet_,_] = s2x_ii( 'eXPOW', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eXPOW', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eXMYZSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eXMYZSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         elftv = loaset(elftv,it,2,'Z')
-        [it,iet_,_] = s2x_ii( 'ePMP1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePMP1', iet_)
         elftv = loaset(elftv,it,0,'Q')
-        [it,iet_,_] = s2x_ii( 'ePMP2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePMP2', iet_)
         elftv = loaset(elftv,it,0,'Q')
-        [it,iet_,_] = s2x_ii( 'ePMP3', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePMP3', iet_)
         elftv = loaset(elftv,it,0,'Q')
-        [it,iet_,_] = s2x_ii( 'ePMP4', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePMP4', iet_)
         elftv = loaset(elftv,it,0,'Q')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -606,145 +605,145 @@ class  YORKNET(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['NSTEP'])+1):
             for J in range(int(v_['SuPIPE']),int(v_['EuPIPE'])+1):
                 ename = 'EA'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXPOW')
                 ielftype = arrset(ielftype, ie, iet_["eXPOW"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['SuVAL']),int(v_['EuVAL'])+1):
                 ename = 'EA'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXPOW')
                 ielftype = arrset(ielftype, ie, iet_["eXPOW"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
                 ename = 'EA'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXSQ')
                 ielftype = arrset(ielftype, ie, iet_["eXSQ"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'EB'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXZ')
                 ielftype = arrset(ielftype, ie, iet_["eXZ"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'u'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'EC'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXSQ')
                 ielftype = arrset(ielftype, ie, iet_["eXSQ"])
                 vname = 'u'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'EH'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eXMYZSQ')
                 ielftype = arrset(ielftype, ie, iet_["eXMYZSQ"])
                 vname = 'u'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['11']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['7']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['11']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['9']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['12']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['4']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['12']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['6']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['13']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['1']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['13']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['5']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['14']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['2']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['14']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['11']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['15']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['2']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['15']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['11']))+','+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NSTEP'])+1):
             ename = 'PPW'+str(int(v_['11']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePMP4')
             ielftype = arrset(ielftype, ie, iet_["ePMP4"])
             ename = 'PPW'+str(int(v_['12']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePMP3')
             ielftype = arrset(ielftype, ie, iet_["ePMP3"])
             ename = 'PPW'+str(int(v_['13']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePMP1')
             ielftype = arrset(ielftype, ie, iet_["ePMP1"])
             ename = 'PPW'+str(int(v_['14']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePMP2')
             ielftype = arrset(ielftype, ie, iet_["ePMP2"])
             ename = 'PPW'+str(int(v_['15']))+','+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePMP2')
             ielftype = arrset(ielftype, ie, iet_["ePMP2"])
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
                 ename = 'PPW'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

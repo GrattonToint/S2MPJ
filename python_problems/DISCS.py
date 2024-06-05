@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DISCS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -75,11 +75,11 @@ class  DISCS(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
-            [iv,ix_,_] = s2x_ii('R'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('R'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'R'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -89,7 +89,7 @@ class  DISCS(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['R'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -99,13 +99,13 @@ class  DISCS(CUTEst_problem):
                 v_['RAIJ'] = v_['A'+str(J)+','+str(I)]
                 v_['AIJ'] = int(np.fix(v_['RAIJ']))
                 for K in range(int(v_['1']),int(v_['AIJ'])+1):
-                    [ig,ig_,_] = s2x_ii('S'+str(J)+','+str(I),ig_)
+                    [ig,ig_,_] = s2mpj_ii('S'+str(J)+','+str(I),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'S'+str(J)+','+str(I))
                 v_['AIJ-1'] = -1+v_['AIJ']
                 v_['NAIJ'] = -1*v_['AIJ-1']
                 for K in range(int(v_['1']),int(v_['NAIJ'])+1):
-                    [ig,ig_,_] = s2x_ii('S'+str(J)+','+str(I),ig_)
+                    [ig,ig_,_] = s2mpj_ii('S'+str(J)+','+str(I),ig_)
                     gtype = arrset(gtype,ig,'<=')
                     cnames = arrset(cnames,ig,'S'+str(J)+','+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -135,8 +135,6 @@ class  DISCS(CUTEst_problem):
                 for K in range(int(v_['1']),int(v_['NAIJ'])+1):
                     pbm.gconst  = (
                           arrset(pbm.gconst,ig_['S'+str(J)+','+str(I)],float(v_['-EPSIL'])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -161,10 +159,10 @@ class  DISCS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eIPSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eIPSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
-        [it,iet_,_] = s2x_ii( 'eIMSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eIMSQ', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -176,39 +174,39 @@ class  DISCS(CUTEst_problem):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 ename = 'DR'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eIPSQ')
                 ielftype = arrset(ielftype, ie, iet_["eIPSQ"])
                 vname = 'R'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'R'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'DX'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eIMSQ')
                 ielftype = arrset(ielftype, ie, iet_["eIMSQ"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'DY'+str(J)+','+str(I)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eIMSQ')
                 ielftype = arrset(ielftype, ie, iet_["eIMSQ"])
                 vname = 'Y'+str(I)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='X')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -234,6 +232,9 @@ class  DISCS(CUTEst_problem):
                 pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['DY'+str(J)+','+str(I)])
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# ZL DISCS                              RNODES
+#    Solution
+# LO SOLTN(12)           20.46122911
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -250,6 +251,10 @@ class  DISCS(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LQR2-MY-36-66"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

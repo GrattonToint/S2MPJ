@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  COOLHANS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +78,7 @@ class  COOLHANS(CUTEst_problem):
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(v_['N'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -90,7 +90,7 @@ class  COOLHANS(CUTEst_problem):
         for K in range(int(v_['1']),int(v_['N'])+1):
             for L in range(int(v_['1']),int(v_['N'])+1):
                 for M in range(int(v_['1']),int(v_['N'])+1):
-                    [ig,ig_,_] = s2x_ii('G'+str(K)+','+str(L),ig_)
+                    [ig,ig_,_] = s2mpj_ii('G'+str(K)+','+str(L),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'G'+str(K)+','+str(L))
                     iv = ix_['X'+str(M)+','+str(L)]
@@ -115,15 +115,13 @@ class  COOLHANS(CUTEst_problem):
             for L in range(int(v_['1']),int(v_['N'])+1):
                 v_['-C'] = -1.0*v_['C'+str(K)+','+str(L)]
                 pbm.gconst = arrset(pbm.gconst,ig_['G'+str(K)+','+str(L)],float(v_['-C']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'XX')
         elftv = loaset(elftv,it,1,'YY')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -135,16 +133,16 @@ class  COOLHANS(CUTEst_problem):
             for L in range(int(v_['1']),int(v_['N'])+1):
                 for M in range(int(v_['1']),int(v_['N'])+1):
                     ename = 'E'+str(K)+','+str(M)+','+str(L)
-                    [ie,ie_,_] = s2x_ii(ename,ie_)
+                    [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     pb.x0 = np.zeros((pb.n,1))
                     vname = 'X'+str(K)+','+str(M)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                     vname = 'X'+str(M)+','+str(L)
-                    [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                     posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
                     pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -186,6 +184,8 @@ class  COOLHANS(CUTEst_problem):
                           loaset(pbm.grelw,ig,posel,float(v_['A'+str(int(v_['3']))+','+str(P)])))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -202,6 +202,10 @@ class  COOLHANS(CUTEst_problem):
         pb.pbclass = "NQR2-RN-9-9"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

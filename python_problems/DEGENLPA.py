@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DEGENLPA(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,7 +48,7 @@ class  DEGENLPA(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -57,7 +57,7 @@ class  DEGENLPA(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
@@ -77,7 +77,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(133.33)+pbm.A[ig,iv]
         iv = ix_['X10']
         pbm.A[ig,iv] = float(100.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C1',ig_)
+        [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C1')
         iv = ix_['X1']
@@ -100,7 +100,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
         iv = ix_['X10']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C2',ig_)
+        [ig,ig_,_] = s2mpj_ii('C2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C2')
         iv = ix_['X1']
@@ -111,7 +111,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.09)+pbm.A[ig,iv]
         iv = ix_['X4']
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C3',ig_)
+        [ig,ig_,_] = s2mpj_ii('C3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C3')
         iv = ix_['X1']
@@ -124,7 +124,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.06)+pbm.A[ig,iv]
         iv = ix_['X7']
         pbm.A[ig,iv] = float(0.02)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C4',ig_)
+        [ig,ig_,_] = s2mpj_ii('C4',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C4')
         iv = ix_['X1']
@@ -137,7 +137,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.06)+pbm.A[ig,iv]
         iv = ix_['X9']
         pbm.A[ig,iv] = float(0.02)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C5',ig_)
+        [ig,ig_,_] = s2mpj_ii('C5',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C5')
         iv = ix_['X1']
@@ -150,7 +150,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.06)+pbm.A[ig,iv]
         iv = ix_['X10']
         pbm.A[ig,iv] = float(0.02)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C6',ig_)
+        [ig,ig_,_] = s2mpj_ii('C6',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C6')
         iv = ix_['X2']
@@ -163,7 +163,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
         iv = ix_['X13']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C7',ig_)
+        [ig,ig_,_] = s2mpj_ii('C7',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C7')
         iv = ix_['X2']
@@ -178,7 +178,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
         iv = ix_['X15']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C8',ig_)
+        [ig,ig_,_] = s2mpj_ii('C8',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C8')
         iv = ix_['X2']
@@ -193,7 +193,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
         iv = ix_['X16']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C9',ig_)
+        [ig,ig_,_] = s2mpj_ii('C9',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C9')
         iv = ix_['X3']
@@ -208,7 +208,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
         iv = ix_['X19']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C10',ig_)
+        [ig,ig_,_] = s2mpj_ii('C10',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C10')
         iv = ix_['X3']
@@ -221,7 +221,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
         iv = ix_['X19']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C11',ig_)
+        [ig,ig_,_] = s2mpj_ii('C11',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C11')
         iv = ix_['X4']
@@ -234,7 +234,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(0.03)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(0.01)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C12',ig_)
+        [ig,ig_,_] = s2mpj_ii('C12',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C12')
         iv = ix_['X11']
@@ -245,7 +245,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(-0.61975)+pbm.A[ig,iv]
         iv = ix_['X20']
         pbm.A[ig,iv] = float(1.03)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C13',ig_)
+        [ig,ig_,_] = s2mpj_ii('C13',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C13')
         iv = ix_['X11']
@@ -256,7 +256,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(-6.2)+pbm.A[ig,iv]
         iv = ix_['X17']
         pbm.A[ig,iv] = float(1.09)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C14',ig_)
+        [ig,ig_,_] = s2mpj_ii('C14',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C14')
         iv = ix_['X11']
@@ -271,7 +271,7 @@ class  DEGENLPA(CUTEst_problem):
         pbm.A[ig,iv] = float(505.1)+pbm.A[ig,iv]
         iv = ix_['X19']
         pbm.A[ig,iv] = float(-256.72)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C15',ig_)
+        [ig,ig_,_] = s2mpj_ii('C15',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C15')
         iv = ix_['X12']
@@ -303,15 +303,15 @@ class  DEGENLPA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['C1'],float(0.70785))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = np.full((pb.n,1),1.0)
-        pb.xlower =  np.full((pb.n,1),-float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.full((pb.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               3.06435
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))

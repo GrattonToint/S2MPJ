@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  WATSON(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,6 +29,8 @@ class  WATSON(CUTEst_problem):
 # 
 #    Number of variables
 # 
+#           Alternative values for the SIF file parameters:
+# IE N                   12             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -51,7 +53,6 @@ class  WATSON(CUTEst_problem):
             v_['N'] = int(12);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
 # IE N                   31             $-PARAMETER
         v_['M'] = 31
         v_['1'] = 1
@@ -66,7 +67,7 @@ class  WATSON(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -86,15 +87,15 @@ class  WATSON(CUTEst_problem):
                 v_['AE'] = v_['RJ-2']*v_['LNTI']
                 v_['C0'] = np.exp(v_['AE'])
                 v_['C'] = v_['C0']*v_['RJ-1']
-                [ig,ig_,_] = s2x_ii('G'+str(I),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
                 pbm.A[ig,iv] = float(v_['C'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G'+str(int(v_['30'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['30'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('G'+str(int(v_['M'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['M'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X'+str(int(v_['2']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -106,15 +107,13 @@ class  WATSON(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.full((ngrp,1),1.0)
         pbm.gconst = arrset(pbm.gconst,ig_['G'+str(int(v_['30']))],float(0.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eMWSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eMWSQ', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -140,7 +139,7 @@ class  WATSON(CUTEst_problem):
         elftp = loaset(elftp,it,9,'T10')
         elftp = loaset(elftp,it,10,'T11')
         elftp = loaset(elftp,it,11,'T12')
-        [it,iet_,_] = s2x_ii( 'eMSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eMSQ', iet_)
         elftv = loaset(elftv,it,0,'V1')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -153,56 +152,56 @@ class  WATSON(CUTEst_problem):
             v_['TI'] = v_['RI']*v_['1/29']
             v_['LNTI'] = np.log(v_['TI'])
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eMWSQ')
             ielftype = arrset(ielftype, ie, iet_["eMWSQ"])
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X1'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X4'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X5'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X6'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V6')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X7'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V7')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X8'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V8')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X9'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V9')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X10'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V10')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X11'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V11')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X12'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V12')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             for J in range(int(v_['1']),int(v_['N'])+1):
@@ -211,7 +210,7 @@ class  WATSON(CUTEst_problem):
                 v_['CE0'] = v_['RJ-1']*v_['LNTI']
                 v_['CE'+str(J)] = np.exp(v_['CE0'])
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             posep = find(elftp[ielftype[ie]],lambda x:x=='T1')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['CE1']))
             posep = find(elftp[ielftype[ie]],lambda x:x=='T2')
@@ -237,18 +236,18 @@ class  WATSON(CUTEst_problem):
             posep = find(elftp[ielftype[ie]],lambda x:x=='T12')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['CE12']))
         ename = 'E'+str(int(v_['M']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eMSQ')
         ielftype = arrset(ielftype, ie, iet_["eMSQ"])
         ename = 'E'+str(int(v_['M']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -268,7 +267,11 @@ class  WATSON(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(int(v_['M']))])
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(12)           2.27559922D-9
+# LO SOLTN(31)           1.53795068D-9
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
@@ -279,6 +282,10 @@ class  WATSON(CUTEst_problem):
         pb.pbclass = "SUR2-AN-V-0"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

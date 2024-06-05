@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  DIAMON3D(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -13,7 +13,7 @@ class  DIAMON3D(CUTEst_problem):
 #    Source: Data from Aaron Parsons, I14: Hard X-ray Nanoprobe,
 #      Diamond Light Source, Harwell, Oxfordshire, England, EU.
 # 
-#    SIF input: Nick Gould and Tyrone Rees, Feb 2016
+#    SIF input: Nick Gould and Tyrone Rees, Feb 2016, corrected May 2024
 # 
 #    classification = "NOR2-MN-99-4643"
 # 
@@ -9333,11 +9333,11 @@ class  DIAMON3D(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NVEC'])+1):
-            [iv,ix_,_] = s2x_ii('WEIGHT'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('WEIGHT'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'WEIGHT'+str(I))
-            [iv,ix_,_] = s2x_ii('WIDTH'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('WIDTH'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'WIDTH'+str(I))
-            [iv,ix_,_] = s2x_ii('POSIT'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('POSIT'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'POSIT'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -9347,7 +9347,7 @@ class  DIAMON3D(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('R'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -9368,8 +9368,6 @@ class  DIAMON3D(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -9875,7 +9873,7 @@ class  DIAMON3D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eLORENTZ3', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eLORENTZ3', iet_)
         elftv = loaset(elftv,it,0,'WEIGHT')
         elftv = loaset(elftv,it,1,'WIDTH')
         elftv = loaset(elftv,it,2,'POSIT')
@@ -9890,19 +9888,19 @@ class  DIAMON3D(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['NVEC'])+1):
                 ename = 'E'+str(I)+','+str(J)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eLORENTZ3')
                 ielftype = arrset(ielftype, ie, iet_["eLORENTZ3"])
                 vname = 'WEIGHT'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='WEIGHT')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'WIDTH'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='WIDTH')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'POSIT'+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='POSIT')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='X')
@@ -9922,7 +9920,10 @@ class  DIAMON3D(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -9934,6 +9935,10 @@ class  DIAMON3D(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-99-4643"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -9972,13 +9977,13 @@ class  DIAMON3D(CUTEst_problem):
                 H_[1,0] = H_[0,1]
                 H_[1,1]  = (
                       -6.0e+0*pbm.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e+0*pbm.efpar[0]*EV_[0]*RATIO**3)
-                H_[0,2] = -2.0E0*pbm.efpar[0]*EV_[1]*PMX/DENOM**2
+                H_[0,2] = -2.0e0*pbm.efpar[0]*EV_[1]*PMX/DENOM**2
                 H_[2,0] = H_[0,2]
                 H_[1,2]  = (
-                      -2.0E0*pbm.efpar[0]*EV_[0]*PMX/DENOM**2+8.0E0*pbm.efpar[0]*EV_[0]*PMX*(EV_[1]**2)/(DENOM**3))
+                      -2.0e0*pbm.efpar[0]*EV_[0]*PMX/DENOM**2+8.0e0*pbm.efpar[0]*EV_[0]*PMX*(EV_[1]**2)/(DENOM**3))
                 H_[2,1] = H_[1,2]
                 H_[2,2]  = (
-                      -2.0E0*pbm.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0E0*pbm.efpar[0]*EV_[0]*EV_[1]*(PMX**2)/(DENOM**3))
+                      -2.0e0*pbm.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e0*pbm.efpar[0]*EV_[0]*EV_[1]*(PMX**2)/(DENOM**3))
         if nargout == 1:
             return f_
         elif nargout == 2:

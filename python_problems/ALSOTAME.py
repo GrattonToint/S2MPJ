@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ALSOTAME(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,9 +40,9 @@ class  ALSOTAME(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('x',ix_)
+        [iv,ix_,_] = s2mpj_ii('x',ix_)
         pb.xnames=arrset(pb.xnames,iv,'x')
-        [iv,ix_,_] = s2x_ii('y',ix_)
+        [iv,ix_,_] = s2mpj_ii('y',ix_)
         pb.xnames=arrset(pb.xnames,iv,'y')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -51,13 +51,13 @@ class  ALSOTAME(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('Object',ig_)
+        [ig,ig_,_] = s2mpj_ii('Object',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['x']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['y']
         pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('Constr',ig_)
+        [ig,ig_,_] = s2mpj_ii('Constr',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'Constr')
         iv = ix_['x']
@@ -81,10 +81,8 @@ class  ALSOTAME(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['Constr'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['x']] = -2.0
         pb.xupper[ix_['x']] = 2.0
@@ -92,8 +90,8 @@ class  ALSOTAME(CUTEst_problem):
         pb.xupper[ix_['y']] = 1.5
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gEXPN',igt_)
-        [it,igt_,_] = s2x_ii('gSINE',igt_)
+        [it,igt_,_] = s2mpj_ii('gEXPN',igt_)
+        [it,igt_,_] = s2mpj_ii('gSINE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

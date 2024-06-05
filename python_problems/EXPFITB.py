@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  EXPFITB(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -56,15 +56,15 @@ class  EXPFITB(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('P0',ix_)
+        [iv,ix_,_] = s2mpj_ii('P0',ix_)
         pb.xnames=arrset(pb.xnames,iv,'P0')
-        [iv,ix_,_] = s2x_ii('P1',ix_)
+        [iv,ix_,_] = s2mpj_ii('P1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'P1')
-        [iv,ix_,_] = s2x_ii('P2',ix_)
+        [iv,ix_,_] = s2mpj_ii('P2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'P2')
-        [iv,ix_,_] = s2x_ii('Q1',ix_)
+        [iv,ix_,_] = s2mpj_ii('Q1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Q1')
-        [iv,ix_,_] = s2x_ii('Q2',ix_)
+        [iv,ix_,_] = s2mpj_ii('Q2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'Q2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -73,7 +73,7 @@ class  EXPFITB(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['R'])+1):
             v_['TM5'] = -5.0+v_['T'+str(I)]
@@ -83,7 +83,7 @@ class  EXPFITB(CUTEst_problem):
             v_['-QC1'] = -1.0*v_['QC1']
             v_['-QC2'] = -1.0*v_['QC2']
             v_['2T'] = v_['T'+str(I)]*v_['T'+str(I)]
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'C'+str(I))
             iv = ix_['P0']
@@ -96,7 +96,7 @@ class  EXPFITB(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-QC1'])+pbm.A[ig,iv]
             iv = ix_['Q2']
             pbm.A[ig,iv] = float(v_['-QC2'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('B'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'>=')
             cnames = arrset(cnames,ig,'B'+str(I))
             iv = ix_['Q1']
@@ -122,8 +122,6 @@ class  EXPFITB(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['R'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)],float(v_['ET'+str(I)]))
             pbm.gconst = arrset(pbm.gconst,ig_['B'+str(I)],float(-0.99999))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -158,7 +156,7 @@ class  EXPFITB(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eFIT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eFIT', iet_)
         elftv = loaset(elftv,it,0,'P0')
         elftv = loaset(elftv,it,1,'P1')
         elftv = loaset(elftv,it,2,'P2')
@@ -174,27 +172,27 @@ class  EXPFITB(CUTEst_problem):
         pbm.elpar   = []
         for I in range(int(v_['1']),int(v_['R'])+1):
             ename = 'F'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eFIT')
             ielftype = arrset(ielftype, ie, iet_["eFIT"])
             vname = 'P0'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P0')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P1'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Q1'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Q1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Q2'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Q2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='T')
@@ -214,6 +212,7 @@ class  EXPFITB(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
         pass
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -229,6 +228,10 @@ class  EXPFITB(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-AN-5-102"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

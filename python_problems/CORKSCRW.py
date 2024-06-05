@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CORKSCRW(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,6 +27,11 @@ class  CORKSCRW(CUTEst_problem):
 #    Number of time intervals
 #    The number of variables is 9T+6, of which 9 are fixed.
 # 
+#           Alternative values for the SIF file parameters:
+# IE T                   10             $-PARAMETER n = 96     original value
+# IE T                   50             $-PARAMETER n = 456
+# IE T                   100            $-PARAMETER n = 906
+# IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,10 +54,6 @@ class  CORKSCRW(CUTEst_problem):
             v_['T'] = int(10);  #  SIF file default value
         else:
             v_['T'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE T                   50             $-PARAMETER n = 456
-# IE T                   100            $-PARAMETER n = 906
-# IE T                   500            $-PARAMETER n = 4506
 # IE T                   1000           $-PARAMETER n = 9006
         if nargin<2:
             v_['XT'] = float(10.0);  #  SIF file default value
@@ -90,24 +91,24 @@ class  CORKSCRW(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['T'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-            [iv,ix_,_] = s2x_ii('Y'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Y'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Y'+str(I))
-            [iv,ix_,_] = s2x_ii('Z'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('Z'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'Z'+str(I))
-            [iv,ix_,_] = s2x_ii('VX'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('VX'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'VX'+str(I))
-            [iv,ix_,_] = s2x_ii('VY'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('VY'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'VY'+str(I))
-            [iv,ix_,_] = s2x_ii('VZ'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('VZ'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'VZ'+str(I))
         for I in range(int(v_['1']),int(v_['T'])+1):
-            [iv,ix_,_] = s2x_ii('UX'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UX'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UX'+str(I))
-            [iv,ix_,_] = s2x_ii('UY'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UY'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UY'+str(I))
-            [iv,ix_,_] = s2x_ii('UZ'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('UZ'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'UZ'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -117,14 +118,14 @@ class  CORKSCRW(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['T'])+1):
-            [ig,ig_,_] = s2x_ii('OX'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OX'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['W/T'+str(I)]))
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['T'])+1):
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('ACX'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ACX'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ACX'+str(I))
             iv = ix_['VX'+str(I)]
@@ -133,7 +134,7 @@ class  CORKSCRW(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-M/H'])+pbm.A[ig,iv]
             iv = ix_['UX'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ACY'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ACY'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ACY'+str(I))
             iv = ix_['VY'+str(I)]
@@ -142,7 +143,7 @@ class  CORKSCRW(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-M/H'])+pbm.A[ig,iv]
             iv = ix_['UY'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ACZ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ACZ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ACZ'+str(I))
             iv = ix_['VZ'+str(I)]
@@ -151,7 +152,7 @@ class  CORKSCRW(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-M/H'])+pbm.A[ig,iv]
             iv = ix_['UZ'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('PSX'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('PSX'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PSX'+str(I))
             iv = ix_['X'+str(I)]
@@ -160,7 +161,7 @@ class  CORKSCRW(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
             iv = ix_['VX'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('PSY'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('PSY'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PSY'+str(I))
             iv = ix_['Y'+str(I)]
@@ -169,7 +170,7 @@ class  CORKSCRW(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
             iv = ix_['VY'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('PSZ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('PSZ'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'PSZ'+str(I))
             iv = ix_['Z'+str(I)]
@@ -178,7 +179,7 @@ class  CORKSCRW(CUTEst_problem):
             pbm.A[ig,iv] = float(v_['-1/H'])+pbm.A[ig,iv]
             iv = ix_['VZ'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('SC'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('SC'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'SC'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -200,8 +201,6 @@ class  CORKSCRW(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['T'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['OX'+str(I)],float(v_['XT']))
             pbm.gconst = arrset(pbm.gconst,ig_['SC'+str(I)],float(v_['TOLSQ']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -260,10 +259,10 @@ class  CORKSCRW(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eERRSIN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eERRSIN', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
-        [it,iet_,_] = s2x_ii( 'eERRCOS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eERRCOS', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Z')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -273,32 +272,32 @@ class  CORKSCRW(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['1']),int(v_['T'])+1):
             ename = 'ES'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eERRSIN')
             ielftype = arrset(ielftype, ie, iet_["eERRSIN"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Y'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'EC'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eERRCOS')
             ielftype = arrset(ielftype, ie, iet_["eERRCOS"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'Z'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gL2',igt_)
+        [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):
@@ -318,6 +317,12 @@ class  CORKSCRW(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['EC'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           1.1601050195
+# LO SOLTN(50)           26.484181830
+# LO SOLTN(100)          44.368110588
+# LO SOLTN(500)
+# LO SOLTN(1000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -334,6 +339,10 @@ class  CORKSCRW(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "SOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

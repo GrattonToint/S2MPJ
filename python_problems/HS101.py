@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS101(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,7 +47,7 @@ class  HS101(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -56,10 +56,10 @@ class  HS101(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('CONSTR'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CONSTR'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'CONSTR'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -86,8 +86,6 @@ class  HS101(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%%
         grange = np.full((ngrp,1),None)
         grange[legrps] = np.full((pb.nle,1),float('inf'))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.1)
         pb.xupper = np.full((pb.n,1),10.0)
@@ -97,7 +95,7 @@ class  HS101(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en3PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en3PR', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -105,7 +103,7 @@ class  HS101(CUTEst_problem):
         elftp = loaset(elftp,it,0,'P1')
         elftp = loaset(elftp,it,1,'P2')
         elftp = loaset(elftp,it,2,'P3')
-        [it,iet_,_] = s2x_ii( 'en4PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en4PR', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -114,7 +112,7 @@ class  HS101(CUTEst_problem):
         elftp = loaset(elftp,it,1,'P2')
         elftp = loaset(elftp,it,2,'P3')
         elftp = loaset(elftp,it,3,'P4')
-        [it,iet_,_] = s2x_ii( 'en5PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en5PR', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -125,7 +123,7 @@ class  HS101(CUTEst_problem):
         elftp = loaset(elftp,it,2,'P3')
         elftp = loaset(elftp,it,3,'P4')
         elftp = loaset(elftp,it,4,'P5')
-        [it,iet_,_] = s2x_ii( 'en6PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en6PR', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -145,23 +143,23 @@ class  HS101(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E1C1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en4PR')
         ielftype = arrset(ielftype, ie, iet_["en4PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -173,27 +171,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P4')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'E2C1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -207,27 +205,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.5))
         ename = 'E3C1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -241,27 +239,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.25))
         ename = 'E1C2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -275,23 +273,23 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'E2C2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en4PR')
         ielftype = arrset(ielftype, ie, iet_["en4PR"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -303,27 +301,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P4')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.0))
         ename = 'E3C2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -337,27 +335,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.3333333333))
         ename = 'E1C3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -371,27 +369,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.3333333333))
         ename = 'E2C3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -405,23 +403,23 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-0.5))
         ename = 'E3C3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en4PR')
         ielftype = arrset(ielftype, ie, iet_["en4PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -433,27 +431,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P4')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'E4C3'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -467,27 +465,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'E1C4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -501,31 +499,31 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.3333333333))
         ename = 'E2C4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en6PR')
         ielftype = arrset(ielftype, ie, iet_["en6PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V6')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -541,27 +539,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P6')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.25))
         ename = 'E3C4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -575,19 +573,19 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.75))
         ename = 'E4C4'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en3PR')
         ielftype = arrset(ielftype, ie, iet_["en3PR"])
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -597,27 +595,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P3')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.5))
         ename = 'E1C5'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -631,31 +629,31 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['A101']))
         ename = 'E2C5'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en6PR')
         ielftype = arrset(ielftype, ie, iet_["en6PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V6')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -671,27 +669,27 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P6')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-0.5))
         ename = 'E3C5'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en5PR')
         ielftype = arrset(ielftype, ie, iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -705,31 +703,31 @@ class  HS101(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'E4C5'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'en6PR')
         ielftype = arrset(ielftype, ie, iet_["en6PR"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.1,10.0,6.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V6')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -836,6 +834,8 @@ class  HS101(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E4C5'])
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(25.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               1809.76476
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -847,6 +847,10 @@ class  HS101(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-AN-7-5"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

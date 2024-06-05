@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  LUBRIFC(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,6 +29,10 @@ class  LUBRIFC(CUTEst_problem):
 # 
 #    Number of discretized points per unit length
 # 
+#           Alternative values for the SIF file parameters:
+# IE NN                  10             $-PARAMETER n = 151    original value
+# IE NN                  50             $-PARAMETER n = 751
+# IE NN                  250            $-PARAMETER n = 3751
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -51,10 +55,6 @@ class  LUBRIFC(CUTEst_problem):
             v_['NN'] = int(5);  #  SIF file default value
         else:
             v_['NN'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE NN                  10             $-PARAMETER n = 151    original value
-# IE NN                  50             $-PARAMETER n = 751
-# IE NN                  250            $-PARAMETER n = 3751
         v_['ALPHA'] = 1.838
         v_['LAMBDA'] = 1.642
         v_['XA'] = -3.0
@@ -90,16 +90,16 @@ class  LUBRIFC(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('K',ix_)
+        [iv,ix_,_] = s2mpj_ii('K',ix_)
         pb.xnames=arrset(pb.xnames,iv,'K')
         for I in range(int(v_['0']),int(v_['2N'])+1,int(v_['2'])):
-            [iv,ix_,_] = s2x_ii('P'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
         for J in range(int(v_['1']),int(v_['2N-1'])+1,int(v_['2'])):
-            [iv,ix_,_] = s2x_ii('H'+str(J),ix_)
+            [iv,ix_,_] = s2mpj_ii('H'+str(J),ix_)
             pb.xnames=arrset(pb.xnames,iv,'H'+str(J))
         for I in range(int(v_['2']),int(v_['2N-2'])+1,int(v_['2'])):
-            [iv,ix_,_] = s2x_ii('R'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('R'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'R'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -109,22 +109,22 @@ class  LUBRIFC(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['2']),int(v_['2N-2'])+1,int(v_['2'])):
-            [ig,ig_,_] = s2x_ii('R'+str(int(v_['0'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(int(v_['0'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(int(v_['0'])))
             iv = ix_['P'+str(I)]
             pbm.A[ig,iv] = float(v_['2DX/PI'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('R'+str(int(v_['0'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('R'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'R'+str(int(v_['0'])))
         iv = ix_['P'+str(int(v_['2N']))]
         pbm.A[ig,iv] = float(v_['DX/PI'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('COMPL',ig_)
+        [ig,ig_,_] = s2mpj_ii('COMPL',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['2']),int(v_['2N-2'])+1,int(v_['2'])):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('DR'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('DR'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'DR'+str(I))
             iv = ix_['H'+str(int(v_['I+1']))]
@@ -135,7 +135,7 @@ class  LUBRIFC(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for J in range(int(v_['1']),int(v_['2N-1'])+1,int(v_['2'])):
             v_['-J'] = -1*J
-            [ig,ig_,_] = s2x_ii('DH'+str(J),ig_)
+            [ig,ig_,_] = s2mpj_ii('DH'+str(J),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'DH'+str(J))
             iv = ix_['K']
@@ -182,7 +182,7 @@ class  LUBRIFC(CUTEst_problem):
             v_['-COEFF'] = -1.0*v_['COEFF']
             v_['C'+str(int(v_['2N-2']))] = v_['C'+str(int(v_['2N-2']))]+v_['-COEFF']
             for I in range(int(v_['2']),int(v_['2N-2'])+1,int(v_['2'])):
-                [ig,ig_,_] = s2x_ii('DH'+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('DH'+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'DH'+str(J))
                 iv = ix_['P'+str(I)]
@@ -212,10 +212,8 @@ class  LUBRIFC(CUTEst_problem):
             v_['XJSQ+1'] = 1.0+v_['XJSQ']
             v_['RHS'] = -1.0*v_['XJSQ+1']
             pbm.gconst = arrset(pbm.gconst,ig_['DH'+str(J)],float(v_['RHS']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['K']] = -float('Inf')
         pb.xupper[ix_['K']] = +float('Inf')
@@ -279,13 +277,13 @@ class  LUBRIFC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eREY', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eREY', iet_)
         elftv = loaset(elftv,it,0,'PA')
         elftv = loaset(elftv,it,1,'PB')
         elftv = loaset(elftv,it,2,'H')
         elftp = []
         elftp = loaset(elftp,it,0,'A')
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'P')
         elftv = loaset(elftv,it,1,'R')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -298,34 +296,34 @@ class  LUBRIFC(CUTEst_problem):
             v_['I+'] = 1+J
             v_['I-'] = -1+J
             ename = 'ER'+str(J)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eREY')
             ielftype = arrset(ielftype, ie, iet_["eREY"])
             vname = 'P'+str(int(v_['I-']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='PA')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'H'+str(J)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='H')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'P'+str(int(v_['I+']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='PB')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='A')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['ALPHA']))
         for I in range(int(v_['2']),int(v_['2N-2'])+1,int(v_['2'])):
             ename = 'EC'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'R'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='R')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -355,6 +353,8 @@ class  LUBRIFC(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-1/DX2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -370,6 +370,10 @@ class  LUBRIFC(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

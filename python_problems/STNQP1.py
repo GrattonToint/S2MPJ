@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  STNQP1(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,6 +27,12 @@ class  STNQP1(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE P                   2              $-PARAMETER n = 5
+# IE P                   4              $-PARAMETER n = 17
+# IE P                   6              $-PARAMETER n = 65
+# IE P                   8              $-PARAMETER n = 257
+# IE P                   10             $-PARAMETER n = 1025
+# IE P                   12             $-PARAMETER n = 4097     original value
+# IE P                   13             $-PARAMETER n = 8193
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,11 +55,6 @@ class  STNQP1(CUTEst_problem):
             v_['P'] = int(4);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
-# IE P                   6              $-PARAMETER n = 65
-# IE P                   8              $-PARAMETER n = 257
-# IE P                   10             $-PARAMETER n = 1025
-# IE P                   12             $-PARAMETER n = 4097     original value
-# IE P                   13             $-PARAMETER n = 8193
 # IE P                   14             $-PARAMETER n = 16395
 # IE P                   15             $-PARAMETER n = 32769
 # IE P                   16             $-PARAMETER n = 65537
@@ -70,7 +71,7 @@ class  STNQP1(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -80,7 +81,7 @@ class  STNQP1(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -89,7 +90,7 @@ class  STNQP1(CUTEst_problem):
                 v_['K'] = v_['1']
                 for J in range(int(v_['1']),int(I)+1):
                     v_['K+L'] = v_['K']+L
-                    [ig,ig_,_] = s2x_ii('N'+str(I)+','+str(L),ig_)
+                    [ig,ig_,_] = s2mpj_ii('N'+str(I)+','+str(L),ig_)
                     gtype = arrset(gtype,ig,'<>')
                     iv = ix_['X'+str(int(v_['K+L']))]
                     pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -100,7 +101,7 @@ class  STNQP1(CUTEst_problem):
                 for J in range(int(v_['1']),int(I)+1):
                     v_['K-1'] = v_['K']-v_['1']
                     v_['K+L-1'] = v_['K-1']+L
-                    [ig,ig_,_] = s2x_ii('E'+str(I)+','+str(L),ig_)
+                    [ig,ig_,_] = s2mpj_ii('E'+str(I)+','+str(L),ig_)
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'E'+str(I)+','+str(L))
                     iv = ix_['X'+str(int(v_['K+L-1']))]
@@ -126,10 +127,8 @@ class  STNQP1(CUTEst_problem):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 v_['RI'] = float(I)
                 pbm.gconst = arrset(pbm.gconst,ig_['E'+str(I)+','+str(L)],float(v_['RI']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
             pb.xlower[ix_['X'+str(I)]] = -2.0
@@ -138,8 +137,8 @@ class  STNQP1(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(0.5))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gPSQR',igt_)
-        [it,igt_,_] = s2x_ii('gPSQR',igt_)
+        [it,igt_,_] = s2mpj_ii('gPSQR',igt_)
+        [it,igt_,_] = s2mpj_ii('gPSQR',igt_)
         grftp = []
         grftp = loaset(grftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -162,6 +161,8 @@ class  STNQP1(CUTEst_problem):
                 posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
                 pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(-0.5))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION            -1.361565E+5   $ (P=12)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -177,6 +178,10 @@ class  STNQP1(CUTEst_problem):
         pb.lincons   = np.arange(len(pbm.congrps))
         pb.pbclass = "QLR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

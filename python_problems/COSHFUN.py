@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  COSHFUN(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,11 @@ class  COSHFUN(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE M                   3              $-PARAMETER
+# IE M                   8              $-PARAMETER
+# IE M                   14             $-PARAMETER
+# IE M                   20             $-PARAMETER     original value
+# IE M                   200            $-PARAMETER
+# IE M                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,10 +50,6 @@ class  COSHFUN(CUTEst_problem):
             v_['M'] = int(8);  #  SIF file default value
         else:
             v_['M'] = int(args[0])
-# IE M                   14             $-PARAMETER
-# IE M                   20             $-PARAMETER     original value
-# IE M                   200            $-PARAMETER
-# IE M                   2000           $-PARAMETER
         v_['N'] = 3*v_['M']
         v_['N-3'] = -3+v_['N']
         v_['N-5'] = -5+v_['N']
@@ -62,9 +63,9 @@ class  COSHFUN(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
-        [iv,ix_,_] = s2x_ii('F',ix_)
+        [iv,ix_,_] = s2mpj_ii('F',ix_)
         pb.xnames=arrset(pb.xnames,iv,'F')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -73,17 +74,17 @@ class  COSHFUN(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['F']
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('C'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(I))
             iv = ix_['F']
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C1',ig_)
+        [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'C1')
         iv = ix_['X3']
@@ -94,19 +95,19 @@ class  COSHFUN(CUTEst_problem):
             v_['I-5'] = -5+I
             v_['I+3'] = 3+I
             v_['I/3'] = int(np.fix(I/v_['3']))
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['I/3'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['I/3'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['I/3'])))
             iv = ix_['X'+str(int(v_['I-5']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('C'+str(int(v_['I/3'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['I/3'])),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'C'+str(int(v_['I/3'])))
             iv = ix_['X'+str(int(v_['I+3']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('C'+str(int(v_['M'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('C'+str(int(v_['M'])),ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'C'+str(int(v_['M'])))
         iv = ix_['X'+str(int(v_['N-5']))]
@@ -127,19 +128,17 @@ class  COSHFUN(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQR', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'eCOSH', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCOSH', iet_)
         elftv = loaset(elftv,it,0,'X')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -152,40 +151,40 @@ class  COSHFUN(CUTEst_problem):
             v_['I-2'] = -2+I
             v_['I/3'] = int(np.fix(I/v_['3']))
             ename = 'SQR'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
             ielftype = arrset(ielftype, ie, iet_["eSQR"])
             ename = 'SQR'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pb.x0 = np.zeros((pb.n,1))
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'COSH'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCOSH')
             ielftype = arrset(ielftype, ie, iet_["eCOSH"])
             ename = 'COSH'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'PROD'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             ename = 'PROD'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I-2']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'PROD'+str(int(v_['I/3']))
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%

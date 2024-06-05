@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  MINSURF(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +45,7 @@ class  MINSURF(CUTEst_problem):
         binvars   = np.array([])
         for i in range(int(v_['1']),int(v_['P+1'])+1):
             for j in range(int(v_['1']),int(v_['P+1'])+1):
-                [iv,ix_,_] = s2x_ii('X'+str(i)+','+str(j),ix_)
+                [iv,ix_,_] = s2mpj_ii('X'+str(i)+','+str(j),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'X'+str(i)+','+str(j))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -56,7 +56,7 @@ class  MINSURF(CUTEst_problem):
         gtype       = np.array([])
         for i in range(int(v_['1']),int(v_['P'])+1):
             for j in range(int(v_['1']),int(v_['P'])+1):
-                [ig,ig_,_] = s2x_ii('S'+str(i)+','+str(j),ig_)
+                [ig,ig_,_] = s2mpj_ii('S'+str(i)+','+str(j),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 pbm.gscale = arrset(pbm.gscale,ig,float(v_['RPSQ']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -69,10 +69,8 @@ class  MINSURF(CUTEst_problem):
         for i in range(int(v_['1']),int(v_['P'])+1):
             for j in range(int(v_['1']),int(v_['P'])+1):
                 pbm.gconst = arrset(pbm.gconst,ig_['S'+str(i)+','+str(j)],float(-1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         v_['2'] = 2
         for i in range(int(v_['2']),int(v_['P'])+1):
@@ -91,7 +89,7 @@ class  MINSURF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eISQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eISQ', iet_)
         elftv = loaset(elftv,it,0,'V')
         elftv = loaset(elftv,it,1,'W')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -104,33 +102,33 @@ class  MINSURF(CUTEst_problem):
             for j in range(int(v_['1']),int(v_['P'])+1):
                 v_['j+1'] = 1+j
                 ename = 'A'+str(i)+','+str(j)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 pb.x0 = np.zeros((pb.n,1))
                 vname = 'X'+str(i)+','+str(j)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['i+1']))+','+str(int(v_['j+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='W')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 ename = 'B'+str(i)+','+str(j)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(i)+','+str(int(v_['j+1']))
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='V')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['i+1']))+','+str(j)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='W')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQROOT',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQROOT',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         pbm.grelt   = []
         for ig in np.arange(0,ngrp):

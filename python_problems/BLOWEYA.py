@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BLOWEYA(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,14 +47,15 @@ class  BLOWEYA(CUTEst_problem):
         ix_ = {}
         ig_ = {}
 #    classification = "QLR2-MN-V-V"
+#           Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER  n = 22, m = 12
+# IE N                   100            $-PARAMETER  n = 202, m = 102
+# IE N                   1000           $-PARAMETER  n = 2002, m = 1002
+# IE N                   2000           $-PARAMETER  n = 4002, m = 2002
         if nargin<1:
             v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER  n = 202, m = 102
-# IE N                   1000           $-PARAMETER  n = 2002, m = 1002
-# IE N                   2000           $-PARAMETER  n = 4002, m = 2002
 # IE N                   4000           $-PARAMETER  n = 8002, m = 4002
 # IE N                   8000           $-PARAMETER  n = 16002, m = 8002
         v_['0'] = 0
@@ -128,9 +129,9 @@ class  BLOWEYA(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
-            [iv,ix_,_] = s2x_ii('W'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('W'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'W'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -141,7 +142,7 @@ class  BLOWEYA(CUTEst_problem):
         gtype       = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
             v_['VAL'] = v_['V'+str(I)]*v_['-1/N**2']
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(v_['VAL'])+pbm.A[ig,iv]
@@ -149,7 +150,7 @@ class  BLOWEYA(CUTEst_problem):
             iv = ix_['W'+str(I)]
             pbm.A[ig,iv] = float(v_['VAL'])+pbm.A[ig,iv]
         v_['VAL'] = v_['V'+str(int(v_['1']))]-v_['V'+str(int(v_['0']))]
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U'+str(int(v_['0']))]
         pbm.A[ig,iv] = float(v_['VAL'])+pbm.A[ig,iv]
@@ -159,28 +160,28 @@ class  BLOWEYA(CUTEst_problem):
             v_['VAL'] = -2.0*v_['V'+str(I)]
             v_['VAL'] = v_['VAL']+v_['V'+str(int(v_['I-1']))]
             v_['VAL'] = v_['VAL']+v_['V'+str(int(v_['I+1']))]
-            [ig,ig_,_] = s2x_ii('OBJ',ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(v_['VAL'])+pbm.A[ig,iv]
         v_['VAL'] = v_['V'+str(int(v_['N-1']))]-v_['V'+str(int(v_['N']))]
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['U'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['VAL'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('INT',ig_)
+        [ig,ig_,_] = s2mpj_ii('INT',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'INT')
         iv = ix_['U'+str(int(v_['0']))]
         pbm.A[ig,iv] = float(0.5)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CON'+str(int(v_['0'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['0'])))
         iv = ix_['U'+str(int(v_['0']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U'+str(int(v_['1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CON'+str(int(v_['0'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['0'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['0'])))
         iv = ix_['W'+str(int(v_['0']))]
@@ -188,7 +189,7 @@ class  BLOWEYA(CUTEst_problem):
         for I in range(int(v_['1']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             v_['I-1'] = -1+I
-            [ig,ig_,_] = s2x_ii('CON'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CON'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CON'+str(I))
             iv = ix_['U'+str(I)]
@@ -199,24 +200,24 @@ class  BLOWEYA(CUTEst_problem):
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
             iv = ix_['W'+str(I)]
             pbm.A[ig,iv] = float(v_['-1/N**2'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('INT',ig_)
+            [ig,ig_,_] = s2mpj_ii('INT',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'INT')
             iv = ix_['U'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CON'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['N'])))
         iv = ix_['U'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         iv = ix_['U'+str(int(v_['N-1']))]
         pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('CON'+str(int(v_['N'])),ig_)
+        [ig,ig_,_] = s2mpj_ii('CON'+str(int(v_['N'])),ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON'+str(int(v_['N'])))
         iv = ix_['W'+str(int(v_['N']))]
         pbm.A[ig,iv] = float(v_['-1/N**2'])+pbm.A[ig,iv]
-        [ig,ig_,_] = s2x_ii('INT',ig_)
+        [ig,ig_,_] = s2mpj_ii('INT',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'INT')
         iv = ix_['U'+str(int(v_['N']))]
@@ -238,8 +239,6 @@ class  BLOWEYA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['INT'],float(v_['INT']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -253,9 +252,9 @@ class  BLOWEYA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'Z')
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -265,47 +264,47 @@ class  BLOWEYA(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['0']),int(v_['N'])+1):
             ename = 'C'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'W'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
             ename = 'D'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'O'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'D'+str(int(v_['N']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         ename = 'D'+str(int(v_['N']))
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'U'+str(int(v_['N']))
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -346,6 +345,10 @@ class  BLOWEYA(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/N**2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION            -4.56932D+00   $ N = 10 
+# XL SOLUTION            -4.55694D-01   $ N = 100
+# XL SOLUTION            -4.55629D-02   $ N = 1000
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -361,6 +364,10 @@ class  BLOWEYA(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "QLR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

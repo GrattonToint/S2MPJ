@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BEALENE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,9 +44,9 @@ class  BEALENE(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -55,13 +55,13 @@ class  BEALENE(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('A',ig_)
+        [ig,ig_,_] = s2mpj_ii('A',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'A')
-        [ig,ig_,_] = s2x_ii('B',ig_)
+        [ig,ig_,_] = s2mpj_ii('B',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'B')
-        [ig,ig_,_] = s2x_ii('C',ig_)
+        [ig,ig_,_] = s2mpj_ii('C',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'C')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -83,8 +83,6 @@ class  BEALENE(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['A'],float(1.5))
         pbm.gconst = arrset(pbm.gconst,ig_['B'],float(2.25))
         pbm.gconst = arrset(pbm.gconst,ig_['C'],float(2.625))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -93,7 +91,7 @@ class  BEALENE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePRODB', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePRODB', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftp = []
@@ -105,46 +103,46 @@ class  BEALENE(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'AE'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
             ielftype = arrset( ielftype,ie,iet_['ePRODB'])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
         ename = 'BE'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
             ielftype = arrset( ielftype,ie,iet_['ePRODB'])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.0))
         ename = 'CE'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
             ielftype = arrset( ielftype,ie,iet_['ePRODB'])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
@@ -173,6 +171,8 @@ class  BEALENE(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -184,6 +184,10 @@ class  BEALENE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-AN-2-3"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

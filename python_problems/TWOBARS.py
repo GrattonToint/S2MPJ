@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  TWOBARS(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,9 +50,9 @@ class  TWOBARS(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('X1',ix_)
+        [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        [iv,ix_,_] = s2x_ii('X2',ix_)
+        [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -61,12 +61,12 @@ class  TWOBARS(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('CONS1',ig_)
+        [ig,ig_,_] = s2mpj_ii('CONS1',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'CONS1')
-        [ig,ig_,_] = s2x_ii('CONS2',ig_)
+        [ig,ig_,_] = s2mpj_ii('CONS2',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'CONS2')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -87,10 +87,8 @@ class  TWOBARS(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['CONS1'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['CONS2'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['X1']] = 0.2
         pb.xupper[ix_['X1']] = 4.0
@@ -101,13 +99,13 @@ class  TWOBARS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eOE', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eOE', iet_)
         elftv = loaset(elftv,it,0,'XX')
         elftv = loaset(elftv,it,1,'YY')
-        [it,iet_,_] = s2x_ii( 'eCE1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCE1', iet_)
         elftv = loaset(elftv,it,0,'XX')
         elftv = loaset(elftv,it,1,'YY')
-        [it,iet_,_] = s2x_ii( 'eCE2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCE2', iet_)
         elftv = loaset(elftv,it,0,'XX')
         elftv = loaset(elftv,it,1,'YY')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -116,39 +114,39 @@ class  TWOBARS(CUTEst_problem):
         ielftype    = np.array([])
         pbm.elvar   = []
         ename = 'OBEL'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eOE')
         ielftype = arrset(ielftype, ie, iet_["eOE"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'COEL1'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eCE1')
         ielftype = arrset(ielftype, ie, iet_["eCE1"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         ename = 'COEL2'
-        [ie,ie_,_] = s2x_ii(ename,ie_)
+        [ie,ie_,_] = s2mpj_ii(ename,ie_)
         pbm.elftype = arrset(pbm.elftype,ie,'eCE2')
         ielftype = arrset(ielftype, ie, iet_["eCE2"])
         vname = 'X1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
         posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -175,6 +173,8 @@ class  TWOBARS(CUTEst_problem):
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.124))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               1.5086379655
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -185,6 +185,10 @@ class  TWOBARS(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-MN-2-2"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

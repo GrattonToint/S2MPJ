@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CATMIX(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,6 +22,12 @@ class  CATMIX(CUTEst_problem):
 #    The number of subintervals
 # 
 # 
+#           Alternative values for the SIF file parameters:
+# IE NH                  100            $-PARAMETER
+# IE NH                  200            $-PARAMETER
+# IE NH                  400            $-PARAMETER
+# IE NH                  800            $-PARAMETER
+# 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CATMIX'
@@ -39,12 +45,12 @@ class  CATMIX(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        v_['NH'] = 10
-#           Alternative values for the SIF file parameters:
-# IE NH                  100            $-PARAMETER
-# IE NH                  200            $-PARAMETER
-# IE NH                  400            $-PARAMETER
-# IE NH                  800            $-PARAMETER
+        if nargin<1:
+            v_['NH'] = int(10);  #  SIF file default value
+        else:
+            v_['NH'] = int(args[0])
+# IE NH                  3000           $-PARAMETER
+# IE NH                  30000          $-PARAMETER
         v_['TF'] = 1.0
         v_['X1u0'] = 1.0
         v_['X2u0'] = 0.0
@@ -63,11 +69,11 @@ class  CATMIX(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['NH'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
-            [iv,ix_,_] = s2x_ii('X1'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X1'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X1'+str(I))
-            [iv,ix_,_] = s2x_ii('X2'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X2'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X2'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -76,7 +82,7 @@ class  CATMIX(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1'+str(int(v_['NH']))]
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -84,14 +90,14 @@ class  CATMIX(CUTEst_problem):
         pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['0']),int(v_['NH-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('ODE1'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ODE1'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ODE1'+str(I))
             iv = ix_['X1'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X1'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ODE2'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ODE2'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ODE2'+str(I))
             iv = ix_['X2'+str(I)]
@@ -115,8 +121,6 @@ class  CATMIX(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['OBJ'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -149,14 +153,14 @@ class  CATMIX(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eDIFSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eDIFSQ', iet_)
         elftv = loaset(elftv,it,0,'U1')
         elftv = loaset(elftv,it,1,'U2')
-        [it,iet_,_] = s2x_ii( 'eP1', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eP1', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'X1')
         elftv = loaset(elftv,it,2,'X2')
-        [it,iet_,_] = s2x_ii( 'eP2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eP2', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -167,44 +171,44 @@ class  CATMIX(CUTEst_problem):
         for I in range(int(v_['0']),int(v_['NH-1'])+1):
             v_['I+1'] = 1+I
             ename = 'O'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eDIFSQ')
             ielftype = arrset(ielftype, ie, iet_["eDIFSQ"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['NH'])+1):
             ename = 'P1'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eP1')
             ielftype = arrset(ielftype, ie, iet_["eP1"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X1'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X2'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'P2'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eP2')
             ielftype = arrset(ielftype, ie, iet_["eP2"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'X2'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -247,6 +251,11 @@ class  CATMIX(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['H/2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION             -4.7748D-02   $ (NH=100)
+# LO SOLUTION             -4.8016D-02   $ (NH=200)
+# LO SOLUTION             -4.7862D-02   $ (NH=400)
+# LO SOLUTION             -4.7185D-02   $ (NH=800)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -262,6 +271,10 @@ class  CATMIX(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HONG(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,13 +39,13 @@ class  HONG(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('T1',ix_)
+        [iv,ix_,_] = s2mpj_ii('T1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T1')
-        [iv,ix_,_] = s2x_ii('T2',ix_)
+        [iv,ix_,_] = s2mpj_ii('T2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T2')
-        [iv,ix_,_] = s2x_ii('T3',ix_)
+        [iv,ix_,_] = s2mpj_ii('T3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T3')
-        [iv,ix_,_] = s2x_ii('T4',ix_)
+        [iv,ix_,_] = s2mpj_ii('T4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'T4')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -54,9 +54,9 @@ class  HONG(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('SUM1',ig_)
+        [ig,ig_,_] = s2mpj_ii('SUM1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'SUM1')
         iv = ix_['T1']
@@ -84,8 +84,6 @@ class  HONG(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         pbm.gconst = arrset(pbm.gconst,ig_['SUM1'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),0.0)
         pb.xupper = np.full((pb.n,1),1.0)
@@ -94,7 +92,7 @@ class  HONG(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEXP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXP', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftp = []
         elftp = loaset(elftp,it,0,'P1')
@@ -109,12 +107,12 @@ class  HONG(CUTEst_problem):
         pbm.elvar   = []
         pbm.elpar   = []
         ename = 'E1'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
             ielftype = arrset( ielftype,ie,iet_['eEXP'])
         vname = 'T1'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -128,12 +126,12 @@ class  HONG(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.38))
         ename = 'E2'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
             ielftype = arrset( ielftype,ie,iet_['eEXP'])
         vname = 'T2'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -147,12 +145,12 @@ class  HONG(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(0.11))
         ename = 'E3'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
             ielftype = arrset( ielftype,ie,iet_['eEXP'])
         vname = 'T3'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -166,12 +164,12 @@ class  HONG(CUTEst_problem):
         posep = find(elftp[ielftype[ie]],lambda x:x=='P5')
         pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(-1.48))
         ename = 'E4'
-        [ie,ie_,newelt] = s2x_ii(ename,ie_)
+        [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
             ielftype = arrset( ielftype,ie,iet_['eEXP'])
         vname = 'T4'
-        [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = find(elftv[ielftype[ie]],lambda x:x=='X')
         pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         posep = find(elftp[ielftype[ie]],lambda x:x=='P1')
@@ -207,6 +205,7 @@ class  HONG(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E4'])
         pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution unknown
         pb.objlower = -4.0
         pb.objupper = 300.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
@@ -224,6 +223,10 @@ class  HONG(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OLR2-AN-4-1"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

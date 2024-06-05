@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  BRATU2D(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,12 @@ class  BRATU2D(CUTEst_problem):
 #    P is the number of points in one side of the unit square.
 #    There are P*P variables.
 # 
+#           Alternative values for the SIF file parameters:
+# IE P                   7              $-PARAMETER  n=P**2   original value
+# IE P                   10             $-PARAMETER  n=P**2
+# IE P                   22             $-PARAMETER  n=P**2
+# IE P                   32             $-PARAMETER  n=P**2
+# IE P                   72             $-PARAMETER  n=P**2
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,11 +51,6 @@ class  BRATU2D(CUTEst_problem):
             v_['P'] = int(7);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE P                   10             $-PARAMETER  n=P**2
-# IE P                   22             $-PARAMETER  n=P**2
-# IE P                   32             $-PARAMETER  n=P**2
-# IE P                   72             $-PARAMETER  n=P**2
         if nargin<2:
             v_['LAMBDA'] = float(4.0);  #  SIF file default value
         else:
@@ -70,7 +71,7 @@ class  BRATU2D(CUTEst_problem):
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
-                [iv,ix_,_] = s2x_ii('U'+str(I)+','+str(J),ix_)
+                [iv,ix_,_] = s2mpj_ii('U'+str(I)+','+str(J),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'U'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -85,7 +86,7 @@ class  BRATU2D(CUTEst_problem):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 v_['J+1'] = 1+J
                 v_['J-1'] = -1+J
-                [ig,ig_,_] = s2x_ii('G'+str(I)+','+str(J),ig_)
+                [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'G'+str(I)+','+str(J))
                 iv = ix_['U'+str(I)+','+str(J)]
@@ -112,8 +113,6 @@ class  BRATU2D(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -130,7 +129,7 @@ class  BRATU2D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eEXP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXP', iet_)
         elftv = loaset(elftv,it,0,'U')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -140,13 +139,13 @@ class  BRATU2D(CUTEst_problem):
         for I in range(int(v_['2']),int(v_['P-1'])+1):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 ename = 'A'+str(I)+','+str(J)
-                [ie,ie_,newelt] = s2x_ii(ename,ie_)
+                [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
                     ielftype = arrset( ielftype,ie,iet_['eEXP'])
                 pb.x0 = np.zeros((pb.n,1))
                 vname = 'U'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='U')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -165,6 +164,8 @@ class  BRATU2D(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-C']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -182,6 +183,10 @@ class  BRATU2D(CUTEst_problem):
         pb.pbclass = "NOR2-MN-V-V"
         pb.x0          = np.zeros((pb.n,1))
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

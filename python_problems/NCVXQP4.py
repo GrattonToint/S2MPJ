@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  NCVXQP4(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -17,6 +17,10 @@ class  NCVXQP4(CUTEst_problem):
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER    original value
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,9 +43,6 @@ class  NCVXQP4(CUTEst_problem):
             v_['N'] = int(50);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER    original value
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
         v_['1'] = 1
         v_['2'] = 2
@@ -55,7 +56,7 @@ class  NCVXQP4(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -65,7 +66,7 @@ class  NCVXQP4(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [ig,ig_,_] = s2x_ii('OBJ'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('OBJ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
@@ -86,7 +87,7 @@ class  NCVXQP4(CUTEst_problem):
             iv = ix_['X'+str(int(v_['J']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for I in range(int(v_['1']),int(v_['M'])+1):
-            [ig,ig_,_] = s2x_ii('CON'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('CON'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'CON'+str(I))
             iv = ix_['X'+str(I)]
@@ -125,10 +126,8 @@ class  NCVXQP4(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['CON'+str(I)],float(6.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
             pb.xlower[ix_['X'+str(I)]] = 0.1
@@ -137,8 +136,8 @@ class  NCVXQP4(CUTEst_problem):
         pb.x0 = np.full((pb.n,1),float(0.5))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
-        [it,igt_,_] = s2x_ii('gSQR',igt_)
-        [it,igt_,_] = s2x_ii('gSQR',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQR',igt_)
+        [it,igt_,_] = s2mpj_ii('gSQR',igt_)
         grftp = []
         grftp = loaset(grftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -163,6 +162,8 @@ class  NCVXQP4(CUTEst_problem):
             posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
             pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['RI']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -9.39672D+07   $ (n=1000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -178,6 +179,10 @@ class  NCVXQP4(CUTEst_problem):
         pb.lincons   = np.arange(len(pbm.congrps))
         pb.pbclass = "QLR2-AN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

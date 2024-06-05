@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  SSEBNLN(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -221,29 +221,29 @@ class  SSEBNLN(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('V'+str(int(v_['0']))+','+str(int(v_['HOURS'])),ix_)
+        [iv,ix_,_] = s2mpj_ii('V'+str(int(v_['0']))+','+str(int(v_['HOURS'])),ix_)
         pb.xnames = (
              arrset(pb.xnames,iv,'V'+str(int(v_['0']))+','+str(int(v_['HOURS']))))
-        [iv,ix_,_] = s2x_ii('R'+str(int(v_['0']))+','+str(int(v_['HOURS'])),ix_)
+        [iv,ix_,_] = s2mpj_ii('R'+str(int(v_['0']))+','+str(int(v_['HOURS'])),ix_)
         pb.xnames = (
              arrset(pb.xnames,iv,'R'+str(int(v_['0']))+','+str(int(v_['HOURS']))))
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
-                [iv,ix_,_] = s2x_ii('P1'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('P1'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'P1'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('P2'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('P2'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'P2'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('QH'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('QH'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'QH'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('S'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('S'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'S'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('QG'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('QG'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'QG'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('QP'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('QP'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'QP'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('V'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('V'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'V'+str(ID)+','+str(IH))
-                [iv,ix_,_] = s2x_ii('R'+str(ID)+','+str(IH),ix_)
+                [iv,ix_,_] = s2mpj_ii('R'+str(ID)+','+str(IH),ix_)
                 pb.xnames=arrset(pb.xnames,iv,'R'+str(ID)+','+str(IH))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -254,7 +254,7 @@ class  SSEBNLN(CUTEst_problem):
         gtype       = np.array([])
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
-                [ig,ig_,_] = s2x_ii('OBJ',ig_)
+                [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['P1'+str(ID)+','+str(IH)]
                 pbm.A[ig,iv] = float(1000.0)+pbm.A[ig,iv]
@@ -270,14 +270,14 @@ class  SSEBNLN(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1200.0)+pbm.A[ig,iv]
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             v_['P'] = -1+ID
-            [ig,ig_,_] = s2x_ii('H'+str(ID)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('H'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'H'+str(ID)+','+str(int(v_['1'])))
             iv = ix_['V'+str(ID)+','+str(int(v_['1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['V'+str(int(v_['P']))+','+str(int(v_['HOURS']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('H'+str(ID)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('H'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'H'+str(ID)+','+str(int(v_['1'])))
             iv = ix_['S'+str(ID)+','+str(int(v_['1']))]
@@ -287,7 +287,7 @@ class  SSEBNLN(CUTEst_problem):
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['2']),int(v_['HOURS'])+1):
                 v_['IH-1'] = -1+IH
-                [ig,ig_,_] = s2x_ii('H'+str(ID)+','+str(IH),ig_)
+                [ig,ig_,_] = s2mpj_ii('H'+str(ID)+','+str(IH),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'H'+str(ID)+','+str(IH))
                 iv = ix_['V'+str(ID)+','+str(IH)]
@@ -300,14 +300,14 @@ class  SSEBNLN(CUTEst_problem):
                 pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             v_['P'] = -1+ID
-            [ig,ig_,_] = s2x_ii('R'+str(ID)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(ID)+','+str(int(v_['1'])))
             iv = ix_['R'+str(ID)+','+str(int(v_['1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['R'+str(int(v_['P']))+','+str(int(v_['HOURS']))]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('R'+str(ID)+','+str(int(v_['1'])),ig_)
+            [ig,ig_,_] = s2mpj_ii('R'+str(ID)+','+str(int(v_['1'])),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(ID)+','+str(int(v_['1'])))
             iv = ix_['QG'+str(ID)+','+str(int(v_['1']))]
@@ -317,7 +317,7 @@ class  SSEBNLN(CUTEst_problem):
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['2']),int(v_['HOURS'])+1):
                 v_['IH-1'] = -1+IH
-                [ig,ig_,_] = s2x_ii('R'+str(ID)+','+str(IH),ig_)
+                [ig,ig_,_] = s2mpj_ii('R'+str(ID)+','+str(IH),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'R'+str(ID)+','+str(IH))
                 iv = ix_['R'+str(ID)+','+str(IH)]
@@ -330,7 +330,7 @@ class  SSEBNLN(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
-                [ig,ig_,_] = s2x_ii('D'+str(ID)+','+str(IH),ig_)
+                [ig,ig_,_] = s2mpj_ii('D'+str(ID)+','+str(IH),ig_)
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'D'+str(ID)+','+str(IH))
                 iv = ix_['P1'+str(ID)+','+str(IH)]
@@ -345,7 +345,7 @@ class  SSEBNLN(CUTEst_problem):
                 pbm.A[ig,iv] = float(-1.33)+pbm.A[ig,iv]
         for D in range(int(v_['1']),int(v_['DAYS'])+1):
             for H in range(int(v_['1']),int(v_['HOURS'])+1):
-                [ig,ig_,_] = s2x_ii('QG*QP'+str(D)+','+str(H),ig_)
+                [ig,ig_,_] = s2mpj_ii('QG*QP'+str(D)+','+str(H),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'QG*QP'+str(D)+','+str(H))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -377,10 +377,8 @@ class  SSEBNLN(CUTEst_problem):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
                 pbm.gconst  = (
                       arrset(pbm.gconst,ig_['D'+str(ID)+','+str(IH)],float(v_['D'+str(ID)+','+str(IH)])))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['V'+str(int(v_['0']))+','+str(int(v_['HOURS']))]] = 240000.0
         pb.xupper[ix_['V'+str(int(v_['0']))+','+str(int(v_['HOURS']))]] = 240000.0
@@ -452,7 +450,7 @@ class  SSEBNLN(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'QP')
         elftv = loaset(elftv,it,1,'QG')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -463,15 +461,15 @@ class  SSEBNLN(CUTEst_problem):
         for ID in range(int(v_['1']),int(v_['DAYS'])+1):
             for IH in range(int(v_['1']),int(v_['HOURS'])+1):
                 ename = 'P'+str(ID)+','+str(IH)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
                 ielftype = arrset(ielftype, ie, iet_["ePROD"])
                 vname = 'QP'+str(ID)+','+str(IH)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='QP')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'QG'+str(ID)+','+str(IH)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='QG')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -489,6 +487,8 @@ class  SSEBNLN(CUTEst_problem):
                 nlc = np.union1d(nlc,np.array([ig]))
                 pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               1.617060D+07
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -505,6 +505,10 @@ class  SSEBNLN(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LQR2-RN-194-96"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  CLNLBEAM(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -24,6 +24,13 @@ class  CLNLBEAM(CUTEst_problem):
 # 
 #    Discretization: specify the number of interior points + 1
 # 
+#           Alternative values for the SIF file parameters:
+# IE NI                  10             $-PARAMETER n=33, m=20
+# IE NI                  50             $-PARAMETER n=153, m=100
+# IE NI                  100            $-PARAMETER n=303, m=200
+# IE NI                  500            $-PARAMETER n=1503, m=1000
+# IE NI                  1000           $-PARAMETER n=3003, m=2000 original value
+# IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,12 +53,6 @@ class  CLNLBEAM(CUTEst_problem):
             v_['NI'] = int(10);  #  SIF file default value
         else:
             v_['NI'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE NI                  50             $-PARAMETER n=153, m=100
-# IE NI                  100            $-PARAMETER n=303, m=200
-# IE NI                  500            $-PARAMETER n=1503, m=1000
-# IE NI                  1000           $-PARAMETER n=3003, m=2000 original value
-# IE NI                  2000           $-PARAMETER n=6003, m=4000
 # IE NI                  5000           $-PARAMETER n=15003, m=10000
         if nargin<2:
             v_['ALPHA'] = float(350.0);  #  SIF file default value
@@ -72,13 +73,13 @@ class  CLNLBEAM(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            [iv,ix_,_] = s2x_ii('T'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('T'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'T'+str(I))
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -87,18 +88,18 @@ class  CLNLBEAM(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('ENERGY',ig_)
+        [ig,ig_,_] = s2mpj_ii('ENERGY',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['0']),int(v_['NI-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('EX'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('EX'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EX'+str(I))
             iv = ix_['X'+str(int(v_['I+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['X'+str(I)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('ET'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('ET'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ET'+str(I))
             iv = ix_['T'+str(int(v_['I+1']))]
@@ -123,8 +124,6 @@ class  CLNLBEAM(CUTEst_problem):
         pb.cnames= cnames[pbm.congrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = find(gtype,lambda x:x=='<>')
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -155,11 +154,11 @@ class  CLNLBEAM(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eCOS', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eCOS', iet_)
         elftv = loaset(elftv,it,0,'T')
-        [it,iet_,_] = s2x_ii( 'eSIN', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSIN', iet_)
         elftv = loaset(elftv,it,0,'T')
-        [it,iet_,_] = s2x_ii( 'eSQ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eSQ', iet_)
         elftv = loaset(elftv,it,0,'U')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -168,27 +167,27 @@ class  CLNLBEAM(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['0']),int(v_['NI'])+1):
             ename = 'C'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eCOS')
             ielftype = arrset(ielftype, ie, iet_["eCOS"])
             vname = 'T'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'S'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSIN')
             ielftype = arrset(ielftype, ie, iet_["eSIN"])
             vname = 'T'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='T')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             ename = 'USQ'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -227,6 +226,13 @@ class  CLNLBEAM(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['AH/2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           345.0301196587
+# LO SOLTN(50)           344.8673691861
+# LO SOLTN(100)          344.8801831150
+# LO SOLTN(500)          344.8748539754
+# LO SOLTN(1000)         344.8788169123
+# LO SOLTN(5000)         
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -243,6 +249,10 @@ class  CLNLBEAM(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  ROTDISC(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,15 +106,15 @@ class  ROTDISC(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for k in range(int(v_['0']),int(v_['K'])+1):
-            [iv,ix_,_] = s2x_ii('w'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('w'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'w'+str(k))
-            [iv,ix_,_] = s2x_ii('sigt'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('sigt'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'sigt'+str(k))
-            [iv,ix_,_] = s2x_ii('sigr'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('sigr'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'sigr'+str(k))
-            [iv,ix_,_] = s2x_ii('x'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('x'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'x'+str(k))
-            [iv,ix_,_] = s2x_ii('y'+str(k),ix_)
+            [iv,ix_,_] = s2mpj_ii('y'+str(k),ix_)
             pb.xnames=arrset(pb.xnames,iv,'y'+str(k))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -132,7 +132,7 @@ class  ROTDISC(CUTEst_problem):
             v_['coef1'] = v_['aux3']*v_['rk2']
             v_['rk+1sq'] = v_['rk+1']*v_['rk+1']
             v_['coef2'] = v_['aux3']*v_['rk+1sq']
-            [ig,ig_,_] = s2x_ii('SR'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SR'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'SR'+str(k))
             pbm.gscale = arrset(pbm.gscale,ig,float(v_['ech1']))
@@ -144,7 +144,7 @@ class  ROTDISC(CUTEst_problem):
             v_['tmp2'] = v_['(1+nu)/2']*v_['rk+1']
             v_['tmp3'] = v_['tmp1']-v_['tmp2']
             v_['coef3'] = v_['tmp3']/v_['rk']
-            [ig,ig_,_] = s2x_ii('ST'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('ST'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'ST'+str(k))
             iv = ix_['sigr'+str(k)]
@@ -167,14 +167,14 @@ class  ROTDISC(CUTEst_problem):
             v_['coef6'] = v_['tmp12']/v_['rk+1']
             iv = ix_['sigt'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(v_['coef6'])+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('STAy'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('STAy'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'STAy'+str(k))
             iv = ix_['y'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['y'+str(k)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('STAx'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('STAx'+str(k),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'STAx'+str(k))
             iv = ix_['x'+str(int(v_['k+1']))]
@@ -195,7 +195,7 @@ class  ROTDISC(CUTEst_problem):
         v_['aux4'] = v_['aux3']*v_['pirho']
         v_['coef1'] = v_['aux4']*v_['ech3']
         v_['-coef1'] = -1.0*v_['coef1']
-        [ig,ig_,_] = s2x_ii('WEIGHT',ig_)
+        [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['w'+str(int(v_['0']))]
         pbm.A[ig,iv] = float(v_['-coef1'])+pbm.A[ig,iv]
@@ -207,7 +207,7 @@ class  ROTDISC(CUTEst_problem):
             v_['aux4'] = v_['aux3']*v_['pirho']
             v_['coef1'] = v_['aux4']*v_['ech3']
             v_['-coef1'] = -1.0*v_['coef1']
-            [ig,ig_,_] = s2x_ii('WEIGHT',ig_)
+            [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'WEIGHT')
             iv = ix_['w'+str(k)]
@@ -219,20 +219,20 @@ class  ROTDISC(CUTEst_problem):
         v_['aux4'] = v_['pirho']*v_['aux3']
         v_['coef1'] = v_['aux4']*v_['ech3']
         v_['-coef1'] = -1.0*v_['coef1']
-        [ig,ig_,_] = s2x_ii('WEIGHT',ig_)
+        [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['w'+str(int(v_['K']))]
         pbm.A[ig,iv] = float(v_['-coef1'])+pbm.A[ig,iv]
         for k in range(int(v_['0']),int(v_['K-1'])+1):
             v_['k+1'] = 1+k
-            [ig,ig_,_] = s2x_ii('SLOP'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SLOP'+str(k),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'SLOP'+str(k))
             iv = ix_['w'+str(int(v_['k+1']))]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
             iv = ix_['w'+str(k)]
             pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            [ig,ig_,_] = s2x_ii('SLOM'+str(k),ig_)
+            [ig,ig_,_] = s2mpj_ii('SLOM'+str(k),ig_)
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'SLOM'+str(k))
             iv = ix_['w'+str(int(v_['k+1']))]
@@ -240,7 +240,7 @@ class  ROTDISC(CUTEst_problem):
             iv = ix_['w'+str(k)]
             pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
         v_['-sigmatA'] = -1.0*v_['sigmatA']
-        [ig,ig_,_] = s2x_ii('AVsigt',ig_)
+        [ig,ig_,_] = s2mpj_ii('AVsigt',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'AVsigt')
         iv = ix_['y'+str(int(v_['K']))]
@@ -286,8 +286,6 @@ class  ROTDISC(CUTEst_problem):
         for k in range(int(v_['0']),int(v_['K-1'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['SLOP'+str(k)],float(v_['4dr']))
             pbm.gconst = arrset(pbm.gconst,ig_['SLOM'+str(k)],float(v_['4dr']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -4848,7 +4846,7 @@ class  ROTDISC(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'en2PR', iet_)
+        [it,iet_,_] = s2mpj_ii( 'en2PR', iet_)
         elftv = loaset(elftv,it,0,'X')
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -4858,28 +4856,28 @@ class  ROTDISC(CUTEst_problem):
         pbm.elvar   = []
         for k in range(int(v_['0']),int(v_['K'])+1):
             ename = 'WSR'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'w'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'sigr'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for k in range(int(v_['0']),int(v_['K'])+1):
             ename = 'WST'+str(k)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'w'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'sigt'+str(k)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
             posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -4923,6 +4921,7 @@ class  ROTDISC(CUTEst_problem):
             v_['rk'] = v_['rk+1']
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 5.0
+# LO SOLUTION            7.872067544
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -4939,6 +4938,10 @@ class  ROTDISC(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "LQR2-RN-905-1081"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

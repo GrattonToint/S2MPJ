@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  READING9(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -23,6 +23,14 @@ class  READING9(CUTEst_problem):
 # 
 #    Number of discretized points in [0,1] - 1
 # 
+#           Alternative values for the SIF file parameters:
+# IE N+1                 3              $-PARAMETER n=6, m=2
+# IE N+1                 51             $-PARAMETER n=102, m=50
+# IE N+1                 101            $-PARAMETER n=202, m=100
+# IE N+1                 201            $-PARAMETER n=402, m=200
+# IE N+1                 501            $-PARAMETER n=1002, m=500  original value
+# IE N+1                 1001           $-PARAMETER n=2002, m=1000
+# IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,13 +53,6 @@ class  READING9(CUTEst_problem):
             v_['N+1'] = int(3);  #  SIF file default value
         else:
             v_['N+1'] = int(args[0])
-#           Alternative values for the SIF file parameters:
-# IE N+1                 51             $-PARAMETER n=102, m=50
-# IE N+1                 101            $-PARAMETER n=202, m=100
-# IE N+1                 201            $-PARAMETER n=402, m=200
-# IE N+1                 501            $-PARAMETER n=1002, m=500  original value
-# IE N+1                 1001           $-PARAMETER n=2002, m=1000
-# IE N+1                 5001           $-PARAMETER n=10002, m= 5000
         v_['N'] = -1+v_['N+1']
         v_['N-1'] = -1+v_['N']
         v_['RN'] = float(v_['N'])
@@ -72,10 +73,10 @@ class  READING9(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('P'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('U'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -84,11 +85,11 @@ class  READING9(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             v_['I+1'] = 1+I
-            [ig,ig_,_] = s2x_ii('S'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'S'+str(I))
             iv = ix_['P'+str(int(v_['I+1']))]
@@ -117,10 +118,8 @@ class  READING9(CUTEst_problem):
             v_['SINT'] = np.sin(v_['T'])
             v_['HSINT'] = v_['H']*v_['SINT']
             pbm.gconst = arrset(pbm.gconst,ig_['S'+str(I)],float(v_['HSINT']))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
             pb.xupper[ix_['U'+str(I)]] = 1.0
@@ -133,10 +132,10 @@ class  READING9(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'ePROD', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'P')
-        [it,iet_,_] = s2x_ii( 'ePROD2', iet_)
+        [it,iet_,_] = s2mpj_ii( 'ePROD2', iet_)
         elftv = loaset(elftv,it,0,'U')
         elftv = loaset(elftv,it,1,'P')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -146,28 +145,28 @@ class  READING9(CUTEst_problem):
         pbm.elvar   = []
         for I in range(int(v_['0']),int(v_['N'])+1):
             ename = 'OE'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD2')
             ielftype = arrset(ielftype, ie, iet_["ePROD2"])
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.2)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.2)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.2)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.2)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             ename = 'CE'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
             ielftype = arrset(ielftype, ie, iet_["ePROD"])
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.2)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.2)
             posev = find(elftv[ielftype[ie]],lambda x:x=='P')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,0.2)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.2)
             posev = find(elftv[ielftype[ie]],lambda x:x=='U')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -194,6 +193,8 @@ class  READING9(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['K2H']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION            -4.41677D-02   $ (n=500)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -209,6 +210,10 @@ class  READING9(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-MN-V-V"
         self.pb = pb; self.pbm = pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

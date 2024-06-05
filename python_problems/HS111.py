@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  HS111(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,7 +67,7 @@ class  HS111(CUTEst_problem):
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
-            [iv,ix_,_] = s2x_ii('X'+str(I),ix_)
+            [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -76,15 +76,15 @@ class  HS111(CUTEst_problem):
         cnames      = np.array([])
         pb.cnames   = np.array([])
         gtype       = np.array([])
-        [ig,ig_,_] = s2x_ii('OBJ',ig_)
+        [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
-        [ig,ig_,_] = s2x_ii('CON1',ig_)
+        [ig,ig_,_] = s2mpj_ii('CON1',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON1')
-        [ig,ig_,_] = s2x_ii('CON2',ig_)
+        [ig,ig_,_] = s2mpj_ii('CON2',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON2')
-        [ig,ig_,_] = s2x_ii('CON3',ig_)
+        [ig,ig_,_] = s2mpj_ii('CON3',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'CON3')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -106,8 +106,6 @@ class  HS111(CUTEst_problem):
         pbm.gconst = arrset(pbm.gconst,ig_['CON1'],float(2.0))
         pbm.gconst = arrset(pbm.gconst,ig_['CON2'],float(1.0))
         pbm.gconst = arrset(pbm.gconst,ig_['CON3'],float(1.0))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-100.0)
         pb.xupper = np.full((pb.n,1),100.0)
@@ -116,7 +114,7 @@ class  HS111(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eOBJ', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eOBJ', iet_)
         elftv = loaset(elftv,it,0,'V1')
         elftv = loaset(elftv,it,1,'V2')
         elftv = loaset(elftv,it,2,'V3')
@@ -129,7 +127,7 @@ class  HS111(CUTEst_problem):
         elftv = loaset(elftv,it,9,'V10')
         elftp = []
         elftp = loaset(elftp,it,0,'C')
-        [it,iet_,_] = s2x_ii( 'eEXP', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eEXP', iet_)
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
@@ -142,7 +140,7 @@ class  HS111(CUTEst_problem):
             v_['RI'+str(I)] = 0.1+v_['RI'+str(I)]
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'O'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eOBJ')
             ielftype = arrset(ielftype, ie, iet_["eOBJ"])
             v_['TEMP'] = v_['RI'+str(int(v_['1']))]
@@ -151,71 +149,71 @@ class  HS111(CUTEst_problem):
             v_['R'] = v_['RI'+str(int(v_['1']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['2']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['3']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['4']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V4')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['5']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V5')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['6']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V6')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['7']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V7')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['8']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V8')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['9']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V9')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             v_['R'] = v_['RI'+str(int(v_['10']))]
             v_['J'] = int(np.fix(v_['R']))
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='V10')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='C')
             pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['C'+str(I)]))
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eEXP')
             ielftype = arrset(ielftype, ie, iet_["eEXP"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = find(elftv[ielftype[ie]],lambda x:x=='X')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -285,6 +283,8 @@ class  HS111(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -47.707579
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -296,6 +296,10 @@ class  HS111(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-AN-10-3"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

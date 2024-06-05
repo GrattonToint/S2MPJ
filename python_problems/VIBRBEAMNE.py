@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  VIBRBEAMNE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -150,21 +150,21 @@ class  VIBRBEAMNE(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('c0',ix_)
+        [iv,ix_,_] = s2mpj_ii('c0',ix_)
         pb.xnames=arrset(pb.xnames,iv,'c0')
-        [iv,ix_,_] = s2x_ii('c1',ix_)
+        [iv,ix_,_] = s2mpj_ii('c1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'c1')
-        [iv,ix_,_] = s2x_ii('c2',ix_)
+        [iv,ix_,_] = s2mpj_ii('c2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'c2')
-        [iv,ix_,_] = s2x_ii('c3',ix_)
+        [iv,ix_,_] = s2mpj_ii('c3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'c3')
-        [iv,ix_,_] = s2x_ii('d0',ix_)
+        [iv,ix_,_] = s2mpj_ii('d0',ix_)
         pb.xnames=arrset(pb.xnames,iv,'d0')
-        [iv,ix_,_] = s2x_ii('d1',ix_)
+        [iv,ix_,_] = s2mpj_ii('d1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'d1')
-        [iv,ix_,_] = s2x_ii('d2',ix_)
+        [iv,ix_,_] = s2mpj_ii('d2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'d2')
-        [iv,ix_,_] = s2x_ii('d3',ix_)
+        [iv,ix_,_] = s2mpj_ii('d3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'d3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -174,7 +174,7 @@ class  VIBRBEAMNE(CUTEst_problem):
         pb.cnames   = np.array([])
         gtype       = np.array([])
         for i in range(int(v_['1']),int(v_['m'])+1):
-            [ig,ig_,_] = s2x_ii('f'+str(i),ig_)
+            [ig,ig_,_] = s2mpj_ii('f'+str(i),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'f'+str(i))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -195,8 +195,6 @@ class  VIBRBEAMNE(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for i in range(int(v_['1']),int(v_['m'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['f'+str(i)],float(v_['v'+str(i)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
@@ -209,7 +207,7 @@ class  VIBRBEAMNE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'efun', iet_)
+        [it,iet_,_] = s2mpj_ii( 'efun', iet_)
         elftv = loaset(elftv,it,0,'a0')
         elftv = loaset(elftv,it,1,'a1')
         elftv = loaset(elftv,it,2,'a2')
@@ -227,27 +225,27 @@ class  VIBRBEAMNE(CUTEst_problem):
         for i in range(int(v_['1']),int(v_['m'])+1):
             for j in range(int(v_['0']),int(v_['3'])+1):
                 ename = 'fu'+str(i)+','+str(j)
-                [ie,ie_,_] = s2x_ii(ename,ie_)
+                [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 pbm.elftype = arrset(pbm.elftype,ie,'efun')
                 ielftype = arrset(ielftype, ie, iet_["efun"])
                 vname = 'd0'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='a0')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'd1'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='a1')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'd2'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='a2')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'd3'
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='a3')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 vname = 'c'+str(j)
-                [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,None)
+                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
                 posev = find(elftv[ielftype[ie]],lambda x:x=='b')
                 pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
                 posep = find(elftp[ielftype[ie]],lambda x:x=='y')
@@ -271,6 +269,7 @@ class  VIBRBEAMNE(CUTEst_problem):
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['y']))
                 v_['y'] = v_['y']*v_['x'+str(i)]
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOLUTION             0.15644607137
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -282,6 +281,10 @@ class  VIBRBEAMNE(CUTEst_problem):
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "NOR2-MN-8-30"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

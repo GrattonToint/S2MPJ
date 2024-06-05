@@ -1,4 +1,4 @@
-from s2xlib import *
+from s2mpjlib import *
 class  PALMER5BNE(CUTEst_problem):
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,7 +20,7 @@ class  PALMER5BNE(CUTEst_problem):
 #    SIF input: Nick Gould, 1992.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-RN-9-0"
+#    classification = "NOR2-RN-9-12"
 # 
 #    Number of data points
 # 
@@ -74,23 +74,23 @@ class  PALMER5BNE(CUTEst_problem):
         xscale    = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
-        [iv,ix_,_] = s2x_ii('A0',ix_)
+        [iv,ix_,_] = s2mpj_ii('A0',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A0')
-        [iv,ix_,_] = s2x_ii('A2',ix_)
+        [iv,ix_,_] = s2mpj_ii('A2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A2')
-        [iv,ix_,_] = s2x_ii('A4',ix_)
+        [iv,ix_,_] = s2mpj_ii('A4',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A4')
-        [iv,ix_,_] = s2x_ii('A6',ix_)
+        [iv,ix_,_] = s2mpj_ii('A6',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A6')
-        [iv,ix_,_] = s2x_ii('A8',ix_)
+        [iv,ix_,_] = s2mpj_ii('A8',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A8')
-        [iv,ix_,_] = s2x_ii('A10',ix_)
+        [iv,ix_,_] = s2mpj_ii('A10',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A10')
-        [iv,ix_,_] = s2x_ii('A12',ix_)
+        [iv,ix_,_] = s2mpj_ii('A12',ix_)
         pb.xnames=arrset(pb.xnames,iv,'A12')
-        [iv,ix_,_] = s2x_ii('B',ix_)
+        [iv,ix_,_] = s2mpj_ii('B',ix_)
         pb.xnames=arrset(pb.xnames,iv,'B')
-        [iv,ix_,_] = s2x_ii('C',ix_)
+        [iv,ix_,_] = s2mpj_ii('C',ix_)
         pb.xnames=arrset(pb.xnames,iv,'C')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
@@ -107,7 +107,7 @@ class  PALMER5BNE(CUTEst_problem):
             v_['X**10'] = v_['XSQR']*v_['X**8']
             v_['X**12'] = v_['XSQR']*v_['X**10']
             v_['X**14'] = v_['XSQR']*v_['X**12']
-            [ig,ig_,_] = s2x_ii('O'+str(I),ig_)
+            [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'O'+str(I))
             iv = ix_['A0']
@@ -142,10 +142,8 @@ class  PALMER5BNE(CUTEst_problem):
         pbm.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['12']),int(v_['M'])+1):
             pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),float('inf'))
         pb.xlower[ix_['A0']] = -float('Inf')
         pb.xupper[ix_['A0']] = +float('Inf')
@@ -168,7 +166,7 @@ class  PALMER5BNE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
-        [it,iet_,_] = s2x_ii( 'eQUOT', iet_)
+        [it,iet_,_] = s2mpj_ii( 'eQUOT', iet_)
         elftv = loaset(elftv,it,0,'B')
         elftv = loaset(elftv,it,1,'C')
         elftp = []
@@ -182,15 +180,15 @@ class  PALMER5BNE(CUTEst_problem):
         for I in range(int(v_['12']),int(v_['M'])+1):
             v_['XSQR'] = v_['X'+str(I)]*v_['X'+str(I)]
             ename = 'E'+str(I)
-            [ie,ie_,_] = s2x_ii(ename,ie_)
+            [ie,ie_,_] = s2mpj_ii(ename,ie_)
             pbm.elftype = arrset(pbm.elftype,ie,'eQUOT')
             ielftype = arrset(ielftype, ie, iet_["eQUOT"])
             vname = 'B'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='B')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             vname = 'C'
-            [iv,ix_,pb] = s2x_nlx(vname,ix_,pb,1,None,None,1.0)
+            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
             posev = find(elftv[ielftype[ie]],lambda x:x=='C')
             pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
             posep = find(elftp[ielftype[ie]],lambda x:x=='XSQR')
@@ -209,6 +207,10 @@ class  PALMER5BNE(CUTEst_problem):
             nlc = np.union1d(nlc,np.array([ig]))
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
+# LO PALMER5B               0.0
+#    Solution
+# LO SOLTN               4.0606141D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
@@ -222,8 +224,12 @@ class  PALMER5BNE(CUTEst_problem):
         pbm.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-RN-9-0"
+        pb.pbclass = "NOR2-RN-9-12"
         self.pb = pb; self.pbm = pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
