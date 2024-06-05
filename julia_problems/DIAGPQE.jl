@@ -18,6 +18,8 @@ function DIAGPQE(action,args...)
 # 
 #    Number of variables (variable)
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,7 +41,6 @@ function DIAGPQE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
 # IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # IE N                   500            $-PARAMETER
@@ -55,13 +56,13 @@ function DIAGPQE(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
@@ -71,8 +72,6 @@ function DIAGPQE(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-100000.0,pb.n)
         pb.xupper = fill(1000000.0,pb.n)
@@ -89,6 +88,8 @@ function DIAGPQE(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -106,7 +107,7 @@ function DIAGPQE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -37,18 +37,18 @@ function ROSENBR(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G1",ig_)
+        ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(0.01))
-        ig,ig_,_ = s2x_ii("G2",ig_)
+        ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
@@ -60,8 +60,6 @@ function ROSENBR(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["G2"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -72,22 +70,22 @@ function ROSENBR(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"V1")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -102,6 +100,8 @@ function ROSENBR(action,args...)
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -109,6 +109,10 @@ function ROSENBR(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SUR2-AN-2-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -167,7 +171,7 @@ function ROSENBR(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

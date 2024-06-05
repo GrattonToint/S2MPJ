@@ -15,6 +15,13 @@ function DEGDIAG(action,args...)
 # 
 #    The number of variables - 1
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -36,19 +43,13 @@ function DEGDIAG(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
-# IE N                   100000         $-PARAMETER
         v_["0"] = 0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -58,10 +59,8 @@ function DEGDIAG(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         v_["RN"] = Float64(v_["N"])
         v_["RN"] = 1.0+v_["RN"]
@@ -80,6 +79,7 @@ function DEGDIAG(action,args...)
             pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
@@ -96,7 +96,7 @@ function DEGDIAG(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

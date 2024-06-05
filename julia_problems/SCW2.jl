@@ -26,6 +26,9 @@ function SCW2(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE K                   1              $-PARAMETER
+# IE K                   10             $-PARAMETER
+# IE K                   100            $-PARAMETER
+# IE K                   1000           $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,8 +50,6 @@ function SCW2(action,args...)
         else
             v_["K"] = Int64(args[1]);
         end
-# IE K                   100            $-PARAMETER
-# IE K                   1000           $-PARAMETER     original value
         v_["0"] = 0
         v_["1"] = 1
         v_["2"] = 2
@@ -66,22 +67,22 @@ function SCW2(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["K+1"])
-            iv,ix_,_ = s2x_ii("T"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["K"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("S",ig_)
+        ig,ig_,_ = s2mpj_ii("S",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("C",ig_)
+        ig,ig_,_ = s2mpj_ii("C",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["0"]):Int64(v_["K"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("CON"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CON"*string(I))
             iv = ix_["T"*string(Int64(v_["I+1"]))]
@@ -102,10 +103,8 @@ function SCW2(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["T"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["T"*string(Int64(v_["0"]))]] = 0.0
@@ -150,10 +149,10 @@ function SCW2(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eUSINT", iet_)
+        it,iet_,_ = s2mpj_ii( "eUSINT", iet_)
         loaset(elftv,it,1,"T")
         loaset(elftv,it,2,"U")
-        it,iet_,_ = s2x_ii( "eUCOST", iet_)
+        it,iet_,_ = s2mpj_ii( "eUCOST", iet_)
         loaset(elftv,it,1,"T")
         loaset(elftv,it,2,"U")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -162,57 +161,57 @@ function SCW2(action,args...)
         for I = Int64(v_["0"]):Int64(v_["K"])
             v_["I+1"] = 1+I
             ename = "US"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eUSINT")
             arrset(ielftype, ie, iet_["eUSINT"])
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "USP"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eUSINT")
             arrset(ielftype, ie, iet_["eUSINT"])
             vname = "T"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "UC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eUCOST")
             arrset(ielftype, ie, iet_["eUCOST"])
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "UCP"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eUCOST")
             arrset(ielftype, ie, iet_["eUCOST"])
             vname = "T"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gMAXSQ",igt_)
+        it,igt_,_ = s2mpj_ii("gMAXSQ",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -243,6 +242,8 @@ function SCW2(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SCW                 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -257,6 +258,10 @@ function SCW2(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "SLR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -349,7 +354,7 @@ function SCW2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

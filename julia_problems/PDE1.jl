@@ -10,6 +10,7 @@ function PDE1(action,args...)
 #    See: http://plato.asu.edu/ftp/barrier/
 # 
 #    SIF input: Nick Gould, April 25th 2012
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "LLR2-AN-V-V"
 # 
@@ -17,6 +18,7 @@ function PDE1(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   3              $-PARAMETER
+# IE N                   299            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,7 +40,6 @@ function PDE1(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   299            $-PARAMETER
 # IE N                   2999           $-PARAMETER     pde_1.mod value
 # IE N                   2099           $-PARAMETER     pde_10.mod value
         v_["0"] = 0
@@ -58,17 +59,17 @@ function PDE1(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("T",ix_)
+        iv,ix_,_ = s2mpj_ii("T",ix_)
         arrset(pb.xnames,iv,"T")
         for I = Int64(v_["0"]):Int64(v_["N1"])
             for J = Int64(v_["0"]):Int64(v_["N1"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T"]
         pbm.A[ig,iv] += Float64(1.0)
@@ -78,7 +79,7 @@ function PDE1(action,args...)
             for J = Int64(v_["1"]):Int64(v_["N"])
                 v_["J+"] = 1+J
                 v_["J-"] = -1+J
-                ig,ig_,_ = s2x_ii("P"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("P"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"P"*string(I)*","*string(J))
                 iv = ix_["X"*string(I)*","*string(J)]
@@ -95,14 +96,14 @@ function PDE1(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("A"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("A"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"A"*string(I)*","*string(J))
                 iv = ix_["T"]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["X"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(v_["H"])
-                ig,ig_,_ = s2x_ii("B"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("B"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"B"*string(I)*","*string(J))
                 iv = ix_["T"]
@@ -112,82 +113,82 @@ function PDE1(action,args...)
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("C"*string(I)*","*string(Int64(v_["0"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I)*","*string(Int64(v_["0"])))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("C"*string(I)*","*string(Int64(v_["0"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I)*","*string(Int64(v_["0"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["0"]))]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("D"*string(I)*","*string(Int64(v_["0"])),ig_)
+            ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"D"*string(I)*","*string(Int64(v_["0"])))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("D"*string(I)*","*string(Int64(v_["0"])),ig_)
+            ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"D"*string(I)*","*string(Int64(v_["0"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["0"]))]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("C"*string(I)*","*string(Int64(v_["N1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(Int64(v_["N1"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I)*","*string(Int64(v_["N1"])))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("C"*string(I)*","*string(Int64(v_["N1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(Int64(v_["N1"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I)*","*string(Int64(v_["N1"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["N1"]))]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("D"*string(I)*","*string(Int64(v_["N1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(Int64(v_["N1"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"D"*string(I)*","*string(Int64(v_["N1"])))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("D"*string(I)*","*string(Int64(v_["N1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(Int64(v_["N1"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"D"*string(I)*","*string(Int64(v_["N1"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["N1"]))]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("E"*string(Int64(v_["0"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["0"]))*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"E"*string(Int64(v_["0"]))*","*string(I))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("E"*string(Int64(v_["0"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["0"]))*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"E"*string(Int64(v_["0"]))*","*string(I))
             iv = ix_["X"*string(Int64(v_["0"]))*","*string(I)]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("F"*string(Int64(v_["0"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(Int64(v_["0"]))*","*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"F"*string(Int64(v_["0"]))*","*string(I))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("F"*string(Int64(v_["0"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(Int64(v_["0"]))*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"F"*string(Int64(v_["0"]))*","*string(I))
             iv = ix_["X"*string(Int64(v_["0"]))*","*string(I)]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("E"*string(Int64(v_["N1"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["N1"]))*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"E"*string(Int64(v_["N1"]))*","*string(I))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("E"*string(Int64(v_["N1"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(Int64(v_["N1"]))*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"E"*string(Int64(v_["N1"]))*","*string(I))
             iv = ix_["X"*string(Int64(v_["N1"]))*","*string(I)]
             pbm.A[ig,iv] += Float64(v_["SQRTAH"])
-            ig,ig_,_ = s2x_ii("F"*string(Int64(v_["N1"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(Int64(v_["N1"]))*","*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"F"*string(Int64(v_["N1"]))*","*string(I))
             iv = ix_["T"]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("F"*string(Int64(v_["N1"]))*","*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(Int64(v_["N1"]))*","*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"F"*string(Int64(v_["N1"]))*","*string(I))
             iv = ix_["X"*string(Int64(v_["N1"]))*","*string(I)]
@@ -232,8 +233,6 @@ function PDE1(action,args...)
                 pbm.gconst[ig_["B"*string(I)*","*string(J)]] = Float64(v_["-YD"])
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(3.5,pb.n)
@@ -268,7 +267,7 @@ function PDE1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

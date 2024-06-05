@@ -135,20 +135,20 @@ function DECONVC(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for K = Int64(v_["-LGSG"]):Int64(v_["LGTR"])
-            iv,ix_,_ = s2x_ii("C"*string(K),ix_)
+            iv,ix_,_ = s2mpj_ii("C"*string(K),ix_)
             arrset(pb.xnames,iv,"C"*string(K))
         end
         for I = Int64(v_["1"]):Int64(v_["LGSG"])
-            iv,ix_,_ = s2x_ii("SG"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("SG"*string(I),ix_)
             arrset(pb.xnames,iv,"SG"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for K = Int64(v_["1"]):Int64(v_["LGTR"])
-            ig,ig_,_ = s2x_ii("R"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(K),ig_)
             arrset(gtype,ig,"<>")
         end
-        ig,ig_,_ = s2x_ii("ENERG",ig_)
+        ig,ig_,_ = s2mpj_ii("ENERG",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"ENERG")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -170,10 +170,8 @@ function DECONVC(action,args...)
             pbm.gconst[ig_["R"*string(K)]] = Float64(v_["TR"*string(K)])
         end
         pbm.gconst[ig_["ENERG"]] = Float64(v_["PIC"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for K = Int64(v_["-LGSG"]):Int64(v_["0"])
             pb.xlower[ix_["C"*string(K)]] = 0.0
@@ -191,12 +189,12 @@ function DECONVC(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePR", iet_)
+        it,iet_,_ = s2mpj_ii( "ePR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"IDX")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -207,15 +205,15 @@ function DECONVC(action,args...)
                 v_["K-I+1"] = 1+v_["K-I"]
                 v_["RIDX"] = Float64(v_["K-I+1"])
                 ename = "PROD"*string(K)*","*string(I)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePR")
                 arrset(ielftype, ie, iet_["ePR"])
                 vname = "SG"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C"*string(Int64(v_["K-I+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="IDX",elftp[ielftype[ie]])
@@ -224,17 +222,17 @@ function DECONVC(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["LGSG"])
             ename = "ESQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "SG"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQ",igt_)
+        it,igt_,_ = s2mpj_ii("gSQ",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -361,7 +359,7 @@ function DECONVC(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

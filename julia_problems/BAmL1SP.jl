@@ -39,12 +39,12 @@ function BAmL1SP(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("C1",ig_)
+        ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C1")
         iv = ix_["X4"]
@@ -71,7 +71,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(-490.2705298)
         iv = ix_["X12"]
         pbm.A[ig,iv] += Float64(-.8547064923)
-        ig,ig_,_ = s2x_ii("C2",ig_)
+        ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C2")
         iv = ix_["X4"]
@@ -98,7 +98,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(392.14243755)
         iv = ix_["X12"]
         pbm.A[ig,iv] += Float64(.68363621076)
-        ig,ig_,_ = s2x_ii("C3",ig_)
+        ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C3")
         iv = ix_["X13"]
@@ -125,7 +125,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(-38.04282609)
         iv = ix_["X21"]
         pbm.A[ig,iv] += Float64(-.5014538225)
-        ig,ig_,_ = s2x_ii("C4",ig_)
+        ig,ig_,_ = s2mpj_ii("C4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C4")
         iv = ix_["X13"]
@@ -152,7 +152,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(32.449722244)
         iv = ix_["X21"]
         pbm.A[ig,iv] += Float64(.42772945465)
-        ig,ig_,_ = s2x_ii("C5",ig_)
+        ig,ig_,_ = s2mpj_ii("C5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C5")
         iv = ix_["X22"]
@@ -179,7 +179,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(-121.2420785)
         iv = ix_["X30"]
         pbm.A[ig,iv] += Float64(-.6428351473)
-        ig,ig_,_ = s2x_ii("C6",ig_)
+        ig,ig_,_ = s2mpj_ii("C6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C6")
         iv = ix_["X22"]
@@ -206,7 +206,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(98.560653819)
         iv = ix_["X30"]
         pbm.A[ig,iv] += Float64(.52257642872)
-        ig,ig_,_ = s2x_ii("C7",ig_)
+        ig,ig_,_ = s2mpj_ii("C7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C7")
         iv = ix_["X31"]
@@ -233,7 +233,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(.07566110172)
         iv = ix_["X39"]
         pbm.A[ig,iv] += Float64(.14143107787)
-        ig,ig_,_ = s2x_ii("C8",ig_)
+        ig,ig_,_ = s2mpj_ii("C8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C8")
         iv = ix_["X31"]
@@ -260,7 +260,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(.06819699123)
         iv = ix_["X39"]
         pbm.A[ig,iv] += Float64(.12747863508)
-        ig,ig_,_ = s2x_ii("C9",ig_)
+        ig,ig_,_ = s2mpj_ii("C9",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C9")
         iv = ix_["X40"]
@@ -287,7 +287,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(27.161405788)
         iv = ix_["X48"]
         pbm.A[ig,iv] += Float64(.57708943686)
-        ig,ig_,_ = s2x_ii("C10",ig_)
+        ig,ig_,_ = s2mpj_ii("C10",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C10")
         iv = ix_["X40"]
@@ -314,7 +314,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(4.0712344877)
         iv = ix_["X48"]
         pbm.A[ig,iv] += Float64(.08650017735)
-        ig,ig_,_ = s2x_ii("C11",ig_)
+        ig,ig_,_ = s2mpj_ii("C11",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C11")
         iv = ix_["X49"]
@@ -341,7 +341,7 @@ function BAmL1SP(action,args...)
         pbm.A[ig,iv] += Float64(112.10170813)
         iv = ix_["X57"]
         pbm.A[ig,iv] += Float64(.77126151439)
-        ig,ig_,_ = s2x_ii("C12",ig_)
+        ig,ig_,_ = s2mpj_ii("C12",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C12")
         iv = ix_["X49"]
@@ -395,17 +395,15 @@ function BAmL1SP(action,args...)
         pbm.gconst[ig_["C10"]] = Float64(202.2580513)
         pbm.gconst[ig_["C11"]] = Float64(5.392772211)
         pbm.gconst[ig_["C12"]] = Float64(194.2376052)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -414,24 +412,24 @@ function BAmL1SP(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["IP1"] = 1+I
             ename = "P"*string(I)*","*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             for J = Int64(v_["IP1"]):Int64(v_["N"])
                 ename = "P"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePROD")
                 arrset(ielftype, ie, iet_["ePROD"])
                 vname = "X"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -20398,7 +20396,10 @@ function BAmL1SP(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(.06649371711))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -20413,6 +20414,10 @@ function BAmL1SP(action,args...)
         pb.pbclass = "NOR2-MN-57-12"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -20473,7 +20478,7 @@ function BAmL1SP(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

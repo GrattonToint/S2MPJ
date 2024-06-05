@@ -12,6 +12,10 @@ function FERRISDC(action,args...)
 # 
 #    classification = "QLR2-AN-V-V"
 # 
+#       Alternative values for the SIF file parameters:
+# IE n                   4              $-PARAMETER
+# IE n                   100            $-PARAMETER
+# IE n                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -33,16 +37,14 @@ function FERRISDC(action,args...)
         else
             v_["n"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE n                   100            $-PARAMETER
-# IE n                   200            $-PARAMETER
 # IE n                   300            $-PARAMETER
+# IE k                   3              $-PARAMETER
+# IE k                   10             $-PARAMETER
         if nargin<2
             v_["k"] = Int64(3);  #  SIF file default value
         else
             v_["k"] = Int64(args[2]);
         end
-# IE k                   10             $-PARAMETER
 # IE k                   20             $-PARAMETER
         v_["0"] = 0
         v_["1"] = 1
@@ -312,19 +314,19 @@ function FERRISDC(action,args...)
         binvars = Int64[]
         for i = Int64(v_["1"]):Int64(v_["k"])
             for j = Int64(v_["1"]):Int64(v_["n"])
-                iv,ix_,_ = s2x_ii("A"*string(i)*","*string(j),ix_)
+                iv,ix_,_ = s2mpj_ii("A"*string(i)*","*string(j),ix_)
                 arrset(pb.xnames,iv,"A"*string(i)*","*string(j))
             end
         end
         for i = Int64(v_["1"]):Int64(v_["n"])
-            iv,ix_,_ = s2x_ii("W"*string(i),ix_)
+            iv,ix_,_ = s2mpj_ii("W"*string(i),ix_)
             arrset(pb.xnames,iv,"W"*string(i))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for j = Int64(v_["1"]):Int64(v_["n"])
             for i = Int64(v_["1"]):Int64(v_["k"])
-                ig,ig_,_ = s2x_ii("OBJ",ig_)
+                ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["A"*string(i)*","*string(j)]
                 pbm.A[ig,iv] += Float64(v_["Y"*string(i)*","*string(j)])
@@ -332,7 +334,7 @@ function FERRISDC(action,args...)
         end
         for i = Int64(v_["1"]):Int64(v_["k"])
             for j = Int64(v_["1"]):Int64(v_["n"])
-                ig,ig_,_ = s2x_ii("C"*string(i),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(i),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"C"*string(i))
                 iv = ix_["A"*string(i)*","*string(j)]
@@ -342,13 +344,13 @@ function FERRISDC(action,args...)
             end
         end
         for j = Int64(v_["1"]):Int64(v_["n"])
-            ig,ig_,_ = s2x_ii("A"*string(j),ig_)
+            ig,ig_,_ = s2mpj_ii("A"*string(j),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"A"*string(j))
             iv = ix_["W"*string(j)]
             pbm.A[ig,iv] += Float64(-1.0)
             for i = Int64(v_["1"]):Int64(v_["k"])
-                ig,ig_,_ = s2x_ii("A"*string(j),ig_)
+                ig,ig_,_ = s2mpj_ii("A"*string(j),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"A"*string(j))
                 iv = ix_["A"*string(i)*","*string(j)]
@@ -368,8 +370,6 @@ function FERRISDC(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
@@ -416,6 +416,9 @@ function FERRISDC(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
+# XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -440,7 +443,7 @@ function FERRISDC(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

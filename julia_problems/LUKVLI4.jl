@@ -16,11 +16,16 @@ function LUKVLI4(action,args...)
 #    Equality constraints changed to inequalities
 # 
 #    SIF input: Nick Gould, April 2001
+#               incorrectly decoded version (see LUKVLE4C for correction)
 # 
 #    classification = "OOR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,10 +47,6 @@ function LUKVLI4(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
         v_["1"] = 1
         v_["2"] = 2
@@ -61,7 +62,7 @@ function LUKVLI4(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -71,36 +72,43 @@ function LUKVLI4(action,args...)
             v_["2I-1"] = -1+v_["2I"]
             v_["2I+1"] = 1+v_["2I"]
             v_["2I+2"] = 2+v_["2I"]
-            ig,ig_,_ = s2x_ii("A"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("A"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["2I"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("B"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["2I"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["2I+1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["2I+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["2I+2"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("D"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("D"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["2I-1"]))]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("F"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["2I+2"]))]
             pbm.A[ig,iv] += Float64(1.0)
         end
-        for K = Int64(v_["1"]):Int64(v_["N-2"])
+        for K = Int64(v_["1"]):Int64(v_["N/2-1"])
             v_["K+1"] = 1+K
-            ig,ig_,_ = s2x_ii("E"*string(K),ig_)
-            arrset(gtype,ig,"<=")
-            arrset(pb.cnames,ig,"E"*string(K))
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
+            arrset(gtype,ig,"<>")
+            iv = ix_["X"*string(Int64(v_["K+1"]))]
+            pbm.A[ig,iv] += Float64(6.0)
+        end
+        for K = Int64(v_["N/2"]):Int64(v_["N-2"])
+            v_["K+1"] = 1+K
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
+            arrset(gtype,ig,"==")
+            arrset(pb.cnames,ig,"C"*string(K))
             iv = ix_["X"*string(Int64(v_["K+1"]))]
             pbm.A[ig,iv] += Float64(6.0)
         end
@@ -123,10 +131,8 @@ function LUKVLI4(action,args...)
             pbm.gconst[ig_["F"*string(I)]] = Float64(1.0)
         end
         for K = Int64(v_["1"]):Int64(v_["N-2"])
-            pbm.gconst[ig_["E"*string(K)]] = Float64(2.0)
+            pbm.gconst[ig_["C"*string(K)]] = Float64(2.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -148,14 +154,14 @@ function LUKVLI4(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEXPN", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXPN", iet_)
         loaset(elftv,it,1,"V")
-        it,iet_,_ = s2x_ii( "eTANG", iet_)
+        it,iet_,_ = s2mpj_ii( "eTANG", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"V")
-        it,iet_,_ = s2x_ii( "eCUBEP", iet_)
+        it,iet_,_ = s2mpj_ii( "eCUBEP", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftv,it,2,"W")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -167,23 +173,23 @@ function LUKVLI4(action,args...)
             v_["2I+1"] = 1+v_["2I"]
             v_["2I+2"] = 2+v_["2I"]
             ename = "AE"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXPN")
             arrset(ielftype, ie, iet_["eEXPN"])
             vname = "X"*string(Int64(v_["2I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "CE"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eTANG")
             arrset(ielftype, ie, iet_["eTANG"])
             vname = "X"*string(Int64(v_["2I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["2I+2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -191,32 +197,32 @@ function LUKVLI4(action,args...)
             v_["K+1"] = 1+K
             v_["K+2"] = 2+K
             ename = "CA"*string(K)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCUBEP")
             arrset(ielftype, ie, iet_["eCUBEP"])
             vname = "X"*string(Int64(v_["K+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(K)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "CB"*string(K)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["K+2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
-        it,igt_,_ = s2x_ii("gL4",igt_)
-        it,igt_,_ = s2x_ii("gAL6",igt_)
-        it,igt_,_ = s2x_ii("gL8",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL4",igt_)
+        it,igt_,_ = s2mpj_ii("gAL6",igt_)
+        it,igt_,_ = s2mpj_ii("gL8",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -243,7 +249,7 @@ function LUKVLI4(action,args...)
             arrset(pbm.grftype,ig,"gL2")
         end
         for K = Int64(v_["1"]):Int64(v_["N-2"])
-            ig = ig_["E"*string(K)]
+            ig = ig_["C"*string(K)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["CA"*string(K)])
             arrset(nlc,length(nlc)+1,ig)
@@ -254,11 +260,14 @@ function LUKVLI4(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               4.78473E+03
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)
-        pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)
+        pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
+        pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
@@ -266,6 +275,10 @@ function LUKVLI4(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AY-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -476,7 +489,7 @@ function LUKVLI4(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

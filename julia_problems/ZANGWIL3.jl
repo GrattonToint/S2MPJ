@@ -38,15 +38,15 @@ function ZANGWIL3(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G1",ig_)
+        ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G1")
         iv = ix_["X1"]
@@ -55,7 +55,7 @@ function ZANGWIL3(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("G2",ig_)
+        ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G2")
         iv = ix_["X1"]
@@ -64,7 +64,7 @@ function ZANGWIL3(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("G3",ig_)
+        ig,ig_,_ = s2mpj_ii("G3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G3")
         iv = ix_["X1"]
@@ -86,8 +86,6 @@ function ZANGWIL3(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -131,7 +129,7 @@ function ZANGWIL3(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

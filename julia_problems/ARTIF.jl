@@ -19,6 +19,13 @@ function ARTIF(action,args...)
 # 
 #    Number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER 
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,12 +47,6 @@ function ARTIF(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER 
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
         v_["0"] = 0
         v_["1"] = 1
         v_["N+1"] = 1+v_["N"]
@@ -54,7 +55,7 @@ function ARTIF(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N+1"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -62,7 +63,7 @@ function ARTIF(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("EQ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("EQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EQ"*string(I))
             iv = ix_["X"*string(I)]
@@ -85,8 +86,6 @@ function ARTIF(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -99,7 +98,7 @@ function ARTIF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eTRIG", iet_)
+        it,iet_,_ = s2mpj_ii( "eTRIG", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"PAR")
@@ -109,13 +108,13 @@ function ARTIF(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["RI"] = Float64(I)
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eTRIG")
                 arrset(ielftype,ie,iet_["eTRIG"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="PAR",elftp[ielftype[ie]])
@@ -134,6 +133,8 @@ function ARTIF(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -148,6 +149,10 @@ function ARTIF(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -188,7 +193,7 @@ function ARTIF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

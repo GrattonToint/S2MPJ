@@ -24,6 +24,10 @@ function EIGENA2(action,args...)
 # 
 #    The dimension of the matrix.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER
+# IE N                   10             $-PARAMETER     original value
+# IE N                   50             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,9 +49,6 @@ function EIGENA2(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER     original value
-# IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
         v_["1"] = 1
         for J = Int64(v_["1"]):Int64(v_["N"])
@@ -62,10 +63,10 @@ function EIGENA2(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("D"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("D"*string(J),ix_)
             arrset(pb.xnames,iv,"D"*string(J))
             for I = Int64(v_["1"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("Q"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Q"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Q"*string(I)*","*string(J))
             end
         end
@@ -73,14 +74,14 @@ function EIGENA2(action,args...)
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(J)
-                ig,ig_,_ = s2x_ii("O"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("O"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"O"*string(I)*","*string(J))
             end
             for I = Int64(v_["1"]):Int64(v_["N"])
                 for K = Int64(v_["1"]):Int64(v_["N"])
                     v_["-AIK"] = -1.0*v_["A"*string(I)*","*string(K)]
-                    ig,ig_,_ = s2x_ii("E"*string(I)*","*string(J),ig_)
+                    ig,ig_,_ = s2mpj_ii("E"*string(I)*","*string(J),ig_)
                     arrset(gtype,ig,"<>")
                     iv = ix_["Q"*string(J)*","*string(K)]
                     pbm.A[ig,iv] += Float64(v_["-AIK"])
@@ -105,8 +106,6 @@ function EIGENA2(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["O"*string(J)*","*string(J)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -120,7 +119,7 @@ function EIGENA2(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PROD", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PROD", iet_)
         loaset(elftv,it,1,"Q1")
         loaset(elftv,it,2,"Q2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -129,34 +128,34 @@ function EIGENA2(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["N"])
                 ename = "E"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"en2PROD")
                     arrset(ielftype,ie,iet_["en2PROD"])
                 end
                 vname = "Q"*string(J)*","*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "D"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
             for I = Int64(v_["1"]):Int64(J)
                 for K = Int64(v_["1"]):Int64(v_["N"])
                     ename = "O"*string(I)*","*string(J)*","*string(K)
-                    ie,ie_,newelt = s2x_ii(ename,ie_)
+                    ie,ie_,newelt = s2mpj_ii(ename,ie_)
                     if newelt > 0
                         arrset(pbm.elftype,ie,"en2PROD")
                         arrset(ielftype,ie,iet_["en2PROD"])
                     end
                     vname = "Q"*string(K)*","*string(I)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                     posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "Q"*string(K)*","*string(J)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                     posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -164,7 +163,7 @@ function EIGENA2(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -262,7 +261,7 @@ function EIGENA2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -22,6 +22,8 @@ function TRIGON2B(action,args...)
 # 
 #    Number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,7 +45,6 @@ function TRIGON2B(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
 # IE N                   100            $-PARAMETER
 # IE N                   1000           $-PARAMETER
         v_["ME"] = 3*v_["N"]
@@ -58,19 +59,19 @@ function TRIGON2B(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("FA",ig_)
+        ig,ig_,_ = s2mpj_ii("FA",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("FB"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("FB"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("FC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("FC"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("FD"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("FD"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
@@ -86,8 +87,6 @@ function TRIGON2B(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["FD"*string(I)]] = Float64(0.9)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-500.0,pb.n)
         pb.xupper = fill(500.0,pb.n)
@@ -101,7 +100,7 @@ function TRIGON2B(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSINF", iet_)
+        it,iet_,_ = s2mpj_ii( "eSINF", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"P")
@@ -110,21 +109,21 @@ function TRIGON2B(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "EB"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSINF")
             arrset(ielftype, ie, iet_["eSINF"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-500.0,500.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-500.0,500.0,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(7.0))
             ename = "EC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSINF")
             arrset(ielftype, ie, iet_["eSINF"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-500.0,500.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-500.0,500.0,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
@@ -132,7 +131,7 @@ function TRIGON2B(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -151,7 +150,10 @@ function TRIGON2B(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["ROOT6"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -159,6 +161,10 @@ function TRIGON2B(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SBR2-MN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -224,7 +230,7 @@ function TRIGON2B(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

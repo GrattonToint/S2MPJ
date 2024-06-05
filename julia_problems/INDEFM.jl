@@ -24,6 +24,8 @@ function INDEFM(action,args...)
 # 
 #    The number of variables is N.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,7 +47,6 @@ function INDEFM(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
 # IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # IE N                   1000           $-PARAMETER     original value
@@ -71,19 +72,19 @@ function INDEFM(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("SIN"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("SIN"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
         end
         for I = Int64(v_["2"]):Int64(v_["N-1"])
-            ig,ig_,_ = s2x_ii("COS"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("COS"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(2.0)
@@ -97,8 +98,6 @@ function INDEFM(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -111,11 +110,11 @@ function INDEFM(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gCOS",igt_)
-        it,igt_,_ = s2x_ii("gCOS",igt_)
+        it,igt_,_ = s2mpj_ii("gCOS",igt_)
+        it,igt_,_ = s2mpj_ii("gCOS",igt_)
         grftp = Vector{Vector{String}}()
         loaset(grftp,it,1,"ALPHA")
-        it,igt_,_ = s2x_ii("gSIN",igt_)
+        it,igt_,_ = s2mpj_ii("gSIN",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -132,6 +131,8 @@ function INDEFM(action,args...)
             arrset(pbm.grftype,ig,"gSIN")
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -140,6 +141,10 @@ function INDEFM(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -194,7 +199,7 @@ function INDEFM(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

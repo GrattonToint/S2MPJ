@@ -35,13 +35,13 @@ function LOGROS(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X",ix_)
+        iv,ix_,_ = s2mpj_ii("X",ix_)
         arrset(pb.xnames,iv,"X")
-        iv,ix_,_ = s2x_ii("Y",ix_)
+        iv,ix_,_ = s2mpj_ii("Y",ix_)
         arrset(pb.xnames,iv,"Y")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -55,27 +55,27 @@ function LOGROS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eROS", iet_)
+        it,iet_,_ = s2mpj_ii( "eROS", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "F"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eROS")
         arrset(ielftype, ie, iet_["eROS"])
         vname = "X"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "Y"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gLOG",igt_)
+        it,igt_,_ = s2mpj_ii("gLOG",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -97,6 +97,10 @@ function LOGROS(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OBR2-AN-2-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -165,7 +169,7 @@ function LOGROS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

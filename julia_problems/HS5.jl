@@ -36,25 +36,25 @@ function HS5(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G1",ig_)
+        ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("G2",ig_)
+        ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("G3",ig_)
+        ig,ig_,_ = s2mpj_ii("G3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(-1.5)
@@ -68,10 +68,8 @@ function HS5(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["G3"]] = Float64(-1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["X1"]] = -1.5
         pb.xupper[ix_["X1"]] = 4.0
@@ -79,8 +77,8 @@ function HS5(action,args...)
         pb.xupper[ix_["X2"]] = 3.0
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSINE",igt_)
-        it,igt_,_ = s2x_ii("gSQ",igt_)
+        it,igt_,_ = s2mpj_ii("gSINE",igt_)
+        it,igt_,_ = s2mpj_ii("gSQ",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -91,7 +89,10 @@ function HS5(action,args...)
         ig = ig_["G2"]
         arrset(pbm.grftype,ig,"gSQ")
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Problem is trivially bounded below by -13.5
         pb.objlower = -13.5
+#    Solution
+# LO SOLTN               -1.9132229
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -100,6 +101,10 @@ function HS5(action,args...)
         pb.pbclass = "OBR2-AN-2-0"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -154,7 +159,7 @@ function HS5(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

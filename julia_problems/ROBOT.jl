@@ -63,42 +63,42 @@ function ROBOT(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("TH1",ix_)
+        iv,ix_,_ = s2mpj_ii("TH1",ix_)
         arrset(pb.xnames,iv,"TH1")
-        iv,ix_,_ = s2x_ii("TH2",ix_)
+        iv,ix_,_ = s2mpj_ii("TH2",ix_)
         arrset(pb.xnames,iv,"TH2")
-        iv,ix_,_ = s2x_ii("TH3",ix_)
+        iv,ix_,_ = s2mpj_ii("TH3",ix_)
         arrset(pb.xnames,iv,"TH3")
-        iv,ix_,_ = s2x_ii("TH4",ix_)
+        iv,ix_,_ = s2mpj_ii("TH4",ix_)
         arrset(pb.xnames,iv,"TH4")
-        iv,ix_,_ = s2x_ii("TH5",ix_)
+        iv,ix_,_ = s2mpj_ii("TH5",ix_)
         arrset(pb.xnames,iv,"TH5")
-        iv,ix_,_ = s2x_ii("TH6",ix_)
+        iv,ix_,_ = s2mpj_ii("TH6",ix_)
         arrset(pb.xnames,iv,"TH6")
-        iv,ix_,_ = s2x_ii("TH7",ix_)
+        iv,ix_,_ = s2mpj_ii("TH7",ix_)
         arrset(pb.xnames,iv,"TH7")
-        iv,ix_,_ = s2x_ii("TH1I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH1I",ix_)
         arrset(pb.xnames,iv,"TH1I")
-        iv,ix_,_ = s2x_ii("TH2I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH2I",ix_)
         arrset(pb.xnames,iv,"TH2I")
-        iv,ix_,_ = s2x_ii("TH3I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH3I",ix_)
         arrset(pb.xnames,iv,"TH3I")
-        iv,ix_,_ = s2x_ii("TH4I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH4I",ix_)
         arrset(pb.xnames,iv,"TH4I")
-        iv,ix_,_ = s2x_ii("TH5I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH5I",ix_)
         arrset(pb.xnames,iv,"TH5I")
-        iv,ix_,_ = s2x_ii("TH6I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH6I",ix_)
         arrset(pb.xnames,iv,"TH6I")
-        iv,ix_,_ = s2x_ii("TH7I",ix_)
+        iv,ix_,_ = s2mpj_ii("TH7I",ix_)
         arrset(pb.xnames,iv,"TH7I")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("CONSTR1",ig_)
+        ig,ig_,_ = s2mpj_ii("CONSTR1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONSTR1")
-        ig,ig_,_ = s2x_ii("CONSTR2",ig_)
+        ig,ig_,_ = s2mpj_ii("CONSTR2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONSTR2")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -118,10 +118,8 @@ function ROBOT(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["CONSTR1"]] = Float64(v_["XPOS"])
         pbm.gconst[ig_["CONSTR2"]] = Float64(v_["YPOS"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["TH1"]] = v_["DOWN"]
         pb.xupper[ix_["TH1"]] = v_["HIGH"]
@@ -171,210 +169,210 @@ function ROBOT(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eISQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eISQ", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftv,it,2,"W")
-        it,iet_,_ = s2x_ii( "eCOSTH", iet_)
+        it,iet_,_ = s2mpj_ii( "eCOSTH", iet_)
         loaset(elftv,it,1,"THETAC")
-        it,iet_,_ = s2x_ii( "eSINTH", iet_)
+        it,iet_,_ = s2mpj_ii( "eSINTH", iet_)
         loaset(elftv,it,1,"THETAS")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "TH1SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH1I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "TH2SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH2I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "TH3SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH3I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "TH4SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH4I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "TH5SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH5"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH5I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "TH6SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH6"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH6I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "TH7SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eISQ")
         arrset(ielftype, ie, iet_["eISQ"])
         vname = "TH7"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "TH7I"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C1TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C2TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C3TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C4TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C5TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH5"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C6TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH6"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "C7TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOSTH")
         arrset(ielftype, ie, iet_["eCOSTH"])
         vname = "TH7"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S1TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S2TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S3TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S4TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S5TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH5"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S6TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH6"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S7TH"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINTH")
         arrset(ielftype, ie, iet_["eSINTH"])
         vname = "TH7"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="THETAS",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -461,6 +459,7 @@ function ROBOT(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOLUTION            5.46283877
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -473,6 +472,10 @@ function ROBOT(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QOR2-MY-14-2"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -564,7 +567,7 @@ function ROBOT(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

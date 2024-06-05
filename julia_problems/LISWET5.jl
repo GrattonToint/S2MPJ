@@ -40,6 +40,29 @@ function LISWET5(action,args...)
 # 
 #    classification = "QLR2-AN-V-V"
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER 103 variables original value 
+# IE K                   3              $-PARAMETER original value
+# 
+# IE N                   100            $-PARAMETER 104 variables    
+# IE K                   4              $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER 105 variables    
+# IE K                   5              $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER 106 variables    
+# IE K                   6              $-PARAMETER
+# 
+# IE N                   400            $-PARAMETER 402 variables    
+# IE K                   2              $-PARAMETER
+# 
+# IE N                   400            $-PARAMETER 403 variables    
+# IE K                   3              $-PARAMETER
+# 
+# IE N                   2000           $-PARAMETER 2001 variables    
+# IE K                   1              $-PARAMETER
+# 
+# IE N                   2000           $-PARAMETER 2002 variables    
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -61,26 +84,12 @@ function LISWET5(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
+# IE K                   2              $-PARAMETER
         if nargin<2
             v_["K"] = Int64(3);  #  SIF file default value
         else
             v_["K"] = Int64(args[2]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER 104 variables    
-# IE K                   4              $-PARAMETER
-# IE N                   100            $-PARAMETER 105 variables    
-# IE K                   5              $-PARAMETER
-# IE N                   100            $-PARAMETER 106 variables    
-# IE K                   6              $-PARAMETER
-# IE N                   400            $-PARAMETER 402 variables    
-# IE K                   2              $-PARAMETER
-# IE N                   400            $-PARAMETER 403 variables    
-# IE K                   3              $-PARAMETER
-# IE N                   2000           $-PARAMETER 2001 variables    
-# IE K                   1              $-PARAMETER
-# IE N                   2000           $-PARAMETER 2002 variables    
-# IE K                   2              $-PARAMETER
 # IE N                   10000          $-PARAMETER 10001 variables    
 # IE K                   1              $-PARAMETER
 # IE N                   10000          $-PARAMETER 10002 variables    
@@ -113,7 +122,7 @@ function LISWET5(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N+K"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -130,7 +139,7 @@ function LISWET5(action,args...)
             v_["-CI"] = -1.0*v_["CI"]
             v_["-CI*CI"] = v_["-CI"]*v_["CI"]
             v_["CONST"] = v_["CONST"]+v_["-CI*CI"]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["-CI"])
@@ -139,7 +148,7 @@ function LISWET5(action,args...)
             v_["J+K"] = J+v_["K"]
             for I = Int64(v_["0"]):Int64(v_["K"])
                 v_["J+K-I"] = v_["J+K"]-I
-                ig,ig_,_ = s2x_ii("CON"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("CON"*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"CON"*string(J))
                 iv = ix_["X"*string(Int64(v_["J+K-I"]))]
@@ -163,26 +172,24 @@ function LISWET5(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         v_["CONST"] = v_["HALF"]*v_["CONST"]
         pbm.gconst[ig_["OBJ"]] = Float64(v_["CONST"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N+K"])
             ename = "XSQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -199,6 +206,8 @@ function LISWET5(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -213,6 +222,10 @@ function LISWET5(action,args...)
         pb.pbclass = "QLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -247,7 +260,7 @@ function LISWET5(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

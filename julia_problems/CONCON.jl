@@ -38,71 +38,71 @@ function CONCON(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("P"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
             arrset(pb.xnames,iv,"P"*string(I))
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
-            iv,ix_,_ = s2x_ii("Q"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Q"*string(I),ix_)
             arrset(pb.xnames,iv,"Q"*string(I))
-            iv,ix_,_ = s2x_ii("F"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("F"*string(I),ix_)
             arrset(pb.xnames,iv,"F"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("OBJECT",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJECT",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["P"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("PAN"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("PAN"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PAN"*string(I))
         end
-        ig,ig_,_ = s2x_ii("MBAL1",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL1")
         iv = ix_["Q1"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["F3"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("MBAL2",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL2")
         iv = ix_["Q1"]
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["F1"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("MBAL3",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL3")
         iv = ix_["Q2"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["F1"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("MBAL4",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL4")
         iv = ix_["Q2"]
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["Q3"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("MBAL5",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL5")
         iv = ix_["Q3"]
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["F2"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("MBAL6",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL6")
         iv = ix_["Q4"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["F2"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("MBAL7",ig_)
+        ig,ig_,_ = s2mpj_ii("MBAL7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"MBAL7")
         iv = ix_["Q4"]
@@ -126,8 +126,6 @@ function CONCON(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         v_["DEMAND"] = -1000.0
         pbm.gconst[ig_["MBAL4"]] = Float64(v_["DEMAND"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -155,30 +153,30 @@ function CONCON(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eFORQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eFORQ", iet_)
         loaset(elftv,it,1,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "PSQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "P"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
             ename = "QTO"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFORQ")
             arrset(ielftype, ie, iet_["eFORQ"])
             vname = "Q"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -333,7 +331,7 @@ function CONCON(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

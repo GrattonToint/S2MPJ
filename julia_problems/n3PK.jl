@@ -82,113 +82,113 @@ function n3PK(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("A1,0",ix_)
+        iv,ix_,_ = s2mpj_ii("A1,0",ix_)
         arrset(pb.xnames,iv,"A1,0")
-        iv,ix_,_ = s2x_ii("A2,0",ix_)
+        iv,ix_,_ = s2mpj_ii("A2,0",ix_)
         arrset(pb.xnames,iv,"A2,0")
-        iv,ix_,_ = s2x_ii("A3,0",ix_)
+        iv,ix_,_ = s2mpj_ii("A3,0",ix_)
         arrset(pb.xnames,iv,"A3,0")
-        iv,ix_,_ = s2x_ii("A4,0",ix_)
+        iv,ix_,_ = s2mpj_ii("A4,0",ix_)
         arrset(pb.xnames,iv,"A4,0")
-        iv,ix_,_ = s2x_ii("A5,0",ix_)
+        iv,ix_,_ = s2mpj_ii("A5,0",ix_)
         arrset(pb.xnames,iv,"A5,0")
-        iv,ix_,_ = s2x_ii("A0,1",ix_)
+        iv,ix_,_ = s2mpj_ii("A0,1",ix_)
         arrset(pb.xnames,iv,"A0,1")
-        iv,ix_,_ = s2x_ii("A2,1",ix_)
+        iv,ix_,_ = s2mpj_ii("A2,1",ix_)
         arrset(pb.xnames,iv,"A2,1")
-        iv,ix_,_ = s2x_ii("A3,1",ix_)
+        iv,ix_,_ = s2mpj_ii("A3,1",ix_)
         arrset(pb.xnames,iv,"A3,1")
-        iv,ix_,_ = s2x_ii("A4,1",ix_)
+        iv,ix_,_ = s2mpj_ii("A4,1",ix_)
         arrset(pb.xnames,iv,"A4,1")
-        iv,ix_,_ = s2x_ii("A5,1",ix_)
+        iv,ix_,_ = s2mpj_ii("A5,1",ix_)
         arrset(pb.xnames,iv,"A5,1")
-        iv,ix_,_ = s2x_ii("A0,2",ix_)
+        iv,ix_,_ = s2mpj_ii("A0,2",ix_)
         arrset(pb.xnames,iv,"A0,2")
-        iv,ix_,_ = s2x_ii("A1,2",ix_)
+        iv,ix_,_ = s2mpj_ii("A1,2",ix_)
         arrset(pb.xnames,iv,"A1,2")
-        iv,ix_,_ = s2x_ii("A3,2",ix_)
+        iv,ix_,_ = s2mpj_ii("A3,2",ix_)
         arrset(pb.xnames,iv,"A3,2")
-        iv,ix_,_ = s2x_ii("A4,2",ix_)
+        iv,ix_,_ = s2mpj_ii("A4,2",ix_)
         arrset(pb.xnames,iv,"A4,2")
-        iv,ix_,_ = s2x_ii("A5,2",ix_)
+        iv,ix_,_ = s2mpj_ii("A5,2",ix_)
         arrset(pb.xnames,iv,"A5,2")
         for J = Int64(v_["NPKC"]):Int64(v_["NCENT-1"])
             v_["J+1"] = 1+J
             v_["J-1"] = -1+J
             for I = Int64(v_["0"]):Int64(v_["J-1"])
-                iv,ix_,_ = s2x_ii("T"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("T"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"T"*string(I)*","*string(J))
             end
             for I = Int64(v_["J+1"]):Int64(v_["NCENT-1"])
-                iv,ix_,_ = s2x_ii("T"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("T"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"T"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G0,3",ig_)
+        ig,ig_,_ = s2mpj_ii("G0,3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,3"]
         pbm.A[ig,iv] += Float64(0.010000)
-        ig,ig_,_ = s2x_ii("G1,3",ig_)
+        ig,ig_,_ = s2mpj_ii("G1,3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,3"]
         pbm.A[ig,iv] += Float64(0.007143)
-        ig,ig_,_ = s2x_ii("G2,3",ig_)
+        ig,ig_,_ = s2mpj_ii("G2,3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,3"]
         pbm.A[ig,iv] += Float64(0.008333)
-        ig,ig_,_ = s2x_ii("G4,3",ig_)
+        ig,ig_,_ = s2mpj_ii("G4,3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T4,3"]
         pbm.A[ig,iv] += Float64(0.050000)
-        ig,ig_,_ = s2x_ii("G5,3",ig_)
+        ig,ig_,_ = s2mpj_ii("G5,3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T5,3"]
         pbm.A[ig,iv] += Float64(0.050000)
-        ig,ig_,_ = s2x_ii("G0,4",ig_)
+        ig,ig_,_ = s2mpj_ii("G0,4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,4"]
         pbm.A[ig,iv] += Float64(0.005000)
-        ig,ig_,_ = s2x_ii("G1,4",ig_)
+        ig,ig_,_ = s2mpj_ii("G1,4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,4"]
         pbm.A[ig,iv] += Float64(0.005556)
-        ig,ig_,_ = s2x_ii("G2,4",ig_)
+        ig,ig_,_ = s2mpj_ii("G2,4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,4"]
         pbm.A[ig,iv] += Float64(0.050000)
-        ig,ig_,_ = s2x_ii("G3,4",ig_)
+        ig,ig_,_ = s2mpj_ii("G3,4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,4"]
         pbm.A[ig,iv] += Float64(0.001667)
-        ig,ig_,_ = s2x_ii("G5,4",ig_)
+        ig,ig_,_ = s2mpj_ii("G5,4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T5,4"]
         pbm.A[ig,iv] += Float64(0.025000)
-        ig,ig_,_ = s2x_ii("G0,5",ig_)
+        ig,ig_,_ = s2mpj_ii("G0,5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,5"]
         pbm.A[ig,iv] += Float64(0.020000)
-        ig,ig_,_ = s2x_ii("G1,5",ig_)
+        ig,ig_,_ = s2mpj_ii("G1,5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,5"]
         pbm.A[ig,iv] += Float64(0.033333)
-        ig,ig_,_ = s2x_ii("G2,5",ig_)
+        ig,ig_,_ = s2mpj_ii("G2,5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,5"]
         pbm.A[ig,iv] += Float64(0.014286)
-        ig,ig_,_ = s2x_ii("G3,5",ig_)
+        ig,ig_,_ = s2mpj_ii("G3,5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,5"]
         pbm.A[ig,iv] += Float64(0.006667)
-        ig,ig_,_ = s2x_ii("G4,5",ig_)
+        ig,ig_,_ = s2mpj_ii("G4,5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T4,5"]
         pbm.A[ig,iv] += Float64(0.050000)
         v_["TMP"] = 5.000000*v_["FT0"]
         v_["TMP1"] = 1.0/v_["TMP"]
-        ig,ig_,_ = s2x_ii("H0",ig_)
+        ig,ig_,_ = s2mpj_ii("H0",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["WFT0"]))
         iv = ix_["A1,0"]
@@ -203,7 +203,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(v_["TMP1"])
         v_["TMP"] = 5.000000*v_["FT1"]
         v_["TMP1"] = 1.0/v_["TMP"]
-        ig,ig_,_ = s2x_ii("H1",ig_)
+        ig,ig_,_ = s2mpj_ii("H1",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["WFT1"]))
         iv = ix_["A0,1"]
@@ -218,7 +218,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(v_["TMP1"])
         v_["TMP"] = 5.000000*v_["FT2"]
         v_["TMP1"] = 1.0/v_["TMP"]
-        ig,ig_,_ = s2x_ii("H2",ig_)
+        ig,ig_,_ = s2mpj_ii("H2",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["WFT2"]))
         iv = ix_["A0,2"]
@@ -232,49 +232,49 @@ function n3PK(action,args...)
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(v_["TMP1"])
         for I = Int64(v_["0"]):Int64(v_["COUNT-1"])
-            ig,ig_,_ = s2x_ii("K"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("K"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(v_["PHI"*string(I)]))
         end
         v_["TMP1"] = 200.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 200.000000/v_["COU4"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K4",ig_)
+        ig,ig_,_ = s2mpj_ii("K4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 200.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 480.000000/v_["COU8"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 480.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 480.000000/v_["COU6"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 480.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
@@ -284,290 +284,290 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 360.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A4,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 360.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A4,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 560.000000/v_["COU8"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 560.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 560.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 240.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 400.000000/v_["COU8"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 400.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 400.000000/v_["COU6"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 400.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 400.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A2,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 420.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A3,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 420.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A3,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 180.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A4,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 180.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A4,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 180.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A4,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 320.000000/v_["COU8"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 320.000000/v_["COU7"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 320.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 320.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 20.000000/v_["COU1"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K1",ig_)
+        ig,ig_,_ = s2mpj_ii("K1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 20.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 60.000000/v_["COU1"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K1",ig_)
+        ig,ig_,_ = s2mpj_ii("K1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 40.000000/v_["COU2"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A3,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 40.000000/v_["COU1"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K1",ig_)
+        ig,ig_,_ = s2mpj_ii("K1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A3,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 40.000000/v_["COU0"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A3,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 120.000000/v_["COU5"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K5",ig_)
+        ig,ig_,_ = s2mpj_ii("K5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A4,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 20.000000/v_["COU8"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP1"] = 20.000000/v_["COU5"]
         v_["TMP"] = 1.000000*v_["TMP1"]
-        ig,ig_,_ = s2x_ii("K5",ig_)
+        ig,ig_,_ = s2mpj_ii("K5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU7"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU3"]
-        ig,ig_,_ = s2x_ii("K3",ig_)
+        ig,ig_,_ = s2mpj_ii("K3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU7"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU4"]
-        ig,ig_,_ = s2x_ii("K4",ig_)
+        ig,ig_,_ = s2mpj_ii("K4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU8"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU7"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU6"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU7"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T4,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU8"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T5,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU7"]
-        ig,ig_,_ = s2x_ii("K7",ig_)
+        ig,ig_,_ = s2mpj_ii("K7",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T5,3"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU3"]
-        ig,ig_,_ = s2x_ii("K3",ig_)
+        ig,ig_,_ = s2mpj_ii("K3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU4"]
-        ig,ig_,_ = s2x_ii("K4",ig_)
+        ig,ig_,_ = s2mpj_ii("K4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU8"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU6"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU3"]
-        ig,ig_,_ = s2x_ii("K3",ig_)
+        ig,ig_,_ = s2mpj_ii("K3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU2"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU8"]
-        ig,ig_,_ = s2x_ii("K8",ig_)
+        ig,ig_,_ = s2mpj_ii("K8",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T5,4"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU6"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU1"]
-        ig,ig_,_ = s2x_ii("K1",ig_)
+        ig,ig_,_ = s2mpj_ii("K1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU0"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T0,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU6"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU1"]
-        ig,ig_,_ = s2x_ii("K1",ig_)
+        ig,ig_,_ = s2mpj_ii("K1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T1,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU6"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T2,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
@@ -575,31 +575,31 @@ function n3PK(action,args...)
         iv = ix_["T3,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU2"]
-        ig,ig_,_ = s2x_ii("K2",ig_)
+        ig,ig_,_ = s2mpj_ii("K2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU1"]
-        ig,ig_,_ = s2x_ii("K1",ig_)
+        ig,ig_,_ = s2mpj_ii("K1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU0"]
-        ig,ig_,_ = s2x_ii("K0",ig_)
+        ig,ig_,_ = s2mpj_ii("K0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T3,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU6"]
-        ig,ig_,_ = s2x_ii("K6",ig_)
+        ig,ig_,_ = s2mpj_ii("K6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T4,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
         v_["TMP"] = 1.000000/v_["COU5"]
-        ig,ig_,_ = s2x_ii("K5",ig_)
+        ig,ig_,_ = s2mpj_ii("K5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T4,5"]
         pbm.A[ig,iv] += Float64(v_["TMP"])
-        ig,ig_,_ = s2x_ii("L1,0",ig_)
+        ig,ig_,_ = s2mpj_ii("L1,0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(-0.800000)
@@ -612,7 +612,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L2,0",ig_)
+        ig,ig_,_ = s2mpj_ii("L2,0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -625,7 +625,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L3,0",ig_)
+        ig,ig_,_ = s2mpj_ii("L3,0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -638,7 +638,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L4,0",ig_)
+        ig,ig_,_ = s2mpj_ii("L4,0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -651,7 +651,7 @@ function n3PK(action,args...)
         arrset(pbm.gscale,ig,Float64(0.500000))
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L5,0",ig_)
+        ig,ig_,_ = s2mpj_ii("L5,0",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A1,0"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -664,7 +664,7 @@ function n3PK(action,args...)
         iv = ix_["A5,0"]
         pbm.A[ig,iv] += Float64(-0.800000)
         arrset(pbm.gscale,ig,Float64(0.500000))
-        ig,ig_,_ = s2x_ii("L0,1",ig_)
+        ig,ig_,_ = s2mpj_ii("L0,1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,1"]
         pbm.A[ig,iv] += Float64(-0.800000)
@@ -677,7 +677,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L2,1",ig_)
+        ig,ig_,_ = s2mpj_ii("L2,1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,1"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -690,7 +690,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L3,1",ig_)
+        ig,ig_,_ = s2mpj_ii("L3,1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,1"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -703,7 +703,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L4,1",ig_)
+        ig,ig_,_ = s2mpj_ii("L4,1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,1"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -716,7 +716,7 @@ function n3PK(action,args...)
         arrset(pbm.gscale,ig,Float64(0.500000))
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L5,1",ig_)
+        ig,ig_,_ = s2mpj_ii("L5,1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,1"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -729,7 +729,7 @@ function n3PK(action,args...)
         iv = ix_["A5,1"]
         pbm.A[ig,iv] += Float64(-0.800000)
         arrset(pbm.gscale,ig,Float64(0.500000))
-        ig,ig_,_ = s2x_ii("L0,2",ig_)
+        ig,ig_,_ = s2mpj_ii("L0,2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(-0.800000)
@@ -742,7 +742,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L1,2",ig_)
+        ig,ig_,_ = s2mpj_ii("L1,2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -755,7 +755,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L3,2",ig_)
+        ig,ig_,_ = s2mpj_ii("L3,2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -768,7 +768,7 @@ function n3PK(action,args...)
         pbm.A[ig,iv] += Float64(0.200000)
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L4,2",ig_)
+        ig,ig_,_ = s2mpj_ii("L4,2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -781,7 +781,7 @@ function n3PK(action,args...)
         arrset(pbm.gscale,ig,Float64(0.500000))
         iv = ix_["A5,2"]
         pbm.A[ig,iv] += Float64(0.200000)
-        ig,ig_,_ = s2x_ii("L5,2",ig_)
+        ig,ig_,_ = s2mpj_ii("L5,2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["A0,2"]
         pbm.A[ig,iv] += Float64(0.200000)
@@ -851,7 +851,7 @@ function n3PK(action,args...)
         pb.x0[ix_["T4,5"]] = Float64(20.000000)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQUARE",igt_)
+        it,igt_,_ = s2mpj_ii("gSQUARE",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -898,7 +898,7 @@ function n3PK(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

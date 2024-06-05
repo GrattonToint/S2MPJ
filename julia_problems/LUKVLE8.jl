@@ -19,6 +19,10 @@ function LUKVLE8(action,args...)
 # 
 #    some useful parameters, including N, the number of variables.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,10 +44,6 @@ function LUKVLE8(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
         v_["LAMBDA1"] = -0.002008
         v_["LAMBDA2"] = -0.001900
@@ -68,25 +68,25 @@ function LUKVLE8(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N/5"])
-            ig,ig_,_ = s2x_ii("O1"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O1"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("O2"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O2"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("O3"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O3"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("O4"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O4"*string(I),ig_)
             arrset(gtype,ig,"<>")
         end
         for K = Int64(v_["1"]):Int64(v_["N-2"])
             v_["K+1"] = 1+K
             v_["K+2"] = 2+K
-            ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(K))
             iv = ix_["X"*string(Int64(v_["K+1"]))]
@@ -116,8 +116,6 @@ function LUKVLE8(action,args...)
             pbm.gconst[ig_["O3"*string(I)]] = Float64(v_["LAMBDA2"])
             pbm.gconst[ig_["O4"*string(I)]] = Float64(v_["LAMBA3-1"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -133,18 +131,18 @@ function LUKVLE8(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"V")
-        it,iet_,_ = s2x_ii( "eSHIFTSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSHIFTSQR", iet_)
         loaset(elftv,it,1,"V")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"P")
-        it,iet_,_ = s2x_ii( "eCUBE", iet_)
+        it,iet_,_ = s2mpj_ii( "eCUBE", iet_)
         loaset(elftv,it,1,"V")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftv,it,2,"W")
-        it,iet_,_ = s2x_ii( "en5PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en5PR", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         loaset(elftv,it,3,"V3")
@@ -160,107 +158,107 @@ function LUKVLE8(action,args...)
             v_["5I-3"] = -3+v_["5I"]
             v_["5I-4"] = -4+v_["5I"]
             ename = "O1"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en5PR")
             arrset(ielftype, ie, iet_["en5PR"])
             vname = "X"*string(Int64(v_["5I"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5I-2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5I-3"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5I-4"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O2A"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["5I"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O2B"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["5I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O2C"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["5I-2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O2D"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["5I-3"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O2E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["5I-4"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O3A"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "X"*string(Int64(v_["5I-3"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5I-2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O3B"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "X"*string(Int64(v_["5I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5I"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O4A"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCUBE")
             arrset(ielftype, ie, iet_["eCUBE"])
             vname = "X"*string(Int64(v_["5I-4"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O4B"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCUBE")
             arrset(ielftype, ie, iet_["eCUBE"])
             vname = "X"*string(Int64(v_["5I-3"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -270,11 +268,11 @@ function LUKVLE8(action,args...)
             v_["H(K+1)"] = v_["H"]*v_["K+1"]
             v_["H.K+1)+1"] = 1.0+v_["H(K+1)"]
             ename = "C"*string(K)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSHIFTSQR")
             arrset(ielftype, ie, iet_["eSHIFTSQR"])
             vname = "X"*string(Int64(v_["K+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
@@ -282,8 +280,8 @@ function LUKVLE8(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gEXP",igt_)
-        it,igt_,_ = s2x_ii("gn10L2",igt_)
+        it,igt_,_ = s2mpj_ii("gEXP",igt_)
+        it,igt_,_ = s2mpj_ii("gn10L2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -344,6 +342,8 @@ function LUKVLE8(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               8.25936E+04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -357,6 +357,10 @@ function LUKVLE8(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AY-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -559,7 +563,7 @@ function LUKVLE8(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

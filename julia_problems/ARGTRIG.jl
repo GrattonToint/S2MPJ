@@ -21,6 +21,11 @@ function ARGTRIG(action,args...)
 # 
 #    N is the number of free variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER 
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,10 +47,6 @@ function ARGTRIG(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER 
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
         v_["1"] = 1
         v_["1.0"] = 1.0
         v_["RN"] = Float64(v_["N"])
@@ -55,13 +56,13 @@ function ARGTRIG(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
         end
@@ -85,8 +86,6 @@ function ARGTRIG(action,args...)
             v_["RN+I"] = Float64(v_["N+I"])
             pbm.gconst[ig_["G"*string(I)]] = Float64(v_["RN+I"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -104,28 +103,28 @@ function ARGTRIG(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eCOSINE", iet_)
+        it,iet_,_ = s2mpj_ii( "eCOSINE", iet_)
         loaset(elftv,it,1,"XJ")
-        it,iet_,_ = s2x_ii( "eSINCOS", iet_)
+        it,iet_,_ = s2mpj_ii( "eSINCOS", iet_)
         loaset(elftv,it,1,"XI")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "C"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOSINE")
             arrset(ielftype, ie, iet_["eCOSINE"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "SC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSINCOS")
             arrset(ielftype, ie, iet_["eSINCOS"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="XI",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -150,6 +149,8 @@ function ARGTRIG(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -162,6 +163,10 @@ function ARGTRIG(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -223,7 +228,7 @@ function ARGTRIG(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

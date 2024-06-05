@@ -39,19 +39,19 @@ function HIMMELBA(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G1",ig_)
+        ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G1")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(0.25))
-        ig,ig_,_ = s2x_ii("G2",ig_)
+        ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G2")
         iv = ix_["X2"]
@@ -73,8 +73,6 @@ function HIMMELBA(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["G1"]] = Float64(5.0)
         pbm.gconst[ig_["G2"]] = Float64(6.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -112,7 +110,7 @@ function HIMMELBA(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

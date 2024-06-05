@@ -27,6 +27,12 @@ function YATP1CNE(action,args...)
 # 
 #    nonlinear equation version
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER n = 120
+# IE N                   50             $-PARAMETER n = 2600
+# IE N                   100            $-PARAMETER n = 10200
+# IE N                   200            $-PARAMETER n = 40400
+# IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,12 +54,6 @@ function YATP1CNE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER n = 120
-# IE N                   50             $-PARAMETER n = 2600
-# IE N                   100            $-PARAMETER n = 10200
-# IE N                   200            $-PARAMETER n = 40400
-# IE N                   350            $-PARAMETER n = 123200
         v_["A"] = 10.0
         v_["1"] = 1
         v_["-A"] = -1.0*v_["A"]
@@ -63,30 +63,30 @@ function YATP1CNE(action,args...)
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
-            iv,ix_,_ = s2x_ii("Z"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Z"*string(I),ix_)
             arrset(pb.xnames,iv,"Z"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("E"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("E"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"E"*string(I)*","*string(J))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("ER"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ER"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ER"*string(I))
-            ig,ig_,_ = s2x_ii("EC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("EC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EC"*string(I))
         end
@@ -109,8 +109,6 @@ function YATP1CNE(action,args...)
             pbm.gconst[ig_["ER"*string(I)]] = Float64(1.0)
             pbm.gconst[ig_["EC"*string(I)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -130,19 +128,19 @@ function YATP1CNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eCB", iet_)
+        it,iet_,_ = s2mpj_ii( "eCB", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eLXC", iet_)
-        loaset(elftv,it,1,"X")
-        loaset(elftv,it,2,"Y")
-        loaset(elftv,it,3,"Z")
-        it,iet_,_ = s2x_ii( "eLS", iet_)
+        it,iet_,_ = s2mpj_ii( "eLXC", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         loaset(elftv,it,3,"Z")
-        it,iet_,_ = s2x_ii( "eRAT", iet_)
+        it,iet_,_ = s2mpj_ii( "eLS", iet_)
+        loaset(elftv,it,1,"X")
+        loaset(elftv,it,2,"Y")
+        loaset(elftv,it,3,"Z")
+        it,iet_,_ = s2mpj_ii( "eRAT", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -150,59 +148,59 @@ function YATP1CNE(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["N"])
                 ename = "CB"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eCB")
                 arrset(ielftype, ie, iet_["eCB"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "SQ"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "DC"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eLXC")
                 arrset(ielftype, ie, iet_["eLXC"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Z"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "DS"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eLS")
                 arrset(ielftype, ie, iet_["eLS"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Z"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "SX"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eRAT")
                 arrset(ielftype, ie, iet_["eRAT"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -274,7 +272,7 @@ function YATP1CNE(action,args...)
             g_[1] = EV_[1]+EV_[1]
             if nargout>2
                 H_ = zeros(Float64,1,1)
-                H_[1,1] = 2.0e0
+                H_[1,1] = 2.0
             end
         end
         if nargout == 1
@@ -295,10 +293,10 @@ function YATP1CNE(action,args...)
         if nargout>1
             dim = try length(IV_) catch; length(EV_) end
             g_  = zeros(Float64,dim)
-            g_[1] = 3.0e0*EV_[1]*EV_[1]
+            g_[1] = 3.0*EV_[1]*EV_[1]
             if nargout>2
                 H_ = zeros(Float64,1,1)
-                H_[1,1] = 6.0e0*EV_[1]
+                H_[1,1] = 6.0*EV_[1]
             end
         end
         if nargout == 1
@@ -418,7 +416,7 @@ function YATP1CNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

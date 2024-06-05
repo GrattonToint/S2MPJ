@@ -37,17 +37,17 @@ function EXTRASIM(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X",ix_)
+        iv,ix_,_ = s2mpj_ii("X",ix_)
         arrset(pb.xnames,iv,"X")
-        iv,ix_,_ = s2x_ii("Y",ix_)
+        iv,ix_,_ = s2mpj_ii("Y",ix_)
         arrset(pb.xnames,iv,"Y")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("Object",ig_)
+        ig,ig_,_ = s2mpj_ii("Object",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("Cautious",ig_)
+        ig,ig_,_ = s2mpj_ii("Cautious",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"Cautious")
         iv = ix_["X"]
@@ -71,10 +71,8 @@ function EXTRASIM(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["Object"]] = Float64(-1.0)
         pbm.gconst[ig_["Cautious"]] = Float64(2.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["Y"]] = -Inf
         pb.xupper[ix_["Y"]] = +Inf
@@ -100,7 +98,7 @@ function EXTRASIM(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

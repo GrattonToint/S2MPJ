@@ -48,34 +48,34 @@ function HS38(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
         end
-        ig,ig_,_ = s2x_ii("G2",ig_)
+        ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["1/P1"]))
-        ig,ig_,_ = s2x_ii("G4",ig_)
+        ig,ig_,_ = s2mpj_ii("G4",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["1/P1"]))
-        ig,ig_,_ = s2x_ii("G5",ig_)
+        ig,ig_,_ = s2mpj_ii("G5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(0.01))
-        ig,ig_,_ = s2x_ii("G6",ig_)
+        ig,ig_,_ = s2mpj_ii("G6",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(v_["1/P2"]))
-        ig,ig_,_ = s2x_ii("G7",ig_)
+        ig,ig_,_ = s2mpj_ii("G7",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -87,8 +87,6 @@ function HS38(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["G"*string(I)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-10.0,pb.n)
         pb.xupper = fill(10.0,pb.n)
@@ -101,45 +99,45 @@ function HS38(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eMSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eMSQ", iet_)
         loaset(elftv,it,1,"V1")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eMSQ")
         arrset(ielftype, ie, iet_["eMSQ"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eMSQ")
         arrset(ielftype, ie, iet_["eMSQ"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype, ie, iet_["ePROD"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -165,6 +163,8 @@ function HS38(action,args...)
         loaset(pbm.grelw,ig,posel,Float64(19.8))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = -99.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -172,6 +172,10 @@ function HS38(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OBR2-AN-4-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -258,7 +262,7 @@ function HS38(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

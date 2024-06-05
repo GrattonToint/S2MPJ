@@ -22,6 +22,12 @@ function FREUROTH(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER     original value
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,12 +49,6 @@ function FREUROTH(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   10             $-PARAMETER
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
         v_["NGS"] = -1+v_["N"]
         v_["1"] = 1
         v_["2"] = 2
@@ -57,20 +57,20 @@ function FREUROTH(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["NGS"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("R"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(-2.0)
-            ig,ig_,_ = s2x_ii("S"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("S"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
@@ -89,8 +89,6 @@ function FREUROTH(action,args...)
             pbm.gconst[ig_["R"*string(I)]] = Float64(13.0)
             pbm.gconst[ig_["S"*string(I)]] = Float64(29.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -101,7 +99,7 @@ function FREUROTH(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eFRDRTH", iet_)
+        it,iet_,_ = s2mpj_ii( "eFRDRTH", iet_)
         loaset(elftv,it,1,"ELV")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"COEFF")
@@ -112,13 +110,13 @@ function FREUROTH(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NGS"])
             v_["I+1"] = 1+I
             ename = "A"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eFRDRTH")
                 arrset(ielftype,ie,iet_["eFRDRTH"])
             end
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ELV",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -126,13 +124,13 @@ function FREUROTH(action,args...)
             posep = findfirst(x->x=="XCOEFF",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(-1.0))
             ename = "B"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eFRDRTH")
                 arrset(ielftype,ie,iet_["eFRDRTH"])
             end
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ELV",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -142,7 +140,7 @@ function FREUROTH(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -163,6 +161,15 @@ function FREUROTH(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(2)            0.0
+# LO SOLTN(2)            4.8984D+01
+# LO SOLTN(10)           1.0141D+03
+# LO SOLTN(50)           5.8810D+03
+# LO SOLTN(100)          1.1965D+04
+# LO SOLTN(500)          6.0634D+04
+# LO SOLTN(1000)         1.2147D+05
+# LO SOLTN(5000)         6.0816D+05
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -170,6 +177,10 @@ function FREUROTH(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SUR2-AN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -231,7 +242,7 @@ function FREUROTH(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

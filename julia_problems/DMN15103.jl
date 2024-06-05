@@ -13,7 +13,7 @@ function DMN15103(action,args...)
 #    Source: Data from Aaron Parsons, I14: Hard X-ray Nanoprobe,
 #      Diamond Light Source, Harwell, Oxfordshire, England, EU.
 # 
-#    SIF input: Nick Gould and Tyrone Rees, Feb 2016
+#    SIF input: Nick Gould and Tyrone Rees, Feb 2016, corrected May 2024
 # 
 #    classification = "NOR2-MN-99-4643"
 # 
@@ -9330,17 +9330,17 @@ function DMN15103(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["NVEC"])
-            iv,ix_,_ = s2x_ii("WEIGHT"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("WEIGHT"*string(I),ix_)
             arrset(pb.xnames,iv,"WEIGHT"*string(I))
-            iv,ix_,_ = s2x_ii("WIDTH"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("WIDTH"*string(I),ix_)
             arrset(pb.xnames,iv,"WIDTH"*string(I))
-            iv,ix_,_ = s2x_ii("POSIT"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("POSIT"*string(I),ix_)
             arrset(pb.xnames,iv,"POSIT"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("R"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(I))
         end
@@ -9362,8 +9362,6 @@ function DMN15103(action,args...)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pbm.gconst[ig_["R"*string(I)]] = Float64(v_["Y"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -9868,7 +9866,7 @@ function DMN15103(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eLORENTZ3", iet_)
+        it,iet_,_ = s2mpj_ii( "eLORENTZ3", iet_)
         loaset(elftv,it,1,"WEIGHT")
         loaset(elftv,it,2,"WIDTH")
         loaset(elftv,it,3,"POSIT")
@@ -9880,19 +9878,19 @@ function DMN15103(action,args...)
         for I = Int64(v_["1"]):Int64(v_["M"])
             for J = Int64(v_["1"]):Int64(v_["NVEC"])
                 ename = "E"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eLORENTZ3")
                 arrset(ielftype, ie, iet_["eLORENTZ3"])
                 vname = "WEIGHT"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="WEIGHT",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "WIDTH"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="WIDTH",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "POSIT"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="POSIT",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="X",elftp[ielftype[ie]])
@@ -9914,7 +9912,10 @@ function DMN15103(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -9927,6 +9928,10 @@ function DMN15103(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-MN-99-4643"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -9985,7 +9990,7 @@ function DMN15103(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [1,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

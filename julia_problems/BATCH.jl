@@ -138,34 +138,34 @@ function BATCH(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["M"])
-            iv,ix_,_ = s2x_ii("N"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("N"*string(J),ix_)
             arrset(pb.xnames,iv,"N"*string(J))
         end
         for J = Int64(v_["1"]):Int64(v_["M"])
-            iv,ix_,_ = s2x_ii("V"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("V"*string(J),ix_)
             arrset(pb.xnames,iv,"V"*string(J))
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("B"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("B"*string(I),ix_)
             arrset(pb.xnames,iv,"B"*string(I))
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("TL"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("TL"*string(I),ix_)
             arrset(pb.xnames,iv,"TL"*string(I))
         end
         for J = Int64(v_["1"]):Int64(v_["M"])
             for K = Int64(v_["1"]):Int64(v_["NU"])
-                iv,ix_,_ = s2x_ii("Y"*string(K)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Y"*string(K)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Y"*string(K)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("COST",ig_)
+        ig,ig_,_ = s2mpj_ii("COST",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["M"])
-                ig,ig_,_ = s2x_ii("VOL"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("VOL"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"VOL"*string(I)*","*string(J))
                 iv = ix_["V"*string(J)]
@@ -176,7 +176,7 @@ function BATCH(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["M"])
-                ig,ig_,_ = s2x_ii("CYCL"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("CYCL"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"CYCL"*string(I)*","*string(J))
                 iv = ix_["N"*string(J)]
@@ -185,18 +185,18 @@ function BATCH(action,args...)
                 pbm.A[ig,iv] += Float64(1.0)
             end
         end
-        ig,ig_,_ = s2x_ii("HORIZON",ig_)
+        ig,ig_,_ = s2mpj_ii("HORIZON",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"HORIZON")
         for J = Int64(v_["1"]):Int64(v_["M"])
             for K = Int64(v_["1"]):Int64(v_["NU"])
-                ig,ig_,_ = s2x_ii("NPAR"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("NPAR"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"NPAR"*string(J))
                 iv = ix_["Y"*string(K)*","*string(J)]
                 pbm.A[ig,iv] += Float64(v_["LOGI"*string(K)])
             end
-            ig,ig_,_ = s2x_ii("NPAR"*string(J),ig_)
+            ig,ig_,_ = s2mpj_ii("NPAR"*string(J),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"NPAR"*string(J))
             iv = ix_["N"*string(J)]
@@ -204,7 +204,7 @@ function BATCH(action,args...)
         end
         for J = Int64(v_["1"]):Int64(v_["M"])
             for K = Int64(v_["1"]):Int64(v_["NU"])
-                ig,ig_,_ = s2x_ii("SOS1"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("SOS1"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"SOS1"*string(J))
                 iv = ix_["Y"*string(K)*","*string(J)]
@@ -242,10 +242,8 @@ function BATCH(action,args...)
         for J = Int64(v_["1"]):Int64(v_["M"])
             pbm.gconst[ig_["SOS1"*string(J)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for J = Int64(v_["1"]):Int64(v_["M"])
             pb.xupper[ix_["N"*string(J)]] = v_["LOGNU"]
@@ -266,7 +264,7 @@ function BATCH(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEXPXAY", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXPXAY", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         elftp = Vector{Vector{String}}()
@@ -276,15 +274,15 @@ function BATCH(action,args...)
         ielftype = Vector{Int64}()
         for J = Int64(v_["1"]):Int64(v_["M"])
             ename = "EXPO"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXPXAY")
             arrset(ielftype, ie, iet_["eEXPXAY"])
             vname = "N"*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "V"*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="A",elftp[ielftype[ie]])
@@ -292,15 +290,15 @@ function BATCH(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
             ename = "EXPC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXPXAY")
             arrset(ielftype, ie, iet_["eEXPXAY"])
             vname = "TL"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="A",elftp[ielftype[ie]])
@@ -326,6 +324,7 @@ function BATCH(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["Q"*string(I)]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -343,6 +342,10 @@ function BATCH(action,args...)
         pb.pbclass = "OOR2-AN-46-73"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -383,7 +386,7 @@ function BATCH(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

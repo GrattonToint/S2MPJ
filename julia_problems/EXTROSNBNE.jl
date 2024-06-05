@@ -46,6 +46,7 @@ function EXTROSNBNE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
+# IE N                   10             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # IE N                   1000           $-PARAMETER
         v_["1"] = 1
@@ -56,17 +57,17 @@ function EXTROSNBNE(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("SQ1",ig_)
+        ig,ig_,_ = s2mpj_ii("SQ1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["2"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("SQ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("SQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SQ"*string(I))
             iv = ix_["X"*string(I)]
@@ -89,8 +90,6 @@ function EXTROSNBNE(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["SQ1"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -99,7 +98,7 @@ function EXTROSNBNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eETYPE", iet_)
+        it,iet_,_ = s2mpj_ii( "eETYPE", iet_)
         loaset(elftv,it,1,"V1")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -107,13 +106,13 @@ function EXTROSNBNE(action,args...)
         for I = Int64(v_["2"]):Int64(v_["N"])
             v_["J"] = -1+I
             ename = "ELA"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eETYPE")
                 arrset(ielftype,ie,iet_["eETYPE"])
             end
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -131,6 +130,8 @@ function EXTROSNBNE(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -144,6 +145,10 @@ function EXTROSNBNE(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -178,7 +183,7 @@ function EXTROSNBNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

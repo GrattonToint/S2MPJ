@@ -22,6 +22,8 @@ function FREURONE(action,args...)
 # 
 #    N is the number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,16 +41,10 @@ function FREURONE(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["N"] = Int64(2);  #  SIF file default value
-        else
-            v_["N"] = Int64(args[1]);
-        end
-        if nargin<1
             v_["N"] = Int64(4);  #  SIF file default value
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER
 # IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
@@ -63,21 +59,21 @@ function FREURONE(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["NGS"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("R"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(I))
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(-2.0)
-            ig,ig_,_ = s2x_ii("S"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("S"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"S"*string(I))
             iv = ix_["X"*string(I)]
@@ -105,8 +101,6 @@ function FREURONE(action,args...)
             pbm.gconst[ig_["R"*string(I)]] = Float64(13.0)
             pbm.gconst[ig_["S"*string(I)]] = Float64(29.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -128,7 +122,7 @@ function FREURONE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eFRDRTH", iet_)
+        it,iet_,_ = s2mpj_ii( "eFRDRTH", iet_)
         loaset(elftv,it,1,"ELV")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"COEFF")
@@ -139,13 +133,13 @@ function FREURONE(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NGS"])
             v_["I+1"] = 1+I
             ename = "A"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eFRDRTH")
                 arrset(ielftype,ie,iet_["eFRDRTH"])
             end
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ELV",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -153,13 +147,13 @@ function FREURONE(action,args...)
             posep = findfirst(x->x=="XCOEFF",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(-1.0))
             ename = "B"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eFRDRTH")
                 arrset(ielftype,ie,iet_["eFRDRTH"])
             end
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="ELV",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -186,6 +180,15 @@ function FREURONE(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(2)            0.0
+# LO SOLTN(2)            4.8984D+01
+# LO SOLTN(10)           1.0141D+03
+# LO SOLTN(50)           5.8810D+03
+# LO SOLTN(100)          1.1965D+04
+# LO SOLTN(500)          6.0634D+04
+# LO SOLTN(1000)         1.2147D+05
+# LO SOLTN(5000)         6.0816D+05
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -199,6 +202,10 @@ function FREURONE(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -236,7 +243,7 @@ function FREURONE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -22,6 +22,11 @@ function COSHFUN(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE M                   3              $-PARAMETER
+# IE M                   8              $-PARAMETER
+# IE M                   14             $-PARAMETER
+# IE M                   20             $-PARAMETER     original value
+# IE M                   200            $-PARAMETER
+# IE M                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,10 +48,6 @@ function COSHFUN(action,args...)
         else
             v_["M"] = Int64(args[1]);
         end
-# IE M                   14             $-PARAMETER
-# IE M                   20             $-PARAMETER     original value
-# IE M                   200            $-PARAMETER
-# IE M                   2000           $-PARAMETER
         v_["N"] = 3*v_["M"]
         v_["N-3"] = -3+v_["N"]
         v_["N-5"] = -5+v_["N"]
@@ -59,25 +60,25 @@ function COSHFUN(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
-        iv,ix_,_ = s2x_ii("F",ix_)
+        iv,ix_,_ = s2mpj_ii("F",ix_)
         arrset(pb.xnames,iv,"F")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["F"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(I))
             iv = ix_["F"]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("C1",ig_)
+        ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C1")
         iv = ix_["X3"]
@@ -88,20 +89,20 @@ function COSHFUN(action,args...)
             v_["I-5"] = -5+I
             v_["I+3"] = 3+I
             v_["I/3"] = trunc(Int,(I/v_["3"]))
-            ig,ig_,_ = s2x_ii("C"*string(Int64(v_["I/3"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["I/3"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["I/3"])))
             iv = ix_["X"*string(Int64(v_["I-5"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(-2.0)
-            ig,ig_,_ = s2x_ii("C"*string(Int64(v_["I/3"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["I/3"])),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["I/3"])))
             iv = ix_["X"*string(Int64(v_["I+3"]))]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("C"*string(Int64(v_["M"])),ig_)
+        ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["M"])),ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"C"*string(Int64(v_["M"])))
         iv = ix_["X"*string(Int64(v_["N-5"]))]
@@ -121,19 +122,17 @@ function COSHFUN(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eCOSH", iet_)
+        it,iet_,_ = s2mpj_ii( "eCOSH", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -144,39 +143,39 @@ function COSHFUN(action,args...)
             v_["I-2"] = -2+I
             v_["I/3"] = trunc(Int,(I/v_["3"]))
             ename = "SQR"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             ename = "SQR"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "COSH"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOSH")
             arrset(ielftype, ie, iet_["eCOSH"])
             ename = "COSH"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "PROD"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             ename = "PROD"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["I-2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "PROD"*string(Int64(v_["I/3"]))
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -299,7 +298,7 @@ function COSHFUN(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

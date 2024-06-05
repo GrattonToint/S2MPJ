@@ -38,17 +38,17 @@ function HS72(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
-        iv,ix_,_ = s2x_ii("X4",ix_)
+        iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("F",ig_)
+        ig,ig_,_ = s2mpj_ii("F",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
@@ -58,10 +58,10 @@ function HS72(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("CON1",ig_)
+        ig,ig_,_ = s2mpj_ii("CON1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON1")
-        ig,ig_,_ = s2x_ii("CON2",ig_)
+        ig,ig_,_ = s2mpj_ii("CON2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON2")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -82,8 +82,6 @@ function HS72(action,args...)
         pbm.gconst[ig_["F"]] = Float64(-1.0)
         pbm.gconst[ig_["CON1"]] = Float64(-0.0401)
         pbm.gconst[ig_["CON2"]] = Float64(-0.010085)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.001,pb.n)
         pb.xupper = fill(Inf,pb.n)
@@ -96,41 +94,41 @@ function HS72(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en1dX", iet_)
+        it,iet_,_ = s2mpj_ii( "en1dX", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en1dX")
         arrset(ielftype, ie, iet_["en1dX"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en1dX")
         arrset(ielftype, ie, iet_["en1dX"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en1dX")
         arrset(ielftype, ie, iet_["en1dX"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E4"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en1dX")
         arrset(ielftype, ie, iet_["en1dX"])
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.001,nothing,1.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -169,6 +167,8 @@ function HS72(action,args...)
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(-0.64))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               727.5888453
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -182,6 +182,10 @@ function HS72(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-MN-4-2"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -216,7 +220,7 @@ function HS72(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

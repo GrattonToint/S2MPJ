@@ -22,6 +22,12 @@ function BRATU2D(action,args...)
 #    P is the number of points in one side of the unit square.
 #    There are P*P variables.
 # 
+#       Alternative values for the SIF file parameters:
+# IE P                   7              $-PARAMETER  n=P**2   original value
+# IE P                   10             $-PARAMETER  n=P**2
+# IE P                   22             $-PARAMETER  n=P**2
+# IE P                   32             $-PARAMETER  n=P**2
+# IE P                   72             $-PARAMETER  n=P**2
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,11 +49,6 @@ function BRATU2D(action,args...)
         else
             v_["P"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE P                   10             $-PARAMETER  n=P**2
-# IE P                   22             $-PARAMETER  n=P**2
-# IE P                   32             $-PARAMETER  n=P**2
-# IE P                   72             $-PARAMETER  n=P**2
         if nargin<2
             v_["LAMBDA"] = Float64(4.0);  #  SIF file default value
         else
@@ -68,7 +69,7 @@ function BRATU2D(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
-                iv,ix_,_ = s2x_ii("U"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("U"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"U"*string(I)*","*string(J))
             end
         end
@@ -80,7 +81,7 @@ function BRATU2D(action,args...)
             for J = Int64(v_["2"]):Int64(v_["P-1"])
                 v_["J+1"] = 1+J
                 v_["J-1"] = -1+J
-                ig,ig_,_ = s2x_ii("G"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I)*","*string(J))
                 iv = ix_["U"*string(I)*","*string(J)]
@@ -108,8 +109,6 @@ function BRATU2D(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -128,7 +127,7 @@ function BRATU2D(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEXP", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXP", iet_)
         loaset(elftv,it,1,"U")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -136,13 +135,13 @@ function BRATU2D(action,args...)
         for I = Int64(v_["2"]):Int64(v_["P-1"])
             for J = Int64(v_["2"]):Int64(v_["P-1"])
                 ename = "A"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eEXP")
                     arrset(ielftype,ie,iet_["eEXP"])
                 end
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -163,6 +162,8 @@ function BRATU2D(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -178,6 +179,10 @@ function BRATU2D(action,args...)
         pb.pbclass = "NOR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -213,7 +218,7 @@ function BRATU2D(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

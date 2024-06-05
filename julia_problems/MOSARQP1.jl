@@ -29,6 +29,96 @@ function MOSARQP1(action,args...)
 #    Except for the first, the instances suggested are those used by Morales
 #    and Sargent.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   36             $-PARAMETER
+# IE M                   10             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER     original value
+# IE M                   10             $-PARAMETER     original value
+# RE COND                3.0            $-PARAMETER     original value
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   30             $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   30             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   30             $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   60             $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   60             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   60             $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   90             $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   90             $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   90             $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   120            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   120            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   120            $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   300            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   300            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   300            $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   600            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   600            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   900            $-PARAMETER
+# IE M                   600            $-PARAMETER
+# RE COND                3.0            $-PARAMETER
+# 
+# IE N                   2500           $-PARAMETER
+# IE M                   700            $-PARAMETER
+# RE COND                1.0            $-PARAMETER
+# 
+# IE N                   2500           $-PARAMETER
+# IE M                   700            $-PARAMETER
+# RE COND                2.0            $-PARAMETER
+# 
+# IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -50,83 +140,18 @@ function MOSARQP1(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
+# IE M                   700            $-PARAMETER
         if nargin<2
             v_["M"] = Int64(10);  #  SIF file default value
         else
             v_["M"] = Int64(args[2]);
         end
+# RE COND                3.0            $-PARAMETER
         if nargin<3
             v_["COND"] = Float64(2.0);  #  SIF file default value
         else
             v_["COND"] = Float64(args[3]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER     original value
-# IE M                   10             $-PARAMETER     original value
-# RE COND                3.0            $-PARAMETER     original value
-# IE N                   900            $-PARAMETER
-# IE M                   30             $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   30             $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   30             $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   60             $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   60             $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   60             $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   90             $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   90             $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   90             $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   120            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   120            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   120            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   300            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   300            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   300            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   600            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   600            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   900            $-PARAMETER
-# IE M                   600            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
-# IE N                   2500           $-PARAMETER
-# IE M                   700            $-PARAMETER
-# RE COND                1.0            $-PARAMETER
-# IE N                   2500           $-PARAMETER
-# IE M                   700            $-PARAMETER
-# RE COND                2.0            $-PARAMETER
-# IE N                   2500           $-PARAMETER
-# IE M                   700            $-PARAMETER
-# RE COND                3.0            $-PARAMETER
         v_["1"] = 1
         v_["2"] = 2
         v_["N-1"] = -1+v_["N"]
@@ -220,23 +245,23 @@ function MOSARQP1(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["C"*string(I)])
         end
-        ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["1"])))
         iv = ix_["X"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(4.0)
-        ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["1"])))
         iv = ix_["X"*string(Int64(v_["RTN+1"]))]
@@ -247,7 +272,7 @@ function MOSARQP1(action,args...)
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
             v_["I+RTN"] = I+v_["RTN"]
-            ig,ig_,_ = s2x_ii("CS"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(I))
             iv = ix_["X"*string(I)]
@@ -259,12 +284,12 @@ function MOSARQP1(action,args...)
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["RTN"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["RTN"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["RTN"])))
         iv = ix_["X"*string(Int64(v_["RTN"]))]
         pbm.A[ig,iv] += Float64(4.0)
-        ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["RTN"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["RTN"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CS"*string(Int64(v_["RTN"])))
         iv = ix_["X"*string(Int64(v_["RTN-1"]))]
@@ -278,7 +303,7 @@ function MOSARQP1(action,args...)
             v_["JS-1"] = -1+v_["JS"]
             v_["J-RTN"] = J-v_["RTN"]
             v_["J+RTN"] = J+v_["RTN"]
-            ig,ig_,_ = s2x_ii("CS"*string(J),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(J),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(J))
             iv = ix_["X"*string(J)]
@@ -294,7 +319,7 @@ function MOSARQP1(action,args...)
                 v_["I-1"] = -1+I
                 v_["I+RTN"] = I+v_["RTN"]
                 v_["I-RTN"] = I-v_["RTN"]
-                ig,ig_,_ = s2x_ii("CS"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("CS"*string(I),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"CS"*string(I))
                 iv = ix_["X"*string(I)]
@@ -310,14 +335,14 @@ function MOSARQP1(action,args...)
             end
             v_["JS+RTN"] = v_["JS"]+v_["RTN"]
             v_["JS-RTN"] = v_["JS"]-v_["RTN"]
-            ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["JS"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["JS"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["JS"])))
             iv = ix_["X"*string(Int64(v_["JS"]))]
             pbm.A[ig,iv] += Float64(4.0)
             iv = ix_["X"*string(Int64(v_["JS-1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["JS"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["JS"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["JS"])))
             iv = ix_["X"*string(Int64(v_["JS-RTN"]))]
@@ -330,14 +355,14 @@ function MOSARQP1(action,args...)
             v_["K+1"] = 1+v_["K"]
             v_["K+RTN"] = v_["K"]+v_["RTN"]
             v_["K-RTN"] = v_["K"]-v_["RTN"]
-            ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["K"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["K"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["K"])))
             iv = ix_["X"*string(Int64(v_["K"]))]
             pbm.A[ig,iv] += Float64(4.0)
             iv = ix_["X"*string(Int64(v_["K+1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("CS"*string(Int64(v_["K"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(Int64(v_["K"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(Int64(v_["K"])))
             iv = ix_["X"*string(Int64(v_["K-RTN"]))]
@@ -351,7 +376,7 @@ function MOSARQP1(action,args...)
             v_["I-1"] = -1+I
             v_["I+RTN"] = I+v_["RTN"]
             v_["I-RTN"] = I-v_["RTN"]
-            ig,ig_,_ = s2x_ii("CS"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CS"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CS"*string(I))
             iv = ix_["X"*string(I)]
@@ -400,9 +425,9 @@ function MOSARQP1(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -410,11 +435,11 @@ function MOSARQP1(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "XSQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -426,15 +451,15 @@ function MOSARQP1(action,args...)
                 v_["RKJ"] = v_["K"*string(J)]
                 v_["KJ"] = trunc(Int,v_["RKJ"])
                 ename = "P"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"en2PR")
                 arrset(ielftype, ie, iet_["en2PR"])
                 vname = "X"*string(Int64(v_["KI"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["KJ"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -483,6 +508,28 @@ function MOSARQP1(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["WII"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(  36, 10,2)   -24.13768932
+# LO SOLTN( 100, 10,3)   -154.2001028
+# LO SOLTN( 900, 30,1)   -380.0891288
+# LO SOLTN( 900, 30,2)   -711.7109010
+# LO SOLTN( 900, 30,3)   -1424.280649
+# LO SOLTN( 900, 60,1)   -374.7138829
+# LO SOLTN( 900, 60,2)   -706.1411506
+# LO SOLTN( 900, 60,3)   -1418.592879
+# LO SOLTN( 900, 90,1)   -369.8384609
+# LO SOLTN( 900, 90,2)   -700.8243599
+# LO SOLTN( 900, 90,3)   -1412.776689
+# LO SOLTN( 900,120,1)   -364.8603691
+# LO SOLTN( 900,120,2)   -695.2431416
+# LO SOLTN( 900,120,3)   -1406.503648
+# LO SOLTN( 900,300,1)   -331.0120280
+# LO SOLTN( 900,300,2)   -652.2778434
+# LO SOLTN( 900,300,3)   -1351.831332
+# LO SOLTN( 900,600,1)   -257.4400842
+# LO SOLTN( 900,600,2)   -529.6445809
+# LO SOLTN( 900,600,3)   -1145.403000
+# LO SOLTN(2500,700,1)   -952.8754378
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -498,6 +545,10 @@ function MOSARQP1(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QLR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -558,7 +609,7 @@ function MOSARQP1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

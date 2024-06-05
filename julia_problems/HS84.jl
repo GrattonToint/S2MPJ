@@ -87,26 +87,26 @@ function HS84(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["5"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(v_["MA"*string(Int64(v_["2"]))])
-        ig,ig_,_ = s2x_ii("CON1",ig_)
+        ig,ig_,_ = s2mpj_ii("CON1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON1")
         iv = ix_["X"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(v_["A"*string(Int64(v_["7"]))])
-        ig,ig_,_ = s2x_ii("CON2",ig_)
+        ig,ig_,_ = s2mpj_ii("CON2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON2")
         iv = ix_["X"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(v_["A"*string(Int64(v_["12"]))])
-        ig,ig_,_ = s2x_ii("CON3",ig_)
+        ig,ig_,_ = s2mpj_ii("CON3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON3")
         iv = ix_["X"*string(Int64(v_["1"]))]
@@ -133,10 +133,8 @@ function HS84(action,args...)
         arrset(grange,ig_["CON1"],Float64(294000.0))
         arrset(grange,ig_["CON2"],Float64(294000.0))
         arrset(grange,ig_["CON3"],Float64(277200.0))
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["1"]))]] = 0.0
         pb.xlower[ix_["X"*string(Int64(v_["2"]))]] = 1.2
@@ -159,7 +157,7 @@ function HS84(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"U1")
         loaset(elftv,it,2,"U2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -167,16 +165,16 @@ function HS84(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["4"])
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             v_["IP1"] = 1+I
             vname = "X"*string(Int64(v_["1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["IP1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -302,7 +300,7 @@ function HS84(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

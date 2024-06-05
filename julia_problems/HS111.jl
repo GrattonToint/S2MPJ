@@ -63,20 +63,20 @@ function HS111(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("CON1",ig_)
+        ig,ig_,_ = s2mpj_ii("CON1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON1")
-        ig,ig_,_ = s2x_ii("CON2",ig_)
+        ig,ig_,_ = s2mpj_ii("CON2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON2")
-        ig,ig_,_ = s2x_ii("CON3",ig_)
+        ig,ig_,_ = s2mpj_ii("CON3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON3")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -97,8 +97,6 @@ function HS111(action,args...)
         pbm.gconst[ig_["CON1"]] = Float64(2.0)
         pbm.gconst[ig_["CON2"]] = Float64(1.0)
         pbm.gconst[ig_["CON3"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-100.0,pb.n)
         pb.xupper = fill(100.0,pb.n)
@@ -107,7 +105,7 @@ function HS111(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eOBJ", iet_)
+        it,iet_,_ = s2mpj_ii( "eOBJ", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         loaset(elftv,it,3,"V3")
@@ -120,7 +118,7 @@ function HS111(action,args...)
         loaset(elftv,it,10,"V10")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"C")
-        it,iet_,_ = s2x_ii( "eEXP", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXP", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -131,7 +129,7 @@ function HS111(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "O"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eOBJ")
             arrset(ielftype, ie, iet_["eOBJ"])
             v_["TEMP"] = v_["RI"*string(Int64(v_["1"]))]
@@ -140,71 +138,71 @@ function HS111(action,args...)
             v_["R"] = v_["RI"*string(Int64(v_["1"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["2"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["3"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["4"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["5"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["6"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V6",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["7"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V7",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["8"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V8",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["9"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V9",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["R"] = v_["RI"*string(Int64(v_["10"]))]
             v_["J"] = trunc(Int,v_["R"])
             vname = "X"*string(Int64(v_["J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="V10",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="C",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["C"*string(I)]))
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXP")
             arrset(ielftype, ie, iet_["eEXP"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-100.0,100.0,-2.3)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -274,6 +272,8 @@ function HS111(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -47.707579
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -286,6 +286,10 @@ function HS111(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AN-10-3"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -465,7 +469,7 @@ function HS111(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

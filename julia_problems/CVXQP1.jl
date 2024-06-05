@@ -14,6 +14,12 @@ function CVXQP1(action,args...)
 # 
 #    The number of variables constraints
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER    original value
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -35,13 +41,9 @@ function CVXQP1(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER    original value
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
 # IE N                   20000          $-PARAMETER
+# IE N                   100            $-PARAMETER
         v_["1"] = 1
         v_["2"] = 2
         v_["4"] = 4
@@ -51,13 +53,13 @@ function CVXQP1(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("OBJ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
@@ -79,7 +81,7 @@ function CVXQP1(action,args...)
             pbm.A[ig,iv] += Float64(1.0)
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("CON"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CON"*string(I))
             iv = ix_["X"*string(I)]
@@ -119,10 +121,8 @@ function CVXQP1(action,args...)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pbm.gconst[ig_["CON"*string(I)]] = Float64(6.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["X"*string(I)]] = 0.1
@@ -132,8 +132,8 @@ function CVXQP1(action,args...)
         pb.x0 = fill(Float64(0.5),pb.n)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQR",igt_)
-        it,igt_,_ = s2x_ii("gSQR",igt_)
+        it,igt_,_ = s2mpj_ii("gSQR",igt_)
+        it,igt_,_ = s2mpj_ii("gSQR",igt_)
         grftp = Vector{Vector{String}}()
         loaset(grftp,it,1,"P")
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -149,6 +149,8 @@ function CVXQP1(action,args...)
             loaset(pbm.grpar,ig,posgp,Float64(v_["RI"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION             1.08751D+06   $ (n=1000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -162,6 +164,10 @@ function CVXQP1(action,args...)
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "QLR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -194,7 +200,7 @@ function CVXQP1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

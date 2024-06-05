@@ -74,7 +74,7 @@ function COOLHANS(action,args...)
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
@@ -83,7 +83,7 @@ function COOLHANS(action,args...)
         for K = Int64(v_["1"]):Int64(v_["N"])
             for L = Int64(v_["1"]):Int64(v_["N"])
                 for M = Int64(v_["1"]):Int64(v_["N"])
-                    ig,ig_,_ = s2x_ii("G"*string(K)*","*string(L),ig_)
+                    ig,ig_,_ = s2mpj_ii("G"*string(K)*","*string(L),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"G"*string(K)*","*string(L))
                     iv = ix_["X"*string(M)*","*string(L)]
@@ -112,15 +112,13 @@ function COOLHANS(action,args...)
                 pbm.gconst[ig_["G"*string(K)*","*string(L)]] = Float64(v_["-C"])
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"XX")
         loaset(elftv,it,2,"YY")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -130,15 +128,15 @@ function COOLHANS(action,args...)
             for L = Int64(v_["1"]):Int64(v_["N"])
                 for M = Int64(v_["1"]):Int64(v_["N"])
                     ename = "E"*string(K)*","*string(M)*","*string(L)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PR")
                     arrset(ielftype, ie, iet_["en2PR"])
                     vname = "X"*string(K)*","*string(M)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "X"*string(M)*","*string(L)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -184,6 +182,8 @@ function COOLHANS(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -198,6 +198,10 @@ function COOLHANS(action,args...)
         pb.pbclass = "NQR2-RN-9-9"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -234,7 +238,7 @@ function COOLHANS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

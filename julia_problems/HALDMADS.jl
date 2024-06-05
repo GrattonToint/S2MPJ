@@ -47,24 +47,24 @@ function HALDMADS(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["5"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
-        iv,ix_,_ = s2x_ii("U",ix_)
+        iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["21"])
-            ig,ig_,_ = s2x_ii("F"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"F"*string(I))
             iv = ix_["U"]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("MF"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("MF"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"MF"*string(I))
             iv = ix_["U"]
@@ -90,8 +90,6 @@ function HALDMADS(action,args...)
             v_["-EY"*string(I)] = -1.0*v_["EY"*string(I)]
             pbm.gconst[ig_["MF"*string(I)]] = Float64(v_["-EY"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -106,7 +104,7 @@ function HALDMADS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eHM", iet_)
+        it,iet_,_ = s2mpj_ii( "eHM", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         loaset(elftv,it,3,"V3")
@@ -119,27 +117,27 @@ function HALDMADS(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["21"])
             ename = "EL"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eHM")
             arrset(ielftype, ie, iet_["eHM"])
             vname = "X1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X4"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X5"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="Y",elftp[ielftype[ie]])
@@ -163,6 +161,8 @@ function HALDMADS(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0001207
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -175,6 +175,10 @@ function HALDMADS(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-AN-6-42"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -239,7 +243,7 @@ function HALDMADS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

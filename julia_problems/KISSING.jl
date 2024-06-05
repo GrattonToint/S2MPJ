@@ -57,6 +57,15 @@ function KISSING(action,args...)
 # IE NP                   22            $-PARAMETER
 # IE NP                   23            $-PARAMETER
 # IE NP                   24            $-PARAMETER
+# IE NP                   25            $-PARAMETER
+# IE NP                   26            $-PARAMETER
+# IE NP                   27            $-PARAMETER
+# IE NP	                 37            $-PARAMETER
+# IE NP                   38            $-PARAMETER
+# IE NP                   39            $-PARAMETER
+# IE NP                   40            $-PARAMETER
+# IE NP                   41            $-PARAMETER
+# IE NP                   42            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -78,14 +87,7 @@ function KISSING(action,args...)
         else
             v_["NP"] = Int64(args[1]);
         end
-# IE NP                   26            $-PARAMETER
-# IE NP                   27            $-PARAMETER
-# IE NP	                 37            $-PARAMETER
-# IE NP                   38            $-PARAMETER
-# IE NP                   39            $-PARAMETER
-# IE NP                   40            $-PARAMETER
-# IE NP                   41            $-PARAMETER
-# IE NP                   42            $-PARAMETER
+# IE MDIM                 3             $-PARAMETER
         if nargin<2
             v_["MDIM"] = Int64(3);  #  SIF file default value
         else
@@ -101,22 +103,22 @@ function KISSING(action,args...)
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["NP"])
             for J = Int64(v_["1"]):Int64(v_["MDIM"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
-        iv,ix_,_ = s2x_ii("Z",ix_)
+        iv,ix_,_ = s2mpj_ii("Z",ix_)
         arrset(pb.xnames,iv,"Z")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["Z"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["N-"])
             v_["I+"] = 1+I
             for J = Int64(v_["I+"]):Int64(v_["NP"])
-                ig,ig_,_ = s2x_ii("IC"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("IC"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"IC"*string(I)*","*string(J))
                 iv = ix_["Z"]
@@ -124,7 +126,7 @@ function KISSING(action,args...)
             end
         end
         for I = Int64(v_["1"]):Int64(v_["NP"])
-            ig,ig_,_ = s2x_ii("EC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("EC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EC"*string(I))
         end
@@ -146,10 +148,8 @@ function KISSING(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NP"])
             pbm.gconst[ig_["EC"*string(I)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["NP"])
             for J = Int64(v_["1"]):Int64(v_["MDIM"])
@@ -201,10 +201,10 @@ function KISSING(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
-        it,iet_,_ = s2x_ii( "eQUA", iet_)
+        it,iet_,_ = s2mpj_ii( "eQUA", iet_)
         loaset(elftv,it,1,"V")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -214,15 +214,15 @@ function KISSING(action,args...)
             for J = Int64(v_["I+"]):Int64(v_["NP"])
                 for K = Int64(v_["1"]):Int64(v_["MDIM"])
                     ename = "A"*string(I)*","*string(J)*","*string(K)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"ePROD")
                     arrset(ielftype, ie, iet_["ePROD"])
                     vname = "X"*string(I)*","*string(K)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "X"*string(J)*","*string(K)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -231,11 +231,11 @@ function KISSING(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NP"])
             for K = Int64(v_["1"]):Int64(v_["MDIM"])
                 ename = "B"*string(I)*","*string(K)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eQUA")
                 arrset(ielftype, ie, iet_["eQUA"])
                 vname = "X"*string(I)*","*string(K)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -267,6 +267,8 @@ function KISSING(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION             4.47214D-01
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -281,6 +283,10 @@ function KISSING(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-RN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -341,7 +347,7 @@ function KISSING(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

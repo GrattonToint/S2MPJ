@@ -28,6 +28,13 @@ function VAREIGVL(action,args...)
 # 
 #    Number of variables -1 (variable)
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   19             $-PARAMETER
+# IE N                   49             $-PARAMETER     original value
+# IE N                   99             $-PARAMETER
+# IE N                   499            $-PARAMETER
+# IE N                   999            $-PARAMETER
+# IE N                   4999           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,12 +56,6 @@ function VAREIGVL(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   49             $-PARAMETER     original value
-# IE N                   99             $-PARAMETER
-# IE N                   499            $-PARAMETER
-# IE N                   999            $-PARAMETER
-# IE N                   4999           $-PARAMETER
 # IE M                   4              $-PARAMETER  .le. N
 # IE M                   5              $-PARAMETER  .le. N
         if nargin<2
@@ -82,10 +83,10 @@ function VAREIGVL(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
-        iv,ix_,_ = s2x_ii("MU",ix_)
+        iv,ix_,_ = s2mpj_ii("MU",ix_)
         arrset(pb.xnames,iv,"MU")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
@@ -102,7 +103,7 @@ function VAREIGVL(action,args...)
                 v_["ARG"] = v_["J-ISQ"]*v_["-1/N2"]
                 v_["EX"] = exp(v_["ARG"])
                 v_["AIJ"] = v_["SIJ"]*v_["EX"]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(v_["AIJ"])
@@ -122,7 +123,7 @@ function VAREIGVL(action,args...)
                 v_["ARG"] = v_["J-ISQ"]*v_["-1/N2"]
                 v_["EX"] = exp(v_["ARG"])
                 v_["AIJ"] = v_["SIJ"]*v_["EX"]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(v_["AIJ"])
@@ -141,21 +142,19 @@ function VAREIGVL(action,args...)
                 v_["ARG"] = v_["J-ISQ"]*v_["-1/N2"]
                 v_["EX"] = exp(v_["ARG"])
                 v_["AIJ"] = v_["SIJ"]*v_["EX"]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(v_["AIJ"])
             end
         end
-        ig,ig_,_ = s2x_ii("G"*string(Int64(v_["N+1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["N+1"])),ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -165,44 +164,44 @@ function VAREIGVL(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"M")
         loaset(elftv,it,2,"X")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "P"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype, ie, iet_["en2PR"])
             vname = "MU"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="M",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "S"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gLQ",igt_)
-        it,igt_,_ = s2x_ii("gLQ",igt_)
+        it,igt_,_ = s2mpj_ii("gLQ",igt_)
+        it,igt_,_ = s2mpj_ii("gLQ",igt_)
         grftp = Vector{Vector{String}}()
         loaset(grftp,it,1,"POWER")
-        it,igt_,_ = s2x_ii("gLQ2",igt_)
-        it,igt_,_ = s2x_ii("gLQ2",igt_)
+        it,igt_,_ = s2mpj_ii("gLQ2",igt_)
+        it,igt_,_ = s2mpj_ii("gLQ2",igt_)
         loaset(grftp,it,1,"POWER")
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
@@ -231,6 +230,8 @@ function VAREIGVL(action,args...)
         loaset(pbm.grpar,ig,posgp,Float64(v_["Q"]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -239,6 +240,10 @@ function VAREIGVL(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -347,7 +352,7 @@ function VAREIGVL(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

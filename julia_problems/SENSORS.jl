@@ -22,6 +22,8 @@ function SENSORS(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
 # IE N                   3              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,8 +45,6 @@ function SENSORS(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   10             $-PARAMETER
-# IE N                   100            $-PARAMETER
 # IE N                   1000           $-PARAMETER
         v_["1"] = 1
         v_["RN"] = Float64(v_["N"])
@@ -53,14 +53,14 @@ function SENSORS(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("THETA"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("THETA"*string(I),ix_)
             arrset(pb.xnames,iv,"THETA"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("S"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
             end
         end
@@ -69,8 +69,6 @@ function SENSORS(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -84,7 +82,7 @@ function SENSORS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSINFUN", iet_)
+        it,iet_,_ = s2mpj_ii( "eSINFUN", iet_)
         loaset(elftv,it,1,"THETAI")
         loaset(elftv,it,2,"THETAJ")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -93,24 +91,24 @@ function SENSORS(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["N"])
                 ename = "S"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eSINFUN")
                     arrset(ielftype,ie,iet_["eSINFUN"])
                 end
                 vname = "THETA"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="THETAI",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "THETA"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="THETAJ",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gmL2",igt_)
+        it,igt_,_ = s2mpj_ii("gmL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -205,7 +203,7 @@ function SENSORS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

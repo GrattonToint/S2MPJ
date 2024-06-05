@@ -24,6 +24,11 @@ function SOSQP2(action,args...)
 # 
 #    The number of equality constraints
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER 
+# IE N                   100            $-PARAMETER 
+# IE N                   1000           $-PARAMETER      original value
+# IE N                   2500           $-PARAMETER 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,10 +50,6 @@ function SOSQP2(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER 
-# IE N                   1000           $-PARAMETER      original value
-# IE N                   2500           $-PARAMETER 
 # IE N                   5000           $-PARAMETER 
 # IE N                   10000          $-PARAMETER 
 # IE N                   50000          $-PARAMETER 
@@ -60,18 +61,18 @@ function SOSQP2(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["RI"] = Float64(I)
-            ig,ig_,_ = s2x_ii("E"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E"*string(I))
             iv = ix_["X"*string(I)]
@@ -80,7 +81,7 @@ function SOSQP2(action,args...)
             pbm.A[ig,iv] += Float64(-1.0)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("CX",ig_)
+            ig,ig_,_ = s2mpj_ii("CX",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CX")
             iv = ix_["X"*string(I)]
@@ -108,15 +109,13 @@ function SOSQP2(action,args...)
             pbm.gconst[ig_["E"*string(I)]] = Float64(v_["RI"])
         end
         pbm.gconst[ig_["CX"]] = Float64(v_["RN/2"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-1.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -124,15 +123,15 @@ function SOSQP2(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "P"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Y"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -149,6 +148,11 @@ function SOSQP2(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.99781D+00   $ (N=10)
+# LO SOLTN               -4.87375D+01   $ (N=100)
+# LO SOLTN               -4.98703D+02   $ (N=1000)
+# LO SOLTN               -4.99864D+03   $ (N=10000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -163,6 +167,10 @@ function SOSQP2(action,args...)
         pb.pbclass = "QLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -199,7 +207,7 @@ function SOSQP2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -32,6 +32,13 @@ function SSBRYBNDNE(action,args...)
 # 
 #    N is the number of equations and variables (variable).
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,12 +60,6 @@ function SSBRYBNDNE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   5000           $-PARAMETER
         v_["ONE"] = 1.0
         v_["KAPPA1"] = 2.0
         v_["KAPPA2"] = 5.0
@@ -85,7 +86,7 @@ function SSBRYBNDNE(action,args...)
             v_["RAT"] = v_["RI-1"]/v_["RN-1"]
             v_["ARG"] = v_["RAT"]*v_["SCAL"]
             v_["SCALE"*string(I)] = exp(v_["ARG"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -96,21 +97,21 @@ function SSBRYBNDNE(action,args...)
             v_["I+UB"] = I+v_["UB"]
             for J = Int64(v_["1"]):Int64(v_["I-1"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(v_["KAP"])
             end
             v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["KAP"])
             for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
@@ -124,21 +125,21 @@ function SSBRYBNDNE(action,args...)
             v_["I+UB"] = I+v_["UB"]
             for J = Int64(v_["I-LB"]):Int64(v_["I-1"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(v_["KAP"])
             end
             v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["KAP"])
             for J = Int64(v_["I+1"]):Int64(v_["I+UB"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
@@ -151,21 +152,21 @@ function SSBRYBNDNE(action,args...)
             v_["I+1"] = 1+I
             for J = Int64(v_["I-LB"]):Int64(v_["I-1"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(v_["KAP"])
             end
             v_["KAP"] = v_["KAPPA1"]*v_["SCALE"*string(I)]
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["KAP"])
             for J = Int64(v_["I+1"]):Int64(v_["N"])
                 v_["KAP"] = v_["-KAPPA3"]*v_["SCALE"*string(J)]
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
@@ -185,8 +186,6 @@ function SSBRYBNDNE(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -200,11 +199,11 @@ function SSBRYBNDNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"V")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"P")
-        it,iet_,_ = s2x_ii( "eCB", iet_)
+        it,iet_,_ = s2mpj_ii( "eCB", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftp,it,1,"P")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -212,21 +211,21 @@ function SSBRYBNDNE(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["SCALE"*string(I)]))
             ename = "Q"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCB")
             arrset(ielftype, ie, iet_["eCB"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
@@ -311,6 +310,8 @@ function SSBRYBNDNE(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -325,6 +326,10 @@ function SSBRYBNDNE(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -385,7 +390,7 @@ function SSBRYBNDNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

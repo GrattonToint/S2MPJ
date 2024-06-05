@@ -75,23 +75,23 @@ function S268(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["5"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("NONL",ig_)
+        ig,ig_,_ = s2mpj_ii("NONL",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("LINEAR",ig_)
+            ig,ig_,_ = s2mpj_ii("LINEAR",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["B"*string(I)])
         end
-        ig,ig_,_ = s2x_ii("LINEAR",ig_)
+        ig,ig_,_ = s2mpj_ii("LINEAR",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(-0.5))
-        ig,ig_,_ = s2x_ii("C1",ig_)
+        ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C1")
         iv = ix_["X1"]
@@ -104,7 +104,7 @@ function S268(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C2",ig_)
+        ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C2")
         iv = ix_["X1"]
@@ -117,7 +117,7 @@ function S268(action,args...)
         pbm.A[ig,iv] += Float64(5.0)
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(4.0)
-        ig,ig_,_ = s2x_ii("C3",ig_)
+        ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C3")
         iv = ix_["X1"]
@@ -130,7 +130,7 @@ function S268(action,args...)
         pbm.A[ig,iv] += Float64(-5.0)
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(3.0)
-        ig,ig_,_ = s2x_ii("C4",ig_)
+        ig,ig_,_ = s2mpj_ii("C4",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C4")
         iv = ix_["X1"]
@@ -143,7 +143,7 @@ function S268(action,args...)
         pbm.A[ig,iv] += Float64(5.0)
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(-3.0)
-        ig,ig_,_ = s2x_ii("C5",ig_)
+        ig,ig_,_ = s2mpj_ii("C5",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C5")
         iv = ix_["X1"]
@@ -177,8 +177,6 @@ function S268(action,args...)
         pbm.gconst[ig_["C4"]] = Float64(11.0)
         pbm.gconst[ig_["C5"]] = Float64(-30.0)
         pbm.gconst[ig_["NONL"]] = Float64(-14463.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -187,7 +185,7 @@ function S268(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         elftp = Vector{Vector{String}}()
@@ -198,15 +196,15 @@ function S268(action,args...)
         for I = Int64(v_["1"]):Int64(v_["5"])
             for J = Int64(v_["1"]):Int64(v_["5"])
                 ename = "E"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePROD")
                 arrset(ielftype, ie, iet_["ePROD"])
                 vname = "X"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="D",elftp[ielftype[ie]])
@@ -278,7 +276,7 @@ function S268(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

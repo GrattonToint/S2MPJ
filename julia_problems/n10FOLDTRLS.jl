@@ -51,14 +51,14 @@ function n10FOLDTRLS(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(I)
-                ig,ig_,_ = s2x_ii("E"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -69,8 +69,6 @@ function n10FOLDTRLS(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -78,8 +76,8 @@ function n10FOLDTRLS(action,args...)
         pb.x0 = fill(Float64(10.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL4",igt_)
-        it,igt_,_ = s2x_ii("gL10",igt_)
+        it,igt_,_ = s2mpj_ii("gL4",igt_)
+        it,igt_,_ = s2mpj_ii("gL10",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -160,7 +158,7 @@ function n10FOLDTRLS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

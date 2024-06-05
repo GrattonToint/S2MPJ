@@ -36,47 +36,47 @@ function ALLINITU(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
-        iv,ix_,_ = s2x_ii("X4",ix_)
+        iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("FT1",ig_)
+        ig,ig_,_ = s2mpj_ii("FT1",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FT2",ig_)
+        ig,ig_,_ = s2mpj_ii("FT2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("FT3",ig_)
+        ig,ig_,_ = s2mpj_ii("FT3",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FT4",ig_)
+        ig,ig_,_ = s2mpj_ii("FT4",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FT5",ig_)
-        arrset(gtype,ig,"<>")
-        iv = ix_["X4"]
-        pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("FT6",ig_)
-        arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FNT1",ig_)
-        arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FNT2",ig_)
+        ig,ig_,_ = s2mpj_ii("FT5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("FNT3",ig_)
+        ig,ig_,_ = s2mpj_ii("FT6",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FNT4",ig_)
+        ig,ig_,_ = s2mpj_ii("FNT1",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("FNT5",ig_)
+        ig,ig_,_ = s2mpj_ii("FNT2",ig_)
+        arrset(gtype,ig,"<>")
+        iv = ix_["X4"]
+        pbm.A[ig,iv] += Float64(1.0)
+        ig,ig_,_ = s2mpj_ii("FNT3",ig_)
+        arrset(gtype,ig,"<>")
+        ig,ig_,_ = s2mpj_ii("FNT4",ig_)
+        arrset(gtype,ig,"<>")
+        ig,ig_,_ = s2mpj_ii("FNT5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("FNT6",ig_)
+        ig,ig_,_ = s2mpj_ii("FNT6",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -89,135 +89,133 @@ function ALLINITU(action,args...)
         pbm.gconst[ig_["FT5"]] = Float64(3.0)
         pbm.gconst[ig_["FNT2"]] = Float64(1.0)
         pbm.gconst[ig_["FNT5"]] = Float64(4.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eSQR2", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR2", iet_)
         loaset(elftv,it,1,"Y")
         loaset(elftv,it,2,"Z")
-        it,iet_,_ = s2x_ii( "eSINSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSINSQR", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "ePRODSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "ePRODSQR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "FT3E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
         end
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FT4E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
         end
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FT4E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR2")
         arrset(ielftype, ie, iet_["eSQR2"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FT56E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINSQR")
         arrset(ielftype, ie, iet_["eSINSQR"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FT5E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODSQR")
         arrset(ielftype, ie, iet_["ePRODSQR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FNT3E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
         end
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FNT4E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype,ie,iet_["eSQR"])
         end
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FNT4E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR2")
         arrset(ielftype, ie, iet_["eSQR2"])
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FNT56E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINSQR")
         arrset(ielftype, ie, iet_["eSINSQR"])
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "FNT5E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODSQR")
         arrset(ielftype, ie, iet_["ePRODSQR"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gTRIVIAL",igt_)
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gTRIVIAL",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -453,7 +451,7 @@ function ALLINITU(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

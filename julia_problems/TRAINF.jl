@@ -32,6 +32,7 @@ function TRAINF(action,args...)
 # RE TIME                2.0            $-PARAMETER  travel time
 # RE LENGTH              2.0            $-PARAMETER  length of track
 # 
+# RE TIME                1.5            $-PARAMETER  travel time
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,21 +54,23 @@ function TRAINF(action,args...)
         else
             v_["TIME"] = Float64(args[1]);
         end
+# RE LENGTH              2.0            $-PARAMETER  length of track
         if nargin<2
-            v_["LENGTH"] = Float64(2.0);  #  SIF file default value
+            v_["LENGTH"] = Float64(2);  #  SIF file default value
         else
             v_["LENGTH"] = Float64(args[2]);
         end
-        if nargin<3
-            v_["N"] = Int64(11);  #  SIF file default value
-        else
-            v_["N"] = Int64(args[3]);
-        end
+# IE N                   11             $-PARAMETER
 # IE N                   51             $-PARAMETER
 # IE N                   101            $-PARAMETER     original value
 # IE N                   201            $-PARAMETER
 # IE N                   501            $-PARAMETER
 # IE N                   1001           $-PARAMETER
+        if nargin<3
+            v_["N"] = Int64(11);  #  SIF file default value
+        else
+            v_["N"] = Int64(args[3]);
+        end
 # IE N                   5001           $-PARAMETER
 # IE N                   10001          $-PARAMETER
         v_["N-1"] = -1+v_["N"]
@@ -95,28 +98,28 @@ function TRAINF(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("V"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("V"*string(I),ix_)
             arrset(pb.xnames,iv,"V"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("UA"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("UA"*string(I),ix_)
             arrset(pb.xnames,iv,"UA"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("UB"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("UB"*string(I),ix_)
             arrset(pb.xnames,iv,"UB"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("ENERGY",ig_)
+        ig,ig_,_ = s2mpj_ii("ENERGY",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("XEQ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("XEQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"XEQ"*string(I))
             iv = ix_["X"*string(Int64(v_["I+1"]))]
@@ -127,7 +130,7 @@ function TRAINF(action,args...)
             pbm.A[ig,iv] += Float64(v_["-H/2"])
             iv = ix_["V"*string(I)]
             pbm.A[ig,iv] += Float64(v_["-H/2"])
-            ig,ig_,_ = s2x_ii("VEQ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("VEQ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"VEQ"*string(I))
             iv = ix_["V"*string(Int64(v_["I+1"]))]
@@ -161,10 +164,8 @@ function TRAINF(action,args...)
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             pbm.gconst[ig_["VEQ"*string(I)]] = Float64(v_["-AH"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = 0.0
@@ -214,10 +215,10 @@ function TRAINF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"UU")
         loaset(elftv,it,2,"VV")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"VVV")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -225,25 +226,25 @@ function TRAINF(action,args...)
         for I = Int64(v_["0"]):Int64(v_["N"])
             v_["I+1"] = 1+I
             ename = "VISQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "V"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="VVV",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             ename = "UV"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "UA"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="UU",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "V"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="VV",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -273,6 +274,7 @@ function TRAINF(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLUTION            3.09751881012
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -286,6 +288,10 @@ function TRAINF(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QQR2-MN-V-V"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -346,7 +352,7 @@ function TRAINF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

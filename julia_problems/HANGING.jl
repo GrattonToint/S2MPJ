@@ -18,6 +18,20 @@ function HANGING(action,args...)
 # 
 #    dimension of the grid
 # 
+#       Alternative values for the SIF file parameters:
+# IE NX                  3              $-PARAMETER n = 27
+# IE NY                  3              $-PARAMETER
+# 
+# IE NX                  5              $-PARAMETER n = 90
+# IE NY                  6              $-PARAMETER
+# 
+# IE NX                  10             $-PARAMETER n = 300  original value
+# IE NY                  10             $-PARAMETER
+# 
+# IE NX                  20             $-PARAMETER n = 1800
+# IE NY                  30             $-PARAMETER
+# 
+# IE NX                  40             $-PARAMETER n = 3600
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,20 +53,12 @@ function HANGING(action,args...)
         else
             v_["NX"] = Int64(args[1]);
         end
+# IE NY                  30             $-PARAMETER
         if nargin<2
             v_["NY"] = Int64(3);  #  SIF file default value
         else
             v_["NY"] = Int64(args[2]);
         end
-#       Alternative values for the SIF file parameters:
-# IE NX                  5              $-PARAMETER n = 90
-# IE NY                  6              $-PARAMETER
-# IE NX                  10             $-PARAMETER n = 300  original value
-# IE NY                  10             $-PARAMETER
-# IE NX                  20             $-PARAMETER n = 1800
-# IE NY                  30             $-PARAMETER
-# IE NX                  40             $-PARAMETER n = 3600
-# IE NY                  30             $-PARAMETER
         v_["LX"] = 1.8
         v_["LY"] = 1.8
         v_["1"] = 1
@@ -68,11 +74,11 @@ function HANGING(action,args...)
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
-                iv,ix_,_ = s2x_ii("Y"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Y"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Y"*string(I)*","*string(J))
-                iv,ix_,_ = s2x_ii("Z"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Z"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Z"*string(I)*","*string(J))
             end
         end
@@ -80,7 +86,7 @@ function HANGING(action,args...)
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
-                ig,ig_,_ = s2x_ii("OBJ",ig_)
+                ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["Z"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -88,14 +94,14 @@ function HANGING(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY-1"])
-                ig,ig_,_ = s2x_ii("RC"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("RC"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"RC"*string(I)*","*string(J))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["NX-1"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
-                ig,ig_,_ = s2x_ii("DC"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("DC"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"DC"*string(I)*","*string(J))
             end
@@ -125,8 +131,6 @@ function HANGING(action,args...)
                 pbm.gconst[ig_["DC"*string(I)*","*string(J)]] = Float64(v_["LY2"])
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -180,7 +184,7 @@ function HANGING(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eISQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eISQ", iet_)
         loaset(elftv,it,1,"XX")
         loaset(elftv,it,2,"YY")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -190,45 +194,45 @@ function HANGING(action,args...)
             v_["J+1"] = 1+J
             for I = Int64(v_["1"]):Int64(v_["NX"])
                 ename = "RX"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eISQ")
                     arrset(ielftype,ie,iet_["eISQ"])
                 end
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(Int64(v_["J+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "RY"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eISQ")
                     arrset(ielftype,ie,iet_["eISQ"])
                 end
                 vname = "Y"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(I)*","*string(Int64(v_["J+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "RZ"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eISQ")
                     arrset(ielftype,ie,iet_["eISQ"])
                 end
                 vname = "Z"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Z"*string(I)*","*string(Int64(v_["J+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -237,45 +241,45 @@ function HANGING(action,args...)
             v_["I+1"] = 1+I
             for J = Int64(v_["1"]):Int64(v_["NY"])
                 ename = "DX"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eISQ")
                     arrset(ielftype,ie,iet_["eISQ"])
                 end
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["I+1"]))*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "DY"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eISQ")
                     arrset(ielftype,ie,iet_["eISQ"])
                 end
                 vname = "Y"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(Int64(v_["I+1"]))*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "DZ"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eISQ")
                     arrset(ielftype,ie,iet_["eISQ"])
                 end
                 vname = "Z"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Z"*string(Int64(v_["I+1"]))*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -318,6 +322,11 @@ function HANGING(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(3,3)          -6.1184107487
+# LO SOLTN(5,6)          -77.260229515
+# LO SOLTN(10,10)        -620.17603242
+# LO SOLTN(20,30)        -1025.4292887
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -330,6 +339,10 @@ function HANGING(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-AY-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -371,7 +384,7 @@ function HANGING(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

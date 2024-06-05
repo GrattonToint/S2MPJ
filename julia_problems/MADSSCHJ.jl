@@ -21,6 +21,19 @@ function MADSSCHJ(action,args...)
 #    N is the number of variables - 1, and must be even and at least 4.
 #    The number of inequality constraints is 2*N - 2.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   4              $-PARAMETER  n=  5, m=  6
+# IE N                   10             $-PARAMETER  n= 11, m= 18  original value
+# IE N                   20             $-PARAMETER  n= 21, m= 38
+# IE N                   30             $-PARAMETER  n= 31, m= 58
+# IE N                   40             $-PARAMETER  n= 41, m= 78
+# IE N                   50             $-PARAMETER  n= 51, m= 98
+# IE N                   60             $-PARAMETER  n= 61, m=118
+# IE N                   70             $-PARAMETER  n= 71, m=138
+# IE N                   80             $-PARAMETER  n= 81, m=158
+# IE N                   90             $-PARAMETER  n= 91, m=178
+# IE N                   100            $-PARAMETER  n=101, m=198
+# IE N                   200            $-PARAMETER  n=201, m=398
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,18 +55,6 @@ function MADSSCHJ(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER  n= 11, m= 18  original value
-# IE N                   20             $-PARAMETER  n= 21, m= 38
-# IE N                   30             $-PARAMETER  n= 31, m= 58
-# IE N                   40             $-PARAMETER  n= 41, m= 78
-# IE N                   50             $-PARAMETER  n= 51, m= 98
-# IE N                   60             $-PARAMETER  n= 61, m=118
-# IE N                   70             $-PARAMETER  n= 71, m=138
-# IE N                   80             $-PARAMETER  n= 81, m=158
-# IE N                   90             $-PARAMETER  n= 91, m=178
-# IE N                   100            $-PARAMETER  n=101, m=198
-# IE N                   200            $-PARAMETER  n=201, m=398
         v_["1"] = 1
         v_["2"] = 2
         v_["3"] = 3
@@ -67,30 +68,30 @@ function MADSSCHJ(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
-        iv,ix_,_ = s2x_ii("Z",ix_)
+        iv,ix_,_ = s2mpj_ii("Z",ix_)
         arrset(pb.xnames,iv,"Z")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["Z"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("C1",ig_)
+        ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C1")
         iv = ix_["Z"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["2"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("C1",ig_)
+            ig,ig_,_ = s2mpj_ii("C1",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C1")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("C2",ig_)
+        ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C2")
         iv = ix_["Z"]
@@ -98,13 +99,13 @@ function MADSSCHJ(action,args...)
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(-1.0)
         for I = Int64(v_["3"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("C2",ig_)
+            ig,ig_,_ = s2mpj_ii("C2",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C2")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("C3",ig_)
+        ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C3")
         iv = ix_["Z"]
@@ -112,7 +113,7 @@ function MADSSCHJ(action,args...)
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(-1.0)
         for I = Int64(v_["3"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("C3",ig_)
+            ig,ig_,_ = s2mpj_ii("C3",ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C3")
             iv = ix_["X"*string(I)]
@@ -124,48 +125,48 @@ function MADSSCHJ(action,args...)
             v_["J"] = trunc(Int,(v_["K+2"]/v_["2"]))
             v_["J-1"] = -1+v_["J"]
             v_["J+1"] = 1+v_["J"]
-            ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(K))
             iv = ix_["Z"]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("C"*string(Int64(v_["K+1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["K+1"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["K+1"])))
             iv = ix_["Z"]
             pbm.A[ig,iv] += Float64(1.0)
             for I = Int64(v_["1"]):Int64(v_["J-1"])
-                ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(K))
                 iv = ix_["X"*string(I)]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("C"*string(Int64(v_["K+1"])),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["K+1"])),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(Int64(v_["K+1"])))
                 iv = ix_["X"*string(I)]
                 pbm.A[ig,iv] += Float64(-1.0)
             end
             for I = Int64(v_["J+1"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(K))
                 iv = ix_["X"*string(I)]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("C"*string(Int64(v_["K+1"])),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["K+1"])),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(Int64(v_["K+1"])))
                 iv = ix_["X"*string(I)]
                 pbm.A[ig,iv] += Float64(-1.0)
             end
         end
-        ig,ig_,_ = s2x_ii("C"*string(Int64(v_["M"])),ig_)
+        ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["M"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"C"*string(Int64(v_["M"])))
         iv = ix_["Z"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
-            ig,ig_,_ = s2x_ii("C"*string(Int64(v_["M"])),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(Int64(v_["M"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(Int64(v_["M"])))
             iv = ix_["X"*string(I)]
@@ -189,8 +190,6 @@ function MADSSCHJ(action,args...)
         for K = Int64(v_["1"]):Int64(v_["M"])
             pbm.gconst[ig_["C"*string(K)]] = Float64(-1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -200,18 +199,18 @@ function MADSSCHJ(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "XSQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,10.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,10.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -256,6 +255,19 @@ function MADSSCHJ(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(4)             -2.6121094144
+# LO SOLTN(10)            -12.814452425
+# LO SOLTN(20)            -49.869888156
+# LO SOLTN(30)            -111.93545559
+# LO SOLTN(40)            -199.00371592
+# LO SOLTN(50)            -311.07308068
+# LO SOLTN(60)            -448.14300524
+# LO SOLTN(70)            -610.21325256
+# LO SOLTN(80)            -797.28370289
+# LO SOLTN(90)            -1009.3542892
+# LO SOLTN(100)           -1246.4249710
+# LO SOLTN(200)           -4992.1339031
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -269,6 +281,10 @@ function MADSSCHJ(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -303,7 +319,7 @@ function MADSSCHJ(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

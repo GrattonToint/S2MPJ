@@ -96,13 +96,13 @@ function HART6(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["L"])
-            ig,ig_,_ = s2x_ii("OBJ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(-1.0))
         end
@@ -111,8 +111,6 @@ function HART6(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
@@ -121,7 +119,7 @@ function HART6(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"V1")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"PIJ")
@@ -131,11 +129,11 @@ function HART6(action,args...)
         for I = Int64(v_["1"]):Int64(v_["L"])
             for J = Int64(v_["1"]):Int64(v_["NN"])
                 ename = "E"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "X"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.2)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.2)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="PIJ",elftp[ielftype[ie]])
@@ -144,8 +142,8 @@ function HART6(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gNEXP",igt_)
-        it,igt_,_ = s2x_ii("gNEXP",igt_)
+        it,igt_,_ = s2mpj_ii("gNEXP",igt_)
+        it,igt_,_ = s2mpj_ii("gNEXP",igt_)
         grftp = Vector{Vector{String}}()
         loaset(grftp,it,1,"CI")
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -167,6 +165,8 @@ function HART6(action,args...)
             loaset(pbm.grpar,ig,posgp,Float64(v_["C"*string(I)]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.32288689158
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
@@ -174,6 +174,10 @@ function HART6(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OBR2-AN-6-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -232,7 +236,7 @@ function HART6(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

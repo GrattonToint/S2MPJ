@@ -3121,7 +3121,7 @@ function VESUVIO(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("B"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("B"*string(I),ix_)
             arrset(pb.xnames,iv,"B"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -3130,7 +3130,7 @@ function VESUVIO(action,args...)
             v_["E"] = v_["E"*string(I)]
             v_["EINV"] = v_["ONE"]/v_["E"]
             v_["XOVERE"] = v_["EINV"]*v_["X"*string(I)]
-            ig,ig_,_ = s2x_ii("F"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"F"*string(I))
             iv = ix_["B1"]
@@ -3159,8 +3159,6 @@ function VESUVIO(action,args...)
             v_["YOVERE"] = v_["EINV"]*v_["Y"*string(I)]
             pbm.gconst[ig_["F"*string(I)]] = Float64(v_["YOVERE"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -3210,7 +3208,7 @@ function VESUVIO(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eGAUSSIAN", iet_)
+        it,iet_,_ = s2mpj_ii( "eGAUSSIAN", iet_)
         loaset(elftv,it,1,"H")
         loaset(elftv,it,2,"C")
         loaset(elftv,it,3,"S")
@@ -3221,37 +3219,37 @@ function VESUVIO(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["M"])
             ename = "GA"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eGAUSSIAN")
             arrset(ielftype, ie, iet_["eGAUSSIAN"])
             vname = "B3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="H",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B4"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="C",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B5"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="S",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="X",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["X"*string(I)]))
             ename = "GB"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eGAUSSIAN")
             arrset(ielftype, ie, iet_["eGAUSSIAN"])
             vname = "B6"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="H",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B7"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="C",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B8"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="S",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="X",elftp[ielftype[ie]])
@@ -3276,7 +3274,10 @@ function VESUVIO(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["EINV"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -3290,6 +3291,10 @@ function VESUVIO(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-MN-8-1025"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -3349,7 +3354,7 @@ function VESUVIO(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

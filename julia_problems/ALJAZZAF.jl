@@ -20,6 +20,8 @@ function ALJAZZAF(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   3              $-PARAMETER     original value
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,16 +43,15 @@ function ALJAZZAF(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
+# IE N1                  2               $-PARAMETER  .lt. N  original value
+# IE N1                  50              $-PARAMETER  .lt. N
+# IE N1                  500             $-PARAMETER  .lt. N
         if nargin<2
             v_["N1"] = Int64(2);  #  SIF file default value
         else
             v_["N1"] = Int64(args[2]);
         end
-# IE N1                  50              $-PARAMETER  .lt. N
-# IE N1                  500             $-PARAMETER  .lt. N
 # IE N1                  5000            $-PARAMETER  .lt. N
         v_["BIGA"] = 100.0
         v_["1"] = 1
@@ -76,14 +77,14 @@ function ALJAZZAF(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("H",ig_)
+        ig,ig_,_ = s2mpj_ii("H",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"H")
         iv = ix_["X1"]
@@ -109,7 +110,7 @@ function ALJAZZAF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSSQ", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"SHIFT")
@@ -117,17 +118,17 @@ function ALJAZZAF(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E"*string(Int64(v_["1"]))
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eSSQ")
             arrset(ielftype,ie,iet_["eSSQ"])
         end
         vname = "X"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["1"]))
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset( pbm.elftype,ie,"eSSQ")
             arrset(ielftype,ie,iet_["eSSQ"])
@@ -136,13 +137,13 @@ function ALJAZZAF(action,args...)
         loaset(pbm.elpar,ie,posep,Float64(0.5))
         for I = Int64(v_["2"]):Int64(v_["N1"])
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eSSQ")
                 arrset(ielftype,ie,iet_["eSSQ"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="SHIFT",elftp[ielftype[ie]])
@@ -150,13 +151,13 @@ function ALJAZZAF(action,args...)
         end
         for I = Int64(v_["N1+1"]):Int64(v_["N"])
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eSSQ")
                 arrset(ielftype,ie,iet_["eSSQ"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="SHIFT",elftp[ielftype[ie]])
@@ -164,13 +165,13 @@ function ALJAZZAF(action,args...)
         end
         for I = Int64(v_["2"]):Int64(v_["N1"])
             ename = "C"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eSSQ")
                 arrset(ielftype,ie,iet_["eSSQ"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="SHIFT",elftp[ielftype[ie]])
@@ -178,13 +179,13 @@ function ALJAZZAF(action,args...)
         end
         for I = Int64(v_["N1+1"]):Int64(v_["N"])
             ename = "C"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eSSQ")
                 arrset(ielftype,ie,iet_["eSSQ"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="SHIFT",elftp[ielftype[ie]])
@@ -214,6 +215,8 @@ function ALJAZZAF(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               75.004996
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -229,6 +232,10 @@ function ALJAZZAF(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QQR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -264,7 +271,7 @@ function ALJAZZAF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

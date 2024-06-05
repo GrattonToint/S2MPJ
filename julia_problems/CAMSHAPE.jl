@@ -20,6 +20,11 @@ function CAMSHAPE(action,args...)
 # 
 #    The number of discretization points
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
+# IE N                   400            $-PARAMETER
+# IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,11 +46,6 @@ function CAMSHAPE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
-# IE N                   400            $-PARAMETER
-# IE N                   800            $-PARAMETER
         v_["RV"] = 1.0
         v_["RMAX"] = 2.0
         v_["RMIN"] = 1.0
@@ -83,23 +83,23 @@ function CAMSHAPE(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("R"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("R"*string(I),ix_)
             arrset(pb.xnames,iv,"R"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("AREA",ig_)
+            ig,ig_,_ = s2mpj_ii("AREA",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["R"*string(I)]
             pbm.A[ig,iv] += Float64(v_["-PIRV/N"])
         end
         for I = Int64(v_["2"]):Int64(v_["N-1"])
-            ig,ig_,_ = s2x_ii("CO"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CO"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"CO"*string(I))
         end
-        ig,ig_,_ = s2x_ii("E1",ig_)
+        ig,ig_,_ = s2mpj_ii("E1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E1")
         iv = ix_["R"*string(Int64(v_["1"]))]
@@ -107,31 +107,31 @@ function CAMSHAPE(action,args...)
         iv = ix_["R"*string(Int64(v_["2"]))]
         pbm.A[ig,iv] += Float64(v_["RMIN2CD"])
         v_["R"] = v_["RMIN2CD"]-v_["RMIN"]
-        ig,ig_,_ = s2x_ii("E2",ig_)
+        ig,ig_,_ = s2mpj_ii("E2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E2")
         iv = ix_["R"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(v_["R"])
-        ig,ig_,_ = s2x_ii("E3",ig_)
+        ig,ig_,_ = s2mpj_ii("E3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E3")
         iv = ix_["R"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(v_["-RMAX"])
         iv = ix_["R"*string(Int64(v_["N-1"]))]
         pbm.A[ig,iv] += Float64(v_["RMAX2CD"])
-        ig,ig_,_ = s2x_ii("E4",ig_)
+        ig,ig_,_ = s2mpj_ii("E4",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"E4")
         iv = ix_["R"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(v_["-2RMAX"])
-        ig,ig_,_ = s2x_ii("CU"*string(Int64(v_["0"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CU"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CU"*string(Int64(v_["0"])))
         iv = ix_["R"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("CU"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CU"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CU"*string(I))
             iv = ix_["R"*string(Int64(v_["I+1"]))]
@@ -139,7 +139,7 @@ function CAMSHAPE(action,args...)
             iv = ix_["R"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("CU"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CU"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CU"*string(Int64(v_["N"])))
         iv = ix_["R"*string(Int64(v_["N"]))]
@@ -174,10 +174,8 @@ function CAMSHAPE(action,args...)
         for I = Int64(v_["0"]):Int64(v_["N"])
             arrset(grange,ig_["CU"*string(I)],Float64(v_["2ADTHETA"]))
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["R"*string(I)]] = v_["RMIN"]
@@ -192,9 +190,9 @@ function CAMSHAPE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -204,52 +202,52 @@ function CAMSHAPE(action,args...)
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
             ename = "RA"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "R"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "R"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "RB"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "R"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "R"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "RA"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype, ie, iet_["ePROD"])
         ename = "RA"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "R"*string(Int64(v_["N"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "RA"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "R"*string(Int64(v_["N-1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "R2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
         arrset(ielftype, ie, iet_["eSQR"])
         vname = "R"*string(Int64(v_["N"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -288,6 +286,11 @@ function CAMSHAPE(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(v_["2CDTHETA"]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION             -4.2841D+00   $ (NH=100)
+# LO SOLUTION             -4.2785D+00   $ (NH=200)
+# LO SOLUTION             -4.2757D+00   $ (NH=400)
+# LO SOLUTION             -4.2743D+00   $ (NH=800)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -303,6 +306,10 @@ function CAMSHAPE(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -363,7 +370,7 @@ function CAMSHAPE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

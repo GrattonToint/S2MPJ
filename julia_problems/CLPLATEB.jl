@@ -31,6 +31,13 @@ function CLPLATEB(action,args...)
 #    P is the number of points in one side of the unit square
 #    The number of variables is P*P, of which (P-1)*(P-1) are free.
 # 
+#       Alternative values for the SIF file parameters:
+# IE P                   4              $-PARAMETER n = 16
+# IE P                   7              $-PARAMETER n = 49    original value
+# IE P                   10             $-PARAMETER n = 100
+# IE P                   23             $-PARAMETER n = 529
+# IE P                   32             $-PARAMETER n = 1024
+# IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,12 +59,6 @@ function CLPLATEB(action,args...)
         else
             v_["P"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE P                   7              $-PARAMETER n = 49    original value
-# IE P                   10             $-PARAMETER n = 100
-# IE P                   23             $-PARAMETER n = 529
-# IE P                   32             $-PARAMETER n = 1024
-# IE P                   71             $-PARAMETER n = 5041
         v_["WGHT"] = -0.1
         v_["1"] = 1
         v_["2"] = 2
@@ -75,7 +76,7 @@ function CLPLATEB(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
@@ -85,28 +86,28 @@ function CLPLATEB(action,args...)
             v_["I-1"] = -1+I
             for J = Int64(v_["2"]):Int64(v_["P"])
                 v_["J-1"] = -1+J
-                ig,ig_,_ = s2x_ii("A"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("A"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(2.0))
                 iv = ix_["X"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["X"*string(I)*","*string(Int64(v_["J-1"]))]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("B"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("B"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(2.0))
                 iv = ix_["X"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["X"*string(Int64(v_["I-1"]))*","*string(J)]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("C"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(v_["1/HP2"]))
                 iv = ix_["X"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["X"*string(I)*","*string(Int64(v_["J-1"]))]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("D"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(v_["1/HP2"]))
                 iv = ix_["X"*string(I)*","*string(J)]
@@ -116,7 +117,7 @@ function CLPLATEB(action,args...)
             end
         end
         for J = Int64(v_["1"]):Int64(v_["P"])
-            ig,ig_,_ = s2x_ii("W",ig_)
+            ig,ig_,_ = s2mpj_ii("W",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["P"]))*","*string(J)]
             pbm.A[ig,iv] += Float64(v_["DISW"])
@@ -126,8 +127,6 @@ function CLPLATEB(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -139,8 +138,8 @@ function CLPLATEB(action,args...)
         pb.x0 = fill(Float64(0.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
-        it,igt_,_ = s2x_ii("gL4",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL4",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -160,6 +159,13 @@ function CLPLATEB(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(4)            -9.3705D-03
+# LO SOLTN(7)            -6.9193D-03
+# LO SOLTN(10)           -6.2008D-03
+# LO SOLTN(23)           -5.4274D-03
+# LO SOLTN(32)           -5.2835D-03
+# LO SOLTN(71)           -5.0948D-03
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -168,6 +174,10 @@ function CLPLATEB(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OXR2-MN-V-0"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -222,7 +232,7 @@ function CLPLATEB(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

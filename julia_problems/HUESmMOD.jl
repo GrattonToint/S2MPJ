@@ -17,6 +17,11 @@ function HUESmMOD(action,args...)
 # 
 #    Number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE K                   10             $-PARAMETER
+# IE K                   100            $-PARAMETER
+# IE K                   1000           $-PARAMETER    original value
+# IE K                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,10 +43,6 @@ function HUESmMOD(action,args...)
         else
             v_["K"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE K                   100            $-PARAMETER
-# IE K                   1000           $-PARAMETER    original value
-# IE K                   5000           $-PARAMETER
 # IE K                   10000          $-PARAMETER
         v_["1"] = 1
         v_["RANGE"] = 1.0
@@ -59,13 +60,13 @@ function HUESmMOD(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["K"])
-            iv,ix_,_ = s2x_ii("M"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("M"*string(I),ix_)
             arrset(pb.xnames,iv,"M"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["K"])
-            ig,ig_,_ = s2x_ii("OBJ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
         end
         for I = Int64(v_["1"]):Int64(v_["K"])
@@ -82,12 +83,12 @@ function HUESmMOD(action,args...)
             v_["DIFF5"] = v_["RI5"]-v_["RI-15"]
             v_["COEFF1"] = v_["DIFF3"]*v_["DELTAX3/3"]
             v_["COEFF2"] = v_["DIFF5"]*v_["DELTAX5/5"]
-            ig,ig_,_ = s2x_ii("E1",ig_)
+            ig,ig_,_ = s2mpj_ii("E1",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E1")
             iv = ix_["M"*string(I)]
             pbm.A[ig,iv] += Float64(v_["COEFF1"])
-            ig,ig_,_ = s2x_ii("E2",ig_)
+            ig,ig_,_ = s2mpj_ii("E2",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E2")
             iv = ix_["M"*string(I)]
@@ -118,20 +119,20 @@ function HUESmMOD(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"U1")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["K"])
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype,ie,iet_["eSQ"])
             end
             vname = "M"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -149,6 +150,8 @@ function HUESmMOD(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -164,6 +167,10 @@ function HUESmMOD(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QLR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -198,7 +205,7 @@ function HUESmMOD(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

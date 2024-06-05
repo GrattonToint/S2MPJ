@@ -15,6 +15,9 @@ function TWOD(action,args...)
 # 
 #    the x-y discretization 
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                    2             $-PARAMETER
+# IE N                   40             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -36,8 +39,6 @@ function TWOD(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   40             $-PARAMETER
 # IE N                   79             $-PARAMETER     twod_000.mod value
 # IE N                   99             $-PARAMETER     twod_0.mod value
         v_["M"] = v_["N"]
@@ -88,20 +89,20 @@ function TWOD(action,args...)
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["0"]):Int64(v_["N"])
                 for K = Int64(v_["0"]):Int64(v_["M"])
-                    iv,ix_,_ = s2x_ii("Y"*string(K)*","*string(I)*","*string(J),ix_)
+                    iv,ix_,_ = s2mpj_ii("Y"*string(K)*","*string(I)*","*string(J),ix_)
                     arrset(pb.xnames,iv,"Y"*string(K)*","*string(I)*","*string(J))
                 end
             end
         end
         for I = Int64(v_["1"]):Int64(v_["M"])
             for J = Int64(v_["0"]):Int64(v_["N1"])
-                iv,ix_,_ = s2x_ii("U"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("U"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"U"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N1"])
             v_["I+"] = 1+I
@@ -111,7 +112,7 @@ function TWOD(action,args...)
                 v_["J-"] = -1+J
                 for K = Int64(v_["0"]):Int64(v_["M1"])
                     v_["K+"] = 1+K
-                    ig,ig_,_ = s2x_ii("P"*string(K)*","*string(I)*","*string(J),ig_)
+                    ig,ig_,_ = s2mpj_ii("P"*string(K)*","*string(I)*","*string(J),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"P"*string(K)*","*string(I)*","*string(J))
                     iv = ix_["Y"*string(Int64(v_["K+"]))*","*string(I)*","*string(J)]
@@ -143,7 +144,7 @@ function TWOD(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["N1"])
             for K = Int64(v_["1"]):Int64(v_["M"])
-                ig,ig_,_ = s2x_ii("B1"*string(K)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("B1"*string(K)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B1"*string(K)*","*string(I))
                 iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["N2"]))]
@@ -154,7 +155,7 @@ function TWOD(action,args...)
                 pbm.A[ig,iv] += Float64(v_["3/2DY+1"])
                 iv = ix_["U"*string(K)*","*string(I)]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("B2"*string(K)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("B2"*string(K)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B2"*string(K)*","*string(I))
                 iv = ix_["Y"*string(K)*","*string(I)*","*string(Int64(v_["2"]))]
@@ -167,7 +168,7 @@ function TWOD(action,args...)
         end
         for J = Int64(v_["1"]):Int64(v_["N1"])
             for K = Int64(v_["1"]):Int64(v_["M"])
-                ig,ig_,_ = s2x_ii("B3"*string(K)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("B3"*string(K)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B3"*string(K)*","*string(J))
                 iv = ix_["Y"*string(K)*","*string(Int64(v_["2"]))*","*string(J)]
@@ -176,7 +177,7 @@ function TWOD(action,args...)
                 pbm.A[ig,iv] += Float64(v_["-2/DX"])
                 iv = ix_["Y"*string(K)*","*string(Int64(v_["0"]))*","*string(J)]
                 pbm.A[ig,iv] += Float64(v_["3/2DX+1"])
-                ig,ig_,_ = s2x_ii("B4"*string(K)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("B4"*string(K)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B4"*string(K)*","*string(J))
                 iv = ix_["Y"*string(K)*","*string(Int64(v_["N2"]))*","*string(J)]
@@ -200,10 +201,8 @@ function TWOD(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["0"]):Int64(v_["N"])
@@ -241,9 +240,9 @@ function TWOD(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"U")
-        it,iet_,_ = s2x_ii( "eSQD", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQD", iet_)
         loaset(elftv,it,1,"Y")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"YP")
@@ -258,17 +257,17 @@ function TWOD(action,args...)
                 v_[".5DXDYIJ"] = v_[".5DXDYI"]*v_["RJ"]
                 v_["YP"] = 0.25+v_[".5DXDYIJ"]
                 ename = "E"*string(Int64(v_["M"]))*","*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQD")
                 arrset(ielftype, ie, iet_["eSQD"])
                 ename = "E"*string(Int64(v_["M"]))*","*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 vname = "Y"*string(Int64(v_["M"]))*","*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "E"*string(Int64(v_["M"]))*","*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 posep = findfirst(x->x=="YP",elftp[ielftype[ie]])
                 loaset(pbm.elpar,ie,posep,Float64(v_["YP"]))
             end
@@ -276,11 +275,11 @@ function TWOD(action,args...)
         for K = Int64(v_["1"]):Int64(v_["M"])
             for I = Int64(v_["1"]):Int64(v_["N1"])
                 ename = "E"*string(K)*","*string(I)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "U"*string(K)*","*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -423,7 +422,7 @@ function TWOD(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

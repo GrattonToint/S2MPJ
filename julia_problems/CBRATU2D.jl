@@ -23,6 +23,8 @@ function CBRATU2D(action,args...)
 #    P is the number of points in one side of the unit square (variable).
 #    There are 2*P**2 variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE P                   4              $-PARAMETER n = 32     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,7 +46,6 @@ function CBRATU2D(action,args...)
         else
             v_["P"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
 # IE P                   7              $-PARAMETER n = 98
 # IE P                   16             $-PARAMETER n = 512
 # IE P                   23             $-PARAMETER n = 1058
@@ -69,9 +70,9 @@ function CBRATU2D(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
-                iv,ix_,_ = s2x_ii("U"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("U"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"U"*string(I)*","*string(J))
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
@@ -83,7 +84,7 @@ function CBRATU2D(action,args...)
             for J = Int64(v_["2"]):Int64(v_["P-1"])
                 v_["V"] = 1+J
                 v_["W"] = -1+J
-                ig,ig_,_ = s2x_ii("G"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I)*","*string(J))
                 iv = ix_["U"*string(I)*","*string(J)]
@@ -96,7 +97,7 @@ function CBRATU2D(action,args...)
                 pbm.A[ig,iv] += Float64(-1.0)
                 iv = ix_["U"*string(I)*","*string(Int64(v_["W"]))]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("F"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("F"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"F"*string(I)*","*string(J))
                 iv = ix_["X"*string(I)*","*string(J)]
@@ -124,8 +125,6 @@ function CBRATU2D(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -154,10 +153,10 @@ function CBRATU2D(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eRPART", iet_)
+        it,iet_,_ = s2mpj_ii( "eRPART", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"V")
-        it,iet_,_ = s2x_ii( "eCPART", iet_)
+        it,iet_,_ = s2mpj_ii( "eCPART", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"V")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -166,27 +165,27 @@ function CBRATU2D(action,args...)
         for I = Int64(v_["2"]):Int64(v_["P-1"])
             for J = Int64(v_["2"]):Int64(v_["P-1"])
                 ename = "A"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eRPART")
                 arrset(ielftype, ie, iet_["eRPART"])
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "B"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eCPART")
                 arrset(ielftype, ie, iet_["eCPART"])
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -212,6 +211,8 @@ function CBRATU2D(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -226,6 +227,10 @@ function CBRATU2D(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -298,7 +303,7 @@ function CBRATU2D(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -431,13 +431,13 @@ function NELSONLS(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("B"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("B"*string(I),ix_)
             arrset(pb.xnames,iv,"B"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("F"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["B1"]
             pbm.A[ig,iv] += Float64(1.0)
@@ -453,8 +453,6 @@ function NELSONLS(action,args...)
             v_["LOGY"] = log(v_["Y"*string(I)])
             pbm.gconst[ig_["F"*string(I)]] = Float64(v_["LOGY"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -466,7 +464,7 @@ function NELSONLS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eE6", iet_)
+        it,iet_,_ = s2mpj_ii( "eE6", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         elftp = Vector{Vector{String}}()
@@ -477,15 +475,15 @@ function NELSONLS(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["M"])
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eE6")
             arrset(ielftype, ie, iet_["eE6"])
             vname = "B2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="X1",elftp[ielftype[ie]])
@@ -495,7 +493,7 @@ function NELSONLS(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -511,7 +509,10 @@ function NELSONLS(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -519,6 +520,10 @@ function NELSONLS(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SUR2-MN-3"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -583,7 +588,7 @@ function NELSONLS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -8891,19 +8891,19 @@ function FBRAIN2LS(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("ALPHA1",ix_)
+        iv,ix_,_ = s2mpj_ii("ALPHA1",ix_)
         arrset(pb.xnames,iv,"ALPHA1")
-        iv,ix_,_ = s2x_ii("C01",ix_)
+        iv,ix_,_ = s2mpj_ii("C01",ix_)
         arrset(pb.xnames,iv,"C01")
-        iv,ix_,_ = s2x_ii("ALPHA2",ix_)
+        iv,ix_,_ = s2mpj_ii("ALPHA2",ix_)
         arrset(pb.xnames,iv,"ALPHA2")
-        iv,ix_,_ = s2x_ii("C02",ix_)
+        iv,ix_,_ = s2mpj_ii("C02",ix_)
         arrset(pb.xnames,iv,"C02")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["0"]):Int64(v_["M"])
-                ig,ig_,_ = s2x_ii("R"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("R"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
             end
         end
@@ -11125,8 +11125,6 @@ function FBRAIN2LS(action,args...)
         pbm.gconst[ig_["R198,11"]] = Float64(1.5504359e-1)
         pbm.gconst[ig_["R199,11"]] = Float64(1.5748296e-1)
         pbm.gconst[ig_["R200,11"]] = Float64(1.6075537e-1)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -11141,7 +11139,7 @@ function FBRAIN2LS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eFBRAIN", iet_)
+        it,iet_,_ = s2mpj_ii( "eFBRAIN", iet_)
         loaset(elftv,it,1,"ALPHA")
         loaset(elftv,it,2,"C0")
         elftp = Vector{Vector{String}}()
@@ -11153,17 +11151,17 @@ function FBRAIN2LS(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["0"]):Int64(v_["M"])
                 ename = "A"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eFBRAIN")
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA1"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C01"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11171,17 +11169,17 @@ function FBRAIN2LS(action,args...)
                 posep = findfirst(x->x=="LAMBDA",elftp[ielftype[ie]])
                 loaset(pbm.elpar,ie,posep,Float64(v_["AL"*string(I)*","*string(J)]))
                 ename = "B"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eFBRAIN")
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA1"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C01"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11189,17 +11187,17 @@ function FBRAIN2LS(action,args...)
                 posep = findfirst(x->x=="LAMBDA",elftp[ielftype[ie]])
                 loaset(pbm.elpar,ie,posep,Float64(v_["BL"*string(I)*","*string(J)]))
                 ename = "C"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eFBRAIN")
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA2"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C02"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11207,17 +11205,17 @@ function FBRAIN2LS(action,args...)
                 posep = findfirst(x->x=="LAMBDA",elftp[ielftype[ie]])
                 loaset(pbm.elpar,ie,posep,Float64(v_["AL"*string(I)*","*string(J)]))
                 ename = "D"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eFBRAIN")
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA2"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C02"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11228,7 +11226,7 @@ function FBRAIN2LS(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -11332,7 +11330,7 @@ function FBRAIN2LS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -218,28 +218,28 @@ function SSEBNLN(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_  = (
-              s2x_ii("V"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])),ix_))
+              s2mpj_ii("V"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])),ix_))
         arrset(pb.xnames,iv,"V"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])))
         iv,ix_,_  = (
-              s2x_ii("R"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])),ix_))
+              s2mpj_ii("R"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])),ix_))
         arrset(pb.xnames,iv,"R"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"])))
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["1"]):Int64(v_["HOURS"])
-                iv,ix_,_ = s2x_ii("P1"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("P1"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"P1"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("P2"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("P2"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"P2"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("QH"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("QH"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"QH"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("S"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("S"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"S"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("QG"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("QG"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"QG"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("QP"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("QP"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"QP"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("V"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("V"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"V"*string(ID)*","*string(IH))
-                iv,ix_,_ = s2x_ii("R"*string(ID)*","*string(IH),ix_)
+                iv,ix_,_ = s2mpj_ii("R"*string(ID)*","*string(IH),ix_)
                 arrset(pb.xnames,iv,"R"*string(ID)*","*string(IH))
             end
         end
@@ -247,7 +247,7 @@ function SSEBNLN(action,args...)
         gtype    = String[]
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["1"]):Int64(v_["HOURS"])
-                ig,ig_,_ = s2x_ii("OBJ",ig_)
+                ig,ig_,_ = s2mpj_ii("OBJ",ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["P1"*string(ID)*","*string(IH)]
                 pbm.A[ig,iv] += Float64(1000.0)
@@ -265,14 +265,14 @@ function SSEBNLN(action,args...)
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             v_["P"] = -1+ID
-            ig,ig_,_ = s2x_ii("H"*string(ID)*","*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("H"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"H"*string(ID)*","*string(Int64(v_["1"])))
             iv = ix_["V"*string(ID)*","*string(Int64(v_["1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["V"*string(Int64(v_["P"]))*","*string(Int64(v_["HOURS"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("H"*string(ID)*","*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("H"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"H"*string(ID)*","*string(Int64(v_["1"])))
             iv = ix_["S"*string(ID)*","*string(Int64(v_["1"]))]
@@ -283,7 +283,7 @@ function SSEBNLN(action,args...)
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["2"]):Int64(v_["HOURS"])
                 v_["IH-1"] = -1+IH
-                ig,ig_,_ = s2x_ii("H"*string(ID)*","*string(IH),ig_)
+                ig,ig_,_ = s2mpj_ii("H"*string(ID)*","*string(IH),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"H"*string(ID)*","*string(IH))
                 iv = ix_["V"*string(ID)*","*string(IH)]
@@ -298,14 +298,14 @@ function SSEBNLN(action,args...)
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             v_["P"] = -1+ID
-            ig,ig_,_ = s2x_ii("R"*string(ID)*","*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(ID)*","*string(Int64(v_["1"])))
             iv = ix_["R"*string(ID)*","*string(Int64(v_["1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["R"*string(Int64(v_["P"]))*","*string(Int64(v_["HOURS"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("R"*string(ID)*","*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(ID)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(ID)*","*string(Int64(v_["1"])))
             iv = ix_["QG"*string(ID)*","*string(Int64(v_["1"]))]
@@ -316,7 +316,7 @@ function SSEBNLN(action,args...)
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["2"]):Int64(v_["HOURS"])
                 v_["IH-1"] = -1+IH
-                ig,ig_,_ = s2x_ii("R"*string(ID)*","*string(IH),ig_)
+                ig,ig_,_ = s2mpj_ii("R"*string(ID)*","*string(IH),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"R"*string(ID)*","*string(IH))
                 iv = ix_["R"*string(ID)*","*string(IH)]
@@ -331,7 +331,7 @@ function SSEBNLN(action,args...)
         end
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["1"]):Int64(v_["HOURS"])
-                ig,ig_,_ = s2x_ii("D"*string(ID)*","*string(IH),ig_)
+                ig,ig_,_ = s2mpj_ii("D"*string(ID)*","*string(IH),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"D"*string(ID)*","*string(IH))
                 iv = ix_["P1"*string(ID)*","*string(IH)]
@@ -348,7 +348,7 @@ function SSEBNLN(action,args...)
         end
         for D = Int64(v_["1"]):Int64(v_["DAYS"])
             for H = Int64(v_["1"]):Int64(v_["HOURS"])
-                ig,ig_,_ = s2x_ii("QG*QP"*string(D)*","*string(H),ig_)
+                ig,ig_,_ = s2mpj_ii("QG*QP"*string(D)*","*string(H),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"QG*QP"*string(D)*","*string(H))
             end
@@ -385,10 +385,8 @@ function SSEBNLN(action,args...)
                       Float64(v_["D"*string(ID)*","*string(IH)]))
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["HOURS"]))]]  = (
               240000.0)
@@ -475,7 +473,7 @@ function SSEBNLN(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"QP")
         loaset(elftv,it,2,"QG")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -484,15 +482,15 @@ function SSEBNLN(action,args...)
         for ID = Int64(v_["1"]):Int64(v_["DAYS"])
             for IH = Int64(v_["1"]):Int64(v_["HOURS"])
                 ename = "P"*string(ID)*","*string(IH)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePROD")
                 arrset(ielftype, ie, iet_["ePROD"])
                 vname = "QP"*string(ID)*","*string(IH)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="QP",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "QG"*string(ID)*","*string(IH)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="QG",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -512,6 +510,8 @@ function SSEBNLN(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               1.617060D+07
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -527,6 +527,10 @@ function SSEBNLN(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-RN-194-96"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -563,7 +567,7 @@ function SSEBNLN(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

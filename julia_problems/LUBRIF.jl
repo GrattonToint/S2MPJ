@@ -25,6 +25,10 @@ function LUBRIF(action,args...)
 # 
 #    Number of discretized points per unit length
 # 
+#       Alternative values for the SIF file parameters:
+# IE NN                  10             $-PARAMETER n = 151    original value
+# IE NN                  50             $-PARAMETER n = 751
+# IE NN                  250            $-PARAMETER n = 3751
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,10 +50,6 @@ function LUBRIF(action,args...)
         else
             v_["NN"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE NN                  10             $-PARAMETER n = 151    original value
-# IE NN                  50             $-PARAMETER n = 751
-# IE NN                  250            $-PARAMETER n = 3751
         v_["ALPHA"] = 1.838
         v_["LAMBDA"] = 1.642
         v_["XA"] = -3.0
@@ -84,40 +84,40 @@ function LUBRIF(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("K",ix_)
+        iv,ix_,_ = s2mpj_ii("K",ix_)
         arrset(pb.xnames,iv,"K")
         for I = Int64(v_["0"]):Int64(v_["2"]):Int64(v_["2N"])
-            iv,ix_,_ = s2x_ii("P"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
             arrset(pb.xnames,iv,"P"*string(I))
         end
         for J = Int64(v_["1"]):Int64(v_["2"]):Int64(v_["2N-1"])
-            iv,ix_,_ = s2x_ii("H"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("H"*string(J),ix_)
             arrset(pb.xnames,iv,"H"*string(J))
         end
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
-            iv,ix_,_ = s2x_ii("R"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("R"*string(I),ix_)
             arrset(pb.xnames,iv,"R"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
-            ig,ig_,_ = s2x_ii("R"*string(Int64(v_["0"])),ig_)
+            ig,ig_,_ = s2mpj_ii("R"*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"R"*string(Int64(v_["0"])))
             iv = ix_["P"*string(I)]
             pbm.A[ig,iv] += Float64(v_["2DX/PI"])
         end
-        ig,ig_,_ = s2x_ii("R"*string(Int64(v_["0"])),ig_)
+        ig,ig_,_ = s2mpj_ii("R"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"R"*string(Int64(v_["0"])))
         iv = ix_["P"*string(Int64(v_["2N"]))]
         pbm.A[ig,iv] += Float64(v_["DX/PI"])
-        ig,ig_,_ = s2x_ii("COMPL",ig_)
+        ig,ig_,_ = s2mpj_ii("COMPL",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("DR"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("DR"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"DR"*string(I))
             iv = ix_["H"*string(Int64(v_["I+1"]))]
@@ -129,7 +129,7 @@ function LUBRIF(action,args...)
         end
         for J = Int64(v_["1"]):Int64(v_["2"]):Int64(v_["2N-1"])
             v_["-J"] = -1*J
-            ig,ig_,_ = s2x_ii("DH"*string(J),ig_)
+            ig,ig_,_ = s2mpj_ii("DH"*string(J),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"DH"*string(J))
             iv = ix_["K"]
@@ -181,7 +181,7 @@ function LUBRIF(action,args...)
             v_["C"*string(Int64(v_["2N-2"]))] = (v_["C"*string(Int64(v_["2N-2"]))]+
                  v_["-COEFF"])
             for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
-                ig,ig_,_ = s2x_ii("DH"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("DH"*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"DH"*string(J))
                 iv = ix_["P"*string(I)]
@@ -213,10 +213,8 @@ function LUBRIF(action,args...)
             v_["RHS"] = -1.0*v_["XJSQ+1"]
             pbm.gconst[ig_["DH"*string(J)]] = Float64(v_["RHS"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["K"]] = -Inf
         pb.xupper[ix_["K"]] = +Inf
@@ -286,13 +284,13 @@ function LUBRIF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eREY", iet_)
+        it,iet_,_ = s2mpj_ii( "eREY", iet_)
         loaset(elftv,it,1,"PA")
         loaset(elftv,it,2,"PB")
         loaset(elftv,it,3,"H")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"A")
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"P")
         loaset(elftv,it,2,"R")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -302,19 +300,19 @@ function LUBRIF(action,args...)
             v_["I+"] = 1+J
             v_["I-"] = -1+J
             ename = "ER"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eREY")
             arrset(ielftype, ie, iet_["eREY"])
             vname = "P"*string(Int64(v_["I-"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="PA",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "P"*string(Int64(v_["I+"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="H",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "H"*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="PB",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="A",elftp[ielftype[ie]])
@@ -322,15 +320,15 @@ function LUBRIF(action,args...)
         end
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["2N-2"])
             ename = "EC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype, ie, iet_["en2PR"])
             vname = "P"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="P",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "R"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="R",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -361,6 +359,8 @@ function LUBRIF(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -374,6 +374,10 @@ function LUBRIF(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -452,7 +456,7 @@ function LUBRIF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

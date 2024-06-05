@@ -19,6 +19,13 @@ function CHARDIS02(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE NP1                 5              $-PARAMETER
 # IE NP1                 9              $-PARAMETER
+# IE NP1                 20             $-PARAMETER
+# IE NP1                 30             $-PARAMETER
+# IE NP1                 50             $-PARAMETER     original value
+# IE NP1                 100            $-PARAMETER
+# IE NP1                 200            $-PARAMETER
+# IE NP1                 500            $-PARAMETER
+# IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,12 +47,6 @@ function CHARDIS02(action,args...)
         else
             v_["NP1"] = Int64(args[1]);
         end
-# IE NP1                 30             $-PARAMETER
-# IE NP1                 50             $-PARAMETER     original value
-# IE NP1                 100            $-PARAMETER
-# IE NP1                 200            $-PARAMETER
-# IE NP1                 500            $-PARAMETER
-# IE NP1                 1000           $-PARAMETER
 # IE NP1                 2000           $-PARAMETER
 # IE NP1                 5000           $-PARAMETER
         v_["R"] = 10.0
@@ -68,9 +69,9 @@ function CHARDIS02(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["NP1"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -78,7 +79,7 @@ function CHARDIS02(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NP1"])
             v_["I+"] = 1+I
             for J = Int64(v_["I+"]):Int64(v_["NP1"])
-                ig,ig_,_ = s2x_ii("O"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("O"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(0.01))
             end
@@ -88,10 +89,8 @@ function CHARDIS02(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["NP1"])
             pb.xlower[ix_["X"*string(I)]] = v_["R-"]
@@ -118,7 +117,7 @@ function CHARDIS02(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eDIFSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eDIFSQR", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -128,34 +127,34 @@ function CHARDIS02(action,args...)
             v_["I+"] = 1+I
             for J = Int64(v_["I+"]):Int64(v_["NP1"])
                 ename = "X"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eDIFSQR")
                 arrset(ielftype, ie, iet_["eDIFSQR"])
                 vname = "X"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "Y"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eDIFSQR")
                 arrset(ielftype, ie, iet_["eDIFSQR"])
                 vname = "Y"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gREZIP",igt_)
+        it,igt_,_ = s2mpj_ii("gREZIP",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -243,7 +242,7 @@ function CHARDIS02(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

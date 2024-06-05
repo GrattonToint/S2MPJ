@@ -164,18 +164,18 @@ function HS119(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["16"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["16"])
-            ig,ig_,_ = s2x_ii("OG"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OG"*string(I),ig_)
             arrset(gtype,ig,"<>")
         end
         for I = Int64(v_["1"]):Int64(v_["8"])
             for J = Int64(v_["1"]):Int64(v_["16"])
-                ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I))
                 iv = ix_["X"*string(J)]
@@ -200,17 +200,15 @@ function HS119(action,args...)
         for I = Int64(v_["1"]):Int64(v_["8"])
             pbm.gconst[ig_["G"*string(I)]] = Float64(v_["C"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = fill(5.0,pb.n)
-        pb.xlower =  -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(10.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"U1")
         loaset(elftv,it,2,"U2")
         elftp = Vector{Vector{String}}()
@@ -221,17 +219,17 @@ function HS119(action,args...)
         for I = Int64(v_["1"]):Int64(v_["16"])
             for J = Int64(v_["1"]):Int64(v_["16"])
                 ename = "S"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"ePROD")
                     arrset(ielftype,ie,iet_["ePROD"])
                 end
                 vname = "X"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,5.0,10.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,5.0,10.0)
                 posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,5.0,10.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,5.0,10.0)
                 posev = findfirst(x->x=="U2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="AIJ",elftp[ielftype[ie]])
@@ -307,7 +305,7 @@ function HS119(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

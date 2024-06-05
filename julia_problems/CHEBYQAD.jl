@@ -30,6 +30,10 @@ function CHEBYQAD(action,args...)
 # IE N                   7              $-PARAMETER
 # IE N                   8              $-PARAMETER
 # IE N                   9              $-PARAMETER
+# IE N                   10             $-PARAMETER     original value
+# IE N                   20             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -51,9 +55,6 @@ function CHEBYQAD(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   20             $-PARAMETER
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER
         v_["M"] = v_["N"]
         v_["N+1"] = 1+v_["N"]
         v_["1"] = 1
@@ -67,13 +68,13 @@ function CHEBYQAD(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(J),ix_)
             arrset(pb.xnames,iv,"X"*string(J))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -90,11 +91,9 @@ function CHEBYQAD(action,args...)
             v_["-1/LAST"] = -1.0/v_["RLAST"]
             pbm.gconst[ig_["G"*string(I)]] = Float64(v_["-1/LAST"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = fill(1.0,pb.n)
-        pb.xlower =  -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["N"])
@@ -105,7 +104,7 @@ function CHEBYQAD(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eCHEBYPOL", iet_)
+        it,iet_,_ = s2mpj_ii( "eCHEBYPOL", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"RI")
@@ -116,13 +115,13 @@ function CHEBYQAD(action,args...)
             v_["RI"] = Float64(I)
             for J = Int64(v_["1"]):Int64(v_["N"])
                 ename = "E"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eCHEBYPOL")
                     arrset(ielftype,ie,iet_["eCHEBYPOL"])
                 end
                 vname = "X"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="RI",elftp[ielftype[ie]])
@@ -131,7 +130,7 @@ function CHEBYQAD(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -149,12 +148,27 @@ function CHEBYQAD(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(2)            0.0
+# LO SOLTN(4)            0.0
+# LO SOLTN(5)            0.0
+# LO SOLTN(6)            0.0
+# LO SOLTN(7)            0.0
+# LO SOLTN(8)            3.516874D-3
+# LO SOLTN(9)            0.0
+# LO SOLTN(10)           4.772713D-3
+# LO SOLTN(20)           4.572955D-3
+# LO SOLTN(50)           5.386315D-3
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SBR2-AN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -220,7 +234,7 @@ function CHEBYQAD(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

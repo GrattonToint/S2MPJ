@@ -190,21 +190,21 @@ function HIMMELBI(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["NT"])
             for I = Int64(v_["1"]):Int64(v_["5"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["NT"])
-            ig,ig_,_ = s2x_ii("P"*string(J),ig_)
+            ig,ig_,_ = s2mpj_ii("P"*string(J),ig_)
             arrset(gtype,ig,"<>")
             v_["1/UJ"] = 1.0/v_["U"*string(J)]
             arrset(pbm.gscale,ig,Float64(v_["1/UJ"]))
         end
         v_["J"] = 1
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -212,7 +212,7 @@ function HIMMELBI(action,args...)
         end
         v_["J"] = 6
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -220,7 +220,7 @@ function HIMMELBI(action,args...)
         end
         v_["J"] = 10
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -228,7 +228,7 @@ function HIMMELBI(action,args...)
         end
         v_["J"] = 14
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -236,7 +236,7 @@ function HIMMELBI(action,args...)
         end
         v_["J"] = 15
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -244,7 +244,7 @@ function HIMMELBI(action,args...)
         end
         v_["J"] = 16
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -252,7 +252,7 @@ function HIMMELBI(action,args...)
         end
         v_["J"] = 20
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CB"*string(Int64(v_["J"])),ig_)
+            ig,ig_,_ = s2mpj_ii("CB"*string(Int64(v_["J"])),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CB"*string(Int64(v_["J"])))
             iv = ix_["X"*string(I)*","*string(Int64(v_["J"]))]
@@ -260,7 +260,7 @@ function HIMMELBI(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["5"])
             for J = Int64(v_["1"]):Int64(v_["NT"])
-                ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"CC"*string(I))
                 iv = ix_["X"*string(I)*","*string(J)]
@@ -309,15 +309,13 @@ function HIMMELBI(action,args...)
         for I = Int64(v_["1"]):Int64(v_["5"])
             pbm.gconst[ig_["CC"*string(I)]] = Float64(v_["C"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = fill(v_["NW"],pb.n)
-        pb.xlower =  -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en5PEXP", iet_)
+        it,iet_,_ = s2mpj_ii( "en5PEXP", iet_)
         loaset(elftv,it,1,"Y1")
         loaset(elftv,it,2,"Y2")
         loaset(elftv,it,3,"Y3")
@@ -334,27 +332,27 @@ function HIMMELBI(action,args...)
         ielftype = Vector{Int64}()
         for J = Int64(v_["1"]):Int64(v_["NT"])
             ename = "PP"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en5PEXP")
             arrset(ielftype, ie, iet_["en5PEXP"])
             vname = "X"*string(Int64(v_["1"]))*","*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["2"]))*","*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["3"]))*","*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["4"]))*","*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
             posev = findfirst(x->x=="Y4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5"]))*","*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
             posev = findfirst(x->x=="Y5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="A1",elftp[ielftype[ie]])
@@ -381,6 +379,8 @@ function HIMMELBI(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -1735.56958
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -396,6 +396,10 @@ function HIMMELBI(action,args...)
         pb.pbclass = "OLR2-MN-100-12"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -465,7 +469,7 @@ function HIMMELBI(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

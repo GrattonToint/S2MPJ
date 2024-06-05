@@ -42,19 +42,19 @@ function PFIT2LS(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("A",ix_)
+        iv,ix_,_ = s2mpj_ii("A",ix_)
         arrset(pb.xnames,iv,"A")
-        iv,ix_,_ = s2x_ii("R",ix_)
+        iv,ix_,_ = s2mpj_ii("R",ix_)
         arrset(pb.xnames,iv,"R")
-        iv,ix_,_ = s2x_ii("H",ix_)
+        iv,ix_,_ = s2mpj_ii("H",ix_)
         arrset(pb.xnames,iv,"H")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("EF",ig_)
+        ig,ig_,_ = s2mpj_ii("EF",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("EG",ig_)
+        ig,ig_,_ = s2mpj_ii("EG",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("EH",ig_)
+        ig,ig_,_ = s2mpj_ii("EH",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -66,8 +66,6 @@ function PFIT2LS(action,args...)
         pbm.gconst[ig_["EF"]] = Float64(v_["CF"])
         pbm.gconst[ig_["EG"]] = Float64(v_["CG"])
         pbm.gconst[ig_["EH"]] = Float64(v_["CH"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -80,23 +78,23 @@ function PFIT2LS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eT1", iet_)
+        it,iet_,_ = s2mpj_ii( "eT1", iet_)
         loaset(elftv,it,1,"AA")
         loaset(elftv,it,2,"RR")
         loaset(elftv,it,3,"XX")
-        it,iet_,_ = s2x_ii( "eT2", iet_)
+        it,iet_,_ = s2mpj_ii( "eT2", iet_)
         loaset(elftv,it,1,"AA")
         loaset(elftv,it,2,"RR")
         loaset(elftv,it,3,"XX")
-        it,iet_,_ = s2x_ii( "eT3", iet_)
+        it,iet_,_ = s2mpj_ii( "eT3", iet_)
         loaset(elftv,it,1,"AA")
         loaset(elftv,it,2,"RR")
         loaset(elftv,it,3,"XX")
-        it,iet_,_ = s2x_ii( "eT4", iet_)
+        it,iet_,_ = s2mpj_ii( "eT4", iet_)
         loaset(elftv,it,1,"AA")
         loaset(elftv,it,2,"RR")
         loaset(elftv,it,3,"XX")
-        it,iet_,_ = s2x_ii( "eT5", iet_)
+        it,iet_,_ = s2mpj_ii( "eT5", iet_)
         loaset(elftv,it,1,"AA")
         loaset(elftv,it,2,"RR")
         loaset(elftv,it,3,"XX")
@@ -104,88 +102,88 @@ function PFIT2LS(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "EA"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT3")
         arrset(ielftype, ie, iet_["eT3"])
         vname = "A"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EB"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT2")
         arrset(ielftype, ie, iet_["eT2"])
         vname = "A"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EC"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT1")
         arrset(ielftype, ie, iet_["eT1"])
         vname = "A"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "ED"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype, ie, iet_["eT4"])
         vname = "A"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EE"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT5")
         arrset(ielftype, ie, iet_["eT5"])
         vname = "A"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="AA",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "R"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="RR",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "H"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -217,12 +215,18 @@ function PFIT2LS(action,args...)
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution at ( 1.0, 3.0 , 2.0 )
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SBR2-AN-3-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -465,7 +469,7 @@ function PFIT2LS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

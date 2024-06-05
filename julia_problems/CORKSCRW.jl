@@ -26,6 +26,11 @@ function CORKSCRW(action,args...)
 #    Number of time intervals
 #    The number of variables is 9T+6, of which 9 are fixed.
 # 
+#       Alternative values for the SIF file parameters:
+# IE T                   10             $-PARAMETER n = 96     original value
+# IE T                   50             $-PARAMETER n = 456
+# IE T                   100            $-PARAMETER n = 906
+# IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,10 +52,6 @@ function CORKSCRW(action,args...)
         else
             v_["T"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE T                   50             $-PARAMETER n = 456
-# IE T                   100            $-PARAMETER n = 906
-# IE T                   500            $-PARAMETER n = 4506
 # IE T                   1000           $-PARAMETER n = 9006
         if nargin<2
             v_["XT"] = Float64(10.0);  #  SIF file default value
@@ -91,31 +92,31 @@ function CORKSCRW(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["T"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
-            iv,ix_,_ = s2x_ii("Z"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Z"*string(I),ix_)
             arrset(pb.xnames,iv,"Z"*string(I))
-            iv,ix_,_ = s2x_ii("VX"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("VX"*string(I),ix_)
             arrset(pb.xnames,iv,"VX"*string(I))
-            iv,ix_,_ = s2x_ii("VY"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("VY"*string(I),ix_)
             arrset(pb.xnames,iv,"VY"*string(I))
-            iv,ix_,_ = s2x_ii("VZ"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("VZ"*string(I),ix_)
             arrset(pb.xnames,iv,"VZ"*string(I))
         end
         for I = Int64(v_["1"]):Int64(v_["T"])
-            iv,ix_,_ = s2x_ii("UX"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("UX"*string(I),ix_)
             arrset(pb.xnames,iv,"UX"*string(I))
-            iv,ix_,_ = s2x_ii("UY"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("UY"*string(I),ix_)
             arrset(pb.xnames,iv,"UY"*string(I))
-            iv,ix_,_ = s2x_ii("UZ"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("UZ"*string(I),ix_)
             arrset(pb.xnames,iv,"UZ"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["T"])
-            ig,ig_,_ = s2x_ii("OX"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OX"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(v_["W/T"*string(I)]))
             iv = ix_["X"*string(I)]
@@ -123,7 +124,7 @@ function CORKSCRW(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["T"])
             v_["I-1"] = -1+I
-            ig,ig_,_ = s2x_ii("ACX"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ACX"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ACX"*string(I))
             iv = ix_["VX"*string(I)]
@@ -132,7 +133,7 @@ function CORKSCRW(action,args...)
             pbm.A[ig,iv] += Float64(v_["-M/H"])
             iv = ix_["UX"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("ACY"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ACY"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ACY"*string(I))
             iv = ix_["VY"*string(I)]
@@ -141,7 +142,7 @@ function CORKSCRW(action,args...)
             pbm.A[ig,iv] += Float64(v_["-M/H"])
             iv = ix_["UY"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("ACZ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ACZ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ACZ"*string(I))
             iv = ix_["VZ"*string(I)]
@@ -150,7 +151,7 @@ function CORKSCRW(action,args...)
             pbm.A[ig,iv] += Float64(v_["-M/H"])
             iv = ix_["UZ"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("PSX"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("PSX"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PSX"*string(I))
             iv = ix_["X"*string(I)]
@@ -159,7 +160,7 @@ function CORKSCRW(action,args...)
             pbm.A[ig,iv] += Float64(v_["-1/H"])
             iv = ix_["VX"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("PSY"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("PSY"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PSY"*string(I))
             iv = ix_["Y"*string(I)]
@@ -168,7 +169,7 @@ function CORKSCRW(action,args...)
             pbm.A[ig,iv] += Float64(v_["-1/H"])
             iv = ix_["VY"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("PSZ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("PSZ"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"PSZ"*string(I))
             iv = ix_["Z"*string(I)]
@@ -177,7 +178,7 @@ function CORKSCRW(action,args...)
             pbm.A[ig,iv] += Float64(v_["-1/H"])
             iv = ix_["VZ"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("SC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("SC"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"SC"*string(I))
         end
@@ -200,8 +201,6 @@ function CORKSCRW(action,args...)
             pbm.gconst[ig_["OX"*string(I)]] = Float64(v_["XT"])
             pbm.gconst[ig_["SC"*string(I)]] = Float64(v_["TOLSQ"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -262,10 +261,10 @@ function CORKSCRW(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eERRSIN", iet_)
+        it,iet_,_ = s2mpj_ii( "eERRSIN", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
-        it,iet_,_ = s2x_ii( "eERRCOS", iet_)
+        it,iet_,_ = s2mpj_ii( "eERRCOS", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Z")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -273,33 +272,33 @@ function CORKSCRW(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["T"])
             ename = "ES"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eERRSIN")
             arrset(ielftype, ie, iet_["eERRSIN"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Y"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eERRCOS")
             arrset(ielftype, ie, iet_["eERRCOS"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -318,6 +317,12 @@ function CORKSCRW(action,args...)
             loaset(pbm.grelw,ig,posel, 1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           1.1601050195
+# LO SOLTN(50)           26.484181830
+# LO SOLTN(100)          44.368110588
+# LO SOLTN(500)
+# LO SOLTN(1000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -332,6 +337,10 @@ function CORKSCRW(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "SOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -428,7 +437,7 @@ function CORKSCRW(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

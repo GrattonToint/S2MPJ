@@ -35,6 +35,11 @@ function OPTMASS(action,args...)
 #    Number of discretization steps in the time interval
 #    The number of variables is 6 * (N + 2) -2 , 4 of which are fixed.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER n = 70    original value
+# IE N                   100            $-PARAMETER n = 610
+# IE N                   200            $-PARAMETER n = 1210
+# IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,10 +61,6 @@ function OPTMASS(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER n = 610
-# IE N                   200            $-PARAMETER n = 1210
-# IE N                   500            $-PARAMETER n = 3010
 # IE N                   1000           $-PARAMETER n = 6010
 # IE N                   5000           $-PARAMETER n = 30010
         v_["SPEED"] = 0.01
@@ -79,28 +80,28 @@ function OPTMASS(action,args...)
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["2"])
-                iv,ix_,_ = s2x_ii("X"*string(J)*","*string(I),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(J)*","*string(I),ix_)
                 arrset(pb.xnames,iv,"X"*string(J)*","*string(I))
-                iv,ix_,_ = s2x_ii("V"*string(J)*","*string(I),ix_)
+                iv,ix_,_ = s2mpj_ii("V"*string(J)*","*string(I),ix_)
                 arrset(pb.xnames,iv,"V"*string(J)*","*string(I))
-                iv,ix_,_ = s2x_ii("F"*string(J)*","*string(I),ix_)
+                iv,ix_,_ = s2mpj_ii("F"*string(J)*","*string(I),ix_)
                 arrset(pb.xnames,iv,"F"*string(J)*","*string(I))
             end
         end
         for J = Int64(v_["1"]):Int64(v_["2"])
-            iv,ix_,_ = s2x_ii("X"*string(J)*","*string(Int64(v_["N+1"])),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(J)*","*string(Int64(v_["N+1"])),ix_)
             arrset(pb.xnames,iv,"X"*string(J)*","*string(Int64(v_["N+1"])))
-            iv,ix_,_ = s2x_ii("V"*string(J)*","*string(Int64(v_["N+1"])),ix_)
+            iv,ix_,_ = s2mpj_ii("V"*string(J)*","*string(Int64(v_["N+1"])),ix_)
             arrset(pb.xnames,iv,"V"*string(J)*","*string(Int64(v_["N+1"])))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("F",ig_)
+        ig,ig_,_ = s2mpj_ii("F",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["N+1"])
             v_["I-1"] = -1+I
             for J = Int64(v_["1"]):Int64(v_["2"])
-                ig,ig_,_ = s2x_ii("A"*string(J)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("A"*string(J)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"A"*string(J)*","*string(I))
                 iv = ix_["X"*string(J)*","*string(I)]
@@ -111,7 +112,7 @@ function OPTMASS(action,args...)
                 pbm.A[ig,iv] += Float64(v_["-1/N"])
                 iv = ix_["F"*string(J)*","*string(Int64(v_["I-1"]))]
                 pbm.A[ig,iv] += Float64(v_["-1/2N2"])
-                ig,ig_,_ = s2x_ii("B"*string(J)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("B"*string(J)*","*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"B"*string(J)*","*string(I))
                 iv = ix_["V"*string(J)*","*string(I)]
@@ -123,7 +124,7 @@ function OPTMASS(action,args...)
             end
         end
         for I = Int64(v_["0"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(I))
         end
@@ -145,8 +146,6 @@ function OPTMASS(action,args...)
         for I = Int64(v_["0"]):Int64(v_["N"])
             pbm.gconst[ig_["C"*string(I)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -171,51 +170,51 @@ function OPTMASS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "O1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "X"*string(Int64(v_["1"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "X"*string(Int64(v_["2"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O3"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "V"*string(Int64(v_["1"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O4"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "V"*string(Int64(v_["2"]))*","*string(Int64(v_["N+1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["0"]):Int64(v_["N"])
             for J = Int64(v_["1"]):Int64(v_["2"])
                 ename = "D"*string(J)*","*string(I)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "F"*string(J)*","*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -252,6 +251,11 @@ function OPTMASS(action,args...)
             loaset(pbm.grelw,ig,posel, 1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           -0.04647
+# LO SOLTN(100)          ???
+# LO SOLTN(200)          ???
+# LO SOLTN(500)          ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -266,6 +270,10 @@ function OPTMASS(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QQR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -300,7 +308,7 @@ function OPTMASS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

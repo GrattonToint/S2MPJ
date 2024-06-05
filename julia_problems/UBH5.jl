@@ -27,6 +27,10 @@ function UBH5(action,args...)
 # 
 #    Number of grid points
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER n=100, m=70    original value
+# IE N                   100            $-PARAMETER n=1000, m=700
+# IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,9 +52,6 @@ function UBH5(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER n=1000, m=700
-# IE N                   500            $-PARAMETER n=5000, m=3500
 # IE N                   1000           $-PARAMETER n=10000, m=7000
 # IE N                   2000           $-PARAMETER n=20000, m=14000
         v_["T0"] = 0.0
@@ -73,19 +74,19 @@ function UBH5(action,args...)
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["7"])
             for T = Int64(v_["0"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("Y"*string(I)*","*string(T),ix_)
+                iv,ix_,_ = s2mpj_ii("Y"*string(I)*","*string(T),ix_)
                 arrset(pb.xnames,iv,"Y"*string(I)*","*string(T))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["3"])
             for T = Int64(v_["0"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("U"*string(I)*","*string(T),ix_)
+                iv,ix_,_ = s2mpj_ii("U"*string(I)*","*string(T),ix_)
                 arrset(pb.xnames,iv,"U"*string(I)*","*string(T))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["Y"*string(Int64(v_["7"]))*","*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(1.0)
@@ -93,7 +94,7 @@ function UBH5(action,args...)
             v_["I+3"] = 3+I
             for T = Int64(v_["1"]):Int64(v_["N"])
                 v_["T-1"] = -1+T
-                ig,ig_,_ = s2x_ii("S"*string(I)*","*string(T),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(I)*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(I)*","*string(T))
                 iv = ix_["Y"*string(I)*","*string(T)]
@@ -110,19 +111,19 @@ function UBH5(action,args...)
             v_["I+3"] = 3+I
             for T = Int64(v_["1"]):Int64(v_["N"])
                 v_["T-1"] = -1+T
-                ig,ig_,_ = s2x_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(Int64(v_["I+3"]))*","*string(T))
                 iv = ix_["Y"*string(Int64(v_["I+3"]))*","*string(T)]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["Y"*string(Int64(v_["I+3"]))*","*string(Int64(v_["T-1"]))]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(Int64(v_["I+3"]))*","*string(T))
                 iv = ix_["U"*string(I)*","*string(Int64(v_["T-1"]))]
                 pbm.A[ig,iv] += Float64(v_["-K/2"])
-                ig,ig_,_ = s2x_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["I+3"]))*","*string(T),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"S"*string(Int64(v_["I+3"]))*","*string(T))
                 iv = ix_["U"*string(I)*","*string(T)]
@@ -131,7 +132,7 @@ function UBH5(action,args...)
         end
         for T = Int64(v_["1"]):Int64(v_["N"])
             v_["T-1"] = -1+T
-            ig,ig_,_ = s2x_ii("S"*string(Int64(v_["7"]))*","*string(T),ig_)
+            ig,ig_,_ = s2mpj_ii("S"*string(Int64(v_["7"]))*","*string(T),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"S"*string(Int64(v_["7"]))*","*string(T))
             iv = ix_["Y"*string(Int64(v_["7"]))*","*string(T)]
@@ -152,8 +153,6 @@ function UBH5(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -197,7 +196,7 @@ function UBH5(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"V")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -205,11 +204,11 @@ function UBH5(action,args...)
         for T = Int64(v_["0"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["3"])
                 ename = "E"*string(I)*","*string(T)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "U"*string(I)*","*string(T)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -235,6 +234,11 @@ function UBH5(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(10)           1.14735202967
+# LO SOLTN(100)          1.11631518169
+# LO SOLTN(1000)         1.11598643493
+# LO SOLTN(2000)         1.11587382445
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -250,6 +254,10 @@ function UBH5(action,args...)
         pb.pbclass = "LQR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -284,7 +292,7 @@ function UBH5(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

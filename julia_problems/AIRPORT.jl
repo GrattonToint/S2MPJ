@@ -177,9 +177,9 @@ function AIRPORT(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -187,13 +187,13 @@ function AIRPORT(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = I+v_["1"]
             for J = Int64(v_["I+1"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("OBJ1"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("OBJ1"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(I)]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(-1.0)
-                ig,ig_,_ = s2x_ii("OBJ2"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("OBJ2"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["Y"*string(I)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -202,7 +202,7 @@ function AIRPORT(action,args...)
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("CONS"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CONS"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"CONS"*string(I))
         end
@@ -224,10 +224,8 @@ function AIRPORT(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["CONS"*string(I)]] = Float64(v_["R"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["X"*string(I)]] = -10
@@ -238,7 +236,7 @@ function AIRPORT(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eDIFSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eDIFSQR", iet_)
         loaset(elftv,it,1,"V")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"W")
@@ -247,11 +245,11 @@ function AIRPORT(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "A"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDIFSQR")
             arrset(ielftype, ie, iet_["eDIFSQR"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="W",elftp[ielftype[ie]])
@@ -259,11 +257,11 @@ function AIRPORT(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "B"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDIFSQR")
             arrset(ielftype, ie, iet_["eDIFSQR"])
             vname = "Y"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="W",elftp[ielftype[ie]])
@@ -271,7 +269,7 @@ function AIRPORT(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQUARE",igt_)
+        it,igt_,_ = s2mpj_ii("gSQUARE",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -298,6 +296,8 @@ function AIRPORT(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = .0
+#    Solution
+# LO SOLTN              47952.695811
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -311,6 +311,10 @@ function AIRPORT(action,args...)
         pb.pbclass = "SQR2-MN-84-42"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -370,7 +374,7 @@ function AIRPORT(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

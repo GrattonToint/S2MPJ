@@ -28,7 +28,6 @@ function POWELLBC(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE P                   2              $-PARAMETER
 # IE P                   5              $-PARAMETER
-# IE P                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -50,6 +49,7 @@ function POWELLBC(action,args...)
         else
             v_["P"] = Int64(args[1]);
         end
+# IE P                   10             $-PARAMETER
 # IE P                   100            $-PARAMETER
 # IE P                   500            $-PARAMETER
         v_["1"] = 1
@@ -61,12 +61,12 @@ function POWELLBC(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
@@ -75,8 +75,6 @@ function POWELLBC(action,args...)
         pb.m        = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
@@ -91,7 +89,7 @@ function POWELLBC(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eINVNRM", iet_)
+        it,iet_,_ = s2mpj_ii( "eINVNRM", iet_)
         loaset(elftv,it,1,"XJ")
         loaset(elftv,it,2,"YJ")
         loaset(elftv,it,3,"XK")
@@ -107,25 +105,25 @@ function POWELLBC(action,args...)
                 v_["2J"] = v_["2"]*J
                 v_["2J-1"] = v_["2J"]-v_["1"]
                 ename = "E"*string(K)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eINVNRM")
                     arrset(ielftype,ie,iet_["eINVNRM"])
                 end
                 vname = "X"*string(Int64(v_["2J-1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
                 posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["2K-1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
                 posev = findfirst(x->x=="XK",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["2J"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
                 posev = findfirst(x->x=="YJ",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["2K"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,nothing)
                 posev = findfirst(x->x=="YK",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -146,6 +144,8 @@ function POWELLBC(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
@@ -153,6 +153,10 @@ function POWELLBC(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OBR2-AN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -202,7 +206,7 @@ function POWELLBC(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

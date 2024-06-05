@@ -35,6 +35,10 @@ function LIPPERT1(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE NX                  2              $-PARAMETER
+# IE NX                  3              $-PARAMETER
+# IE NX                  10             $-PARAMETER
+# IE NX                  40             $-PARAMETER
+# IE NX                  100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,18 +60,16 @@ function LIPPERT1(action,args...)
         else
             v_["NX"] = Int64(args[1]);
         end
-# IE NX                  10             $-PARAMETER
-# IE NX                  40             $-PARAMETER
-# IE NX                  100            $-PARAMETER
 # IE NY                  2              $-PARAMETER
 # IE NY                  3              $-PARAMETER
+# IE NY                  10             $-PARAMETER 
+# IE NY                  40             $-PARAMETER
+# IE NY                  100            $-PARAMETER
         if nargin<2
             v_["NY"] = Int64(10);  #  SIF file default value
         else
             v_["NY"] = Int64(args[2]);
         end
-# IE NY                  40             $-PARAMETER
-# IE NY                  100            $-PARAMETER
         v_["X+"] = 1+v_["NX"]
         v_["X-"] = -1+v_["NX"]
         v_["Y+"] = 1+v_["NY"]
@@ -88,23 +90,23 @@ function LIPPERT1(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("T",ix_)
+        iv,ix_,_ = s2mpj_ii("T",ix_)
         arrset(pb.xnames,iv,"T")
         for I = Int64(v_["0"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
-                iv,ix_,_ = s2x_ii("U"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("U"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"U"*string(I)*","*string(J))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["0"]):Int64(v_["NY"])
-                iv,ix_,_ = s2x_ii("V"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("V"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"V"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["T"]
         pbm.A[ig,iv] += Float64(-1.0)
@@ -112,7 +114,7 @@ function LIPPERT1(action,args...)
             v_["I-1"] = -1+I
             for J = Int64(v_["1"]):Int64(v_["NY"])
                 v_["J-1"] = -1+J
-                ig,ig_,_ = s2x_ii("O"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("O"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"O"*string(I)*","*string(J))
                 arrset(pbm.gscale,ig,Float64(v_["DX"]))
@@ -130,16 +132,16 @@ function LIPPERT1(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
-                ig,ig_,_ = s2x_ii("A"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("A"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"A"*string(I)*","*string(J))
-                ig,ig_,_ = s2x_ii("B"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("B"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"B"*string(I)*","*string(J))
-                ig,ig_,_ = s2x_ii("C"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"C"*string(I)*","*string(J))
-                ig,ig_,_ = s2x_ii("D"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("D"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"D"*string(I)*","*string(J))
             end
@@ -167,8 +169,6 @@ function LIPPERT1(action,args...)
                 pbm.gconst[ig_["D"*string(I)*","*string(J)]] = Float64(1.0)
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -179,7 +179,7 @@ function LIPPERT1(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"ALPHA")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -187,13 +187,13 @@ function LIPPERT1(action,args...)
         for I = Int64(v_["0"]):Int64(v_["NX"])
             for J = Int64(v_["1"]):Int64(v_["NY"])
                 ename = "P"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eSQR")
                     arrset(ielftype,ie,iet_["eSQR"])
                 end
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -201,13 +201,13 @@ function LIPPERT1(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NX"])
             for J = Int64(v_["0"]):Int64(v_["NY"])
                 ename = "Q"*string(I)*","*string(J)
-                ie,ie_,newelt = s2x_ii(ename,ie_)
+                ie,ie_,newelt = s2mpj_ii(ename,ie_)
                 if newelt > 0
                     arrset(pbm.elftype,ie,"eSQR")
                     arrset(ielftype,ie,iet_["eSQR"])
                 end
                 vname = "V"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -260,6 +260,8 @@ function LIPPERT1(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.77245385
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -275,6 +277,10 @@ function LIPPERT1(action,args...)
         pb.pbclass = "LQR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -309,7 +315,7 @@ function LIPPERT1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

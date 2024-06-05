@@ -45,36 +45,36 @@ function CSFI1(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("THICK",ix_)
+        iv,ix_,_ = s2mpj_ii("THICK",ix_)
         arrset(pb.xnames,iv,"THICK")
-        iv,ix_,_ = s2x_ii("WID",ix_)
+        iv,ix_,_ = s2mpj_ii("WID",ix_)
         arrset(pb.xnames,iv,"WID")
-        iv,ix_,_ = s2x_ii("LEN",ix_)
+        iv,ix_,_ = s2mpj_ii("LEN",ix_)
         arrset(pb.xnames,iv,"LEN")
-        iv,ix_,_ = s2x_ii("TPH",ix_)
+        iv,ix_,_ = s2mpj_ii("TPH",ix_)
         arrset(pb.xnames,iv,"TPH")
-        iv,ix_,_ = s2x_ii("IPM",ix_)
+        iv,ix_,_ = s2mpj_ii("IPM",ix_)
         arrset(pb.xnames,iv,"IPM")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["TPH"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("CIPM",ig_)
+        ig,ig_,_ = s2mpj_ii("CIPM",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CIPM")
         iv = ix_["IPM"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("CLEN",ig_)
+        ig,ig_,_ = s2mpj_ii("CLEN",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CLEN")
         iv = ix_["LEN"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("WOT",ig_)
+        ig,ig_,_ = s2mpj_ii("WOT",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"WOT")
-        ig,ig_,_ = s2x_ii("TTW",ig_)
+        ig,ig_,_ = s2mpj_ii("TTW",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"TTW")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -100,10 +100,8 @@ function CSFI1(action,args...)
         grange[gegrps,1] = fill(Inf,pb.nge)
         v_["RHS"] = v_["MAXAREA"]-v_["MINAREA"]
         arrset(grange,ig_["TTW"],Float64(v_["RHS"]))
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xupper[ix_["LEN"]] = v_["LENMAX"]
         pb.xlower[ix_["THICK"]] = v_["MINTHICK"]
@@ -112,72 +110,72 @@ function CSFI1(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eCMPLQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eCMPLQ", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         loaset(elftv,it,3,"V3")
-        it,iet_,_ = s2x_ii( "eSQQUT", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQQUT", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
-        it,iet_,_ = s2x_ii( "eQUOTN", iet_)
+        it,iet_,_ = s2mpj_ii( "eQUOTN", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCMPLQ")
         arrset(ielftype, ie, iet_["eCMPLQ"])
         vname = "TPH"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "WID"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "THICK"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQQUT")
         arrset(ielftype, ie, iet_["eSQQUT"])
         vname = "THICK"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "IPM"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eQUOTN")
         arrset(ielftype, ie, iet_["eQUOTN"])
         vname = "WID"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "THICK"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E4"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
         arrset(ielftype, ie, iet_["ePROD"])
         vname = "THICK"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "WID"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.5)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -206,6 +204,8 @@ function CSFI1(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -49.1
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -223,6 +223,10 @@ function CSFI1(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-RN-5-4"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -351,7 +355,7 @@ function CSFI1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

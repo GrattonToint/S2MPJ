@@ -23,6 +23,11 @@ function GENHUMPS(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   5              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER    original value
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,10 +49,6 @@ function GENHUMPS(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER    original value
-# IE N                   5000           $-PARAMETER
 # RE ZETA                2.0            $-PARAMETER
         if nargin<2
             v_["ZETA"] = Float64(20.0);  #  SIF file default value
@@ -61,20 +62,18 @@ function GENHUMPS(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
         pb.n   = length(ix_)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -84,12 +83,12 @@ function GENHUMPS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eHMP", iet_)
+        it,iet_,_ = s2mpj_ii( "eHMP", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"A")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -97,33 +96,33 @@ function GENHUMPS(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             ename = "Q"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eHMP")
             arrset(ielftype, ie, iet_["eHMP"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="A",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["ZETA"]))
             ename = "SX"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "SY"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-506.2)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -146,6 +145,7 @@ function GENHUMPS(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
@@ -153,6 +153,10 @@ function GENHUMPS(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -221,7 +225,7 @@ function GENHUMPS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

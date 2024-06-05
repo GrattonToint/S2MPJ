@@ -29,6 +29,10 @@ function POROUS2(action,args...)
 #    P is the number of points in one side of the unit square.
 #    There are P*P variables.
 # 
+#       Alternative values for the SIF file parameters:
+# IE P                   32             $-PARAMETER      original value
+# IE P                   64             $-PARAMETER 
+# IE P                   72             $-PARAMETER 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -50,9 +54,6 @@ function POROUS2(action,args...)
         else
             v_["P"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE P                   64             $-PARAMETER 
-# IE P                   72             $-PARAMETER 
         if nargin<2
             v_["D"] = Float64(-50.0);  #  SIF file default value
         else
@@ -75,7 +76,7 @@ function POROUS2(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])
             for I = Int64(v_["1"]):Int64(v_["P"])
-                iv,ix_,_ = s2x_ii("U"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("U"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"U"*string(I)*","*string(J))
             end
         end
@@ -83,7 +84,7 @@ function POROUS2(action,args...)
         gtype    = String[]
         for I = Int64(v_["2"]):Int64(v_["P-1"])
             for J = Int64(v_["2"]):Int64(v_["P-1"])
-                ig,ig_,_ = s2x_ii("G"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"G"*string(I)*","*string(J))
             end
@@ -105,8 +106,6 @@ function POROUS2(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["G"*string(Int64(v_["P-1"]))*","*string(Int64(v_["P-1"]))]]  = (
               Float64(-50.0))
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -142,9 +141,9 @@ function POROUS2(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"U")
-        it,iet_,_ = s2x_ii( "eCB", iet_)
+        it,iet_,_ = s2mpj_ii( "eCB", iet_)
         loaset(elftv,it,1,"U")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -152,19 +151,19 @@ function POROUS2(action,args...)
         for I = Int64(v_["1"]):Int64(v_["P"])
             for J = Int64(v_["1"]):Int64(v_["P"])
                 ename = "US"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "UC"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eCB")
                 arrset(ielftype, ie, iet_["eCB"])
                 vname = "U"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -213,6 +212,8 @@ function POROUS2(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -225,6 +226,10 @@ function POROUS2(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -283,7 +288,7 @@ function POROUS2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

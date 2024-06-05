@@ -21,6 +21,10 @@ function LUKVLI10(action,args...)
 # 
 #    some useful parameters, including N, the number of variables.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,10 +46,6 @@ function LUKVLI10(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
 # IE N                   100000         $-PARAMETER
         v_["1"] = 1
         v_["2"] = 2
@@ -56,21 +56,21 @@ function LUKVLI10(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N/2"])
-            ig,ig_,_ = s2x_ii("OBJ1"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ1"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("OBJ2"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ2"*string(I),ig_)
             arrset(gtype,ig,"<>")
         end
         for K = Int64(v_["1"]):Int64(v_["N-2"])
             v_["K+1"] = 1+K
             v_["K+2"] = 2+K
-            ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(K))
             iv = ix_["X"*string(Int64(v_["K+1"]))]
@@ -98,8 +98,6 @@ function LUKVLI10(action,args...)
         for K = Int64(v_["1"]):Int64(v_["N-2"])
             pbm.gconst[ig_["C"*string(K)]] = Float64(-1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -115,9 +113,9 @@ function LUKVLI10(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"V")
-        it,iet_,_ = s2x_ii( "eNASTY", iet_)
+        it,iet_,_ = s2mpj_ii( "eNASTY", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -127,38 +125,38 @@ function LUKVLI10(action,args...)
             v_["2I"] = 2*I
             v_["2I-1"] = -1+v_["2I"]
             ename = "OBJ1"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eNASTY")
             arrset(ielftype, ie, iet_["eNASTY"])
             vname = "X"*string(Int64(v_["2I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["2I"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "OBJ2"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eNASTY")
             arrset(ielftype, ie, iet_["eNASTY"])
             vname = "X"*string(Int64(v_["2I"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["2I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for K = Int64(v_["1"]):Int64(v_["N-2"])
             v_["K+1"] = 1+K
             ename = "C"*string(K)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
             arrset(ielftype, ie, iet_["eSQR"])
             vname = "X"*string(Int64(v_["K+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -188,6 +186,8 @@ function LUKVLI10(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               3.53122E+02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -200,6 +200,10 @@ function LUKVLI10(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OQR2-AY-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -270,7 +274,7 @@ function LUKVLI10(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

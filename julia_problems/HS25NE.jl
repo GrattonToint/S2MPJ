@@ -17,7 +17,7 @@ function HS25NE(action,args...)
 #    SIF input: J-M Collin, Mar 1990.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-AN-3-0"
+#    classification = "NOR2-AN-3-99"
 # 
 #    Number of variables
 # 
@@ -45,16 +45,16 @@ function HS25NE(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["99"])
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"O"*string(I))
         end
@@ -78,10 +78,8 @@ function HS25NE(action,args...)
             v_["I/100"] = 0.01*v_["IR"]
             pbm.gconst[ig_["O"*string(I)]] = Float64(v_["I/100"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["X1"]] = 0.1
         pb.xupper[ix_["X1"]] = 100.0
@@ -110,7 +108,7 @@ function HS25NE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eWFI", iet_)
+        it,iet_,_ = s2mpj_ii( "eWFI", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         loaset(elftv,it,3,"Z")
@@ -129,19 +127,19 @@ function HS25NE(action,args...)
             v_["EXP2/3"] = exp(v_["EXPL2/3"])
             v_["UI"] = 25.0+v_["EXP2/3"]
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWFI")
             arrset(ielftype, ie, iet_["eWFI"])
             vname = "X1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="W",elftp[ielftype[ie]])
@@ -160,6 +158,9 @@ function HS25NE(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO HS25                0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -170,8 +171,12 @@ function HS25NE(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-AN-3-0"
+        pb.pbclass = "NOR2-AN-3-99"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -223,7 +228,7 @@ function HS25NE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -44,12 +44,12 @@ function DEGENLPB(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(-0.01)
@@ -69,7 +69,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(-133.33)
         iv = ix_["X10"]
         pbm.A[ig,iv] += Float64(-100.0)
-        ig,ig_,_ = s2x_ii("C1",ig_)
+        ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C1")
         iv = ix_["X1"]
@@ -92,7 +92,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(2.0)
         iv = ix_["X10"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("C2",ig_)
+        ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C2")
         iv = ix_["X1"]
@@ -103,7 +103,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.09)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(0.03)
-        ig,ig_,_ = s2x_ii("C3",ig_)
+        ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C3")
         iv = ix_["X1"]
@@ -116,7 +116,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.06)
         iv = ix_["X7"]
         pbm.A[ig,iv] += Float64(0.02)
-        ig,ig_,_ = s2x_ii("C4",ig_)
+        ig,ig_,_ = s2mpj_ii("C4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C4")
         iv = ix_["X1"]
@@ -129,7 +129,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.06)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(0.02)
-        ig,ig_,_ = s2x_ii("C5",ig_)
+        ig,ig_,_ = s2mpj_ii("C5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C5")
         iv = ix_["X1"]
@@ -142,7 +142,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.06)
         iv = ix_["X10"]
         pbm.A[ig,iv] += Float64(0.02)
-        ig,ig_,_ = s2x_ii("C6",ig_)
+        ig,ig_,_ = s2mpj_ii("C6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C6")
         iv = ix_["X2"]
@@ -155,7 +155,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.03)
         iv = ix_["X13"]
         pbm.A[ig,iv] += Float64(0.01)
-        ig,ig_,_ = s2x_ii("C7",ig_)
+        ig,ig_,_ = s2mpj_ii("C7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C7")
         iv = ix_["X2"]
@@ -170,7 +170,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.03)
         iv = ix_["X15"]
         pbm.A[ig,iv] += Float64(0.01)
-        ig,ig_,_ = s2x_ii("C8",ig_)
+        ig,ig_,_ = s2mpj_ii("C8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C8")
         iv = ix_["X2"]
@@ -185,7 +185,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.03)
         iv = ix_["X16"]
         pbm.A[ig,iv] += Float64(0.01)
-        ig,ig_,_ = s2x_ii("C9",ig_)
+        ig,ig_,_ = s2mpj_ii("C9",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C9")
         iv = ix_["X3"]
@@ -200,7 +200,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.03)
         iv = ix_["X19"]
         pbm.A[ig,iv] += Float64(0.01)
-        ig,ig_,_ = s2x_ii("C10",ig_)
+        ig,ig_,_ = s2mpj_ii("C10",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C10")
         iv = ix_["X3"]
@@ -213,7 +213,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.03)
         iv = ix_["X19"]
         pbm.A[ig,iv] += Float64(0.01)
-        ig,ig_,_ = s2x_ii("C11",ig_)
+        ig,ig_,_ = s2mpj_ii("C11",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C11")
         iv = ix_["X4"]
@@ -226,7 +226,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(0.03)
         iv = ix_["X20"]
         pbm.A[ig,iv] += Float64(0.01)
-        ig,ig_,_ = s2x_ii("C12",ig_)
+        ig,ig_,_ = s2mpj_ii("C12",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C12")
         iv = ix_["X11"]
@@ -237,7 +237,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(-0.61975)
         iv = ix_["X20"]
         pbm.A[ig,iv] += Float64(1.03)
-        ig,ig_,_ = s2x_ii("C13",ig_)
+        ig,ig_,_ = s2mpj_ii("C13",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C13")
         iv = ix_["X11"]
@@ -248,7 +248,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(-6.2)
         iv = ix_["X17"]
         pbm.A[ig,iv] += Float64(1.09)
-        ig,ig_,_ = s2x_ii("C14",ig_)
+        ig,ig_,_ = s2mpj_ii("C14",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C14")
         iv = ix_["X11"]
@@ -263,7 +263,7 @@ function DEGENLPB(action,args...)
         pbm.A[ig,iv] += Float64(505.1)
         iv = ix_["X19"]
         pbm.A[ig,iv] += Float64(-256.72)
-        ig,ig_,_ = s2x_ii("C15",ig_)
+        ig,ig_,_ = s2mpj_ii("C15",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C15")
         iv = ix_["X12"]
@@ -294,15 +294,15 @@ function DEGENLPB(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["C1"]] = Float64(0.70785)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = fill(1.0,pb.n)
-        pb.xlower =  -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(1.0),pb.n)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               3.06435
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -324,7 +324,7 @@ function DEGENLPB(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

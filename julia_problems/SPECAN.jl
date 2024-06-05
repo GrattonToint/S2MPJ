@@ -19,6 +19,7 @@ function SPECAN(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE K                   1              $-PARAMETER
 # IE K                   2              $-PARAMETER
+# IE K                   3              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -54,7 +55,7 @@ function SPECAN(action,args...)
         binvars = Int64[]
         for p = Int64(v_["1"]):Int64(v_["K"])
             for j = Int64(v_["1"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("X"*string(p)*","*string(j),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(p)*","*string(j),ix_)
                 arrset(pb.xnames,iv,"X"*string(p)*","*string(j))
             end
         end
@@ -62,7 +63,7 @@ function SPECAN(action,args...)
         gtype    = String[]
         for p = Int64(v_["1"]):Int64(v_["K"])
             for I = Int64(v_["1"]):Int64(v_["M"])
-                ig,ig_,_ = s2x_ii("OBJ"*string(p)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("OBJ"*string(p)*","*string(I),ig_)
                 arrset(gtype,ig,"<>")
             end
         end
@@ -111,10 +112,8 @@ function SPECAN(action,args...)
                 pbm.gconst[ig_["OBJ"*string(p)*","*string(I)]] = Float64(v_["Yi"*string(p)])
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         v_["LOWER1,1"] = 15.0
         v_["LOWER1,2"] = 3.5
@@ -162,7 +161,7 @@ function SPECAN(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEXPSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXPSQ", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"V")
         loaset(elftv,it,3,"W")
@@ -174,19 +173,19 @@ function SPECAN(action,args...)
         for p = Int64(v_["1"]):Int64(v_["K"])
             for I = Int64(v_["1"]):Int64(v_["M"])
                 ename = "E"*string(p)*","*string(I)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eEXPSQ")
                 arrset(ielftype, ie, iet_["eEXPSQ"])
                 vname = "X"*string(p)*","*string(Int64(v_["1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(p)*","*string(Int64(v_["2"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(p)*","*string(Int64(v_["3"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="W",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 v_["RI"] = Float64(I)
@@ -198,7 +197,7 @@ function SPECAN(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQUARE",igt_)
+        it,igt_,_ = s2mpj_ii("gSQUARE",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -217,12 +216,17 @@ function SPECAN(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SBR2-AN-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -293,7 +297,7 @@ function SPECAN(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

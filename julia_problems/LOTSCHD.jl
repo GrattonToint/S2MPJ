@@ -62,26 +62,26 @@ function LOTSCHD(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["6"])
-            iv,ix_,_ = s2x_ii("T"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["6"])
-            ig,ig_,_ = s2x_ii("OBJ"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["T"*string(I)]
             pbm.A[ig,iv] += Float64(v_["X"*string(I)])
-            ig,ig_,_ = s2x_ii("CONS7",ig_)
+            ig,ig_,_ = s2mpj_ii("CONS7",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS7")
             iv = ix_["T"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("CONS"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CONS"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS"*string(I))
             iv = ix_["T"*string(I)]
@@ -90,7 +90,7 @@ function LOTSCHD(action,args...)
             pbm.A[ig,iv] += Float64(-1.0)
         end
         for I = Int64(v_["2"]):Int64(v_["4"])
-            ig,ig_,_ = s2x_ii("CONS"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CONS"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS"*string(I))
             iv = ix_["T"*string(I)]
@@ -98,7 +98,7 @@ function LOTSCHD(action,args...)
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("CONS2",ig_)
+        ig,ig_,_ = s2mpj_ii("CONS2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONS2")
         iv = ix_["T3"]
@@ -106,7 +106,7 @@ function LOTSCHD(action,args...)
         iv = ix_["U3"]
         pbm.A[ig,iv] += Float64(-1.0)
         for I = Int64(v_["1"]):Int64(v_["2"])
-            ig,ig_,_ = s2x_ii("CONS3",ig_)
+            ig,ig_,_ = s2mpj_ii("CONS3",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS3")
             iv = ix_["T"*string(I)]
@@ -115,7 +115,7 @@ function LOTSCHD(action,args...)
             pbm.A[ig,iv] += Float64(-1.0)
         end
         for I = Int64(v_["4"]):Int64(v_["6"])
-            ig,ig_,_ = s2x_ii("CONS3",ig_)
+            ig,ig_,_ = s2mpj_ii("CONS3",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS3")
             iv = ix_["T"*string(I)]
@@ -123,7 +123,7 @@ function LOTSCHD(action,args...)
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("CONS4",ig_)
+        ig,ig_,_ = s2mpj_ii("CONS4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONS4")
         iv = ix_["T1"]
@@ -131,7 +131,7 @@ function LOTSCHD(action,args...)
         iv = ix_["U1"]
         pbm.A[ig,iv] += Float64(-1.0)
         for I = Int64(v_["5"]):Int64(v_["6"])
-            ig,ig_,_ = s2x_ii("CONS4",ig_)
+            ig,ig_,_ = s2mpj_ii("CONS4",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS4")
             iv = ix_["T"*string(I)]
@@ -139,7 +139,7 @@ function LOTSCHD(action,args...)
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("CONS5",ig_)
+        ig,ig_,_ = s2mpj_ii("CONS5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CONS5")
         iv = ix_["T1"]
@@ -147,7 +147,7 @@ function LOTSCHD(action,args...)
         iv = ix_["U1"]
         pbm.A[ig,iv] += Float64(-1.0)
         for I = Int64(v_["1"]):Int64(v_["5"])
-            ig,ig_,_ = s2x_ii("CONS6",ig_)
+            ig,ig_,_ = s2mpj_ii("CONS6",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CONS6")
             iv = ix_["T"*string(I)]
@@ -175,7 +175,7 @@ function LOTSCHD(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQUARE",igt_)
+        it,igt_,_ = s2mpj_ii("gSQUARE",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -233,7 +233,7 @@ function LOTSCHD(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

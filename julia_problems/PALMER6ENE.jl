@@ -19,7 +19,7 @@ function PALMER6ENE(action,args...)
 #    SIF input: Nick Gould, 1992.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-RN-8-0"
+#    classification = "NOR2-RN-8-13"
 # 
 #    Number of data points
 # 
@@ -72,21 +72,21 @@ function PALMER6ENE(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("A0",ix_)
+        iv,ix_,_ = s2mpj_ii("A0",ix_)
         arrset(pb.xnames,iv,"A0")
-        iv,ix_,_ = s2x_ii("A2",ix_)
+        iv,ix_,_ = s2mpj_ii("A2",ix_)
         arrset(pb.xnames,iv,"A2")
-        iv,ix_,_ = s2x_ii("A4",ix_)
+        iv,ix_,_ = s2mpj_ii("A4",ix_)
         arrset(pb.xnames,iv,"A4")
-        iv,ix_,_ = s2x_ii("A6",ix_)
+        iv,ix_,_ = s2mpj_ii("A6",ix_)
         arrset(pb.xnames,iv,"A6")
-        iv,ix_,_ = s2x_ii("A8",ix_)
+        iv,ix_,_ = s2mpj_ii("A8",ix_)
         arrset(pb.xnames,iv,"A8")
-        iv,ix_,_ = s2x_ii("A10",ix_)
+        iv,ix_,_ = s2mpj_ii("A10",ix_)
         arrset(pb.xnames,iv,"A10")
-        iv,ix_,_ = s2x_ii("K",ix_)
+        iv,ix_,_ = s2mpj_ii("K",ix_)
         arrset(pb.xnames,iv,"K")
-        iv,ix_,_ = s2x_ii("L",ix_)
+        iv,ix_,_ = s2mpj_ii("L",ix_)
         arrset(pb.xnames,iv,"L")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
@@ -98,7 +98,7 @@ function PALMER6ENE(action,args...)
             v_["X**10"] = v_["XSQR"]*v_["X**8"]
             v_["X**12"] = v_["XSQR"]*v_["X**10"]
             v_["X**14"] = v_["XSQR"]*v_["X**12"]
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"O"*string(I))
             iv = ix_["A0"]
@@ -132,10 +132,8 @@ function PALMER6ENE(action,args...)
         for I = Int64(v_["12"]):Int64(v_["M"])
             pbm.gconst[ig_["O"*string(I)]] = Float64(v_["Y"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["A0"]] = -Inf
         pb.xupper[ix_["A0"]] = +Inf
@@ -156,7 +154,7 @@ function PALMER6ENE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"K")
         loaset(elftv,it,2,"L")
         elftp = Vector{Vector{String}}()
@@ -167,15 +165,15 @@ function PALMER6ENE(action,args...)
         for I = Int64(v_["12"]):Int64(v_["M"])
             v_["XSQR"] = v_["X"*string(I)]*v_["X"*string(I)]
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "K"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="K",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "L"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="L",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="XSQR",elftp[ielftype[ie]])
@@ -194,6 +192,10 @@ function PALMER6ENE(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
+# LO PALMER6E                0.0
+#    Solution
+# LO SOLTN              1.48003482D-04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -205,8 +207,12 @@ function PALMER6ENE(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-RN-8-0"
+        pb.pbclass = "NOR2-RN-8-13"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -245,7 +251,7 @@ function PALMER6ENE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

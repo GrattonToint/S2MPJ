@@ -40,26 +40,26 @@ function MAKELA4(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["20"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
-        iv,ix_,_ = s2x_ii("U",ix_)
+        iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["1"]):Int64(v_["20"])
-            ig,ig_,_ = s2x_ii("F"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"F"*string(I))
             iv = ix_["U"]
             pbm.A[ig,iv] += Float64(-1.0)
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("MF"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("MF"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"MF"*string(I))
             iv = ix_["U"]
@@ -80,8 +80,6 @@ function MAKELA4(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -189,6 +187,8 @@ function MAKELA4(action,args...)
             pb.y0[findfirst(x->x==ig_["X20"],pbm.congrps)] = Float64(-20.0)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -210,7 +210,7 @@ function MAKELA4(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -15,7 +15,7 @@ function KOEBHELBNE(action,args...)
 #    SIF input: Ph. Toint, June 2005.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-RN-3-0"
+#    classification = "NOR2-RN-3-156"
 # 
 #    Useful constants
 # 
@@ -353,16 +353,16 @@ function KOEBHELBNE(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("N",ix_)
+        iv,ix_,_ = s2mpj_ii("N",ix_)
         arrset(pb.xnames,iv,"N")
-        iv,ix_,_ = s2x_ii("A",ix_)
+        iv,ix_,_ = s2mpj_ii("A",ix_)
         arrset(pb.xnames,iv,"A")
-        iv,ix_,_ = s2x_ii("B",ix_)
+        iv,ix_,_ = s2mpj_ii("B",ix_)
         arrset(pb.xnames,iv,"B")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"O"*string(I))
         end
@@ -384,10 +384,8 @@ function KOEBHELBNE(action,args...)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pbm.gconst[ig_["O"*string(I)]] = Float64(v_["Y"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["A"]] = -Inf
         pb.xupper[ix_["A"]] = +Inf
@@ -413,7 +411,7 @@ function KOEBHELBNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eKHE", iet_)
+        it,iet_,_ = s2mpj_ii( "eKHE", iet_)
         loaset(elftv,it,1,"VN")
         loaset(elftv,it,2,"VA")
         loaset(elftv,it,3,"VB")
@@ -424,21 +422,21 @@ function KOEBHELBNE(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["M"])
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eKHE")
                 arrset(ielftype,ie,iet_["eKHE"])
             end
             vname = "N"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="VN",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "A"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="VA",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "B"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="VB",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="XX",elftp[ielftype[ie]])
@@ -457,6 +455,9 @@ function KOEBHELBNE(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO                       0.0
+#    Solution
+# LO SOLTN                 77.516347286
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -467,8 +468,12 @@ function KOEBHELBNE(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-RN-3-0"
+        pb.pbclass = "NOR2-RN-3-156"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -516,7 +521,7 @@ function KOEBHELBNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -53,19 +53,19 @@ function EXPFITA(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("P0",ix_)
+        iv,ix_,_ = s2mpj_ii("P0",ix_)
         arrset(pb.xnames,iv,"P0")
-        iv,ix_,_ = s2x_ii("P1",ix_)
+        iv,ix_,_ = s2mpj_ii("P1",ix_)
         arrset(pb.xnames,iv,"P1")
-        iv,ix_,_ = s2x_ii("P2",ix_)
+        iv,ix_,_ = s2mpj_ii("P2",ix_)
         arrset(pb.xnames,iv,"P2")
-        iv,ix_,_ = s2x_ii("Q1",ix_)
+        iv,ix_,_ = s2mpj_ii("Q1",ix_)
         arrset(pb.xnames,iv,"Q1")
-        iv,ix_,_ = s2x_ii("Q2",ix_)
+        iv,ix_,_ = s2mpj_ii("Q2",ix_)
         arrset(pb.xnames,iv,"Q2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["R"])
             v_["TM5"] = -5.0+v_["T"*string(I)]
@@ -75,7 +75,7 @@ function EXPFITA(action,args...)
             v_["-QC1"] = -1.0*v_["QC1"]
             v_["-QC2"] = -1.0*v_["QC2"]
             v_["2T"] = v_["T"*string(I)]*v_["T"*string(I)]
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(I))
             iv = ix_["P0"]
@@ -88,7 +88,7 @@ function EXPFITA(action,args...)
             pbm.A[ig,iv] += Float64(v_["-QC1"])
             iv = ix_["Q2"]
             pbm.A[ig,iv] += Float64(v_["-QC2"])
-            ig,ig_,_ = s2x_ii("B"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"B"*string(I))
             iv = ix_["Q1"]
@@ -115,8 +115,6 @@ function EXPFITA(action,args...)
             pbm.gconst[ig_["C"*string(I)]] = Float64(v_["ET"*string(I)])
             pbm.gconst[ig_["B"*string(I)]] = Float64(-0.99999)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -151,7 +149,7 @@ function EXPFITA(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eFIT", iet_)
+        it,iet_,_ = s2mpj_ii( "eFIT", iet_)
         loaset(elftv,it,1,"P0")
         loaset(elftv,it,2,"P1")
         loaset(elftv,it,3,"P2")
@@ -164,27 +162,27 @@ function EXPFITA(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["R"])
             ename = "F"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFIT")
             arrset(ielftype, ie, iet_["eFIT"])
             vname = "P0"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="P0",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "P1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="P1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "P2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="P2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Q1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Q2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="T",elftp[ielftype[ie]])
@@ -204,6 +202,7 @@ function EXPFITA(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -217,6 +216,10 @@ function EXPFITA(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OLR2-AN-5-22"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -304,7 +307,7 @@ function EXPFITA(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

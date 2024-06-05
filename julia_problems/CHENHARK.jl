@@ -30,6 +30,11 @@ function CHENHARK(action,args...)
 # 
 #    Number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -51,30 +56,28 @@ function CHENHARK(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # IE N                   50000          $-PARAMETER
+# IE NFREE               5              $-PARAMETER
+# IE NFREE               50             $-PARAMETER
+# IE NFREE               500            $-PARAMETER     original value
+# IE NFREE               2500           $-PARAMETER
         if nargin<2
             v_["NFREE"] = Int64(5);  #  SIF file default value
         else
             v_["NFREE"] = Int64(args[2]);
         end
-# IE NFREE               50             $-PARAMETER
-# IE NFREE               500            $-PARAMETER     original value
-# IE NFREE               2500           $-PARAMETER
 # IE NFREE               5000           $-PARAMETER
 # IE NFREE               10000          $-PARAMETER
+# IE NDEGEN              2              $-PARAMETER
+# IE NDEGEN              20             $-PARAMETER
+# IE NDEGEN              200            $-PARAMETER     original value
+# IE NDEGEN              500            $-PARAMETER
         if nargin<3
             v_["NDEGEN"] = Int64(2);  #  SIF file default value
         else
             v_["NDEGEN"] = Int64(args[3]);
         end
-# IE NDEGEN              20             $-PARAMETER
-# IE NDEGEN              200            $-PARAMETER     original value
-# IE NDEGEN              500            $-PARAMETER
 # IE NDEGEN              1000           $-PARAMETER
 # IE NDEGEN              2000           $-PARAMETER
         v_["-1"] = -1
@@ -100,7 +103,7 @@ function CHENHARK(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -108,7 +111,7 @@ function CHENHARK(action,args...)
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
-            ig,ig_,_ = s2x_ii("Q"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("Q"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
@@ -117,23 +120,23 @@ function CHENHARK(action,args...)
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(-2.0)
         end
-        ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["0"])),ig_)
+        ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(2.0)
         iv = ix_["X"*string(Int64(v_["2"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(2.0)
         iv = ix_["X"*string(Int64(v_["N-1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["N+1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["N+1"])),ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(1.0)
@@ -151,7 +154,7 @@ function CHENHARK(action,args...)
             v_["Q"] = v_["Q"]+v_["Q3"]
             v_["Q"] = v_["Q"]+v_["Q4"]
             v_["Q"] = v_["Q"]+v_["Q5"]
-            ig,ig_,_ = s2x_ii("L",ig_)
+            ig,ig_,_ = s2mpj_ii("L",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["Q"])
@@ -171,7 +174,7 @@ function CHENHARK(action,args...)
             v_["Q"] = v_["Q"]+v_["Q4"]
             v_["Q"] = v_["Q"]+v_["Q5"]
             v_["Q"] = 1.0+v_["Q"]
-            ig,ig_,_ = s2x_ii("L",ig_)
+            ig,ig_,_ = s2mpj_ii("L",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["Q"])
@@ -188,7 +191,7 @@ function CHENHARK(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gHALFL2",igt_)
+        it,igt_,_ = s2mpj_ii("gHALFL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -200,6 +203,8 @@ function CHENHARK(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 1.0
+#    Solution
+# LO SOLTN               -0.5
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
@@ -210,6 +215,10 @@ function CHENHARK(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "QBR2-AN-V-V"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -242,7 +251,7 @@ function CHENHARK(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

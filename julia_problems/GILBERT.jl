@@ -24,6 +24,14 @@ function GILBERT(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
 # IE N                   5              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   20             $-PARAMETER
+# IE N                   50             $-PARAMETER     original value
+# IE N                   100            $-PARAMETER
+# IE N                   200            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,20 +53,13 @@ function GILBERT(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   20             $-PARAMETER
-# IE N                   50             $-PARAMETER     original value
-# IE N                   100            $-PARAMETER
-# IE N                   200            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
         v_["1"] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -69,13 +70,13 @@ function GILBERT(action,args...)
             v_["N+1-I"] = v_["N+1"]-I
             v_["RD"] = Float64(v_["N+1-I"])
             v_["AI"] = v_["RD"]/v_["RN"]
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["AI"])
             arrset(pbm.gscale,ig,Float64(2.0))
         end
-        ig,ig_,_ = s2x_ii("SPHERE",ig_)
+        ig,ig_,_ = s2mpj_ii("SPHERE",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"SPHERE")
         arrset(pbm.gscale,ig,Float64(2.0))
@@ -98,8 +99,6 @@ function GILBERT(action,args...)
             pbm.gconst[ig_["O"*string(I)]] = Float64(1.0)
         end
         pbm.gconst[ig_["SPHERE"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -115,24 +114,24 @@ function GILBERT(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"XX")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "XSQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -148,6 +147,16 @@ function GILBERT(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(2)            0.2516255986
+# LO SOLTN(5)            1.3397104096
+# LO SOLTN(10)           3.3451956841
+# LO SOLTN(20)           7.6216246637
+# LO SOLTN(50)           21.153509646
+# LO SOLTN(100)          44.801301992
+# LO SOLTN(200)          92.101619216
+# LO SOLTN(500)          237.36861141
+# LO SOLTN(1000)         482.02730043
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -161,6 +170,10 @@ function GILBERT(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QQR2-AN-V-1"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -219,7 +232,7 @@ function GILBERT(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

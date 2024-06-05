@@ -36,27 +36,27 @@ function HS59(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(3.8112)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(6.8306)
-        ig,ig_,_ = s2x_ii("CON1",ig_)
+        ig,ig_,_ = s2mpj_ii("CON1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON1")
-        ig,ig_,_ = s2x_ii("CON2",ig_)
+        ig,ig_,_ = s2mpj_ii("CON2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON2")
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("CON3",ig_)
+        ig,ig_,_ = s2mpj_ii("CON3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CON3")
         iv = ix_["X1"]
@@ -79,10 +79,8 @@ function HS59(action,args...)
         pbm.gconst[ig_["OBJ"]] = Float64(75.196)
         pbm.gconst[ig_["CON1"]] = Float64(700.0)
         pbm.gconst[ig_["CON3"]] = Float64(-275.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xupper[ix_["X1"]] = 75.0
         pb.xupper[ix_["X2"]] = 65.0
@@ -102,19 +100,19 @@ function HS59(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePOWER", iet_)
+        it,iet_,_ = s2mpj_ii( "ePOWER", iet_)
         loaset(elftv,it,1,"V1")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"P")
-        it,iet_,_ = s2x_ii( "ePOWPR", iet_)
+        it,iet_,_ = s2mpj_ii( "ePOWPR", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         loaset(elftp,it,1,"P1")
         loaset(elftp,it,2,"P2")
-        it,iet_,_ = s2x_ii( "eEXPR", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXPR", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
-        it,iet_,_ = s2x_ii( "eSHPOW", iet_)
+        it,iet_,_ = s2mpj_ii( "eSHPOW", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftp,it,1,"P")
         loaset(elftp,it,2,"S")
@@ -122,35 +120,35 @@ function HS59(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWER")
         arrset(ielftype, ie, iet_["ePOWER"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(3.0))
         ename = "E2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWER")
         arrset(ielftype, ie, iet_["ePOWER"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(4.0))
         ename = "E3"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -158,15 +156,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.0))
         ename = "E4"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -174,15 +172,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.0))
         ename = "E5"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -190,41 +188,41 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.0))
         ename = "E6"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWER")
         arrset(ielftype, ie, iet_["ePOWER"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(2.0))
         ename = "E7"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWER")
         arrset(ielftype, ie, iet_["ePOWER"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(3.0))
         ename = "E8"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWER")
         arrset(ielftype, ie, iet_["ePOWER"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(4.0))
         ename = "E9"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSHPOW")
         arrset(ielftype, ie, iet_["eSHPOW"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
@@ -232,15 +230,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="S",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(-1.0))
         ename = "E10"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -248,15 +246,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(2.0))
         ename = "E11"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -264,15 +262,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(2.0))
         ename = "E12"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -280,15 +278,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(3.0))
         ename = "E13"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -296,15 +294,15 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(2.0))
         ename = "E14"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -312,27 +310,27 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(3.0))
         ename = "E15"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEXPR")
         arrset(ielftype, ie, iet_["eEXPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E16"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWPR")
         arrset(ielftype, ie, iet_["ePOWPR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -340,21 +338,21 @@ function HS59(action,args...)
         posep = findfirst(x->x=="P2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.0))
         ename = "E17"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePOWER")
         arrset(ielftype, ie, iet_["ePOWER"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(2.0))
         ename = "E18"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSHPOW")
         arrset(ielftype, ie, iet_["eSHPOW"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
@@ -443,6 +441,8 @@ function HS59(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -7.8027894
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -456,6 +456,10 @@ function HS59(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OQR2-AN-2-3"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -580,7 +584,7 @@ function HS59(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

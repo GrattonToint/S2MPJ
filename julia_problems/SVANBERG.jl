@@ -19,6 +19,20 @@ function SVANBERG(action,args...)
 # 
 #    Number of variables (must be even and >= 10)
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE N                   20             $-PARAMETER
+# IE N                   30             $-PARAMETER
+# IE N                   40             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   60             $-PARAMETER
+# IE N                   70             $-PARAMETER
+# IE N                   80             $-PARAMETER
+# IE N                   90             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -40,19 +54,6 @@ function SVANBERG(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   20             $-PARAMETER
-# IE N                   30             $-PARAMETER
-# IE N                   40             $-PARAMETER
-# IE N                   50             $-PARAMETER
-# IE N                   60             $-PARAMETER
-# IE N                   70             $-PARAMETER
-# IE N                   80             $-PARAMETER
-# IE N                   90             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
         v_["1"] = 1
         v_["2"] = 2
         v_["3"] = 3
@@ -92,15 +93,15 @@ function SVANBERG(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"C"*string(I))
         end
@@ -122,36 +123,34 @@ function SVANBERG(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["C"*string(I)]] = Float64(v_["B"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-0.8,pb.n)
         pb.xupper = fill(0.8,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEP", iet_)
+        it,iet_,_ = s2mpj_ii( "eEP", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eEM", iet_)
+        it,iet_,_ = s2mpj_ii( "eEM", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "Q"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEP")
             arrset(ielftype, ie, iet_["eEP"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-0.8,0.8,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.8,0.8,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "P"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEM")
             arrset(ielftype, ie, iet_["eEM"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-0.8,0.8,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.8,0.8,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -515,6 +514,21 @@ function SVANBERG(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           15.7315
+# LO SOLTN(20)           32.4279
+# LO SOLTN(30)           49.1425
+# LO SOLTN(40)           65.8611
+# LO SOLTN(50)           82.5819
+# LO SOLTN(60)           99.3039
+# LO SOLTN(70)           116.0266
+# LO SOLTN(80)           132.7498
+# LO SOLTN(90)           149.4734
+# LO SOLTN(100)          166.1972
+# LO SOLTN(500)          ???
+# LO SOLTN(1000)         ???
+# LO SOLTN(5000)         ???
+# LO SOLTN(10000)        ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -527,6 +541,10 @@ function SVANBERG(action,args...)
         pb.pbclass = "OOR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -589,7 +607,7 @@ function SVANBERG(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

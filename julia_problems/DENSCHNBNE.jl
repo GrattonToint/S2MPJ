@@ -15,7 +15,7 @@ function DENSCHNBNE(action,args...)
 #    SIF input: Ph. Toint, Nov 1990.
 #    Nonlinear-equations version of DENSCHNB.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "NOR2-AN-2-2"
+#    classification = "NOR2-AN-2-3"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,21 +37,21 @@ function DENSCHNBNE(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("A",ig_)
+        ig,ig_,_ = s2mpj_ii("A",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"A")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("B",ig_)
+        ig,ig_,_ = s2mpj_ii("B",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"B")
-        ig,ig_,_ = s2x_ii("C",ig_)
+        ig,ig_,_ = s2mpj_ii("C",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C")
         iv = ix_["X2"]
@@ -73,8 +73,6 @@ function DENSCHNBNE(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["A"]] = Float64(2.0)
         pbm.gconst[ig_["C"]] = Float64(-1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -83,22 +81,22 @@ function DENSCHNBNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePR", iet_)
+        it,iet_,_ = s2mpj_ii( "ePR", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePR")
         arrset(ielftype, ie, iet_["ePR"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -113,6 +111,8 @@ function DENSCHNBNE(action,args...)
         loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                   0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -124,8 +124,12 @@ function DENSCHNBNE(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-AN-2-2"
+        pb.pbclass = "NOR2-AN-2-3"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -162,7 +166,7 @@ function DENSCHNBNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

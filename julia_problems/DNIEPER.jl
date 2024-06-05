@@ -87,18 +87,18 @@ function DNIEPER(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["56"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
-        iv,ix_,_ = s2x_ii("X0F",ix_)
+        iv,ix_,_ = s2mpj_ii("X0F",ix_)
         arrset(pb.xnames,iv,"X0F")
-        iv,ix_,_ = s2x_ii("X24F",ix_)
+        iv,ix_,_ = s2mpj_ii("X24F",ix_)
         arrset(pb.xnames,iv,"X24F")
-        iv,ix_,_ = s2x_ii("X12F",ix_)
+        iv,ix_,_ = s2mpj_ii("X12F",ix_)
         arrset(pb.xnames,iv,"X12F")
-        iv,ix_,_ = s2x_ii("X36F",ix_)
+        iv,ix_,_ = s2mpj_ii("X36F",ix_)
         arrset(pb.xnames,iv,"X36F")
-        iv,ix_,_ = s2x_ii("AC",ix_)
+        iv,ix_,_ = s2mpj_ii("AC",ix_)
         arrset(pb.xnames,iv,"AC")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
@@ -106,7 +106,7 @@ function DNIEPER(action,args...)
             v_["I0"] = 12+I
             v_["I1"] = 24+I
             v_["I2"] = 36+I
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I1"]))]
             pbm.A[ig,iv] += Float64(19.95)
@@ -117,12 +117,12 @@ function DNIEPER(action,args...)
             iv = ix_["X"*string(Int64(v_["I0"]))]
             pbm.A[ig,iv] += Float64(-0.7135)
         end
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(-1.0))
         for I = Int64(v_["1"]):Int64(v_["4"])
             v_["I0"] = 24+I
-            ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
             iv = ix_["X"*string(Int64(v_["I0"]))]
@@ -131,7 +131,7 @@ function DNIEPER(action,args...)
         for I = Int64(v_["5"]):Int64(v_["8"])
             v_["I0"] = 24+I
             v_["I1"] = 44+I
-            ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
             iv = ix_["X"*string(Int64(v_["I0"]))]
@@ -141,7 +141,7 @@ function DNIEPER(action,args...)
         end
         for I = Int64(v_["9"]):Int64(v_["12"])
             v_["I0"] = 24+I
-            ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
             iv = ix_["X"*string(Int64(v_["I0"]))]
@@ -150,7 +150,7 @@ function DNIEPER(action,args...)
         for I = Int64(v_["13"]):Int64(v_["16"])
             v_["I0"] = 12+I
             v_["I1"] = 24+I
-            ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
             iv = ix_["X"*string(Int64(v_["I0"]))]
@@ -164,7 +164,7 @@ function DNIEPER(action,args...)
             v_["I0"] = 12+I
             v_["I1"] = 24+I
             v_["I2"] = 36+I
-            ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
             iv = ix_["X"*string(Int64(v_["I0"]))]
@@ -179,7 +179,7 @@ function DNIEPER(action,args...)
         for I = Int64(v_["21"]):Int64(v_["24"])
             v_["I0"] = 12+I
             v_["I1"] = 24+I
-            ig,ig_,_ = s2x_ii("CC"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CC"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CC"*string(I))
             iv = ix_["X"*string(Int64(v_["I0"]))]
@@ -209,10 +209,8 @@ function DNIEPER(action,args...)
             v_["CST"] = -1.0*v_["C"*string(I)]
             pbm.gconst[ig_["CC"*string(I)]] = Float64(v_["CST"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["12"])
             pb.xlower[ix_["X"*string(I)]] = 51.2
@@ -269,16 +267,16 @@ function DNIEPER(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eWJ", iet_)
+        it,iet_,_ = s2mpj_ii( "eWJ", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
-        it,iet_,_ = s2x_ii( "eWK", iet_)
+        it,iet_,_ = s2mpj_ii( "eWK", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -287,117 +285,117 @@ function DNIEPER(action,args...)
             v_["I1"] = 12+I
             v_["I2"] = 36+I
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype, ie, iet_["en2PR"])
             vname = "X"*string(Int64(v_["I1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I2"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "ACSQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "AC"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["1"]):Int64(v_["12"])
             v_["I0"] = 24+I
             ename = "W1"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWJ")
             arrset(ielftype, ie, iet_["eWJ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I0"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "W2"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eWJ")
         arrset(ielftype, ie, iet_["eWJ"])
         ename = "W2"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X0F"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W2"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X24F"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["2"]):Int64(v_["12"])
             v_["I0"] = 23+I
             v_["I1"] = -1+I
             ename = "W2"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWJ")
             arrset(ielftype, ie, iet_["eWJ"])
             vname = "X"*string(Int64(v_["I1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I0"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["13"]):Int64(v_["24"])
             v_["I1"] = 24+I
             ename = "W1"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWK")
             arrset(ielftype, ie, iet_["eWK"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "W2"*string(Int64(v_["13"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eWK")
         arrset(ielftype, ie, iet_["eWK"])
         ename = "W2"*string(Int64(v_["13"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X12F"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W2"*string(Int64(v_["13"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X36F"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["14"]):Int64(v_["24"])
             v_["I0"] = 23+I
             v_["I1"] = -1+I
             ename = "W2"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWK")
             arrset(ielftype, ie, iet_["eWK"])
             vname = "X"*string(Int64(v_["I1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I0"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -429,6 +427,8 @@ function DNIEPER(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION             1.87439D+04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -442,6 +442,10 @@ function DNIEPER(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QOR2-MN-61-24"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -582,7 +586,7 @@ function DNIEPER(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

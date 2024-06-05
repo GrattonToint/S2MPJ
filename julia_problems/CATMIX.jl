@@ -21,6 +21,12 @@ function CATMIX(action,args...)
 #    The number of subintervals
 # 
 # 
+#       Alternative values for the SIF file parameters:
+# IE NH                  100            $-PARAMETER
+# IE NH                  200            $-PARAMETER
+# IE NH                  400            $-PARAMETER
+# IE NH                  800            $-PARAMETER
+# 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CATMIX"
@@ -36,12 +42,13 @@ function CATMIX(action,args...)
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
-        v_["NH"] = 10
-#       Alternative values for the SIF file parameters:
-# IE NH                  100            $-PARAMETER
-# IE NH                  200            $-PARAMETER
-# IE NH                  400            $-PARAMETER
-# IE NH                  800            $-PARAMETER
+        if nargin<1
+            v_["NH"] = Int64(10);  #  SIF file default value
+        else
+            v_["NH"] = Int64(args[1]);
+        end
+# IE NH                  3000           $-PARAMETER
+# IE NH                  30000          $-PARAMETER
         v_["TF"] = 1.0
         v_["X1u0"] = 1.0
         v_["X2u0"] = 0.0
@@ -59,16 +66,16 @@ function CATMIX(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["NH"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
-            iv,ix_,_ = s2x_ii("X1"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X1"*string(I),ix_)
             arrset(pb.xnames,iv,"X1"*string(I))
-            iv,ix_,_ = s2x_ii("X2"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X2"*string(I),ix_)
             arrset(pb.xnames,iv,"X2"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"*string(Int64(v_["NH"]))]
         pbm.A[ig,iv] += Float64(1.0)
@@ -76,14 +83,14 @@ function CATMIX(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["0"]):Int64(v_["NH-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("ODE1"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ODE1"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ODE1"*string(I))
             iv = ix_["X1"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X1"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("ODE2"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ODE2"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ODE2"*string(I))
             iv = ix_["X2"*string(I)]
@@ -107,8 +114,6 @@ function CATMIX(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["OBJ"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -143,14 +148,14 @@ function CATMIX(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eDIFSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eDIFSQ", iet_)
         loaset(elftv,it,1,"U1")
         loaset(elftv,it,2,"U2")
-        it,iet_,_ = s2x_ii( "eP1", iet_)
+        it,iet_,_ = s2mpj_ii( "eP1", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"X1")
         loaset(elftv,it,3,"X2")
-        it,iet_,_ = s2x_ii( "eP2", iet_)
+        it,iet_,_ = s2mpj_ii( "eP2", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -159,45 +164,45 @@ function CATMIX(action,args...)
         for I = Int64(v_["0"]):Int64(v_["NH-1"])
             v_["I+1"] = 1+I
             ename = "O"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDIFSQ")
             arrset(ielftype, ie, iet_["eDIFSQ"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["0"]):Int64(v_["NH"])
             ename = "P1"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eP1")
             arrset(ielftype, ie, iet_["eP1"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X1"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X2"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "P2"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eP2")
             arrset(ielftype, ie, iet_["eP2"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X2"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -240,6 +245,11 @@ function CATMIX(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["H/2"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLUTION             -4.7748D-02   $ (NH=100)
+# LO SOLUTION             -4.8016D-02   $ (NH=200)
+# LO SOLUTION             -4.7862D-02   $ (NH=400)
+# LO SOLUTION             -4.7185D-02   $ (NH=800)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -253,6 +263,10 @@ function CATMIX(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -355,7 +369,7 @@ function CATMIX(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

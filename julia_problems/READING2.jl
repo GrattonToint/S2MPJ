@@ -24,6 +24,11 @@ function READING2(action,args...)
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER     original value
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,11 +50,6 @@ function READING2(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER     original value
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   2000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
         v_["PI"] = 3.1415926535
         v_["2PI"] = 2.0*v_["PI"]
@@ -78,11 +78,11 @@ function READING2(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X1u"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X1u"*string(I),ix_)
             arrset(pb.xnames,iv,"X1u"*string(I))
-            iv,ix_,_ = s2x_ii("X2u"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X2u"*string(I),ix_)
             arrset(pb.xnames,iv,"X2u"*string(I))
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -99,7 +99,7 @@ function READING2(action,args...)
             v_["2PITI-1"] = v_["2PI"]*v_["TI-1"]
             v_["CTI-1"] = cos(v_["2PITI-1"])
             v_["-CCTI-1"] = v_["CTI-1"]*v_["-H/2"]
-            ig,ig_,_ = s2x_ii("COST",ig_)
+            ig,ig_,_ = s2mpj_ii("COST",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X1u"*string(I)]
             pbm.A[ig,iv] += Float64(v_["-CCTI"])
@@ -112,7 +112,7 @@ function READING2(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I-1"] = -1+I
-            ig,ig_,_ = s2x_ii("C1u"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C1u"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C1u"*string(I))
             iv = ix_["X1u"*string(I)]
@@ -123,7 +123,7 @@ function READING2(action,args...)
             pbm.A[ig,iv] += Float64(-0.5)
             iv = ix_["X2u"*string(Int64(v_["I-1"]))]
             pbm.A[ig,iv] += Float64(-0.5)
-            ig,ig_,_ = s2x_ii("C2u"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C2u"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C2u"*string(I))
             iv = ix_["X2u"*string(I)]
@@ -148,10 +148,8 @@ function READING2(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["X1u"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["X1u"*string(Int64(v_["0"]))]] = 0.0
@@ -190,7 +188,7 @@ function READING2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -18,6 +18,13 @@ function OSCIGRNE(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE N                   2              $-PARAMETER
 # IE N                   5              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   15             $-PARAMETER
+# IE N                   25             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,12 +46,6 @@ function OSCIGRNE(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   15             $-PARAMETER
-# IE N                   25             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   10000          $-PARAMETER
-# IE N                   100000         $-PARAMETER
 # RE RHO                 1.0            $-PARAMETER    Nesterov's original value
         if nargin<2
             v_["RHO"] = Float64(500.0);  #  SIF file default value
@@ -61,18 +62,18 @@ function OSCIGRNE(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G1",ig_)
+        ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G1")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(0.5)
         for I = Int64(v_["2"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
         end
@@ -92,8 +93,6 @@ function OSCIGRNE(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["G1"]] = Float64(0.5)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -107,12 +106,12 @@ function OSCIGRNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eA", iet_)
+        it,iet_,_ = s2mpj_ii( "eA", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"V")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"P")
-        it,iet_,_ = s2x_ii( "eB", iet_)
+        it,iet_,_ = s2mpj_ii( "eB", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"V")
         loaset(elftp,it,1,"P")
@@ -120,15 +119,15 @@ function OSCIGRNE(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "B1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eB")
         arrset(ielftype, ie, iet_["eB"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="U",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
@@ -137,52 +136,52 @@ function OSCIGRNE(action,args...)
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
             ename = "A"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eA")
             arrset(ielftype, ie, iet_["eA"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["2RHO"]))
             ename = "B"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eB")
             arrset(ielftype, ie, iet_["eB"])
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="P",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["-4RHO"]))
         end
         ename = "A"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA")
         arrset(ielftype, ie, iet_["eA"])
         ename = "A"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["N"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "A"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["N-1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="U",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "A"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         posep = findfirst(x->x=="P",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(v_["2RHO"]))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -212,6 +211,8 @@ function OSCIGRNE(action,args...)
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -225,6 +226,10 @@ function OSCIGRNE(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -287,7 +292,7 @@ function OSCIGRNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

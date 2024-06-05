@@ -40,16 +40,16 @@ function HATFLDF(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["3"])
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
             iv = ix_["X1"]
@@ -73,8 +73,6 @@ function HATFLDF(action,args...)
         pbm.gconst[ig_["G1"]] = Float64(0.032)
         pbm.gconst[ig_["G2"]] = Float64(0.056)
         pbm.gconst[ig_["G3"]] = Float64(0.099)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -83,7 +81,7 @@ function HATFLDF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eXPEXP", iet_)
+        it,iet_,_ = s2mpj_ii( "eXPEXP", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         elftp = Vector{Vector{String}}()
@@ -94,17 +92,17 @@ function HATFLDF(action,args...)
         for I = Int64(v_["1"]):Int64(v_["3"])
             v_["RI"] = Float64(I)
             ename = "A"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eXPEXP")
                 arrset(ielftype,ie,iet_["eXPEXP"])
             end
             vname = "X2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="T",elftp[ielftype[ie]])
@@ -173,7 +171,7 @@ function HATFLDF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

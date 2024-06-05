@@ -23,6 +23,13 @@ function CLNLBEAM(action,args...)
 # 
 #    Discretization: specify the number of interior points + 1
 # 
+#       Alternative values for the SIF file parameters:
+# IE NI                  10             $-PARAMETER n=33, m=20
+# IE NI                  50             $-PARAMETER n=153, m=100
+# IE NI                  100            $-PARAMETER n=303, m=200
+# IE NI                  500            $-PARAMETER n=1503, m=1000
+# IE NI                  1000           $-PARAMETER n=3003, m=2000 original value
+# IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,12 +51,6 @@ function CLNLBEAM(action,args...)
         else
             v_["NI"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE NI                  50             $-PARAMETER n=153, m=100
-# IE NI                  100            $-PARAMETER n=303, m=200
-# IE NI                  500            $-PARAMETER n=1503, m=1000
-# IE NI                  1000           $-PARAMETER n=3003, m=2000 original value
-# IE NI                  2000           $-PARAMETER n=6003, m=4000
 # IE NI                  5000           $-PARAMETER n=15003, m=10000
         if nargin<2
             v_["ALPHA"] = Float64(350.0);  #  SIF file default value
@@ -70,31 +71,31 @@ function CLNLBEAM(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["NI"])
-            iv,ix_,_ = s2x_ii("T"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["NI"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["NI"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("ENERGY",ig_)
+        ig,ig_,_ = s2mpj_ii("ENERGY",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["0"]):Int64(v_["NI-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("EX"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("EX"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EX"*string(I))
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("ET"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("ET"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ET"*string(I))
             iv = ix_["T"*string(Int64(v_["I+1"]))]
@@ -119,8 +120,6 @@ function CLNLBEAM(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -154,38 +153,38 @@ function CLNLBEAM(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eCOS", iet_)
+        it,iet_,_ = s2mpj_ii( "eCOS", iet_)
         loaset(elftv,it,1,"T")
-        it,iet_,_ = s2x_ii( "eSIN", iet_)
+        it,iet_,_ = s2mpj_ii( "eSIN", iet_)
         loaset(elftv,it,1,"T")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"U")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["0"]):Int64(v_["NI"])
             ename = "C"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOS")
             arrset(ielftype, ie, iet_["eCOS"])
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "S"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSIN")
             arrset(ielftype, ie, iet_["eSIN"])
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "USQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -224,6 +223,13 @@ function CLNLBEAM(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["AH/2"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(10)           345.0301196587
+# LO SOLTN(50)           344.8673691861
+# LO SOLTN(100)          344.8801831150
+# LO SOLTN(500)          344.8748539754
+# LO SOLTN(1000)         344.8788169123
+# LO SOLTN(5000)         
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -238,6 +244,10 @@ function CLNLBEAM(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -324,7 +334,7 @@ function CLNLBEAM(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -35,12 +35,12 @@ function NASH(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(J),ix_)
             arrset(pb.xnames,iv,"X"*string(J))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X56"]
         pbm.A[ig,iv] += Float64(1000.0)
@@ -48,7 +48,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(500.0)
         iv = ix_["X58"]
         pbm.A[ig,iv] += Float64(1000.0)
-        ig,ig_,_ = s2x_ii("C1",ig_)
+        ig,ig_,_ = s2mpj_ii("C1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C1")
         iv = ix_["X25"]
@@ -69,7 +69,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X7"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C2",ig_)
+        ig,ig_,_ = s2mpj_ii("C2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C2")
         iv = ix_["X26"]
@@ -92,7 +92,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.263887)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(0.447486)
-        ig,ig_,_ = s2x_ii("C3",ig_)
+        ig,ig_,_ = s2mpj_ii("C3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C3")
         iv = ix_["X27"]
@@ -115,7 +115,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.263887)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(0.447486)
-        ig,ig_,_ = s2x_ii("C4",ig_)
+        ig,ig_,_ = s2mpj_ii("C4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C4")
         iv = ix_["X28"]
@@ -138,7 +138,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.263887)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(0.447486)
-        ig,ig_,_ = s2x_ii("C5",ig_)
+        ig,ig_,_ = s2mpj_ii("C5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C5")
         iv = ix_["X29"]
@@ -161,7 +161,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.263887)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(0.447486)
-        ig,ig_,_ = s2x_ii("C6",ig_)
+        ig,ig_,_ = s2mpj_ii("C6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C6")
         iv = ix_["X30"]
@@ -184,7 +184,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.263887)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(0.447486)
-        ig,ig_,_ = s2x_ii("C7",ig_)
+        ig,ig_,_ = s2mpj_ii("C7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C7")
         iv = ix_["X31"]
@@ -207,7 +207,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.263887)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(0.447486)
-        ig,ig_,_ = s2x_ii("C8",ig_)
+        ig,ig_,_ = s2mpj_ii("C8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C8")
         iv = ix_["X32"]
@@ -218,7 +218,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X22"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C9",ig_)
+        ig,ig_,_ = s2mpj_ii("C9",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C9")
         iv = ix_["X33"]
@@ -229,7 +229,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X23"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C10",ig_)
+        ig,ig_,_ = s2mpj_ii("C10",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C10")
         iv = ix_["X34"]
@@ -240,7 +240,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X23"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C11",ig_)
+        ig,ig_,_ = s2mpj_ii("C11",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C11")
         iv = ix_["X35"]
@@ -257,7 +257,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("C12",ig_)
+        ig,ig_,_ = s2mpj_ii("C12",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C12")
         iv = ix_["X36"]
@@ -272,7 +272,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X10"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("C13",ig_)
+        ig,ig_,_ = s2mpj_ii("C13",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C13")
         iv = ix_["X37"]
@@ -285,7 +285,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-.33)
         iv = ix_["X20"]
         pbm.A[ig,iv] += Float64(0.33)
-        ig,ig_,_ = s2x_ii("C14",ig_)
+        ig,ig_,_ = s2mpj_ii("C14",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C14")
         iv = ix_["X38"]
@@ -298,7 +298,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-.67)
         iv = ix_["X20"]
         pbm.A[ig,iv] += Float64(-.33)
-        ig,ig_,_ = s2x_ii("C15",ig_)
+        ig,ig_,_ = s2mpj_ii("C15",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C15")
         iv = ix_["X39"]
@@ -311,7 +311,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-.33)
         iv = ix_["X20"]
         pbm.A[ig,iv] += Float64(-.67)
-        ig,ig_,_ = s2x_ii("C16",ig_)
+        ig,ig_,_ = s2mpj_ii("C16",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C16")
         iv = ix_["X40"]
@@ -320,7 +320,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X13"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C17",ig_)
+        ig,ig_,_ = s2mpj_ii("C17",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C17")
         iv = ix_["X41"]
@@ -329,7 +329,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X14"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C18",ig_)
+        ig,ig_,_ = s2mpj_ii("C18",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C18")
         iv = ix_["X42"]
@@ -338,7 +338,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X15"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C19",ig_)
+        ig,ig_,_ = s2mpj_ii("C19",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C19")
         iv = ix_["X43"]
@@ -353,7 +353,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.33)
         iv = ix_["X22"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C20",ig_)
+        ig,ig_,_ = s2mpj_ii("C20",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C20")
         iv = ix_["X44"]
@@ -368,7 +368,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(0.67)
         iv = ix_["X23"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C21",ig_)
+        ig,ig_,_ = s2mpj_ii("C21",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C21")
         iv = ix_["X45"]
@@ -377,7 +377,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("C22",ig_)
+        ig,ig_,_ = s2mpj_ii("C22",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C22")
         iv = ix_["X46"]
@@ -396,7 +396,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(-3.298588)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(-5.593581)
-        ig,ig_,_ = s2x_ii("C23",ig_)
+        ig,ig_,_ = s2mpj_ii("C23",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C23")
         iv = ix_["X47"]
@@ -417,7 +417,7 @@ function NASH(action,args...)
         pbm.A[ig,iv] += Float64(8.412719)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(-5.114131)
-        ig,ig_,_ = s2x_ii("C24",ig_)
+        ig,ig_,_ = s2mpj_ii("C24",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"C24")
         iv = ix_["X48"]
@@ -461,8 +461,6 @@ function NASH(action,args...)
         pbm.gconst[ig_["C22"]] = Float64(61.241589)
         pbm.gconst[ig_["C23"]] = Float64(-1.150548)
         pbm.gconst[ig_["C24"]] = Float64(-60.091041)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.E+00,pb.n)
         pb.xupper = fill(0.E+00,pb.n)
@@ -715,7 +713,7 @@ function NASH(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

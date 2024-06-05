@@ -65,27 +65,27 @@ function OET4(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("U",ix_)
+        iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(1.0)
         for I = Int64(v_["0"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("LO"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("LO"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"LO"*string(I))
             iv = ix_["U"]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("UP"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("UP"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"UP"*string(I))
             iv = ix_["U"]
@@ -115,15 +115,13 @@ function OET4(action,args...)
             pbm.gconst[ig_["LO"*string(I)]] = Float64(v_["-EXPW"])
             pbm.gconst[ig_["UP"*string(I)]] = Float64(v_["EXPW"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eRATIO", iet_)
+        it,iet_,_ = s2mpj_ii( "eRATIO", iet_)
         loaset(elftv,it,1,"X1")
         loaset(elftv,it,2,"X2")
         loaset(elftv,it,3,"X3")
@@ -137,29 +135,29 @@ function OET4(action,args...)
             v_["W"] = v_["RI"]*v_["H"]
             v_["W"] = v_["W"]+v_["LOWER"]
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eRATIO")
             arrset(ielftype, ie, iet_["eRATIO"])
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["1"]))*","*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             posep = findfirst(x->x=="W",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["W"]))
         end
@@ -236,7 +234,7 @@ function OET4(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

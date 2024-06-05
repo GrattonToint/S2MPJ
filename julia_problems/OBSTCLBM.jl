@@ -32,6 +32,19 @@ function OBSTCLBM(action,args...)
 # IE PX                  4              $-PARAMETER n = 16
 # IE PY                  4              $-PARAMETER
 # 
+# IE PX                  10             $-PARAMETER n = 100     original value
+# IE PY                  10             $-PARAMETER             original value
+# 
+# IE PX                  23             $-PARAMETER n = 529
+# IE PY                  23             $-PARAMETER
+# 
+# IE PX                  32             $-PARAMETER n = 1024
+# IE PY                  32             $-PARAMETER
+# 
+# IE PX                  75             $-PARAMETER n = 5625
+# IE PY                  75             $-PARAMETER
+# 
+# IE PX                  100            $-PARAMETER n = 10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -54,20 +67,10 @@ function OBSTCLBM(action,args...)
             v_["PX"] = Int64(args[1]);
         end
         if nargin<2
-            v_["PY"] = Int64(5);  #  SIF file default value
+            v_["PY"] = Int64(100);  #  SIF file default value
         else
             v_["PY"] = Int64(args[2]);
         end
-# IE PX                  10             $-PARAMETER n = 100     original value
-# IE PY                  10             $-PARAMETER             original value
-# IE PX                  23             $-PARAMETER n = 529
-# IE PY                  23             $-PARAMETER
-# IE PX                  32             $-PARAMETER n = 1024
-# IE PY                  32             $-PARAMETER
-# IE PX                  75             $-PARAMETER n = 5625
-# IE PY                  75             $-PARAMETER
-# IE PX                  100            $-PARAMETER n = 10000
-# IE PY                  100            $-PARAMETER
 # IE PX                  125            $-PARAMETER n = 15625
 # IE PY                  125            $-PARAMETER
         if nargin<3
@@ -98,7 +101,7 @@ function OBSTCLBM(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["PX"])
             for I = Int64(v_["1"]):Int64(v_["PY"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
             end
         end
@@ -106,7 +109,7 @@ function OBSTCLBM(action,args...)
         gtype    = String[]
         for I = Int64(v_["2"]):Int64(v_["PY-1"])
             for J = Int64(v_["2"]):Int64(v_["PX-1"])
-                ig,ig_,_ = s2x_ii("G"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("G"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(v_["LC"])
@@ -117,10 +120,8 @@ function OBSTCLBM(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for J = Int64(v_["1"]):Int64(v_["PX"])
             pb.xlower[ix_["X"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
@@ -204,7 +205,7 @@ function OBSTCLBM(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eISQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eISQ", iet_)
         loaset(elftv,it,1,"V1")
         loaset(elftv,it,2,"V2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -217,51 +218,51 @@ function OBSTCLBM(action,args...)
                 v_["J-1"] = -1+J
                 v_["J+1"] = 1+J
                 ename = "A"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "X"*string(Int64(v_["I+1"]))*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "B"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "X"*string(I)*","*string(Int64(v_["J+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "C"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "X"*string(Int64(v_["I-1"]))*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "D"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "X"*string(I)*","*string(Int64(v_["J-1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -289,6 +290,14 @@ function OBSTCLBM(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN(4)            -0.0081108
+# LO SOLTN(10)           2.87503823
+# LO SOLTN(23)           6.51932527
+# LO SOLTN(32)           6.88708670
+# LO SOLTN(75)           ???
+# LO SOLTN(100)          ???
+# LO SOLTN(125)          ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -297,6 +306,10 @@ function OBSTCLBM(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "QBR2-AY-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -338,7 +351,7 @@ function OBSTCLBM(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

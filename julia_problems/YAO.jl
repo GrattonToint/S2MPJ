@@ -21,6 +21,10 @@ function YAO(action,args...)
 # 
 #   Number of discretization points
 # 
+#       Alternative values for the SIF file parameters:
+# IE P                   20             $-PARAMETER
+# IE P                   200            $-PARAMETER
+# IE P                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,9 +46,7 @@ function YAO(action,args...)
         else
             v_["P"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE P                   200            $-PARAMETER
-# IE P                   2000           $-PARAMETER
+# IE k                   2              $-PARAMETER
         if nargin<2
             v_["k"] = Int64(2);  #  SIF file default value
         else
@@ -63,13 +65,13 @@ function YAO(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for i = Int64(v_["1"]):Int64(v_["P+k"])
-            iv,ix_,_ = s2x_ii("X"*string(i),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(i),ix_)
             arrset(pb.xnames,iv,"X"*string(i))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for i = Int64(v_["1"]):Int64(v_["P+k"])
-            ig,ig_,_ = s2x_ii("S"*string(i),ig_)
+            ig,ig_,_ = s2mpj_ii("S"*string(i),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(i)]
             pbm.A[ig,iv] += Float64(1.0)
@@ -77,7 +79,7 @@ function YAO(action,args...)
         end
         for i = Int64(v_["1"]):Int64(v_["P"])
             v_["i+1"] = 1+i
-            ig,ig_,_ = s2x_ii("B"*string(i),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(i),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"B"*string(i))
             iv = ix_["X"*string(i)]
@@ -109,8 +111,6 @@ function YAO(action,args...)
             v_["SINI"] = sin(v_["iOVP"])
             pbm.gconst[ig_["S"*string(i)]] = Float64(v_["SINI"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -121,7 +121,7 @@ function YAO(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQ",igt_)
+        it,igt_,_ = s2mpj_ii("gSQ",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -132,6 +132,10 @@ function YAO(action,args...)
             arrset(pbm.grftype,ig,"gSQ")
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION             2.39883D+00   $ (p=20)
+# XL SOLUTION             2.01517D+01   $ (p=200)
+# XL SOLUTION             1.97705D+02   $ (p=2000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -146,6 +150,10 @@ function YAO(action,args...)
         pb.pbclass = "QLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -178,7 +186,7 @@ function YAO(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

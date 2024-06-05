@@ -29,6 +29,14 @@ function RAYBENDL(action,args...)
 #    number of  knots  ( >= 4 )
 #    ( n = 2( NKNOTS - 1 ) ) 
 # 
+#       Alternative values for the SIF file parameters:
+# IE NKNOTS              4              $-PARAMETER n = 6
+# IE NKNOTS              11             $-PARAMETER n = 20
+# IE NKNOTS              21             $-PARAMETER n = 40     original value
+# IE NKNOTS              32             $-PARAMETER n = 62
+# IE NKNOTS              64             $-PARAMETER n = 126
+# IE NKNOTS              512            $-PARAMETER n = 1022
+# IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -50,13 +58,6 @@ function RAYBENDL(action,args...)
         else
             v_["NKNOTS"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE NKNOTS              11             $-PARAMETER n = 20
-# IE NKNOTS              21             $-PARAMETER n = 40     original value
-# IE NKNOTS              32             $-PARAMETER n = 62
-# IE NKNOTS              64             $-PARAMETER n = 126
-# IE NKNOTS              512            $-PARAMETER n = 1022
-# IE NKNOTS              1024           $-PARAMETER n = 2046
         v_["XSRC"] = 0.0
         v_["ZSRC"] = 0.0
         v_["XRCV"] = 100.0
@@ -72,15 +73,15 @@ function RAYBENDL(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["NKNOTS"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Z"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Z"*string(I),ix_)
             arrset(pb.xnames,iv,"Z"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["NKNOTS"])
-            ig,ig_,_ = s2x_ii("TIME"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("TIME"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(2.0))
         end
@@ -89,8 +90,6 @@ function RAYBENDL(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -120,7 +119,7 @@ function RAYBENDL(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eTT", iet_)
+        it,iet_,_ = s2mpj_ii( "eTT", iet_)
         loaset(elftv,it,1,"X1")
         loaset(elftv,it,2,"X2")
         loaset(elftv,it,3,"Z1")
@@ -131,25 +130,25 @@ function RAYBENDL(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NKNOTS"])
             v_["I-1"] = -1+I
             ename = "T"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eTT")
                 arrset(ielftype,ie,iet_["eTT"])
             end
             vname = "X"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Z1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Z2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -165,6 +164,8 @@ function RAYBENDL(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#   Solution of the continuous problem
+# LO RAYBENDL            96.2424
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
@@ -172,6 +173,10 @@ function RAYBENDL(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OXR2-MY-V-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -252,7 +257,7 @@ function RAYBENDL(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [1,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -52,13 +52,13 @@ function LUKSAN17(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["M"])
-            ig,ig_,_ = s2x_ii("E"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E"*string(I))
         end
@@ -88,8 +88,6 @@ function LUKSAN17(action,args...)
             pbm.gconst[ig_["E"*string(Int64(v_["K"]))]] = Float64(v_["Y4"])
             v_["K"] = 1+v_["K"]
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -111,11 +109,11 @@ function LUKSAN17(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eACOSX", iet_)
+        it,iet_,_ = s2mpj_ii( "eACOSX", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"A")
-        it,iet_,_ = s2x_ii( "eASINX", iet_)
+        it,iet_,_ = s2mpj_ii( "eASINX", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftp,it,1,"A")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -134,32 +132,32 @@ function LUKSAN17(action,args...)
                     v_["A"] = v_["RL"]*v_["RQ2"]
                     v_["A"] = -1.0*v_["A"]
                     ename = "S"*string(Int64(v_["K"]))*","*string(Q)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eASINX")
                     arrset(ielftype, ie, iet_["eASINX"])
                     ename = "S"*string(Int64(v_["K"]))*","*string(Q)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     vname = "X"*string(Int64(v_["I+Q"]))
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     ename = "S"*string(Int64(v_["K"]))*","*string(Q)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     posep = findfirst(x->x=="A",elftp[ielftype[ie]])
                     loaset(pbm.elpar,ie,posep,Float64(v_["A"]))
                     v_["A"] = v_["RL2"]*v_["RQ"]
                     ename = "C"*string(Int64(v_["K"]))*","*string(Q)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eACOSX")
                     arrset(ielftype, ie, iet_["eACOSX"])
                     ename = "C"*string(Int64(v_["K"]))*","*string(Q)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     vname = "X"*string(Int64(v_["I+Q"]))
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     ename = "C"*string(Int64(v_["K"]))*","*string(Q)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     posep = findfirst(x->x=="A",elftp[ielftype[ie]])
                     loaset(pbm.elpar,ie,posep,Float64(v_["A"]))
                     v_["K"] = 1+v_["K"]
@@ -186,6 +184,8 @@ function LUKSAN17(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -198,6 +198,10 @@ function LUKSAN17(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -258,7 +262,7 @@ function LUKSAN17(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

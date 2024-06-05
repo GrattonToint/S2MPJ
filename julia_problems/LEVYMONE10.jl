@@ -23,6 +23,8 @@ function LEVYMONE10(action,args...)
 # 
 #    N is the number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -64,19 +66,19 @@ function LEVYMONE10(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("Q"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("Q"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"Q"*string(I))
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["L"])
             arrset(pbm.gscale,ig,Float64(v_["N/PI"]))
-            ig,ig_,_ = s2x_ii("N"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("N"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"N"*string(I))
         end
@@ -98,8 +100,6 @@ function LEVYMONE10(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["Q"*string(I)]] = Float64(v_["A-C"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-10.0,pb.n)
         pb.xupper = fill(10.0,pb.n)
@@ -110,12 +110,12 @@ function LEVYMONE10(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eS2", iet_)
+        it,iet_,_ = s2mpj_ii( "eS2", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"L")
         loaset(elftp,it,2,"C")
-        it,iet_,_ = s2x_ii( "ePS2", iet_)
+        it,iet_,_ = s2mpj_ii( "ePS2", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Z")
         loaset(elftp,it,1,"L")
@@ -125,35 +125,35 @@ function LEVYMONE10(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eS2")
         arrset(ielftype, ie, iet_["eS2"])
         ename = "E"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         posep = findfirst(x->x=="L",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(v_["L"]))
         ename = "E"*string(Int64(v_["1"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         posep = findfirst(x->x=="C",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(v_["C"]))
         for I = Int64(v_["2"]):Int64(v_["N"])
             v_["I-1"] = I-v_["1"]
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePS2")
             arrset(ielftype, ie, iet_["ePS2"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,8.0)
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="L",elftp[ielftype[ie]])
@@ -177,6 +177,8 @@ function LEVYMONE10(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -190,6 +192,10 @@ function LEVYMONE10(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AY-10-20"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -267,7 +273,7 @@ function LEVYMONE10(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [1,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

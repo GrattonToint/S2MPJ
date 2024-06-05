@@ -26,6 +26,12 @@ function CATENARY(action,args...)
 # 
 #    Number of beams = N+1 ; the number of variables is 3*(N+2)
 # 
+#       Alternative values for the SIF file parameters:
+# IE N+1                 4              $-PARAMETER n = 15
+# IE N+1                 10             $-PARAMETER n = 33
+# IE N+1                 32             $-PARAMETER n = 99
+# IE N+1                 166            $-PARAMETER n = 501     original value
+# IE N+1                 1000           $-PARAMETER n = 3003
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,11 +53,6 @@ function CATENARY(action,args...)
         else
             v_["N+1"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N+1                 10             $-PARAMETER n = 33
-# IE N+1                 32             $-PARAMETER n = 99
-# IE N+1                 166            $-PARAMETER n = 501     original value
-# IE N+1                 1000           $-PARAMETER n = 3003
         v_["GAMMA"] = 9.81
         v_["TMASS"] = 500.0
         v_["BL"] = 1.0
@@ -71,31 +72,31 @@ function CATENARY(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N+1"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
-            iv,ix_,_ = s2x_ii("Z"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Z"*string(I),ix_)
             arrset(pb.xnames,iv,"Z"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["Y"*string(Int64(v_["0"]))]
         pbm.A[ig,iv] += Float64(v_["MG/2"])
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["Y"*string(I)]
             pbm.A[ig,iv] += Float64(v_["MG"])
         end
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["Y"*string(Int64(v_["N+1"]))]
         pbm.A[ig,iv] += Float64(v_["MG/2"])
         for I = Int64(v_["1"]):Int64(v_["N+1"])
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(I))
         end
@@ -117,8 +118,6 @@ function CATENARY(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N+1"])
             pbm.gconst[ig_["C"*string(I)]] = Float64(v_["BLSQ"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -142,7 +141,7 @@ function CATENARY(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eISQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eISQ", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftv,it,2,"W")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -151,39 +150,39 @@ function CATENARY(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N+1"])
             v_["I-1"] = -1+I
             ename = "EX"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eISQ")
             arrset(ielftype, ie, iet_["eISQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EY"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eISQ")
             arrset(ielftype, ie, iet_["eISQ"])
             vname = "Y"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Y"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EZ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eISQ")
             arrset(ielftype, ie, iet_["eISQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Z"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -207,6 +206,10 @@ function CATENARY(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOL(15)             -8184.81057777
+# LO SOL(33)             -20837.3763330
+# LO SOL(99)             -67050.9978802
+# LO SOL(501)            -348403.164505
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -220,6 +223,10 @@ function CATENARY(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-AY-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -261,7 +268,7 @@ function CATENARY(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

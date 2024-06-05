@@ -21,6 +21,10 @@ function PORTSNQP(action,args...)
 # 
 #    The number of equality constraints
 # 
+# IE N                   10
+# IE N                   100
+# IE N                   1000
+# IE N                   10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -37,6 +41,7 @@ function PORTSNQP(action,args...)
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
+        v_["N"] = 100000
         v_["N"] = 10
         v_["1"] = 1
         v_["RN"] = Float64(v_["N"])
@@ -45,7 +50,7 @@ function PORTSNQP(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -55,22 +60,22 @@ function PORTSNQP(action,args...)
             v_["2I"] = 2.0*v_["RI"]
             v_["2I-N"] = v_["2I"]-v_["RN"]
             v_["C"] = v_["2I-N"]/v_["RN"]
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("E",ig_)
+            ig,ig_,_ = s2mpj_ii("E",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("E2",ig_)
+            ig,ig_,_ = s2mpj_ii("E2",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"E2")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["C"])
         end
-        ig,ig_,_ = s2x_ii("O",ig_)
+        ig,ig_,_ = s2mpj_ii("O",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(1.0)
@@ -99,10 +104,8 @@ function PORTSNQP(action,args...)
         end
         pbm.gconst[ig_["E"]] = Float64(1.0)
         pbm.gconst[ig_["E2"]] = Float64(0.5)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["X"*string(I)]] = 0.0
@@ -111,7 +114,7 @@ function PORTSNQP(action,args...)
         pb.x0 = fill(Float64(0.5),pb.n)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -124,6 +127,7 @@ function PORTSNQP(action,args...)
         ig = ig_["O"]
         arrset(pbm.grftype,ig,"gL2")
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -137,6 +141,10 @@ function PORTSNQP(action,args...)
         pb.lincons   = collect(1:length(pbm.congrps))
         pb.pbclass = "QLR2-AN-V-1"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -151,7 +159,7 @@ function PORTSNQP(action,args...)
             g_ = GVAR_+GVAR_
             if nargout>2
                 H_ = zeros(Float64,1,1)
-                H_ = 2.0e0
+                H_ = 2.0
             end
         end
         if nargout == 1
@@ -169,7 +177,7 @@ function PORTSNQP(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

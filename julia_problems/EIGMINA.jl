@@ -21,6 +21,10 @@ function EIGMINA(action,args...)
 # 
 #    The dimension of the matrix.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   2              $-PARAMETER
+# IE N                   10             $-PARAMETER     original value
+# IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,9 +46,6 @@ function EIGMINA(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   10             $-PARAMETER     original value
-# IE N                   100            $-PARAMETER
         v_["1"] = 1
         v_["RN"] = Float64(v_["N"])
         v_["ROOTN"] = sqrt(v_["RN"])
@@ -60,25 +61,25 @@ function EIGMINA(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("D",ix_)
+        iv,ix_,_ = s2mpj_ii("D",ix_)
         arrset(pb.xnames,iv,"D")
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("Q"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Q"*string(I),ix_)
             arrset(pb.xnames,iv,"Q"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("MINEIG",ig_)
+        ig,ig_,_ = s2mpj_ii("MINEIG",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["D"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("O",ig_)
+        ig,ig_,_ = s2mpj_ii("O",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"O")
         for I = Int64(v_["1"]):Int64(v_["N"])
             for K = Int64(v_["1"]):Int64(v_["N"])
                 v_["-AIK"] = -1.0*v_["A"*string(I)*","*string(K)]
-                ig,ig_,_ = s2x_ii("E"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"E"*string(I))
                 iv = ix_["Q"*string(K)]
@@ -101,8 +102,6 @@ function EIGMINA(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["O"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-1.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
@@ -116,7 +115,7 @@ function EIGMINA(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PROD", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PROD", iet_)
         loaset(elftv,it,1,"Q1")
         loaset(elftv,it,2,"Q2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -124,33 +123,33 @@ function EIGMINA(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"en2PROD")
                 arrset(ielftype,ie,iet_["en2PROD"])
             end
             vname = "Q"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
             posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "D"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
             posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for K = Int64(v_["1"]):Int64(v_["N"])
             ename = "O"*string(K)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"en2PROD")
                 arrset(ielftype,ie,iet_["en2PROD"])
             end
             vname = "Q"*string(K)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
             posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "Q"*string(K)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
             posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -222,7 +221,7 @@ function EIGMINA(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

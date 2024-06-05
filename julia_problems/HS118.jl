@@ -45,7 +45,7 @@ function HS118(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["15"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -55,7 +55,7 @@ function HS118(action,args...)
             v_["3K+1"] = 1+v_["3K"]
             v_["3K+2"] = 2+v_["3K"]
             v_["3K+3"] = 3+v_["3K"]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["3K+1"]))]
             pbm.A[ig,iv] += Float64(2.3)
@@ -71,21 +71,21 @@ function HS118(action,args...)
             v_["3K+3"] = 3+v_["3K"]
             v_["3K-2"] = -2+v_["3K"]
             v_["3K-1"] = -1+v_["3K"]
-            ig,ig_,_ = s2x_ii("A"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("A"*string(K),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"A"*string(K))
             iv = ix_["X"*string(Int64(v_["3K+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["3K-2"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("B"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(K),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"B"*string(K))
             iv = ix_["X"*string(Int64(v_["3K+3"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["3K"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"C"*string(K))
             iv = ix_["X"*string(Int64(v_["3K+2"]))]
@@ -93,7 +93,7 @@ function HS118(action,args...)
             iv = ix_["X"*string(Int64(v_["3K-1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("D1",ig_)
+        ig,ig_,_ = s2mpj_ii("D1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"D1")
         iv = ix_["X1"]
@@ -102,7 +102,7 @@ function HS118(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("D2",ig_)
+        ig,ig_,_ = s2mpj_ii("D2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"D2")
         iv = ix_["X4"]
@@ -111,7 +111,7 @@ function HS118(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X6"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("D3",ig_)
+        ig,ig_,_ = s2mpj_ii("D3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"D3")
         iv = ix_["X7"]
@@ -120,7 +120,7 @@ function HS118(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("D4",ig_)
+        ig,ig_,_ = s2mpj_ii("D4",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"D4")
         iv = ix_["X10"]
@@ -129,7 +129,7 @@ function HS118(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X12"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("D5",ig_)
+        ig,ig_,_ = s2mpj_ii("D5",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"D5")
         iv = ix_["X13"]
@@ -171,8 +171,6 @@ function HS118(action,args...)
             arrset(grange,ig_["B"*string(K)],Float64(13.0))
             arrset(grange,ig_["C"*string(K)],Float64(14.0))
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(Inf,pb.n)
@@ -226,18 +224,18 @@ function HS118(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["15"])
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,nothing,20.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,nothing,20.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -265,6 +263,8 @@ function HS118(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(0.00015))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               664.82045
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -278,6 +278,10 @@ function HS118(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QLR2-AN-15-17"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -312,7 +316,7 @@ function HS118(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

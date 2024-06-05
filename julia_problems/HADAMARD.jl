@@ -25,6 +25,12 @@ function HADAMARD(action,args...)
 # IE N                   4              $-PARAMETER
 # IE N                   6              $-PARAMETER
 # IE N                   8              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   12             $-PARAMETER
+# IE N                   14             $-PARAMETER
+# IE N                   16             $-PARAMETER    original value
+# IE N                   18             $-PARAMETER
+# IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,11 +52,6 @@ function HADAMARD(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   12             $-PARAMETER
-# IE N                   14             $-PARAMETER
-# IE N                   16             $-PARAMETER    original value
-# IE N                   18             $-PARAMETER
-# IE N                   20             $-PARAMETER
 # IE N                   100            $-PARAMETER
         v_["1"] = 1
         v_["RN"] = Float64(v_["N"])
@@ -58,37 +59,37 @@ function HADAMARD(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("MAXABSQ",ix_)
+        iv,ix_,_ = s2mpj_ii("MAXABSQ",ix_)
         arrset(pb.xnames,iv,"MAXABSQ")
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("Q"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Q"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Q"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJECTIVE",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJECTIVE",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["MAXABSQ"]
         pbm.A[ig,iv] += Float64(1.0)
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(J)
-                ig,ig_,_ = s2x_ii("O"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("O"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"O"*string(I)*","*string(J))
             end
         end
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("L"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("L"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"L"*string(I)*","*string(J))
                 iv = ix_["MAXABSQ"]
                 pbm.A[ig,iv] += Float64(1.0)
                 iv = ix_["Q"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
-                ig,ig_,_ = s2x_ii("U"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("U"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"U"*string(I)*","*string(J))
                 iv = ix_["MAXABSQ"]
@@ -115,8 +116,6 @@ function HADAMARD(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             pbm.gconst[ig_["O"*string(J)*","*string(J)]] = Float64(v_["RN"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -133,7 +132,7 @@ function HADAMARD(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PROD", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PROD", iet_)
         loaset(elftv,it,1,"Q1")
         loaset(elftv,it,2,"Q2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -143,15 +142,15 @@ function HADAMARD(action,args...)
             for I = Int64(v_["1"]):Int64(J)
                 for K = Int64(v_["1"]):Int64(v_["N"])
                     ename = "O"*string(I)*","*string(J)*","*string(K)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PROD")
                     arrset(ielftype, ie, iet_["en2PROD"])
                     vname = "Q"*string(K)*","*string(I)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "Q"*string(K)*","*string(J)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -224,7 +223,7 @@ function HADAMARD(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -37,31 +37,31 @@ function POLAK4(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("U",ix_)
+        iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("F1",ig_)
+        ig,ig_,_ = s2mpj_ii("F1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F1")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("F2",ig_)
+        ig,ig_,_ = s2mpj_ii("F2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F2")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("F3",ig_)
+        ig,ig_,_ = s2mpj_ii("F3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F3")
         iv = ix_["U"]
@@ -84,8 +84,6 @@ function POLAK4(action,args...)
         pbm.gconst[ig_["F1"]] = Float64(1.0)
         pbm.gconst[ig_["F2"]] = Float64(0.01)
         pbm.gconst[ig_["F3"]] = Float64(100000.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -105,7 +103,7 @@ function POLAK4(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSSQ", iet_)
         loaset(elftv,it,1,"XX")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"S")
@@ -113,31 +111,31 @@ function POLAK4(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "X1SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSSQ")
         arrset(ielftype, ie, iet_["eSSQ"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="S",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(0.0))
         ename = "X2SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSSQ")
         arrset(ielftype, ie, iet_["eSSQ"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="S",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(0.0))
         ename = "X1M2SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSSQ")
         arrset(ielftype, ie, iet_["eSSQ"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="S",elftp[ielftype[ie]])
@@ -172,6 +170,8 @@ function POLAK4(action,args...)
         loaset(pbm.grelt,ig,posel,ie_["X2SQ"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -184,6 +184,10 @@ function POLAK4(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-AN-3-3"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -218,7 +222,7 @@ function POLAK4(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

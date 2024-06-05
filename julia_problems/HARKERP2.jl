@@ -22,6 +22,11 @@ function HARKERP2(action,args...)
 # 
 #    Number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER     original value
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,10 +48,6 @@ function HARKERP2(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER     original value
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
         v_["0"] = 0
@@ -57,35 +58,35 @@ function HARKERP2(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("S"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("S"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(-1.0))
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["0"])),ig_)
+            ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["0"])),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
         end
-        ig,ig_,_ = s2x_ii("Q"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("Q"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(0.5))
         for J = Int64(v_["2"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("Q"*string(J),ig_)
+            ig,ig_,_ = s2mpj_ii("Q"*string(J),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(0.25))
             for I = Int64(J):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("Q"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("Q"*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(I)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -104,7 +105,7 @@ function HARKERP2(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gHALFL2",igt_)
+        it,igt_,_ = s2mpj_ii("gHALFL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -118,6 +119,8 @@ function HARKERP2(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 1.0
+#    Solution
+# LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
@@ -128,6 +131,10 @@ function HARKERP2(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "QBR2-AN-V-V"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -160,7 +167,7 @@ function HARKERP2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

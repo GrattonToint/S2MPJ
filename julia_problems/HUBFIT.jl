@@ -49,48 +49,48 @@ function HUBFIT(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("a",ix_)
+        iv,ix_,_ = s2mpj_ii("a",ix_)
         arrset(pb.xnames,iv,"a")
-        iv,ix_,_ = s2x_ii("b",ix_)
+        iv,ix_,_ = s2mpj_ii("b",ix_)
         arrset(pb.xnames,iv,"b")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("Obj1",ig_)
+        ig,ig_,_ = s2mpj_ii("Obj1",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["a"]
         pbm.A[ig,iv] += Float64(v_["X1"])
         iv = ix_["b"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(2.0))
-        ig,ig_,_ = s2x_ii("Obj2",ig_)
+        ig,ig_,_ = s2mpj_ii("Obj2",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["a"]
         pbm.A[ig,iv] += Float64(v_["X2"])
         iv = ix_["b"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(2.0))
-        ig,ig_,_ = s2x_ii("Obj3",ig_)
+        ig,ig_,_ = s2mpj_ii("Obj3",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["a"]
         pbm.A[ig,iv] += Float64(v_["X3"])
         iv = ix_["b"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(2.0))
-        ig,ig_,_ = s2x_ii("Obj4",ig_)
+        ig,ig_,_ = s2mpj_ii("Obj4",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["a"]
         pbm.A[ig,iv] += Float64(v_["X4"])
         iv = ix_["b"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(2.0))
-        ig,ig_,_ = s2x_ii("Obj5",ig_)
+        ig,ig_,_ = s2mpj_ii("Obj5",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["a"]
         pbm.A[ig,iv] += Float64(v_["X5"])
         iv = ix_["b"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(2.0))
-        ig,ig_,_ = s2x_ii("Cons",ig_)
+        ig,ig_,_ = s2mpj_ii("Cons",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"Cons")
         iv = ix_["a"]
@@ -118,16 +118,14 @@ function HUBFIT(action,args...)
         pbm.gconst[ig_["Obj4"]] = Float64(v_["Y4"])
         pbm.gconst[ig_["Obj5"]] = Float64(v_["Y5"])
         pbm.gconst[ig_["Cons"]] = Float64(v_["C"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["b"]] = -Inf
         pb.xupper[ix_["b"]] = +Inf
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gHUBER",igt_)
+        it,igt_,_ = s2mpj_ii("gHUBER",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -214,7 +212,7 @@ function HUBFIT(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

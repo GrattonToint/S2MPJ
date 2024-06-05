@@ -45,25 +45,25 @@ function AIRCRFTA(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("ROLLRATE",ix_)
+        iv,ix_,_ = s2mpj_ii("ROLLRATE",ix_)
         arrset(pb.xnames,iv,"ROLLRATE")
-        iv,ix_,_ = s2x_ii("PITCHRAT",ix_)
+        iv,ix_,_ = s2mpj_ii("PITCHRAT",ix_)
         arrset(pb.xnames,iv,"PITCHRAT")
-        iv,ix_,_ = s2x_ii("YAWRATE",ix_)
+        iv,ix_,_ = s2mpj_ii("YAWRATE",ix_)
         arrset(pb.xnames,iv,"YAWRATE")
-        iv,ix_,_ = s2x_ii("ATTCKANG",ix_)
+        iv,ix_,_ = s2mpj_ii("ATTCKANG",ix_)
         arrset(pb.xnames,iv,"ATTCKANG")
-        iv,ix_,_ = s2x_ii("SSLIPANG",ix_)
+        iv,ix_,_ = s2mpj_ii("SSLIPANG",ix_)
         arrset(pb.xnames,iv,"SSLIPANG")
-        iv,ix_,_ = s2x_ii("ELEVATOR",ix_)
+        iv,ix_,_ = s2mpj_ii("ELEVATOR",ix_)
         arrset(pb.xnames,iv,"ELEVATOR")
-        iv,ix_,_ = s2x_ii("AILERON",ix_)
+        iv,ix_,_ = s2mpj_ii("AILERON",ix_)
         arrset(pb.xnames,iv,"AILERON")
-        iv,ix_,_ = s2x_ii("RUDDERDF",ix_)
+        iv,ix_,_ = s2mpj_ii("RUDDERDF",ix_)
         arrset(pb.xnames,iv,"RUDDERDF")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("G1",ig_)
+        ig,ig_,_ = s2mpj_ii("G1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G1")
         iv = ix_["ROLLRATE"]
@@ -78,7 +78,7 @@ function AIRCRFTA(action,args...)
         pbm.A[ig,iv] += Float64(-45.83)
         iv = ix_["RUDDERDF"]
         pbm.A[ig,iv] += Float64(-7.64)
-        ig,ig_,_ = s2x_ii("G2",ig_)
+        ig,ig_,_ = s2mpj_ii("G2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G2")
         iv = ix_["PITCHRAT"]
@@ -87,7 +87,7 @@ function AIRCRFTA(action,args...)
         pbm.A[ig,iv] += Float64(-22.95)
         iv = ix_["ELEVATOR"]
         pbm.A[ig,iv] += Float64(-28.37)
-        ig,ig_,_ = s2x_ii("G3",ig_)
+        ig,ig_,_ = s2mpj_ii("G3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G3")
         iv = ix_["ROLLRATE"]
@@ -100,7 +100,7 @@ function AIRCRFTA(action,args...)
         pbm.A[ig,iv] += Float64(-0.921)
         iv = ix_["RUDDERDF"]
         pbm.A[ig,iv] += Float64(-6.51)
-        ig,ig_,_ = s2x_ii("G4",ig_)
+        ig,ig_,_ = s2mpj_ii("G4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G4")
         iv = ix_["PITCHRAT"]
@@ -109,7 +109,7 @@ function AIRCRFTA(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["ELEVATOR"]
         pbm.A[ig,iv] += Float64(-1.168)
-        ig,ig_,_ = s2x_ii("G5",ig_)
+        ig,ig_,_ = s2mpj_ii("G5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"G5")
         iv = ix_["YAWRATE"]
@@ -131,8 +131,6 @@ function AIRCRFTA(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -162,122 +160,122 @@ function AIRCRFTA(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1A"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "PITCHRAT"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "YAWRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E1B"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "YAWRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "ATTCKANG"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E1C"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "ATTCKANG"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "SSLIPANG"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E1D"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "PITCHRAT"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "ATTCKANG"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2A"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "ROLLRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "YAWRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2B"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "ROLLRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "SSLIPANG"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3A"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "ROLLRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PITCHRAT"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3B"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "ROLLRATE"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "ATTCKANG"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -380,7 +378,7 @@ function AIRCRFTA(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

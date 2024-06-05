@@ -35,19 +35,19 @@ function HONG(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("T1",ix_)
+        iv,ix_,_ = s2mpj_ii("T1",ix_)
         arrset(pb.xnames,iv,"T1")
-        iv,ix_,_ = s2x_ii("T2",ix_)
+        iv,ix_,_ = s2mpj_ii("T2",ix_)
         arrset(pb.xnames,iv,"T2")
-        iv,ix_,_ = s2x_ii("T3",ix_)
+        iv,ix_,_ = s2mpj_ii("T3",ix_)
         arrset(pb.xnames,iv,"T3")
-        iv,ix_,_ = s2x_ii("T4",ix_)
+        iv,ix_,_ = s2mpj_ii("T4",ix_)
         arrset(pb.xnames,iv,"T4")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("SUM1",ig_)
+        ig,ig_,_ = s2mpj_ii("SUM1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"SUM1")
         iv = ix_["T1"]
@@ -74,8 +74,6 @@ function HONG(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["SUM1"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
@@ -84,7 +82,7 @@ function HONG(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEXP", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXP", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"P1")
@@ -96,13 +94,13 @@ function HONG(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eEXP")
             arrset(ielftype,ie,iet_["eEXP"])
         end
         vname = "T1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -116,13 +114,13 @@ function HONG(action,args...)
         posep = findfirst(x->x=="P5",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(0.38))
         ename = "E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eEXP")
             arrset(ielftype,ie,iet_["eEXP"])
         end
         vname = "T2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -136,13 +134,13 @@ function HONG(action,args...)
         posep = findfirst(x->x=="P5",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(0.11))
         ename = "E3"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eEXP")
             arrset(ielftype,ie,iet_["eEXP"])
         end
         vname = "T3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -156,13 +154,13 @@ function HONG(action,args...)
         posep = findfirst(x->x=="P5",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(-1.48))
         ename = "E4"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eEXP")
             arrset(ielftype,ie,iet_["eEXP"])
         end
         vname = "T4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.5)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="P1",elftp[ielftype[ie]])
@@ -196,6 +194,7 @@ function HONG(action,args...)
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution unknown
         pb.objlower = -4.0
         pb.objupper = 300.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
@@ -211,6 +210,10 @@ function HONG(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OLR2-AN-4-1"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -248,7 +251,7 @@ function HONG(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

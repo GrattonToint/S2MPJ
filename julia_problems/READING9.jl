@@ -22,6 +22,14 @@ function READING9(action,args...)
 # 
 #    Number of discretized points in [0,1] - 1
 # 
+#       Alternative values for the SIF file parameters:
+# IE N+1                 3              $-PARAMETER n=6, m=2
+# IE N+1                 51             $-PARAMETER n=102, m=50
+# IE N+1                 101            $-PARAMETER n=202, m=100
+# IE N+1                 201            $-PARAMETER n=402, m=200
+# IE N+1                 501            $-PARAMETER n=1002, m=500  original value
+# IE N+1                 1001           $-PARAMETER n=2002, m=1000
+# IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,13 +51,6 @@ function READING9(action,args...)
         else
             v_["N+1"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N+1                 51             $-PARAMETER n=102, m=50
-# IE N+1                 101            $-PARAMETER n=202, m=100
-# IE N+1                 201            $-PARAMETER n=402, m=200
-# IE N+1                 501            $-PARAMETER n=1002, m=500  original value
-# IE N+1                 1001           $-PARAMETER n=2002, m=1000
-# IE N+1                 5001           $-PARAMETER n=10002, m= 5000
         v_["N"] = -1+v_["N+1"]
         v_["N-1"] = -1+v_["N"]
         v_["RN"] = Float64(v_["N"])
@@ -69,20 +70,20 @@ function READING9(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("P"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
             arrset(pb.xnames,iv,"P"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("S"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("S"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"S"*string(I))
             iv = ix_["P"*string(Int64(v_["I+1"]))]
@@ -112,10 +113,8 @@ function READING9(action,args...)
             v_["HSINT"] = v_["H"]*v_["SINT"]
             pbm.gconst[ig_["S"*string(I)]] = Float64(v_["HSINT"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["0"]):Int64(v_["N"])
             pb.xupper[ix_["U"*string(I)]] = 1.0
@@ -129,10 +128,10 @@ function READING9(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"P")
-        it,iet_,_ = s2x_ii( "ePROD2", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD2", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"P")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -140,29 +139,29 @@ function READING9(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["0"]):Int64(v_["N"])
             ename = "OE"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD2")
             arrset(ielftype, ie, iet_["ePROD2"])
             vname = "P"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
             posev = findfirst(x->x=="P",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             ename = "CE"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "P"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
             posev = findfirst(x->x=="P",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.2)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -189,6 +188,8 @@ function READING9(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["K2H"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION            -4.41677D-02   $ (n=500)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -202,6 +203,10 @@ function READING9(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-MN-V-V"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -266,7 +271,7 @@ function READING9(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

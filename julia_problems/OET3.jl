@@ -64,17 +64,17 @@ function OET3(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("U",ix_)
+        iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(1.0)
@@ -85,7 +85,7 @@ function OET3(action,args...)
             v_["-W"] = -1.0*v_["W"]
             v_["W**2"] = v_["W"]*v_["W"]
             v_["-W**2"] = -1.0*v_["W**2"]
-            ig,ig_,_ = s2x_ii("LO"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("LO"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"LO"*string(I))
             iv = ix_["U"]
@@ -96,7 +96,7 @@ function OET3(action,args...)
             pbm.A[ig,iv] += Float64(v_["-W"])
             iv = ix_["X3"]
             pbm.A[ig,iv] += Float64(v_["-W**2"])
-            ig,ig_,_ = s2x_ii("UP"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("UP"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"UP"*string(I))
             iv = ix_["U"]
@@ -132,8 +132,6 @@ function OET3(action,args...)
             pbm.gconst[ig_["LO"*string(I)]] = Float64(v_["-SINW"])
             pbm.gconst[ig_["UP"*string(I)]] = Float64(v_["SINW"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -159,7 +157,7 @@ function OET3(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

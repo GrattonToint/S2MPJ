@@ -22,6 +22,11 @@ function DIXCHLNV(action,args...)
 #    Number of variables
 #    (variable, but must be even and at least equal to 4)
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER     original value
+# IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -43,10 +48,6 @@ function DIXCHLNV(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE N                   100            $-PARAMETER     original value
-# IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
         v_["1"] = 1
         v_["2"] = 2
@@ -63,7 +64,7 @@ function DIXCHLNV(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -72,40 +73,40 @@ function DIXCHLNV(action,args...)
             v_["I+1"] = 1+I
             v_["I+2"] = 2+I
             v_["I+3"] = 3+I
-            ig,ig_,_ = s2x_ii("A"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("A"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             arrset(pbm.gscale,ig,Float64(0.01))
-            ig,ig_,_ = s2x_ii("B"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("C"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+3"]))]
             pbm.A[ig,iv] += Float64(1.0)
             arrset(pbm.gscale,ig,Float64(v_["1/90.0"]))
-            ig,ig_,_ = s2x_ii("D"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("D"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+2"]))]
             pbm.A[ig,iv] += Float64(1.0)
-            ig,ig_,_ = s2x_ii("E"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("E"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             arrset(pbm.gscale,ig,Float64(v_["1/10.1"]))
-            ig,ig_,_ = s2x_ii("F"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("F"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+3"]))]
             pbm.A[ig,iv] += Float64(1.0)
             arrset(pbm.gscale,ig,Float64(v_["1/10.1"]))
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(v_["1/19.8"]))
         end
         for I = Int64(v_["2"]):Int64(v_["2"]):Int64(v_["N"])
-            ig,ig_,_ = s2x_ii("P"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("P"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"P"*string(I))
         end
@@ -130,8 +131,6 @@ function DIXCHLNV(action,args...)
             pbm.gconst[ig_["E"*string(I)]] = Float64(1.0)
             pbm.gconst[ig_["F"*string(I)]] = Float64(1.0)
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(1.0e-8,pb.n)
         pb.xupper = fill(Inf,pb.n)
@@ -149,23 +148,23 @@ function DIXCHLNV(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"V")
-        it,iet_,_ = s2x_ii( "eS2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "eS2PR", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftv,it,2,"W")
-        it,iet_,_ = s2x_ii( "eLOGV", iet_)
+        it,iet_,_ = s2mpj_ii( "eLOGV", iet_)
         loaset(elftv,it,1,"V")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             ename = "XSQ"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -173,31 +172,31 @@ function DIXCHLNV(action,args...)
             v_["I+1"] = 1+I
             v_["I+3"] = 3+I
             ename = "PR"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eS2PR")
             arrset(ielftype, ie, iet_["eS2PR"])
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I+3"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "LOGX"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eLOGV")
             arrset(ielftype, ie, iet_["eLOGV"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.0e-8,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -241,6 +240,8 @@ function DIXCHLNV(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -254,6 +255,10 @@ function DIXCHLNV(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "SOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -362,7 +367,7 @@ function DIXCHLNV(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -102,15 +102,15 @@ function ROTDISC(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for k = Int64(v_["0"]):Int64(v_["K"])
-            iv,ix_,_ = s2x_ii("w"*string(k),ix_)
+            iv,ix_,_ = s2mpj_ii("w"*string(k),ix_)
             arrset(pb.xnames,iv,"w"*string(k))
-            iv,ix_,_ = s2x_ii("sigt"*string(k),ix_)
+            iv,ix_,_ = s2mpj_ii("sigt"*string(k),ix_)
             arrset(pb.xnames,iv,"sigt"*string(k))
-            iv,ix_,_ = s2x_ii("sigr"*string(k),ix_)
+            iv,ix_,_ = s2mpj_ii("sigr"*string(k),ix_)
             arrset(pb.xnames,iv,"sigr"*string(k))
-            iv,ix_,_ = s2x_ii("x"*string(k),ix_)
+            iv,ix_,_ = s2mpj_ii("x"*string(k),ix_)
             arrset(pb.xnames,iv,"x"*string(k))
-            iv,ix_,_ = s2x_ii("y"*string(k),ix_)
+            iv,ix_,_ = s2mpj_ii("y"*string(k),ix_)
             arrset(pb.xnames,iv,"y"*string(k))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -124,7 +124,7 @@ function ROTDISC(action,args...)
             v_["coef1"] = v_["aux3"]*v_["rk2"]
             v_["rk+1sq"] = v_["rk+1"]*v_["rk+1"]
             v_["coef2"] = v_["aux3"]*v_["rk+1sq"]
-            ig,ig_,_ = s2x_ii("SR"*string(k),ig_)
+            ig,ig_,_ = s2mpj_ii("SR"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"SR"*string(k))
             arrset(pbm.gscale,ig,Float64(v_["ech1"]))
@@ -136,7 +136,7 @@ function ROTDISC(action,args...)
             v_["tmp2"] = v_["(1+nu)/2"]*v_["rk+1"]
             v_["tmp3"] = v_["tmp1"]-v_["tmp2"]
             v_["coef3"] = v_["tmp3"]/v_["rk"]
-            ig,ig_,_ = s2x_ii("ST"*string(k),ig_)
+            ig,ig_,_ = s2mpj_ii("ST"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"ST"*string(k))
             iv = ix_["sigr"*string(k)]
@@ -159,14 +159,14 @@ function ROTDISC(action,args...)
             v_["coef6"] = v_["tmp12"]/v_["rk+1"]
             iv = ix_["sigt"*string(Int64(v_["k+1"]))]
             pbm.A[ig,iv] += Float64(v_["coef6"])
-            ig,ig_,_ = s2x_ii("STAy"*string(k),ig_)
+            ig,ig_,_ = s2mpj_ii("STAy"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"STAy"*string(k))
             iv = ix_["y"*string(Int64(v_["k+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["y"*string(k)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("STAx"*string(k),ig_)
+            ig,ig_,_ = s2mpj_ii("STAx"*string(k),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"STAx"*string(k))
             iv = ix_["x"*string(Int64(v_["k+1"]))]
@@ -188,7 +188,7 @@ function ROTDISC(action,args...)
         v_["aux4"] = v_["aux3"]*v_["pirho"]
         v_["coef1"] = v_["aux4"]*v_["ech3"]
         v_["-coef1"] = -1.0*v_["coef1"]
-        ig,ig_,_ = s2x_ii("WEIGHT",ig_)
+        ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["w"*string(Int64(v_["0"]))]
         pbm.A[ig,iv] += Float64(v_["-coef1"])
@@ -200,7 +200,7 @@ function ROTDISC(action,args...)
             v_["aux4"] = v_["aux3"]*v_["pirho"]
             v_["coef1"] = v_["aux4"]*v_["ech3"]
             v_["-coef1"] = -1.0*v_["coef1"]
-            ig,ig_,_ = s2x_ii("WEIGHT",ig_)
+            ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"WEIGHT")
             iv = ix_["w"*string(k)]
@@ -213,20 +213,20 @@ function ROTDISC(action,args...)
         v_["aux4"] = v_["pirho"]*v_["aux3"]
         v_["coef1"] = v_["aux4"]*v_["ech3"]
         v_["-coef1"] = -1.0*v_["coef1"]
-        ig,ig_,_ = s2x_ii("WEIGHT",ig_)
+        ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["w"*string(Int64(v_["K"]))]
         pbm.A[ig,iv] += Float64(v_["-coef1"])
         for k = Int64(v_["0"]):Int64(v_["K-1"])
             v_["k+1"] = 1+k
-            ig,ig_,_ = s2x_ii("SLOP"*string(k),ig_)
+            ig,ig_,_ = s2mpj_ii("SLOP"*string(k),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"SLOP"*string(k))
             iv = ix_["w"*string(Int64(v_["k+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["w"*string(k)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("SLOM"*string(k),ig_)
+            ig,ig_,_ = s2mpj_ii("SLOM"*string(k),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"SLOM"*string(k))
             iv = ix_["w"*string(Int64(v_["k+1"]))]
@@ -235,7 +235,7 @@ function ROTDISC(action,args...)
             pbm.A[ig,iv] += Float64(1.0)
         end
         v_["-sigmatA"] = -1.0*v_["sigmatA"]
-        ig,ig_,_ = s2x_ii("AVsigt",ig_)
+        ig,ig_,_ = s2mpj_ii("AVsigt",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"AVsigt")
         iv = ix_["y"*string(Int64(v_["K"]))]
@@ -282,8 +282,6 @@ function ROTDISC(action,args...)
             pbm.gconst[ig_["SLOP"*string(k)]] = Float64(v_["4dr"])
             pbm.gconst[ig_["SLOM"*string(k)]] = Float64(v_["4dr"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -4848,7 +4846,7 @@ function ROTDISC(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -4856,29 +4854,29 @@ function ROTDISC(action,args...)
         ielftype = Vector{Int64}()
         for k = Int64(v_["0"]):Int64(v_["K"])
             ename = "WSR"*string(k)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype, ie, iet_["en2PR"])
             vname = "w"*string(k)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "sigr"*string(k)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for k = Int64(v_["0"]):Int64(v_["K"])
             ename = "WST"*string(k)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PR")
             arrset(ielftype, ie, iet_["en2PR"])
             vname = "w"*string(k)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "sigt"*string(k)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -4922,6 +4920,7 @@ function ROTDISC(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 5.0
+# LO SOLUTION            7.872067544
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -4936,6 +4935,10 @@ function ROTDISC(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-RN-905-1081"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -4972,7 +4975,7 @@ function ROTDISC(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

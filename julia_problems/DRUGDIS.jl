@@ -27,11 +27,14 @@ function DRUGDIS(action,args...)
 #    Optimal Control Applications and Methods 13, pp. 43-55, 1992.
 # 
 #    SIF input: Ph. Toint, Nov 1993.
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "LOR2-MN-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
+#       Alternative values for the SIF file parameters:
+# IE NI                  10             $-PARAMETER n=  34, m= 20 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,7 +56,6 @@ function DRUGDIS(action,args...)
         else
             v_["NI"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
 # IE NI                  50             $-PARAMETER n= 154, m=100 
 # IE NI                  100            $-PARAMETER n= 304, m=200  original value
 # IE NI                  200            $-PARAMETER n= 604, m=400 
@@ -95,32 +97,32 @@ function DRUGDIS(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("TF",ix_)
+        iv,ix_,_ = s2mpj_ii("TF",ix_)
         arrset(pb.xnames,iv,"TF")
         arrset(xscale,iv,200.0)
         for I = Int64(v_["0"]):Int64(v_["NI"])
-            iv,ix_,_ = s2x_ii("W"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("W"*string(I),ix_)
             arrset(pb.xnames,iv,"W"*string(I))
             arrset(xscale,iv,0.02)
         end
         for I = Int64(v_["0"]):Int64(v_["NI"])
-            iv,ix_,_ = s2x_ii("P"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
             arrset(pb.xnames,iv,"P"*string(I))
         end
         for I = Int64(v_["0"]):Int64(v_["NI"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("TFINAL",ig_)
+        ig,ig_,_ = s2mpj_ii("TFINAL",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["TF"]
         pbm.A[ig,iv] += Float64(1.0)
         arrset(pbm.gscale,ig,Float64(100.0))
         for I = Int64(v_["0"]):Int64(v_["NI-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("EW"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("EW"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EW"*string(I))
             iv = ix_["W"*string(Int64(v_["I+1"]))]
@@ -128,7 +130,7 @@ function DRUGDIS(action,args...)
             iv = ix_["W"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
             arrset(pbm.gscale,ig,Float64(0.02))
-            ig,ig_,_ = s2x_ii("EP"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("EP"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EP"*string(I))
             iv = ix_["P"*string(Int64(v_["I+1"]))]
@@ -149,10 +151,8 @@ function DRUGDIS(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["TF"]] = 200.0
         for I = Int64(v_["0"]):Int64(v_["NI"])
@@ -187,12 +187,12 @@ function DRUGDIS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEW", iet_)
+        it,iet_,_ = s2mpj_ii( "eEW", iet_)
         loaset(elftv,it,1,"T")
         loaset(elftv,it,2,"W")
         loaset(elftv,it,3,"P")
         loaset(elftv,it,4,"U")
-        it,iet_,_ = s2x_ii( "eEP", iet_)
+        it,iet_,_ = s2mpj_ii( "eEP", iet_)
         loaset(elftv,it,1,"T")
         loaset(elftv,it,2,"W")
         loaset(elftv,it,3,"P")
@@ -202,43 +202,43 @@ function DRUGDIS(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["0"]):Int64(v_["NI"])
             ename = "WA"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEW")
             arrset(ielftype, ie, iet_["eEW"])
             vname = "TF"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "W"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "P"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="P",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "PA"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEP")
             arrset(ielftype, ie, iet_["eEP"])
             vname = "TF"
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "W"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="W",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "P"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="P",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -269,6 +269,14 @@ function DRUGDIS(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 200.0
+#    Solution
+# LO SOLTN(10)           3.82432
+# LO SOLTN(50)           4.19953
+# LO SOLTN(100)          4.23934
+# LO SOLTN(200)          4.25762
+# LO SOLTN(500)
+# LO SOLTN(1000)
+# LO SOLTN(Maurer)       2.62637
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -293,6 +301,10 @@ function DRUGDIS(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -456,7 +468,7 @@ function DRUGDIS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [5,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -21,6 +21,11 @@ function MANNE(action,args...)
 #    Number of periods
 #    The number of variables in the problem N = 3*T
 # 
+#       Alternative values for the SIF file parameters:
+# IE T                   100            $-PARAMETER n = 300    original value
+# IE T                   365            $-PARAMETER n = 995
+# IE T                   1000           $-PARAMETER n = 3000
+# IE T                   2000           $-PARAMETER n = 6000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -42,11 +47,6 @@ function MANNE(action,args...)
         else
             v_["T"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE T                   100            $-PARAMETER n = 300    original value
-# IE T                   365            $-PARAMETER n = 995
-# IE T                   1000           $-PARAMETER n = 3000
-# IE T                   2000           $-PARAMETER n = 6000
         v_["GROW"] = 0.03
         v_["BETA"] = 0.95
         v_["XK0"] = 3.0
@@ -84,19 +84,19 @@ function MANNE(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["T"])
-            iv,ix_,_ = s2x_ii("C"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("C"*string(I),ix_)
             arrset(pb.xnames,iv,"C"*string(I))
-            iv,ix_,_ = s2x_ii("I"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("I"*string(I),ix_)
             arrset(pb.xnames,iv,"I"*string(I))
-            iv,ix_,_ = s2x_ii("K"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("K"*string(I),ix_)
             arrset(pb.xnames,iv,"K"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["T"])
-            ig,ig_,_ = s2x_ii("NL"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("NL"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"NL"*string(I))
             iv = ix_["C"*string(I)]
@@ -106,7 +106,7 @@ function MANNE(action,args...)
         end
         for I = Int64(v_["1"]):Int64(v_["T-1"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("L"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("L"*string(I),ig_)
             arrset(gtype,ig,"<=")
             arrset(pb.cnames,ig,"L"*string(I))
             iv = ix_["K"*string(Int64(v_["I+1"]))]
@@ -116,12 +116,12 @@ function MANNE(action,args...)
             iv = ix_["I"*string(I)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("L"*string(Int64(v_["T"])),ig_)
+        ig,ig_,_ = s2mpj_ii("L"*string(Int64(v_["T"])),ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L"*string(Int64(v_["T"])))
         iv = ix_["K"*string(Int64(v_["T"]))]
         pbm.A[ig,iv] += Float64(v_["GROW"])
-        ig,ig_,_ = s2x_ii("L"*string(Int64(v_["T"])),ig_)
+        ig,ig_,_ = s2mpj_ii("L"*string(Int64(v_["T"])),ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L"*string(Int64(v_["T"])))
         iv = ix_["I"*string(Int64(v_["T"]))]
@@ -143,10 +143,8 @@ function MANNE(action,args...)
         grange = Vector{Float64}(undef,ngrp)
         grange[legrps,1] = fill(Inf,pb.nle)
         grange[gegrps,1] = fill(Inf,pb.nge)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["K1"]] = 3.05
         pb.xupper[ix_["K1"]] = 3.05
@@ -194,9 +192,9 @@ function MANNE(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eLOGS", iet_)
+        it,iet_,_ = s2mpj_ii( "eLOGS", iet_)
         loaset(elftv,it,1,"C")
-        it,iet_,_ = s2x_ii( "ePOWER", iet_)
+        it,iet_,_ = s2mpj_ii( "ePOWER", iet_)
         loaset(elftv,it,1,"K")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"B")
@@ -205,19 +203,19 @@ function MANNE(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["T"])
             ename = "LOGC"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eLOGS")
             arrset(ielftype, ie, iet_["eLOGS"])
             vname = "C"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="C",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "KS"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePOWER")
             arrset(ielftype, ie, iet_["ePOWER"])
             vname = "K"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="K",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="B",elftp[ielftype[ie]])
@@ -241,6 +239,8 @@ function MANNE(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["AT"*string(I)]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -9.7457259D-01
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -256,6 +256,10 @@ function MANNE(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -315,7 +319,7 @@ function MANNE(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

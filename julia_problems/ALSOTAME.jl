@@ -36,19 +36,19 @@ function ALSOTAME(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("x",ix_)
+        iv,ix_,_ = s2mpj_ii("x",ix_)
         arrset(pb.xnames,iv,"x")
-        iv,ix_,_ = s2x_ii("y",ix_)
+        iv,ix_,_ = s2mpj_ii("y",ix_)
         arrset(pb.xnames,iv,"y")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("Object",ig_)
+        ig,ig_,_ = s2mpj_ii("Object",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["x"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["y"]
         pbm.A[ig,iv] += Float64(-2.0)
-        ig,ig_,_ = s2x_ii("Constr",ig_)
+        ig,ig_,_ = s2mpj_ii("Constr",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"Constr")
         iv = ix_["x"]
@@ -71,10 +71,8 @@ function ALSOTAME(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["Constr"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["x"]] = -2.0
         pb.xupper[ix_["x"]] = 2.0
@@ -82,8 +80,8 @@ function ALSOTAME(action,args...)
         pb.xupper[ix_["y"]] = 1.5
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gEXPN",igt_)
-        it,igt_,_ = s2x_ii("gSINE",igt_)
+        it,igt_,_ = s2mpj_ii("gEXPN",igt_)
+        it,igt_,_ = s2mpj_ii("gSINE",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -163,7 +161,7 @@ function ALSOTAME(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

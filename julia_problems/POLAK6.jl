@@ -38,23 +38,23 @@ function POLAK6(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
-        iv,ix_,_ = s2x_ii("X4",ix_)
+        iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
-        iv,ix_,_ = s2x_ii("U",ix_)
+        iv,ix_,_ = s2mpj_ii("U",ix_)
         arrset(pb.xnames,iv,"U")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("F1",ig_)
+        ig,ig_,_ = s2mpj_ii("F1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F1")
         iv = ix_["U"]
@@ -67,7 +67,7 @@ function POLAK6(action,args...)
         pbm.A[ig,iv] += Float64(-21.0)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(7.0)
-        ig,ig_,_ = s2x_ii("F2",ig_)
+        ig,ig_,_ = s2mpj_ii("F2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F2")
         iv = ix_["U"]
@@ -80,7 +80,7 @@ function POLAK6(action,args...)
         pbm.A[ig,iv] += Float64(-11.0)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(-3.0)
-        ig,ig_,_ = s2x_ii("F3",ig_)
+        ig,ig_,_ = s2mpj_ii("F3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F3")
         iv = ix_["U"]
@@ -93,7 +93,7 @@ function POLAK6(action,args...)
         pbm.A[ig,iv] += Float64(-21.0)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(-3.0)
-        ig,ig_,_ = s2x_ii("F4",ig_)
+        ig,ig_,_ = s2mpj_ii("F4",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"F4")
         iv = ix_["U"]
@@ -124,93 +124,91 @@ function POLAK6(action,args...)
         pbm.gconst[ig_["F2"]] = Float64(80.0)
         pbm.gconst[ig_["F3"]] = Float64(100.0)
         pbm.gconst[ig_["F4"]] = Float64(50.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"XX")
-        it,iet_,_ = s2x_ii( "eEL42", iet_)
+        it,iet_,_ = s2mpj_ii( "eEL42", iet_)
         loaset(elftv,it,1,"XX")
         loaset(elftv,it,2,"YY")
-        it,iet_,_ = s2x_ii( "eEL442", iet_)
+        it,iet_,_ = s2mpj_ii( "eEL442", iet_)
         loaset(elftv,it,1,"XX")
         loaset(elftv,it,2,"YY")
         loaset(elftv,it,3,"ZZ")
-        it,iet_,_ = s2x_ii( "eEL4", iet_)
+        it,iet_,_ = s2mpj_ii( "eEL4", iet_)
         loaset(elftv,it,1,"XX")
-        it,iet_,_ = s2x_ii( "eEL44", iet_)
+        it,iet_,_ = s2mpj_ii( "eEL44", iet_)
         loaset(elftv,it,1,"XX")
         loaset(elftv,it,2,"YY")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEL42")
         arrset(ielftype, ie, iet_["eEL42"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEL442")
         arrset(ielftype, ie, iet_["eEL442"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="ZZ",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEL4")
         arrset(ielftype, ie, iet_["eEL4"])
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E4"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEL44")
         arrset(ielftype, ie, iet_["eEL44"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "X3SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "X4SQ"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -307,6 +305,8 @@ function POLAK6(action,args...)
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(15.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution at ( 0, 1, 2, -1 )
+# LO SOLTN               -44.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -320,6 +320,10 @@ function POLAK6(action,args...)
         pb.pbclass = "LOR2-AN-5-4"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -483,7 +487,7 @@ function POLAK6(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

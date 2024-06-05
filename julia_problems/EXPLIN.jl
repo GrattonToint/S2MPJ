@@ -13,6 +13,14 @@ function EXPLIN(action,args...)
 # 
 #    classification = "OBR2-AN-V-V"
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   12             $-PARAMETER
+# IE M                   6              $-PARAMETER
+# 
+# IE N                   120            $-PARAMETER     original value
+# IE M                   10             $-PARAMETER     original value
+# 
+# IE N                   1200           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -35,15 +43,10 @@ function EXPLIN(action,args...)
             v_["N"] = Int64(args[1]);
         end
         if nargin<2
-            v_["M"] = Int64(6);  #  SIF file default value
+            v_["M"] = Int64(100);  #  SIF file default value
         else
             v_["M"] = Int64(args[2]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   120            $-PARAMETER     original value
-# IE M                   10             $-PARAMETER     original value
-# IE N                   1200           $-PARAMETER
-# IE M                   100            $-PARAMETER
         v_["0"] = 0
         v_["1"] = 1
         v_["2"] = 2
@@ -52,7 +55,7 @@ function EXPLIN(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -60,7 +63,7 @@ function EXPLIN(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["RI"] = Float64(I)
             v_["C"] = - 10.0*v_["RI"]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(v_["C"])
@@ -72,17 +75,15 @@ function EXPLIN(action,args...)
         pb.m        = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = fill(10.0,pb.n)
-        pb.xlower =  -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eEXP", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXP", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -91,17 +92,17 @@ function EXPLIN(action,args...)
         for I = Int64(v_["1"]):Int64(v_["M"])
             v_["I+1"] = I+v_["1"]
             ename = "E"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eEXP")
                 arrset(ielftype,ie,iet_["eEXP"])
             end
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,10.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,10.0,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,10.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,10.0,nothing)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -118,6 +119,7 @@ function EXPLIN(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -127,6 +129,10 @@ function EXPLIN(action,args...)
         pb.pbclass = "OBR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -166,7 +172,7 @@ function EXPLIN(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

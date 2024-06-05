@@ -103,29 +103,29 @@ function TRUSPYR2(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["NBAR"])
-            iv,ix_,_ = s2x_ii("XAREA"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("XAREA"*string(J),ix_)
             arrset(pb.xnames,iv,"XAREA"*string(J))
         end
         for I = Int64(v_["1"]):Int64(v_["NDIM"])
-            iv,ix_,_ = s2x_ii("DISPL"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("DISPL"*string(I),ix_)
             arrset(pb.xnames,iv,"DISPL"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["NBAR"])
-            ig,ig_,_ = s2x_ii("WEIGHT",ig_)
+            ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["XAREA"*string(J)]
             pbm.A[ig,iv] += Float64(v_["W"*string(J)])
         end
         for K = Int64(v_["1"]):Int64(v_["NDIM"])
-            ig,ig_,_ = s2x_ii("EQUIL"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("EQUIL"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"EQUIL"*string(K))
         end
         for I = Int64(v_["1"]):Int64(v_["NDIM"])
             for J = Int64(v_["1"]):Int64(v_["NBAR"])
-                ig,ig_,_ = s2x_ii("STRES"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("STRES"*string(J),ig_)
                 arrset(gtype,ig,"<=")
                 arrset(pb.cnames,ig,"STRES"*string(J))
                 iv = ix_["DISPL"*string(I)]
@@ -153,10 +153,8 @@ function TRUSPYR2(action,args...)
         for J = Int64(v_["1"]):Int64(v_["NBAR"])
             pbm.gconst[ig_["STRES"*string(J)]] = Float64(v_["STRUP"*string(J)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for J = Int64(v_["1"]):Int64(v_["NBAR"])
             pb.xlower[ix_["XAREA"*string(J)]] = 1.0
@@ -168,7 +166,7 @@ function TRUSPYR2(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "en2PR", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PR", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -177,15 +175,15 @@ function TRUSPYR2(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NDIM"])
             for J = Int64(v_["1"]):Int64(v_["NBAR"])
                 ename = "UX"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"en2PR")
                 arrset(ielftype, ie, iet_["en2PR"])
                 vname = "DISPL"*string(I)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "XAREA"*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -207,6 +205,7 @@ function TRUSPYR2(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Objective function value corresponding to the local minimizer above
         pb.objlower = 1.2287408808
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -223,6 +222,10 @@ function TRUSPYR2(action,args...)
         pb.pbclass = "LQR2-MN-11-11"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -259,7 +262,7 @@ function TRUSPYR2(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

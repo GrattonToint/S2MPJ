@@ -24,6 +24,12 @@ function HADAMALS(action,args...)
 # IE N                   4              $-PARAMETER
 # IE N                   6              $-PARAMETER
 # IE N                   8              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   12             $-PARAMETER
+# IE N                   14             $-PARAMETER
+# IE N                   16             $-PARAMETER
+# IE N                   18             $-PARAMETER
+# IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -45,11 +51,6 @@ function HADAMALS(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   12             $-PARAMETER
-# IE N                   14             $-PARAMETER
-# IE N                   16             $-PARAMETER
-# IE N                   18             $-PARAMETER
-# IE N                   20             $-PARAMETER
 # IE N                   32             $-PARAMETER
 # IE N                   64             $-PARAMETER
 # IE N                   128            $-PARAMETER
@@ -66,7 +67,7 @@ function HADAMALS(action,args...)
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["N"])
-                iv,ix_,_ = s2x_ii("Q"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Q"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Q"*string(I)*","*string(J))
             end
         end
@@ -74,13 +75,13 @@ function HADAMALS(action,args...)
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(J)
-                ig,ig_,_ = s2x_ii("O"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("O"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
             end
         end
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["2"]):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("S"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
             end
         end
@@ -99,8 +100,6 @@ function HADAMALS(action,args...)
                 pbm.gconst[ig_["S"*string(I)*","*string(J)]] = Float64(1.0)
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-1.0,pb.n)
         pb.xupper = fill(1.0,pb.n)
@@ -125,9 +124,9 @@ function HADAMALS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQR", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQR", iet_)
         loaset(elftv,it,1,"Q1")
-        it,iet_,_ = s2x_ii( "en2PROD", iet_)
+        it,iet_,_ = s2mpj_ii( "en2PROD", iet_)
         loaset(elftv,it,1,"Q1")
         loaset(elftv,it,2,"Q2")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -137,15 +136,15 @@ function HADAMALS(action,args...)
             for I = Int64(v_["1"]):Int64(J)
                 for K = Int64(v_["1"]):Int64(v_["N"])
                     ename = "O"*string(I)*","*string(J)*","*string(K)
-                    ie,ie_,_  = s2x_ii(ename,ie_)
+                    ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PROD")
                     arrset(ielftype, ie, iet_["en2PROD"])
                     vname = "Q"*string(K)*","*string(I)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
                     posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "Q"*string(K)*","*string(J)
-                    iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
                     posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -154,19 +153,19 @@ function HADAMALS(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["2"]):Int64(v_["N"])
                 ename = "S"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQR")
                 arrset(ielftype, ie, iet_["eSQR"])
                 vname = "Q"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
                 posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
-        it,igt_,_ = s2x_ii("gLARGEL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gLARGEL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -310,7 +309,7 @@ function HADAMALS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,1]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

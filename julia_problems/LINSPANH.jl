@@ -39,10 +39,10 @@ function LINSPANH(action,args...)
         v_["1"] = 1
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["NODES"])
-            ig,ig_,_ = s2x_ii("N"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("N"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"N"*string(I))
         end
@@ -51,587 +51,587 @@ function LINSPANH(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         ngrp   = length(ig_)
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         ig = ig_["OBJ"]
         pbm.A[ig,iv] += Float64(-1.0)
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N1"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N2"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N3"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X4",ix_)
+        iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N4"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X5",ix_)
+        iv,ix_,_ = s2mpj_ii("X5",ix_)
         arrset(pb.xnames,iv,"X5")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N5"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X6",ix_)
+        iv,ix_,_ = s2mpj_ii("X6",ix_)
         arrset(pb.xnames,iv,"X6")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N6"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X7",ix_)
+        iv,ix_,_ = s2mpj_ii("X7",ix_)
         arrset(pb.xnames,iv,"X7")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N7"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X8",ix_)
+        iv,ix_,_ = s2mpj_ii("X8",ix_)
         arrset(pb.xnames,iv,"X8")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N8"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X9",ix_)
+        iv,ix_,_ = s2mpj_ii("X9",ix_)
         arrset(pb.xnames,iv,"X9")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X10",ix_)
+        iv,ix_,_ = s2mpj_ii("X10",ix_)
         arrset(pb.xnames,iv,"X10")
         ig = ig_["N32"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N10"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X11",ix_)
+        iv,ix_,_ = s2mpj_ii("X11",ix_)
         arrset(pb.xnames,iv,"X11")
         ig = ig_["N1"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N2"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X12",ix_)
+        iv,ix_,_ = s2mpj_ii("X12",ix_)
         arrset(pb.xnames,iv,"X12")
         ig = ig_["N2"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N3"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X13",ix_)
+        iv,ix_,_ = s2mpj_ii("X13",ix_)
         arrset(pb.xnames,iv,"X13")
         ig = ig_["N3"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N5"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X14",ix_)
+        iv,ix_,_ = s2mpj_ii("X14",ix_)
         arrset(pb.xnames,iv,"X14")
         ig = ig_["N4"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N5"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X15",ix_)
+        iv,ix_,_ = s2mpj_ii("X15",ix_)
         arrset(pb.xnames,iv,"X15")
         ig = ig_["N5"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X16",ix_)
+        iv,ix_,_ = s2mpj_ii("X16",ix_)
         arrset(pb.xnames,iv,"X16")
         ig = ig_["N6"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N7"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X17",ix_)
+        iv,ix_,_ = s2mpj_ii("X17",ix_)
         arrset(pb.xnames,iv,"X17")
         ig = ig_["N7"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N8"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X18",ix_)
+        iv,ix_,_ = s2mpj_ii("X18",ix_)
         arrset(pb.xnames,iv,"X18")
         ig = ig_["N8"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X19",ix_)
+        iv,ix_,_ = s2mpj_ii("X19",ix_)
         arrset(pb.xnames,iv,"X19")
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N10"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X20",ix_)
+        iv,ix_,_ = s2mpj_ii("X20",ix_)
         arrset(pb.xnames,iv,"X20")
         ig = ig_["N10"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N31"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X21",ix_)
+        iv,ix_,_ = s2mpj_ii("X21",ix_)
         arrset(pb.xnames,iv,"X21")
         ig = ig_["N1"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N2"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X22",ix_)
+        iv,ix_,_ = s2mpj_ii("X22",ix_)
         arrset(pb.xnames,iv,"X22")
         ig = ig_["N2"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N3"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X23",ix_)
+        iv,ix_,_ = s2mpj_ii("X23",ix_)
         arrset(pb.xnames,iv,"X23")
         ig = ig_["N3"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X24",ix_)
+        iv,ix_,_ = s2mpj_ii("X24",ix_)
         arrset(pb.xnames,iv,"X24")
         ig = ig_["N4"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X25",ix_)
+        iv,ix_,_ = s2mpj_ii("X25",ix_)
         arrset(pb.xnames,iv,"X25")
         ig = ig_["N6"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N7"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X26",ix_)
+        iv,ix_,_ = s2mpj_ii("X26",ix_)
         arrset(pb.xnames,iv,"X26")
         ig = ig_["N7"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N8"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X27",ix_)
+        iv,ix_,_ = s2mpj_ii("X27",ix_)
         arrset(pb.xnames,iv,"X27")
         ig = ig_["N8"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X28",ix_)
+        iv,ix_,_ = s2mpj_ii("X28",ix_)
         arrset(pb.xnames,iv,"X28")
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N10"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X29",ix_)
+        iv,ix_,_ = s2mpj_ii("X29",ix_)
         arrset(pb.xnames,iv,"X29")
         ig = ig_["N10"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N31"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X30",ix_)
+        iv,ix_,_ = s2mpj_ii("X30",ix_)
         arrset(pb.xnames,iv,"X30")
         ig = ig_["N1"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N11"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X31",ix_)
+        iv,ix_,_ = s2mpj_ii("X31",ix_)
         arrset(pb.xnames,iv,"X31")
         ig = ig_["N2"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N12"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X32",ix_)
+        iv,ix_,_ = s2mpj_ii("X32",ix_)
         arrset(pb.xnames,iv,"X32")
         ig = ig_["N3"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N13"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X33",ix_)
+        iv,ix_,_ = s2mpj_ii("X33",ix_)
         arrset(pb.xnames,iv,"X33")
         ig = ig_["N4"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N14"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X34",ix_)
+        iv,ix_,_ = s2mpj_ii("X34",ix_)
         arrset(pb.xnames,iv,"X34")
         ig = ig_["N5"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N15"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X35",ix_)
+        iv,ix_,_ = s2mpj_ii("X35",ix_)
         arrset(pb.xnames,iv,"X35")
         ig = ig_["N6"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N16"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X36",ix_)
+        iv,ix_,_ = s2mpj_ii("X36",ix_)
         arrset(pb.xnames,iv,"X36")
         ig = ig_["N7"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N17"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X37",ix_)
+        iv,ix_,_ = s2mpj_ii("X37",ix_)
         arrset(pb.xnames,iv,"X37")
         ig = ig_["N8"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N18"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X38",ix_)
+        iv,ix_,_ = s2mpj_ii("X38",ix_)
         arrset(pb.xnames,iv,"X38")
         ig = ig_["N9"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X39",ix_)
+        iv,ix_,_ = s2mpj_ii("X39",ix_)
         arrset(pb.xnames,iv,"X39")
         ig = ig_["N10"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N20"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X40",ix_)
+        iv,ix_,_ = s2mpj_ii("X40",ix_)
         arrset(pb.xnames,iv,"X40")
         ig = ig_["N11"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N12"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X41",ix_)
+        iv,ix_,_ = s2mpj_ii("X41",ix_)
         arrset(pb.xnames,iv,"X41")
         ig = ig_["N12"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N13"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X42",ix_)
+        iv,ix_,_ = s2mpj_ii("X42",ix_)
         arrset(pb.xnames,iv,"X42")
         ig = ig_["N13"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N15"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X43",ix_)
+        iv,ix_,_ = s2mpj_ii("X43",ix_)
         arrset(pb.xnames,iv,"X43")
         ig = ig_["N14"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N15"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X44",ix_)
+        iv,ix_,_ = s2mpj_ii("X44",ix_)
         arrset(pb.xnames,iv,"X44")
         ig = ig_["N15"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X45",ix_)
+        iv,ix_,_ = s2mpj_ii("X45",ix_)
         arrset(pb.xnames,iv,"X45")
         ig = ig_["N16"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N17"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X46",ix_)
+        iv,ix_,_ = s2mpj_ii("X46",ix_)
         arrset(pb.xnames,iv,"X46")
         ig = ig_["N17"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N18"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X47",ix_)
+        iv,ix_,_ = s2mpj_ii("X47",ix_)
         arrset(pb.xnames,iv,"X47")
         ig = ig_["N18"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X48",ix_)
+        iv,ix_,_ = s2mpj_ii("X48",ix_)
         arrset(pb.xnames,iv,"X48")
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N20"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X49",ix_)
+        iv,ix_,_ = s2mpj_ii("X49",ix_)
         arrset(pb.xnames,iv,"X49")
         ig = ig_["N20"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N31"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X50",ix_)
+        iv,ix_,_ = s2mpj_ii("X50",ix_)
         arrset(pb.xnames,iv,"X50")
         ig = ig_["N11"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N12"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X51",ix_)
+        iv,ix_,_ = s2mpj_ii("X51",ix_)
         arrset(pb.xnames,iv,"X51")
         ig = ig_["N12"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N13"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X52",ix_)
+        iv,ix_,_ = s2mpj_ii("X52",ix_)
         arrset(pb.xnames,iv,"X52")
         ig = ig_["N13"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X53",ix_)
+        iv,ix_,_ = s2mpj_ii("X53",ix_)
         arrset(pb.xnames,iv,"X53")
         ig = ig_["N14"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X54",ix_)
+        iv,ix_,_ = s2mpj_ii("X54",ix_)
         arrset(pb.xnames,iv,"X54")
         ig = ig_["N16"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N17"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X55",ix_)
+        iv,ix_,_ = s2mpj_ii("X55",ix_)
         arrset(pb.xnames,iv,"X55")
         ig = ig_["N17"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N18"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X56",ix_)
+        iv,ix_,_ = s2mpj_ii("X56",ix_)
         arrset(pb.xnames,iv,"X56")
         ig = ig_["N18"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X57",ix_)
+        iv,ix_,_ = s2mpj_ii("X57",ix_)
         arrset(pb.xnames,iv,"X57")
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N20"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X58",ix_)
+        iv,ix_,_ = s2mpj_ii("X58",ix_)
         arrset(pb.xnames,iv,"X58")
         ig = ig_["N20"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N31"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X59",ix_)
+        iv,ix_,_ = s2mpj_ii("X59",ix_)
         arrset(pb.xnames,iv,"X59")
         ig = ig_["N11"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N21"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X60",ix_)
+        iv,ix_,_ = s2mpj_ii("X60",ix_)
         arrset(pb.xnames,iv,"X60")
         ig = ig_["N12"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N22"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X61",ix_)
+        iv,ix_,_ = s2mpj_ii("X61",ix_)
         arrset(pb.xnames,iv,"X61")
         ig = ig_["N13"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N23"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X62",ix_)
+        iv,ix_,_ = s2mpj_ii("X62",ix_)
         arrset(pb.xnames,iv,"X62")
         ig = ig_["N14"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N24"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X63",ix_)
+        iv,ix_,_ = s2mpj_ii("X63",ix_)
         arrset(pb.xnames,iv,"X63")
         ig = ig_["N15"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N25"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X64",ix_)
+        iv,ix_,_ = s2mpj_ii("X64",ix_)
         arrset(pb.xnames,iv,"X64")
         ig = ig_["N16"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N26"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X65",ix_)
+        iv,ix_,_ = s2mpj_ii("X65",ix_)
         arrset(pb.xnames,iv,"X65")
         ig = ig_["N17"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N27"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X66",ix_)
+        iv,ix_,_ = s2mpj_ii("X66",ix_)
         arrset(pb.xnames,iv,"X66")
         ig = ig_["N18"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N28"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X67",ix_)
+        iv,ix_,_ = s2mpj_ii("X67",ix_)
         arrset(pb.xnames,iv,"X67")
         ig = ig_["N19"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X68",ix_)
+        iv,ix_,_ = s2mpj_ii("X68",ix_)
         arrset(pb.xnames,iv,"X68")
         ig = ig_["N20"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N30"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X69",ix_)
+        iv,ix_,_ = s2mpj_ii("X69",ix_)
         arrset(pb.xnames,iv,"X69")
         ig = ig_["N21"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N22"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X70",ix_)
+        iv,ix_,_ = s2mpj_ii("X70",ix_)
         arrset(pb.xnames,iv,"X70")
         ig = ig_["N22"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N23"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X71",ix_)
+        iv,ix_,_ = s2mpj_ii("X71",ix_)
         arrset(pb.xnames,iv,"X71")
         ig = ig_["N23"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N25"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X72",ix_)
+        iv,ix_,_ = s2mpj_ii("X72",ix_)
         arrset(pb.xnames,iv,"X72")
         ig = ig_["N24"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N25"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X73",ix_)
+        iv,ix_,_ = s2mpj_ii("X73",ix_)
         arrset(pb.xnames,iv,"X73")
         ig = ig_["N25"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X74",ix_)
+        iv,ix_,_ = s2mpj_ii("X74",ix_)
         arrset(pb.xnames,iv,"X74")
         ig = ig_["N26"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N27"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X75",ix_)
+        iv,ix_,_ = s2mpj_ii("X75",ix_)
         arrset(pb.xnames,iv,"X75")
         ig = ig_["N27"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N28"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X76",ix_)
+        iv,ix_,_ = s2mpj_ii("X76",ix_)
         arrset(pb.xnames,iv,"X76")
         ig = ig_["N28"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X77",ix_)
+        iv,ix_,_ = s2mpj_ii("X77",ix_)
         arrset(pb.xnames,iv,"X77")
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N30"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X78",ix_)
+        iv,ix_,_ = s2mpj_ii("X78",ix_)
         arrset(pb.xnames,iv,"X78")
         ig = ig_["N30"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N31"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X79",ix_)
+        iv,ix_,_ = s2mpj_ii("X79",ix_)
         arrset(pb.xnames,iv,"X79")
         ig = ig_["N21"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N22"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X80",ix_)
+        iv,ix_,_ = s2mpj_ii("X80",ix_)
         arrset(pb.xnames,iv,"X80")
         ig = ig_["N22"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N23"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X81",ix_)
+        iv,ix_,_ = s2mpj_ii("X81",ix_)
         arrset(pb.xnames,iv,"X81")
         ig = ig_["N23"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X82",ix_)
+        iv,ix_,_ = s2mpj_ii("X82",ix_)
         arrset(pb.xnames,iv,"X82")
         ig = ig_["N24"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X83",ix_)
+        iv,ix_,_ = s2mpj_ii("X83",ix_)
         arrset(pb.xnames,iv,"X83")
         ig = ig_["N26"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N27"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X84",ix_)
+        iv,ix_,_ = s2mpj_ii("X84",ix_)
         arrset(pb.xnames,iv,"X84")
         ig = ig_["N27"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N28"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X85",ix_)
+        iv,ix_,_ = s2mpj_ii("X85",ix_)
         arrset(pb.xnames,iv,"X85")
         ig = ig_["N28"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X86",ix_)
+        iv,ix_,_ = s2mpj_ii("X86",ix_)
         arrset(pb.xnames,iv,"X86")
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N30"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X87",ix_)
+        iv,ix_,_ = s2mpj_ii("X87",ix_)
         arrset(pb.xnames,iv,"X87")
         ig = ig_["N30"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N31"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X88",ix_)
+        iv,ix_,_ = s2mpj_ii("X88",ix_)
         arrset(pb.xnames,iv,"X88")
         ig = ig_["N21"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X89",ix_)
+        iv,ix_,_ = s2mpj_ii("X89",ix_)
         arrset(pb.xnames,iv,"X89")
         ig = ig_["N22"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X90",ix_)
+        iv,ix_,_ = s2mpj_ii("X90",ix_)
         arrset(pb.xnames,iv,"X90")
         ig = ig_["N23"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X91",ix_)
+        iv,ix_,_ = s2mpj_ii("X91",ix_)
         arrset(pb.xnames,iv,"X91")
         ig = ig_["N24"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X92",ix_)
+        iv,ix_,_ = s2mpj_ii("X92",ix_)
         arrset(pb.xnames,iv,"X92")
         ig = ig_["N25"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X93",ix_)
+        iv,ix_,_ = s2mpj_ii("X93",ix_)
         arrset(pb.xnames,iv,"X93")
         ig = ig_["N26"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X94",ix_)
+        iv,ix_,_ = s2mpj_ii("X94",ix_)
         arrset(pb.xnames,iv,"X94")
         ig = ig_["N27"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X95",ix_)
+        iv,ix_,_ = s2mpj_ii("X95",ix_)
         arrset(pb.xnames,iv,"X95")
         ig = ig_["N28"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X96",ix_)
+        iv,ix_,_ = s2mpj_ii("X96",ix_)
         arrset(pb.xnames,iv,"X96")
         ig = ig_["N29"]
         pbm.A[ig,iv] += Float64(-1.0)
         ig = ig_["N33"]
         pbm.A[ig,iv] += Float64(1.0)
-        iv,ix_,_ = s2x_ii("X97",ix_)
+        iv,ix_,_ = s2mpj_ii("X97",ix_)
         arrset(pb.xnames,iv,"X97")
         ig = ig_["N30"]
         pbm.A[ig,iv] += Float64(-1.0)
@@ -676,11 +676,9 @@ function LINSPANH(action,args...)
         pbm.gconst[ig_["N31"]] = Float64(6.08350e+02)
         pbm.gconst[ig_["N32"]] = Float64(-4.62634e+03)
         pbm.gconst[ig_["N33"]] = Float64(4.36300e+03)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xupper = fill(3.02400e+03,pb.n)
-        pb.xlower =  -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X1"]] = 7.70000e+01
         pb.xupper[ix_["X1"]] = 7.70100e+01
         pb.xlower[ix_["X2"]] = 1.12452e+03
@@ -1109,6 +1107,8 @@ function LINSPANH(action,args...)
             pb.y0[findfirst(x->x==ig_["X97"],pbm.congrps)] = Float64(2.52000e+02)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN                77.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -1130,7 +1130,7 @@ function LINSPANH(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

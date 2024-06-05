@@ -26,6 +26,13 @@ function CHEMRCTA(action,args...)
 #    Number of discretized point for the interval [0,1].
 #    The number of variables is 2N.
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   5              $-PARAMETER n = 10
+# IE N                   25             $-PARAMETER n = 50
+# IE N                   50             $-PARAMETER n = 100
+# IE N                   250            $-PARAMETER n = 500    original value
+# IE N                   500            $-PARAMETER n = 1000
+# IE N                   2500           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,12 +54,6 @@ function CHEMRCTA(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   25             $-PARAMETER n = 50
-# IE N                   50             $-PARAMETER n = 100
-# IE N                   250            $-PARAMETER n = 500    original value
-# IE N                   500            $-PARAMETER n = 1000
-# IE N                   2500           $-PARAMETER n = 5000
         if nargin<2
             v_["PEM"] = Float64(1.0);  #  SIF file default value
         else
@@ -118,31 +119,31 @@ function CHEMRCTA(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("T"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
         end
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("GU"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["1"])))
         iv = ix_["U"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("GU"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["1"])))
         iv = ix_["U"*string(Int64(v_["2"]))]
         pbm.A[ig,iv] += Float64(v_["CU1"])
-        ig,ig_,_ = s2x_ii("GT"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["1"])))
         iv = ix_["T"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("GT"*string(Int64(v_["1"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["1"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["1"])))
         iv = ix_["T"*string(Int64(v_["2"]))]
@@ -150,7 +151,7 @@ function CHEMRCTA(action,args...)
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             v_["I-1"] = -1+I
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("GU"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("GU"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"GU"*string(I))
             iv = ix_["U"*string(Int64(v_["I-1"]))]
@@ -159,7 +160,7 @@ function CHEMRCTA(action,args...)
             pbm.A[ig,iv] += Float64(v_["CUI"])
             iv = ix_["U"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(v_["1/H2PEM"])
-            ig,ig_,_ = s2x_ii("GT"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("GT"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"GT"*string(I))
             iv = ix_["T"*string(I)]
@@ -171,22 +172,22 @@ function CHEMRCTA(action,args...)
             iv = ix_["T"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(v_["1/H2PEH"])
         end
-        ig,ig_,_ = s2x_ii("GU"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["N"])))
         iv = ix_["U"*string(Int64(v_["N-1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("GU"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GU"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GU"*string(Int64(v_["N"])))
         iv = ix_["U"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("GT"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["N"])))
         iv = ix_["T"*string(Int64(v_["N-1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("GT"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("GT"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"GT"*string(Int64(v_["N"])))
         iv = ix_["T"*string(Int64(v_["N"]))]
@@ -208,10 +209,8 @@ function CHEMRCTA(action,args...)
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["GU"*string(Int64(v_["1"]))]] = Float64(v_["-HPEM"])
         pbm.gconst[ig_["GT"*string(Int64(v_["1"]))]] = Float64(v_["-HPEH"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["T"*string(I)]] = 0.0000001
@@ -221,7 +220,7 @@ function CHEMRCTA(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eREAC", iet_)
+        it,iet_,_ = s2mpj_ii( "eREAC", iet_)
         loaset(elftv,it,1,"U")
         loaset(elftv,it,2,"T")
         elftp = Vector{Vector{String}}()
@@ -231,33 +230,33 @@ function CHEMRCTA(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             ename = "EU"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eREAC")
                 arrset(ielftype,ie,iet_["eREAC"])
             end
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="G",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["GAMMA"]))
             ename = "ET"*string(I)
-            ie,ie_,newelt = s2x_ii(ename,ie_)
+            ie,ie_,newelt = s2mpj_ii(ename,ie_)
             if newelt > 0
                 arrset(pbm.elftype,ie,"eREAC")
                 arrset(ielftype,ie,iet_["eREAC"])
             end
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="U",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,1.0)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="G",elftp[ielftype[ie]])
@@ -281,6 +280,8 @@ function CHEMRCTA(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["BD"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -294,6 +295,10 @@ function CHEMRCTA(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -335,7 +340,7 @@ function CHEMRCTA(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

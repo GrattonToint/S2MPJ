@@ -138,14 +138,14 @@ function HS117(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["M+N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for J = Int64(v_["1"]):Int64(v_["M"])
             v_["-BJ"] = -1.0*v_["B"*string(J)]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(J)]
             pbm.A[ig,iv] += Float64(v_["-BJ"])
@@ -154,7 +154,7 @@ function HS117(action,args...)
             for K = Int64(v_["1"]):Int64(v_["N"])
                 v_["M+K"] = v_["M"]+K
                 v_["2CKJ"] = 2.0*v_["C"*string(K)*","*string(J)]
-                ig,ig_,_ = s2x_ii("C"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(J))
                 iv = ix_["X"*string(Int64(v_["M+K"]))]
@@ -162,7 +162,7 @@ function HS117(action,args...)
             end
             for K = Int64(v_["1"]):Int64(v_["M"])
                 v_["-AKJ"] = -1.0*v_["A"*string(K)*","*string(J)]
-                ig,ig_,_ = s2x_ii("C"*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("C"*string(J),ig_)
                 arrset(gtype,ig,">=")
                 arrset(pb.cnames,ig,"C"*string(J))
                 iv = ix_["X"*string(K)]
@@ -199,11 +199,11 @@ function HS117(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQUARE", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQUARE", iet_)
         loaset(elftv,it,1,"XJ")
-        it,iet_,_ = s2x_ii( "eCUBE", iet_)
+        it,iet_,_ = s2mpj_ii( "eCUBE", iet_)
         loaset(elftv,it,1,"XJ")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"XI")
         loaset(elftv,it,2,"XJ")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -212,33 +212,33 @@ function HS117(action,args...)
         for J = Int64(v_["1"]):Int64(v_["N"])
             v_["M+J"] = v_["M"]+J
             ename = "2D"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCUBE")
             arrset(ielftype, ie, iet_["eCUBE"])
             vname = "X"*string(Int64(v_["M+J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
             posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "3D"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQUARE")
             arrset(ielftype, ie, iet_["eSQUARE"])
             vname = "X"*string(Int64(v_["M+J"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
             posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             for K = Int64(v_["1"]):Int64(v_["N"])
                 v_["M+K"] = v_["M"]+K
                 ename = "C"*string(K)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePROD")
                 arrset(ielftype, ie, iet_["ePROD"])
                 vname = "X"*string(Int64(v_["M+K"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
                 posev = findfirst(x->x=="XI",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["M+J"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.001)
                 posev = findfirst(x->x=="XJ",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -270,6 +270,8 @@ function HS117(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               32.34867897
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -285,6 +287,10 @@ function HS117(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OQR2-AN-15-5"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -369,7 +375,7 @@ function HS117(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

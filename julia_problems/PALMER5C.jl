@@ -75,17 +75,17 @@ function PALMER5C(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("A0",ix_)
+        iv,ix_,_ = s2mpj_ii("A0",ix_)
         arrset(pb.xnames,iv,"A0")
-        iv,ix_,_ = s2x_ii("A2",ix_)
+        iv,ix_,_ = s2mpj_ii("A2",ix_)
         arrset(pb.xnames,iv,"A2")
-        iv,ix_,_ = s2x_ii("A4",ix_)
+        iv,ix_,_ = s2mpj_ii("A4",ix_)
         arrset(pb.xnames,iv,"A4")
-        iv,ix_,_ = s2x_ii("A6",ix_)
+        iv,ix_,_ = s2mpj_ii("A6",ix_)
         arrset(pb.xnames,iv,"A6")
-        iv,ix_,_ = s2x_ii("A8",ix_)
+        iv,ix_,_ = s2mpj_ii("A8",ix_)
         arrset(pb.xnames,iv,"A8")
-        iv,ix_,_ = s2x_ii("A10",ix_)
+        iv,ix_,_ = s2mpj_ii("A10",ix_)
         arrset(pb.xnames,iv,"A10")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
@@ -103,7 +103,7 @@ function PALMER5C(action,args...)
                 v_["T"*string(J)] = v_["2Y"]*v_["T"*string(Int64(v_["J-1"]))]
                 v_["T"*string(J)] = v_["T"*string(J)]-v_["T"*string(Int64(v_["J-2"]))]
             end
-            ig,ig_,_ = s2x_ii("O"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("O"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["A0"]
             pbm.A[ig,iv] += Float64(v_["T0"])
@@ -128,10 +128,8 @@ function PALMER5C(action,args...)
         for I = Int64(v_["12"]):Int64(v_["M"])
             pbm.gconst[ig_["O"*string(I)]] = Float64(v_["Y"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["A0"]] = -Inf
         pb.xupper[ix_["A0"]] = +Inf
@@ -149,7 +147,7 @@ function PALMER5C(action,args...)
         pb.x0 = fill(Float64(1.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -160,7 +158,10 @@ function PALMER5C(action,args...)
             arrset(pbm.grftype,ig,"gL2")
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN              5.0310687D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
@@ -168,6 +169,10 @@ function PALMER5C(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "QUR2-RN-6-0"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -200,7 +205,7 @@ function PALMER5C(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

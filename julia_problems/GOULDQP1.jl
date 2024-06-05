@@ -49,23 +49,23 @@ function GOULDQP1(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["15"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         for K = Int64(v_["1"]):Int64(v_["4"])
-            iv,ix_,_ = s2x_ii("AS"*string(K),ix_)
+            iv,ix_,_ = s2mpj_ii("AS"*string(K),ix_)
             arrset(pb.xnames,iv,"AS"*string(K))
         end
         for K = Int64(v_["1"]):Int64(v_["4"])
-            iv,ix_,_ = s2x_ii("CS"*string(K),ix_)
+            iv,ix_,_ = s2mpj_ii("CS"*string(K),ix_)
             arrset(pb.xnames,iv,"CS"*string(K))
         end
         for K = Int64(v_["1"]):Int64(v_["4"])
-            iv,ix_,_ = s2x_ii("BS"*string(K),ix_)
+            iv,ix_,_ = s2mpj_ii("BS"*string(K),ix_)
             arrset(pb.xnames,iv,"BS"*string(K))
         end
         for K = Int64(v_["1"]):Int64(v_["5"])
-            iv,ix_,_ = s2x_ii("DS"*string(K),ix_)
+            iv,ix_,_ = s2mpj_ii("DS"*string(K),ix_)
             arrset(pb.xnames,iv,"DS"*string(K))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -75,7 +75,7 @@ function GOULDQP1(action,args...)
             v_["3K+1"] = 1+v_["3K"]
             v_["3K+2"] = 2+v_["3K"]
             v_["3K+3"] = 3+v_["3K"]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["3K+1"]))]
             pbm.A[ig,iv] += Float64(2.3)
@@ -91,7 +91,7 @@ function GOULDQP1(action,args...)
             v_["3K+3"] = 3+v_["3K"]
             v_["3K-2"] = -2+v_["3K"]
             v_["3K-1"] = -1+v_["3K"]
-            ig,ig_,_ = s2x_ii("A"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("A"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"A"*string(K))
             iv = ix_["X"*string(Int64(v_["3K+1"]))]
@@ -100,7 +100,7 @@ function GOULDQP1(action,args...)
             pbm.A[ig,iv] += Float64(-1.0)
             iv = ix_["AS"*string(K)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("B"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("B"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"B"*string(K))
             iv = ix_["X"*string(Int64(v_["3K+3"]))]
@@ -109,7 +109,7 @@ function GOULDQP1(action,args...)
             pbm.A[ig,iv] += Float64(-1.0)
             iv = ix_["BS"*string(K)]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("C"*string(K),ig_)
+            ig,ig_,_ = s2mpj_ii("C"*string(K),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"C"*string(K))
             iv = ix_["X"*string(Int64(v_["3K+2"]))]
@@ -119,7 +119,7 @@ function GOULDQP1(action,args...)
             iv = ix_["CS"*string(K)]
             pbm.A[ig,iv] += Float64(-1.0)
         end
-        ig,ig_,_ = s2x_ii("D1",ig_)
+        ig,ig_,_ = s2mpj_ii("D1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D1")
         iv = ix_["X1"]
@@ -130,7 +130,7 @@ function GOULDQP1(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["DS1"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("D2",ig_)
+        ig,ig_,_ = s2mpj_ii("D2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D2")
         iv = ix_["X4"]
@@ -141,7 +141,7 @@ function GOULDQP1(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["DS2"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("D3",ig_)
+        ig,ig_,_ = s2mpj_ii("D3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D3")
         iv = ix_["X7"]
@@ -152,7 +152,7 @@ function GOULDQP1(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["DS3"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("D4",ig_)
+        ig,ig_,_ = s2mpj_ii("D4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D4")
         iv = ix_["X10"]
@@ -163,7 +163,7 @@ function GOULDQP1(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["DS4"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("D5",ig_)
+        ig,ig_,_ = s2mpj_ii("D5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"D5")
         iv = ix_["X13"]
@@ -199,10 +199,8 @@ function GOULDQP1(action,args...)
         pbm.gconst[ig_["D3"]] = Float64(70.0)
         pbm.gconst[ig_["D4"]] = Float64(85.0)
         pbm.gconst[ig_["D5"]] = Float64(100.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["X1"]] = 8.0
         pb.xupper[ix_["X1"]] = 21.0
@@ -357,18 +355,18 @@ function GOULDQP1(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["15"])
             ename = "E"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,20.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,20.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -439,6 +437,8 @@ function GOULDQP1(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(0.00015))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.485333E+3
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -452,6 +452,10 @@ function GOULDQP1(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QLR2-AN-32-17"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -486,7 +490,7 @@ function GOULDQP1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

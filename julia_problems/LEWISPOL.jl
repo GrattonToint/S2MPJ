@@ -49,16 +49,16 @@ function LEWISPOL(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["0"]):Int64(v_["N-1"])
-            iv,ix_,_ = s2x_ii("A"*string(J),ix_)
+            iv,ix_,_ = s2mpj_ii("A"*string(J),ix_)
             arrset(pb.xnames,iv,"A"*string(J))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for J = Int64(v_["0"]):Int64(v_["N-1"])
             v_["C"*string(Int64(v_["0"]))*","*string(J)] = 1.0
-            ig,ig_,_ = s2x_ii("D0",ig_)
+            ig,ig_,_ = s2mpj_ii("D0",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"D0")
             iv = ix_["A"*string(J)]
@@ -70,7 +70,7 @@ function LEWISPOL(action,args...)
                 v_["RJ"] = Float64(J)
                 v_["C"*string(I)*","*string(J)]  = (
                       v_["C"*string(Int64(v_["I-1"]))*","*string(J)]*v_["RJ"])
-                ig,ig_,_ = s2x_ii("D"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("D"*string(I),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"D"*string(I))
                 iv = ix_["A"*string(J)]
@@ -78,7 +78,7 @@ function LEWISPOL(action,args...)
             end
         end
         for J = Int64(v_["0"]):Int64(v_["N-1"])
-            ig,ig_,_ = s2x_ii("INT"*string(J),ig_)
+            ig,ig_,_ = s2mpj_ii("INT"*string(J),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"INT"*string(J))
             iv = ix_["A"*string(J)]
@@ -110,8 +110,6 @@ function LEWISPOL(action,args...)
             v_["CT"*string(I)] = v_["CT"*string(Int64(v_["I-1"]))]*v_["VAL"]
             pbm.gconst[ig_["D"*string(I)]] = Float64(v_["CT"*string(I)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-10.0,pb.n)
         pb.xupper = fill(10.0,pb.n)
@@ -151,28 +149,28 @@ function LEWISPOL(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eCB", iet_)
+        it,iet_,_ = s2mpj_ii( "eCB", iet_)
         loaset(elftv,it,1,"X")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for J = Int64(v_["0"]):Int64(v_["N-1"])
             ename = "O"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "A"*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(J)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCB")
             arrset(ielftype, ie, iet_["eCB"])
             vname = "A"*string(J)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -195,6 +193,8 @@ function LEWISPOL(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -208,6 +208,10 @@ function LEWISPOL(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QOR2-AN-6-9"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -266,7 +270,7 @@ function LEWISPOL(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

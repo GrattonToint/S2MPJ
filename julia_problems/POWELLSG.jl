@@ -26,6 +26,16 @@ function POWELLSG(action,args...)
 #       Alternative values for the SIF file parameters:
 # IE N                   4              $-PARAMETER     original value
 # IE N                   8              $-PARAMETER
+# IE N                   16             $-PARAMETER
+# IE N                   20             $-PARAMETER
+# IE N                   36             $-PARAMETER
+# IE N                   40             $-PARAMETER
+# IE N                   60             $-PARAMETER
+# IE N                   80             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,16 +57,6 @@ function POWELLSG(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-# IE N                   16             $-PARAMETER
-# IE N                   20             $-PARAMETER
-# IE N                   36             $-PARAMETER
-# IE N                   40             $-PARAMETER
-# IE N                   60             $-PARAMETER
-# IE N                   80             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE N                   5000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
         v_["1"] = 1
         v_["4"] = 4
@@ -65,7 +65,7 @@ function POWELLSG(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -74,34 +74,34 @@ function POWELLSG(action,args...)
             v_["I+1"] = 1+I
             v_["I+2"] = 2+I
             v_["I+3"] = 3+I
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(10.0)
-            ig,ig_,_ = s2x_ii("G"*string(Int64(v_["I+1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["I+1"])),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+2"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+3"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("G"*string(Int64(v_["I+1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["I+1"])),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(0.2))
-            ig,ig_,_ = s2x_ii("G"*string(Int64(v_["I+2"])),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["I+2"])),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(Int64(v_["I+1"]))]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+2"]))]
             pbm.A[ig,iv] += Float64(-2.0)
-            ig,ig_,_ = s2x_ii("G"*string(Int64(v_["I+3"])),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["I+3"])),ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["X"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
             iv = ix_["X"*string(Int64(v_["I+3"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("G"*string(Int64(v_["I+3"])),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(Int64(v_["I+3"])),ig_)
             arrset(gtype,ig,"<>")
             arrset(pbm.gscale,ig,Float64(0.1))
         end
@@ -110,8 +110,6 @@ function POWELLSG(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -128,8 +126,8 @@ function POWELLSG(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
-        it,igt_,_ = s2x_ii("gL4",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL4",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -150,6 +148,8 @@ function POWELLSG(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -158,6 +158,10 @@ function POWELLSG(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -212,7 +216,7 @@ function POWELLSG(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -24,6 +24,8 @@ function SCW1(action,args...)
 # 
 #    Number of internal knots
 # 
+#       Alternative values for the SIF file parameters:
+# IE K                   1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -41,21 +43,12 @@ function SCW1(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["K"] = Int64(1);  #  SIF file default value
-        else
-            v_["K"] = Int64(args[1]);
-        end
-        if nargin<1
-            v_["K"] = Int64(3);  #  SIF file default value
-        else
-            v_["K"] = Int64(args[1]);
-        end
-        if nargin<1
             v_["K"] = Int64(7);  #  SIF file default value
         else
             v_["K"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
+# IE K                   3              $-PARAMETER
+# IE K                   7              $-PARAMETER     original value
 # IE K                   10             $-PARAMETER
 # IE K                   100            $-PARAMETER
         v_["0"] = 0
@@ -72,18 +65,18 @@ function SCW1(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["K+1"])
-            iv,ix_,_ = s2x_ii("T"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("T"*string(I),ix_)
             arrset(pb.xnames,iv,"T"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("S",ig_)
+        ig,ig_,_ = s2mpj_ii("S",ig_)
         arrset(gtype,ig,"<>")
-        ig,ig_,_ = s2x_ii("C",ig_)
+        ig,ig_,_ = s2mpj_ii("C",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["0"]):Int64(v_["K"])
             v_["I+1"] = 1+I
-            ig,ig_,_ = s2x_ii("CON"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,">=")
             arrset(pb.cnames,ig,"CON"*string(I))
             iv = ix_["T"*string(Int64(v_["I+1"]))]
@@ -104,10 +97,8 @@ function SCW1(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["T"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["T"*string(Int64(v_["0"]))]] = 0.0
@@ -138,34 +129,34 @@ function SCW1(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSINT", iet_)
+        it,iet_,_ = s2mpj_ii( "eSINT", iet_)
         loaset(elftv,it,1,"T")
-        it,iet_,_ = s2x_ii( "eCOST", iet_)
+        it,iet_,_ = s2mpj_ii( "eCOST", iet_)
         loaset(elftv,it,1,"T")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for I = Int64(v_["0"]):Int64(v_["K+1"])
             ename = "S"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSINT")
             arrset(ielftype, ie, iet_["eSINT"])
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "C"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOST")
             arrset(ielftype, ie, iet_["eCOST"])
             vname = "T"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="T",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gMAXSQ",igt_)
+        it,igt_,_ = s2mpj_ii("gMAXSQ",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -220,6 +211,8 @@ function SCW1(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SCW                 0.0
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -234,6 +227,10 @@ function SCW1(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "SLR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -318,7 +315,7 @@ function SCW1(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

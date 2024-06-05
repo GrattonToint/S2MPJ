@@ -25,6 +25,23 @@ function SEMICN2U(action,args...)
 #    LN = Index of the last negative discretization point
 #         (the interest is in the negative part)
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER     original value
+# IE LN                  9              $-PARAMETER     original value
+# 
+# IE N                   50             $-PARAMETER
+# IE LN                  45             $-PARAMETER
+# 
+# IE N                   100            $-PARAMETER
+# IE LN                  90             $-PARAMETER
+# 
+# IE N                   500            $-PARAMETER
+# IE LN                  450            $-PARAMETER
+# 
+# IE N                   1000           $-PARAMETER
+# IE LN                  900            $-PARAMETER
+# 
+# IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,22 +63,12 @@ function SEMICN2U(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
+# IE LN                  4500           $-PARAMETER
         if nargin<2
             v_["LN"] = Int64(9);  #  SIF file default value
         else
             v_["LN"] = Int64(args[2]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER
-# IE LN                  45             $-PARAMETER
-# IE N                   100            $-PARAMETER
-# IE LN                  90             $-PARAMETER
-# IE N                   500            $-PARAMETER
-# IE LN                  450            $-PARAMETER
-# IE N                   1000           $-PARAMETER
-# IE LN                  900            $-PARAMETER
-# IE N                   5000           $-PARAMETER
-# IE LN                  4500           $-PARAMETER
         if nargin<3
             v_["LAMBDA"] = Float64(0.2);  #  SIF file default value
         else
@@ -101,7 +108,7 @@ function SEMICN2U(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N+1"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -109,7 +116,7 @@ function SEMICN2U(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N"])
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
-            ig,ig_,_ = s2x_ii("G"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("G"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"G"*string(I))
             iv = ix_["U"*string(Int64(v_["I-1"]))]
@@ -140,8 +147,6 @@ function SEMICN2U(action,args...)
         for I = Int64(v_["LN+1"]):Int64(v_["N"])
             pbm.gconst[ig_["G"*string(I)]] = Float64(v_["-LH2CB"])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -156,7 +161,7 @@ function SEMICN2U(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eWE1", iet_)
+        it,iet_,_ = s2mpj_ii( "eWE1", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"LAC")
@@ -167,11 +172,11 @@ function SEMICN2U(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["1"]):Int64(v_["N"])
             ename = "EA"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWE1")
             arrset(ielftype, ie, iet_["eWE1"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="LAC",elftp[ielftype[ie]])
@@ -181,11 +186,11 @@ function SEMICN2U(action,args...)
             posep = findfirst(x->x=="LU",elftp[ielftype[ie]])
             loaset(pbm.elpar,ie,posep,Float64(v_["LUA"]))
             ename = "EB"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWE1")
             arrset(ielftype, ie, iet_["eWE1"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="LAC",elftp[ielftype[ie]])
@@ -211,7 +216,10 @@ function SEMICN2U(action,args...)
             loaset(pbm.grelw,ig,posel, 1.)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Least square problems are bounded below by zero
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -225,6 +233,10 @@ function SEMICN2U(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "NOR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -261,7 +273,7 @@ function SEMICN2U(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

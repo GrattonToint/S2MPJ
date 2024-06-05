@@ -27,6 +27,13 @@ function ORTHREGF(action,args...)
 #    square root of the number of data points
 #    (number of variables = 3 * NPTS**2 + 5 )
 # 
+#       Alternative values for the SIF file parameters:
+# IE NPTS                5              $-PARAMETER n = 80    original value
+# IE NPTS                7              $-PARAMETER n = 152
+# IE NPTS                10             $-PARAMETER n = 305
+# IE NPTS                15             $-PARAMETER n = 680
+# IE NPTS                20             $-PARAMETER n = 1205
+# IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,12 +55,6 @@ function ORTHREGF(action,args...)
         else
             v_["NPTS"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE NPTS                7              $-PARAMETER n = 152
-# IE NPTS                10             $-PARAMETER n = 305
-# IE NPTS                15             $-PARAMETER n = 680
-# IE NPTS                20             $-PARAMETER n = 1205
-# IE NPTS                40             $-PARAMETER n = 4805
         v_["TP4"] = 1.7
         v_["TP5"] = 0.8
         v_["PSEED"] = 237.1531
@@ -96,38 +97,38 @@ function ORTHREGF(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["5"])
-            iv,ix_,_ = s2x_ii("P"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
             arrset(pb.xnames,iv,"P"*string(I))
         end
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
             for J = Int64(v_["1"]):Int64(v_["NPTS"])
-                iv,ix_,_ = s2x_ii("X"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"X"*string(I)*","*string(J))
-                iv,ix_,_ = s2x_ii("Y"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Y"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Y"*string(I)*","*string(J))
-                iv,ix_,_ = s2x_ii("Z"*string(I)*","*string(J),ix_)
+                iv,ix_,_ = s2mpj_ii("Z"*string(I)*","*string(J),ix_)
                 arrset(pb.xnames,iv,"Z"*string(I)*","*string(J))
             end
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
             for J = Int64(v_["1"]):Int64(v_["NPTS"])
-                ig,ig_,_ = s2x_ii("OX"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("OX"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
-                ig,ig_,_ = s2x_ii("OY"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("OY"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["Y"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
-                ig,ig_,_ = s2x_ii("OZ"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("OZ"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["Z"*string(I)*","*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
-                ig,ig_,_ = s2x_ii("A"*string(I)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("A"*string(I)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"A"*string(I)*","*string(J))
             end
@@ -157,8 +158,6 @@ function ORTHREGF(action,args...)
                       Float64(v_["ZD"*string(I)*","*string(J)]))
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -220,16 +219,16 @@ function ORTHREGF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eTA", iet_)
+        it,iet_,_ = s2mpj_ii( "eTA", iet_)
         loaset(elftv,it,1,"XX")
         loaset(elftv,it,2,"YY")
         loaset(elftv,it,3,"A")
         loaset(elftv,it,4,"B")
         loaset(elftv,it,5,"C")
-        it,iet_,_ = s2x_ii( "eISQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eISQ", iet_)
         loaset(elftv,it,1,"Z")
         loaset(elftv,it,2,"P")
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"XX")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
@@ -237,54 +236,54 @@ function ORTHREGF(action,args...)
         for I = Int64(v_["1"]):Int64(v_["NPTS"])
             for J = Int64(v_["1"]):Int64(v_["NPTS"])
                 ename = "EA"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eTA")
                 arrset(ielftype, ie, iet_["eTA"])
                 vname = "X"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "Y"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P1"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="A",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P2"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="B",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P4"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EB"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "Z"*string(I)*","*string(J)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "P3"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="P",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EC"*string(I)*","*string(J)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
                 arrset(ielftype, ie, iet_["eSQ"])
                 vname = "P5"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL2",igt_)
+        it,igt_,_ = s2mpj_ii("gL2",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -314,6 +313,12 @@ function ORTHREGF(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN(5)            0.990089426
+# LO SOLTN(7)            1.315031322
+# LO SOLTN(10)           4.515848902
+# LO SOLTN(15)           9.185538338
+# LO SOLTN(20)           16.20054380
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -327,6 +332,10 @@ function ORTHREGF(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QOR2-AY-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -487,7 +496,7 @@ function ORTHREGF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

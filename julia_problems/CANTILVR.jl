@@ -13,6 +13,7 @@ function CANTILVR(action,args...)
 #    an example in a talk by W.K. Zhang and C. Fleury, LLN, 1994.
 # 
 #    SIF input: Ph. Toint, November 1994
+#               correction by S. Gratton & Ph. Toint, May 2024
 # 
 #    classification = "LOR2-MN-5-1"
 # 
@@ -36,19 +37,19 @@ function CANTILVR(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        iv,ix_,_ = s2x_ii("X3",ix_)
+        iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
-        iv,ix_,_ = s2x_ii("X4",ix_)
+        iv,ix_,_ = s2mpj_ii("X4",ix_)
         arrset(pb.xnames,iv,"X4")
-        iv,ix_,_ = s2x_ii("X5",ix_)
+        iv,ix_,_ = s2mpj_ii("X5",ix_)
         arrset(pb.xnames,iv,"X5")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("WEIGHT",ig_)
+        ig,ig_,_ = s2mpj_ii("WEIGHT",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(0.0624)
@@ -60,7 +61,7 @@ function CANTILVR(action,args...)
         pbm.A[ig,iv] += Float64(0.0624)
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(0.0624)
-        ig,ig_,_ = s2x_ii("CONST",ig_)
+        ig,ig_,_ = s2mpj_ii("CONST",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"CONST")
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -79,8 +80,6 @@ function CANTILVR(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["CONST"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(0.000001,pb.n)
         pb.xupper = fill(Inf,pb.n)
@@ -89,59 +88,59 @@ function CANTILVR(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eINVCUBE", iet_)
+        it,iet_,_ = s2mpj_ii( "eINVCUBE", iet_)
         loaset(elftv,it,1,"XX")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eINVCUBE")
             arrset(ielftype,ie,iet_["eINVCUBE"])
         end
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eINVCUBE")
             arrset(ielftype,ie,iet_["eINVCUBE"])
         end
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eINVCUBE")
             arrset(ielftype,ie,iet_["eINVCUBE"])
         end
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E4"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eINVCUBE")
             arrset(ielftype,ie,iet_["eINVCUBE"])
         end
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E5"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eINVCUBE")
             arrset(ielftype,ie,iet_["eINVCUBE"])
         end
         vname = "X5"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.000001,nothing,1.0)
         posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -170,6 +169,8 @@ function CANTILVR(action,args...)
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+#    Solution
+# LO SOLTN                1.3399595938
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -182,6 +183,10 @@ function CANTILVR(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-MN-5-1"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -216,7 +221,7 @@ function CANTILVR(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -41,7 +41,7 @@ function MINSURF(action,args...)
         binvars = Int64[]
         for i = Int64(v_["1"]):Int64(v_["P+1"])
             for j = Int64(v_["1"]):Int64(v_["P+1"])
-                iv,ix_,_ = s2x_ii("X"*string(i)*","*string(j),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(i)*","*string(j),ix_)
                 arrset(pb.xnames,iv,"X"*string(i)*","*string(j))
             end
         end
@@ -49,7 +49,7 @@ function MINSURF(action,args...)
         gtype    = String[]
         for i = Int64(v_["1"]):Int64(v_["P"])
             for j = Int64(v_["1"]):Int64(v_["P"])
-                ig,ig_,_ = s2x_ii("S"*string(i)*","*string(j),ig_)
+                ig,ig_,_ = s2mpj_ii("S"*string(i)*","*string(j),ig_)
                 arrset(gtype,ig,"<>")
                 arrset(pbm.gscale,ig,Float64(v_["RPSQ"]))
             end
@@ -66,10 +66,8 @@ function MINSURF(action,args...)
                 pbm.gconst[ig_["S"*string(i)*","*string(j)]] = Float64(-1.0)
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         v_["2"] = 2
         for i = Int64(v_["2"]):Int64(v_["P"])
@@ -91,7 +89,7 @@ function MINSURF(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eISQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eISQ", iet_)
         loaset(elftv,it,1,"V")
         loaset(elftv,it,2,"W")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -102,34 +100,34 @@ function MINSURF(action,args...)
             for j = Int64(v_["1"]):Int64(v_["P"])
                 v_["j+1"] = 1+j
                 ename = "A"*string(i)*","*string(j)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "X"*string(i)*","*string(j)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["i+1"]))*","*string(Int64(v_["j+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="W",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "B"*string(i)*","*string(j)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
                 arrset(ielftype, ie, iet_["eISQ"])
                 vname = "X"*string(i)*","*string(Int64(v_["j+1"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(Int64(v_["i+1"]))*","*string(j)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="W",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gSQROOT",igt_)
+        it,igt_,_ = s2mpj_ii("gSQROOT",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -221,7 +219,7 @@ function MINSURF(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

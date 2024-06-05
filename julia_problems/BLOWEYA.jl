@@ -44,15 +44,16 @@ function BLOWEYA(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
 #    classification = "QLR2-MN-V-V"
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER  n = 22, m = 12
+# IE N                   100            $-PARAMETER  n = 202, m = 102
+# IE N                   1000           $-PARAMETER  n = 2002, m = 1002
+# IE N                   2000           $-PARAMETER  n = 4002, m = 2002
         if nargin<1
             v_["N"] = Int64(10);  #  SIF file default value
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER  n = 202, m = 102
-# IE N                   1000           $-PARAMETER  n = 2002, m = 1002
-# IE N                   2000           $-PARAMETER  n = 4002, m = 2002
 # IE N                   4000           $-PARAMETER  n = 8002, m = 4002
 # IE N                   8000           $-PARAMETER  n = 16002, m = 8002
         v_["0"] = 0
@@ -130,16 +131,16 @@ function BLOWEYA(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("U"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("U"*string(I),ix_)
             arrset(pb.xnames,iv,"U"*string(I))
-            iv,ix_,_ = s2x_ii("W"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("W"*string(I),ix_)
             arrset(pb.xnames,iv,"W"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["0"]):Int64(v_["N"])
             v_["VAL"] = v_["V"*string(I)]*v_["-1/N**2"]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(v_["VAL"])
@@ -148,7 +149,7 @@ function BLOWEYA(action,args...)
             pbm.A[ig,iv] += Float64(v_["VAL"])
         end
         v_["VAL"] = v_["V"*string(Int64(v_["1"]))]-v_["V"*string(Int64(v_["0"]))]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"*string(Int64(v_["0"]))]
         pbm.A[ig,iv] += Float64(v_["VAL"])
@@ -158,29 +159,29 @@ function BLOWEYA(action,args...)
             v_["VAL"] = -2.0*v_["V"*string(I)]
             v_["VAL"] = v_["VAL"]+v_["V"*string(Int64(v_["I-1"]))]
             v_["VAL"] = v_["VAL"]+v_["V"*string(Int64(v_["I+1"]))]
-            ig,ig_,_ = s2x_ii("OBJ",ig_)
+            ig,ig_,_ = s2mpj_ii("OBJ",ig_)
             arrset(gtype,ig,"<>")
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(v_["VAL"])
         end
         v_["VAL"] = v_["V"*string(Int64(v_["N-1"]))]-v_["V"*string(Int64(v_["N"]))]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["U"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(v_["VAL"])
-        ig,ig_,_ = s2x_ii("INT",ig_)
+        ig,ig_,_ = s2mpj_ii("INT",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"INT")
         iv = ix_["U"*string(Int64(v_["0"]))]
         pbm.A[ig,iv] += Float64(0.5)
-        ig,ig_,_ = s2x_ii("CON"*string(Int64(v_["0"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["0"])))
         iv = ix_["U"*string(Int64(v_["0"]))]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["U"*string(Int64(v_["1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("CON"*string(Int64(v_["0"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["0"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["0"])))
         iv = ix_["W"*string(Int64(v_["0"]))]
@@ -188,7 +189,7 @@ function BLOWEYA(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             v_["I-1"] = -1+I
-            ig,ig_,_ = s2x_ii("CON"*string(I),ig_)
+            ig,ig_,_ = s2mpj_ii("CON"*string(I),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"CON"*string(I))
             iv = ix_["U"*string(I)]
@@ -199,25 +200,25 @@ function BLOWEYA(action,args...)
             pbm.A[ig,iv] += Float64(-1.0)
             iv = ix_["W"*string(I)]
             pbm.A[ig,iv] += Float64(v_["-1/N**2"])
-            ig,ig_,_ = s2x_ii("INT",ig_)
+            ig,ig_,_ = s2mpj_ii("INT",ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"INT")
             iv = ix_["U"*string(I)]
             pbm.A[ig,iv] += Float64(1.0)
         end
-        ig,ig_,_ = s2x_ii("CON"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["N"])))
         iv = ix_["U"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["U"*string(Int64(v_["N-1"]))]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("CON"*string(Int64(v_["N"])),ig_)
+        ig,ig_,_ = s2mpj_ii("CON"*string(Int64(v_["N"])),ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"CON"*string(Int64(v_["N"])))
         iv = ix_["W"*string(Int64(v_["N"]))]
         pbm.A[ig,iv] += Float64(v_["-1/N**2"])
-        ig,ig_,_ = s2x_ii("INT",ig_)
+        ig,ig_,_ = s2mpj_ii("INT",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"INT")
         iv = ix_["U"*string(Int64(v_["N"]))]
@@ -238,8 +239,6 @@ function BLOWEYA(action,args...)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         pbm.gconst[ig_["INT"]] = Float64(v_["INT"])
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -255,9 +254,9 @@ function BLOWEYA(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"Z")
-        it,iet_,_ = s2x_ii( "ePROD", iet_)
+        it,iet_,_ = s2mpj_ii( "ePROD", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
@@ -265,49 +264,49 @@ function BLOWEYA(action,args...)
         ielftype = Vector{Int64}()
         for I = Int64(v_["0"]):Int64(v_["N"])
             ename = "C"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "W"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         for I = Int64(v_["0"]):Int64(v_["N-1"])
             v_["I+1"] = 1+I
             ename = "D"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "O"*string(I)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
             arrset(ielftype, ie, iet_["ePROD"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "U"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "D"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
         arrset(ielftype, ie, iet_["eSQ"])
         ename = "D"*string(Int64(v_["N"]))
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "U"*string(Int64(v_["N"]))
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -348,6 +347,10 @@ function BLOWEYA(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["1/N**2"]))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# XL SOLUTION            -4.56932D+00   $ N = 10 
+# XL SOLUTION            -4.55694D-01   $ N = 100
+# XL SOLUTION            -4.55629D-02   $ N = 1000
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -361,6 +364,10 @@ function BLOWEYA(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QLR2-MN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -421,7 +428,7 @@ function BLOWEYA(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

@@ -39,16 +39,16 @@ function SYNTHES3(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["9"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         for I = Int64(v_["1"]):Int64(v_["8"])
-            iv,ix_,_ = s2x_ii("Y"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(I),ix_)
             arrset(pb.xnames,iv,"Y"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["Y1"]
         pbm.A[ig,iv] += Float64(5.0)
@@ -84,25 +84,25 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(15.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(-35.0)
-        ig,ig_,_ = s2x_ii("N1",ig_)
+        ig,ig_,_ = s2mpj_ii("N1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"N1")
         iv = ix_["X8"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N2",ig_)
+        ig,ig_,_ = s2mpj_ii("N2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"N2")
-        ig,ig_,_ = s2x_ii("N3",ig_)
+        ig,ig_,_ = s2mpj_ii("N3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"N3")
         iv = ix_["Y1"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("N4",ig_)
+        ig,ig_,_ = s2mpj_ii("N4",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"N4")
         iv = ix_["Y2"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L1",ig_)
+        ig,ig_,_ = s2mpj_ii("L1",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L1")
         iv = ix_["X1"]
@@ -123,7 +123,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(-2.0)
-        ig,ig_,_ = s2x_ii("L2",ig_)
+        ig,ig_,_ = s2mpj_ii("L2",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L2")
         iv = ix_["X1"]
@@ -142,7 +142,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(-2.0)
-        ig,ig_,_ = s2x_ii("L3",ig_)
+        ig,ig_,_ = s2mpj_ii("L3",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L3")
         iv = ix_["X4"]
@@ -157,7 +157,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(2.0)
-        ig,ig_,_ = s2x_ii("L4",ig_)
+        ig,ig_,_ = s2mpj_ii("L4",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L4")
         iv = ix_["X5"]
@@ -166,7 +166,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(-0.8)
         iv = ix_["X8"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("L5",ig_)
+        ig,ig_,_ = s2mpj_ii("L5",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L5")
         iv = ix_["X4"]
@@ -175,7 +175,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("L6",ig_)
+        ig,ig_,_ = s2mpj_ii("L6",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L6")
         iv = ix_["X5"]
@@ -184,7 +184,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(-0.4)
         iv = ix_["X8"]
         pbm.A[ig,iv] += Float64(1.5)
-        ig,ig_,_ = s2x_ii("L7",ig_)
+        ig,ig_,_ = s2mpj_ii("L7",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L7")
         iv = ix_["X5"]
@@ -193,28 +193,28 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(0.16)
         iv = ix_["X8"]
         pbm.A[ig,iv] += Float64(-1.2)
-        ig,ig_,_ = s2x_ii("L8",ig_)
+        ig,ig_,_ = s2mpj_ii("L8",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L8")
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(-0.8)
-        ig,ig_,_ = s2x_ii("L9",ig_)
+        ig,ig_,_ = s2mpj_ii("L9",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L9")
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(0.4)
-        ig,ig_,_ = s2x_ii("L10",ig_)
+        ig,ig_,_ = s2mpj_ii("L10",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L10")
         iv = ix_["X7"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y3"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L11",ig_)
+        ig,ig_,_ = s2mpj_ii("L11",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L11")
         iv = ix_["X5"]
@@ -223,7 +223,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(0.8)
         iv = ix_["Y4"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L12",ig_)
+        ig,ig_,_ = s2mpj_ii("L12",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L12")
         iv = ix_["X4"]
@@ -234,21 +234,21 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(-2.0)
         iv = ix_["Y5"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L13",ig_)
+        ig,ig_,_ = s2mpj_ii("L13",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L13")
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y6"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L14",ig_)
+        ig,ig_,_ = s2mpj_ii("L14",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L14")
         iv = ix_["X6"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y7"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L15",ig_)
+        ig,ig_,_ = s2mpj_ii("L15",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L15")
         iv = ix_["X3"]
@@ -257,21 +257,21 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y8"]
         pbm.A[ig,iv] += Float64(-10.0)
-        ig,ig_,_ = s2x_ii("L16",ig_)
+        ig,ig_,_ = s2mpj_ii("L16",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"L16")
         iv = ix_["Y1"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y2"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("L17",ig_)
+        ig,ig_,_ = s2mpj_ii("L17",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L17")
         iv = ix_["Y4"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y5"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("L18",ig_)
+        ig,ig_,_ = s2mpj_ii("L18",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"L18")
         iv = ix_["Y4"]
@@ -280,7 +280,7 @@ function SYNTHES3(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["Y7"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("L19",ig_)
+        ig,ig_,_ = s2mpj_ii("L19",ig_)
         arrset(gtype,ig,"<=")
         arrset(pb.cnames,ig,"L19")
         iv = ix_["Y3"]
@@ -307,10 +307,8 @@ function SYNTHES3(action,args...)
         pbm.gconst[ig_["N4"]] = Float64(1.0)
         pbm.gconst[ig_["L16"]] = Float64(1.0)
         pbm.gconst[ig_["L17"]] = Float64(1.0)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xupper[ix_["X1"]] = 2.0
         pb.xupper[ix_["X2"]] = 2.0
@@ -327,12 +325,12 @@ function SYNTHES3(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eLOGSUM", iet_)
+        it,iet_,_ = s2mpj_ii( "eLOGSUM", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
-        it,iet_,_ = s2x_ii( "eLOGXP1", iet_)
+        it,iet_,_ = s2mpj_ii( "eLOGXP1", iet_)
         loaset(elftv,it,1,"X")
-        it,iet_,_ = s2x_ii( "eEXPA", iet_)
+        it,iet_,_ = s2mpj_ii( "eEXPA", iet_)
         loaset(elftv,it,1,"X")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"A")
@@ -340,49 +338,49 @@ function SYNTHES3(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "LOGX3X4"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLOGSUM")
         arrset(ielftype, ie, iet_["eLOGSUM"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "LOGX5P1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLOGXP1")
         arrset(ielftype, ie, iet_["eLOGXP1"])
         vname = "X5"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "LOGX6P1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLOGXP1")
         arrset(ielftype, ie, iet_["eLOGXP1"])
         vname = "X6"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "EXPX1"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEXPA")
         arrset(ielftype, ie, iet_["eEXPA"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="A",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.0))
         ename = "EXPX2"
-        ie,ie_,_  = s2x_ii(ename,ie_)
+        ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eEXPA")
         arrset(ielftype, ie, iet_["eEXPA"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="A",elftp[ielftype[ie]])
@@ -435,6 +433,7 @@ function SYNTHES3(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -450,6 +449,10 @@ function SYNTHES3(action,args...)
         pb.pbclass = "OOR2-AN-17-19"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -539,7 +542,7 @@ function SYNTHES3(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

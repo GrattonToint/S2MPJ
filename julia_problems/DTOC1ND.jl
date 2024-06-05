@@ -35,6 +35,24 @@ function DTOC1ND(action,args...)
 #    The problem has (N-1)*NX+N*NY  variables (of which NY are fixed),
 #    and (N-1)*NY constraints
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER # periods  } original value
+# IE NX                  2              $-PARAMETER # controls } n=   58, m=  36
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   50             $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   100            $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   500            $-PARAMETER # periods  }
+# IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
+# IE NY                  4              $-PARAMETER # states   }
+# 
+# IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -56,29 +74,18 @@ function DTOC1ND(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
+# IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
         if nargin<2
             v_["NX"] = Int64(2);  #  SIF file default value
         else
             v_["NX"] = Int64(args[2]);
         end
+# IE NY                  4              $-PARAMETER # states   }
         if nargin<3
             v_["NY"] = Int64(4);  #  SIF file default value
         else
             v_["NY"] = Int64(args[3]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n=  298, m= 196
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   100            $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n=  598, m= 396
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   500            $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n= 2998, m=1996
-# IE NY                  4              $-PARAMETER # states   }
-# IE N                   1000           $-PARAMETER # periods  }
-# IE NX                  2              $-PARAMETER # controls } n= 5998, m=3996
-# IE NY                  4              $-PARAMETER # states   }
 # IE N                   10             $-PARAMETER # periods  }
 # IE NX                  5              $-PARAMETER # controls } n=  145, m=  90
 # IE NY                  10             $-PARAMETER # states   }
@@ -126,13 +133,13 @@ function DTOC1ND(action,args...)
         binvars = Int64[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             for I = Int64(v_["1"]):Int64(v_["NX"])
-                iv,ix_,_ = s2x_ii("X"*string(T)*","*string(I),ix_)
+                iv,ix_,_ = s2mpj_ii("X"*string(T)*","*string(I),ix_)
                 arrset(pb.xnames,iv,"X"*string(T)*","*string(I))
             end
         end
         for T = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["NY"])
-                iv,ix_,_ = s2x_ii("Y"*string(T)*","*string(I),ix_)
+                iv,ix_,_ = s2mpj_ii("Y"*string(T)*","*string(I),ix_)
                 arrset(pb.xnames,iv,"Y"*string(T)*","*string(I))
             end
         end
@@ -140,7 +147,7 @@ function DTOC1ND(action,args...)
         gtype    = String[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             for I = Int64(v_["1"]):Int64(v_["NX"])
-                ig,ig_,_ = s2x_ii("OX"*string(T)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("OX"*string(T)*","*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(T)*","*string(I)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -148,7 +155,7 @@ function DTOC1ND(action,args...)
         end
         for T = Int64(v_["1"]):Int64(v_["N"])
             for I = Int64(v_["1"]):Int64(v_["NY"])
-                ig,ig_,_ = s2x_ii("OY"*string(T)*","*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("OY"*string(T)*","*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["Y"*string(T)*","*string(I)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -156,12 +163,12 @@ function DTOC1ND(action,args...)
         end
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             v_["T+1"] = 1+T
-            ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["1"])))
             iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(Int64(v_["1"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
+            ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["1"])))
             iv = ix_["Y"*string(T)*","*string(Int64(v_["1"]))]
@@ -169,7 +176,7 @@ function DTOC1ND(action,args...)
             iv = ix_["Y"*string(T)*","*string(Int64(v_["2"]))]
             pbm.A[ig,iv] += Float64(0.25)
             for I = Int64(v_["1"]):Int64(v_["NX"])
-                ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
+                ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["1"])),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["1"])))
                 iv = ix_["X"*string(T)*","*string(I)]
@@ -178,7 +185,7 @@ function DTOC1ND(action,args...)
             for J = Int64(v_["2"]):Int64(v_["NY-1"])
                 v_["J-1"] = -1+J
                 v_["J+1"] = 1+J
-                ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(J),ig_)
+                ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(J),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(J))
                 iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(J)]
@@ -190,19 +197,19 @@ function DTOC1ND(action,args...)
                 iv = ix_["Y"*string(T)*","*string(Int64(v_["J+1"]))]
                 pbm.A[ig,iv] += Float64(0.25)
                 for I = Int64(v_["1"]):Int64(v_["NX"])
-                    ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(J),ig_)
+                    ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(J),ig_)
                     arrset(gtype,ig,"==")
                     arrset(pb.cnames,ig,"TT"*string(T)*","*string(J))
                     iv = ix_["X"*string(T)*","*string(I)]
                     pbm.A[ig,iv] += Float64(v_["B"*string(J)*","*string(I)])
                 end
             end
-            ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
+            ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["NY"])))
             iv = ix_["Y"*string(Int64(v_["T+1"]))*","*string(Int64(v_["NY"]))]
             pbm.A[ig,iv] += Float64(-1.0)
-            ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
+            ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["NY"])))
             iv = ix_["Y"*string(T)*","*string(Int64(v_["NY"]))]
@@ -210,7 +217,7 @@ function DTOC1ND(action,args...)
             iv = ix_["Y"*string(T)*","*string(Int64(v_["NY-1"]))]
             pbm.A[ig,iv] += Float64(-0.25)
             for I = Int64(v_["1"]):Int64(v_["NX"])
-                ig,ig_,_ = s2x_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
+                ig,ig_,_ = s2mpj_ii("TT"*string(T)*","*string(Int64(v_["NY"])),ig_)
                 arrset(gtype,ig,"==")
                 arrset(pb.cnames,ig,"TT"*string(T)*","*string(Int64(v_["NY"])))
                 iv = ix_["X"*string(T)*","*string(I)]
@@ -242,8 +249,6 @@ function DTOC1ND(action,args...)
                 pbm.gconst[ig_["OY"*string(T)*","*string(I)]] = Float64(-0.25)
             end
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -254,7 +259,7 @@ function DTOC1ND(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "ePR", iet_)
+        it,iet_,_ = s2mpj_ii( "ePR", iet_)
         loaset(elftv,it,1,"X")
         loaset(elftv,it,2,"Y")
         elftp = Vector{Vector{String}}()
@@ -270,15 +275,15 @@ function DTOC1ND(action,args...)
                 v_["I"] = 1+v_["I"]
                 v_["J"] = 1+v_["J"]
                 ename = "E"*string(T)*","*string(K)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePR")
                 arrset(ielftype, ie, iet_["ePR"])
                 vname = "Y"*string(T)*","*string(Int64(v_["I"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(T)*","*string(Int64(v_["J"]))
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="MUC",elftp[ielftype[ie]])
@@ -287,7 +292,7 @@ function DTOC1ND(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gL4",igt_)
+        it,igt_,_ = s2mpj_ii("gL4",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -318,6 +323,14 @@ function DTOC1ND(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO S(  10,2, 4)        0.41425633947
+# LO S(  50,2, 4)        2.32087442729
+# LO S( 100,2, 4)        4.70413735495
+# LO S( 500,2, 4)        23.7703360951
+# LO S(1000,2, 4)        47.6030771433
+# LO S(  10,5,10)        2.20543231235
+# LO S(  50,5,10)        12.7757765942
+# LO S( 100,5,10)        25.9885564479
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -332,6 +345,10 @@ function DTOC1ND(action,args...)
         pb.pbclass = "OQR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -392,7 +409,7 @@ function DTOC1ND(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

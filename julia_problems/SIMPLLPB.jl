@@ -35,33 +35,33 @@ function SIMPLLPB(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("X1",ix_)
+        iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        iv,ix_,_ = s2x_ii("X2",ix_)
+        iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.5)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("CONSTR1",ig_)
+        ig,ig_,_ = s2mpj_ii("CONSTR1",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CONSTR1")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("CONSTR2",ig_)
+        ig,ig_,_ = s2mpj_ii("CONSTR2",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CONSTR2")
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(2.0)
-        ig,ig_,_ = s2x_ii("CONSTR3",ig_)
+        ig,ig_,_ = s2mpj_ii("CONSTR3",ig_)
         arrset(gtype,ig,">=")
         arrset(pb.cnames,ig,"CONSTR3")
         iv = ix_["X1"]
@@ -89,6 +89,8 @@ function SIMPLLPB(action,args...)
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(0.1),pb.n)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               1.1
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -112,7 +114,7 @@ function SIMPLLPB(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

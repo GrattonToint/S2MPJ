@@ -145,26 +145,26 @@ function VIBRBEAM(action,args...)
         xscale  = Float64[]
         intvars = Int64[]
         binvars = Int64[]
-        iv,ix_,_ = s2x_ii("c0",ix_)
+        iv,ix_,_ = s2mpj_ii("c0",ix_)
         arrset(pb.xnames,iv,"c0")
-        iv,ix_,_ = s2x_ii("c1",ix_)
+        iv,ix_,_ = s2mpj_ii("c1",ix_)
         arrset(pb.xnames,iv,"c1")
-        iv,ix_,_ = s2x_ii("c2",ix_)
+        iv,ix_,_ = s2mpj_ii("c2",ix_)
         arrset(pb.xnames,iv,"c2")
-        iv,ix_,_ = s2x_ii("c3",ix_)
+        iv,ix_,_ = s2mpj_ii("c3",ix_)
         arrset(pb.xnames,iv,"c3")
-        iv,ix_,_ = s2x_ii("d0",ix_)
+        iv,ix_,_ = s2mpj_ii("d0",ix_)
         arrset(pb.xnames,iv,"d0")
-        iv,ix_,_ = s2x_ii("d1",ix_)
+        iv,ix_,_ = s2mpj_ii("d1",ix_)
         arrset(pb.xnames,iv,"d1")
-        iv,ix_,_ = s2x_ii("d2",ix_)
+        iv,ix_,_ = s2mpj_ii("d2",ix_)
         arrset(pb.xnames,iv,"d2")
-        iv,ix_,_ = s2x_ii("d3",ix_)
+        iv,ix_,_ = s2mpj_ii("d3",ix_)
         arrset(pb.xnames,iv,"d3")
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for i = Int64(v_["1"]):Int64(v_["m"])
-            ig,ig_,_ = s2x_ii("f"*string(i),ig_)
+            ig,ig_,_ = s2mpj_ii("f"*string(i),ig_)
             arrset(gtype,ig,"<>")
         end
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
@@ -177,10 +177,8 @@ function VIBRBEAM(action,args...)
         for i = Int64(v_["1"]):Int64(v_["m"])
             pbm.gconst[ig_["f"*string(i)]] = Float64(v_["v"*string(i)])
         end
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = -1*fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pb.xlower[ix_["c0"]] = -Inf
         pb.xupper[ix_["c0"]] = +Inf
@@ -206,7 +204,7 @@ function VIBRBEAM(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "efun", iet_)
+        it,iet_,_ = s2mpj_ii( "efun", iet_)
         loaset(elftv,it,1,"a0")
         loaset(elftv,it,2,"a1")
         loaset(elftv,it,3,"a2")
@@ -221,27 +219,27 @@ function VIBRBEAM(action,args...)
         for i = Int64(v_["1"]):Int64(v_["m"])
             for j = Int64(v_["0"]):Int64(v_["3"])
                 ename = "fu"*string(i)*","*string(j)
-                ie,ie_,_  = s2x_ii(ename,ie_)
+                ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"efun")
                 arrset(ielftype, ie, iet_["efun"])
                 vname = "d0"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="a0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "d1"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="a1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "d2"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="a2",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "d3"
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="a3",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "c"*string(j)
-                iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="b",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="y",elftp[ielftype[ie]])
@@ -252,7 +250,7 @@ function VIBRBEAM(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gsquare",igt_)
+        it,igt_,_ = s2mpj_ii("gsquare",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -271,12 +269,17 @@ function VIBRBEAM(action,args...)
             end
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+# LO SOLUTION             0.15644607137
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "SUR2-MN-8-0"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -373,7 +376,7 @@ function VIBRBEAM(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

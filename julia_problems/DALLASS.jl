@@ -45,12 +45,12 @@ function DALLASS(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         iv = ix_["X42"]
         pbm.A[ig,iv] += Float64(-6.38400e+02)
@@ -62,7 +62,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-5.05000e+02)
         iv = ix_["X46"]
         pbm.A[ig,iv] += Float64(-4.36900e+02)
-        ig,ig_,_ = s2x_ii("N1",ig_)
+        ig,ig_,_ = s2mpj_ii("N1",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N1")
         iv = ix_["X46"]
@@ -71,26 +71,26 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N2",ig_)
+        ig,ig_,_ = s2mpj_ii("N2",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N2")
         iv = ix_["X45"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X2"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N3",ig_)
+        ig,ig_,_ = s2mpj_ii("N3",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N3")
         iv = ix_["X44"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X3"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N4",ig_)
+        ig,ig_,_ = s2mpj_ii("N4",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N4")
         iv = ix_["X4"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N5",ig_)
+        ig,ig_,_ = s2mpj_ii("N5",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N5")
         iv = ix_["X16"]
@@ -101,7 +101,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X5"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N6",ig_)
+        ig,ig_,_ = s2mpj_ii("N6",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N6")
         iv = ix_["X7"]
@@ -110,14 +110,14 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X8"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N7",ig_)
+        ig,ig_,_ = s2mpj_ii("N7",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N7")
         iv = ix_["X9"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X10"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N8",ig_)
+        ig,ig_,_ = s2mpj_ii("N8",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N8")
         iv = ix_["X10"]
@@ -128,7 +128,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X11"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N9",ig_)
+        ig,ig_,_ = s2mpj_ii("N9",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N9")
         iv = ix_["X12"]
@@ -137,7 +137,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X13"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N10",ig_)
+        ig,ig_,_ = s2mpj_ii("N10",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N10")
         iv = ix_["X4"]
@@ -148,7 +148,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X14"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N11",ig_)
+        ig,ig_,_ = s2mpj_ii("N11",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N11")
         iv = ix_["X15"]
@@ -159,7 +159,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X17"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N12",ig_)
+        ig,ig_,_ = s2mpj_ii("N12",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N12")
         iv = ix_["X20"]
@@ -172,7 +172,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X18"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N13",ig_)
+        ig,ig_,_ = s2mpj_ii("N13",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N13")
         iv = ix_["X42"]
@@ -181,21 +181,21 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X19"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N14",ig_)
+        ig,ig_,_ = s2mpj_ii("N14",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N14")
         iv = ix_["X21"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X20"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N15",ig_)
+        ig,ig_,_ = s2mpj_ii("N15",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N15")
         iv = ix_["X43"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X21"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N16",ig_)
+        ig,ig_,_ = s2mpj_ii("N16",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N16")
         iv = ix_["X14"]
@@ -206,7 +206,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X22"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N17",ig_)
+        ig,ig_,_ = s2mpj_ii("N17",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N17")
         iv = ix_["X23"]
@@ -215,7 +215,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N18",ig_)
+        ig,ig_,_ = s2mpj_ii("N18",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N18")
         iv = ix_["X31"]
@@ -226,7 +226,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X26"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N19",ig_)
+        ig,ig_,_ = s2mpj_ii("N19",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N19")
         iv = ix_["X26"]
@@ -237,12 +237,12 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X27"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N20",ig_)
+        ig,ig_,_ = s2mpj_ii("N20",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N20")
         iv = ix_["X28"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("N21",ig_)
+        ig,ig_,_ = s2mpj_ii("N21",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N21")
         iv = ix_["X31"]
@@ -251,21 +251,21 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X29"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N22",ig_)
+        ig,ig_,_ = s2mpj_ii("N22",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N22")
         iv = ix_["X30"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X27"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("N23",ig_)
+        ig,ig_,_ = s2mpj_ii("N23",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N23")
         iv = ix_["X24"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X32"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N24",ig_)
+        ig,ig_,_ = s2mpj_ii("N24",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N24")
         iv = ix_["X38"]
@@ -276,14 +276,14 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X33"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N25",ig_)
+        ig,ig_,_ = s2mpj_ii("N25",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N25")
         iv = ix_["X32"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X35"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N26",ig_)
+        ig,ig_,_ = s2mpj_ii("N26",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N26")
         iv = ix_["X35"]
@@ -292,14 +292,14 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X36"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N27",ig_)
+        ig,ig_,_ = s2mpj_ii("N27",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N27")
         iv = ix_["X37"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X34"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("N28",ig_)
+        ig,ig_,_ = s2mpj_ii("N28",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N28")
         iv = ix_["X36"]
@@ -310,7 +310,7 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(-1.0)
         iv = ix_["X38"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N29",ig_)
+        ig,ig_,_ = s2mpj_ii("N29",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N29")
         iv = ix_["X39"]
@@ -319,14 +319,14 @@ function DALLASS(action,args...)
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X1"]
         pbm.A[ig,iv] += Float64(1.0)
-        ig,ig_,_ = s2x_ii("N30",ig_)
+        ig,ig_,_ = s2mpj_ii("N30",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N30")
         iv = ix_["X40"]
         pbm.A[ig,iv] += Float64(1.0)
         iv = ix_["X41"]
         pbm.A[ig,iv] += Float64(-1.0)
-        ig,ig_,_ = s2x_ii("N31",ig_)
+        ig,ig_,_ = s2mpj_ii("N31",ig_)
         arrset(gtype,ig,"==")
         arrset(pb.cnames,ig,"N31")
         iv = ix_["X46"]
@@ -371,8 +371,6 @@ function DALLASS(action,args...)
         pbm.gconst[ig_["N26"]] = Float64(5.27000e-01)
         pbm.gconst[ig_["N29"]] = Float64(1.00000e-03)
         pbm.gconst[ig_["N31"]] = Float64(-1.01960e+01)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = fill(-2.00000e+02,pb.n)
         pb.xupper = fill(2.00000e+02,pb.n)
@@ -586,13 +584,13 @@ function DALLASS(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eT1", iet_)
+        it,iet_,_ = s2mpj_ii( "eT1", iet_)
         loaset(elftv,it,1,"ARC")
         elftp = Vector{Vector{String}}()
         loaset(elftp,it,1,"C1")
         loaset(elftp,it,2,"C2")
         loaset(elftp,it,3,"C3")
-        it,iet_,_ = s2x_ii( "eT4", iet_)
+        it,iet_,_ = s2mpj_ii( "eT4", iet_)
         loaset(elftv,it,1,"ARC")
         loaset(elftp,it,1,"C1")
         loaset(elftp,it,2,"C2")
@@ -600,11 +598,11 @@ function DALLASS(action,args...)
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         ename = "E1"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype, ie, iet_["eT4"])
         vname = "X1"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -612,11 +610,11 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(2.51200e+02))
         ename = "E2"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype, ie, iet_["eT4"])
         vname = "X2"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -624,11 +622,11 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(6.46300e+01))
         ename = "E3"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype, ie, iet_["eT4"])
         vname = "X3"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -636,13 +634,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(4.81400e+01))
         ename = "E4"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X4"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -652,13 +650,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.22000e+02))
         ename = "E5"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X5"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -668,13 +666,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.00000e+02))
         ename = "E6"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X6"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -684,13 +682,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.20000e+02))
         ename = "E7"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X7"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -700,13 +698,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.22000e+02))
         ename = "E8"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X8"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -716,13 +714,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.20000e+02))
         ename = "E9"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X9"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -732,13 +730,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.22000e+02))
         ename = "E10"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X10"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -748,13 +746,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(9.50000e+01))
         ename = "E11"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X11"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -764,13 +762,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.07000e+02))
         ename = "E12"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X12"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -780,13 +778,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E13"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X13"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -796,13 +794,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E14"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X14"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -812,13 +810,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.00000e+02))
         ename = "E15"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X15"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -828,13 +826,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.30000e+02))
         ename = "E16"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X16"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -844,13 +842,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.22000e+02))
         ename = "E17"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X17"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -860,13 +858,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E18"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X18"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -876,11 +874,11 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.18000e+02))
         ename = "E19"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype, ie, iet_["eT4"])
         vname = "X19"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -888,13 +886,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.12970e+02))
         ename = "E20"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X20"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -904,11 +902,11 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E21"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eT4")
         arrset(ielftype, ie, iet_["eT4"])
         vname = "X21"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -916,13 +914,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C2",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.60610e+02))
         ename = "E22"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X22"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -932,13 +930,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.30000e+02))
         ename = "E23"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X23"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -948,13 +946,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(9.50000e+01))
         ename = "E24"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X24"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -964,13 +962,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(9.50000e+01))
         ename = "E25"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X25"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -980,13 +978,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E26"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X26"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -996,13 +994,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E27"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X27"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1012,13 +1010,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.24000e+02))
         ename = "E28"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X28"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1028,13 +1026,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E29"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X29"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1044,13 +1042,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.13000e+02))
         ename = "E30"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X30"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1060,13 +1058,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.13000e+02))
         ename = "E31"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X31"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1076,13 +1074,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E32"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X32"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1092,13 +1090,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(9.50000e+01))
         ename = "E33"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X33"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1108,13 +1106,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.00000e+02))
         ename = "E34"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X34"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1124,13 +1122,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.13000e+02))
         ename = "E35"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X35"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1140,13 +1138,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(9.50000e+01))
         ename = "E36"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X36"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1156,13 +1154,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E37"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X37"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1172,13 +1170,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.10000e+02))
         ename = "E38"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X38"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1188,13 +1186,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.00000e+02))
         ename = "E39"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X39"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1204,13 +1202,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.20000e+02))
         ename = "E40"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X40"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1220,13 +1218,13 @@ function DALLASS(action,args...)
         posep = findfirst(x->x=="C3",elftp[ielftype[ie]])
         loaset(pbm.elpar,ie,posep,Float64(1.20000e+02))
         ename = "E41"
-        ie,ie_,newelt = s2x_ii(ename,ie_)
+        ie,ie_,newelt = s2mpj_ii(ename,ie_)
         if newelt > 0
             arrset(pbm.elftype,ie,"eT1")
             arrset(ielftype,ie,iet_["eT1"])
         end
         vname = "X41"
-        iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
         posev = findfirst(x->x=="ARC",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="C1",elftp[ielftype[ie]])
@@ -1386,6 +1384,8 @@ function DALLASS(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# LO SOLTN               -3.2393D+04
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
@@ -1399,6 +1399,10 @@ function DALLASS(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "ONR2-MN-46-31"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1408,7 +1412,7 @@ function DALLASS(action,args...)
         iel_    = args[2]
         nargout = args[3]
         pbm     = args[4]
-        TMP = 850559.0e0/2.85e0*pbm.elpar[iel_][1]
+        TMP = 850559.0e0/2.85*pbm.elpar[iel_][1]
         TMP = TMP/(pbm.elpar[iel_][3]^1.85)
         TMP = TMP/(pbm.elpar[iel_][2]^4.87)
         X = abs(EV_[1])
@@ -1417,10 +1421,10 @@ function DALLASS(action,args...)
         if nargout>1
             dim = try length(IV_) catch; length(EV_) end
             g_  = zeros(Float64,dim)
-            g_[1] = 2.85e0*TMP*EV_[1]*XEXP
+            g_[1] = 2.85*TMP*EV_[1]*XEXP
             if nargout>2
                 H_ = zeros(Float64,1,1)
-                H_[1,1] = 5.2725e0*TMP*XEXP
+                H_[1,1] = 5.2725*TMP*XEXP
             end
         end
         if nargout == 1
@@ -1443,7 +1447,7 @@ function DALLASS(action,args...)
         TMP = pbm.elpar[iel_][2]*(pbm.elpar[iel_][1]-X*X)
         TMP = sqrt(max(TMP,EPS2))
         TMP2 = sqrt(pbm.elpar[iel_][2])*asin(X/SQC1)
-        f_   = 0.5e0*(-X*TMP-pbm.elpar[iel_][1]*TMP2)
+        f_   = 0.5*(-X*TMP-pbm.elpar[iel_][1]*TMP2)
         if nargout>1
             dim = try length(IV_) catch; length(EV_) end
             g_  = zeros(Float64,dim)
@@ -1468,7 +1472,7 @@ function DALLASS(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

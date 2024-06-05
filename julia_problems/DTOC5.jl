@@ -33,6 +33,13 @@ function DTOC5(action,args...)
 #    The problem has 2N-1  variables (of which 1 is fixed),
 #    and N-1 constraints
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   10             $-PARAMETER n =    19, m =     9
+# IE N                   50             $-PARAMETER n =    99, m =    49
+# IE N                   100            $-PARAMETER n =   199, m =    99
+# IE N                   500            $-PARAMETER n =   999, m =   499
+# IE N                   1000           $-PARAMETER n =  1999, m =   999
+# IE N                   5000           $-PARAMETER n =  9999, m =  4999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -54,12 +61,6 @@ function DTOC5(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   50             $-PARAMETER n =    99, m =    49
-# IE N                   100            $-PARAMETER n =   199, m =    99
-# IE N                   500            $-PARAMETER n =   999, m =   499
-# IE N                   1000           $-PARAMETER n =  1999, m =   999
-# IE N                   5000           $-PARAMETER n =  9999, m =  4999
 # IE N                   10000          $-PARAMETER n = 19999, m =  9999
 # IE N                   50000          $-PARAMETER n = 99999, m = 49999
         v_["N-1"] = -1+v_["N"]
@@ -72,21 +73,21 @@ function DTOC5(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for T = Int64(v_["1"]):Int64(v_["N-1"])
-            iv,ix_,_ = s2x_ii("X"*string(T),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(T),ix_)
             arrset(pb.xnames,iv,"X"*string(T))
         end
         for T = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("Y"*string(T),ix_)
+            iv,ix_,_ = s2mpj_ii("Y"*string(T),ix_)
             arrset(pb.xnames,iv,"Y"*string(T))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
-        ig,ig_,_ = s2x_ii("OBJ",ig_)
+        ig,ig_,_ = s2mpj_ii("OBJ",ig_)
         arrset(gtype,ig,"<>")
         arrset(pbm.gscale,ig,Float64(v_["RN"]))
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             v_["T+1"] = 1+T
-            ig,ig_,_ = s2x_ii("TT"*string(T),ig_)
+            ig,ig_,_ = s2mpj_ii("TT"*string(T),ig_)
             arrset(gtype,ig,"==")
             arrset(pb.cnames,ig,"TT"*string(T))
             iv = ix_["Y"*string(Int64(v_["T+1"]))]
@@ -109,8 +110,6 @@ function DTOC5(action,args...)
         pbm.congrps = findall(x->x!="<>",gtype)
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -123,26 +122,26 @@ function DTOC5(action,args...)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = Dict{String,Int}()
         elftv = Vector{Vector{String}}()
-        it,iet_,_ = s2x_ii( "eSQ", iet_)
+        it,iet_,_ = s2mpj_ii( "eSQ", iet_)
         loaset(elftv,it,1,"Z")
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_      = Dict{String,Int}()
         ielftype = Vector{Int64}()
         for T = Int64(v_["1"]):Int64(v_["N-1"])
             ename = "YSQ"*string(T)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "Y"*string(T)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "XSQ"*string(T)
-            ie,ie_,_  = s2x_ii(ename,ie_)
+            ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
             arrset(ielftype, ie, iet_["eSQ"])
             vname = "X"*string(T)
-            iv,ix_,pb = s2x_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -168,6 +167,12 @@ function DTOC5(action,args...)
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
+# LO SOLUTION(  10)      1.451893900588
+# LO SOLUTION(  50)      1.528586458855
+# LO SOLUTION( 100)      1.532552633518
+# LO SOLUTION( 500)      1.530860973890
+# LO SOLUTION(1000)      1.527434119271
+# LO SOLUTION(5000)      1.531611890390
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -182,6 +187,10 @@ function DTOC5(action,args...)
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QQR2-AN-V-V"
         return pb, pbm
+# **********************
+#  SET UP THE FUNCTION *
+#  AND RANGE ROUTINES  *
+# **********************
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -216,7 +225,7 @@ function DTOC5(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])

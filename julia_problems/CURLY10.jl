@@ -17,6 +17,10 @@ function CURLY10(action,args...)
 # 
 #    Number of variables
 # 
+#       Alternative values for the SIF file parameters:
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER     original value
+# IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,10 +42,6 @@ function CURLY10(action,args...)
         else
             v_["N"] = Int64(args[1]);
         end
-#       Alternative values for the SIF file parameters:
-# IE N                   100            $-PARAMETER
-# IE N                   1000           $-PARAMETER     original value
-# IE N                   10000          $-PARAMETER
         v_["K"] = 10
         v_["1"] = 1
         v_["N-K"] = v_["N"]-v_["K"]
@@ -53,7 +53,7 @@ function CURLY10(action,args...)
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])
-            iv,ix_,_ = s2x_ii("X"*string(I),ix_)
+            iv,ix_,_ = s2mpj_ii("X"*string(I),ix_)
             arrset(pb.xnames,iv,"X"*string(I))
         end
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
@@ -61,7 +61,7 @@ function CURLY10(action,args...)
         for I = Int64(v_["1"]):Int64(v_["N-K"])
             v_["I+K"] = I+v_["K"]
             for J = Int64(I):Int64(v_["I+K"])
-                ig,ig_,_ = s2x_ii("Q"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("Q"*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -69,7 +69,7 @@ function CURLY10(action,args...)
         end
         for I = Int64(v_["N-K+1"]):Int64(v_["N"])
             for J = Int64(I):Int64(v_["N"])
-                ig,ig_,_ = s2x_ii("Q"*string(I),ig_)
+                ig,ig_,_ = s2mpj_ii("Q"*string(I),ig_)
                 arrset(gtype,ig,"<>")
                 iv = ix_["X"*string(J)]
                 pbm.A[ig,iv] += Float64(1.0)
@@ -80,8 +80,6 @@ function CURLY10(action,args...)
         ngrp   = length(ig_)
         pbm.objgrps = collect(1:ngrp)
         pb.m        = 0
-        pb.xlower = zeros(Float64,pb.n)
-        pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
@@ -95,7 +93,7 @@ function CURLY10(action,args...)
         end
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
-        it,igt_,_ = s2x_ii("gP4",igt_)
+        it,igt_,_ = s2mpj_ii("gP4",igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         for ig in 1:ngrp
             arrset(pbm.grelt,ig,Int64[])
@@ -105,6 +103,8 @@ function CURLY10(action,args...)
             arrset(pbm.grftype,ig,"gP4")
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
+#    Solution
+# ZL SOLTN               -1.003163D+5   $ (n=1000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
@@ -113,6 +113,10 @@ function CURLY10(action,args...)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = "OUR2-AN-V-0"
         return pb, pbm
+# ********************
+#  SET UP THE GROUPS *
+#  ROUTINE           *
+# ********************
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
@@ -146,7 +150,7 @@ function CURLY10(action,args...)
         pbm = args[1]
         if pbm.name == name
             pbm.has_globs = [0,0]
-            return s2x_eval(action,args...)
+            return s2mpj_eval(action,args...)
         else
             println("ERROR: please run "*name*" with action = setup")
             return ntuple(i->undef,args[end])
