@@ -5,7 +5,7 @@
 #
 ########################################################################
 
-include("s2xlib.jl")
+include("s2mpjlib.jl")
 
 start = 1
 stop  = 10000
@@ -22,7 +22,7 @@ usepython = true
 if ( usepython )
    ENV["PYTHON"] = "/usr/bin/python3"
    using PyCall
-   pushfirst!(PyVector(pyimport("sys")."path"), "/home/philippe/s2x")
+   pushfirst!(PyVector(pyimport("sys")."path"), "/home/philippe/s2mpj_local")
 end
 using Printf
 using LinearAlgebra
@@ -69,7 +69,7 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
     
 if( usejulia )
 
-    jlfile = prob*".jl"
+    jlfile = "./julia_problems/"*prob*".jl"
     run( `touch $jlfile` )
     
     include(jlfile)
@@ -141,7 +141,7 @@ end
 
 if ( usepython )
 
-    pyfile = prob*".py"
+    pyfile = "./python_problems/"*prob*".py"
     run( `touch $pyfile` )
     
     inval   = eval( Meta.parse(inval) ) 

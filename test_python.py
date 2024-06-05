@@ -6,15 +6,16 @@
 
 import numpy as np
 import time
+import sys
+
+sys.path.insert(1, './python_problems')
 
 start = 0
+stop  = 10000
 
 second_evaluation = True
 eval_matvec       = True
 
-#file1 = open('problist', 'r')
-#file1 = open('problist2', 'r')
-#file1 = open('problist3', 'r')
 file1 = open('fullproblist', 'r')
 
 Lines = file1.readlines()
@@ -26,11 +27,10 @@ for line in Lines:
     problem = np.append( problem,  fields[0] )
     invalue = np.append( invalue,  fields[1] )
 
-    problem = [ "ALLINITC"]
-#    problem = [ "ZAMB2m10"]
-    invalue = [ "4" ]
+problem = [ "TAX1" ]
+invalue = [ "1,3,3,2,2" ]
     
-for i in range(start,len(problem)):
+for i in range(start,min(stop,len(problem))):
     theproblem = problem[i]
     thevalue   = invalue[i]
     if ( theproblem[0] == "#" ):
@@ -43,10 +43,10 @@ for i in range(start,len(problem)):
     toc = time.perf_counter()
     print(f"   Python setup       :  {toc - tic:0.4f} seconds")
 
-#    print( "=========")
-#    print(PB.pb)
-#    print( "=========")
-#    print(PB.pbm)
+    print( "=========")
+    print(PB.pb)
+    print( "=========")
+    print(PB.pbm)
 
 #    exit()#D
 

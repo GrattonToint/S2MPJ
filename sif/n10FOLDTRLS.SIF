@@ -2,7 +2,7 @@
 * SET UP THE INITIAL DATA *
 ***************************
 
-NAME          n10FOLDTR
+NAME          n10FOLDTRLS
 
 *   Problem :
 *   *********
@@ -17,16 +17,17 @@ NAME          n10FOLDTR
 *   University of Notre Dame, Indiana, USA (2012)
 
 *   SIF input: Nick Gould, Jan 2012.
+*   Least-squares version of 10FOLDTR.SIF, Nick Gould, Jun 2024.
 
-*   classification NOR2-AN-V-V
+*   classification SUR2-AN-V-0
 
 *   Problem dimension
 
-*IE N                   4              $-PARAMETER original value
-*IE N                   10             $-PARAMETER
-*IE N                   100            $-PARAMETER
-*IE N                   1000           $-PARAMETER
- IE N                   10             $-PARAMETER     modified for S2X tests
+*IE N                   4              $ original value
+*IE N                   10
+*IE N                   100
+ IE N                   1000
+ IE N                   4              $ original value
 
 *   Define useful parameters
 
@@ -44,7 +45,7 @@ GROUPS
 
  DO I         1                        N
  DO J         1                        I
- XE E(I)      X(J)      1.0
+ XN E(I)      X(J)      1.0
  ND
 
 BOUNDS
@@ -57,13 +58,13 @@ START POINT
 
 GROUP TYPE
 
- GV L2        GVAR
- GV L5        GVAR
+ GV L4        GVAR
+ GV L10       GVAR
 
 GROUP USES
 
- XT E(N-1)    L2
- XT E(N)      L5
+ XT E(N-1)    L4
+ XT E(N)      L10
 
 OBJECT BOUND
 
@@ -82,18 +83,18 @@ ENDATA
 * ROUTINE           *
 *********************
 
-GROUPS        n10FOLDTR
+GROUPS        n10FOLDTRLS
 
 INDIVIDUALS
 
- T  L2
- F                      GVAR * GVAR
- G                      GVAR + GVAR
- H                      2.0
+ T  L4
+ F                      GVAR ** 4
+ G                      4.0D0 * GVAR ** 3
+ H                      12.0D0 * GVAR ** 2
 
- T  L5
- F                      GVAR ** 5
- G                      5.0 * GVAR ** 4
- H                      20.0 * GVAR ** 3
+ T  L10
+ F                      GVAR ** 10
+ G                      10.0D0 * GVAR ** 9
+ H                      90.0D0 * GVAR ** 8
 
 ENDATA

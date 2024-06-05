@@ -24,12 +24,14 @@ NAME          CYCLIC3LS
 
 *   dimension parameter
 
-*IE N                   4              $ original value
-*IE N                   10
-*IE N                   100
-*IE N                   1000
-*IE N                   10000
- IE N                   100000
+*IE N                   4              $-PARAMETER original value
+*IE N                   10             $-PARAMETER
+*IE N                   100            $-PARAMETER
+*IE N                   1000           $-PARAMETER
+*IE N                   10000          $-PARAMETER
+*IE N                   100000         $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2X tests
+
 
 *   Problem dimension
 

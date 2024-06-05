@@ -282,14 +282,14 @@ EXPFIT        10
 EXPFITA       10
 EXPFITB       10
 EXPFITC       10
-EXPLIN        10  # 2 params ? 10,6
-EXPLIN2       10  # 2 params ? 10,6
+EXPLIN      12,6 
+EXPLIN2     12,6 
 EXPQUAD     12,6
 EXTRASIM       2
 EXTROSNB      10
 EXTROSNBNE    10
-#FBRAIN2LS     10    
-#FBRAIN3LS      4
+FBRAIN2LS     10    
+FBRAIN3LS      4
 #FBRAINLS       2  # too long in Julia
 FCCU          19
 FEEDLOC       90
@@ -634,6 +634,7 @@ LUKVLE18      17
 LUKVLE2       10
 LUKVLE3       10
 LUKVLE4       10  # pycutest gives 4 constraints instead of 8 !
+LUKVLE4C      10
 LUKVLE5       10
 LUKVLE6        9
 LUKVLE7       10
@@ -652,6 +653,7 @@ LUKVLI18      17
 LUKVLI2       10
 LUKVLI3       10
 LUKVLI4       10  # pycutest gives 4 constraints instead of 8 !
+LUKVLI4C      10
 LUKVLI5       10
 LUKVLI6        9
 LUKVLI7       10
@@ -721,6 +723,7 @@ MUONSINE       1
 MUONSINELS     1
 MWRIGHT        5
 n10FOLDTR     10
+n10FOLDTRLS   10
 n3PK          30
 NASH          74
 NCB20         25
