@@ -26,7 +26,6 @@ function HART6(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HART6"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -168,7 +167,6 @@ function HART6(action,args...)
 #    Solution
 # LO SOLTN               -3.32288689158
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%

@@ -31,7 +31,6 @@ function LUKVLE7(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LUKVLE7"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -118,6 +117,7 @@ function LUKVLE7(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         pb.y0 = zeros(Float64,pb.m)

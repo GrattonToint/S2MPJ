@@ -33,7 +33,6 @@ function YAO(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "YAO"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -114,6 +113,7 @@ function YAO(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["1"]))]] = 0.08
         for i = Int64(v_["P+1"]):Int64(v_["P+k"])
             pb.xlower[ix_["X"*string(i)]] = 0.0

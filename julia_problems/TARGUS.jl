@@ -29,7 +29,6 @@ function TARGUS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TARGUS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -2619,7 +2618,6 @@ function TARGUS(action,args...)
         pbm.H[ix1,ix2] = Float64(2.000000e+00)+pbm.H[ix1,ix2]
         pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

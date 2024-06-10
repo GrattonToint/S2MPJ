@@ -22,7 +22,6 @@ function CONCON(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CONCON"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -129,6 +128,7 @@ function CONCON(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         v_["PMAX1"] = 914.73
         v_["PMAX2"] = 904.73
         pb.xupper[ix_["P3"]] = v_["PMAX2"]

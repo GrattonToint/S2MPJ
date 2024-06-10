@@ -30,7 +30,6 @@ function BOX2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "BOX2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -73,6 +72,7 @@ function BOX2(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X3"]] = 1.0
         pb.xupper[ix_["X3"]] = 1.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
@@ -143,7 +143,6 @@ function BOX2(action,args...)
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

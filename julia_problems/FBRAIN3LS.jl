@@ -31,7 +31,6 @@ function FBRAIN3LS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "FBRAIN3LS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -11132,6 +11131,7 @@ function FBRAIN3LS(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         pb.x0[ix_["ALPHA1"]] = Float64(-4.0)

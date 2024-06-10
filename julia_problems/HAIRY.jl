@@ -28,7 +28,6 @@ function HAIRY(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HAIRY"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -58,6 +57,7 @@ function HAIRY(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         pb.x0[ix_["X1"]] = Float64(-5.0)
@@ -137,7 +137,6 @@ function HAIRY(action,args...)
 #    Solution
 # LO SOLTN               20.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%

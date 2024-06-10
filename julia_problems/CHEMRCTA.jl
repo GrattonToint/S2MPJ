@@ -41,7 +41,6 @@ function CHEMRCTA(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CHEMRCTA"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

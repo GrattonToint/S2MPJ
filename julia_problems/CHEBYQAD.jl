@@ -42,7 +42,6 @@ function CHEBYQAD(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CHEBYQAD"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

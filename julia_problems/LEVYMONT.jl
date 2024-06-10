@@ -37,7 +37,6 @@ function LEVYMONT(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LEVYMONT"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

@@ -23,7 +23,6 @@ function QPCBLEND(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "QPCBLEND"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

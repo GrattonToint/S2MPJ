@@ -32,7 +32,6 @@ function INTEGREQ(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "INTEGREQ"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -84,6 +83,7 @@ function INTEGREQ(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xlower[ix_["X"*string(Int64(v_["N+1"]))]] = 0.0
@@ -176,7 +176,6 @@ function INTEGREQ(action,args...)
             end
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

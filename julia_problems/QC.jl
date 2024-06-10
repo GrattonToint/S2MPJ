@@ -24,7 +24,6 @@ function QC(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "QC"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

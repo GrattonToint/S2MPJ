@@ -24,7 +24,6 @@ function HS3MOD(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS3MOD"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -60,6 +59,7 @@ function HS3MOD(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X2"]] = 0.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
@@ -80,7 +80,6 @@ function HS3MOD(action,args...)
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

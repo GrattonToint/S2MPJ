@@ -39,7 +39,6 @@ function PENTDI(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "PENTDI"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -183,7 +182,6 @@ function PENTDI(action,args...)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION               -0.75
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         Asave = pbm.A[1:ngrp, 1:pb.n]

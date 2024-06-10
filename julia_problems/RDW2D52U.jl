@@ -47,7 +47,6 @@ function RDW2D52U(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "RDW2D52U"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -150,6 +149,7 @@ function RDW2D52U(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["U"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]]  = (
               v_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))])
         pb.xupper[ix_["U"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]]  = (
@@ -696,7 +696,6 @@ function RDW2D52U(action,args...)
         arrset(nlc,length(nlc)+1,ig)
         loaset(pbm.grelw,ig,posel,Float64(v_["-H**2/36"]))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

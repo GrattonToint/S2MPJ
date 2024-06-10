@@ -26,7 +26,6 @@ function HS99EXP(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS99EXP"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -140,6 +139,7 @@ function HS99EXP(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["R"*string(Int64(v_["1"]))]] = 0.0
         pb.xupper[ix_["R"*string(Int64(v_["1"]))]] = 0.0
         pb.xlower[ix_["Q"*string(Int64(v_["1"]))]] = 0.0

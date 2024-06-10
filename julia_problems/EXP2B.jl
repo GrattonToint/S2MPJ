@@ -30,7 +30,6 @@ function EXP2B(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "EXP2B"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

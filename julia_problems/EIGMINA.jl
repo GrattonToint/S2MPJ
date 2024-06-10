@@ -33,7 +33,6 @@ function EIGMINA(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "EIGMINA"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

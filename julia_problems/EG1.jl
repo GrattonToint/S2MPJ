@@ -27,7 +27,6 @@ function EG1(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "EG1"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -148,7 +147,6 @@ function EG1(action,args...)
         loaset(pbm.grelt,ig,posel,ie_["G3E2"])
         loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

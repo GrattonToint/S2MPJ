@@ -49,7 +49,6 @@ function FLOSP2TL(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "FLOSP2TL"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -350,6 +349,7 @@ function FLOSP2TL(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for K = Int64(v_["-M"]):Int64(v_["M"])
             pb.xlower[ix_["PS"*string(K)*","*string(Int64(v_["-M"]))]] = 1.0
             pb.xupper[ix_["PS"*string(K)*","*string(Int64(v_["-M"]))]] = 1.0

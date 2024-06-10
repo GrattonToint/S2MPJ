@@ -31,7 +31,6 @@ function n3PK(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "n3PK"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

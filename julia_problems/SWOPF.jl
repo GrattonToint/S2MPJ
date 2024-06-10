@@ -28,7 +28,6 @@ function SWOPF(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SWOPF"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -1187,6 +1186,7 @@ function SWOPF(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["V20001"]] = 0.810
         pb.xupper[ix_["V20001"]] = 1.210
         pb.xlower[ix_["V20002"]] = 0.810

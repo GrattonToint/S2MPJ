@@ -26,7 +26,6 @@ function HS75(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS75"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

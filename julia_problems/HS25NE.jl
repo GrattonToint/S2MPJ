@@ -29,7 +29,6 @@ function HS25NE(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS25NE"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

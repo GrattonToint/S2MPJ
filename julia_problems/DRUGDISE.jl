@@ -44,7 +44,6 @@ function DRUGDISE(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DRUGDISE"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

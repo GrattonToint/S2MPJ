@@ -28,7 +28,6 @@ function DIAGIQE(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DIAGIQE"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -94,7 +93,6 @@ function DIAGIQE(action,args...)
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         Hsave = pbm.H[ 1:pb.n, 1:pb.n ]

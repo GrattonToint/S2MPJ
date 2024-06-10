@@ -53,7 +53,6 @@ function OBSTCLBU(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "OBSTCLBU"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -296,7 +295,6 @@ function OBSTCLBU(action,args...)
 # LO SOLTN(100)          ???
 # LO SOLTN(125)          ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

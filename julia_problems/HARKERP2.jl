@@ -35,7 +35,6 @@ function HARKERP2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HARKERP2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -122,7 +121,6 @@ function HARKERP2(action,args...)
 #    Solution
 # LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         Asave = pbm.A[1:ngrp, 1:pb.n]

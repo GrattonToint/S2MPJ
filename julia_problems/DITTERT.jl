@@ -34,7 +34,6 @@ function DITTERT(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DITTERT"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

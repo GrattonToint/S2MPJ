@@ -35,7 +35,6 @@ function BRATU1D(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "BRATU1D"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -91,6 +90,7 @@ function BRATU1D(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xlower[ix_["X"*string(Int64(v_["N+1"]))]] = 0.0
@@ -204,7 +204,6 @@ function BRATU1D(action,args...)
 # LO SOLTN501            -8.51892
 # LO SOLTN1001           -8.51893
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%

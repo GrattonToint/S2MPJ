@@ -45,7 +45,6 @@ function CLPLATEA(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CLPLATEA"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -123,6 +122,7 @@ function CLPLATEA(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             pb.xlower[ix_["X"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
             pb.xupper[ix_["X"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
@@ -159,7 +159,6 @@ function CLPLATEA(action,args...)
 # LO SOLTN(32)           -1.1543D-02
 # LO SOLTN(71)           -1.2592D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

@@ -23,7 +23,6 @@ function LOGROS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LOGROS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -89,7 +88,6 @@ function LOGROS(action,args...)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         pbm.A = spzeros(Float64,0,0)

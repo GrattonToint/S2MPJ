@@ -23,7 +23,6 @@ function AGG(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "AGG"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

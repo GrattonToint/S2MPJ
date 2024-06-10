@@ -33,7 +33,6 @@ function TAX13322(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TAX13322"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -210,6 +209,7 @@ function TAX13322(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["NA"])
             for P = Int64(v_["1"]):Int64(v_["NBD"])
                 for Q = Int64(v_["1"]):Int64(v_["NCE"])
@@ -11068,7 +11068,6 @@ function TAX13322(action,args...)
             end
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

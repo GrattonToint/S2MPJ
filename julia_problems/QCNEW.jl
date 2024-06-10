@@ -24,7 +24,6 @@ function QCNEW(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "QCNEW"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

@@ -23,7 +23,6 @@ function ZAMB2m8(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ZAMB2m8"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -1573,6 +1572,7 @@ function ZAMB2m8(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["V1"*string(Int64(v_["0"]))]] = v_["V10"]
         pb.xupper[ix_["V1"*string(Int64(v_["0"]))]] = v_["V10"]
         pb.xlower[ix_["V2"*string(Int64(v_["0"]))]] = v_["V20"]

@@ -30,7 +30,6 @@ function ALJAZZAF(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ALJAZZAF"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

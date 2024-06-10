@@ -35,7 +35,6 @@ function FLETCHBV(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "FLETCHBV"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -131,6 +130,7 @@ function FLETCHBV(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -180,7 +180,6 @@ function FLETCHBV(action,args...)
 #    Solution
 # LO SOLTN                ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

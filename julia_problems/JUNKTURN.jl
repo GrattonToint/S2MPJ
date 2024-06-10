@@ -44,7 +44,6 @@ function JUNKTURN(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "JUNKTURN"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -143,6 +142,7 @@ function JUNKTURN(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["1"]))*","*string(Int64(v_["0"]))]] = 1.0
         pb.xupper[ix_["X"*string(Int64(v_["1"]))*","*string(Int64(v_["0"]))]] = 1.0
         pb.xlower[ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["0"]))]] = 0.0
@@ -525,7 +525,6 @@ function JUNKTURN(action,args...)
 # LO SOLTN(500)          7.417771100D-5
 # LO SOLTN(1000)         1.224842784D-5
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

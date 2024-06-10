@@ -26,7 +26,6 @@ function OPTPRLOC(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "OPTPRLOC"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

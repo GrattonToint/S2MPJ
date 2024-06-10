@@ -30,7 +30,6 @@ function PRICE4B(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "PRICE4B"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -140,7 +139,6 @@ function PRICE4B(action,args...)
 #    Solution
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

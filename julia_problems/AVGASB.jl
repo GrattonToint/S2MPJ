@@ -20,7 +20,6 @@ function AVGASB(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "AVGASB"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

@@ -43,7 +43,6 @@ function CHENHARK(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CHENHARK"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -206,7 +205,6 @@ function CHENHARK(action,args...)
 #    Solution
 # LO SOLTN               -0.5
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         Asave = pbm.A[1:ngrp, 1:pb.n]

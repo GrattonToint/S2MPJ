@@ -25,7 +25,6 @@ function CANTILVR(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CANTILVR"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

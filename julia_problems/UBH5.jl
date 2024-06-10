@@ -39,7 +39,6 @@ function UBH5(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "UBH5"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -156,6 +155,7 @@ function UBH5(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["3"])
             for T = Int64(v_["0"]):Int64(v_["N"])
                 pb.xlower[ix_["U"*string(I)*","*string(T)]] = -1.0
@@ -240,7 +240,6 @@ function UBH5(action,args...)
 # LO SOLTN(1000)         1.11598643493
 # LO SOLTN(2000)         1.11587382445
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

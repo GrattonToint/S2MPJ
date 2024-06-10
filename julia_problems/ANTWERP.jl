@@ -148,7 +148,6 @@ function ANTWERP(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ANTWERP"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

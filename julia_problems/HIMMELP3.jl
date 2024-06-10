@@ -30,7 +30,6 @@ function HIMMELP3(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HIMMELP3"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

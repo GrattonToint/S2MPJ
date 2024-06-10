@@ -43,7 +43,6 @@ function DRCAV3LQ(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DRCAV3LQ"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -133,6 +132,7 @@ function DRCAV3LQ(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["-1"]):Int64(v_["M+2"])
             pb.xlower[ix_["Y"*string(Int64(v_["-1"]))*","*string(J)]] = 0.0
             pb.xupper[ix_["Y"*string(Int64(v_["-1"]))*","*string(J)]] = 0.0
@@ -305,7 +305,6 @@ function DRCAV3LQ(action,args...)
 #    Solution
 # LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

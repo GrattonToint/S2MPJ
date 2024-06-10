@@ -30,7 +30,6 @@ function TOINTQOR(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TOINTQOR"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -460,6 +459,7 @@ function TOINTQOR(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = Dict{String,Int}()
         it,igt_,_ = s2mpj_ii("gL2",igt_)

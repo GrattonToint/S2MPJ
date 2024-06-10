@@ -21,7 +21,6 @@ function FEEDLOC(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "FEEDLOC"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

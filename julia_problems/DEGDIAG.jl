@@ -30,7 +30,6 @@ function DEGDIAG(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DEGDIAG"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -81,7 +80,6 @@ function DEGDIAG(action,args...)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
         pbm.H = Hsave

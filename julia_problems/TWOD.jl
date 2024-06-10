@@ -26,7 +26,6 @@ function TWOD(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TWOD"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -351,7 +350,6 @@ function TWOD(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_[".25ADTDX"]))
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

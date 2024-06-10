@@ -48,7 +48,6 @@ function TENBARS2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TENBARS2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -128,6 +127,7 @@ function TENBARS2(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["10"])
             pb.xlower[ix_["X"*string(I)]] = 0.645
         end

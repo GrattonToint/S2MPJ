@@ -24,7 +24,6 @@ function HS66(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS66"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -144,7 +143,6 @@ function HS66(action,args...)
 #    Solution
 # LO SOLTN               .5181632741
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

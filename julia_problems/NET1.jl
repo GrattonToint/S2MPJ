@@ -21,7 +21,6 @@ function NET1(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "NET1"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -465,6 +464,7 @@ function NET1(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["SFL21"]] = 0.00000
         pb.xupper[ix_["SFL21"]] = 3.00000e+03
         pb.xlower[ix_["SFL22"]] = 0.00000

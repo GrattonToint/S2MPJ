@@ -31,7 +31,6 @@ function S365MOD(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "S365MOD"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -88,6 +87,7 @@ function S365MOD(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X1"]] = v_["NEARZERO"]
         pb.xlower[ix_["X3"]] = v_["NEARZERO"]
         pb.xlower[ix_["X5"]] = 1.0

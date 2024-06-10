@@ -25,7 +25,6 @@ function DECONVU(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DECONVU"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -160,6 +159,7 @@ function DECONVU(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for K = Int64(v_["-LGSG"]):Int64(v_["0"])
             pb.xlower[ix_["C"*string(K)]] = 0.0
             pb.xupper[ix_["C"*string(K)]] = 0.0

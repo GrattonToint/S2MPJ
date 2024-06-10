@@ -30,7 +30,6 @@ function AIRCRFTB(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "AIRCRFTB"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -121,6 +120,7 @@ function AIRCRFTB(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["ELEVATOR"]] = v_["ELVVAL"]
         pb.xupper[ix_["ELEVATOR"]] = v_["ELVVAL"]
         pb.xlower[ix_["AILERON"]] = v_["AILVAL"]
@@ -349,7 +349,6 @@ function AIRCRFTB(action,args...)
 #    Solution
 # LO SOLTN               6.4099D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

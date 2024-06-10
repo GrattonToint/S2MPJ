@@ -52,7 +52,6 @@ function LAKES(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LAKES"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -520,6 +519,7 @@ function LAKES(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for i = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["W"*string(i)*","*string(Int64(v_["2"]))]] = 0.0001
             pb.xlower[ix_["W"*string(i)*","*string(Int64(v_["3"]))]] = 0.0001

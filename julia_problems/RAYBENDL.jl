@@ -45,7 +45,6 @@ function RAYBENDL(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "RAYBENDL"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -93,6 +92,7 @@ function RAYBENDL(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = v_["XSRC"]
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = v_["XSRC"]
         pb.xlower[ix_["Z"*string(Int64(v_["0"]))]] = v_["ZSRC"]
@@ -167,7 +167,6 @@ function RAYBENDL(action,args...)
 #   Solution of the continuous problem
 # LO RAYBENDL            96.2424
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%

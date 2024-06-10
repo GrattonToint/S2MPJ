@@ -58,7 +58,6 @@ function LMINSURF(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LMINSURF"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -120,6 +119,7 @@ function LMINSURF(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             v_["J-1"] = -1+J
             v_["RJ-1"] = Float64(v_["J-1"])

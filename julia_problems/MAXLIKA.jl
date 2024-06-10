@@ -26,7 +26,6 @@ function MAXLIKA(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "MAXLIKA"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -432,7 +431,6 @@ function MAXLIKA(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%

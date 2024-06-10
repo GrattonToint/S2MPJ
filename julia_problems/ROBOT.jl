@@ -40,7 +40,6 @@ function ROBOT(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ROBOT"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

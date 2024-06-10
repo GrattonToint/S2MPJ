@@ -44,7 +44,6 @@ function LOADBAL(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LOADBAL"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

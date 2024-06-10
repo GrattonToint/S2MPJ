@@ -35,7 +35,6 @@ function SCOND1LS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SCOND1LS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

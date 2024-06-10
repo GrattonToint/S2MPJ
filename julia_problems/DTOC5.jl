@@ -48,7 +48,6 @@ function DTOC5(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DTOC5"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -113,6 +112,7 @@ function DTOC5(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["Y"*string(Int64(v_["1"]))]] = 1.0
         pb.xupper[ix_["Y"*string(Int64(v_["1"]))]] = 1.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
@@ -174,7 +174,6 @@ function DTOC5(action,args...)
 # LO SOLUTION(1000)      1.527434119271
 # LO SOLUTION(5000)      1.531611890390
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

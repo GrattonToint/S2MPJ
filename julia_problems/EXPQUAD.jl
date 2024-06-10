@@ -29,7 +29,6 @@ function EXPQUAD(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "EXPQUAD"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -81,6 +80,7 @@ function EXPQUAD(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pb.xlower[ix_["X"*string(I)]] = 0.0
             pb.xupper[ix_["X"*string(I)]] = 10.0
@@ -152,7 +152,6 @@ function EXPQUAD(action,args...)
         pb.objlower = 0.0
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

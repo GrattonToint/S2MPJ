@@ -28,7 +28,6 @@ function WATER(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "WATER"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

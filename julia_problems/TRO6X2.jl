@@ -30,7 +30,6 @@ function TRO6X2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TRO6X2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

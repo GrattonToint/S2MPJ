@@ -50,7 +50,6 @@ function SEMICN2U(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SEMICN2U"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -150,6 +149,7 @@ function SEMICN2U(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["U"*string(Int64(v_["0"]))]] = v_["LUA"]
         pb.xupper[ix_["U"*string(Int64(v_["0"]))]] = v_["LUA"]
         pb.xlower[ix_["U"*string(Int64(v_["N+1"]))]] = v_["LUB"]

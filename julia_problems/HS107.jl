@@ -32,7 +32,6 @@ function HS107(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS107"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -118,6 +117,7 @@ function HS107(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X1"]] = 0.0
         pb.xlower[ix_["X2"]] = 0.0
         pb.xlower[ix_["X5"]] = 0.90909

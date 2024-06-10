@@ -48,7 +48,6 @@ function OPTMASS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "OPTMASS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -149,6 +148,7 @@ function OPTMASS(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["1"]))*","*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["X"*string(Int64(v_["1"]))*","*string(Int64(v_["0"]))]] = 0.0
         pb.xlower[ix_["X"*string(Int64(v_["2"]))*","*string(Int64(v_["0"]))]] = 0.0

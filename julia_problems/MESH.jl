@@ -31,7 +31,6 @@ function MESH(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "MESH"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

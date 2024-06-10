@@ -22,7 +22,6 @@ function DUAL1(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DUAL1"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

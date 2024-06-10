@@ -25,7 +25,6 @@ function EXTRASIM(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "EXTRASIM"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

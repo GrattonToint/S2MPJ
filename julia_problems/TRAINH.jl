@@ -55,7 +55,6 @@ function TRAINH(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TRAINH"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

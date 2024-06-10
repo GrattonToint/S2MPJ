@@ -34,7 +34,6 @@ function TWOBARS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TWOBARS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

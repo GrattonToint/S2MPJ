@@ -37,7 +37,6 @@ function READING2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "READING2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -166,7 +165,6 @@ function READING2(action,args...)
             pb.xupper[ix_["U"*string(I)]] = 1.0
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

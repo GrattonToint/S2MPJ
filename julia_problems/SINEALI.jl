@@ -33,7 +33,6 @@ function SINEALI(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SINEALI"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

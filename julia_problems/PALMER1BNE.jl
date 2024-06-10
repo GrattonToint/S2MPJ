@@ -31,7 +31,6 @@ function PALMER1BNE(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "PALMER1BNE"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

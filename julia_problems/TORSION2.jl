@@ -43,7 +43,6 @@ function TORSION2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "TORSION2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -269,7 +268,6 @@ function TORSION2(action,args...)
 # LO SOLTN(50)           ???
 # LO SOLTN(61)           ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

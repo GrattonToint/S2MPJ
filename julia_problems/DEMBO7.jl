@@ -27,7 +27,6 @@ function DEMBO7(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DEMBO7"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

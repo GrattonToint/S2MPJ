@@ -62,7 +62,6 @@ function DTOC1L(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DTOC1L"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -241,6 +240,7 @@ function DTOC1L(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["NY"])
             pb.xlower[ix_["Y"*string(Int64(v_["1"]))*","*string(I)]] = 0.0
             pb.xupper[ix_["Y"*string(Int64(v_["1"]))*","*string(I)]] = 0.0

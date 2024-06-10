@@ -24,7 +24,6 @@ function FERRISDC(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "FERRISDC"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -420,7 +419,6 @@ function FERRISDC(action,args...)
 # XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
 # XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

@@ -27,7 +27,6 @@ function NONCVXU2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "NONCVXU2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -67,6 +66,7 @@ function NONCVXU2(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -168,7 +168,6 @@ function NONCVXU2(action,args...)
 # LO SOLUTION            2.3168084D+4   $ (n=10000)
 # LO SOLUTION            2.3168084D+5   $ (n=100000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%

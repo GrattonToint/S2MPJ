@@ -38,7 +38,6 @@ function CLNLBEAM(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "CLNLBEAM"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -123,6 +122,7 @@ function CLNLBEAM(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["0"]):Int64(v_["NI"])
             pb.xlower[ix_["X"*string(I)]] = -0.05
             pb.xupper[ix_["X"*string(I)]] = 0.05
@@ -231,7 +231,6 @@ function CLNLBEAM(action,args...)
 # LO SOLTN(1000)         344.8788169123
 # LO SOLTN(5000)         
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

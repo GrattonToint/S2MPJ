@@ -31,7 +31,6 @@ function PALMER4ANE(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "PALMER4ANE"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

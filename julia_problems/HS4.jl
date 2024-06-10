@@ -24,7 +24,6 @@ function HS4(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS4"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

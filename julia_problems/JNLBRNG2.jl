@@ -56,7 +56,6 @@ function JNLBRNG2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "JNLBRNG2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -318,7 +317,6 @@ function JNLBRNG2(action,args...)
 # LO SOLTN(100)          -0.4148700
 # LO SOLTN(125)          -0.4149600
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)

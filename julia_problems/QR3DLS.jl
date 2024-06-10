@@ -39,7 +39,6 @@ function QR3DLS(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "QR3DLS"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -139,6 +138,7 @@ function QR3DLS(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pb.xlower[ix_["R"*string(I)*","*string(I)]] = 0.0
         end

@@ -27,7 +27,6 @@ function HS13(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HS13"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -137,7 +136,6 @@ function HS13(action,args...)
 #    Solution
 # LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         pb.xlower = zeros(Float64,pb.n)
         pb.xupper =    fill(Inf,pb.n)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%

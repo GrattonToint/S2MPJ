@@ -37,7 +37,6 @@ function READING5(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "READING5"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -188,7 +187,6 @@ function READING5(action,args...)
             loaset(pbm.grelw,ig,posel,Float64(v_["2A/H"]))
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

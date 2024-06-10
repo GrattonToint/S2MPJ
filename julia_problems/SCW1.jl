@@ -34,7 +34,6 @@ function SCW1(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SCW1"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -214,7 +213,6 @@ function SCW1(action,args...)
 # LO SCW                 0.0
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

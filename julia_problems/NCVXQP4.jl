@@ -28,7 +28,6 @@ function NCVXQP4(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "NCVXQP4"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

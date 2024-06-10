@@ -74,7 +74,6 @@ function KISSING(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "KISSING"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

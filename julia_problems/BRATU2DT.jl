@@ -36,7 +36,6 @@ function BRATU2DT(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "BRATU2DT"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -112,6 +111,7 @@ function BRATU2DT(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             pb.xlower[ix_["U"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
             pb.xupper[ix_["U"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
@@ -171,7 +171,6 @@ function BRATU2DT(action,args...)
 # LO SOLTN(32)           1.27193D-07
 # LO SOLTN(72)           1.30497D-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

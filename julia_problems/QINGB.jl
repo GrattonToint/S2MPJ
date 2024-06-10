@@ -32,7 +32,6 @@ function QINGB(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "QINGB"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

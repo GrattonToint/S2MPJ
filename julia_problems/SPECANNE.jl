@@ -29,7 +29,6 @@ function SPECANNE(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SPECANNE"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

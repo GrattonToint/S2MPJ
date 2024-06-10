@@ -26,7 +26,6 @@ function JANNSON4(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "JANNSON4"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

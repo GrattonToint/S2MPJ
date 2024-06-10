@@ -40,7 +40,6 @@ function ROTDISC(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ROTDISC"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -285,6 +284,7 @@ function ROTDISC(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["sigr"*string(Int64(v_["0"]))]] = v_["sigmari"]
         pb.xupper[ix_["sigr"*string(Int64(v_["0"]))]] = v_["sigmari"]
         pb.xupper[ix_["sigt"*string(Int64(v_["0"]))]] = v_["sigmati"]

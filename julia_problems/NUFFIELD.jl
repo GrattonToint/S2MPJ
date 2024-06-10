@@ -75,7 +75,6 @@ function NUFFIELD(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "NUFFIELD"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -381,6 +380,7 @@ function NUFFIELD(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]] = 0.0
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%

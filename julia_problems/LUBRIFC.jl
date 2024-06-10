@@ -40,7 +40,6 @@ function LUBRIFC(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "LUBRIFC"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

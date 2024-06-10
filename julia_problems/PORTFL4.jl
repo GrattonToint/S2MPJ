@@ -45,7 +45,6 @@ function PORTFL4(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "PORTFL4"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

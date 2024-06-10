@@ -28,7 +28,6 @@ function DEGENLPB(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DEGENLPB"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

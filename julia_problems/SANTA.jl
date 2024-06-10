@@ -108,7 +108,6 @@ function SANTA(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "SANTA"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 

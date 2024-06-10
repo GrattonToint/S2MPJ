@@ -38,7 +38,6 @@ function HAGER4(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "HAGER4"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -133,6 +132,7 @@ function HAGER4(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = v_["XX0"]
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = v_["XX0"]
         for I = Int64(v_["1"]):Int64(v_["N"])
@@ -214,7 +214,6 @@ function HAGER4(action,args...)
 # LO SOLTN(1000)         2.794244187
 # LO SOLTN(5000)         ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = -1*fill(Inf,pb.m)
         pb.cupper =    fill(Inf,pb.m)

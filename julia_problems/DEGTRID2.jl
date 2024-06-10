@@ -15,11 +15,6 @@ function DEGTRID2(action,args...)
 # 
 #    The number of variables - 1
 # 
-# IE N                   10
-# IE N                   50
-# IE N                   100
-# IE N                   1000
-# IE N                   10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -28,7 +23,6 @@ function DEGTRID2(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "DEGTRID2"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -36,7 +30,17 @@ function DEGTRID2(action,args...)
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
-        v_["N"] = 100000
+        if nargin<1
+            v_["N"] = Int64(10);  #  SIF file default value
+        else
+            v_["N"] = Int64(args[1]);
+        end
+#       Alternative values for the SIF file parameters:
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER
         v_["0"] = 0
         v_["1"] = 1
         v_["2"] = 2
@@ -98,7 +102,6 @@ function DEGTRID2(action,args...)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(Float64,ngrp)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
         Hsave = pbm.H[ 1:pb.n, 1:pb.n ]

@@ -42,7 +42,6 @@ function ORTHREGF(action,args...)
     if action == "setup"
         pbm          = PBM(name)
         pb           = PB(name)
-        pb.sifpbname = "ORTHREGF"
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -161,6 +160,7 @@ function ORTHREGF(action,args...)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
+        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["P4"]] = 0.001
         pb.xlower[ix_["P5"]] = 0.001
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
