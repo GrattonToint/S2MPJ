@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. Toint (this version 17 IV 2024)
+#   Programming: S. Gratton and Ph. Toint (this version 7 VI 2024)
 #
 #####################################################################################################
 #####################################################################################################
@@ -316,14 +316,16 @@ class CUTEst_problem:
 
             #  Evaluate the linear term, if any.
 
-            if has_A and ig < sA1:# and pbm.A[ ig, :sA2 ].nnz:
+            if hasattr(pbm,"gconst"):
+                fin = float(-pbm.gconst[ ig ])
+            else:
+                fin = 0
+            if has_A and ig < sA1:
                 gin           = np.zeros( (n, 1) )
                 gin[:sA2, :1] = pbm.A[ ig, :sA2 ].T.toarray()
-                fin           = float(-pbm.gconst[ ig ] + gin.T .dot(x))
-            else:
-                fin = float(-pbm.gconst[ ig ])
-                if nargout == 2 or nargout == 3:
-                    gin =  np.zeros(( n, 1 ))
+                fin           = float(fin + gin.T .dot(x))
+            elif nargout == 2 or nargout == 3:
+                gin =  np.zeros(( n, 1 ))
 
             if nargout > 2:
                 Hin = lil_matrix(( n, n ))
@@ -338,10 +340,6 @@ class CUTEst_problem:
                     irange = [iv for iv in pbm.elvar[ iel ]] #  the elemental variable's indeces
                     xiel   = x[ np.array(irange) ]           #  the elemental variable's values
 
-#                    print("iel lib = ", iel, " efname = ", efname )#D
-#                    print( "irange = ", irange )#D
-#                    print( "xiel = = ", xiel )#D
-                    
                     if  hasattr( pbm, 'grelw' ) and ig <= len( pbm.grelw ) and not pbm.grelw[ig] is None :
                         has_weights = True;
                         wiel        = pbm.grelw[ ig ][ iiel ]
@@ -361,7 +359,6 @@ class CUTEst_problem:
                     
                     elif nargout == 2:
                         fiel, giel = eval('self.'+efname +'( self.pbm, 2, xiel, iel)')
-#                        print( "irange = ", irange, "  x[irange] = ", x[irange], "  efname = ", efname, "  iel = ", iel,"  fiel = ", fiel )
                         if  has_weights:
                             fin += wiel * fiel
                             for ir in range(len(irange)):
@@ -375,10 +372,6 @@ class CUTEst_problem:
 
                     elif nargout == 3:
                         fiel, giel, Hiel = eval('self.'+efname +'( self.pbm, 3, xiel, iel )')
-#                        print("fiel = ", fiel )#D
-#                        print("giel = ", giel )#D
-#                        print("Hiel = ", Hiel )#D
-#                        print("efname =", efname," irange = ", irange, ", ig = ", ig," iel = ", iel )#D
                         if has_weights:
                             fin += wiel * fiel
                             for ir in range(len(irange)):
@@ -396,13 +389,6 @@ class CUTEst_problem:
                                 for jr in range(len( irange )):
                                     jj  = irange[ jr ]
                                     Hin[ ii, jj ] += Hiel[ ir, jr ]
-                                #end for jr
-                            #end for ir
-                        #end has_weights
-                    #end  if nargout
-                #end for iiel
-            #end if hasattr(pbm,"grelt")
-
             if debug: #D
                 if isobj:
                     print( "ig = ", ig, "  fin(nonlinear) = ", fin, "  fx = ", fx  )
@@ -557,16 +543,14 @@ class CUTEst_problem:
 
             #  Evaluate the linear term, if any.
 
-            fin = 0.0
-            if has_A and ig < sA1:
-                gin =  np.zeros((n,1))
-                gin[:sA2, :1] = pbm.A[ ig, :sA2 ].T.toarray()
-                fin           = float(-pbm.gconst[ ig ] + gin.T .dot(x))
-            elif mode == "Hv" or mode == "HIv":
-                fin = float( -pbm.gconst[ ig ] )
-                gin = np.zeros((n,1))
+            if hasattr(pbm,"gconst"):
+                fin = float(-pbm.gconst[ ig ] )
             else:
-                gin = np.zeros((n,1))
+                fin = 0.0
+            gin = np.zeros((n,1))
+            if has_A and ig < sA1:
+                gin[:sA2, :1] = pbm.A[ ig, :sA2 ].T.toarray()
+                fin           = float(fin + gin.T .dot(x))
 
             if debug:
                 print( "ig = ", ig, "  fin(linear)", fin ) #D

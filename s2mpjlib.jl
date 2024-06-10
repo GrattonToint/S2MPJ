@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. L. Toint (this version 15 V 2024)
+#   Programming: S. Gratton and Ph. L. Toint (this version 7 VI 2024)
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -367,21 +367,21 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
        end
 
        # Evaluate the linear term, if any.
-       
+
+       if isdefined(pbm, :gconst)
+           fin = -pbm.gconst[ig]
+       else
+           fin = 0
+       end
        if nargout == 1
            if has_A && ig <= sA1
-               fin = -pbm.gconst[ig] + pbm.A[ig, 1:sA2]' * x[1:sA2]
-           else
-               fin = -pbm.gconst[ig]
+               fin += pbm.A[ig, 1:sA2]' * x[1:sA2]
            end
        elseif nargout in [2, 3]
            gin = zeros( n, 1 )
            if has_A && ig <= sA1
                gin[1:sA2] = pbm.A[ig, 1:sA2]
-               fin = -pbm.gconst[ig] + gin[1:sA2]' * x[1:sA2]
-           else
-#               println("iig = ", iig, "ig = ", ig, " lenglist = ", length(glist), " glist = ", glist," pbm.gconst = ", pbm.gconst )#D
-               fin = -pbm.gconst[ig]
+               fin += gin[1:sA2]' * x[1:sA2]
            end
        end
    
@@ -591,16 +591,16 @@ function evalHJv( mode, glist, x, v, y, pbm )
         end
 
         # Evaluate the linear term, if any.
-        
-        if has_A && ig <= sA1
-            fin = -pbm.gconst[ig] + pbm.A[ig, 1:sA2]' * x[1:sA2]
-            gin = zeros(n, 1)
-            gin[1:sA2] = pbm.A[ig, 1:sA2]
-        elseif ( mode == "Hv" || mode == "HIv" )
+
+        if isdefined(pbm, :gconst)
             fin = -pbm.gconst[ig]
-            gin = zeros(n, 1)
-        else 
-            gin = zeros(n, 1)
+        else
+            fin = 0.0
+        end
+        gin = zeros(n, 1)
+        if has_A && ig <= sA1
+            fin += pbm.A[ig, 1:sA2]' * x[1:sA2]
+            gin[1:sA2] = pbm.A[ig, 1:sA2]
         end
  
         Hin = spzeros(n, n)

@@ -1,21 +1,28 @@
+function regenerate( varargin )
 %
-%   Regenerate .m, .jl and .py files and copy the latter to the docker.
+%   Regenerate .m, .jl and .py files from the SIF files.
+%
+%   If varargin contains a list of problem names, only those are decoded.
+%   If regenerate is used without arguments, the list of problems to regenerate
+%   is given by the fullproblist file, which also specifies the problems
+%   arguments The values of start and stop may be modified to select a sublist.
 %
 %   Programming: Ph. Toint
-%   This version 5 V 2024
+%   This version 7 V 2024
 %
 
-function regenerate( varargin )
+addpath ./sif  % the directory containin the problem's SIF files
 
-addpath ./sif
+inma.language = 'matlab';
+inpy.language = 'python';
+injl.language = 'julia';
 
-if ( nargin )
+if ( nargin )  % Decode only a few problems
 
-   inma.language = 'matlab';
+   %  Options for decoding a small set of problems
+   
    inma.outdir   = './matlab_problems';
-   inpy.language = 'python';
    inpy.outdir   = './python_problems';
-   injl.language = 'julia';
    injl.outdir   = './julia_problems';
 
    for i= 1:nargin
@@ -24,37 +31,42 @@ if ( nargin )
       thename = s2mpj( pname, inma );
       thename = s2mpj( pname, inpy );
       thename = s2mpj( pname, injl );
-      system( [ 'cp ./sif/',pname,'.SIF /home/philippe/docker/mycute_2/newpy' ] );
-      system( [ 'cp ./python_problems/', thename, '.py /home/philippe/docker/mycute_2/newpy' ] );
    end
 
+else       % Decode the full problem list
 
-else
-
+   theproblems = './fullproblist';
    start = 1;
    stop  = 10000;
+
+   %  Provide a backup, just in case...
    
-   system( [ 'cp fullproblist /home/philippe/docker/mycute_2/newpy' ] );
-   system( [ 'cp s2mpjlib.py /home/philippe/docker/mycute_2/newpy' ] );
-   system( [ 'cp test_fortran_python.py /home/philippe/docker/mycute_2/newpy' ] );
+   if ( start == 1 )
+      if( ~exist( 'matlab_problems_bak' ) )
+         system( 'mkdir matlab_problems_bak' );
+      end
+      system( 'cp -r matlab_problems matlab_problems_bak' );
+      if( ~exist( 'python_problems_bak' ) )
+         system( 'mkdir python_problems_bak' );
+      end
+      system( 'cp -r python_problems python_problems_bak' );
+      if( ~exist( 'julia_problems_bak' ) )
+         system( 'mkdir julia_problems_bak' );
+      end
+      system( 'cp -r julia_problems julia_problems_bak' );
+   end
+
+   %  Create a temporary working directory.
+   
    if ( ~exist( './temporaries' ) )
       system( 'mkdir ./temporaries' );
    end
-   inma.language = 'matlab';
    inma.outdir   = './temporaries';
-   inpy.language = 'python';
    inpy.outdir   = './temporaries';
-   injl.language = 'julia';
    injl.outdir   = './temporaries';
-   if ( start == 1 )
-      system( [ 'cp -r ',inma.outdir, ' ',  inma.outdir, '_bak' ] );
-      system( [ 'cp -r ',inpy.outdir, ' ',  inpy.outdir, '_bak' ] );
-      system( [ 'cp -r ',injl.outdir, ' ',  injl.outdir, '_bak' ] );
-   end
 
-   
-   theproblems = 'fullproblist';
-   
+   % Loop on the problems, skipping entries starting with #
+
    fid = fopen(theproblems, 'r' );
    problems = {};
    iprob = 0;
@@ -72,31 +84,35 @@ else
       pname = problems{i};
       fprintf( ' Decoding problem %4d: %s\n', i , pname );
 
+      %  Decode to a Matlab file
+
       thename = s2mpj( pname, inma );
       if ( exist( [ './matlab_problems/', thename, '.m' ] ) )
-         has_changed = system([ 'diff -q ./matlab_problems/', thename, '.m  ./temporaries/', pname, '.m' ] );
+         has_changed = system([ 'diff -q ./matlab_problems/', thename, '.m  ./temporaries/', pname, '.m > /dev/null' ] );
       else
          has_changed = 1;
       end
       if ( has_changed )
          system( [ 'mv ./temporaries/', thename, '.m ./matlab_problems/', thename, '.m' ] );
       end
+
+      %  Decode to a Python file
       
       thename = s2mpj( pname, inpy );
       if ( exist( [ './python_problems/', thename, '.py' ] ) )
-         has_changed = system([ 'diff -q ./python_problems/', thename, '.py  ./temporaries/', pname, '.py' ] );
+         has_changed = system([ 'diff -q ./python_problems/', thename, '.py  ./temporaries/', pname, '.py > /dev/null' ] );
       else
          has_changed = 1;
       end
       if ( has_changed )
          system( [ 'mv ./temporaries/', thename, '.py ./python_problems/', thename, '.py' ] );
-         system( [ 'cp ./sif/',pname,'.SIF /home/philippe/docker/mycute_2/newpy/' ] );
-         system( [ 'cp ./python_problems/', thename, '.py /home/philippe/docker/mycute_2/newpy' ] );
       end
+
+      %  Decode to a Julia file
 
       thename = s2mpj( pname, injl );
       if ( exist( [ './julia_problems/', thename, '.jl' ] ) )
-         has_changed = system([ 'diff -q ./julia_problems/', thename, '.jl  ./temporaries/', pname, '.jl' ] );
+         has_changed = system([ 'diff -q ./julia_problems/', thename, '.jl  ./temporaries/', pname, '.jl > /dev/null' ] );
       else
          has_changed = 1;
       end
@@ -105,10 +121,15 @@ else
       end
    end
 
+   %  Clean up.
+
    system( 'rm -r ./temporaries' );
-   system( [ 'ls ',inma.outdir, ' > list_of_matlab_problems' ] );
-   system( [ 'ls ',inpy.outdir, ' > list_of_python_problems' ] );
-   system( [ 'ls ',injl.outdir, ' > list_of_julia_problems' ]  );
+
+   %  Update the lists of available problems.
+   
+   system( 'ls matlab_problems > list_of_matlab_problems' );
+   system( 'ls python_problems > list_of_python_problems' );
+   system( 'ls julia_problems  > list_of_julia_problems'  );
 
 end
 disp( 'Done.' )

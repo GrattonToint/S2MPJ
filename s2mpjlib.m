@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 16 V 2024)
+%   Programming: Ph. Toint (this version 7 VI 2024)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -112,13 +112,15 @@ case { 'fx', 'fgx', 'fgHx', 'cx', 'cJx', 'cJHx', 'cIx', 'cIJx', 'cIJHx', 'fHxv',
 
    switch ( action )
    case { 'fx', 'fgx', 'fgHx' }                      % varargin = { pbm, x }
-      if ( ( isfield( pbm,'objgrps' ) && ~isempty( pbm.objgrps ) ) || ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
+      if ( ( isfield( pbm,'objgrps' ) && ~isempty( pbm.objgrps ) ) || ...
+           ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
          [varargout{1:nargout}] = evalgrsum( 1, pbm.objgrps, varargin{2}, pbm );
       else
          disp( ' ERROR: no objective function!' )
       end
    case 'fHxv'                                          % varargin = { problem, x, v }
-      if ( ( isfield( pbm,'objgrps' ) && ~isempty( pbm.objgrps ) ) || ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
+      if ( ( isfield( pbm,'objgrps' ) && ~isempty( pbm.objgrps ) ) || ...
+           ( isfield( pbm, 'H' ) && ~isempty( pbm.H ) ) )
          varargout{1} = evalHJv( 'Hv', pbm.objgrps, varargin{2}, varargin{3}, [], pbm );
       else
          disp( ' ERROR: no objective function!' )
@@ -286,21 +288,21 @@ for iig = 1:length( glist )
 
    %  Evaluate the linear term, if any.
 
+   if ( isfield( pbm, 'gconst' ) )
+      fin = -pbm.gconst( ig );
+   else
+      fin = 0;
+   end
    switch( nargout )
    case 1
       if ( has_A && ig <= sA1 )
-         fin = -pbm.gconst( ig ) + pbm.A( ig, 1:sA2 ) * x(1:sA2);
-      else
-         fin = -pbm.gconst( ig );
+         fin = fin + pbm.A( ig, 1:sA2 ) * x(1:sA2);
       end
    case { 2, 3 }
+      gin = zeros( n, 1 );
       if ( has_A && ig <= sA1 )
-         gin        = zeros( n, 1 );
          gin(1:sA2) = pbm.A( ig, 1:sA2 ).';
-         fin        = -pbm.gconst( ig ) + gin.' * x;
-      else
-         fin = -pbm.gconst( ig ); 
-         gin = zeros( n, 1 );
+         fin        = fin + gin.' * x;
       end
    end
    if ( nargout > 2 )
@@ -580,16 +582,15 @@ for iig = 1:length( glist )
 
    %  Evaluate the linear term, if any.
 
-   fin = 0;
-   if ( has_A && ig <= sA1 )
-      fin        = -pbm.gconst( ig ) + pbm.A( ig, 1:sA2 ) * x(1:sA2);
-      gin        = zeros( n, 1 );
-      gin(1:sA2) = pbm.A( ig, 1:sA2 ).';
-   elseif ( ismember( mode, { 'Hv', 'HIv' } ) )
+   if ( isfield( pbm, 'gconst' ) )
       fin = -pbm.gconst( ig );
-      gin  = zeros( n, 1 );
    else
-      gin = zeros( n, 1 );
+      fin = 0;
+   end
+   gin  = zeros( n, 1 );
+   if ( has_A && ig <= sA1 )
+      fin        = fin + pbm.A( ig, 1:sA2 ) * x(1:sA2);
+      gin(1:sA2) = pbm.A( ig, 1:sA2 ).';
    end
 
 if(debug )

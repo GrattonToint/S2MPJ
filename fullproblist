@@ -1,5 +1,4 @@
-#A4X12       130       # too long to compile in Julia
-ACOPP14       14       # Julia sometimes(!) crashes
+ACOPP14       14
 ACOPP30       72
 ACOPR14       38
 ACOPR30       38
@@ -7,7 +6,7 @@ AGG           10
 AIRCRFTA       8
 AIRCRFTB       8
 AIRPORT       10
-ALJAZZAF    10,2       # has "nonlinear variables" defined in ELUSES
+ALJAZZAF    10,2
 ALLINIT        4
 ALLINITA       4
 ALLINITC       4
@@ -35,7 +34,6 @@ BEALE          2
 BEALENE        2
 BENNETT5       3
 BENNETT5LS    10
-#BIGBANK      10        # Julia OUT OF MEMORY
 BIGGS3        10
 BIGGS6        10
 BIGGS6NE       6
@@ -52,21 +50,18 @@ BOXBODLS      10
 BQP1VAR        1
 BQPGABIM      50
 BQPGASIM      50
-#BRAINPC0      10        # has variable scaling
-#BRAINPC1      10        # has variable scaling
 BRANIN        10
 BRATU1D       11
 BRATU2D        7
 BRATU2DT       7
 BRATU3D        3
-#BRIDGEND      10       # definition of the elemental parameters after all elements have been defined! Julia OUT OF MEMORY
 BRKMCC         2
 BROWNAL       10
 BROWNBS       10
 BROWNBSNE      2
 BROWNDEN      10
 BROWNDENE      4
-BROYDN3D      10        # no objective (use 'cx')
+BROYDN3D      10
 BROYDN3DLS     5
 BROYDNBDLS    10
 BT10           2
@@ -85,7 +80,7 @@ BT9            4
 BURKEHAN      10
 BYRDSPHR       3
 CAMEL6        10
-CAMSHAPE      10        # has constraints ranges
+CAMSHAPE      10
 CANTILVR       5
 CATENARY       4
 CATMIX        10
@@ -115,12 +110,12 @@ CLPLATEA       4
 CLPLATEB       4
 CLUSTER       10
 CLUSTERLS      2
-CmRELOAD      10        # uses function renaming from C-RELOAD.SIF
+CmRELOAD      10
 CONCON        15
 CONGIGMZ       3
 COOLHANS      10
 COOLHANSLS     9
-CORE1         10        # has if/the/else statement in NONLINEAR ELEMENTS
+CORE1         10
 CORKSCRW      10
 COSHFUN        8
 COSINE        10
@@ -150,12 +145,12 @@ DECONVB       10
 DECONVBNE     61
 DECONVC       61
 DECONVU       61
-DEGDIAG       10        # no data groups, just H
+DEGDIAG       10
 DEGENLPA      20
 DEGENLPB      20
 DEGTRID       10
 DEGTRID2      10
-DEMBO7        10        # has a GRUSES line without element
+DEMBO7        10
 DEMYMALO       2
 DENSCHNA      10
 DENSCHNB      10
@@ -205,13 +200,13 @@ DIXMAANN       5
 DIXMAANO       5
 DIXMAANP       5
 DIXON3DQ      10
-DJTL          10        # has internals and logical assignments + group parameters
+DJTL          10
 DMN15102      66
 DMN15102LS    66
 DMN15103      99
 DMN15103LS    99
-DMN15332      10        # has e_globs    TRES LENT EN MATLAB! 
-DMN15332LS    10        # has e_globs    TRES LENT EN MATLAB! 
+DMN15332      10
+DMN15332LS    10
 DMN15333      99 
 DMN15333LS    99 
 DMN37142      66 
@@ -269,8 +264,8 @@ ELEC          25
 ENGVAL1       10
 ENGVAL2       10
 ENGVAL2NE      3
-ENSO           9         # has e_globs
-ENSOLS        10         # has e_globs
+ENSO           9
+ENSOLS        10
 EQC           10
 ERRINBAR      18
 ERRINROS      10
@@ -290,7 +285,6 @@ EXTROSNB      10
 EXTROSNBNE    10
 FBRAIN2LS     10    
 FBRAIN3LS      4
-#FBRAINLS       2  # too long in Julia
 FCCU          19
 FEEDLOC       90
 FERRISDC     4,3
@@ -315,7 +309,6 @@ GAUSS1LS      10
 GAUSS2LS      10
 GAUSS3LS      10
 GAUSSIAN      10
-#GBRAINLS       2  # too long in Julia
 GENHS28       10
 GENHUMPS      10
 GENROSE       10
@@ -333,7 +326,7 @@ GROWTH         3
 GROWTHLS      10
 GULF           4
 GULFNE         3
-HADAMALS      10      # has g_globs
+HADAMALS      10
 HADAMARD      10
 HAGER1        10
 HAGER2        10
@@ -367,11 +360,7 @@ HEART8LS       8
 HARKERP2      10
 HELIX          3
 HELIXNE        3
-#HELSBY        10      # elemental parameter definition after elemental variable definitions + logicals julia OUT OF MEMORY
 HETmZ          2
-#HIE1327D      10      # quite long...
-#HIE1372D      10      # quite long...
-#HIER13        10      # Stopped after 12 hours !
 HILBERTA      10
 HILBERTB      10
 HIMMELBA       2
@@ -558,7 +547,7 @@ LANCZOS3LS     6
 LAUNCH        10
 LEAKNET       10
 LEVYMONE       5
-LEVYMONE5      5   #  all the LEVYMONT* involve ATAN( 1.0 ) (single) and give much better results with DATAN( 1.0D0 ) !
+LEVYMONE5      5
 LEVYMONE6      5
 LEVYMONE7      5
 LEVYMONE8      5
@@ -592,17 +581,16 @@ LISWET6     50,3
 LISWET7     50,3
 LISWET8     50,3
 LISWET9     50,2
-LMINSURF       4       # has internal variables
+LMINSURF       4
 LOADBAL       31
 LOGHAIRY       2
 LOGROS         2
 LOOTSMA        3
 LOTSCHD       12
-#LRIJCNN1      22      #  more that 12 hours to compile 
 LSC1           3
 LSC1LS         3
 LSC2           3
-LSC2LS       6,3       # has different values for element parameters
+LSC2LS       6,3
 LSNNODOC       5
 LSQFIT         2
 LUBRIF         5
@@ -633,7 +621,7 @@ LUKVLE17      17
 LUKVLE18      17
 LUKVLE2       10
 LUKVLE3       10
-LUKVLE4       10  # pycutest gives 4 constraints instead of 8 !
+LUKVLE4       10
 LUKVLE4C      10
 LUKVLE5       10
 LUKVLE6        9
@@ -652,7 +640,7 @@ LUKVLI17      17
 LUKVLI18      17
 LUKVLI2       10
 LUKVLI3       10
-LUKVLI4       10  # pycutest gives 4 constraints instead of 8 !
+LUKVLI4       10
 LUKVLI4C      10
 LUKVLI5       10
 LUKVLI6        9
@@ -679,7 +667,7 @@ MESH          41
 METHANB8      31
 METHANB8LS    31
 METHANL8      31
-METHANL8LS    10      #  has several elemental parameters
+METHANL8LS    10
 MEXHAT         2
 MEYER3         3
 MEYER3NE       3
@@ -698,7 +686,7 @@ MINMAXBD       5
 MINMAXRB       3
 MINPERM        2
 MINSURF       64
-MINSURFO       5        # has "nonlinear variables" defined in ELUSES
+MINSURFO       5
 MISRA1A        2
 MISRA1ALS     10
 MISRA1B        2
@@ -781,7 +769,7 @@ OSBORNE1       5
 OSBORNE2      11
 OSBORNEA       5
 OSBORNEB      11
-OSCIPATH      10       # has group parameters
+OSCIPATH      10
 OSCIPANE      10
 OSCIGRAD      10
 OSCIGRNE      10
@@ -941,7 +929,7 @@ SANTA         21
 SANTALS       10
 SBRYBND       10
 SCHMVETT      10
-SCOND1LS      10
+SCOND1LS    10,9
 SCOSINE       10
 SCURLY10      10
 SCURLY20      25
@@ -988,10 +976,9 @@ SSEBNLN       10
 SSI            3
 SSINE          3
 STANCMIN       3
-#STATIC3       10
 STNQP1         4
 STNQP2         4
-STREG         10       # has a quadratic term
+STREG         10
 STREGNE        4
 STRTCHDV      10
 SUPERSIM       2
@@ -1000,7 +987,6 @@ SWOPF         83
 SYNTHES1      10
 SYNTHES2      11
 SYNTHES3      17
-#TABLE1        10       # long
 TAME           2
 TARGUS        10
 TAX13322    1,3,3,2,2
@@ -1008,7 +994,6 @@ TENBARS1      18
 TENBARS2      18
 TENBARS3      18
 TENBARS4      18
-#TESTXSC       10       # has variable scaling
 TFI1           3
 TFI2           3
 TFI3           3
@@ -1031,12 +1016,11 @@ TORSIONC       2
 TORSIOND       2
 TORSIONE       2
 TORSIONF       2
-#TOYSARAH      2        # very long in Julia
 TQUARTIC      10
 TQUARTICNE    10
 TRAINF  1.5,2,11
 TRAINH        11
-TRIDIA         5        # no element (a LLS problem)
+TRIDIA         5
 TRIGON1       10
 TRIGON1B      10
 TRIGON2       10
