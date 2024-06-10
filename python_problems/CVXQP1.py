@@ -31,7 +31,6 @@ class  CVXQP1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CVXQP1'
         pbm.name = self.name
         nargin   = len(args)
 

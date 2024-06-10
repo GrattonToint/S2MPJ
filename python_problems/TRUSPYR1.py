@@ -36,7 +36,6 @@ class  TRUSPYR1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TRUSPYR1'
         pbm.name = self.name
         nargin   = len(args)
 

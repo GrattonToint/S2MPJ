@@ -39,7 +39,6 @@ class  POWELLBC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'POWELLBC'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -152,7 +151,6 @@ class  POWELLBC(CUTEst_problem):
 #    Solution
 # LO SOLTN               ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AN-V-0"

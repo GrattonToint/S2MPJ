@@ -29,7 +29,6 @@ class  MAXLIKA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'MAXLIKA'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -443,7 +442,6 @@ class  MAXLIKA(CUTEst_problem):
             pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['C'+str(I)])
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AY-8-0"

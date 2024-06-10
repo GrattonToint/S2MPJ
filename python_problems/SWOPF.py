@@ -31,7 +31,6 @@ class  SWOPF(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SWOPF'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -1197,6 +1196,7 @@ class  SWOPF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['V20001']] = 0.810
         pb.xupper[ix_['V20001']] = 1.210
         pb.xlower[ix_['V20002']] = 0.810

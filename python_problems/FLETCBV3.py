@@ -37,7 +37,6 @@ class  FLETCBV3(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'FLETCBV3'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -120,6 +119,7 @@ class  FLETCBV3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -179,7 +179,6 @@ class  FLETCBV3(CUTEst_problem):
 #    Solution
 # LO SOLTN                ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

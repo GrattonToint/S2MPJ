@@ -16,11 +16,6 @@ class  DEGTRID(CUTEst_problem):
 # 
 #    The number of variables - 1
 # 
-# IE N                   10
-# IE N                   50
-# IE N                   100
-# IE N                   1000
-# IE N                   10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -31,7 +26,6 @@ class  DEGTRID(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DEGTRID'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -39,7 +33,16 @@ class  DEGTRID(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        v_['N'] = 100000
+        if nargin<1:
+            v_['N'] = int(10);  #  SIF file default value
+        else:
+            v_['N'] = int(args[0])
+#           Alternative values for the SIF file parameters:
+# IE N                   50             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   1000           $-PARAMETER
+# IE N                   10000          $-PARAMETER
+# IE N                   100000         $-PARAMETER
         v_['0'] = 0
         v_['1'] = 1
         v_['2'] = 2
@@ -104,7 +107,6 @@ class  DEGTRID(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

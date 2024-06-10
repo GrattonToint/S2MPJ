@@ -33,7 +33,6 @@ class  TRO6X2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TRO6X2'
         pbm.name = self.name
         nargin   = len(args)
 

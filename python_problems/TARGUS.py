@@ -32,7 +32,6 @@ class  TARGUS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TARGUS'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -2630,7 +2629,6 @@ class  TARGUS(CUTEst_problem):
         pbm.H[ix1,ix2] = float(2.000000e+00)+pbm.H[ix1,ix2]
         pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

@@ -47,7 +47,6 @@ class  DRUGDISE(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DRUGDISE'
         pbm.name = self.name
         nargin   = len(args)
 

@@ -27,7 +27,6 @@ class  BATCH(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'BATCH'
         pbm.name = self.name
         nargin   = len(args)
 

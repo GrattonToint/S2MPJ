@@ -28,7 +28,6 @@ class  DECONVU(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DECONVU'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -165,6 +164,7 @@ class  DECONVU(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for K in range(int(v_['-LGSG']),int(v_['0'])+1):
             pb.xlower[ix_['C'+str(K)]] = 0.0
             pb.xupper[ix_['C'+str(K)]] = 0.0

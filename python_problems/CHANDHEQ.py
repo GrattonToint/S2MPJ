@@ -35,7 +35,6 @@ class  CHANDHEQ(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CHANDHEQ'
         pbm.name = self.name
         nargin   = len(args)
 

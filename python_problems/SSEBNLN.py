@@ -27,7 +27,6 @@ class  SSEBNLN(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SSEBNLN'
         pbm.name = self.name
         nargin   = len(args)
 

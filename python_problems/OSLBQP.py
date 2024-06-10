@@ -38,7 +38,6 @@ class  OSLBQP(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'OSLBQP'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -209,7 +208,6 @@ class  OSLBQP(CUTEst_problem):
 #    Solution
 # LO SOLUTION            6.2500000000
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

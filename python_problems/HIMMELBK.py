@@ -40,7 +40,6 @@ class  HIMMELBK(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HIMMELBK'
         pbm.name = self.name
         nargin   = len(args)
 

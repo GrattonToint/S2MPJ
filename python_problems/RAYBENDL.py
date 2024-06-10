@@ -48,7 +48,6 @@ class  RAYBENDL(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'RAYBENDL'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -99,6 +98,7 @@ class  RAYBENDL(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = v_['XSRC']
         pb.xupper[ix_['X'+str(int(v_['0']))]] = v_['XSRC']
         pb.xlower[ix_['Z'+str(int(v_['0']))]] = v_['ZSRC']
@@ -173,7 +173,6 @@ class  RAYBENDL(CUTEst_problem):
 #   Solution of the continuous problem
 # LO RAYBENDL            96.2424
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OXR2-MY-V-0"

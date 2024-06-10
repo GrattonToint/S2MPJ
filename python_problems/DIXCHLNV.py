@@ -38,7 +38,6 @@ class  DIXCHLNV(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DIXCHLNV'
         pbm.name = self.name
         nargin   = len(args)
 

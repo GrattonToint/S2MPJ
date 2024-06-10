@@ -29,7 +29,6 @@ class  HART6(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HART6'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -177,7 +176,6 @@ class  HART6(CUTEst_problem):
 #    Solution
 # LO SOLTN               -3.32288689158
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AN-6-0"

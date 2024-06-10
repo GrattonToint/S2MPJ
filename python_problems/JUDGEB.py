@@ -33,7 +33,6 @@ class  JUDGEB(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'JUDGEB'
         pbm.name = self.name
         nargin   = len(args)
 

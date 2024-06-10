@@ -52,7 +52,6 @@ class  FLOSP2HH(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'FLOSP2HH'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -352,6 +351,7 @@ class  FLOSP2HH(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for K in range(int(v_['-M']),int(v_['M'])+1):
             pb.xlower[ix_['PS'+str(K)+','+str(int(v_['-M']))]] = 1.0
             pb.xupper[ix_['PS'+str(K)+','+str(int(v_['-M']))]] = 1.0

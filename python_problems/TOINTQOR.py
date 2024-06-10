@@ -33,7 +33,6 @@ class  TOINTQOR(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TOINTQOR'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -465,6 +464,7 @@ class  TOINTQOR(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)

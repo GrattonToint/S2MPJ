@@ -33,7 +33,6 @@ class  YORKNET(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'YORKNET'
         pbm.name = self.name
         nargin   = len(args)
 

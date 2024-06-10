@@ -33,7 +33,6 @@ class  EXP2B(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'EXP2B'
         pbm.name = self.name
         nargin   = len(args)
 

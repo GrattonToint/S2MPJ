@@ -35,7 +35,6 @@ class  ROSEPETAL2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ROSEPETAL2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -122,6 +121,7 @@ class  ROSEPETAL2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.full((pb.n,1),float(v_['R2']))
         pb.x0[ix_['S']] = float(v_['NR2'])

@@ -26,7 +26,6 @@ class  QPBAND(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'QPBAND'
         pbm.name = self.name
         nargin   = len(args)
 

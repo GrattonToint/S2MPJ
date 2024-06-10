@@ -36,7 +36,6 @@ class  SINEALI(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SINEALI'
         pbm.name = self.name
         nargin   = len(args)
 

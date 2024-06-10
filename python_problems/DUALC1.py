@@ -25,7 +25,6 @@ class  DUALC1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DUALC1'
         pbm.name = self.name
         nargin   = len(args)
 

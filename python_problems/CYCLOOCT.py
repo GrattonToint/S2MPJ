@@ -48,7 +48,6 @@ class  CYCLOOCT(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CYCLOOCT'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -121,6 +120,7 @@ class  CYCLOOCT(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X1']] = 0.0
         pb.xupper[ix_['X1']] = 0.0
         pb.xlower[ix_['Y1']] = 0.0

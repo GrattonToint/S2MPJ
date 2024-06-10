@@ -31,7 +31,6 @@ class  NCVXQP8(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'NCVXQP8'
         pbm.name = self.name
         nargin   = len(args)
 

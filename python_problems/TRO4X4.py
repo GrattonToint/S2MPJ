@@ -33,7 +33,6 @@ class  TRO4X4(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TRO4X4'
         pbm.name = self.name
         nargin   = len(args)
 

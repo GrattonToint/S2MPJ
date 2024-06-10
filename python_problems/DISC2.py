@@ -30,7 +30,6 @@ class  DISC2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DISC2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -209,6 +208,7 @@ class  DISC2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['NLINES'])+1):
             pb.xupper[ix_['ALPHA'+str(I)]] = 1.0
             pb.xlower[ix_['ALPHA'+str(I)]] = 0.0
@@ -536,7 +536,6 @@ class  DISC2(CUTEst_problem):
 #    Solution
 # LO SOLTN(12)           20.46122911
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

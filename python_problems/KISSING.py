@@ -77,7 +77,6 @@ class  KISSING(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'KISSING'
         pbm.name = self.name
         nargin   = len(args)
 

@@ -29,7 +29,6 @@ class  ERRINBAR(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ERRINBAR'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -120,6 +119,7 @@ class  ERRINBAR(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['10'])+1):
             pb.xlower[ix_['X'+str(I)]] = 0.645
         for I in range(int(v_['2']),int(v_['8'])+1,int(v_['2'])):

@@ -29,7 +29,6 @@ class  HS72(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS72'
         pbm.name = self.name
         nargin   = len(args)
 

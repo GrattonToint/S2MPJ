@@ -27,7 +27,6 @@ class  LOTSCHD(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'LOTSCHD'
         pbm.name = self.name
         nargin   = len(args)
 

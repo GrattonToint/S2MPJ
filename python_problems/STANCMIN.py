@@ -27,7 +27,6 @@ class  STANCMIN(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'STANCMIN'
         pbm.name = self.name
         nargin   = len(args)
 

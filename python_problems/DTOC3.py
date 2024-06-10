@@ -50,7 +50,6 @@ class  DTOC3(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DTOC3'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -141,6 +140,7 @@ class  DTOC3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['Y'+str(int(v_['1']))+','+str(int(v_['1']))]] = 15.0
         pb.xupper[ix_['Y'+str(int(v_['1']))+','+str(int(v_['1']))]] = 15.0
         pb.xlower[ix_['Y'+str(int(v_['1']))+','+str(int(v_['2']))]] = 5.0
@@ -216,7 +216,6 @@ class  DTOC3(CUTEst_problem):
 # LO SOLUTION(1000)      235.182824435
 # LO SOLUTION(5000)      235.154640099
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

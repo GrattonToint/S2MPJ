@@ -30,7 +30,6 @@ class  HS13(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS13'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -151,7 +150,6 @@ class  HS13(CUTEst_problem):
 #    Solution
 # LO SOLTN               1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         pb.xlower = np.zeros((pb.n,1))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%

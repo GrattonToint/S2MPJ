@@ -44,7 +44,6 @@ class  MINC44(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'MINC44'
         pbm.name = self.name
         nargin   = len(args)
 

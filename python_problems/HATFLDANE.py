@@ -30,7 +30,6 @@ class  HATFLDANE(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HATFLDANE'
         pbm.name = self.name
         nargin   = len(args)
 

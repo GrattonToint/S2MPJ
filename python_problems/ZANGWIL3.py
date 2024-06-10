@@ -29,7 +29,6 @@ class  ZANGWIL3(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ZANGWIL3'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -99,6 +98,7 @@ class  ZANGWIL3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.zeros((pb.n,1))
         pb.y0 = np.zeros((pb.m,1))
@@ -118,7 +118,6 @@ class  ZANGWIL3(CUTEst_problem):
             pb.y0  = (
                   arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['X3']),float(2.5)))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

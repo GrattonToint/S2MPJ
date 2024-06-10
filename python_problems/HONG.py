@@ -26,7 +26,6 @@ class  HONG(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HONG'
         pbm.name = self.name
         nargin   = len(args)
 

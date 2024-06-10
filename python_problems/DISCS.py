@@ -34,7 +34,6 @@ class  DISCS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DISCS'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -138,6 +137,7 @@ class  DISCS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['NNODES'])+1):
             pb.xlower[ix_['R'+str(I)]] = 1.0
         pb.xlower[ix_['X'+str(int(v_['1']))]] = 0.0

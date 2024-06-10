@@ -52,7 +52,6 @@ class  TORSIONC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TORSIONC'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -328,7 +327,6 @@ class  TORSIONC(CUTEst_problem):
 # LO SOLTN(50)           -1.204400
 # LO SOLTN(61)           -1.204500
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

@@ -47,7 +47,6 @@ class  SPIN2LS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SPIN2LS'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -100,6 +99,7 @@ class  SPIN2LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.full((pb.n,1),float(1.0))
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -267,7 +267,6 @@ class  SPIN2LS(CUTEst_problem):
                 pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['RX'+str(J)+','+str(I)])
                 pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "SUR2-AN-V-0"

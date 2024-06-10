@@ -33,7 +33,6 @@ class  AIRCRFTA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'AIRCRFTA'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -144,6 +143,7 @@ class  AIRCRFTA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['ELEVATOR']] = v_['ELVVAL']
         pb.xupper[ix_['ELEVATOR']] = v_['ELVVAL']
         pb.xlower[ix_['AILERON']] = v_['AILVAL']
@@ -335,7 +335,6 @@ class  AIRCRFTA(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

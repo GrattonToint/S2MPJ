@@ -51,7 +51,6 @@ class  OPTMASS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'OPTMASS'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -151,6 +150,7 @@ class  OPTMASS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X'+str(int(v_['1']))+','+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['X'+str(int(v_['1']))+','+str(int(v_['0']))]] = 0.0
         pb.xlower[ix_['X'+str(int(v_['2']))+','+str(int(v_['0']))]] = 0.0

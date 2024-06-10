@@ -34,7 +34,6 @@ class  WEEDS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'WEEDS'
         pbm.name = self.name
         nargin   = len(args)
 

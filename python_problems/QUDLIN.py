@@ -29,7 +29,6 @@ class  QUDLIN(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'QUDLIN'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -130,7 +129,6 @@ class  QUDLIN(CUTEst_problem):
         pb.objlower = 0.0
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

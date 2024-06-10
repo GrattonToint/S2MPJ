@@ -64,7 +64,6 @@ class  DTOC1ND(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DTOC1ND'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -239,6 +238,7 @@ class  DTOC1ND(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['NY'])+1):
             pb.xlower[ix_['Y'+str(int(v_['1']))+','+str(I)]] = 0.0
             pb.xupper[ix_['Y'+str(int(v_['1']))+','+str(I)]] = 0.0

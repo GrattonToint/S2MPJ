@@ -39,7 +39,6 @@ class  BRATU2DT(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'BRATU2DT'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -116,6 +115,7 @@ class  BRATU2DT(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
             pb.xlower[ix_['U'+str(int(v_['1']))+','+str(J)]] = 0.0
             pb.xupper[ix_['U'+str(int(v_['1']))+','+str(J)]] = 0.0
@@ -172,7 +172,6 @@ class  BRATU2DT(CUTEst_problem):
 # LO SOLTN(32)           1.27193D-07
 # LO SOLTN(72)           1.30497D-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

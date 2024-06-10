@@ -30,7 +30,6 @@ class  LEWISPOL(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'LEWISPOL'
         pbm.name = self.name
         nargin   = len(args)
 

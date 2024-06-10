@@ -29,7 +29,6 @@ class  JANNSON4(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'JANNSON4'
         pbm.name = self.name
         nargin   = len(args)
 

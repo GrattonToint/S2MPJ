@@ -33,7 +33,6 @@ class  PALMER1C(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'PALMER1C'
         pbm.name = self.name
         nargin   = len(args)
 

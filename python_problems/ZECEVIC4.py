@@ -26,7 +26,6 @@ class  ZECEVIC4(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ZECEVIC4'
         pbm.name = self.name
         nargin   = len(args)
 

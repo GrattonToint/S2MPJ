@@ -30,7 +30,6 @@ class  DEMBO7(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DEMBO7'
         pbm.name = self.name
         nargin   = len(args)
 

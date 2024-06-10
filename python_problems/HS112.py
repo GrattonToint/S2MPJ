@@ -32,7 +32,6 @@ class  HS112(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS112'
         pbm.name = self.name
         nargin   = len(args)
 

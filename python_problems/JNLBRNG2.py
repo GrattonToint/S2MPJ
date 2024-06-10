@@ -59,7 +59,6 @@ class  JNLBRNG2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'JNLBRNG2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -308,7 +307,6 @@ class  JNLBRNG2(CUTEst_problem):
 # LO SOLTN(100)          -0.4148700
 # LO SOLTN(125)          -0.4149600
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

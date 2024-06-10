@@ -43,7 +43,6 @@ class  HANGING(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HANGING'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -130,6 +129,7 @@ class  HANGING(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X'+str(int(v_['1']))+','+str(int(v_['1']))]] = 0.0
         pb.xupper[ix_['X'+str(int(v_['1']))+','+str(int(v_['1']))]] = 0.0
         pb.xlower[ix_['Y'+str(int(v_['1']))+','+str(int(v_['1']))]] = 0.0

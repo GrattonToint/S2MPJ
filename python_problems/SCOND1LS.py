@@ -38,7 +38,6 @@ class  SCOND1LS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SCOND1LS'
         pbm.name = self.name
         nargin   = len(args)
 

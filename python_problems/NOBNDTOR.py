@@ -52,7 +52,6 @@ class  NOBNDTOR(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'NOBNDTOR'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -316,7 +315,6 @@ class  NOBNDTOR(CUTEst_problem):
 # LO SOLTN(50)           ???
 # LO SOLTN(61)           ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

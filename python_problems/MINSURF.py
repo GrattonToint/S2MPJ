@@ -25,7 +25,6 @@ class  MINSURF(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'MINSURF'
         pbm.name = self.name
         nargin   = len(args)
 

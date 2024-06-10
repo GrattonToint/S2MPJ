@@ -28,7 +28,6 @@ class  CANTILVR(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CANTILVR'
         pbm.name = self.name
         nargin   = len(args)
 

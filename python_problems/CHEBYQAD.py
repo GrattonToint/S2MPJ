@@ -45,7 +45,6 @@ class  CHEBYQAD(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CHEBYQAD'
         pbm.name = self.name
         nargin   = len(args)
 

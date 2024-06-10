@@ -33,7 +33,6 @@ class  PRICE4B(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'PRICE4B'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -151,7 +150,6 @@ class  PRICE4B(CUTEst_problem):
 #    Solution
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

@@ -33,7 +33,6 @@ class  AIRCRFTB(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'AIRCRFTB'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -130,6 +129,7 @@ class  AIRCRFTB(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['ELEVATOR']] = v_['ELVVAL']
         pb.xupper[ix_['ELEVATOR']] = v_['ELVVAL']
         pb.xlower[ix_['AILERON']] = v_['AILVAL']
@@ -350,7 +350,6 @@ class  AIRCRFTB(CUTEst_problem):
 #    Solution
 # LO SOLTN               6.4099D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

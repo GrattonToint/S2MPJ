@@ -118,7 +118,6 @@ class  ACOPR14(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ACOPR14'
         pbm.name = self.name
         nargin   = len(args)
 

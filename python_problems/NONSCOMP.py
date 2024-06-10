@@ -40,7 +40,6 @@ class  NONSCOMP(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'NONSCOMP'
         pbm.name = self.name
         nargin   = len(args)
 

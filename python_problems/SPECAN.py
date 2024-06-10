@@ -31,7 +31,6 @@ class  SPECAN(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SPECAN'
         pbm.name = self.name
         nargin   = len(args)
 

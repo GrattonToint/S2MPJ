@@ -24,7 +24,6 @@ class  CmRELOAD(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CmRELOAD'
         pbm.name = self.name
         nargin   = len(args)
 

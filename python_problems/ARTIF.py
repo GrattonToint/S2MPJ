@@ -37,7 +37,6 @@ class  ARTIF(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ARTIF'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -96,6 +95,7 @@ class  ARTIF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['X'+str(int(v_['0']))]] = 0.0
         pb.xlower[ix_['X'+str(int(v_['N+1']))]] = 0.0
@@ -145,7 +145,6 @@ class  ARTIF(CUTEst_problem):
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

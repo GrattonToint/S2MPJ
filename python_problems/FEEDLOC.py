@@ -24,7 +24,6 @@ class  FEEDLOC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'FEEDLOC'
         pbm.name = self.name
         nargin   = len(args)
 

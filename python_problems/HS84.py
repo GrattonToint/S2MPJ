@@ -30,7 +30,6 @@ class  HS84(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS84'
         pbm.name = self.name
         nargin   = len(args)
 

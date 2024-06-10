@@ -25,7 +25,6 @@ class  CONCON(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CONCON'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -135,6 +134,7 @@ class  CONCON(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         v_['PMAX1'] = 914.73
         v_['PMAX2'] = 904.73
         pb.xupper[ix_['P3']] = v_['PMAX2']

@@ -29,7 +29,6 @@ class  HS99EXP(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS99EXP'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -146,6 +145,7 @@ class  HS99EXP(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['R'+str(int(v_['1']))]] = 0.0
         pb.xupper[ix_['R'+str(int(v_['1']))]] = 0.0
         pb.xlower[ix_['Q'+str(int(v_['1']))]] = 0.0

@@ -37,7 +37,6 @@ class  CHARDIS02(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CHARDIS02'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -177,7 +176,6 @@ class  CHARDIS02(CUTEst_problem):
                 pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['Y'+str(I)+','+str(J)])
                 pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AY-V-V"

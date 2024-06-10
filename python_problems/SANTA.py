@@ -111,7 +111,6 @@ class  SANTA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SANTA'
         pbm.name = self.name
         nargin   = len(args)
 

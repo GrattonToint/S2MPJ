@@ -47,7 +47,6 @@ class  ODFITS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ODFITS'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -298,7 +297,6 @@ class  ODFITS(CUTEst_problem):
 #    Solution
 # LO ODFITS             -2380.026775
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

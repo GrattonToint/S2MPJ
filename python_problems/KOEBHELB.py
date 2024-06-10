@@ -29,7 +29,6 @@ class  KOEBHELB(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'KOEBHELB'
         pbm.name = self.name
         nargin   = len(args)
 

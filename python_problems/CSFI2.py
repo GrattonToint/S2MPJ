@@ -29,7 +29,6 @@ class  CSFI2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CSFI2'
         pbm.name = self.name
         nargin   = len(args)
 

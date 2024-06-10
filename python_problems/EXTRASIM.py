@@ -28,7 +28,6 @@ class  EXTRASIM(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'EXTRASIM'
         pbm.name = self.name
         nargin   = len(args)
 

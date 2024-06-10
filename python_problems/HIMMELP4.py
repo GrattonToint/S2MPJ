@@ -33,7 +33,6 @@ class  HIMMELP4(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HIMMELP4'
         pbm.name = self.name
         nargin   = len(args)
 

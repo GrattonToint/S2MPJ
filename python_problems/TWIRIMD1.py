@@ -34,7 +34,6 @@ class  TWIRIMD1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TWIRIMD1'
         pbm.name = self.name
         nargin   = len(args)
 

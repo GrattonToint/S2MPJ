@@ -27,7 +27,6 @@ class  HS21(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS21'
         pbm.name = self.name
         nargin   = len(args)
 

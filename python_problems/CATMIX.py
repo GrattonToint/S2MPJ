@@ -37,7 +37,6 @@ class  CATMIX(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CATMIX'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -124,6 +123,7 @@ class  CATMIX(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['0']),int(v_['NH'])+1):
             pb.xlower[ix_['U'+str(I)]] = 0.0
             pb.xupper[ix_['U'+str(I)]] = 1.0

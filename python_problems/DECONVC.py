@@ -28,7 +28,6 @@ class  DECONVC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DECONVC'
         pbm.name = self.name
         nargin   = len(args)
 

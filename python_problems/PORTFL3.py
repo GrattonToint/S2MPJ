@@ -48,7 +48,6 @@ class  PORTFL3(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'PORTFL3'
         pbm.name = self.name
         nargin   = len(args)
 

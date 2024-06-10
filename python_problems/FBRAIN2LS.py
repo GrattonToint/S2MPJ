@@ -34,7 +34,6 @@ class  FBRAIN2LS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'FBRAIN2LS'
         pbm.name = self.name
         nargin   = len(args)
 

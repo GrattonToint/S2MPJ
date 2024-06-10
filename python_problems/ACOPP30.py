@@ -128,7 +128,6 @@ class  ACOPP30(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ACOPP30'
         pbm.name = self.name
         nargin   = len(args)
 

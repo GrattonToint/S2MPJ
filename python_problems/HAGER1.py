@@ -37,7 +37,6 @@ class  HAGER1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HAGER1'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -116,6 +115,7 @@ class  HAGER1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = 1.0
         pb.xupper[ix_['X'+str(int(v_['0']))]] = 1.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
@@ -147,7 +147,6 @@ class  HAGER1(CUTEst_problem):
 # LO SOLTN(1000)         0.88079709548
 # LO SOLTN(5000)         0.88079708841
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

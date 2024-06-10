@@ -42,7 +42,6 @@ class  UBH5(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'UBH5'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -156,6 +155,7 @@ class  UBH5(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['3'])+1):
             for T in range(int(v_['0']),int(v_['N'])+1):
                 pb.xlower[ix_['U'+str(I)+','+str(T)]] = -1.0
@@ -228,7 +228,6 @@ class  UBH5(CUTEst_problem):
 # LO SOLTN(1000)         1.11598643493
 # LO SOLTN(2000)         1.11587382445
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

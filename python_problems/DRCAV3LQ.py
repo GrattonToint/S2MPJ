@@ -46,7 +46,6 @@ class  DRCAV3LQ(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DRCAV3LQ'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -136,6 +135,7 @@ class  DRCAV3LQ(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for J in range(int(v_['-1']),int(v_['M+2'])+1):
             pb.xlower[ix_['Y'+str(int(v_['-1']))+','+str(J)]] = 0.0
             pb.xupper[ix_['Y'+str(int(v_['-1']))+','+str(J)]] = 0.0
@@ -302,7 +302,6 @@ class  DRCAV3LQ(CUTEst_problem):
 #    Solution
 # LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

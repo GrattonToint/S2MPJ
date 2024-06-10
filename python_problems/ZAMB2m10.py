@@ -26,7 +26,6 @@ class  ZAMB2m10(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ZAMB2m10'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -1578,6 +1577,7 @@ class  ZAMB2m10(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['V1'+str(int(v_['0']))]] = v_['V10']
         pb.xupper[ix_['V1'+str(int(v_['0']))]] = v_['V10']
         pb.xlower[ix_['V2'+str(int(v_['0']))]] = v_['V20']

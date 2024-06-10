@@ -23,7 +23,6 @@ class  AVGASA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'AVGASA'
         pbm.name = self.name
         nargin   = len(args)
 

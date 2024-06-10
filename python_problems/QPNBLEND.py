@@ -26,7 +26,6 @@ class  QPNBLEND(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'QPNBLEND'
         pbm.name = self.name
         nargin   = len(args)
 

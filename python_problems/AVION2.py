@@ -25,7 +25,6 @@ class  AVION2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'AVION2'
         pbm.name = self.name
         nargin   = len(args)
 

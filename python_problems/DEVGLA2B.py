@@ -33,7 +33,6 @@ class  DEVGLA2B(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DEVGLA2B'
         pbm.name = self.name
         nargin   = len(args)
 

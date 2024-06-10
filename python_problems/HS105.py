@@ -30,7 +30,6 @@ class  HS105(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HS105'
         pbm.name = self.name
         nargin   = len(args)
 

@@ -28,7 +28,6 @@ class  ZY2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ZY2'
         pbm.name = self.name
         nargin   = len(args)
 

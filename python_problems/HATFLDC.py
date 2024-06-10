@@ -29,7 +29,6 @@ class  HATFLDC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'HATFLDC'
         pbm.name = self.name
         nargin   = len(args)
 

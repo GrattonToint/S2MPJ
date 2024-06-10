@@ -44,7 +44,6 @@ class  CHEMRCTA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CHEMRCTA'
         pbm.name = self.name
         nargin   = len(args)
 

@@ -26,7 +26,6 @@ class  MATRIX2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'MATRIX2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -223,7 +222,6 @@ class  MATRIX2(CUTEst_problem):
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

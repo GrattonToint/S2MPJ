@@ -33,7 +33,6 @@ class  WAYSEA2B(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'WAYSEA2B'
         pbm.name = self.name
         nargin   = len(args)
 

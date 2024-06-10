@@ -34,7 +34,6 @@ class  SPANHYD(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SPANHYD'
         pbm.name = self.name
         nargin   = len(args)
 

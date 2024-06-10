@@ -27,7 +27,6 @@ class  QCNEW(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'QCNEW'
         pbm.name = self.name
         nargin   = len(args)
 

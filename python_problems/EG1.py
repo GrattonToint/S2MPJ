@@ -30,7 +30,6 @@ class  EG1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'EG1'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -162,7 +161,6 @@ class  EG1(CUTEst_problem):
         pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['G3E2'])
         pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

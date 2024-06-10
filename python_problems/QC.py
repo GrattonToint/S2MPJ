@@ -27,7 +27,6 @@ class  QC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'QC'
         pbm.name = self.name
         nargin   = len(args)
 

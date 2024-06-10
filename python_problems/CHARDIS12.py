@@ -36,7 +36,6 @@ class  CHARDIS12(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CHARDIS12'
         pbm.name = self.name
         nargin   = len(args)
 

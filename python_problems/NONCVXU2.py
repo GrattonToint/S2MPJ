@@ -30,7 +30,6 @@ class  NONCVXU2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'NONCVXU2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -74,6 +73,7 @@ class  NONCVXU2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -177,7 +177,6 @@ class  NONCVXU2(CUTEst_problem):
 # LO SOLUTION            2.3168084D+4   $ (n=10000)
 # LO SOLUTION            2.3168084D+5   $ (n=100000)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OUR2-AN-V-0"

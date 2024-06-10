@@ -31,7 +31,6 @@ class  WACHBIEG(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'WACHBIEG'
         pbm.name = self.name
         nargin   = len(args)
 

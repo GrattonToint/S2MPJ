@@ -45,7 +45,6 @@ class  DRCAVTY1(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DRCAVTY1'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -145,6 +144,7 @@ class  DRCAVTY1(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for J in range(int(v_['-1']),int(v_['M+2'])+1):
             pb.xlower[ix_['Y'+str(int(v_['-1']))+','+str(J)]] = 0.0
             pb.xupper[ix_['Y'+str(int(v_['-1']))+','+str(J)]] = 0.0
@@ -308,7 +308,6 @@ class  DRCAVTY1(CUTEst_problem):
 #    Solution
 # LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

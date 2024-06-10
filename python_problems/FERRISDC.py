@@ -27,7 +27,6 @@ class  FERRISDC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'FERRISDC'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -395,7 +394,6 @@ class  FERRISDC(CUTEst_problem):
 # XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
 # XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

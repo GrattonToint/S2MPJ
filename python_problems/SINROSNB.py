@@ -35,7 +35,6 @@ class  SINROSNB(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'SINROSNB'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -113,6 +112,7 @@ class  SINROSNB(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X1']] = v_['-PI']
         pb.xupper[ix_['X1']] = v_['PI']
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%

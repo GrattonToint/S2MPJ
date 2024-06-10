@@ -41,7 +41,6 @@ class  MCCORMCK(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'MCCORMCK'
         pbm.name = self.name
         nargin   = len(args)
 

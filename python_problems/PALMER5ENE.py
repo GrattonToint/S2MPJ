@@ -36,7 +36,6 @@ class  PALMER5ENE(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'PALMER5ENE'
         pbm.name = self.name
         nargin   = len(args)
 

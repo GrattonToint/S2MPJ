@@ -35,7 +35,6 @@ class  TRIGON1B(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TRIGON1B'
         pbm.name = self.name
         nargin   = len(args)
 

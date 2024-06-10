@@ -57,7 +57,6 @@ class  DTOC6(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DTOC6'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -126,6 +125,7 @@ class  DTOC6(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['Y'+str(int(v_['1']))]] = 0.0
         pb.xupper[ix_['Y'+str(int(v_['1']))]] = 0.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
@@ -191,7 +191,6 @@ class  DTOC6(CUTEst_problem):
 # LO SOLUTION(1001)      17176.03828316
 # LO SOLUTION(5001)      
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

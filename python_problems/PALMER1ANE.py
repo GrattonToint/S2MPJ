@@ -34,7 +34,6 @@ class  PALMER1ANE(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'PALMER1ANE'
         pbm.name = self.name
         nargin   = len(args)
 

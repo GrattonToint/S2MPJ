@@ -36,7 +36,6 @@ class  EIGMINA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'EIGMINA'
         pbm.name = self.name
         nargin   = len(args)
 

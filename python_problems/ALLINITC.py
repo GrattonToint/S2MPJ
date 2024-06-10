@@ -27,7 +27,6 @@ class  ALLINITC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'ALLINITC'
         pbm.name = self.name
         nargin   = len(args)
 

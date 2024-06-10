@@ -52,7 +52,6 @@ class  TENBARS4(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TENBARS4'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -144,6 +143,7 @@ class  TENBARS4(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['10'])+1):
             pb.xlower[ix_['X'+str(I)]] = 0.645
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%

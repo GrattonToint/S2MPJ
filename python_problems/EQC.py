@@ -27,7 +27,6 @@ class  EQC(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'EQC'
         pbm.name = self.name
         nargin   = len(args)
 

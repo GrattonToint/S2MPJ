@@ -38,7 +38,6 @@ class  BRATU1D(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'BRATU1D'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -96,6 +95,7 @@ class  BRATU1D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['X'+str(int(v_['0']))]] = 0.0
         pb.xupper[ix_['X'+str(int(v_['0']))]] = 0.0
         pb.xlower[ix_['X'+str(int(v_['N+1']))]] = 0.0
@@ -210,7 +210,6 @@ class  BRATU1D(CUTEst_problem):
 # LO SOLTN501            -8.51892
 # LO SOLTN1001           -8.51893
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OXR2-MN-V-0"

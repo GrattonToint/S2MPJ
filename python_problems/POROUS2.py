@@ -44,7 +44,6 @@ class  POROUS2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'POROUS2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -113,6 +112,7 @@ class  POROUS2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
             pb.xlower[ix_['U'+str(int(v_['1']))+','+str(J)]] = 1.0
             pb.xupper[ix_['U'+str(int(v_['1']))+','+str(J)]] = 1.0

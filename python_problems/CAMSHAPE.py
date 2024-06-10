@@ -36,7 +36,6 @@ class  CAMSHAPE(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CAMSHAPE'
         pbm.name = self.name
         nargin   = len(args)
 

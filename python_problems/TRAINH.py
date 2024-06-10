@@ -58,7 +58,6 @@ class  TRAINH(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TRAINH'
         pbm.name = self.name
         nargin   = len(args)
 

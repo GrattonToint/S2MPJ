@@ -31,7 +31,6 @@ class  NCVXBQP3(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'NCVXBQP3'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -132,7 +131,6 @@ class  NCVXBQP3(CUTEst_problem):
 #    Solution
 # LO SOLTN               -6.60133D+05   $ (n=100)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

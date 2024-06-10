@@ -48,7 +48,6 @@ class  CLPLATEA(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CLPLATEA'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -127,6 +126,7 @@ class  CLPLATEA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
             pb.xlower[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
             pb.xupper[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
@@ -162,7 +162,6 @@ class  CLPLATEA(CUTEst_problem):
 # LO SOLTN(32)           -1.1543D-02
 # LO SOLTN(71)           -1.2592D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()

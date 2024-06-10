@@ -37,7 +37,6 @@ class  TWOBARS(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'TWOBARS'
         pbm.name = self.name
         nargin   = len(args)
 

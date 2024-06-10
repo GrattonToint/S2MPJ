@@ -26,7 +26,6 @@ class  CAMEL6(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CAMEL6'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -169,7 +168,6 @@ class  CAMEL6(CUTEst_problem):
 #    Solution
 # LO SOLTN               -1.031628
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         delattr( pbm, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         pb.pbclass = "OBR2-AN-2-0"

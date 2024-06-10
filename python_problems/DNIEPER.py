@@ -31,7 +31,6 @@ class  DNIEPER(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DNIEPER'
         pbm.name = self.name
         nargin   = len(args)
 

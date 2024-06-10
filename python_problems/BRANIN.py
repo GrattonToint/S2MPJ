@@ -33,7 +33,6 @@ class  BRANIN(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'BRANIN'
         pbm.name = self.name
         nargin   = len(args)
 

@@ -34,7 +34,6 @@ class  LEVYMONT7(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'LEVYMONT7'
         pbm.name = self.name
         nargin   = len(args)
 

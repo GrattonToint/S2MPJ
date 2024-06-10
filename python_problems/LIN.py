@@ -34,7 +34,6 @@ class  LIN(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'LIN'
         pbm.name = self.name
         nargin   = len(args)
 

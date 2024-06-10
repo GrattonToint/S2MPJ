@@ -62,7 +62,6 @@ class  DTOC2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'DTOC2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -161,6 +160,7 @@ class  DTOC2(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['1']),int(v_['NY'])+1):
             v_['RI'] = float(I)
             v_['TMP'] = v_['RI']*v_['1/2NY']
@@ -291,7 +291,6 @@ class  DTOC2(CUTEst_problem):
 # LO SOLUTION( 500)      0.490996540460
 # LO SOLUTION(1000)      0.490200910983
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

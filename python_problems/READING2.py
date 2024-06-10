@@ -40,7 +40,6 @@ class  READING2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'READING2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -170,7 +169,6 @@ class  READING2(CUTEst_problem):
             pb.xlower[ix_['U'+str(I)]] = -1.0
             pb.xupper[ix_['U'+str(I)]] = 1.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

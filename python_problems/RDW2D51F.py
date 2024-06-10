@@ -57,7 +57,6 @@ class  RDW2D51F(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'RDW2D51F'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -167,6 +166,7 @@ class  RDW2D51F(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         pb.xlower[ix_['U'+str(int(v_['0']))+','+str(int(v_['0']))]] = (v_['V'+
              str(int(v_['0']))+','+str(int(v_['0']))])
         pb.xupper[ix_['U'+str(int(v_['0']))+','+str(int(v_['0']))]] = (v_['V'+
@@ -738,7 +738,6 @@ class  RDW2D51F(CUTEst_problem):
         nlc = np.union1d(nlc,np.array([ig]))
         pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-H**2/36']))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

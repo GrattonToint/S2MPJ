@@ -41,7 +41,6 @@ class  CLNLBEAM(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'CLNLBEAM'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -127,6 +126,7 @@ class  CLNLBEAM(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = np.full((pb.n,1),-float('Inf'))
         pb.xupper = np.full((pb.n,1),+float('Inf'))
+        pb.xlower = np.zeros((pb.n,1))
         for I in range(int(v_['0']),int(v_['NI'])+1):
             pb.xlower[ix_['X'+str(I)]] = -0.05
             pb.xupper[ix_['X'+str(I)]] = 0.05
@@ -234,7 +234,6 @@ class  CLNLBEAM(CUTEst_problem):
 # LO SOLTN(1000)         344.8788169123
 # LO SOLTN(5000)         
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower = np.full((pb.m,1),-float('Inf'))
         pb.cupper = np.full((pb.m,1),+float('Inf'))

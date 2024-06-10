@@ -31,7 +31,6 @@ class  EXPLIN2(CUTEst_problem):
         pbm      = structtype()
         pb       = structtype()
         pb.name  = self.name
-        pb.sifpbname = 'EXPLIN2'
         pbm.name = self.name
         nargin   = len(args)
 
@@ -134,7 +133,6 @@ class  EXPLIN2(CUTEst_problem):
         pb.objlower = .0
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
         pbm.A.resize(ngrp,pb.n)
         pbm.A      = pbm.A.tocsr()
