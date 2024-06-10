@@ -59,9 +59,8 @@ switch(action)
 
     case 'setup'
 
-    pb.name      = 'JNLBRNG1';
-    pb.sifpbname = 'JNLBRNG1';
-    pbm.name     = 'JNLBRNG1';
+        pb.name      = name;
+        pbm.name     = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
@@ -323,7 +322,6 @@ switch(action)
 % LO SOLTN(100)          -0.1805700
 % LO SOLTN(125)          -0.1805800
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'QBR2-AY-V-0';
         varargout{1} = pb;
@@ -363,8 +361,8 @@ switch(action)
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-        [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
-            end
+            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+        end
 
     otherwise
         disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])

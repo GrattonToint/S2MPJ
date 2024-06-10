@@ -33,9 +33,8 @@ switch(action)
 
     case 'setup'
 
-    pb.name      = 'EGGCRATENE';
-    pb.sifpbname = 'EGGCRATENE';
-    pbm.name     = 'EGGCRATENE';
+        pb.name      = name;
+        pbm.name     = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
@@ -92,6 +91,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         %%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0(1:pb.n,1) = zeros(pb.n,1);
         pb.y0 = zeros(pb.m,1);
@@ -149,7 +149,6 @@ switch(action)
 %    Solution
 % LO SOLUTION            0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
@@ -190,8 +189,8 @@ switch(action)
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-        [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
-            end
+            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+        end
 
     otherwise
         disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])

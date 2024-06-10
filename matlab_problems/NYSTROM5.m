@@ -47,9 +47,8 @@ switch(action)
 
     case 'setup'
 
-    pb.name      = 'NYSTROM5';
-    pb.sifpbname = 'NYSTROM5';
-    pbm.name     = 'NYSTROM5';
+        pb.name      = name;
+        pbm.name     = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
@@ -219,6 +218,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_('AL1'),1) = 0.0;
         pb.xupper(ix_('AL1'),1) = 0.0;
         pb.xlower(ix_('AL2'),1) = 0.2;
@@ -2039,8 +2039,8 @@ switch(action)
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-        [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
-            end
+            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+        end
 
     otherwise
         disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])

@@ -40,9 +40,8 @@ switch(action)
 
     case 'setup'
 
-    pb.name      = 'SCW2';
-    pb.sifpbname = 'SCW2';
-    pbm.name     = 'SCW2';
+        pb.name      = name;
+        pbm.name     = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
@@ -251,7 +250,6 @@ switch(action)
 % LO SCW                 0.0
 %    Solution
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(ngrp,1);
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
@@ -333,8 +331,8 @@ switch(action)
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-        [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
-            end
+            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+        end
 
     otherwise
         disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])

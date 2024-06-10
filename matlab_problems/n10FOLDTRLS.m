@@ -36,9 +36,8 @@ switch(action)
 
     case 'setup'
 
-    pb.name      = 'n10FOLDTRLS';
-    pb.sifpbname = 'n10FOLDTRLS';
-    pbm.name     = 'n10FOLDTRLS';
+        pb.name      = name;
+        pbm.name     = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
@@ -76,6 +75,7 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
+        pb.xlower = zeros(pb.n,1);
         %%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = 10.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -95,7 +95,6 @@ switch(action)
 %    Solution
 % LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'SUR2-AN-V-0';
         varargout{1} = pb;
@@ -145,8 +144,8 @@ switch(action)
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-        [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
-            end
+            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+        end
 
     otherwise
         disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])

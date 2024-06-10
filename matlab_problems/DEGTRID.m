@@ -15,11 +15,6 @@ function varargout = DEGTRID(action,varargin)
 % 
 %    The number of variables - 1
 % 
-% IE N                   10
-% IE N                   50
-% IE N                   100
-% IE N                   1000
-% IE N                   10000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -31,14 +26,23 @@ switch(action)
 
     case 'setup'
 
-    pb.name      = 'DEGTRID';
-    pb.sifpbname = 'DEGTRID';
-    pbm.name     = 'DEGTRID';
+        pb.name      = name;
+        pbm.name     = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        v_('N') = 100000;
+        if(nargin<2)
+            v_('N') = 10;  %  SIF file default value
+        else
+            v_('N') = varargin{1};
+        end
+%       Alternative values for the SIF file parameters:
+% IE N                   50             $-PARAMETER
+% IE N                   100            $-PARAMETER
+% IE N                   1000           $-PARAMETER
+% IE N                   10000          $-PARAMETER
+% IE N                   100000         $-PARAMETER
         v_('0') = 0;
         v_('1') = 1;
         v_('2') = 2;
@@ -114,7 +118,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 %    Solution
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pbm.gconst = zeros(ngrp,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'QBR2-AN-V-0';
         varargout{1} = pb;
@@ -130,8 +133,8 @@ switch(action)
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-        [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
-            end
+            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+        end
 
     otherwise
         disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])
