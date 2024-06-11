@@ -316,8 +316,8 @@ class CUTEst_problem:
 
             #  Evaluate the linear term, if any.
 
-            if hasattr(pbm,"gconst"):
-                fin = float(-pbm.gconst[ ig ])
+            if hasattr(pbm,"gconst") and ig < len(pbm.gconst) and not pbm.gconst[ig] is None:
+                fin = float(-pbm.gconst[ig])
             else:
                 fin = 0
             if has_A and ig < sA1:
@@ -543,7 +543,7 @@ class CUTEst_problem:
 
             #  Evaluate the linear term, if any.
 
-            if hasattr(pbm,"gconst"):
+            if hasattr(pbm,"gconst") and ig < len(pbm.gconst) and not pbm.gconst[ig] is None:
                 fin = float(-pbm.gconst[ ig ] )
             else:
                 fin = 0.0

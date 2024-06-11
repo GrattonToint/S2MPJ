@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 7 VI 2024)
+%   Programming: Ph. Toint (this version 11 VI 2024)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -288,7 +288,7 @@ for iig = 1:length( glist )
 
    %  Evaluate the linear term, if any.
 
-   if ( isfield( pbm, 'gconst' ) )
+   if ( isfield( pbm, 'gconst' ) && ~isempty( pbm.gconst ) )
       fin = -pbm.gconst( ig );
    else
       fin = 0;
@@ -582,7 +582,7 @@ for iig = 1:length( glist )
 
    %  Evaluate the linear term, if any.
 
-   if ( isfield( pbm, 'gconst' ) )
+   if ( isfield( pbm, 'gconst' ) && ~isempty( pbm.gconst ) )
       fin = -pbm.gconst( ig );
    else
       fin = 0;

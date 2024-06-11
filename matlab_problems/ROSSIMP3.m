@@ -1,4 +1,4 @@
-function varargout = ROSSIMP2(action,varargin)
+function varargout = ROSSIMP3(action,varargin)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Problem : ROSSIMP3
 %    The ever famous 2 variables Rosenbrock "banana valley" problem

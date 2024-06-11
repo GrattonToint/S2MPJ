@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. L. Toint (this version 7 VI 2024)
+#   Programming: S. Gratton and Ph. L. Toint (this version 11 VI 2024)
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -368,7 +368,7 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
 
        # Evaluate the linear term, if any.
 
-       if isdefined(pbm, :gconst)
+       if isdefined(pbm, :gconst) && ig <= length(pbm.gconst)
            fin = -pbm.gconst[ig]
        else
            fin = 0
@@ -592,7 +592,7 @@ function evalHJv( mode, glist, x, v, y, pbm )
 
         # Evaluate the linear term, if any.
 
-        if isdefined(pbm, :gconst)
+        if isdefined(pbm, :gconst) && ig <= length(pbm.gconst)
             fin = -pbm.gconst[ig]
         else
             fin = 0.0
