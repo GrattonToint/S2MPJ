@@ -20,7 +20,6 @@ function varargout = MINSURFO(action,varargin)
 % 
 %  grid points in x direction (fixed at 50 in COPS)
 % 
-% IE NX                  25
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -38,8 +37,8 @@ switch(action)
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        v_('NX') = 50;
-        v_('NY') = 100;
+        v_('NX') = 5;
+        v_('NY') = 10;
         v_('0') = 0;
         v_('1') = 1;
         v_('ONE') = 1.0;

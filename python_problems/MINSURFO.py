@@ -21,7 +21,6 @@ class  MINSURFO(CUTEst_problem):
 # 
 #  grid points in x direction (fixed at 50 in COPS)
 # 
-# IE NX                  25
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,8 +38,8 @@ class  MINSURFO(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        v_['NX'] = 50
-        v_['NY'] = 100
+        v_['NX'] = 5
+        v_['NY'] = 10
         v_['0'] = 0
         v_['1'] = 1
         v_['ONE'] = 1.0

@@ -20,7 +20,6 @@ function MINSURFO(action,args...)
 # 
 #  grid points in x direction (fixed at 50 in COPS)
 # 
-# IE NX                  25
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -36,8 +35,8 @@ function MINSURFO(action,args...)
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
-        v_["NX"] = 50
-        v_["NY"] = 100
+        v_["NX"] = 5
+        v_["NY"] = 10
         v_["0"] = 0
         v_["1"] = 1
         v_["ONE"] = 1.0

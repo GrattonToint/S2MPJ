@@ -21,17 +21,19 @@ NAME          MINSURFO
 
 * grid points in x direction (fixed at 50 in COPS)
 
+ IE NX                  5
 *IE NX                  25
- IE NX                  50
+*IE NX                  50
 *IE NX                  75
 *IE NX                  100
 
 * grid points in y direction
 
+ IE NY                  10
 *IE NY                  25
 *IE NY                  50
 *IE NY                  75
- IE NY                  100
+*IE NY                  100
 
 *  Other useful values
 
