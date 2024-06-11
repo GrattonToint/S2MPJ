@@ -730,7 +730,6 @@ class  EQC(CUTEst_problem):
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ZERO = 0.0
         f_   = EV_[0]*EV_[1]
         if not isinstance( f_, float ):
             f_   = f_.item();
@@ -744,9 +743,9 @@ class  EQC(CUTEst_problem):
             g_[1] = EV_[0]
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = ZERO
-                H_[1,1] = ZERO
-                H_[0,1] = 1.0
+                H_[0,0] = 0.0e0
+                H_[1,1] = 0.0e0
+                H_[0,1] = 1.0e0
                 H_[1,0] = H_[0,1]
         if nargout == 1:
             return f_
@@ -768,8 +767,7 @@ class  EQC(CUTEst_problem):
         U_[1,2] = U_[1,2]-1
         IV_[0] = U_[0:1,:].dot(EV_)
         IV_[1] = U_[1:2,:].dot(EV_)
-        ZERO = 0.0
-        f_   = IV_[0]*(1.0+IV_[1])
+        f_   = IV_[0]*(1.0e0+IV_[1])
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -783,9 +781,9 @@ class  EQC(CUTEst_problem):
             g_ =  U_.T.dot(g_)
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,0] = ZERO
-                H_[1,1] = ZERO
-                H_[0,1] = 1.0
+                H_[0,0] = 0.0e0
+                H_[1,1] = 0.0e0
+                H_[0,1] = 1.0e0
                 H_[1,0] = H_[0,1]
                 H_ = U_.T.dot(H_).dot(U_)
         if nargout == 1:
@@ -810,7 +808,7 @@ class  EQC(CUTEst_problem):
         IV_[0] = U_[0:1,:].dot(EV_)
         IV_[1] = U_[1:2,:].dot(EV_)
         IV_[2] = U_[2:3,:].dot(EV_)
-        f_   = IV_[0]*IV_[1]*(1.0+IV_[2])
+        f_   = IV_[0]*IV_[1]*(1.0e0+IV_[2])
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -819,21 +817,21 @@ class  EQC(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = IV_[1]*(1.0+IV_[2])
-            g_[1] = IV_[0]*(1.0+IV_[2])
+            g_[0] = IV_[1]*(1.0e0+IV_[2])
+            g_[1] = IV_[0]*(1.0e0+IV_[2])
             g_[2] = IV_[0]*IV_[1]
             g_ =  U_.T.dot(g_)
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = ZERO
-                H_[0,1] = 1.0+IV_[2]
+                H_[0,0] = 0.0e0
+                H_[0,1] = 1.0e0+IV_[2]
                 H_[1,0] = H_[0,1]
                 H_[0,2] = IV_[1]
                 H_[2,0] = H_[0,2]
-                H_[1,1] = ZERO
+                H_[1,1] = 0.0e0
                 H_[1,2] = IV_[0]
                 H_[2,1] = H_[1,2]
-                H_[2,2] = ZERO
+                H_[2,2] = 0.0e0
                 H_ = U_.T.dot(H_).dot(U_)
         if nargout == 1:
             return f_
@@ -873,15 +871,15 @@ class  EQC(CUTEst_problem):
             g_ =  U_.T.dot(g_)
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,0] = ZERO
-                H_[0,1] = 1.0+IV_[2]
+                H_[0,0] = 0.0e0
+                H_[0,1] = 1.0e0+IV_[2]
                 H_[1,0] = H_[0,1]
                 H_[0,2] = IV_[1]
                 H_[2,0] = H_[0,2]
-                H_[1,1] = ZERO
+                H_[1,1] = 0.0e0
                 H_[1,2] = IV_[0]
                 H_[2,1] = H_[1,2]
-                H_[2,2] = ZERO
+                H_[2,2] = 0.0e0
                 H_ = U_.T.dot(H_).dot(U_)
         if nargout == 1:
             return f_

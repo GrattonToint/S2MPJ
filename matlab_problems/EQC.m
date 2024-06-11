@@ -823,7 +823,6 @@ switch(action)
 
         EV_  = varargin{1};
         iel_ = varargin{2};
-        ZERO = 0.0;
         varargout{1} = EV_(1)*EV_(2);
         if(nargout>1)
             g_(1,1) = EV_(2);
@@ -831,9 +830,9 @@ switch(action)
             varargout{2} = g_;
             if(nargout>2)
                 H_ = sparse(2,2);
-                H_(1,1) = ZERO;
-                H_(2,2) = ZERO;
-                H_(1,2) = 1.0;
+                H_(1,1) = 0.0e0;
+                H_(2,2) = 0.0e0;
+                H_(1,2) = 1.0e0;
                 H_(2,1) = H_(1,2);
                 varargout{3} = H_;
             end
@@ -849,17 +848,16 @@ switch(action)
         U_(2,3) = U_(2,3)-1;
         IV_(1) = U_(1,:)*EV_;
         IV_(2) = U_(2,:)*EV_;
-        ZERO = 0.0;
-        varargout{1} = IV_(1)*(1.0+IV_(2));
+        varargout{1} = IV_(1)*(1.0e0+IV_(2));
         if(nargout>1)
             g_(1,1) = 1.0+IV_(2);
             g_(2,1) = IV_(1);
             varargout{2} = U_.'*g_;
             if(nargout>2)
                 H_ = sparse(2,2);
-                H_(1,1) = ZERO;
-                H_(2,2) = ZERO;
-                H_(1,2) = 1.0;
+                H_(1,1) = 0.0e0;
+                H_(2,2) = 0.0e0;
+                H_(1,2) = 1.0e0;
                 H_(2,1) = H_(1,2);
                 varargout{3} = U_.'*H_*U_;
             end
@@ -877,23 +875,23 @@ switch(action)
         IV_(1) = U_(1,:)*EV_;
         IV_(2) = U_(2,:)*EV_;
         IV_(3) = U_(3,:)*EV_;
-        varargout{1} = IV_(1)*IV_(2)*(1.0+IV_(3));
+        varargout{1} = IV_(1)*IV_(2)*(1.0e0+IV_(3));
         if(nargout>1)
-            g_(1,1) = IV_(2)*(1.0+IV_(3));
-            g_(2,1) = IV_(1)*(1.0+IV_(3));
+            g_(1,1) = IV_(2)*(1.0e0+IV_(3));
+            g_(2,1) = IV_(1)*(1.0e0+IV_(3));
             g_(3,1) = IV_(1)*IV_(2);
             varargout{2} = U_.'*g_;
             if(nargout>2)
                 H_ = sparse(3,3);
-                H_(1,1) = ZERO;
-                H_(1,2) = 1.0+IV_(3);
+                H_(1,1) = 0.0e0;
+                H_(1,2) = 1.0e0+IV_(3);
                 H_(2,1) = H_(1,2);
                 H_(1,3) = IV_(2);
                 H_(3,1) = H_(1,3);
-                H_(2,2) = ZERO;
+                H_(2,2) = 0.0e0;
                 H_(2,3) = IV_(1);
                 H_(3,2) = H_(2,3);
-                H_(3,3) = ZERO;
+                H_(3,3) = 0.0e0;
                 varargout{3} = U_.'*H_*U_;
             end
         end
@@ -919,15 +917,15 @@ switch(action)
             varargout{2} = U_.'*g_;
             if(nargout>2)
                 H_ = sparse(3,3);
-                H_(1,1) = ZERO;
-                H_(1,2) = 1.0+IV_(3);
+                H_(1,1) = 0.0e0;
+                H_(1,2) = 1.0e0+IV_(3);
                 H_(2,1) = H_(1,2);
                 H_(1,3) = IV_(2);
                 H_(3,1) = H_(1,3);
-                H_(2,2) = ZERO;
+                H_(2,2) = 0.0e0;
                 H_(2,3) = IV_(1);
                 H_(3,2) = H_(2,3);
-                H_(3,3) = ZERO;
+                H_(3,3) = 0.0e0;
                 varargout{3} = U_.'*H_*U_;
             end
         end

@@ -713,7 +713,6 @@ function EQC(action,args...)
         iel_    = args[2]
         nargout = args[3]
         pbm     = args[4]
-        ZERO = 0.0
         f_   = EV_[1]*EV_[2]
         if nargout>1
             dim = try length(IV_) catch; length(EV_) end
@@ -722,9 +721,9 @@ function EQC(action,args...)
             g_[2] = EV_[1]
             if nargout>2
                 H_ = zeros(Float64,2,2)
-                H_[1,1] = ZERO
-                H_[2,2] = ZERO
-                H_[1,2] = 1.0
+                H_[1,1] = 0.0e0
+                H_[2,2] = 0.0e0
+                H_[1,2] = 1.0e0
                 H_[2,1] = H_[1,2]
             end
         end
@@ -749,8 +748,7 @@ function EQC(action,args...)
         U_[2,3] = U_[2,3]-1
         IV_[1] = dot(U_[1,:],EV_)
         IV_[2] = dot(U_[2,:],EV_)
-        ZERO = 0.0
-        f_   = IV_[1]*(1.0+IV_[2])
+        f_   = IV_[1]*(1.0e0+IV_[2])
         if nargout>1
             dim = try length(IV_) catch; length(EV_) end
             g_  = zeros(Float64,dim)
@@ -759,9 +757,9 @@ function EQC(action,args...)
             g_ =  U_'*g_
             if nargout>2
                 H_ = zeros(Float64,2,2)
-                H_[1,1] = ZERO
-                H_[2,2] = ZERO
-                H_[1,2] = 1.0
+                H_[1,1] = 0.0e0
+                H_[2,2] = 0.0e0
+                H_[1,2] = 1.0e0
                 H_[2,1] = H_[1,2]
                 H_ = U_'*H_*U_
             end
@@ -789,25 +787,25 @@ function EQC(action,args...)
         IV_[1] = dot(U_[1,:],EV_)
         IV_[2] = dot(U_[2,:],EV_)
         IV_[3] = dot(U_[3,:],EV_)
-        f_   = IV_[1]*IV_[2]*(1.0+IV_[3])
+        f_   = IV_[1]*IV_[2]*(1.0e0+IV_[3])
         if nargout>1
             dim = try length(IV_) catch; length(EV_) end
             g_  = zeros(Float64,dim)
-            g_[1] = IV_[2]*(1.0+IV_[3])
-            g_[2] = IV_[1]*(1.0+IV_[3])
+            g_[1] = IV_[2]*(1.0e0+IV_[3])
+            g_[2] = IV_[1]*(1.0e0+IV_[3])
             g_[3] = IV_[1]*IV_[2]
             g_ =  U_'*g_
             if nargout>2
                 H_ = zeros(Float64,3,3)
-                H_[1,1] = ZERO
-                H_[1,2] = 1.0+IV_[3]
+                H_[1,1] = 0.0e0
+                H_[1,2] = 1.0e0+IV_[3]
                 H_[2,1] = H_[1,2]
                 H_[1,3] = IV_[2]
                 H_[3,1] = H_[1,3]
-                H_[2,2] = ZERO
+                H_[2,2] = 0.0e0
                 H_[2,3] = IV_[1]
                 H_[3,2] = H_[2,3]
-                H_[3,3] = ZERO
+                H_[3,3] = 0.0e0
                 H_ = U_'*H_*U_
             end
         end
@@ -845,15 +843,15 @@ function EQC(action,args...)
             g_ =  U_'*g_
             if nargout>2
                 H_ = zeros(Float64,3,3)
-                H_[1,1] = ZERO
-                H_[1,2] = 1.0+IV_[3]
+                H_[1,1] = 0.0e0
+                H_[1,2] = 1.0e0+IV_[3]
                 H_[2,1] = H_[1,2]
                 H_[1,3] = IV_[2]
                 H_[3,1] = H_[1,3]
-                H_[2,2] = ZERO
+                H_[2,2] = 0.0e0
                 H_[2,3] = IV_[1]
                 H_[3,2] = H_[2,3]
-                H_[3,3] = ZERO
+                H_[3,3] = 0.0e0
                 H_ = U_'*H_*U_
             end
         end
