@@ -11,7 +11,7 @@ function regenerate( varargin )
 %   This version 7 V 2024
 %
 
-addpath ./sif  % the directory containin the problem's SIF files
+addpath ./sif  % the directory containing the problem's SIF files
 
 inma.language = 'matlab';
 inpy.language = 'python';

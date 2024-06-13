@@ -246,6 +246,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %                       section using their Fortran expression
 %         pbm.gfpar     is a real vector containing the values of global GROUPS parameters, once computed in the g_globs
 %                        section using their Fortran expression
+%         pbm.ndigs     if present and >0, indicates that reduced precision arithmetic with pbm.ndigs digits is requested
 %         
 %         Depending on the problem's nature, some fields may be missing from the pbm struct.  Only the fields name and
 %         A are mandatory (a problem only containing those would be an homogeneous linear system). The presence of the
@@ -593,12 +594,6 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %               pbm.grnames on exit of the setup action
 %               (default: 0)
 %
-%        * varargin{1}.returnpbm is a binary flag which is true iff the pbm struct must be returned as the second output
-%               argument on exit of the setup action (mostly for debugging)
-%               NOTE: this option is only available if a Matlab output is being produced.  The pbm struct is always
-%                     returned when a Python or Julia output file is produced.
-%               (default: 0)
-%
 %        * varargin{1}.pbxscale is a binary flag which is true iff the variable's scaling for the columns of pbm.A
 %               must be provided in pb.xscale, instead of being applied internally to the linear factors within
 %               the problem represented by the output file.
@@ -644,8 +639,12 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %               (default: in the Matlab path)
 %
 %        * varargin{1}.outdir is a string giving the path to the directory where the output file (.m or .py) must be
-%               written.
+%               written
 %               (default: '.' )
+%
+%        * varargin{1}.redprec is a binary flag whic is true iff the problem's setup must allow for variable precision
+%                arithmetic to be used in evaluations
+%                (default: 1 )
 %
 %        Not every of the above fields must be defined, each field being tested for presence and value individually.
 %
@@ -717,7 +716,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 10 VI 2024
+%                started VI 2023, this version 12 VI 2024
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -731,8 +730,7 @@ getxnames      = 1;  %  Store the variables' names in pb.xnames
 getcnames      = 1;  %  Store the constraints' names in pb.cnames    
 getenames      = 0;  %  Do not store the elements names in pbm.elnames      
 getgnames      = 0;  %  Do not store the group names in pbm.grnames         
-returnpbm      = 1;  %  Do not return pbm from setup (only for Matlab)              
-keepcorder     = 1;  %  Do not reorder the constraints as <=, ==, >=, but keep the
+keepcorder     = 0;  %  Do not reorder the constraints as <=, ==, >=, but keep the
                      %  order in which they appear in the SIF file 
 keepcformat    = 0;  %  Do not keep the SIF format for constraint specification (ie specifying constants and ranges)
                      %  instead of producing lower and upper bounds on the constraints values (clowerand cupper). 
@@ -745,17 +743,19 @@ addinA         = 1;  %  Sum up repeated entries in pbm.A (instead of overwriting
 dispwarning    = 1;  %  Display a warning when a problem is renamed for Matlab/Python/julia compatibility, that is when
                      %  probname differs from sifpbname
 pbs.disperrors = 1;  %  Display error messages asap
-extxscale      = 0;  %  Apply the variable's scaling internally, instead of apssing them the the user in pb.xscale
+extxscale      = 1;  %  Apply the variable's scaling internally, instead of passing them the the user in pb.xscale
 sifdir         = ''; %  Find the problem in the Matlab path
 outdir         = ''; %  Write the output file in the current directory
 
-%  Initialize the container for error messages..
+%  Determine if the Symbolic Math Toolbox is installed, in which case request support of variable precision arithmetic
+%  by default for Matlab output files (by setting redprec to 1).
+
+v              = ver;
+redprec        = any( strcmp( 'Symbolic Math Toolbox', {v.Name} ) );
+
+%  Initialize the container for error messages.
 
 pbs.errors     = {}; %  So far so good :-)
-
-%  Initialize the container for the action names
-
-actions        = { 'setup' };
 
 %  Possibly rename the problem name so that the output file can be used as a function name in Matlab or as a class name
 %  in Python.
@@ -787,9 +787,6 @@ if ( nargin > 1 )
       if ( isfield( options, 'getgnames' ) )
          getgnames = options.getgnames;
       end
-      if ( isfield( options, 'returnpbm' ) )
-         returnpbm = options.returnpbm;
-      end
       if ( isfield( options, 'keepcorder' ) )
          keepcorder = options.keepcorder;
       end
@@ -816,6 +813,9 @@ if ( nargin > 1 )
       end
       if ( isfield( options, 'pbxscale' ) )
          extxscale = 1;
+      end
+      if ( isfield( options, 'redprec' ) )
+         redprec = options.redprec;
       end
       
       % Prepare for the desired output language.
@@ -1134,7 +1134,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
          printmline( 'switch(action)', 0, bindent, pbs.fidma );   %  the 'action' switch
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
-         printmline( 'case ''setup''', 1, bindent, pbs.fidma );   %  the 'setup' action
+         if ( redprec )
+            printmline( 'case {''setup'',''setup_redprec''}', 1, bindent, pbs.fidma );   %  the 'setup' action with vpa
+         else
+            printmline( 'case ''setup''', 1, bindent, pbs.fidma );                   %  the 'setup' action without vpa
+         end         
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
          printmline( sprintf( 'pb.name      = name;' ),                                       2,      bindent, pbs.fidma );
          if ( ~strcmp( sifpbname, probname ) )
@@ -2119,16 +2123,30 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          if ( ~has_start )
              printmline( 'pb.x0          = zeros(pb.n,1);',                                   indlvl, bindent, pbs.fidma );
              printpline( 'pb.x0          = np.zeros((pb.n,1))',                               indlvl, bindent, pbs.fidpy );
-             printjline( 'pb.x0          = zeros(Float64,pb.n)',                          indlvl, bindent, pbs.fidjl );
+             printjline( 'pb.x0          = zeros(Float64,pb.n)',                              indlvl, bindent, pbs.fidjl );
          end
 
          switch( pbs.lang )
          case 'matlab'
-            if ( returnpbm )
-               printmline( 'varargout{1} = pb;',                                              indlvl, bindent, pbs.fidma );
-               printmline( 'varargout{2} = pbm;',                                             indlvl, bindent, pbs.fidma );
+
+            %  Prepare for variable-precision evaluations by converting pb and pbm to VPA.
+
+            if ( redprec )
+               printmline( '%%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%',        indlvl,     bindent, pbs.fidma );
+               printmline( 'if(isfield(pbm,''ndigs''))',                                  indlvl,     bindent, pbs.fidma );
+               printmline( 'rmfield(pbm,''ndigs'');',                                     indlvl + 1, bindent, pbs.fidma );
+               printmline( 'end',                                                         indlvl,     bindent, pbs.fidma );
+               printmline( 'if(strcmp(action,''setup_redprec''))',                        indlvl,     bindent, pbs.fidma );
+               printmline( 'pbm.ndigs    = max(1,min(15,varargin{end}));',                indlvl + 1, bindent, pbs.fidma );
+               printmline( 'varargout{1} = s2mpjlib(''convert'',pb,  pbm.ndigs);',        indlvl + 1, bindent, pbs.fidma );
+               printmline( 'varargout{2} = s2mpjlib(''convert'',pbm, pbm.ndigs);',        indlvl + 1, bindent, pbs.fidma );
+               printmline( 'else',                                                        indlvl,     bindent, pbs.fidma );
+               printmline( 'varargout{1} = pb;',                                          indlvl + 1, bindent, pbs.fidma );
+               printmline( 'varargout{2} = pbm;',                                         indlvl + 1, bindent, pbs.fidma );
+               printmline( 'end',                                                         indlvl,     bindent, pbs.fidma );
             else
-               printmline( 'varargout{1} = pb;',                                              indlvl, bindent, pbs.fidma );
+               printmline( 'varargout{1} = pb;',                                          indlvl,     bindent, pbs.fidma );
+               printmline( 'varargout{2} = pbm;',                                         indlvl,     bindent, pbs.fidma );
             end
          case 'python'
             if ( has_H )
@@ -2284,7 +2302,16 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             end
             switch( pbs.lang )
             case 'matlab'
-               printmline( sprintf( 'if(nargin<%s)', int2str( ninputs + 1 ) ), indlvl, bindent, pbs.fidma );
+
+               %  If variable precision is requested, save the last input (the number of digits) and test for a shorter
+               %  list  of input arguments.
+             
+               if ( redprec )
+                  printmline( sprintf( 'if(nargin-1<%s)', int2str( ninputs + 1 ) ),       indlvl,     bindent, pbs.fidma );
+               else
+                  printmline( sprintf( 'if(nargin<%s)',   int2str( ninputs + 1 ) ),       indlvl,     bindent, pbs.fidma );
+               end
+               
                if ( strcmp( f{1}, 'IE' ) )
                   printmline( sprintf( 'v_(%s) = %s;  %%  SIF file default value', ...
                                        name2, round( d2e(f{4}) ) ),                       indlvl + 1, bindent, pbs.fidma );
@@ -2292,10 +2319,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( sprintf( 'v_(%s) = %s;  %%  SIF file default value', ...
                                        name2, d2e(f{4}) ),                                indlvl + 1, bindent, pbs.fidma );
                end
-               printmline( 'else', indlvl, bindent, pbs.fidma );
+               printmline( 'else',                                                        indlvl,     bindent, pbs.fidma );
                evalstr = [ 'varargin{', int2str( ninputs ), '}' ];
                printmline( sprintf( 'v_(%s) = %s;', name2, evalstr ),                     indlvl + 1, bindent, pbs.fidma );
-               printmline( 'end', indlvl, bindent, pbs.fidma );
+               printmline( 'end',                                                         indlvl,     bindent, pbs.fidma );
             case 'python'
                printpline( sprintf( 'if nargin<%s:', int2str( ninputs ) ),                indlvl,     bindent, pbs.fidpy );
                if ( strcmp( f{1}, 'IE' ) )

@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 11 VI 2024)
+%   Programming: Ph. Toint (this version 12 VI 2024)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,6 +83,53 @@ case 'nlx'
    varargout{1} = iv;
    varargout{2} = ix_;
    varargout{3} = pb;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%   Convert the real fields of a struct given by varargin{1} to multi-precision with a number of digits
+%   given by varargin{2} (using vpa from the Symbolic Math package).
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+case 'convert'
+
+%   converted_struct <== ( struct, precision )
+
+    %  Set the precision for variable-precision arithmetic.
+    
+    digits( varargin{2} );
+
+    %  Initialize the output structure.
+    
+    varargout{1} = varargin{1};
+
+    % Get the field names of the structure to convert.
+    
+    fields = fieldnames( varargin{1} );
+
+    for i = 1:length( fields )
+        field = fields{i};
+        value = varargin{1}.(field);
+
+        if ( isnumeric( value ) )
+        
+            %  Check if the value has non-integer elements and convert non-integer elements to variable-precision
+            %  arithmetic.
+
+            if ( any( mod( value, 1 ) ~= 0 ) )
+                varargout{1}.(field) = vpa( value );
+%            else
+%                varargout{1}.(field) = value;
+            end
+
+        % Recursively convert nested structures
+            
+%        elseif ( isstruct( value ) )
+%            structOut.(field) = s2mpjlib( 'convert', value, precision );
+        end
+    end
+
+
    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -206,6 +253,15 @@ function varargout = evalgrsum( isobj, glist, x, pbm )
 
 debug = 0;%D
 
+%  See if reduced precision is requested.
+
+if ( isfield( pbm, 'ndigs' ) )
+   ndigs   = pbm.ndigs;
+   redprec = 1;
+else
+   redprec = 0;
+end
+
 %  Initializations
 
 n  = length( x );
@@ -217,10 +273,18 @@ else
    ic = 0;
 end
 if ( nargout > 1 )
-   if ( isobj )
-      gx = zeros( n, 1 );
+   if ( redprec )
+      if ( isobj )
+         gx = 0*x;
+      else
+         Jx = sparse( m, n )*(0*x(1));
+      end
    else
-      Jx = sparse( m, n );
+      if ( isobj )
+         gx = zeros( n,1 );
+      else
+         Jx = sparse( m, n );
+      end
    end
    if ( nargout > 2 )
       if ( isobj )
@@ -288,7 +352,7 @@ for iig = 1:length( glist )
 
    %  Evaluate the linear term, if any.
 
-   if ( isfield( pbm, 'gconst' ) && ~isempty( pbm.gconst ) )
+   if ( isfield( pbm, 'gconst' ) )
       fin = -pbm.gconst( ig );
    else
       fin = 0;
@@ -299,14 +363,24 @@ for iig = 1:length( glist )
          fin = fin + pbm.A( ig, 1:sA2 ) * x(1:sA2);
       end
    case { 2, 3 }
-      gin = zeros( n, 1 );
+      if ( redprec )
+%         gin = 0*x;
+         gin = sparse( n, 1 ) *(0*x(1));
+      else
+%         gin = zeros(n,1);
+         gin = sparse( n, 1 );
+      end
       if ( has_A && ig <= sA1 )
          gin(1:sA2) = pbm.A( ig, 1:sA2 ).';
          fin        = fin + gin.' * x;
       end
    end
    if ( nargout > 2 )
-      Hin = sparse( n, n );
+      if ( redprec )
+         Hin = sparse( n, n )*(0*x(1));
+      else
+         Hin = sparse( n, n );
+      end
    end
 
 if( debug )
@@ -423,8 +497,7 @@ end
            [ fa, grada, Hessa ] = feval( pbm.name, egname, fin, ig );
             fx   = fx + fa / gsc;
             gx   = gx + grada * gin / gsc;
-            sgin = sparse(gin);
-            Hx   = Hx + ( ( Hessa * sgin  ) * sgin.' + grada * Hin ) / gsc;
+            Hx   = Hx + ( ( Hessa * gin  ) * gin.' + grada * Hin ) / gsc;
          end
       else
          ic = ic + 1;
@@ -438,9 +511,8 @@ end
          case 3
             [ fa, grada, Hessa ] = feval( pbm.name, egname, fin, ig );
             cx( ic )   = fa / gsc;
-            sgin       = sparse( gin );
-            Jx(ic,1:n) = grada * sgin.' / gsc;
-            Hx{end+1}  = ( ( Hessa * sgin ) * sgin.' + grada * Hin ) / gsc;
+            Jx(ic,1:n) = grada * gin.' / gsc;
+            Hx{end+1}  = ( ( Hessa * gin ) * gin.' + grada * Hin ) / gsc;
          end
       end
 
@@ -526,6 +598,15 @@ function HJv = evalHJv( mode, glist, x, v, y, pbm )
 
 debug = 0;%D
 
+%  See if reduced precision is requested.
+
+if ( isfield( pbm, 'ndigs' ) )
+   ndigs   = pbm.ndigs;
+   redprec = 1;
+else
+   redprec = 0;
+end
+
 %  Initializations
 
 n = length( x );
@@ -582,12 +663,16 @@ for iig = 1:length( glist )
 
    %  Evaluate the linear term, if any.
 
-   if ( isfield( pbm, 'gconst' ) && ~isempty( pbm.gconst ) )
+   if ( isfield( pbm, 'gconst' ) )
       fin = -pbm.gconst( ig );
    else
       fin = 0;
    end
-   gin  = zeros( n, 1 );
+   if ( redprec )
+      gin  = sparse( n, 1 )*(0*x(1));
+   else
+      gin  = sparse( n, 1 );
+   end
    if ( has_A && ig <= sA1 )
       fin        = fin + pbm.A( ig, 1:sA2 ) * x(1:sA2);
       gin(1:sA2) = pbm.A( ig, 1:sA2 ).';
@@ -597,8 +682,12 @@ if(debug )
    fprintf( ' ig = %d  fin(linear) = %g\n', ig, fin );%D
 end
    %  Initialize the Hessian.
-  
-   Hinv = zeros( n, 1 );
+
+   if ( redprec )
+      Hinv = 0*x;
+   else
+      Hinv = zeros( n, 1 );
+   end
 
    %  Loop on the group's elements.
    %
@@ -690,12 +779,11 @@ end
          end
       else
          [ ~, grada, Hessa ] = feval( pbm.name, egname, fin, ig );
-         sgin = sparse(gin);
          if ( strcmp( mode, 'HIv' ) )
             ic = ic + 1;
             HJv  = HJv + y(ic) * ( ( Hessa * sgin ) * ( sgin.' * v ) + grada * Hinv ) / gsc;
          else
-            HJv  = HJv + ( ( Hessa * sgin ) * ( sgin.' * v ) + grada * Hinv ) / gsc;
+            HJv  = HJv + ( ( Hessa * gin ) * ( gin.' * v ) + grada * Hinv ) / gsc;
          end
       end
    else

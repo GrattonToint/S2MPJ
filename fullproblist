@@ -686,7 +686,7 @@ MINMAXBD       5
 MINMAXRB       3
 MINPERM        2
 MINSURF       64
-MINSURFO       5
+MINSURFO    5,10
 MISRA1A        2
 MISRA1ALS     10
 MISRA1B        2
