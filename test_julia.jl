@@ -1,31 +1,30 @@
 #  Tests Julia problems
 #
 #  Programming: Ph. Toint and S. Gratton
-#  This version : 10 VI 2024
+#  This version : 15 VI 2024
 #
 ########################################################################
 
 include("s2mpjlib.jl")
 
-start = 1
+start = 1050
 stop  = 10000
+
 
 second_evaluation = true
 eval_matvec       = true
 fullcheck         = false
-
-usejulia  = true
+printres          = true
 
 #########################################################################
 
 using Printf
 using LinearAlgebra
 
-filename = "fullproblist"
-
 problem = String[]
 invalue = String[]
 
+filename = "fullproblist"
 open(filename, "r") do file
 
     # Read all lines
@@ -55,7 +54,6 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
     
     #  Julia
     
-
     jlfile = "./julia_problems/"*prob*".jl"
     run( `touch $jlfile` )
     
@@ -68,6 +66,24 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
     print("   Julia setup       :")
     end
 
+    if printres
+        fidres = open("test_julia.res","a")
+        @printf( fidres, "=== Checking problem  %d :  %s ( n = %d  m = %d )\n", iprob, prob, pb.n, pb.m )
+        j = 0
+        while j < pb.n
+             j += 1
+             @printf( fidres, "x0 = %+18.15e",  pb.x0[j]  )
+             for k in [ 1 2 3 4 ]
+                 j += 1
+                 if j > pb.n
+                    break
+                 end
+                 @printf( fidres, " %+18.15e",  pb.x0[j] )
+             end
+             println( fidres, "" )
+        end
+    end
+
     if fullcheck
        dump(pb)
        dump(pbm)
@@ -75,6 +91,10 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
 
     yjl  = ones( pb.m, 1 )
     x0jl = pb.x0
+    ifixed = findall(x->x==0,pb.xupper-pb.xlower)
+    if length(ifixed) > 0
+       x0jl[ifixed] = pb.xlower[ifixed]
+    end
 
     @time begin
     if fullcheck
@@ -87,6 +107,23 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
     end
     print("   Julia evaluation  :" )
     end
+    if printres
+        @printf( fidres, "L0 = %+18.15e\n", Lxyjl  )
+        j = 0
+        while j < pb.n
+             j += 1
+             @printf( fidres, "g0 = %+18.15e", Lgxyjl[j]  )
+             for k in [ 1 2 3 4 ]
+                 j += 1
+                 if j > pb.n
+                    break
+                 end
+                 @printf( fidres, " %+18.15e",  Lgxyjl[j] )
+             end
+             println( fidres, "" )
+        end
+    end
+    
 
     if second_evaluation
        @time begin
@@ -103,10 +140,30 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
 
     if eval_matvec
        vjl =  ones( pb.n, 1 )
+       if  length(ifixed) > 0
+          vjl[ifixed] = zeros( length(ifixed), 1 )
+       end
        @time begin
        Hxyvjl = theprob("LHxyv", pbm, x0jl, yjl, vjl )
        print("   Julia prod H*v    :" )
        end
+       if printres
+           j = 0
+           while j < pb.n
+               j += 1
+               @printf( fidres, "Hv = %+18.15e", Hxyvjl[j]  )
+               for k in [ 1 2 3 4 ]
+                   j += 1
+                   if j > pb.n
+                      break
+                   end
+                   @printf( fidres, " %+18.15e",  Hxyvjl[j] )
+               end
+               println( fidres, "" )
+           end
+           close( fidres )
+       end 
+    
     end
 
     if fullcheck
@@ -115,7 +172,6 @@ for iprob = min(start,length(problem)):min(stop,length(problem))
        println( "y'*c = ", only( yjl'*cxjl ) )
        Lbjl = fxjl + only(yjl'*cxjl)
        println( "Lbjl = ", Lbjl )
-#       println( "g Lag Julia = ", Lgxyjl )
        println( " Verif matvec Julia = ", norm( LHxyjl * vjl - Hxyvjl ) )
     end
     

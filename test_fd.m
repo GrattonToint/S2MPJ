@@ -2,10 +2,10 @@ function [ err_gf, err_Hf, err_gc, err_Hc ] = test_fd ( probname, verbose, pb, p
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%   Test the derivatives of the functions for problem probname in S2X format, using finite differences
-%   in continuous  variables at a random point feasible for the problems bounds or at the problem's
-%   starting point. If the problem's dimension is too large (> 15), select a random set of components
-%   for testing gradients and Hessians.
+%   Test the derivatives of the functions for problem probname in S2MPJ format, using finite
+%   differences in continuous  variables at a random point feasible for the problems bounds or at the
+%   problem's starting point. If the problem's dimension is too large (> 15), select a random set of
+%   components for testing gradients and Hessians.
 
 %   INPUT:
 %
