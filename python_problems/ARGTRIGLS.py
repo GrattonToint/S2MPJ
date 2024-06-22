@@ -46,7 +46,7 @@ class  ARGTRIGLS(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         if nargin<1:
-            v_['N'] = int(200);  #  SIF file default value
+            v_['N'] = int(10);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
         v_['1'] = 1
@@ -55,7 +55,7 @@ class  ARGTRIGLS(CUTEst_problem):
         v_['1OVERN'] = v_['1.0']/v_['RN']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):

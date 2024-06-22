@@ -34,8 +34,8 @@ function EIGENB2(action,args...)
     name = "EIGENB2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -61,7 +61,7 @@ function EIGENB2(action,args...)
             v_["A"*string(Int64(v_["J+1"]))*","*string(J)] = -1.0
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])

@@ -38,7 +38,7 @@ class  GOTTFR(CUTEst_problem):
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)

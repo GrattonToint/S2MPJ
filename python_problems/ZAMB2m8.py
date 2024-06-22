@@ -1391,7 +1391,7 @@ class  ZAMB2m8(CUTEst_problem):
         v_['MALFA'] = -1.0*v_['ALFA']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for k in range(int(v_['0']),int(v_['N'])+1):

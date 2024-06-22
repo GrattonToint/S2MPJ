@@ -62,7 +62,7 @@ class  YAO(CUTEst_problem):
         v_['OVP'] = 1.0/v_['RP']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for i in range(int(v_['1']),int(v_['P+k'])+1):

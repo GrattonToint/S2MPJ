@@ -70,7 +70,7 @@ class  HEART6LS(CUTEst_problem):
         v_['sumuF'] = 15.467
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('a',ix_)

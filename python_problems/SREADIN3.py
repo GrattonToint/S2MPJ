@@ -66,7 +66,7 @@ class  SREADIN3(CUTEst_problem):
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
@@ -74,7 +74,7 @@ class  SREADIN3(CUTEst_problem):
             pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
             [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
             pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
-            xscale = arrset(xscale,iv,v_['RN'])
+            pb.xscale = arrset(pb.xscale,iv,v_['RN'])
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
         pbm.gscale  = np.array([])
@@ -235,12 +235,6 @@ class  SREADIN3(CUTEst_problem):
         pbm.A      = pbm.A.tocsr()
         sA1,sA2    = pbm.A.shape
         pbm.Ashape = [ sA1, sA2 ]
-        #%%%%%%%%%%%%%%% VARIABLES' SCALING %%%%%%%%%%%%%%%
-        lxs = len(xscale);
-        for j in np.arange(0,min(sA2,pb.n,len(xscale))):
-            if not xscale[j] is None and xscale[j] != 0.0 and xscale[j] != 1.0:
-                for i in find(pbm.A[:,j],lambda x:x!=0):
-                      pbm.A[i,j] = pbm.A[i,j]/xscale[j]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
         pb.pbclass = "OOR2-MN-V-V"

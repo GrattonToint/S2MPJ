@@ -44,15 +44,24 @@ name = 'CHENHARK';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('N') = 10;  %  SIF file default value
         else
             v_('N') = varargin{1};
@@ -63,7 +72,7 @@ switch(action)
 % IE NFREE               50             $-PARAMETER
 % IE NFREE               500            $-PARAMETER     original value
 % IE NFREE               2500           $-PARAMETER
-        if(nargin<3)
+        if(nargs<2)
             v_('NFREE') = 5;  %  SIF file default value
         else
             v_('NFREE') = varargin{2};
@@ -74,7 +83,7 @@ switch(action)
 % IE NDEGEN              20             $-PARAMETER
 % IE NDEGEN              200            $-PARAMETER     original value
 % IE NDEGEN              500            $-PARAMETER
-        if(nargin<4)
+        if(nargs<3)
             v_('NDEGEN') = 2;  %  SIF file default value
         else
             v_('NDEGEN') = varargin{3};
@@ -251,8 +260,14 @@ switch(action)
         pb.xupper = +Inf*ones(pb.n,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'QBR2-AN-V-V';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 % ********************
 %  SET UP THE GROUPS *
 %  ROUTINE           *

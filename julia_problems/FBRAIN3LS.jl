@@ -29,8 +29,8 @@ function FBRAIN3LS(action,args...)
     name = "FBRAIN3LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -8887,7 +8887,7 @@ function FBRAIN3LS(action,args...)
         v_["BC200,11"] = -.1986905841
         v_["BL200,11"] = .87288634366
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("ALPHA1",ix_)

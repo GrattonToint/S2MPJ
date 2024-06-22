@@ -21,8 +21,8 @@ function AGG(action,args...)
     name = "AGG"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -1499,7 +1499,7 @@ function AGG(action,args...)
         ig,ig_,_ = s2mpj_ii("OBJECTIV",ig_)
         arrset(gtype,ig,"<>")
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         ngrp   = length(ig_)

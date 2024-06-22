@@ -29,8 +29,8 @@ function BENNETT5(action,args...)
     name = "BENNETT5"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -350,7 +350,7 @@ function BENNETT5(action,args...)
         v_["Y153"] = -31.789700E0
         v_["Y154"] = -31.786800E0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

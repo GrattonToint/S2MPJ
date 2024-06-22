@@ -28,8 +28,8 @@ function HIMMELP5(action,args...)
     name = "HIMMELP5"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -46,7 +46,7 @@ function HIMMELP5(action,args...)
         v_["-B2"] = -1.0*v_["B2"]
         v_["-B6"] = -1.0*v_["B6"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)

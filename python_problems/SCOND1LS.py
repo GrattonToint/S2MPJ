@@ -62,10 +62,7 @@ class  SCOND1LS(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE LN                  900            $-PARAMETER
 # IE N                   5000           $-PARAMETER
-        if nargin<2:
-            v_['LN'] = int(4500);  #  SIF file default value
-        else:
-            v_['LN'] = int(args[1])
+# IE LN                  4500           $-PARAMETER
         if nargin<3:
             v_['LAMBDA'] = float(1.0);  #  SIF file default value
         else:
@@ -101,7 +98,7 @@ class  SCOND1LS(CUTEst_problem):
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N+1'])+1):

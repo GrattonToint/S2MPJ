@@ -32,8 +32,8 @@ function MEYER3NE(action,args...)
     name = "MEYER3NE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -44,18 +44,18 @@ function MEYER3NE(action,args...)
         v_["16"] = 16
         v_["1"] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)
         arrset(pb.xnames,iv,"X1")
-        arrset(xscale,iv,0.01)
+        arrset(pb.xscale,iv,0.01)
         iv,ix_,_ = s2mpj_ii("X2",ix_)
         arrset(pb.xnames,iv,"X2")
-        arrset(xscale,iv,1000.0)
+        arrset(pb.xscale,iv,1000.0)
         iv,ix_,_ = s2mpj_ii("X3",ix_)
         arrset(pb.xnames,iv,"X3")
-        arrset(xscale,iv,100.0)
+        arrset(pb.xscale,iv,100.0)
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         gtype    = String[]
         for I = Int64(v_["1"]):Int64(v_["16"])

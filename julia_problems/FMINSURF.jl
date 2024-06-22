@@ -53,8 +53,8 @@ function FMINSURF(action,args...)
     name = "FMINSURF"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -91,7 +91,7 @@ function FMINSURF(action,args...)
         v_["H01"] = v_["H00"]+v_["SLOPEJ"]
         v_["H10"] = v_["H00"]+v_["SLOPEI"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])

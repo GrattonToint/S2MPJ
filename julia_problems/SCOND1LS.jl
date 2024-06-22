@@ -33,8 +33,8 @@ function SCOND1LS(action,args...)
     name = "SCOND1LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -61,11 +61,7 @@ function SCOND1LS(action,args...)
 # IE N                   1000           $-PARAMETER
 # IE LN                  900            $-PARAMETER
 # IE N                   5000           $-PARAMETER
-        if nargin<2
-            v_["LN"] = Int64(4500);  #  SIF file default value
-        else
-            v_["LN"] = Int64(args[2]);
-        end
+# IE LN                  4500           $-PARAMETER
         if nargin<3
             v_["LAMBDA"] = Float64(1.0);  #  SIF file default value
         else
@@ -101,7 +97,7 @@ function SCOND1LS(action,args...)
         v_["0"] = 0
         v_["1"] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N+1"])

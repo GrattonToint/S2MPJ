@@ -39,8 +39,8 @@ function POROUS2(action,args...)
     name = "POROUS2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -49,7 +49,7 @@ function POROUS2(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["P"] = Int64(32);  #  SIF file default value
+            v_["P"] = Int64(5);  #  SIF file default value
         else
             v_["P"] = Int64(args[1]);
         end
@@ -70,7 +70,7 @@ function POROUS2(action,args...)
         v_["-D/2H"] = -1.0*v_["D/2H"]
         v_["-4/H2"] = -4.0*v_["1/H2"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])

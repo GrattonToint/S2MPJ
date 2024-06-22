@@ -38,8 +38,8 @@ function ROTDISC(action,args...)
     name = "ROTDISC"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -97,7 +97,7 @@ function ROTDISC(action,args...)
         v_["dr/2"] = 0.5*v_["dr"]
         v_["aux3"] = v_["aux2"]*v_["dr"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for k = Int64(v_["0"]):Int64(v_["K"])

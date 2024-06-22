@@ -27,7 +27,7 @@ NAME          ARGTRIGLS
 *IE N                   50             $-PARAMETER
 *IE N                   100            $-PARAMETER
 *IE N                   200            $-PARAMETER
- IE N                   200            $-PARAMETER     modified for S2X tests
+ IE N                   10             $-PARAMETER     modified for S2MPJ tests
 
 *   Define useful parameters
 

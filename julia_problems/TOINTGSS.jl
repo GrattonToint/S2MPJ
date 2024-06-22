@@ -34,8 +34,8 @@ function TOINTGSS(action,args...)
     name = "TOINTGSS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -54,7 +54,7 @@ function TOINTGSS(action,args...)
         v_["T0"] = Float64(v_["N-2"])
         v_["10/N-2"] = 10.0/v_["T0"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

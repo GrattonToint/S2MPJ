@@ -48,8 +48,9 @@ class  QRTQUAD(CUTEst_problem):
 # IE M                   6              $-PARAMETER
 # IE M                   10             $-PARAMETER     original value
 # IE M                   100            $-PARAMETER
+# IE M                   1100           $-PARAMETER
         if nargin<2:
-            v_['M'] = int(1100);  #  SIF file default value
+            v_['M'] = int(100);  #  SIF file default value
         else:
             v_['M'] = int(args[1])
         v_['0'] = 0
@@ -59,7 +60,7 @@ class  QRTQUAD(CUTEst_problem):
         v_['N-1'] = -1+v_['N']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):

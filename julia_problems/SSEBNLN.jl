@@ -22,8 +22,8 @@ function SSEBNLN(action,args...)
     name = "SSEBNLN"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -213,7 +213,7 @@ function SSEBNLN(action,args...)
         v_["D7,23"] = 454.0
         v_["D7,24"] = 511.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_  = (

@@ -103,7 +103,7 @@ class  WATER(CUTEst_problem):
         cnames = arrset(cnames,ig,'c10')
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         ngrp   = len(ig_)

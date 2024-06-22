@@ -26,8 +26,8 @@ function EG2(action,args...)
     name = "EG2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -36,10 +36,16 @@ function EG2(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         v_["ONE"] = 1
-        v_["N"] = 1000
+#       Alternative values for the SIF file parameters:
+# IE N                   1000           $-PARAMETER
+        if nargin<1
+            v_["N"] = Int64(10);  #  SIF file default value
+        else
+            v_["N"] = Int64(args[1]);
+        end
         v_["NM1"] = -1+v_["N"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["ONE"]):Int64(v_["N"])
@@ -108,9 +114,9 @@ function EG2(action,args...)
             posgp = findfirst(x->x=="P",grftp[igt_[pbm.grftype[ig]]])
             loaset(pbm.grpar,ig,posgp,Float64(1.0))
         end
-        ig = ig_["G1000"]
+        ig = ig_["G"*string(Int64(v_["N"]))]
         posel = length(pbm.grelt[ig])+1
-        loaset(pbm.grelt,ig,posel,ie_["E1000"])
+        loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["N"]))])
         loaset(pbm.grelw,ig,posel,1.)
         posgp = findfirst(x->x=="P",grftp[igt_[pbm.grftype[ig]]])
         loaset(pbm.grpar,ig,posgp,Float64(0.5))

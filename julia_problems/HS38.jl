@@ -26,8 +26,8 @@ function HS38(action,args...)
     name = "HS38"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -43,7 +43,7 @@ function HS38(action,args...)
         v_["1/P1"] = 1.0/v_["P1"]
         v_["1/P2"] = 1.0/v_["P2"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

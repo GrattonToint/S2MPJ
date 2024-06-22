@@ -36,8 +36,8 @@ function HS87(action,args...)
     name = "HS87"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -61,7 +61,7 @@ function HS87(action,args...)
         v_["CD/A"] = v_["C/A"]*v_["D"]
         v_["CE/A"] = v_["C/A"]*v_["E"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

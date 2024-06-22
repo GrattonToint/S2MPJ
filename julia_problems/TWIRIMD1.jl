@@ -29,8 +29,8 @@ function TWIRIMD1(action,args...)
     name = "TWIRIMD1"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -1067,7 +1067,7 @@ function TWIRIMD1(action,args...)
         v_["-Kfresh"] = -1.0*v_["Kfresh"]
         v_["Ntra"] = trunc(Int,(v_["Nred"]/v_["Nage"]))
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for i = Int64(v_["1"]):Int64(v_["Nnod"])

@@ -22,8 +22,8 @@ function DGOSPEC(action,args...)
     name = "DGOSPEC"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -34,7 +34,7 @@ function DGOSPEC(action,args...)
         v_["FREQ"] = 10.0
         v_["MAG"] = 1000.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)

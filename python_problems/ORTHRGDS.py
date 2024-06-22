@@ -94,7 +94,7 @@ class  ORTHRGDS(CUTEst_problem):
             v_['YD'+str(I)] = v_['R2']*v_['PERT']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('Z1',ix_)

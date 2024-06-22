@@ -25,8 +25,8 @@ function PFIT3LS(action,args...)
     name = "PFIT3LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -38,7 +38,7 @@ function PFIT3LS(action,args...)
         v_["CG"] = -126.2222222
         v_["CH"] = -143.4074074
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("A",ix_)

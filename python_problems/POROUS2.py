@@ -52,7 +52,7 @@ class  POROUS2(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         if nargin<1:
-            v_['P'] = int(32);  #  SIF file default value
+            v_['P'] = int(5);  #  SIF file default value
         else:
             v_['P'] = int(args[0])
         if nargin<2:
@@ -72,7 +72,7 @@ class  POROUS2(CUTEst_problem):
         v_['-4/H2'] = -4.0*v_['1/H2']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):

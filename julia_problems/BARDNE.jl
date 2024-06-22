@@ -29,8 +29,8 @@ function BARDNE(action,args...)
     name = "BARDNE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -43,7 +43,7 @@ function BARDNE(action,args...)
         v_["8"] = 8
         v_["9"] = 9
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)

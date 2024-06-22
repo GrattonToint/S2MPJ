@@ -28,8 +28,8 @@ function GAUSS3LS(action,args...)
     name = "GAUSS3LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -541,7 +541,7 @@ function GAUSS3LS(action,args...)
         v_["Y249"] = 1.182678
         v_["Y250"] = 4.875312
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

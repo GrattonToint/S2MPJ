@@ -23,17 +23,19 @@ function GENROSEBNE(action,args...)
 # 
 #    Number of variables
 # 
-# IE N                   5
-# IE N                   10
-# IE N                   100
+#       Alternative values for the SIF file parameters:
+# IE N                   5              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "GENROSEBNE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -41,14 +43,18 @@ function GENROSEBNE(action,args...)
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
-        v_["N"] = 500
+        if nargin<1
+            v_["N"] = Int64(10);  #  SIF file default value
+        else
+            v_["N"] = Int64(args[1]);
+        end
         v_["1"] = 1
         v_["2"] = 2
         v_["N-1"] = -1+v_["N"]
         v_["N+1"] = 1+v_["N"]
         v_["RN+1"] = Float64(v_["N+1"])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

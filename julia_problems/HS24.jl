@@ -25,8 +25,8 @@ function HS24(action,args...)
     name = "HS24"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -38,7 +38,7 @@ function HS24(action,args...)
         v_["MRT3"] = -1.0*v_["RT3"]
         v_["C1FAC"] = 1.0/v_["RT3"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)

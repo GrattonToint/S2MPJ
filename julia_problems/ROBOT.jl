@@ -38,8 +38,8 @@ function ROBOT(action,args...)
     name = "ROBOT"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -59,7 +59,7 @@ function ROBOT(action,args...)
         v_["HIGH"] = 2.356194
         v_["DOWN"] = -2.356194
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("TH1",ix_)

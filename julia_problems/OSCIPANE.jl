@@ -23,8 +23,8 @@ function OSCIPANE(action,args...)
     name = "OSCIPANE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -52,7 +52,7 @@ function OSCIPANE(action,args...)
         v_["ONE"] = 1.0
         v_["1/RHO"] = v_["ONE"]/v_["RHO"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

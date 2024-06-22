@@ -24,9 +24,11 @@ class  GENROSEBNE(CUTEst_problem):
 # 
 #    Number of variables
 # 
-# IE N                   5
-# IE N                   10
-# IE N                   100
+#           Alternative values for the SIF file parameters:
+# IE N                   5              $-PARAMETER
+# IE N                   10             $-PARAMETER
+# IE N                   100            $-PARAMETER
+# IE N                   500            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -44,7 +46,10 @@ class  GENROSEBNE(CUTEst_problem):
         v_  = {}
         ix_ = {}
         ig_ = {}
-        v_['N'] = 500
+        if nargin<1:
+            v_['N'] = int(10);  #  SIF file default value
+        else:
+            v_['N'] = int(args[0])
         v_['1'] = 1
         v_['2'] = 2
         v_['N-1'] = -1+v_['N']
@@ -52,7 +57,7 @@ class  GENROSEBNE(CUTEst_problem):
         v_['RN+1'] = float(v_['N+1'])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):

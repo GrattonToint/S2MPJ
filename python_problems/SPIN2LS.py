@@ -66,7 +66,7 @@ class  SPIN2LS(CUTEst_problem):
         v_['2PI/N'] = v_['2PI']/v_['RN']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('MU',ix_)

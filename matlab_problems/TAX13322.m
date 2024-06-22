@@ -34,39 +34,48 @@ name = 'TAX13322';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('NA') = 1;  %  SIF file default value
         else
             v_('NA') = varargin{1};
         end
 % IE NB                  3              $-PARAMETER
-        if(nargin<3)
+        if(nargs<2)
             v_('NB') = 3;  %  SIF file default value
         else
             v_('NB') = varargin{2};
         end
 % IE NC                  3              $-PARAMETER
-        if(nargin<4)
+        if(nargs<3)
             v_('NC') = 3;  %  SIF file default value
         else
             v_('NC') = varargin{3};
         end
 % IE ND                  2              $-PARAMETER
-        if(nargin<5)
+        if(nargs<4)
             v_('ND') = 2;  %  SIF file default value
         else
             v_('ND') = varargin{4};
         end
 % IE NE                  2              $-PARAMETER
-        if(nargin<6)
+        if(nargs<5)
             v_('NE') = 2;  %  SIF file default value
         else
             v_('NE') = varargin{5};
@@ -13352,8 +13361,14 @@ switch(action)
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'OOR2-MN-72-1261';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

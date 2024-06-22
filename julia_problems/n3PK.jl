@@ -29,8 +29,8 @@ function n3PK(action,args...)
     name = "n3PK"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -78,7 +78,7 @@ function n3PK(action,args...)
             v_["PHI"*string(I)] = v_["PHI"*string(I)]/v_["GAMMA"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("A1,0",ix_)

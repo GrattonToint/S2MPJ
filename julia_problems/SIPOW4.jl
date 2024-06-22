@@ -30,8 +30,8 @@ function SIPOW4(action,args...)
     name = "SIPOW4"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -66,7 +66,7 @@ function SIPOW4(action,args...)
             v_["ETA"*string(J)] = v_["HALF"]+v_["-RTS"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)

@@ -35,21 +35,30 @@ name = 'SEMICON2';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('N') = 10;  %  SIF file default value
         else
             v_('N') = varargin{1};
         end
 % IE LN                  9              $-PARAMETER     original value
-        if(nargin<3)
+        if(nargs<2)
             v_('LN') = 9;  %  SIF file default value
         else
             v_('LN') = varargin{2};
@@ -64,7 +73,7 @@ switch(action)
 % IE LN                  900            $-PARAMETER
 % IE N                   5000           $-PARAMETER
 % IE LN                  4500           $-PARAMETER
-        if(nargin<4)
+        if(nargs<3)
             v_('LAMBDA') = 0.2;  %  SIF file default value
         else
             v_('LAMBDA') = varargin{3};
@@ -232,8 +241,14 @@ switch(action)
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'NOR2-AN-V-V';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 % **********************
 %  SET UP THE FUNCTION *
 %  AND RANGE ROUTINES  *

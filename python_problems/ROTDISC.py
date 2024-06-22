@@ -101,7 +101,7 @@ class  ROTDISC(CUTEst_problem):
         v_['aux3'] = v_['aux2']*v_['dr']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for k in range(int(v_['0']),int(v_['K'])+1):

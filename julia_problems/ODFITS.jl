@@ -42,8 +42,8 @@ function ODFITS(action,args...)
     name = "ODFITS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -106,7 +106,7 @@ function ODFITS(action,args...)
             v_["G/QLT"*string(I)] = v_["1/QLT"*string(I)]*v_["GAMMA"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("T13",ix_)

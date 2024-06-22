@@ -32,8 +32,8 @@ function MGH17SLS(action,args...)
     name = "MGH17SLS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -111,7 +111,7 @@ function MGH17SLS(action,args...)
         v_["Y32"] = 4.11E-1
         v_["Y33"] = 4.06E-1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

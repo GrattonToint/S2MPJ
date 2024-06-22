@@ -58,7 +58,7 @@ class  MINSURFO(CUTEst_problem):
         v_['1/HY2'] = v_['1/HY']*v_['1/HY']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['NX+1'])+1):

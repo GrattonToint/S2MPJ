@@ -239,7 +239,7 @@ class  TARGUS(CUTEst_problem):
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         ngrp   = len(ig_)

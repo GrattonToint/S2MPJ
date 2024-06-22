@@ -93,7 +93,7 @@ class  ORTHREGF(CUTEst_problem):
                 v_['ZD'+str(I)+','+str(J)] = v_['R3']*v_['PERT']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['5'])+1):

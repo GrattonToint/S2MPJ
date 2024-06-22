@@ -24,8 +24,8 @@ function HUBFIT(action,args...)
     name = "HUBFIT"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -45,7 +45,7 @@ function HUBFIT(action,args...)
         v_["Y5"] = 1.0
         v_["C"] = 0.85
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("a",ix_)

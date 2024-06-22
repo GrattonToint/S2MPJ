@@ -26,8 +26,8 @@ function MINSURFO(action,args...)
     name = "MINSURFO"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -54,7 +54,7 @@ function MINSURFO(action,args...)
         v_["1/HY"] = 1.0/v_["HY"]
         v_["1/HY2"] = v_["1/HY"]*v_["1/HY"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["NX+1"])

@@ -43,7 +43,7 @@ NAME          SCOND1LS
 *IE LN                  900            $-PARAMETER
 
 *IE N                   5000           $-PARAMETER
- IE LN                  4500           $-PARAMETER
+*IE LN                  4500           $-PARAMETER
 
 *   Continuation parameter
 *   Interesting values: 0.0 (the solution is a straight line)

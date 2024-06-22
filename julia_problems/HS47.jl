@@ -25,8 +25,8 @@ function HS47(action,args...)
     name = "HS47"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -43,7 +43,7 @@ function HS47(action,args...)
         v_["RT2M2"] = -2.0+v_["RT2"]
         v_["2MRT2"] = -1.0*v_["RT2M2"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

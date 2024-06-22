@@ -886,7 +886,7 @@ QPCBLEND      83
 QPNBLEND      83
 QR3D           5
 QR3DLS         5
-QRTQUAD       12
+QRTQUAD   12,100
 QUARTC        10
 QUDLIN      10,6
 RAT42          3

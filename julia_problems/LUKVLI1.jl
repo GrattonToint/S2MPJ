@@ -32,8 +32,8 @@ function LUKVLI1(action,args...)
     name = "LUKVLI1"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -52,7 +52,7 @@ function LUKVLI1(action,args...)
         v_["N-1"] = -1+v_["N"]
         v_["N-2"] = -2+v_["N"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

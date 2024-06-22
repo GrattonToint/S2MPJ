@@ -106,7 +106,7 @@ class  PALMER1NE(CUTEst_problem):
         v_['Y31'] = 83.4221
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('A',ix_)

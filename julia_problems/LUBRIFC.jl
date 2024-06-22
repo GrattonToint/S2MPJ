@@ -38,8 +38,8 @@ function LUBRIFC(action,args...)
     name = "LUBRIFC"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -83,7 +83,7 @@ function LUBRIFC(action,args...)
         v_["2DX/PI"] = 2.0*v_["DX/PI"]
         v_["DX/2"] = 0.5*v_["DX"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("K",ix_)

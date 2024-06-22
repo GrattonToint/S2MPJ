@@ -26,8 +26,8 @@ function PDE2(action,args...)
     name = "PDE2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -36,7 +36,7 @@ function PDE2(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["N"] = Int64(29);  #  SIF file default value
+            v_["N"] = Int64(6);  #  SIF file default value
         else
             v_["N"] = Int64(args[1]);
         end
@@ -57,7 +57,7 @@ function PDE2(action,args...)
         v_["AH"] = v_["A"]*v_["H"]
         v_["SQRTAH"] = sqrt(v_["AH"])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["0"]):Int64(v_["N1"])

@@ -26,8 +26,8 @@ function DIAGPQT(action,args...)
     name = "DIAGPQT"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -54,7 +54,7 @@ function DIAGPQT(action,args...)
         v_["1/RN"] = v_["ONE"]/v_["RN"]
         v_["SHIFT"] = v_["RN"]+v_["1/RN"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

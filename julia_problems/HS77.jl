@@ -24,8 +24,8 @@ function HS77(action,args...)
     name = "HS77"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -39,7 +39,7 @@ function HS77(action,args...)
         v_["C1"] = 2.0*v_["RT2"]
         v_["C2"] = 8.0+v_["RT2"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

@@ -25,8 +25,8 @@ function MUONSINELS(action,args...)
     name = "MUONSINELS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -1064,7 +1064,7 @@ function MUONSINELS(action,args...)
         v_["Y512"] = -0.0735646
         v_["E"] = 0.1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("B",ix_)

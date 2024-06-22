@@ -26,8 +26,8 @@ function EXPLIN2(action,args...)
     name = "EXPLIN2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -36,12 +36,13 @@ function EXPLIN2(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["N"] = Int64(10);  #  SIF file default value
+            v_["N"] = Int64(12);  #  SIF file default value
         else
             v_["N"] = Int64(args[1]);
         end
+# IE M                   100            $-PARAMETER
         if nargin<2
-            v_["M"] = Int64(100);  #  SIF file default value
+            v_["M"] = Int64(6);  #  SIF file default value
         else
             v_["M"] = Int64(args[2]);
         end
@@ -49,7 +50,7 @@ function EXPLIN2(action,args...)
         v_["1"] = 1
         v_["2"] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

@@ -24,8 +24,8 @@ function DECONVBNE(action,args...)
     name = "DECONVBNE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -131,7 +131,7 @@ function DECONVBNE(action,args...)
         v_["CC39"] = 0.0
         v_["CC40"] = 0.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for K = Int64(v_["-LGSG"]):Int64(v_["LGTR"])

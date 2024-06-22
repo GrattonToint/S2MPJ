@@ -72,7 +72,7 @@ class  DTOC6(CUTEst_problem):
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for T in range(int(v_['1']),int(v_['N-1'])+1):

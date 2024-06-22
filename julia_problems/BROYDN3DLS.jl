@@ -35,8 +35,8 @@ function BROYDN3DLS(action,args...)
     name = "BROYDN3DLS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -65,7 +65,7 @@ function BROYDN3DLS(action,args...)
         v_["-K2"] = -1.0*v_["KAPPA2"]
         v_["N-1"] = -1+v_["N"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

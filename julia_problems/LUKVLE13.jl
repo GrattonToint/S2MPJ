@@ -29,8 +29,8 @@ function LUKVLE13(action,args...)
     name = "LUKVLE13"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -53,7 +53,7 @@ function LUKVLE13(action,args...)
         v_["(N-2)/3"] = trunc(Int,(v_["N-2"]/v_["3"]))
         v_["NC"] = v_["2"]*v_["(N-2)/3"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

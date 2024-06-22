@@ -45,8 +45,9 @@ NAME          OBSTCLBM
 *IE PY                  75             $-PARAMETER
 
 *IE PX                  100            $-PARAMETER n = 10000
- IE PX                  5              $-PARAMETER     modified for S2X tests
- IE PY                  100            $-PARAMETER
+ IE PX                  5              $-PARAMETER     modified for S2MPJ tests
+*IE PY                  100            $-PARAMETER
+ IE PY                  20             $-PARAMETER     modified for S2MPJ tests
 
 *IE PX                  125            $-PARAMETER n = 15625
 *IE PY                  125            $-PARAMETER

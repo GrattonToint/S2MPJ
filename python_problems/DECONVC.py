@@ -134,7 +134,7 @@ class  DECONVC(CUTEst_problem):
         v_['CC40'] = 0.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for K in range(int(v_['-LGSG']),int(v_['LGTR'])+1):

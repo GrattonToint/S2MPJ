@@ -31,10 +31,19 @@ name = 'AIRCRFTA';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
@@ -415,8 +424,14 @@ switch(action)
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'NOR2-RN-8-5';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

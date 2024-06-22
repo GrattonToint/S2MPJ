@@ -27,8 +27,8 @@ function EXPFITB(action,args...)
     name = "EXPFITB"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -49,7 +49,7 @@ function EXPFITB(action,args...)
             v_["ET"*string(I)] = exp(v_["T"*string(I)])
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("P0",ix_)

@@ -19,8 +19,8 @@ function CmRELOAD(action,args...)
     name = "CmRELOAD"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -239,7 +239,7 @@ function CmRELOAD(action,args...)
         v_["G"*string(Int64(v_["14"]))*","*string(Int64(v_["14"]))] = 0.5
         v_["T-1"] = -1+v_["T"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

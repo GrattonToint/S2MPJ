@@ -53,7 +53,7 @@ class  LIN(CUTEst_problem):
         v_['INIT'+str(int(v_['2']))] = 0.5
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['C'])+1):

@@ -192,11 +192,11 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %                      'i' : the variable is integer
 %                      'b' : the variable is binary (zero-one)
 %                      If 'xtype' is not a field of pb, all variables are assumed to be of the 'r' type.
-%         pb.xscale    if present, is a real vector containing the scaling factors to be applied by the user on the
+%         pb.xscale    if nonempty, is a real vector containing the scaling factors to be applied by the user on the
 %                      occurrences of the variables in the linear terms of the problem's groups (that is on the columns
-%                      of pbm.A).  If not present, the scaling factors are applied to the relevant terms internally to the
+%                      of pbm.A).  If empty, the scaling factors are applied to the relevant terms internally to the
 %                      decoder without need for further user action (see the pbxscale option of s2mpj below)
-%         pb.y0        is a real vector containing the starting values for the constraint's  multipliers
+%         pb.y0        is a real vector containing the starting values for the constraint's multipliers
 %         pb.clower    is the real vector of lower bounds on the constraints values
 %         pb.cupper    is the real vector of upper bounds on the constraints values
 %         pb.objlower  is a real lower bound of the objective function's value, if known
@@ -206,7 +206,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %         Here, 'problem parameters' are parameters identified by a $-PARAMETER string in the SIF file. They are assigned
 %         in the order where they appear in varargin, which is the same as that used in the SIF and Matlab/Python/Julia
-%         files. If varargin is too short in that it  does not provide a value for a parameter, the SIF default value is
+%         files. If varargin is too short in that it does not provide a value for a parameter, the SIF default value is
 %         used.
 %
 %         If constraints are present, they are reported in the following order:
@@ -217,8 +217,8 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %         This is only for convenience, but this 'ordered' feature  should not be included in a 'S2MPJ format' for problem
 %         description, the type of each constraint being determined by the values the lower and upper bounds on its value.
-%         This may also be superseded by setting the keepcorder flag in the S2MPJ options (see below). If the problem has no
-%         constraints or bound constraints only, then lincons, y0, clower, cupper and cnames are not fields of the pb
+%         This may also be superseded by setting the keepcorder flag in the S2MPJ options (see below). If the problem has
+%         no constraints or bound constraints only, then lincons, y0, clower, cupper and cnames are not fields of the pb
 %         struct returned on setup. pb.m is still defined in this case, but its value is 0. The fields objlower
 %         and objupper may also be missing if no value is provided in the SIF file. When specific S2MPJ options are used
 %         (again, see below), the fields pb.xnames, pb.cnames may be missing from the pb struct.
@@ -702,11 +702,11 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %      pbm.elpar{ie}   : values of parameters for element ie
 %                                             
 %   7) Because the SIF standard typically imposes the DEFAULT type of entities  such as constants, ranges, bounds or
-%      start point to be defined first and  optionally, and because this default might not be zero (the value that
+%      starting point to be defined first and optionally, and because this default might not be zero (the value that
 %      Matlab uses to fill-in unaffected vector entries), one needs to state the default value before any other value is
 %      attached to an entity's component. This may then clash with an explicitly stated DEFAULT value, and a mechanism is
 %      used in S2MPJ to avoid stating the SIF default for as long as one is certain that no other default is stated to
-%      supersede it.  This is achieved by storing the code line defining the SIF default in memory  (in pending{}) and
+%      supersede it.  This is achieved by storing the code line defining the SIF default in memory (in pending{}) and
 %      only using it if the next line is not a DEFAULT line. A similar technique is also used for the DO loop statements
 %      (they may be modified by a subsequent DI line, or not) and for the decoding of the Fortran expressions of the
 %      nonlinear functions, because they may be continued using continuation lines (A+, I+, E+, F+, G+ and H+): the
@@ -716,7 +716,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 12 VI 2024
+%                started VI 2023, this version 20 VI 2024
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -730,8 +730,8 @@ getxnames      = 1;  %  Store the variables' names in pb.xnames
 getcnames      = 1;  %  Store the constraints' names in pb.cnames    
 getenames      = 0;  %  Do not store the elements names in pbm.elnames      
 getgnames      = 0;  %  Do not store the group names in pbm.grnames         
-keepcorder     = 0;  %  Do not reorder the constraints as <=, ==, >=, but keep the
-                     %  order in which they appear in the SIF file 
+keepcorder     = 1;  %  Do not reorder the constraints as <=, ==, >=, but keep the order in which they appear in the
+                     %  SIF file 
 keepcformat    = 0;  %  Do not keep the SIF format for constraint specification (ie specifying constants and ranges)
                      %  instead of producing lower and upper bounds on the constraints values (clowerand cupper). 
 writealtsets   = 0;  %  Do not write (as comments) active (i.e. not commented off)
@@ -747,7 +747,7 @@ extxscale      = 1;  %  Apply the variable's scaling internally, instead of pass
 sifdir         = ''; %  Find the problem in the Matlab path
 outdir         = ''; %  Write the output file in the current directory
 
-%  Determine if the Symbolic Math Toolbox is installed, in which case request support of variable precision arithmetic
+%  Determine if the Symbolic Math Toolbox is installed, in which case request support of reduced precision arithmetic
 %  by default for Matlab output files (by setting redprec to 1).
 
 v              = ver;
@@ -1135,16 +1135,27 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printmline( 'switch(action)', 0, bindent, pbs.fidma );   %  the 'action' switch
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
          if ( redprec )
-            printmline( 'case {''setup'',''setup_redprec''}', 1, bindent, pbs.fidma );   %  the 'setup' action with vpa
+            printmline( 'case {''setup'',''setup_redprec''}',                                 1,      bindent, pbs.fidma ); 
          else
-            printmline( 'case ''setup''', 1, bindent, pbs.fidma );                   %  the 'setup' action without vpa
+            printmline( 'case ''setup''',                                                     1,      bindent, pbs.fidma );
          end         
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
-         printmline( sprintf( 'pb.name      = name;' ),                                       2,      bindent, pbs.fidma );
-         if ( ~strcmp( sifpbname, probname ) )
-            printmline( sprintf( 'pb.sifpbname = ''%s'';', sifpbname ),                       2,      bindent, pbs.fidma );
+         if ( redprec )
+            printmline( 'if(isfield(pbm,''ndigs''))',                                         2,      bindent, pbs.fidma );
+            printmline( 'rmfield(pbm,''ndigs'');',                                            3,      bindent, pbs.fidma );
+            printmline( 'end',                                                                2,      bindent, pbs.fidma );
+            printmline( 'if(strcmp(action,''setup_redprec''))',                               2,      bindent, pbs.fidma );
+            printmline( 'pbm.ndigs = max(1,min(15,varargin{end}));',                          3     , bindent, pbs.fidma );
+            printmline( 'nargs     = nargin-2;',                                              3,      bindent, pbs.fidma );
+            printmline( 'else',                                                               2,      bindent, pbs.fidma );
+            printmline( 'nargs = nargin-1;',                                                  3,      bindent, pbs.fidma );
+            printmline( 'end',                                                                2,      bindent, pbs.fidma );
          end
-         printmline( sprintf( 'pbm.name     = name;' ),                                       2,      bindent, pbs.fidma );
+         printmline( sprintf( 'pb.name   = name;' ),                                          2,      bindent, pbs.fidma );
+         printmline( sprintf( 'pbm.name  = name;' ),                                          2,      bindent, pbs.fidma );
+         if ( ~strcmp( sifpbname, probname ) )
+            printmline( sprintf( 'pb.sifpbname  = ''%s'';', sifpbname ),                      2,      bindent, pbs.fidma );
+         end
          printmline( '%%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
 
          %  Initialize the dictionaries for parameters' values (v_), variables' 'flat'
@@ -1169,10 +1180,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printpline( 'pbm      = structtype()',                                               2,      bindent, pbs.fidpy );
          printpline( 'pb       = structtype()',                                               2,      bindent, pbs.fidpy );
          printpline( 'pb.name  = self.name',                                                  2,      bindent, pbs.fidpy );
+         printpline( 'pbm.name = self.name',                                                  2,      bindent, pbs.fidpy );
          if ( ~strcmp( sifpbname, probname ) )
             printpline( sprintf( 'pb.sifpbname = ''%s''', sifpbname ),                        2,      bindent, pbs.fidpy );
          end
-         printpline( 'pbm.name = self.name',                                                  2,      bindent, pbs.fidpy );
          printpline( 'nargin   = len(args)',                                                  2,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( '#%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
@@ -1195,8 +1206,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
          printjline( 'if action == "setup"',                                                  1,      bindent, pbs.fidjl );
-         printjline( 'pbm          = PBM(name)',                                              2,      bindent, pbs.fidjl );
          printjline( 'pb           = PB(name)',                                               2,      bindent, pbs.fidjl );
+         printjline( 'pbm          = PBM(name)',                                              2,      bindent, pbs.fidjl );
          if ( ~strcmp( sifpbname, probname ) )
             printjline( sprintf( 'pb.sifpbname = "%s"', sifpbname ),                          2,      bindent, pbs.fidjl );
          end
@@ -1288,7 +1299,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printpline( 'pbm.congrps = find(gtype,lambda x:(x==''<='' or x==''=='' or x==''>=''))', ...
                                                                                               indlvl, bindent, pbs.fidpy );
             else
-               printpline( 'pbm.congrps = legrps.append(eqgrps).append(gegrps)',              indlvl, bindent, pbs.fidpy );
+%%%%%%%%%%%%%%%%%%%  PROBLEM HERE ?? %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+               printpline( 'pbm.congrps = np.concatenate((legrps,eqgrps,gegrps))',             indlvl, bindent, pbs.fidpy );
             end
             if ( getcnames )
                printpline( 'pb.cnames= cnames[pbm.congrps]',                                  indlvl, bindent, pbs.fidpy );
@@ -1343,14 +1355,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printmline( 'pb.xlower = zeros(pb.n,1);',                                         indlvl, bindent, pbs.fidma );
             printpline( 'pb.xlower = np.zeros((pb.n,1))',                                     indlvl, bindent, pbs.fidpy );
             printjline( 'pb.xlower = zeros(Float64,pb.n)',                                    indlvl, bindent, pbs.fidjl );
-%            has_xlower  = 1;
             has_xlowdef = 1;
          end
          if ( ~has_xuppdef ) 
             printmline( 'pb.xupper = Inf*ones(pb.n,1);',                                      indlvl, bindent, pbs.fidma );
             printpline( 'pb.xupper = np.full((pb.n,1),float(''inf''))',                       indlvl, bindent, pbs.fidpy );
             printjline( 'pb.xupper =    fill(Inf,pb.n)',                                      indlvl, bindent, pbs.fidjl );
-%            has_xupper  = 1;
             has_xuppdef = 1;
          end
       elseif (contains( pending{1}, 'START POINT' ) )
@@ -1492,8 +1502,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
       % a holder for the variable's scalings
       
-      printpline( 'xscale    = np.array([])',                                                 indlvl, bindent, pbs.fidpy );
-      printjline( 'xscale  = Float64[]',                                                      indlvl, bindent, pbs.fidjl );
+      printpline( 'pb.xscale = np.array([])',                                                 indlvl, bindent, pbs.fidpy );
+      printjline( 'pb.xscale = Float64[]',                                                    indlvl, bindent, pbs.fidjl );
       
        % holders for the indeces of the integer and binary variables
        
@@ -1907,15 +1917,6 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             end
          end
 
-%         %  3) Missing default for group constants
-%
-%         if ( ~has_constants )
-%            printmline( 'pbm.gconst = zeros(ngrp,1);',                                        indlvl, bindent, pbs.fidma );
-%            printpline( 'pbm.gconst = np.zeros((ngrp,1))',                                    indlvl, bindent, pbs.fidpy );
-%            printjline( 'pbm.gconst = zeros(Float64,ngrp)',                                   indlvl, bindent, pbs.fidjl );
-%         end
-
-%         %  4) Missing defaults for bounds on the variables
          %  3) Missing defaults for bounds on the variables
 
          if ( ~has_bounds )
@@ -2042,39 +2043,40 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printjline( 'pbm.A = Asave',                                                      indlvl, bindent, pbs.fidjl );
 
             if ( has_xscale )
-               if ( extxscale )
-                  pb.xscale = xscale;
-               else
+               if ( ~extxscale )
                   switch ( pbs.lang )
                   case 'matlab'
                      printmline( '%%%%%%%%%%%%%%%% VARIABLES'' SCALING %%%%%%%%%%%%%%%',      indlvl, bindent, pbs.fidma );
                      printmline( 'sA2 = size(pbm.A,2);',                                      indlvl, bindent, pbs.fidma );
-                     printmline( 'for j = 1:min([sA2,pb.n,length(xscale)])',                  indlvl, bindent, pbs.fidma );
-                     printmline( '    if ( xscale(j) ~= 0.0 && xscale(j) ~= 1.0 )',           indlvl, bindent, pbs.fidma );
+                     printmline( 'for j = 1:min([sA2,pb.n,length(pb.xscale)])',               indlvl, bindent, pbs.fidma );
+                     printmline( '    if ( pb.xscale(j) ~= 0.0 && pb.xscale(j) ~= 1.0 )',     indlvl, bindent, pbs.fidma );
                      printmline( '        for i = find(pbm.A(:,j))',                          indlvl, bindent, pbs.fidma );
-                     printmline( '              pbm.A(i,j) = pbm.A(i,j)/xscale(j);',          indlvl, bindent, pbs.fidma );
+                     printmline( '              pbm.A(i,j) = pbm.A(i,j)/pb.xscale(j);',       indlvl, bindent, pbs.fidma );
                      printmline( '        end',                                               indlvl, bindent, pbs.fidma );
                      printmline( '    end',                                                   indlvl, bindent, pbs.fidma );
                      printmline( 'end',                                                       indlvl, bindent, pbs.fidma );
+                     printmline( 'pb.xscale = [];',                                           indlvl, bindent, pbs.fidma );
                   case 'python'
                      printpline( '#%%%%%%%%%%%%%%% VARIABLES'' SCALING %%%%%%%%%%%%%%%',      indlvl, bindent, pbs.fidpy );
-                     printpline( 'lxs = len(xscale);',                                        indlvl, bindent, pbs.fidpy );
-                     printpline( 'for j in np.arange(0,min(sA2,pb.n,len(xscale))):',          indlvl, bindent, pbs.fidpy );
-                     printpline( '    if not xscale[j] is None and xscale[j] != 0.0 and xscale[j] != 1.0:',  ...
+                     printpline( 'lxs = len(pb.xscale);',                                     indlvl, bindent, pbs.fidpy );
+                     printpline( 'for j in np.arange(0,min(sA2,pb.n,lxs)):',                  indlvl, bindent, pbs.fidpy );
+                     printpline( '    if not pb.xscale[j] is None and pb.xscale[j] != 0.0 and pb.xscale[j] != 1.0:',  ...
                                                                                               indlvl, bindent, pbs.fidpy );
                      printpline( '        for i in find(pbm.A[:,j],lambda x:x!=0):',          indlvl, bindent, pbs.fidpy );
-                     printpline( '              pbm.A[i,j] = pbm.A[i,j]/xscale[j]',           indlvl, bindent, pbs.fidpy );
+                     printpline( '              pbm.A[i,j] = pbm.A[i,j]/pb.xscale[j]',        indlvl, bindent, pbs.fidpy );
+                     printpline( 'pb.xscale = []',                                            indlvl, bindent, pbs.fidpy );
                   case 'julia'
                      printjline( '#%%%%%%%%%%%%%%% VARIABLES'' SCALING %%%%%%%%%%%%%%%',      indlvl, bindent, pbs.fidjl );
                      printjline( 'sA2 = size(pbm.A,2);',                                      indlvl, bindent, pbs.fidjl );
-                     printjline( 'lxs = length(xscale);',                                     indlvl, bindent, pbs.fidjl );
-                     printjline( 'for j = 1:min(sA2,pb.n,length(xscale))',                    indlvl, bindent, pbs.fidjl );
-                     printjline( '    if xscale[j] != 0.0 && xscale[j] != 1.0',               indlvl, bindent, pbs.fidjl );
+                     printjline( 'lxs = length(pb.xscale);',                                  indlvl, bindent, pbs.fidjl );
+                     printjline( 'for j = 1:min(sA2,pb.n,lxs)',                               indlvl, bindent, pbs.fidjl );
+                     printjline( '    if pb.xscale[j] != 0.0 && pb.xscale[j] != 1.0',         indlvl, bindent, pbs.fidjl );
                      printjline( '        for i in findall(x->x!=0,pbm.A[:,j])',              indlvl, bindent, pbs.fidjl );
-                     printjline( '              pbm.A[i,j] = pbm.A[i,j]/xscale[j]',           indlvl, bindent, pbs.fidjl );
+                     printjline( '              pbm.A[i,j] = pbm.A[i,j]/pb.xscale[j]',        indlvl, bindent, pbs.fidjl );
                      printjline( '        end',                                               indlvl, bindent, pbs.fidjl );
                      printjline( '    end',                                                   indlvl, bindent, pbs.fidjl );
                      printjline( 'end',                                                       indlvl, bindent, pbs.fidjl );
+                     printjline( 'pb.xscale = []',                                            indlvl, bindent, pbs.fidjl );
                   end
                end
             end
@@ -2133,11 +2135,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
             if ( redprec )
                printmline( '%%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%',        indlvl,     bindent, pbs.fidma );
-               printmline( 'if(isfield(pbm,''ndigs''))',                                  indlvl,     bindent, pbs.fidma );
-               printmline( 'rmfield(pbm,''ndigs'');',                                     indlvl + 1, bindent, pbs.fidma );
-               printmline( 'end',                                                         indlvl,     bindent, pbs.fidma );
                printmline( 'if(strcmp(action,''setup_redprec''))',                        indlvl,     bindent, pbs.fidma );
-               printmline( 'pbm.ndigs    = max(1,min(15,varargin{end}));',                indlvl + 1, bindent, pbs.fidma );
                printmline( 'varargout{1} = s2mpjlib(''convert'',pb,  pbm.ndigs);',        indlvl + 1, bindent, pbs.fidma );
                printmline( 'varargout{2} = s2mpjlib(''convert'',pbm, pbm.ndigs);',        indlvl + 1, bindent, pbs.fidma );
                printmline( 'else',                                                        indlvl,     bindent, pbs.fidma );
@@ -2306,12 +2304,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                %  If variable precision is requested, save the last input (the number of digits) and test for a shorter
                %  list  of input arguments.
              
-               if ( redprec )
-                  printmline( sprintf( 'if(nargin-1<%s)', int2str( ninputs + 1 ) ),       indlvl,     bindent, pbs.fidma );
-               else
-                  printmline( sprintf( 'if(nargin<%s)',   int2str( ninputs + 1 ) ),       indlvl,     bindent, pbs.fidma );
-               end
-               
+               printmline( sprintf( 'if(nargs<%s)', int2str( ninputs ) ),                 indlvl,     bindent, pbs.fidma );
                if ( strcmp( f{1}, 'IE' ) )
                   printmline( sprintf( 'v_(%s) = %s;  %%  SIF file default value', ...
                                        name2, round( d2e(f{4}) ) ),                       indlvl + 1, bindent, pbs.fidma );
@@ -2610,19 +2603,19 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             switch( f{3} )
             case '''SCALE'''
                if ( ~isempty( f{1} ) && f{1}(1) == 'Z' )
-                  printmline( sprintf( 'xscale(iv,1) = %s;',            getv1( f{1}, f, pbs ) ), ...
+                  printmline( sprintf( 'pb.xscale(iv,1) = %s;',            getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'xscale = arrset(xscale,iv,%s)', getv1( f{1}, f, pbs ) ), ...
+                  printpline( sprintf( 'pb.xscale = arrset(pb.xscale,iv,%s)', getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                  printjline( sprintf( 'arrset(xscale,iv,%s)',     getv1( f{1}, f, pbs ) ), ...
+                  printjline( sprintf( 'arrset(pb.xscale,iv,%s)',     getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
                   has_xscale = 1;                  
                else
                   xsc = d2e( f{4} );
                   if ( abs( str2double( xsc ) - 1 ) > 1.e-10 && abs( str2double( xsc) ) > 1.0e-15 )
-                     printmline( sprintf( 'xscale(iv,1) = %s;',            xsc),              indlvl, bindent, pbs.fidma );
-                     printpline( sprintf( 'xscale = arrset(xscale,iv,%s)', xsc),              indlvl, bindent, pbs.fidpy );
-                     printjline( sprintf( 'arrset(xscale,iv,%s)',          xsc),              indlvl, bindent, pbs.fidjl );
+                     printmline( sprintf( 'pb.xscale(iv,1) = %s;',               xsc),        indlvl, bindent, pbs.fidma );
+                     printpline( sprintf( 'pb.xscale = arrset(pb.xscale,iv,%s)', xsc),        indlvl, bindent, pbs.fidpy );
+                     printjline( sprintf( 'arrset(pb.xscale,iv,%s)',             xsc),        indlvl, bindent, pbs.fidjl );
                      has_xscale = 1;
                   end
                end

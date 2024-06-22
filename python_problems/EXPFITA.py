@@ -52,7 +52,7 @@ class  EXPFITA(CUTEst_problem):
             v_['ET'+str(I)] = np.exp(v_['T'+str(I)])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('P0',ix_)

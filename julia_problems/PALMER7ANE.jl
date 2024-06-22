@@ -29,8 +29,8 @@ function PALMER7ANE(action,args...)
     name = "PALMER7ANE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -68,7 +68,7 @@ function PALMER7ANE(action,args...)
         v_["Y23"] = 72.283164
         v_["Y24"] = 117.630959
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("A0",ix_)

@@ -36,20 +36,29 @@ name = 'BRATU1D';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('N') = 11;  %  SIF file default value
         else
             v_('N') = varargin{1};
         end
-        if(nargin<3)
+        if(nargs<2)
             v_('LAMBDA') = -3.4;  %  SIF file default value
         else
             v_('LAMBDA') = varargin{2};
@@ -205,8 +214,14 @@ switch(action)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.pbclass = 'OXR2-MN-V-0';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 % **********************
 %  SET UP THE FUNCTION *
 %  AND RANGE ROUTINES  *

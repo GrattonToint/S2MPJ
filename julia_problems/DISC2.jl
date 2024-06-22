@@ -25,8 +25,8 @@ function DISC2(action,args...)
     name = "DISC2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -71,7 +71,7 @@ function DISC2(action,args...)
         v_["Y11"] = 6.0
         v_["RNODES"] = Float64(v_["NNODES"])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("EPSILON",ix_)

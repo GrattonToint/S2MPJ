@@ -32,8 +32,8 @@ function MODBEALE(action,args...)
     name = "MODBEALE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -56,7 +56,7 @@ function MODBEALE(action,args...)
         v_["N/2-1"] = -1+v_["N/2"]
         v_["ALPHINV"] = 1.0/v_["ALPHA"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])

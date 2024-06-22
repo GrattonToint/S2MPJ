@@ -72,7 +72,7 @@ class  POROUS1(CUTEst_problem):
         v_['-4/H2'] = -4.0*v_['1/H2']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):

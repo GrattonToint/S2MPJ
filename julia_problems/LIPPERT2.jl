@@ -46,8 +46,8 @@ function LIPPERT2(action,args...)
     name = "LIPPERT2"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -90,7 +90,7 @@ function LIPPERT2(action,args...)
         v_["-DY"] = v_["-ONE"]/v_["RY"]
         v_["DY/2"] = v_["DY"]*v_["HALF"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("R",ix_)

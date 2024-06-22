@@ -50,8 +50,8 @@ function CRESC4(action,args...)
     name = "CRESC4"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -70,7 +70,7 @@ function CRESC4(action,args...)
         v_["Y4"] = 0.0
         v_["1"] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("V1",ix_)

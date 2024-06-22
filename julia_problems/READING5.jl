@@ -35,8 +35,8 @@ function READING5(action,args...)
     name = "READING5"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -68,7 +68,7 @@ function READING5(action,args...)
         v_["1"] = 1
         v_["2"] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X"*string(Int64(v_["0"])),ix_)

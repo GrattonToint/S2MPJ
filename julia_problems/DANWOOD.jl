@@ -31,8 +31,8 @@ function DANWOOD(action,args...)
     name = "DANWOOD"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -56,7 +56,7 @@ function DANWOOD(action,args...)
         v_["Y5"] = 4.882
         v_["Y6"] = 5.660
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

@@ -55,7 +55,7 @@ class  HIMMELBJ(CUTEst_problem):
         v_['18'] = 18
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for K in range(int(v_['1']),int(v_['NSETS'])+1):

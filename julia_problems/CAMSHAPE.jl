@@ -31,8 +31,8 @@ function CAMSHAPE(action,args...)
     name = "CAMSHAPE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -78,7 +78,7 @@ function CAMSHAPE(action,args...)
         v_["RMIN2CD"] = v_["RMIN"]*v_["2CDTHETA"]
         v_["RMAX2CD"] = v_["RMAX"]*v_["2CDTHETA"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

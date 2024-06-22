@@ -55,15 +55,24 @@ name = 'RDW2D52F';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('N') = 4;  %  SIF file default value
         else
             v_('N') = varargin{1};
@@ -74,7 +83,7 @@ switch(action)
 % IE N                   4096          $-PARAMETER
 % IE N                   8192          $-PARAMETER
 % IE N                   16384         $-PARAMETER
-        if(nargin<3)
+        if(nargs<2)
             v_('BETA') = 0.005;  %  SIF file default value
         else
             v_('BETA') = varargin{2};
@@ -735,8 +744,14 @@ switch(action)
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'QLR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 
     %%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

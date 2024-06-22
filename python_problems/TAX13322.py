@@ -151,7 +151,7 @@ class  TAX13322(CUTEst_problem):
             v_['RB'+str(I)+','+str(int(v_['P']))] = v_['RB']/v_['-THETA']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NA'])+1):

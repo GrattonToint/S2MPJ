@@ -48,18 +48,18 @@ class  MEYER3NE(CUTEst_problem):
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X1')
-        xscale = arrset(xscale,iv,0.01)
+        pb.xscale = arrset(pb.xscale,iv,0.01)
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X2')
-        xscale = arrset(xscale,iv,1000.0)
+        pb.xscale = arrset(pb.xscale,iv,1000.0)
         [iv,ix_,_] = s2mpj_ii('X3',ix_)
         pb.xnames=arrset(pb.xnames,iv,'X3')
-        xscale = arrset(xscale,iv,100.0)
+        pb.xscale = arrset(pb.xscale,iv,100.0)
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A       = lil_matrix((1000000,1000000))
         pbm.gscale  = np.array([])

@@ -39,7 +39,7 @@ class  MINSURF(CUTEst_problem):
         v_['RPSQ'] = v_['RP']*v_['RP']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for i in range(int(v_['1']),int(v_['P+1'])+1):

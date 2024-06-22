@@ -42,21 +42,30 @@ name = 'TRAINF';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('TIME') = 1.5;  %  SIF file default value
         else
             v_('TIME') = varargin{1};
         end
 % RE LENGTH              2.0            $-PARAMETER  length of track
-        if(nargin<3)
+        if(nargs<2)
             v_('LENGTH') = 2;  %  SIF file default value
         else
             v_('LENGTH') = varargin{2};
@@ -67,7 +76,7 @@ switch(action)
 % IE N                   201            $-PARAMETER
 % IE N                   501            $-PARAMETER
 % IE N                   1001           $-PARAMETER
-        if(nargin<4)
+        if(nargs<3)
             v_('N') = 11;  %  SIF file default value
         else
             v_('N') = varargin{3};
@@ -321,8 +330,14 @@ switch(action)
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'QQR2-MN-V-V';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 % ********************
 %  SET UP THE GROUPS *
 %  ROUTINE           *

@@ -38,8 +38,8 @@ function HEART8LS(action,args...)
     name = "HEART8LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -56,7 +56,7 @@ function HEART8LS(action,args...)
         v_["sumuE"] = -12.6
         v_["sumuF"] = 9.48
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("a",ix_)

@@ -217,7 +217,7 @@ class  SSEBNLN(CUTEst_problem):
         v_['D7,24'] = 511.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('V'+str(int(v_['0']))+','+str(int(v_['HOURS'])),ix_)

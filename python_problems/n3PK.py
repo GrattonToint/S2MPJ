@@ -81,7 +81,7 @@ class  n3PK(CUTEst_problem):
             v_['PHI'+str(I)] = v_['PHI'+str(I)]/v_['GAMMA']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('A1,0',ix_)

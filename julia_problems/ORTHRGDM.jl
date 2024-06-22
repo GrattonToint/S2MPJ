@@ -45,8 +45,8 @@ function ORTHRGDM(action,args...)
     name = "ORTHRGDM"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -89,7 +89,7 @@ function ORTHRGDM(action,args...)
             v_["YD"*string(I)] = v_["R2"]*v_["PERT"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("Z1",ix_)

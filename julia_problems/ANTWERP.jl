@@ -146,8 +146,8 @@ function ANTWERP(action,args...)
     name = "ANTWERP"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -200,7 +200,7 @@ function ANTWERP(action,args...)
         v_["1/N3"] = 1.0/v_["N3"]
         v_["-1/N2"] = -1.0/v_["N2"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("P1F",ix_)

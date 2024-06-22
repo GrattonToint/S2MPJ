@@ -781,7 +781,7 @@ end
          [ ~, grada, Hessa ] = feval( pbm.name, egname, fin, ig );
          if ( strcmp( mode, 'HIv' ) )
             ic = ic + 1;
-            HJv  = HJv + y(ic) * ( ( Hessa * sgin ) * ( sgin.' * v ) + grada * Hinv ) / gsc;
+            HJv  = HJv + y(ic) * ( ( Hessa * gin ) * ( gin.' * v ) + grada * Hinv ) / gsc;
          else
             HJv  = HJv + ( ( Hessa * gin ) * ( gin.' * v ) + grada * Hinv ) / gsc;
          end

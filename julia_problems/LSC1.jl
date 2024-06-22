@@ -24,8 +24,8 @@ function LSC1(action,args...)
     name = "LSC1"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -49,7 +49,7 @@ function LSC1(action,args...)
         v_["Y5"] = 27.0
         v_["Y6"] = -10.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X",ix_)

@@ -39,11 +39,16 @@ class  EG2(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         v_['ONE'] = 1
-        v_['N'] = 1000
+#           Alternative values for the SIF file parameters:
+# IE N                   1000           $-PARAMETER
+        if nargin<1:
+            v_['N'] = int(10);  #  SIF file default value
+        else:
+            v_['N'] = int(args[0])
         v_['NM1'] = -1+v_['N']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['ONE']),int(v_['N'])+1):
@@ -118,9 +123,9 @@ class  EG2(CUTEst_problem):
             pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
             posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
             pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(1.0))
-        ig = ig_['G1000']
+        ig = ig_['G'+str(int(v_['N']))]
         posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E1000'])
+        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(int(v_['N']))])
         pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
         posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
         pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(0.5))

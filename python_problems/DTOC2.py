@@ -114,7 +114,7 @@ class  DTOC2(CUTEst_problem):
                 v_['C'+str(I)+','+str(J)] = v_['RI+J']*v_['1/2NY']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for T in range(int(v_['1']),int(v_['N-1'])+1):

@@ -22,7 +22,8 @@ NAME          EG2
 *   classification OUR2-AN-1000-0
 
  IE ONE                 1
- IE N                   1000
+*IE N                   1000           $-PARAMETER
+ IE N                   10             $-PARAMETER     modified for S2MPJ tests
  IA NM1       N         -1
 
 VARIABLES
@@ -71,8 +72,8 @@ GROUP USES
  XE G(I)      E(I)
  XP G(I)      P          1.0
  ND
- E  G1000     E1000
- P  G1000     P          0.5
+ XE G(N)      E(N)
+ XP G(N)      P          0.5
 
 ENDATA
 

@@ -24,8 +24,8 @@ function MRIBASIS(action,args...)
     name = "MRIBASIS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -119,7 +119,7 @@ function MRIBASIS(action,args...)
         v_["-1/12"] = -1*v_["1/12"]
         v_["R0"] = Float64(v_["0"])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for j = Int64(v_["1"]):Int64(v_["2"])

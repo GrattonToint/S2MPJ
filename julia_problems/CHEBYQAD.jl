@@ -40,8 +40,8 @@ function CHEBYQAD(action,args...)
     name = "CHEBYQAD"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -63,7 +63,7 @@ function CHEBYQAD(action,args...)
         v_["RN+1"] = Float64(v_["N+1"])
         v_["1/N+1"] = 1.0/v_["RN+1"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["N"])

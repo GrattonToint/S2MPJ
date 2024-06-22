@@ -249,7 +249,7 @@ class  YORKNET(CUTEst_problem):
         v_['NDuSC'] = 1.0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['ONE']),int(v_['NSTEP'])+1):

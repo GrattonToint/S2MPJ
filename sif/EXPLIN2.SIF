@@ -20,8 +20,9 @@ NAME          EXPLIN2
 *IE M                   10             $-PARAMETER     original value
 
 *IE N                   1200           $-PARAMETER
- IE N                   10             $-PARAMETER     modified for S2X tests
- IE M                   100            $-PARAMETER
+ IE N                   12             $-PARAMETER     modified for S2MPJ tests
+*IE M                   100            $-PARAMETER
+ IE M                   6              $-PARAMETER     modified for S2MPJ tests
 
 *   Define constants
 

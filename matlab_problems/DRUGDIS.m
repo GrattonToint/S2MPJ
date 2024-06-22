@@ -44,15 +44,24 @@ name = 'DRUGDIS';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('NI') = 10;  %  SIF file default value
         else
             v_('NI') = varargin{1};
@@ -63,27 +72,27 @@ switch(action)
 % IE NI                  500            $-PARAMETER n=1504, m=1000 
 % IE NI                  1000           $-PARAMETER n=3004, m=2000 
 % IE NI                  2000           $-PARAMETER n=6004, m=4000 
-        if(nargin<3)
+        if(nargs<2)
             v_('TOXIC') = 0.026;  %  SIF file default value
         else
             v_('TOXIC') = varargin{2};
         end
-        if(nargin<4)
+        if(nargs<3)
             v_('WSS') = 0.02;  %  SIF file default value
         else
             v_('WSS') = varargin{3};
         end
-        if(nargin<5)
+        if(nargs<4)
             v_('UMAX') = 8.0;  %  SIF file default value
         else
             v_('UMAX') = varargin{4};
         end
-        if(nargin<6)
+        if(nargs<5)
             v_('PSTART') = 0.0;  %  SIF file default value
         else
             v_('PSTART') = varargin{5};
         end
-        if(nargin<7)
+        if(nargs<6)
             v_('PFINAL') = 2.0;  %  SIF file default value
         else
             v_('PFINAL') = varargin{6};
@@ -98,11 +107,11 @@ switch(action)
         pb.xnames = {};
         [iv,ix_] = s2mpjlib('ii','TF',ix_);
         pb.xnames{iv} = 'TF';
-        xscale(iv,1) = 200.0;
+        pb.xscale(iv,1) = 200.0;
         for I=v_('0'):v_('NI')
             [iv,ix_] = s2mpjlib('ii',['W',int2str(I)],ix_);
             pb.xnames{iv} = ['W',int2str(I)];
-            xscale(iv,1) = 0.02;
+            pb.xscale(iv,1) = 0.02;
         end
         for I=v_('0'):v_('NI')
             [iv,ix_] = s2mpjlib('ii',['P',int2str(I)],ix_);
@@ -300,20 +309,17 @@ switch(action)
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        %%%%%%%%%%%%%%%% VARIABLES' SCALING %%%%%%%%%%%%%%%
-        sA2 = size(pbm.A,2);
-        for j = 1:min([sA2,pb.n,length(xscale)])
-            if ( xscale(j) ~= 0.0 && xscale(j) ~= 1.0 )
-                for i = find(pbm.A(:,j))
-                      pbm.A(i,j) = pbm.A(i,j)/xscale(j);
-                end
-            end
-        end
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'LOR2-MN-V-V';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 % **********************
 %  SET UP THE FUNCTION *
 %  AND RANGE ROUTINES  *

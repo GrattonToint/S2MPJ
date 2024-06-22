@@ -39,8 +39,8 @@ function POROUS1(action,args...)
     name = "POROUS1"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -70,7 +70,7 @@ function POROUS1(action,args...)
         v_["-D/2H"] = -1.0*v_["D/2H"]
         v_["-4/H2"] = -4.0*v_["1/H2"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["P"])

@@ -128,7 +128,7 @@ class  PRODPL1(CUTEst_problem):
             cnames = arrset(cnames,ig,'SMOOTH'+str(I))
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         ngrp   = len(ig_)

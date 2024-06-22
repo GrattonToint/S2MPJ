@@ -54,7 +54,7 @@ class  SPECANNE(CUTEst_problem):
         v_['ROOTP5'] = np.sqrt(0.5)
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for p in range(int(v_['1']),int(v_['K'])+1):

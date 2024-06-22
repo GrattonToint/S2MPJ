@@ -27,8 +27,8 @@ function RK23(action,args...)
     name = "RK23"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -44,7 +44,7 @@ function RK23(action,args...)
         v_["ONESIXTH"] = v_["ONE"]/v_["SIX"]
         v_["FOURSIXTH"] = v_["FOUR"]/v_["SIX"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("C2",ix_)

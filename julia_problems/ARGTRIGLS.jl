@@ -33,8 +33,8 @@ function ARGTRIGLS(action,args...)
     name = "ARGTRIGLS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -43,7 +43,7 @@ function ARGTRIGLS(action,args...)
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
         if nargin<1
-            v_["N"] = Int64(200);  #  SIF file default value
+            v_["N"] = Int64(10);  #  SIF file default value
         else
             v_["N"] = Int64(args[1]);
         end
@@ -52,7 +52,7 @@ function ARGTRIGLS(action,args...)
         v_["RN"] = Float64(v_["N"])
         v_["1OVERN"] = v_["1.0"]/v_["RN"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

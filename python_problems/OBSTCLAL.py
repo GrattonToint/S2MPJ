@@ -67,8 +67,9 @@ class  OBSTCLAL(CUTEst_problem):
             v_['PX'] = int(5);  #  SIF file default value
         else:
             v_['PX'] = int(args[0])
+# IE PY                  100            $-PARAMETER
         if nargin<2:
-            v_['PY'] = int(100);  #  SIF file default value
+            v_['PY'] = int(20);  #  SIF file default value
         else:
             v_['PY'] = int(args[1])
 # IE PX                  125            $-PARAMETER n = 15625
@@ -96,7 +97,7 @@ class  OBSTCLAL(CUTEst_problem):
         v_['2'] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['PX'])+1):

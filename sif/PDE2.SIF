@@ -20,7 +20,7 @@ NAME          PDE2
 
 *IE N                   3              $-PARAMETER
 *IE N                   299            $-PARAMETER
- IE N                   29             $-PARAMETER     modified for S2X tests
+ IE N                   6              $-PARAMETER     modified for S2MPJ tests
 *IE N                   2999           $-PARAMETER     pde_2.mod value
 *IE N                   2099           $-PARAMETER     pde_20.mod value
 *IE N                   1299           $-PARAMETER     pde_200.mod value

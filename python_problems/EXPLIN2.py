@@ -39,11 +39,12 @@ class  EXPLIN2(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         if nargin<1:
-            v_['N'] = int(10);  #  SIF file default value
+            v_['N'] = int(12);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
+# IE M                   100            $-PARAMETER
         if nargin<2:
-            v_['M'] = int(100);  #  SIF file default value
+            v_['M'] = int(6);  #  SIF file default value
         else:
             v_['M'] = int(args[1])
         v_['0'] = 0
@@ -51,7 +52,7 @@ class  EXPLIN2(CUTEst_problem):
         v_['2'] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):

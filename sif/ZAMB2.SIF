@@ -28,7 +28,7 @@ NAME          ZAMB2
 *IE NY                  10             $-PARAMETER n = 1326    original value
 *IE NY                  20             $-PARAMETER n = 2646
 *IE NY                  30             $-PARAMETER n = 3966
- IE NY                  2              $-PARAMETER     modified for S2X tests
+ IE NY                  2              $-PARAMETER     modified for S2MPJ tests
 
 *   start year (1931 ... 19??, YEAR+NY <= 1966)
 

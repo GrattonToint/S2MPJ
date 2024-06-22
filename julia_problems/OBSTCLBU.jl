@@ -51,8 +51,8 @@ function OBSTCLBU(action,args...)
     name = "OBSTCLBU"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -65,8 +65,9 @@ function OBSTCLBU(action,args...)
         else
             v_["PX"] = Int64(args[1]);
         end
+# IE PY                  100            $-PARAMETER
         if nargin<2
-            v_["PY"] = Int64(100);  #  SIF file default value
+            v_["PY"] = Int64(20);  #  SIF file default value
         else
             v_["PY"] = Int64(args[2]);
         end
@@ -95,7 +96,7 @@ function OBSTCLBU(action,args...)
         v_["1"] = 1
         v_["2"] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for J = Int64(v_["1"]):Int64(v_["PX"])

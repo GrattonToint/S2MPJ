@@ -24,11 +24,12 @@ NAME          QRTQUAD
 *IE N                   120            $-PARAMETER     original value
 *IE N                   1200           $-PARAMETER
 *IE N                   5000           $-PARAMETER
- IE N                   12             $-PARAMETER     modified for S2X tests
+ IE N                   12             $-PARAMETER     modified for S2MPJ tests
 *IE M                   6              $-PARAMETER
 *IE M                   10             $-PARAMETER     original value
 *IE M                   100            $-PARAMETER
- IE M                   1100           $-PARAMETER
+*IE M                   1100           $-PARAMETER
+ IE M                   100            $-PARAMETER     modified for S2MPJ tests
 
 
 *   Define constants

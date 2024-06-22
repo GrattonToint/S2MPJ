@@ -232,7 +232,7 @@ class  CORE1(CUTEst_problem):
         cnames = arrset(cnames,ig,'PROD0006')
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         ngrp   = len(ig_)

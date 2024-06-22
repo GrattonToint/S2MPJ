@@ -28,8 +28,8 @@ function SNAKE(action,args...)
     name = "SNAKE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -39,7 +39,7 @@ function SNAKE(action,args...)
         ig_ = Dict{String,Int}();
         v_["TIP"] = 0.0001
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X",ix_)

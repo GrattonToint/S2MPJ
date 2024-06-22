@@ -38,7 +38,7 @@ class  PDE1(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         if nargin<1:
-            v_['N'] = int(29);  #  SIF file default value
+            v_['N'] = int(6);  #  SIF file default value
         else:
             v_['N'] = int(args[0])
 # IE N                   2999           $-PARAMETER     pde_1.mod value
@@ -58,7 +58,7 @@ class  PDE1(CUTEst_problem):
         v_['SQRTAH'] = np.sqrt(v_['AH'])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('T',ix_)

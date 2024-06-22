@@ -38,8 +38,8 @@ function ORTHREGC(action,args...)
     name = "ORTHREGC"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -92,7 +92,7 @@ function ORTHREGC(action,args...)
             v_["YD"*string(I)] = v_["R2"]*v_["PERT"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("H11",ix_)

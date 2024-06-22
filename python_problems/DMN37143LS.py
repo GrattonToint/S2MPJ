@@ -9330,7 +9330,7 @@ class  DMN37143LS(CUTEst_problem):
         v_['Y4643'] = -6.604424E-1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NVEC'])+1):

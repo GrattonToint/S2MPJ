@@ -27,8 +27,8 @@ function MARATOS(action,args...)
     name = "MARATOS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -38,7 +38,7 @@ function MARATOS(action,args...)
         ig_ = Dict{String,Int}();
         v_["TAU"] = 0.000001
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("X1",ix_)

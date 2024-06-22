@@ -98,7 +98,7 @@ class  ORTHRDS2(CUTEst_problem):
             v_['YD'+str(I)] = 0.1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('Z1',ix_)

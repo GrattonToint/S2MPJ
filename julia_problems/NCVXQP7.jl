@@ -26,8 +26,8 @@ function NCVXQP7(action,args...)
     name = "NCVXQP7"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -50,7 +50,7 @@ function NCVXQP7(action,args...)
         v_["NPLUS"] = trunc(Int,(v_["N"]/v_["4"]))
         v_["NPLUS+1"] = 1+v_["NPLUS"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

@@ -91,7 +91,7 @@ class  ORTHREGA(CUTEst_problem):
             v_['-B'] = v_['-B']/v_['PI']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('H11',ix_)

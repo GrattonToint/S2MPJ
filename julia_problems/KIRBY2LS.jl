@@ -28,8 +28,8 @@ function KIRBY2LS(action,args...)
     name = "KIRBY2LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -343,7 +343,7 @@ function KIRBY2LS(action,args...)
         v_["Y150"] = 91.55
         v_["Y151"] = 92.2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

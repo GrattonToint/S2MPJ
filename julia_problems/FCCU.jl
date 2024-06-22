@@ -144,8 +144,8 @@ function FCCU(action,args...)
     name = "FCCU"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -192,7 +192,7 @@ function FCCU(action,args...)
         v_["M18"] = 6.5
         v_["M19"] = 6.5
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("Feed",ix_)

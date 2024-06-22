@@ -25,8 +25,8 @@ function DMN15103(action,args...)
     name = "DMN15103"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -9325,7 +9325,7 @@ function DMN15103(action,args...)
         v_["Y4642"] = -2.937953E-1
         v_["Y4643"] = 1.57422412
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["NVEC"])

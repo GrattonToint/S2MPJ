@@ -739,9 +739,10 @@ def s2mpj_ii( name, List ):
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def s2mpj_nlx( name, List, pb=None, getxnames=None, xlowdef=None, xuppdef=None, x0def=None ):
-    
-    iv, List, newvar = s2mpj_ii( name ,List );
+
+    iv, List, newvar = s2mpj_ii( name, List );
     if( newvar ):
+        print("here")
         pb.n = pb.n + 1;
         if getxnames:
             pb.xnames = arrset( pb.xnames, iv, name )

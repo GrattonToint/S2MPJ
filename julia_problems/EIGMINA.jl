@@ -31,8 +31,8 @@ function EIGMINA(action,args...)
     name = "EIGMINA"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -57,7 +57,7 @@ function EIGMINA(action,args...)
             v_["A"*string(J)*","*string(J)] = v_["RJ"]
         end
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("D",ix_)

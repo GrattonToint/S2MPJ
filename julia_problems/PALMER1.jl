@@ -27,8 +27,8 @@ function PALMER1(action,args...)
     name = "PALMER1"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -101,7 +101,7 @@ function PALMER1(action,args...)
         v_["Y30"] = 70.1630
         v_["Y31"] = 83.4221
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("A",ix_)

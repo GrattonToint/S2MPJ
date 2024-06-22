@@ -59,7 +59,7 @@ class  DIAGIQT(CUTEst_problem):
         v_['SHIFT'] = v_['1/RN']+v_['RN/2']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):

@@ -38,8 +38,8 @@ function VIBRBEAMNE(action,args...)
     name = "VIBRBEAMNE"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -142,7 +142,7 @@ function VIBRBEAMNE(action,args...)
         v_["p29"] = 0.6666
         v_["p30"] = 0.8630
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("c0",ix_)

@@ -80,7 +80,7 @@ class  MANNE(CUTEst_problem):
         v_['BT'+str(int(v_['T']))] = v_['BT'+str(int(v_['T']))]*v_['1/1-BETA']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['T'])+1):

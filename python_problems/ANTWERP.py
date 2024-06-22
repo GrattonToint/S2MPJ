@@ -204,7 +204,7 @@ class  ANTWERP(CUTEst_problem):
         v_['-1/N2'] = -1.0/v_['N2']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('P1F',ix_)

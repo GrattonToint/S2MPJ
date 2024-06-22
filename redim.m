@@ -1,19 +1,14 @@
 %
-%   Reduce dimension by setting problems arguments to coincide with thse
+%   Reduce dimension by setting problems arguments to coincide with these
 %   specified in fullproblist
 %
 %   Programming: Ph. Toint
-%   This version 31 V 2024
+%   This version 20 VI 2024
 %
 
 function redim( varargin )
 
-inma.language = 'matlab';
-inma.outdir   = 'matlab_problems';
-inpy.language = 'python';
-inpy.outdir   = './python_problems';
-injl.language = 'julia';
-injl.outdir   = './julia_problems';
+sifdir = '/home/philippe/problems/mysif/';
 
 if ( nargin )
 
@@ -21,8 +16,7 @@ if ( nargin )
    for i= 1:nargin
       myprobs{end+1} = varargin{i};
    end
-
-
+   
 end
 
 start = 1;
@@ -42,7 +36,7 @@ while( ~feof(fid ) )
       iprob = iprob + 1;
       fprintf( ' Redim problem %4d: %s\n', iprob , pname );
       args = split( fields{2}, ',' );
-      redimprob( pname, args )
+      redimprob( sifdir, pname, args )
    end
 end
 fclose(fid);
@@ -54,7 +48,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function redimprob( pname, args )
+function redimprob( sifdir, pname, args )
 
 okname  = pname;
 sifname = replace( pname, 'n','' );
@@ -63,8 +57,8 @@ sifname = replace( sifname,'m','-' );
 sifname = replace( sifname,'t','*' );
 sifname = replace( sifname,'d','/' );
 
-fidin    = fopen( ['/home/philippe/problems/sif/', sifname, '.SIF' ], 'r' );
-fidout   = fopen( ['/home/philippe/s2mpj_local/sif/', okname, '.SIF' ], 'w' );
+fidin    = fopen( [ sifdir, sifname, '.SIF' ], 'r' );
+fidout   = fopen( ['./sif/', okname, '.SIF' ], 'w' );
 nargs    = length( args );
 iarg     = 0;
 assigned = {};
@@ -80,11 +74,11 @@ while( ~feof( fidin ) )
          argi  = args{ iarg };
          largi = length( argi );
          argi(largi+1:max(largi,12) ) = " ";
-         cline = line;
+         cline    = line;
          cline(1) = '*';
          fprintf( fidout, '%s\n', cline );
          assigned{end+1} = parname;
-         line(25:36) = argi;
+         line(25:36)     = argi;
          line = [ line(1:strfind( line, '$-PARAMETER' )+10), '     modified for S2MPJ tests' ];
       end
    elseif ( ( lline >4 && strcmp(line(1:4),'NAME') ) ||     ...

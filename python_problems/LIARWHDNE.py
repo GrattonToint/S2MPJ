@@ -55,7 +55,7 @@ class  LIARWHDNE(CUTEst_problem):
         v_['ROOOTP25'] = np.sqrt(0.25)
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):

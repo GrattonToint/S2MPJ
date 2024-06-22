@@ -183,7 +183,7 @@ class  EQC(CUTEst_problem):
         v_['SUBBB'] = v_['SUBBB']/v_['TWO']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('F1',ix_)

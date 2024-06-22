@@ -25,8 +25,8 @@ function PFIT1LS(action,args...)
     name = "PFIT1LS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -38,7 +38,7 @@ function PFIT1LS(action,args...)
         v_["CG"] = -18.66666666
         v_["CH"] = -23.11111111
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("A",ix_)

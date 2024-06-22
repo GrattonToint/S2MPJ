@@ -22,8 +22,8 @@ function QCNEW(action,args...)
     name = "QCNEW"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -179,7 +179,7 @@ function QCNEW(action,args...)
         v_["SUBBB"] = v_["LUBBB"]+v_["UUBBB"]
         v_["SUBBB"] = v_["SUBBB"]/v_["TWO"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("F1",ix_)

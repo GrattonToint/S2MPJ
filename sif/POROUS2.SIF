@@ -33,7 +33,7 @@ NAME          POROUS2
 *IE P                   32             $-PARAMETER      original value
 *IE P                   64             $-PARAMETER 
 *IE P                   72             $-PARAMETER 
- IE P                   32             $-PARAMETER     modified for S2X tests
+ IE P                   5              $-PARAMETER     modified for S2MPJ tests
 
 *   D is the diffusion parameter d in the equation above.
 *   (see problem POROUS1 for D = 50.0)

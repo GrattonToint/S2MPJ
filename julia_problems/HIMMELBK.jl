@@ -35,8 +35,8 @@ function HIMMELBK(action,args...)
     name = "HIMMELBK"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -98,7 +98,7 @@ function HIMMELBK(action,args...)
         v_["13"] = 13
         v_["24"] = 24
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for K = Int64(v_["1"]):Int64(v_["24"])

@@ -41,8 +41,8 @@ function DRUGDIS(action,args...)
     name = "DRUGDIS"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -93,16 +93,16 @@ function DRUGDIS(action,args...)
         v_["-1/2NI"] = -0.5/v_["RNI"]
         v_["0"] = 0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("TF",ix_)
         arrset(pb.xnames,iv,"TF")
-        arrset(xscale,iv,200.0)
+        arrset(pb.xscale,iv,200.0)
         for I = Int64(v_["0"]):Int64(v_["NI"])
             iv,ix_,_ = s2mpj_ii("W"*string(I),ix_)
             arrset(pb.xnames,iv,"W"*string(I))
-            arrset(xscale,iv,0.02)
+            arrset(pb.xscale,iv,0.02)
         end
         for I = Int64(v_["0"]):Int64(v_["NI"])
             iv,ix_,_ = s2mpj_ii("P"*string(I),ix_)
@@ -284,16 +284,6 @@ function DRUGDIS(action,args...)
         pb.cupper[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)
         Asave = pbm.A[1:ngrp, 1:pb.n]
         pbm.A = Asave
-        #%%%%%%%%%%%%%%% VARIABLES' SCALING %%%%%%%%%%%%%%%
-        sA2 = size(pbm.A,2);
-        lxs = length(xscale);
-        for j = 1:min(sA2,pb.n,length(xscale))
-            if xscale[j] != 0.0 && xscale[j] != 1.0
-                for i in findall(x->x!=0,pbm.A[:,j])
-                      pbm.A[i,j] = pbm.A[i,j]/xscale[j]
-                end
-            end
-        end
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)

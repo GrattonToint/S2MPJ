@@ -33,15 +33,24 @@ name = 'SREADIN3';
 
 switch(action)
 
-    case 'setup'
+    case {'setup','setup_redprec'}
 
-        pb.name      = name;
-        pbm.name     = name;
+        if(isfield(pbm,'ndigs'))
+            rmfield(pbm,'ndigs');
+        end
+        if(strcmp(action,'setup_redprec'))
+            pbm.ndigs = max(1,min(15,varargin{end}));
+            nargs     = nargin-2;
+        else
+            nargs = nargin-1;
+        end
+        pb.name   = name;
+        pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = configureDictionary('string','double');
         ix_ = configureDictionary('string','double');
         ig_ = configureDictionary('string','double');
-        if(nargin<2)
+        if(nargs<1)
             v_('N') = 10;  %  SIF file default value
         else
             v_('N') = varargin{1};
@@ -71,7 +80,7 @@ switch(action)
             pb.xnames{iv} = ['X',int2str(I)];
             [iv,ix_] = s2mpjlib('ii',['U',int2str(I)],ix_);
             pb.xnames{iv} = ['U',int2str(I)];
-            xscale(iv,1) = v_('RN');
+            pb.xscale(iv,1) = v_('RN');
         end
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
@@ -247,20 +256,17 @@ switch(action)
         %%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
         pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
-        %%%%%%%%%%%%%%%% VARIABLES' SCALING %%%%%%%%%%%%%%%
-        sA2 = size(pbm.A,2);
-        for j = 1:min([sA2,pb.n,length(xscale)])
-            if ( xscale(j) ~= 0.0 && xscale(j) ~= 1.0 )
-                for i = find(pbm.A(:,j))
-                      pbm.A(i,j) = pbm.A(i,j)/xscale(j);
-                end
-            end
-        end
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'OOR2-MN-V-V';
-        varargout{1} = pb;
-        varargout{2} = pbm;
+        %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
+        if(strcmp(action,'setup_redprec'))
+            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+        else
+            varargout{1} = pb;
+            varargout{2} = pbm;
+        end
 % ********************
 %  SET UP THE GROUPS *
 %  ROUTINE           *

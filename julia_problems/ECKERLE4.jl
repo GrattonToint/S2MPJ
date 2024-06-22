@@ -29,8 +29,8 @@ function ECKERLE4(action,args...)
     name = "ECKERLE4"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -112,7 +112,7 @@ function ECKERLE4(action,args...)
         v_["Y34"] = 0.0001143
         v_["Y35"] = 0.0000710
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         for I = Int64(v_["1"]):Int64(v_["N"])

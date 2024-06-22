@@ -43,8 +43,8 @@ function SPINOP(action,args...)
     name = "SPINOP"
 
     if action == "setup"
-        pbm          = PBM(name)
         pb           = PB(name)
+        pbm          = PBM(name)
         nargin       = length(args)
         pbm.call     = eval( Meta.parse( name ) )
 
@@ -64,7 +64,7 @@ function SPINOP(action,args...)
         v_["2PI"] = 8.0*v_["PI/4"]
         v_["2PI/N"] = v_["2PI"]/v_["RN"]
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        xscale  = Float64[]
+        pb.xscale = Float64[]
         intvars = Int64[]
         binvars = Int64[]
         iv,ix_,_ = s2mpj_ii("MU",ix_)

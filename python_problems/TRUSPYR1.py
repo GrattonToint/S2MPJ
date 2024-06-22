@@ -102,7 +102,7 @@ class  TRUSPYR1(CUTEst_problem):
                          str(K)+','+str(J)])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['NBAR'])+1):

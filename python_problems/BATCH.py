@@ -136,7 +136,7 @@ class  BATCH(CUTEst_problem):
             v_['BETA'+str(J)] = 0.6
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = np.array([])
-        xscale    = np.array([])
+        pb.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['M'])+1):
