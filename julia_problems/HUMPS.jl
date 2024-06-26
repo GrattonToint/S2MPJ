@@ -32,7 +32,7 @@ function HUMPS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -115,10 +115,10 @@ function HUMPS(action,args...)
         ig = ig_["OBJ"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["H"])
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["SY"])
-        loaset(pbm.grelw,ig,posel,Float64(0.05))
+        loaset(self.grelw,ig,posel,Float64(0.05))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["SX"])
         loaset(pbm.grelw,ig,posel,Float64(0.05))

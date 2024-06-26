@@ -28,10 +28,6 @@ class  POWELLSQLS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -39,38 +35,38 @@ class  POWELLSQLS(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
+        self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        self.xnames=arrset(self.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('G1',ig_)
         gtype = arrset(gtype,ig,'<>')
         [ig,ig_,_] = s2mpj_ii('G2',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.x0[ix_['X1']] = float(3.0)
-        pb.x0[ix_['X2']] = float(1.0)
+        self.x0 = np.zeros((self.n,1))
+        self.x0[ix_['X1']] = float(3.0)
+        self.x0[ix_['X2']] = float(1.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -80,66 +76,65 @@ class  POWELLSQLS(CUTEst_problem):
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
+        self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eA')
+        self.elftype = arrset(self.elftype,ie,'eA')
         ielftype = arrset(ielftype, ie, iet_["eA"])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
+        self.elftype = arrset(self.elftype,ie,'eSQ')
         ielftype = arrset(ielftype, ie, iet_["eSQ"])
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for ig in range(0,ngrp):
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         ig = ig_['G1']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E1'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['E1'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         ig = ig_['G2']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E2'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['E2'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         posel = posel+1
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E3'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,float(2.0))
+        self.grelt = loaset(self.grelt,ig,posel,ie_['E3'])
+        self.grelw = loaset(self.grelw,ig,posel,float(2.0))
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-AN-2-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-AN-2-0"
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eSQ(pbm,nargout,*args):
+    def eSQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -165,7 +160,7 @@ class  POWELLSQLS(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eA(pbm,nargout,*args):
+    def eA(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -196,7 +191,7 @@ class  POWELLSQLS(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

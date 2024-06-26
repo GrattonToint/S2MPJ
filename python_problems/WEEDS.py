@@ -31,10 +31,6 @@ class  WEEDS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -56,41 +52,41 @@ class  WEEDS(CUTEst_problem):
         v_['Y11'] = 75.995
         v_['Y12'] = 91.972
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('B1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'B1')
+        self.xnames=arrset(self.xnames,iv,'B1')
         [iv,ix_,_] = s2mpj_ii('B2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'B2')
+        self.xnames=arrset(self.xnames,iv,'B2')
         [iv,ix_,_] = s2mpj_ii('B3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'B3')
+        self.xnames=arrset(self.xnames,iv,'B3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
+            self.gconst = arrset(self.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xupper[ix_['B3']] = 3.0
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xupper[ix_['B3']] = 3.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
+        self.x0 = np.full((self.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -102,56 +98,55 @@ class  WEEDS(CUTEst_problem):
         elftp = loaset(elftp,it,0,'TIME')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eLOGIS')
+            self.elftype = arrset(self.elftype,ie,'eLOGIS')
             ielftype = arrset(ielftype, ie, iet_["eLOGIS"])
             vname = 'B1'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='X')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'B2'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='Y')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'B3'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='Z')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='Z')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             v_['T'] = float(I)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='TIME')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['T']))
+            posep = np.where(elftp[ielftype[ie]]=='TIME')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(v_['T']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             ig = ig_['O'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grftype = arrset(self.grftype,ig,'gL2')
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN                  2.587
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SBR2-RN-3-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SBR2-RN-3-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -160,18 +155,18 @@ class  WEEDS(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eLOGIS(pbm,nargout,*args):
+    def eLOGIS(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        ARG = -EV_[2]*pbm.elpar[iel_][0]
+        ARG = -EV_[2]*self.elpar[iel_][0]
         EXPA = np.exp(ARG)
         DENOM = 1.0/(1+EV_[1]*EXPA)
         DDE = DENOM*DENOM*EXPA
-        TY = pbm.elpar[iel_][0]*EV_[1]
+        TY = self.elpar[iel_][0]*EV_[1]
         D2 = -EV_[0]*DDE
-        HYZ = -D2*pbm.elpar[iel_][0]+2.0e0*D2*TY*EXPA*DENOM
+        HYZ = -D2*self.elpar[iel_][0]+2.0e0*D2*TY*EXPA*DENOM
         f_   = EV_[0]*DENOM
         if not isinstance( f_, float ):
             f_   = f_.item();
@@ -204,7 +199,7 @@ class  WEEDS(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

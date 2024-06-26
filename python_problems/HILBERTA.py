@@ -31,10 +31,6 @@ class  HILBERTA(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -55,35 +51,35 @@ class  HILBERTA(CUTEst_problem):
             v_['D'] = float(args[1])
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             for J in range(int(v_['1']),int(I)+1):
                 [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(-3.0))
+        self.x0 = np.full((self.n,1),float(-3.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -94,38 +90,38 @@ class  HILBERTA(CUTEst_problem):
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['I-1'])+1):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
+                self.elftype = arrset(self.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-3.0)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,-3.0)
+                posev = np.where(elftv[ielftype[ie]]=='X')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-3.0)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,-3.0)
+                posev = np.where(elftv[ielftype[ie]]=='Y')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(I)+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
+            self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,-3.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,-3.0)
+            posev = np.where(elftv[ielftype[ie]]=='X')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['I-1'] = -1+I
@@ -135,9 +131,9 @@ class  HILBERTA(CUTEst_problem):
                 v_['RINVH'] = float(v_['I+J-1'])
                 v_['HIJ'] = 1.0/v_['RINVH']
                 ig = ig_['G'+str(I)+','+str(J)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['HIJ']))
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['HIJ']))
             v_['2I'] = 2*I
             v_['2I-1'] = -1+v_['2I']
             v_['RH0'] = float(v_['2I-1'])
@@ -145,17 +141,16 @@ class  HILBERTA(CUTEst_problem):
             v_['HII/2'] = 0.5*v_['HII']
             v_['COEFF'] = v_['HII/2']+v_['D']
             ig = ig_['G'+str(I)+','+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['COEFF']))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,float(v_['COEFF']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "QUR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "QUR2-AN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -164,7 +159,7 @@ class  HILBERTA(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def en2PR(pbm,nargout,*args):
+    def en2PR(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -192,7 +187,7 @@ class  HILBERTA(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eSQ(pbm,nargout,*args):
+    def eSQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

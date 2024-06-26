@@ -38,10 +38,6 @@ class  CRAGGLVY(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -56,19 +52,19 @@ class  CRAGGLVY(CUTEst_problem):
         v_['N'] = 2+v_['2M']
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['2I'] = 2*I
@@ -78,44 +74,44 @@ class  CRAGGLVY(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('A'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I']))]
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
             [ig,ig_,_] = s2mpj_ii('B'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            pbm.gscale = arrset(pbm.gscale,ig,float(0.01))
+            self.gscale = arrset(self.gscale,ig,float(0.01))
             iv = ix_['X'+str(int(v_['2I']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['X'+str(int(v_['2I+1']))]
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
             [ig,ig_,_] = s2mpj_ii('C'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I+1']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['X'+str(int(v_['2I+2']))]
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
             [ig,ig_,_] = s2mpj_ii('D'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I-1']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             [ig,ig_,_] = s2mpj_ii('F'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['2I+2']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['F'+str(I)],float(1.0))
+            self.gconst = arrset(self.gconst,ig_['F'+str(I)],float(1.0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(2.0))
-        pb.x0[ix_['X'+str(int(v_['1']))]] = float(1.0)
+        self.x0 = np.full((self.n,1),float(2.0))
+        self.x0[ix_['X'+str(int(v_['1']))]] = float(1.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -126,9 +122,9 @@ class  CRAGGLVY(CUTEst_problem):
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['2I'] = 2*I
             v_['2I-1'] = -1+v_['2I']
@@ -136,24 +132,24 @@ class  CRAGGLVY(CUTEst_problem):
             v_['2I+2'] = 2+v_['2I']
             ename = 'AE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eEXPN')
+            self.elftype = arrset(self.elftype,ie,'eEXPN')
             ielftype = arrset(ielftype, ie, iet_["eEXPN"])
             vname = 'X'+str(int(v_['2I-1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,2.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            posev = np.where(elftv[ielftype[ie]]=='V')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'CE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eTANG')
+            self.elftype = arrset(self.elftype,ie,'eTANG')
             ielftype = arrset(ielftype, ie, iet_["eTANG"])
             vname = 'X'+str(int(v_['2I+1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,2.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2I+2']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,2.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
@@ -161,31 +157,31 @@ class  CRAGGLVY(CUTEst_problem):
         [it,igt_,_] = s2mpj_ii('gL6',igt_)
         [it,igt_,_] = s2mpj_ii('gL8',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             ig = ig_['A'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL4')
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['AE'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grftype = arrset(self.grftype,ig,'gL4')
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['AE'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
             ig = ig_['B'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL6')
+            self.grftype = arrset(self.grftype,ig,'gL6')
             ig = ig_['C'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL4')
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['CE'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grftype = arrset(self.grftype,ig,'gL4')
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['CE'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
             ig = ig_['D'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL8')
+            self.grftype = arrset(self.grftype,ig,'gL8')
             ig = ig_['F'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN(2)            0.0
 # LO SOLTN(4)            1.886566
@@ -196,13 +192,12 @@ class  CRAGGLVY(CUTEst_problem):
 # LO SOLTN(2499)         1.6882D+03
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OUR2-AY-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OUR2-AY-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -211,7 +206,7 @@ class  CRAGGLVY(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eEXPN(pbm,nargout,*args):
+    def eEXPN(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -238,7 +233,7 @@ class  CRAGGLVY(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eTANG(pbm,nargout,*args):
+    def eTANG(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -276,7 +271,7 @@ class  CRAGGLVY(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -294,7 +289,7 @@ class  CRAGGLVY(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gL4(pbm,nargout,*args):
+    def gL4(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -312,7 +307,7 @@ class  CRAGGLVY(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gL6(pbm,nargout,*args):
+    def gL6(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -330,7 +325,7 @@ class  CRAGGLVY(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gL8(pbm,nargout,*args):
+    def gL8(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

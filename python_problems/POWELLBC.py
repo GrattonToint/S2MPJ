@@ -36,10 +36,6 @@ class  POWELLBC(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -58,39 +54,39 @@ class  POWELLBC(CUTEst_problem):
         v_['N'] = 2*v_['P']
         v_['RN'] = float(v_['N'])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),0.0)
-        pb.xupper = np.full((pb.n,1),1.0)
+        self.xlower = np.full((self.n,1),0.0)
+        self.xupper = np.full((self.n,1),1.0)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['RI'] = float(I)
             v_['T'] = v_['RI']/v_['RN']
             v_['T'] = v_['T']*v_['T']
-            pb.x0[ix_['X'+str(I)]] = float(v_['T'])
+            self.x0[ix_['X'+str(I)]] = float(v_['T'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -101,9 +97,9 @@ class  POWELLBC(CUTEst_problem):
         elftv = loaset(elftv,it,3,'YK')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for K in range(int(v_['2']),int(v_['P'])+1):
             v_['K-1'] = K-v_['1']
             v_['2K'] = v_['2']*K
@@ -114,47 +110,46 @@ class  POWELLBC(CUTEst_problem):
                 ename = 'E'+str(K)+','+str(J)
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
-                    pbm.elftype = arrset(pbm.elftype,ie,'eINVNRM')
+                    self.elftype = arrset(self.elftype,ie,'eINVNRM')
                     ielftype = arrset( ielftype,ie,iet_['eINVNRM'])
                 vname = 'X'+str(int(v_['2J-1']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='XJ')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2K-1']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='XK')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='XK')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2J']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='YJ')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='YJ')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2K']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='YK')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='YK')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for K in range(int(v_['2']),int(v_['P'])+1):
             v_['K-1'] = K-v_['1']
             for J in range(int(v_['1']),int(v_['K-1'])+1):
                 ig = ig_['OBJ']
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(K)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(K)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN               ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OBR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OBR2-AN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -163,7 +158,7 @@ class  POWELLBC(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eINVNRM(pbm,nargout,*args):
+    def eINVNRM(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

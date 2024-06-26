@@ -30,10 +30,6 @@ class  TOINTGOR(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -160,341 +156,340 @@ class  TOINTGOR(CUTEst_problem):
         v_['1'] = 1
         v_['33'] = 33
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('GA'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             v_['SCALE'] = 1.0/v_['ALPH'+str(I)]
-            pbm.gscale = arrset(pbm.gscale,ig,float(v_['SCALE']))
+            self.gscale = arrset(self.gscale,ig,float(v_['SCALE']))
         [ig,ig_,_] = s2mpj_ii('GB1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X31']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X6']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X7']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X6']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X8']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X9']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB6',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X8']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X10']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X11']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB7',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X10']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X12']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X13']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB8',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X12']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X14']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X15']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB9',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X11']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X13']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X14']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X16']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X17']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB10',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X16']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X18']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X19']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB11',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X9']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X18']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X20']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB12',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X20']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X21']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB13',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X19']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X22']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X23']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X24']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB14',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X23']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X25']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X26']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB15',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X7']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X25']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X27']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X28']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB16',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X28']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X29']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X30']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB17',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X29']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X31']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X32']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB18',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X33']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X34']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB19',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X35']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB20',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X21']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X36']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB21',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X37']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X38']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB22',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X30']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X37']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X39']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB23',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X38']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X39']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X40']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB24',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X40']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X41']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X42']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB25',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X41']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X43']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X44']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X50']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB26',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X44']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X45']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X46']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X47']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB27',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X46']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X48']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB28',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X42']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X45']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X48']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X50']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X49']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB29',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X26']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X34']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X43']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB30',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X15']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X17']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X24']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X47']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB31',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X49']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB32',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X22']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('GB33',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X27']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         for I in range(int(v_['1']),int(v_['33'])+1):
             v_['SCALE'] = 1.0/v_['BETA'+str(I)]
             [ig,ig_,_] = s2mpj_ii('GB'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            pbm.gscale = arrset(pbm.gscale,ig,float(v_['SCALE']))
+            self.gscale = arrset(self.gscale,ig,float(v_['SCALE']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['33'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['GB'+str(I)],float(v_['D'+str(I)]))
+            self.gconst = arrset(self.gconst,ig_['GB'+str(I)],float(v_['D'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gACT',igt_)
         [it,igt_,_] = s2mpj_ii('gBBT',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             ig = ig_['GA'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gACT')
+            self.grftype = arrset(self.grftype,ig,'gACT')
         for I in range(int(v_['1']),int(v_['33'])+1):
             ig = ig_['GB'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gBBT')
+            self.grftype = arrset(self.grftype,ig,'gBBT')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN             1373.90546067
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OUR2-MN-50-0"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OUR2-MN-50-0"
+        self.x0        = np.zeros((self.n,1))
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
@@ -503,20 +498,20 @@ class  TOINTGOR(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def g_globs(pbm):
+    def g_globs(self):
 
-        pbm.gfpar = np.array([]);
-        pbm.gfpar = arrset( pbm.gfpar,0,1.0e0)    # this is ONE
-        pbm.gfpar = arrset( pbm.gfpar,1,0.0e0)    # this is ZERO
+        self.gfpar = np.array([]);
+        self.gfpar = arrset( self.gfpar,0,1.0e0)    # this is ONE
+        self.gfpar = arrset( self.gfpar,1,0.0e0)    # this is ZERO
         return pbm
 
     @staticmethod
-    def gACT(pbm,nargout,*args):
+    def gACT(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
         AT = np.absolute(GVAR_)
-        AT1 = AT+pbm.gfpar[0]
+        AT1 = AT+self.gfpar[0]
         LAT = np.log(AT1)
         AA = AT/AT1
         AG = AA+LAT
@@ -534,16 +529,16 @@ class  TOINTGOR(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gBBT(pbm,nargout,*args):
+    def gBBT(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
         AT = np.absolute(GVAR_)
-        AT1 = AT+pbm.gfpar[0]
+        AT1 = AT+self.gfpar[0]
         LAT = np.log(AT1)
         AA = AT/AT1
-        TPOS = max(np.sign(GVAR_)*(pbm.gfpar[0]),pbm.gfpar[1])
-        TNEG = pbm.gfpar[0]-TPOS
+        TPOS = max(np.sign(GVAR_)*(self.gfpar[0]),self.gfpar[1])
+        TNEG = self.gfpar[0]-TPOS
         f_= GVAR_*GVAR_*(TNEG+TPOS*LAT)
         if nargout>1:
             g_ = TNEG*2.0*GVAR_+TPOS*GVAR_*(AA+2.0*LAT)

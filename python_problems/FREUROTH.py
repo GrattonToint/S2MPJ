@@ -36,10 +36,6 @@ class  FREUROTH(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -54,53 +50,53 @@ class  FREUROTH(CUTEst_problem):
         v_['1'] = 1
         v_['2'] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             v_['I+1'] = 1+I
             [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+1']))]
-            pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
             [ig,ig_,_] = s2mpj_ii('S'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['X'+str(int(v_['I+1']))]
-            pbm.A[ig,iv] = float(-14.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-14.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             v_['I+1'] = 1+I
-            pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(13.0))
-            pbm.gconst = arrset(pbm.gconst,ig_['S'+str(I)],float(29.0))
+            self.gconst = arrset(self.gconst,ig_['R'+str(I)],float(13.0))
+            self.gconst = arrset(self.gconst,ig_['S'+str(I)],float(29.0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.x0[ix_['X'+str(int(v_['1']))]] = float(0.5)
-        pb.x0[ix_['X'+str(int(v_['2']))]] = float(-2.0)
+        self.x0 = np.zeros((self.n,1))
+        self.x0[ix_['X'+str(int(v_['1']))]] = float(0.5)
+        self.x0[ix_['X'+str(int(v_['2']))]] = float(-2.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -111,61 +107,61 @@ class  FREUROTH(CUTEst_problem):
         elftp = loaset(elftp,it,1,'XCOEFF')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             v_['I+1'] = 1+I
             ename = 'A'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
-                pbm.elftype = arrset(pbm.elftype,ie,'eFRDRTH')
+                self.elftype = arrset(self.elftype,ie,'eFRDRTH')
                 ielftype = arrset( ielftype,ie,iet_['eFRDRTH'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='ELV')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.0))
-            posep = find(elftp[ielftype[ie]],lambda x:x=='XCOEFF')
-            loaset(pbm.elpar,ie,posep[0],float(-1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='ELV')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
+            posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(5.0))
+            posep = np.where(elftp[ielftype[ie]]=='XCOEFF')[0]
+            loaset(self.elpar,ie,posep[0],float(-1.0))
             ename = 'B'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
-                pbm.elftype = arrset(pbm.elftype,ie,'eFRDRTH')
+                self.elftype = arrset(self.elftype,ie,'eFRDRTH')
                 ielftype = arrset( ielftype,ie,iet_['eFRDRTH'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='ELV')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='COEFF')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
-            posep = find(elftp[ielftype[ie]],lambda x:x=='XCOEFF')
-            loaset(pbm.elpar,ie,posep[0],float(1.0))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='ELV')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
+            posep = np.where(elftp[ielftype[ie]]=='COEFF')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(1.0))
+            posep = np.where(elftp[ielftype[ie]]=='XCOEFF')[0]
+            loaset(self.elpar,ie,posep[0],float(1.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for ig in range(0,ngrp):
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         for I in range(int(v_['1']),int(v_['NGS'])+1):
             ig = ig_['R'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['A'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['A'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
             ig = ig_['S'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['B'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['B'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN(2)            0.0
 # LO SOLTN(2)            4.8984D+01
@@ -177,13 +173,12 @@ class  FREUROTH(CUTEst_problem):
 # LO SOLTN(5000)         6.0816D+05
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-AN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -192,15 +187,15 @@ class  FREUROTH(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eFRDRTH(pbm,nargout,*args):
+    def eFRDRTH(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TWOC = pbm.elpar[iel_][0]+pbm.elpar[iel_][0]
+        TWOC = self.elpar[iel_][0]+self.elpar[iel_][0]
         ELV2 = EV_[0]*EV_[0]
-        XCELV = pbm.elpar[iel_][1]*EV_[0]
-        f_   = (pbm.elpar[iel_][0]+XCELV)*ELV2
+        XCELV = self.elpar[iel_][1]*EV_[0]
+        f_   = (self.elpar[iel_][0]+XCELV)*ELV2
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -209,7 +204,7 @@ class  FREUROTH(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = TWOC*EV_[0]+3.0*pbm.elpar[iel_][1]*ELV2
+            g_[0] = TWOC*EV_[0]+3.0*self.elpar[iel_][1]*ELV2
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = TWOC+6.0*XCELV
@@ -223,7 +218,7 @@ class  FREUROTH(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

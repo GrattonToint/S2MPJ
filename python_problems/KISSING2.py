@@ -50,10 +50,6 @@ class  KISSING2(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -83,20 +79,20 @@ class  KISSING2(CUTEst_problem):
         v_['PI/m'] = v_['PI']/v_['rm']
         v_['2PI/m'] = 2.0*v_['PI/m']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['n'])+1):
                 [iv,ix_,_] = s2mpj_ii('P'+str(I)+','+str(J),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'P'+str(I)+','+str(J))
+                self.xnames=arrset(self.xnames,iv,'P'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
@@ -106,39 +102,39 @@ class  KISSING2(CUTEst_problem):
                 gtype = arrset(gtype,ig,'>=')
                 cnames = arrset(cnames,ig,'C'+str(I)+','+str(J))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['OBJ'],float(v_['mn']))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['OBJ'],float(v_['mn']))
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['m'])+1):
-                pbm.gconst = arrset(pbm.gconst,ig_['C'+str(I)+','+str(J)],float(4.0))
+                self.gconst = arrset(self.gconst,ig_['C'+str(I)+','+str(J)],float(4.0))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['m'])+1):
             for J in range(int(v_['1']),int(v_['n'])+1):
-                pb.xlower[ix_['P'+str(I)+','+str(J)]] = -float('Inf')
-                pb.xupper[ix_['P'+str(I)+','+str(J)]] = +float('Inf')
+                self.xlower[ix_['P'+str(I)+','+str(J)]] = -float('Inf')
+                self.xupper[ix_['P'+str(I)+','+str(J)]] = +float('Inf')
         for I in range(int(v_['2']),int(v_['n'])+1):
             for J in range(int(I),int(v_['n'])+1):
-                pb.xlower[ix_['P'+str(I)+','+str(J)]] = 0.0
-                pb.xupper[ix_['P'+str(I)+','+str(J)]] = 0.0
+                self.xlower[ix_['P'+str(I)+','+str(J)]] = 0.0
+                self.xupper[ix_['P'+str(I)+','+str(J)]] = 0.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.y0 = np.zeros((pb.m,1))
+        self.x0 = np.zeros((self.n,1))
+        self.y0 = np.zeros((self.m,1))
         for I in range(int(v_['1']),int(v_['m'])+1):
             v_['RI'] = float(I)
             v_['2PIi/m'] = v_['2PI/m']*v_['RI']
@@ -147,21 +143,21 @@ class  KISSING2(CUTEst_problem):
             v_['cos'] = v_['cos']+v_['cos']
             v_['sin'] = v_['sin']+v_['sin']
             if('P'+str(I)+','+str(int(v_['1'])) in ix_):
-                pb.x0[ix_['P'+str(I)+','+str(int(v_['1']))]] = float(v_['cos'])
+                self.x0[ix_['P'+str(I)+','+str(int(v_['1']))]] = float(v_['cos'])
             else:
-                pb.y0  = (
-                      arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['P'+str(I)+','+str(int(v_['1']))]),float(v_['cos'])))
+                self.y0  = (
+                      arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['P'+str(I)+','+str(int(v_['1']))]),float(v_['cos'])))
             for J in range(int(v_['2']),int(v_['n-1'])+1):
                 if('P'+str(I)+','+str(J) in ix_):
-                    pb.x0[ix_['P'+str(I)+','+str(J)]] = float(v_['sin'])
+                    self.x0[ix_['P'+str(I)+','+str(J)]] = float(v_['sin'])
                 else:
-                    pb.y0  = (
-                          arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['P'+str(I)+','+str(J)]),float(v_['sin'])))
+                    self.y0  = (
+                          arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['P'+str(I)+','+str(J)]),float(v_['sin'])))
         if('P'+str(int(v_['m']))+','+str(int(v_['n'])) in ix_):
-            pb.x0[ix_['P'+str(int(v_['m']))+','+str(int(v_['n']))]] = float(v_['cos'])
+            self.x0[ix_['P'+str(int(v_['m']))+','+str(int(v_['n']))]] = float(v_['cos'])
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['P'+str(int(v_['m']))+','+str(int(v_['n']))]),float(v_['cos'])))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['P'+str(int(v_['m']))+','+str(int(v_['n']))]),float(v_['cos'])))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -172,9 +168,9 @@ class  KISSING2(CUTEst_problem):
         elftv = loaset(elftv,it,1,'R')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['m'])+1):
             v_['I-'] = -1+I
             v_['I+'] = 1+I
@@ -182,75 +178,75 @@ class  KISSING2(CUTEst_problem):
                 for K in range(int(v_['1']),int(v_['n'])+1):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                    pbm.elftype = arrset(pbm.elftype,ie,'ePROD2')
+                    self.elftype = arrset(self.elftype,ie,'ePROD2')
                     ielftype = arrset(ielftype, ie, iet_["ePROD2"])
                     vname = 'P'+str(I)+','+str(K)
-                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                    posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
-                    pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    posev = np.where(elftv[ielftype[ie]]=='Q')[0]
+                    self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'P'+str(J)+','+str(K)
-                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                    posev = find(elftv[ielftype[ie]],lambda x:x=='R')
-                    pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    posev = np.where(elftv[ielftype[ie]]=='R')[0]
+                    self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for K in range(int(v_['1']),int(v_['n'])+1):
                 ename = 'E'+str(I)+','+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'ePROD1')
+                self.elftype = arrset(self.elftype,ie,'ePROD1')
                 ielftype = arrset(ielftype, ie, iet_["ePROD1"])
                 vname = 'P'+str(I)+','+str(K)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='P')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='P')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for J in range(int(v_['I+']),int(v_['m'])+1):
                 for K in range(int(v_['1']),int(v_['n'])+1):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                    pbm.elftype = arrset(pbm.elftype,ie,'ePROD2')
+                    self.elftype = arrset(self.elftype,ie,'ePROD2')
                     ielftype = arrset(ielftype, ie, iet_["ePROD2"])
                     vname = 'P'+str(I)+','+str(K)
-                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                    posev = find(elftv[ielftype[ie]],lambda x:x=='Q')
-                    pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    posev = np.where(elftv[ielftype[ie]]=='Q')[0]
+                    self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'P'+str(J)+','+str(K)
-                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                    posev = find(elftv[ielftype[ie]],lambda x:x=='R')
-                    pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    posev = np.where(elftv[ielftype[ie]]=='R')[0]
+                    self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['m'])+1):
             for K in range(int(v_['1']),int(v_['n'])+1):
                 ig = ig_['OBJ']
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(I)+','+str(K)])
+                posel = len(self.grelt[ig])
+                self.grelt  = (
+                      loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(I)+','+str(K)]))
                 nlc = np.union1d(nlc,np.array([ig]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                self.grelw = loaset(self.grelw,ig,posel,1.)
             for J in range(int(v_['1']),int(v_['m'])+1):
                 for K in range(int(v_['1']),int(v_['n'])+1):
                     ig = ig_['C'+str(I)+','+str(J)]
-                    posel = len(pbm.grelt[ig])
-                    pbm.grelt  = (
-                          loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)+','+str(K)]))
+                    posel = len(self.grelt[ig])
+                    self.grelt  = (
+                          loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)+','+str(K)]))
                     nlc = np.union1d(nlc,np.array([ig]))
-                    pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                    self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # XL SOLUTION             0.00000D+00   $ n=4, m = 24
 # XL SOLUTION             6.48030D+00   $ n=4, m = 25 one of many local solutions
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle+pb.neq,pb.m)] = np.zeros((pb.nge,1))
-        delattr( pbm, "A" )
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "QQR2-RN-V-V"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "QQR2-RN-V-V"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -259,7 +255,7 @@ class  KISSING2(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def ePROD1(pbm,nargout,*args):
+    def ePROD1(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -285,7 +281,7 @@ class  KISSING2(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def ePROD2(pbm,nargout,*args):
+    def ePROD2(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

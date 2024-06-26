@@ -26,7 +26,7 @@ function GIGOMEZ1(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -83,7 +83,7 @@ function GIGOMEZ1(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -129,7 +129,7 @@ function GIGOMEZ1(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X2SQ"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -146,7 +146,7 @@ function GIGOMEZ1(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-AN-3-3"
         return pb, pbm
 # **********************

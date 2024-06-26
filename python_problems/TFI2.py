@@ -39,10 +39,6 @@ class  TFI2(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -56,31 +52,31 @@ class  TFI2(CUTEst_problem):
         v_['RM'] = float(v_['M'])
         v_['H'] = 1.0/v_['RM']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
+        self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        self.xnames=arrset(self.xnames,iv,'X2')
         [iv,ix_,_] = s2mpj_ii('X3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X3')
+        self.xnames=arrset(self.xnames,iv,'X3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(0.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(0.5)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(v_['1/3'])+pbm.A[ig,iv]
+        self.A[ig,iv] = float(v_['1/3'])+self.A[ig,iv]
         for I in range(int(v_['0']),int(v_['M'])+1):
             v_['RI'] = float(I)
             v_['T'] = v_['RI']*v_['H']
@@ -91,55 +87,54 @@ class  TFI2(CUTEst_problem):
             gtype = arrset(gtype,ig,'<=')
             cnames = arrset(cnames,ig,'CG'+str(I))
             iv = ix_['X1']
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
             iv = ix_['X2']
-            pbm.A[ig,iv] = float(v_['-T'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['-T'])+self.A[ig,iv]
             iv = ix_['X3']
-            pbm.A[ig,iv] = float(v_['-TT'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['-TT'])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['0']),int(v_['M'])+1):
             v_['RI'] = float(I)
             v_['T'] = v_['RI']*v_['H']
             v_['TANT'] = np.tan(v_['T'])
             v_['-TANT'] = -1.0*v_['TANT']
-            pbm.gconst = arrset(pbm.gconst,ig_['CG'+str(I)],float(v_['-TANT']))
+            self.gconst = arrset(self.gconst,ig_['CG'+str(I)],float(v_['-TANT']))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.64903110696
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.cupper[np.arange(pb.nle)] = np.zeros((pb.nle,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.lincons   = np.arange(len(pbm.congrps))
-        pb.pbclass = "LLR2-AN-3-V"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.lincons   = np.arange(len(self.congrps))
+        self.pbclass = "LLR2-AN-3-V"
+        self.x0        = np.zeros((self.n,1))
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

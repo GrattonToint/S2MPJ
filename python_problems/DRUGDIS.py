@@ -43,10 +43,6 @@ class  DRUGDIS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -90,96 +86,96 @@ class  DRUGDIS(CUTEst_problem):
         v_['-1/2NI'] = -0.5/v_['RNI']
         v_['0'] = 0
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('TF',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'TF')
-        pb.xscale = arrset(pb.xscale,iv,200.0)
+        self.xnames=arrset(self.xnames,iv,'TF')
+        self.xscale = arrset(self.xscale,iv,200.0)
         for I in range(int(v_['0']),int(v_['NI'])+1):
             [iv,ix_,_] = s2mpj_ii('W'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'W'+str(I))
-            pb.xscale = arrset(pb.xscale,iv,0.02)
+            self.xnames=arrset(self.xnames,iv,'W'+str(I))
+            self.xscale = arrset(self.xscale,iv,0.02)
         for I in range(int(v_['0']),int(v_['NI'])+1):
             [iv,ix_,_] = s2mpj_ii('P'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'P'+str(I))
+            self.xnames=arrset(self.xnames,iv,'P'+str(I))
         for I in range(int(v_['0']),int(v_['NI'])+1):
             [iv,ix_,_] = s2mpj_ii('U'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'U'+str(I))
+            self.xnames=arrset(self.xnames,iv,'U'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('TFINAL',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['TF']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        pbm.gscale = arrset(pbm.gscale,ig,float(100.0))
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        self.gscale = arrset(self.gscale,ig,float(100.0))
         for I in range(int(v_['0']),int(v_['NI-1'])+1):
             v_['I+1'] = 1+I
             [ig,ig_,_] = s2mpj_ii('EW'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EW'+str(I))
             iv = ix_['W'+str(int(v_['I+1']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['W'+str(I)]
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
-            pbm.gscale = arrset(pbm.gscale,ig,float(0.02))
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
+            self.gscale = arrset(self.gscale,ig,float(0.02))
             [ig,ig_,_] = s2mpj_ii('EP'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'EP'+str(I))
             iv = ix_['P'+str(int(v_['I+1']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['P'+str(I)]
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['TF']] = 200.0
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['TF']] = 200.0
         for I in range(int(v_['0']),int(v_['NI'])+1):
-            pb.xupper[ix_['W'+str(I)]] = v_['TOXIC']
+            self.xupper[ix_['W'+str(I)]] = v_['TOXIC']
         for I in range(int(v_['0']),int(v_['NI-1'])+1):
-            pb.xupper[ix_['U'+str(I)]] = v_['UMAX']
-        pb.xlower[ix_['W'+str(int(v_['0']))]] = v_['WSS']
-        pb.xupper[ix_['W'+str(int(v_['0']))]] = v_['WSS']
-        pb.xlower[ix_['W'+str(int(v_['NI']))]] = v_['WSS']
-        pb.xupper[ix_['W'+str(int(v_['NI']))]] = v_['WSS']
-        pb.xlower[ix_['P'+str(int(v_['0']))]] = v_['PSTART']
-        pb.xupper[ix_['P'+str(int(v_['0']))]] = v_['PSTART']
-        pb.xlower[ix_['P'+str(int(v_['NI']))]] = v_['PFINAL']
-        pb.xupper[ix_['P'+str(int(v_['NI']))]] = v_['PFINAL']
+            self.xupper[ix_['U'+str(I)]] = v_['UMAX']
+        self.xlower[ix_['W'+str(int(v_['0']))]] = v_['WSS']
+        self.xupper[ix_['W'+str(int(v_['0']))]] = v_['WSS']
+        self.xlower[ix_['W'+str(int(v_['NI']))]] = v_['WSS']
+        self.xupper[ix_['W'+str(int(v_['NI']))]] = v_['WSS']
+        self.xlower[ix_['P'+str(int(v_['0']))]] = v_['PSTART']
+        self.xupper[ix_['P'+str(int(v_['0']))]] = v_['PSTART']
+        self.xlower[ix_['P'+str(int(v_['NI']))]] = v_['PFINAL']
+        self.xupper[ix_['P'+str(int(v_['NI']))]] = v_['PFINAL']
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.y0 = np.zeros((pb.m,1))
+        self.x0 = np.zeros((self.n,1))
+        self.y0 = np.zeros((self.m,1))
         v_['DP'] = v_['PFINAL']-v_['PSTART']
         v_['DP/NI'] = v_['DP']/v_['RNI']
         for I in range(int(v_['0']),int(v_['NI-1'])+1):
             v_['RI'] = float(I)
             v_['IDP/NI'] = v_['RI']*v_['DP/NI']
-            pb.x0[ix_['P'+str(I)]] = float(v_['IDP/NI'])
-            pb.x0[ix_['W'+str(I)]] = float(v_['WSS'])
-            pb.x0[ix_['U'+str(I)]] = float(v_['UMAX'])
-        pb.x0[ix_['TF']] = float(240.0)
-        pb.x0[ix_['W'+str(int(v_['NI']))]] = float(v_['WSS'])
-        pb.x0[ix_['P'+str(int(v_['NI']))]] = float(v_['PFINAL'])
+            self.x0[ix_['P'+str(I)]] = float(v_['IDP/NI'])
+            self.x0[ix_['W'+str(I)]] = float(v_['WSS'])
+            self.x0[ix_['U'+str(I)]] = float(v_['UMAX'])
+        self.x0[ix_['TF']] = float(240.0)
+        self.x0[ix_['W'+str(int(v_['NI']))]] = float(v_['WSS'])
+        self.x0[ix_['P'+str(int(v_['NI']))]] = float(v_['PFINAL'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -195,78 +191,78 @@ class  DRUGDIS(CUTEst_problem):
         elftv = loaset(elftv,it,3,'U')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['0']),int(v_['NI'])+1):
             ename = 'WA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eEW')
+            self.elftype = arrset(self.elftype,ie,'eEW')
             ielftype = arrset(ielftype, ie, iet_["eEW"])
             vname = 'TF'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='T')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='T')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'W'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='W')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='W')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='P')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='P')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='U')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='U')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'PA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eEP')
+            self.elftype = arrset(self.elftype,ie,'eEP')
             ielftype = arrset(ielftype, ie, iet_["eEP"])
             vname = 'TF'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='T')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='T')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'W'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='W')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='W')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'P'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='P')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='P')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='U')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='U')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['0']),int(v_['NI-1'])+1):
             ig = ig_['EW'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['WA'+str(int(v_['I+1']))])
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['WA'+str(int(v_['I+1']))])
             nlc = np.union1d(nlc,np.array([ig]))
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-1/2NI']))
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['WA'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,float(v_['-1/2NI']))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['WA'+str(I)])
             nlc = np.union1d(nlc,np.array([ig]))
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-1/2NI']))
+            self.grelw = loaset(self.grelw,ig,posel,float(v_['-1/2NI']))
             ig = ig_['EP'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['PA'+str(int(v_['I+1']))])
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['PA'+str(int(v_['I+1']))])
             nlc = np.union1d(nlc,np.array([ig]))
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-1/2NI']))
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['PA'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,float(v_['-1/2NI']))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['PA'+str(I)])
             nlc = np.union1d(nlc,np.array([ig]))
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['-1/2NI']))
+            self.grelw = loaset(self.grelw,ig,posel,float(v_['-1/2NI']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 200.0
+        self.objlower = 200.0
 #    Solution
 # LO SOLTN(10)           3.82432
 # LO SOLTN(50)           4.19953
@@ -277,19 +273,18 @@ class  DRUGDIS(CUTEst_problem):
 # LO SOLTN(Maurer)       2.62637
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "LOR2-MN-V-V"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "LOR2-MN-V-V"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -298,36 +293,36 @@ class  DRUGDIS(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def e_globs(pbm):
+    def e_globs(self):
 
         import numpy as np
-        pbm.efpar = np.array([]);
-        pbm.efpar = arrset( pbm.efpar,0,46.4)
-        pbm.efpar = arrset( pbm.efpar,1,0.02)
-        pbm.efpar = arrset( pbm.efpar,2,0.2)
-        pbm.efpar = arrset( pbm.efpar,3,232.0)
-        pbm.efpar = arrset( pbm.efpar,4,pbm.efpar[0]*pbm.efpar[0])
+        self.efpar = np.array([]);
+        self.efpar = arrset( self.efpar,0,46.4)
+        self.efpar = arrset( self.efpar,1,0.02)
+        self.efpar = arrset( self.efpar,2,0.2)
+        self.efpar = arrset( self.efpar,3,232.0)
+        self.efpar = arrset( self.efpar,4,self.efpar[0]*self.efpar[0])
         return pbm
 
     @staticmethod
-    def eEW(pbm,nargout,*args):
+    def eEW(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        D = 1.0+pbm.efpar[2]*(EV_[1]+EV_[2])
+        D = 1.0+self.efpar[2]*(EV_[1]+EV_[2])
         DD = D*D
-        DD1 = 2.0*pbm.efpar[2]*D
-        DD2 = 2.0*pbm.efpar[2]*pbm.efpar[2]
-        A = DD+pbm.efpar[3]+pbm.efpar[0]*EV_[1]
-        AW = DD1+pbm.efpar[0]
-        B = DD+pbm.efpar[3]+pbm.efpar[0]*EV_[2]
-        BP = DD1+pbm.efpar[0]
-        C = A*B-pbm.efpar[4]*EV_[1]*EV_[2]
-        CW = AW*B+A*DD1-pbm.efpar[4]*EV_[2]
-        CP = DD1*B+A*BP-pbm.efpar[4]*EV_[1]
+        DD1 = 2.0*self.efpar[2]*D
+        DD2 = 2.0*self.efpar[2]*self.efpar[2]
+        A = DD+self.efpar[3]+self.efpar[0]*EV_[1]
+        AW = DD1+self.efpar[0]
+        B = DD+self.efpar[3]+self.efpar[0]*EV_[2]
+        BP = DD1+self.efpar[0]
+        C = A*B-self.efpar[4]*EV_[1]*EV_[2]
+        CW = AW*B+A*DD1-self.efpar[4]*EV_[2]
+        CP = DD1*B+A*BP-self.efpar[4]*EV_[1]
         CWW = DD2*B+2.0*AW*DD1+A*DD2
-        CWP = DD2*B+AW*BP+DD1*DD1+A*DD2-pbm.efpar[4]
+        CWP = DD2*B+AW*BP+DD1*DD1+A*DD2-self.efpar[4]
         CPP = DD2*B+2.0*DD1*BP+A*DD2
         F = DD/C
         H = DD1-F*CW
@@ -340,13 +335,13 @@ class  DRUGDIS(CUTEst_problem):
         FWW = (HW-FW*CW)/C
         FWP = (HP-FW*CP)/C
         FPP = (IP-FP*CP)/C
-        GU = pbm.efpar[0]*EV_[1]
-        G = A*(pbm.efpar[1]-EV_[1])+GU*(EV_[3]-2.0*EV_[2])
-        GW = AW*(pbm.efpar[1]-EV_[1])-A+pbm.efpar[0]*(EV_[3]-2.0*EV_[2])
-        GP = DD1*(pbm.efpar[1]-EV_[1])-2.0*GU
-        GPP = DD2*(pbm.efpar[1]-EV_[1])
+        GU = self.efpar[0]*EV_[1]
+        G = A*(self.efpar[1]-EV_[1])+GU*(EV_[3]-2.0*EV_[2])
+        GW = AW*(self.efpar[1]-EV_[1])-A+self.efpar[0]*(EV_[3]-2.0*EV_[2])
+        GP = DD1*(self.efpar[1]-EV_[1])-2.0*GU
+        GPP = DD2*(self.efpar[1]-EV_[1])
         GWW = GPP-2.0*AW
-        GWP = GPP-DD1-2.0*pbm.efpar[0]
+        GWP = GPP-DD1-2.0*self.efpar[0]
         f_   = EV_[0]*F*G
         if not isinstance( f_, float ):
             f_   = f_.item();
@@ -371,7 +366,7 @@ class  DRUGDIS(CUTEst_problem):
                 H_[1,1] = EV_[0]*(FWW*G+2.0*FW*GW+F*GWW)
                 H_[1,2] = EV_[0]*(FWP*G+FW*GP+FP*GW+F*GWP)
                 H_[2,1] = H_[1,2]
-                H_[1,3] = EV_[0]*(FW*GU+F*pbm.efpar[0])
+                H_[1,3] = EV_[0]*(FW*GU+F*self.efpar[0])
                 H_[3,1] = H_[1,3]
                 H_[2,2] = EV_[0]*(FPP*G+2.0*FP*GP+F*GPP)
                 H_[2,3] = EV_[0]*FP*GU
@@ -384,24 +379,24 @@ class  DRUGDIS(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eEP(pbm,nargout,*args):
+    def eEP(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        D = 1.0+pbm.efpar[2]*(EV_[1]+EV_[2])
+        D = 1.0+self.efpar[2]*(EV_[1]+EV_[2])
         DD = D*D
-        DD1 = 2.0*pbm.efpar[2]*D
-        DD2 = 2.0*pbm.efpar[2]*pbm.efpar[2]
-        A = DD+pbm.efpar[3]+pbm.efpar[0]*EV_[1]
-        AW = DD1+pbm.efpar[0]
-        B = DD+pbm.efpar[3]+pbm.efpar[0]*EV_[2]
-        BP = DD1+pbm.efpar[0]
-        C = A*B-pbm.efpar[4]*EV_[1]*EV_[2]
-        CW = AW*B+A*DD1-pbm.efpar[4]*EV_[2]
-        CP = DD1*B+A*BP-pbm.efpar[4]*EV_[1]
+        DD1 = 2.0*self.efpar[2]*D
+        DD2 = 2.0*self.efpar[2]*self.efpar[2]
+        A = DD+self.efpar[3]+self.efpar[0]*EV_[1]
+        AW = DD1+self.efpar[0]
+        B = DD+self.efpar[3]+self.efpar[0]*EV_[2]
+        BP = DD1+self.efpar[0]
+        C = A*B-self.efpar[4]*EV_[1]*EV_[2]
+        CW = AW*B+A*DD1-self.efpar[4]*EV_[2]
+        CP = DD1*B+A*BP-self.efpar[4]*EV_[1]
         CWW = DD2*B+2.0*AW*DD1+A*DD2
-        CWP = DD2*B+AW*BP+DD1*DD1+A*DD2-pbm.efpar[4]
+        CWP = DD2*B+AW*BP+DD1*DD1+A*DD2-self.efpar[4]
         CPP = DD2*B+2.0*DD1*BP+A*DD2
         F = DD/C
         H = DD1-F*CW
@@ -414,11 +409,11 @@ class  DRUGDIS(CUTEst_problem):
         FWW = (HW-FW*CW)/C
         FWP = (HP-FW*CP)/C
         FPP = (IP-FP*CP)/C
-        G = B*(EV_[3]-2.0*EV_[2])+pbm.efpar[0]*EV_[2]*(pbm.efpar[1]-EV_[1])
-        GW = DD1*(EV_[3]-2.0*EV_[2])-pbm.efpar[0]*EV_[2]
-        GP = BP*(EV_[3]-2.0*EV_[2])-2.0*B+pbm.efpar[0]*(pbm.efpar[1]-EV_[1])
+        G = B*(EV_[3]-2.0*EV_[2])+self.efpar[0]*EV_[2]*(self.efpar[1]-EV_[1])
+        GW = DD1*(EV_[3]-2.0*EV_[2])-self.efpar[0]*EV_[2]
+        GP = BP*(EV_[3]-2.0*EV_[2])-2.0*B+self.efpar[0]*(self.efpar[1]-EV_[1])
         GWW = DD2*(EV_[3]-2.0*EV_[2])
-        GWP = GWW-2.0*DD1-pbm.efpar[0]
+        GWP = GWW-2.0*DD1-self.efpar[0]
         GPP = GWW-4.0*BP
         f_   = EV_[0]*F*G
         if not isinstance( f_, float ):

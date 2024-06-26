@@ -29,7 +29,7 @@ function DJTL(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -200,7 +200,7 @@ function DJTL(action,args...)
         arrset(pbm.grftype,ig,"gLOG")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -212,7 +212,7 @@ function DJTL(action,args...)
         arrset(pbm.grftype,ig,"gLOG")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))

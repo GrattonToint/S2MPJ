@@ -149,7 +149,7 @@ function ANTWERP(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -420,7 +420,7 @@ function ANTWERP(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -1530,55 +1530,55 @@ function ANTWERP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P1FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P2FNF"])
         loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P3FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P4FNF"])
         loaset(pbm.grelw,ig,posel,Float64(4.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P5FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(5.0))
+        loaset(self.grelw,ig,posel,Float64(5.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P1MNM"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P2MNM"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P3MNM"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P1WNW"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P2WNW"])
         loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P3WNW"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         ig = ig_["HAD"]
         arrset(pbm.grftype,ig,"gL2")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q0FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q1FNF"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q2FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(4.0))
+        loaset(self.grelw,ig,posel,Float64(4.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q0MNM"])
         arrset(nlc,length(nlc)+1,ig)
@@ -1586,7 +1586,7 @@ function ANTWERP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q1MNM"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q2MNM"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
@@ -1597,7 +1597,7 @@ function ANTWERP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q1WNW"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q2WNW"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
@@ -1606,28 +1606,28 @@ function ANTWERP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P1FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P2FNF"])
         loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P3FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P4FNF"])
         loaset(pbm.grelw,ig,posel,Float64(4.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P5FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(5.0))
+        loaset(self.grelw,ig,posel,Float64(5.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q0FNF"])
         loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q1FNF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q2FNF"])
         loaset(pbm.grelw,ig,posel,Float64(4.0))
@@ -1636,42 +1636,42 @@ function ANTWERP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P1WNW"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P2WNW"])
         loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P3WNW"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q0WNW"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q1WNW"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q2WNW"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P1MNM"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["P2MNM"])
         loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["P3MNM"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q0MNM"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Q1MNM"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Q2MNM"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
@@ -1690,7 +1690,7 @@ function ANTWERP(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "SLR2-RN-27-8-0-3-24-0-2-0-8-0-0-0"
         return pb, pbm
 # **********************

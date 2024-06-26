@@ -32,7 +32,7 @@ function MESH(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -187,7 +187,7 @@ function MESH(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -994,29 +994,29 @@ function MESH(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["aldsq"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["bedsq"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["gadsq"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
         end
         for i = Int64(v_["1"]):Int64(v_["nk"])
             ig = ig_["seit"*string(i)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["laeng"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
         end
         for i = Int64(v_["1"]):Int64(v_["nd"])
             ig = ig_["skal"*string(i)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["sal"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["cal"*string(i)])
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -1024,7 +1024,7 @@ function MESH(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["sbe"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["cbe"*string(i)])
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -1034,7 +1034,7 @@ function MESH(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["flae"*string(i)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
@@ -1051,7 +1051,7 @@ function MESH(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AY-41-48"
         return pb, pbm
 # **********************

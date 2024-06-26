@@ -40,10 +40,6 @@ class  STNQP2(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -65,25 +61,25 @@ class  STNQP2(CUTEst_problem):
             v_['N'] = v_['N']*v_['2']
         v_['N/P'] = int(np.fix(v_['N']/v_['P']))
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['0']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         for L in range(int(v_['1']),int(v_['N/P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 v_['K'] = v_['1']
@@ -92,7 +88,7 @@ class  STNQP2(CUTEst_problem):
                     [ig,ig_,_] = s2mpj_ii('N'+str(I)+','+str(L),ig_)
                     gtype = arrset(gtype,ig,'<>')
                     iv = ix_['X'+str(int(v_['K+L']))]
-                    pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                    self.A[ig,iv] = float(1.0)+self.A[ig,iv]
                     v_['K'] = v_['K']*v_['2']
         for L in range(int(v_['1']),int(v_['N/P'])+1,int(v_['2'])):
             v_['LL'] = L*v_['P']
@@ -104,35 +100,35 @@ class  STNQP2(CUTEst_problem):
                     gtype = arrset(gtype,ig,'==')
                     cnames = arrset(cnames,ig,'E'+str(I)+','+str(L))
                     iv = ix_['X'+str(int(v_['LL+J']))]
-                    pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                    self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for L in range(int(v_['1']),int(v_['N/P'])+1,int(v_['2'])):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 v_['RI'] = float(I)
-                pbm.gconst = arrset(pbm.gconst,ig_['E'+str(I)+','+str(L)],float(v_['RI']))
+                self.gconst = arrset(self.gconst,ig_['E'+str(I)+','+str(L)],float(v_['RI']))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         for I in range(int(v_['0']),int(v_['N'])+1):
-            pb.xlower[ix_['X'+str(I)]] = -2.0
-            pb.xupper[ix_['X'+str(I)]] = 2.0
+            self.xlower[ix_['X'+str(I)]] = -2.0
+            self.xupper[ix_['X'+str(I)]] = 2.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(0.5))
+        self.x0 = np.full((self.n,1),float(0.5))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gPSQR',igt_)
@@ -140,42 +136,41 @@ class  STNQP2(CUTEst_problem):
         grftp = []
         grftp = loaset(grftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
-        pbm.grpar   = []
+        self.grpar   = []
         for I in range(int(v_['0']),int(v_['N'])+1):
             ig = ig_['O'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gPSQR')
-            posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
-            pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(1.0))
+            self.grftype = arrset(self.grftype,ig,'gPSQR')
+            posgp = np.where(grftp[igt_[self.grftype[ig]]]=='P')[0]
+            self.grpar =loaset(self.grpar,ig,posgp[0],float(1.0))
         for L in range(int(v_['1']),int(v_['N/P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 ig = ig_['N'+str(I)+','+str(L)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gPSQR')
-                posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
-                pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(-0.5))
+                self.grftype = arrset(self.grftype,ig,'gPSQR')
+                posgp = np.where(grftp[igt_[self.grftype[ig]]]=='P')[0]
+                self.grpar =loaset(self.grpar,ig,posgp[0],float(-0.5))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLUTION            -2.476395E+5   $ (P=12)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.lincons   = np.arange(len(pbm.congrps))
-        pb.pbclass = "QLR2-AN-V-V"
-        self.pb = pb; self.pbm = pbm
+        self.lincons   = np.arange(len(self.congrps))
+        self.pbclass = "QLR2-AN-V-V"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -184,16 +179,16 @@ class  STNQP2(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gPSQR(pbm,nargout,*args):
+    def gPSQR(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
-        f_= pbm.grpar[igr_][0]*GVAR_*GVAR_
+        f_= self.grpar[igr_][0]*GVAR_*GVAR_
         if nargout>1:
-            g_ = 2.0*pbm.grpar[igr_][0]*GVAR_
+            g_ = 2.0*self.grpar[igr_][0]*GVAR_
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = 2.0*pbm.grpar[igr_][0]
+                H_ = 2.0*self.grpar[igr_][0]
         if nargout == 1:
             return f_
         elif nargout == 2:

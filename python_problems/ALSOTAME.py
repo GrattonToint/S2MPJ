@@ -24,10 +24,6 @@ class  ALSOTAME(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -35,94 +31,93 @@ class  ALSOTAME(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('x',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'x')
+        self.xnames=arrset(self.xnames,iv,'x')
         [iv,ix_,_] = s2mpj_ii('y',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'y')
+        self.xnames=arrset(self.xnames,iv,'y')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('Object',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['x']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['y']
-        pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('Constr',ig_)
         gtype = arrset(gtype,ig,'==')
         cnames = arrset(cnames,ig,'Constr')
         iv = ix_['x']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['y']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['Constr'],float(1.0))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['Constr'],float(1.0))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['x']] = -2.0
-        pb.xupper[ix_['x']] = 2.0
-        pb.xlower[ix_['y']] = -1.5
-        pb.xupper[ix_['y']] = 1.5
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['x']] = -2.0
+        self.xupper[ix_['x']] = 2.0
+        self.xlower[ix_['y']] = -1.5
+        self.xupper[ix_['y']] = 1.5
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gEXPN',igt_)
         [it,igt_,_] = s2mpj_ii('gSINE',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         ig = ig_['Object']
-        pbm.grftype = arrset(pbm.grftype,ig,'gEXPN')
+        self.grftype = arrset(self.grftype,ig,'gEXPN')
         ig = ig_['Constr']
-        pbm.grftype = arrset(pbm.grftype,ig,'gSINE')
+        self.grftype = arrset(self.grftype,ig,'gSINE')
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.lincons   = np.arange(len(pbm.congrps))
-        pb.pbclass = "OOR2-AN-2-1"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.lincons   = np.arange(len(self.congrps))
+        self.pbclass = "OOR2-AN-2-1"
+        self.x0        = np.zeros((self.n,1))
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gEXPN(pbm,nargout,*args):
+    def gEXPN(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -141,7 +136,7 @@ class  ALSOTAME(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gSINE(pbm,nargout,*args):
+    def gSINE(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

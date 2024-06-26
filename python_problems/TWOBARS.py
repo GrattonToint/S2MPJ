@@ -34,10 +34,6 @@ class  TWOBARS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -45,20 +41,20 @@ class  TWOBARS(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
+        self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        self.xnames=arrset(self.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
         gtype = arrset(gtype,ig,'<>')
@@ -69,32 +65,32 @@ class  TWOBARS(CUTEst_problem):
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'CONS2')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['CONS1'],float(1.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['CONS2'],float(1.0))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['CONS1'],float(1.0))
+        self.gconst = arrset(self.gconst,ig_['CONS2'],float(1.0))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['X1']] = 0.2
-        pb.xupper[ix_['X1']] = 4.0
-        pb.xlower[ix_['X2']] = 0.1
-        pb.xupper[ix_['X2']] = 1.6
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['X1']] = 0.2
+        self.xupper[ix_['X1']] = 4.0
+        self.xlower[ix_['X2']] = 0.1
+        self.xupper[ix_['X2']] = 1.6
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
+        self.x0 = np.full((self.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -109,81 +105,80 @@ class  TWOBARS(CUTEst_problem):
         elftv = loaset(elftv,it,1,'YY')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         ename = 'OBEL'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eOE')
+        self.elftype = arrset(self.elftype,ie,'eOE')
         ielftype = arrset(ielftype, ie, iet_["eOE"])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='XX')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='YY')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'COEL1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eCE1')
+        self.elftype = arrset(self.elftype,ie,'eCE1')
         ielftype = arrset(ielftype, ie, iet_["eCE1"])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='XX')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='YY')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'COEL2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eCE2')
+        self.elftype = arrset(self.elftype,ie,'eCE2')
         ielftype = arrset(ielftype, ie, iet_["eCE2"])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='XX')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='XX')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='YY')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='YY')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         ig = ig_['OBJ']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['OBEL'])
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['OBEL'])
         nlc = np.union1d(nlc,np.array([ig]))
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         ig = ig_['CONS1']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['COEL1'])
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['COEL1'])
         nlc = np.union1d(nlc,np.array([ig]))
-        pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.124))
+        self.grelw = loaset(self.grelw,ig,posel,float(0.124))
         ig = ig_['CONS2']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['COEL2'])
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['COEL2'])
         nlc = np.union1d(nlc,np.array([ig]))
-        pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.124))
+        self.grelw = loaset(self.grelw,ig,posel,float(0.124))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN               1.5086379655
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.cupper[np.arange(pb.nle)] = np.zeros((pb.nle,1))
-        delattr( pbm, "A" )
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "OOR2-MN-2-2"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "OOR2-MN-2-2"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -192,7 +187,7 @@ class  TWOBARS(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eOE(pbm,nargout,*args):
+    def eOE(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -223,7 +218,7 @@ class  TWOBARS(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eCE1(pbm,nargout,*args):
+    def eCE1(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -265,7 +260,7 @@ class  TWOBARS(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eCE2(pbm,nargout,*args):
+    def eCE2(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

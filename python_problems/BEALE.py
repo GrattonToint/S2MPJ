@@ -25,10 +25,6 @@ class  BEALE(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -38,20 +34,20 @@ class  BEALE(CUTEst_problem):
         v_['N'] = 2
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
+        self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        self.xnames=arrset(self.xnames,iv,'X2')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('A',ig_)
         gtype = arrset(gtype,ig,'<>')
@@ -60,21 +56,21 @@ class  BEALE(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('C',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['A'],float(1.5))
-        pbm.gconst = arrset(pbm.gconst,ig_['B'],float(2.25))
-        pbm.gconst = arrset(pbm.gconst,ig_['C'],float(2.625))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['A'],float(1.5))
+        self.gconst = arrset(self.gconst,ig_['B'],float(2.25))
+        self.gconst = arrset(self.gconst,ig_['C'],float(2.625))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
+        self.x0 = np.full((self.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -85,88 +81,87 @@ class  BEALE(CUTEst_problem):
         elftp = loaset(elftp,it,0,'POW')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         ename = 'AE'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
+            self.elftype = arrset(self.elftype,ie,'ePRODB')
             ielftype = arrset( ielftype,ie,iet_['ePRODB'])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='POW')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.0))
         ename = 'BE'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
+            self.elftype = arrset(self.elftype,ie,'ePRODB')
             ielftype = arrset( ielftype,ie,iet_['ePRODB'])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='POW')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.0))
         ename = 'CE'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'ePRODB')
+            self.elftype = arrset(self.elftype,ie,'ePRODB')
             ielftype = arrset( ielftype,ie,iet_['ePRODB'])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='POW')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.0))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='POW')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for ig in range(0,ngrp):
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         ig = ig_['A']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['AE'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['AE'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         ig = ig_['B']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['BE'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['BE'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         ig = ig_['C']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['CE'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['CE'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN                0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-AN-2-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-AN-2-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -175,14 +170,14 @@ class  BEALE(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def ePRODB(pbm,nargout,*args):
+    def ePRODB(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        T = 1.0-EV_[1]**pbm.elpar[iel_][0]
-        POWM1 = pbm.elpar[iel_][0]-1.0
-        W = -pbm.elpar[iel_][0]*EV_[1]**POWM1
+        T = 1.0-EV_[1]**self.elpar[iel_][0]
+        POWM1 = self.elpar[iel_][0]-1.0
+        W = -self.elpar[iel_][0]*EV_[1]**POWM1
         f_   = EV_[0]*T
         if not isinstance( f_, float ):
             f_   = f_.item();
@@ -199,7 +194,8 @@ class  BEALE(CUTEst_problem):
                 H_[0,0] = 0.0
                 H_[0,1] = W
                 H_[1,0] = H_[0,1]
-                H_[1,1] = -EV_[0]*pbm.elpar[iel_][0]*POWM1*EV_[1]**(pbm.elpar[iel_][0]-2.0)
+                H_[1,1]  = (
+                      -EV_[0]*self.elpar[iel_][0]*POWM1*EV_[1]**(self.elpar[iel_][0]-2.0))
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -210,7 +206,7 @@ class  BEALE(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

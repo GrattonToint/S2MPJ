@@ -27,10 +27,6 @@ class  HATFLDFLS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -40,44 +36,44 @@ class  HATFLDFLS(CUTEst_problem):
         v_['1'] = 1
         v_['3'] = 3
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
+        self.xnames=arrset(self.xnames,iv,'X1')
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        self.xnames=arrset(self.xnames,iv,'X2')
         [iv,ix_,_] = s2mpj_ii('X3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X3')
+        self.xnames=arrset(self.xnames,iv,'X3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['3'])+1):
             [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X1']
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['G1'],float(0.032))
-        pbm.gconst = arrset(pbm.gconst,ig_['G2'],float(0.056))
-        pbm.gconst = arrset(pbm.gconst,ig_['G3'],float(0.099))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['G1'],float(0.032))
+        self.gconst = arrset(self.gconst,ig_['G2'],float(0.056))
+        self.gconst = arrset(self.gconst,ig_['G3'],float(0.099))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(0.1))
+        self.x0 = np.full((self.n,1),float(0.1))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -88,63 +84,62 @@ class  HATFLDFLS(CUTEst_problem):
         elftp = loaset(elftp,it,0,'T')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['3'])+1):
             v_['RI'] = float(I)
             ename = 'A'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
-                pbm.elftype = arrset(pbm.elftype,ie,'eXPEXP')
+                self.elftype = arrset(self.elftype,ie,'eXPEXP')
                 ielftype = arrset( ielftype,ie,iet_['eXPEXP'])
             vname = 'X2'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.1)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            posev = np.where(elftv[ielftype[ie]]=='X')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.1)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='T')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['RI']))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            posev = np.where(elftv[ielftype[ie]]=='Y')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
+            posep = np.where(elftp[ielftype[ie]]=='T')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(v_['RI']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for ig in range(0,ngrp):
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         for I in range(int(v_['1']),int(v_['3'])+1):
             ig = ig_['G'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['A'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['A'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-AN-3-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-AN-3-0"
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eXPEXP(pbm,nargout,*args):
+    def eXPEXP(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        EX = np.exp(pbm.elpar[iel_][0]*EV_[1])
+        EX = np.exp(self.elpar[iel_][0]*EV_[1])
         f_   = EV_[0]*EX
         if not isinstance( f_, float ):
             f_   = f_.item();
@@ -155,12 +150,12 @@ class  HATFLDFLS(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = EX
-            g_[1] = pbm.elpar[iel_][0]*EV_[0]*EX
+            g_[1] = self.elpar[iel_][0]*EV_[0]*EX
             if nargout>2:
                 H_ = np.zeros((2,2))
-                H_[0,1] = pbm.elpar[iel_][0]*EX
+                H_[0,1] = self.elpar[iel_][0]*EX
                 H_[1,0] = H_[0,1]
-                H_[1,1] = pbm.elpar[iel_][0]*pbm.elpar[iel_][0]*EV_[0]*EX
+                H_[1,1] = self.elpar[iel_][0]*self.elpar[iel_][0]*EV_[0]*EX
         if nargout == 1:
             return f_
         elif nargout == 2:
@@ -171,7 +166,7 @@ class  HATFLDFLS(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

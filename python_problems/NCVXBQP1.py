@@ -28,10 +28,6 @@ class  NCVXBQP1(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -50,25 +46,25 @@ class  NCVXBQP1(CUTEst_problem):
         v_['NPLUS'] = int(np.fix(v_['N']/v_['4']))
         v_['NPLUS+1'] = 1+v_['NPLUS']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('OBJ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             v_['J'] = 2*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
@@ -76,7 +72,7 @@ class  NCVXBQP1(CUTEst_problem):
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
             iv = ix_['X'+str(int(v_['J']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             v_['J'] = 3*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
@@ -84,20 +80,20 @@ class  NCVXBQP1(CUTEst_problem):
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
             iv = ix_['X'+str(int(v_['J']))]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            pb.xlower[ix_['X'+str(I)]] = 0.1
-            pb.xupper[ix_['X'+str(I)]] = 10.0
+            self.xlower[ix_['X'+str(I)]] = 0.1
+            self.xupper[ix_['X'+str(I)]] = 10.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(0.5))
+        self.x0 = np.full((self.n,1),float(0.5))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gSQR',igt_)
@@ -105,38 +101,37 @@ class  NCVXBQP1(CUTEst_problem):
         grftp = []
         grftp = loaset(grftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
-        pbm.grpar   = []
+        self.grpar   = []
         for I in range(int(v_['1']),int(v_['NPLUS'])+1):
             ig = ig_['OBJ'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gSQR')
+            self.grftype = arrset(self.grftype,ig,'gSQR')
             v_['RI'] = float(I)
-            posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
-            pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['RI']))
+            posgp = np.where(grftp[igt_[self.grftype[ig]]]=='P')[0]
+            self.grpar =loaset(self.grpar,ig,posgp[0],float(v_['RI']))
         for I in range(int(v_['NPLUS+1']),int(v_['N'])+1):
             ig = ig_['OBJ'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gSQR')
+            self.grftype = arrset(self.grftype,ig,'gSQR')
             v_['RI'] = float(I)
             v_['RI'] = -1.0*v_['RI']
-            posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
-            pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['RI']))
+            posgp = np.where(grftp[igt_[self.grftype[ig]]]=='P')[0]
+            self.grpar =loaset(self.grpar,ig,posgp[0],float(v_['RI']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -1.99558D+06   $ (n=100)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "QBR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "QBR2-AN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -145,16 +140,16 @@ class  NCVXBQP1(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gSQR(pbm,nargout,*args):
+    def gSQR(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
-        f_= 0.5*pbm.grpar[igr_][0]*GVAR_*GVAR_
+        f_= 0.5*self.grpar[igr_][0]*GVAR_*GVAR_
         if nargout>1:
-            g_ = pbm.grpar[igr_][0]*GVAR_
+            g_ = self.grpar[igr_][0]*GVAR_
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = pbm.grpar[igr_][0]
+                H_ = self.grpar[igr_][0]
         if nargout == 1:
             return f_
         elif nargout == 2:

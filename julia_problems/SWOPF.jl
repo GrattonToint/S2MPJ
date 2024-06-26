@@ -29,7 +29,7 @@ function SWOPF(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -1149,7 +1149,7 @@ function SWOPF(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -2321,443 +2321,443 @@ function SWOPF(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GV20002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GV20003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GV20004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GV20005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GV20006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GV20007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E20007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["F20007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GPI0001"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0001"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0001"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0001"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0001"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0001"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20001"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPI0002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0002"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20002"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPI0003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0003"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20003"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPI0004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0004"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20004"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPI0005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0005"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20005"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPI0006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0006"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20006"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPI0007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIEI0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIFI0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQI0007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EIFI0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FIEI0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GPJ0007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJEJ0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJFJ0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         ig = ig_["GQJ0007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EJFJ0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.000))
+        loaset(self.grelw,ig,posel,Float64(-1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["FJEJ0007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXI0007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PI20007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QI20007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         ig = ig_["GMXJ0007"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PJ20007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["QJ20007"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.000))
+        loaset(self.grelw,ig,posel,Float64(1.000))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solutions
 # LO SOLTN               6.78605619D-2
@@ -2773,7 +2773,7 @@ function SWOPF(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-RN-83-92"
         return pb, pbm
 # **********************

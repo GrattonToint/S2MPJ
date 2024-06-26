@@ -29,10 +29,6 @@ class  SPECANNE(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -53,43 +49,43 @@ class  SPECANNE(CUTEst_problem):
         v_['ONE'] = 1.0
         v_['ROOTP5'] = np.sqrt(0.5)
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for p in range(int(v_['1']),int(v_['K'])+1):
             for j in range(int(v_['1']),int(v_['N'])+1):
                 [iv,ix_,_] = s2mpj_ii('X'+str(p)+','+str(j),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'X'+str(p)+','+str(j))
+                self.xnames=arrset(self.xnames,iv,'X'+str(p)+','+str(j))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for p in range(int(v_['1']),int(v_['K'])+1):
             for I in range(int(v_['1']),int(v_['M'])+1):
                 [ig,ig_,_] = s2mpj_ii('OBJ'+str(p)+','+str(I),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'OBJ'+str(p)+','+str(I))
-                pbm.gscale = arrset(pbm.gscale,ig,float(v_['ROOTP5']))
+                self.gscale = arrset(self.gscale,ig,float(v_['ROOTP5']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         v_['SOLN1,1'] = 19.0
         v_['SOLN1,2'] = 4.2
         v_['SOLN1,3'] = 1.2
@@ -125,11 +121,11 @@ class  SPECANNE(CUTEst_problem):
             v_['ERat'] = np.exp(v_['Ratio'])
             v_['Yi3'] = v_['SOLN3,1']*v_['ERat']
             for p in range(int(v_['1']),int(v_['K'])+1):
-                pbm.gconst  = (
-                      arrset(pbm.gconst,ig_['OBJ'+str(p)+','+str(I)],float(v_['Yi'+str(p)])))
+                self.gconst  = (
+                      arrset(self.gconst,ig_['OBJ'+str(p)+','+str(I)],float(v_['Yi'+str(p)])))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         v_['LOWER1,1'] = 15.0
         v_['LOWER1,2'] = 3.5
         v_['LOWER1,3'] = 0.3
@@ -150,11 +146,11 @@ class  SPECANNE(CUTEst_problem):
         v_['UPPER3,3'] = 2.8
         for p in range(int(v_['1']),int(v_['K'])+1):
             for j in range(int(v_['1']),int(v_['N'])+1):
-                pb.xlower[ix_['X'+str(p)+','+str(j)]] = v_['LOWER'+str(p)+','+str(j)]
-                pb.xupper[ix_['X'+str(p)+','+str(j)]] = v_['UPPER'+str(p)+','+str(j)]
+                self.xlower[ix_['X'+str(p)+','+str(j)]] = v_['LOWER'+str(p)+','+str(j)]
+                self.xupper[ix_['X'+str(p)+','+str(j)]] = v_['UPPER'+str(p)+','+str(j)]
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.y0 = np.zeros((pb.m,1))
+        self.x0 = np.zeros((self.n,1))
+        self.y0 = np.zeros((self.m,1))
         v_['START1,1'] = 25.0
         v_['START1,2'] = 5.2
         v_['START1,3'] = 3.2
@@ -166,7 +162,7 @@ class  SPECANNE(CUTEst_problem):
         v_['START3,3'] = 2.2
         for p in range(int(v_['1']),int(v_['K'])+1):
             for j in range(int(v_['1']),int(v_['N'])+1):
-                pb.x0[ix_['X'+str(p)+','+str(j)]] = float(v_['START'+str(p)+','+str(j)])
+                self.x0[ix_['X'+str(p)+','+str(j)]] = float(v_['START'+str(p)+','+str(j)])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -178,61 +174,60 @@ class  SPECANNE(CUTEst_problem):
         elftp = loaset(elftp,it,0,'T')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for p in range(int(v_['1']),int(v_['K'])+1):
             for I in range(int(v_['1']),int(v_['M'])+1):
                 ename = 'E'+str(p)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eEXPSQ')
+                self.elftype = arrset(self.elftype,ie,'eEXPSQ')
                 ielftype = arrset(ielftype, ie, iet_["eEXPSQ"])
                 vname = 'X'+str(p)+','+str(int(v_['1']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='U')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='U')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(p)+','+str(int(v_['2']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(p)+','+str(int(v_['3']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='W')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='W')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 v_['RI'] = float(I)
                 v_['IH'] = v_['H']*v_['RI']
                 v_['TI'] = v_['ONE']+v_['IH']
-                posep = find(elftp[ielftype[ie]],lambda x:x=='T')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['TI']))
+                posep = np.where(elftp[ielftype[ie]]=='T')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['TI']))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for p in range(int(v_['1']),int(v_['K'])+1):
             for I in range(int(v_['1']),int(v_['M'])+1):
                 ig = ig_['OBJ'+str(p)+','+str(I)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(p)+','+str(I)])
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(p)+','+str(I)])
                 nlc = np.union1d(nlc,np.array([ig]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        delattr( pbm, "A" )
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-AN-V-V"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "NOR2-AN-V-V"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -241,12 +236,12 @@ class  SPECANNE(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eEXPSQ(pbm,nargout,*args):
+    def eEXPSQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        R = (pbm.elpar[iel_][0]-EV_[1])**2
+        R = (self.elpar[iel_][0]-EV_[1])**2
         S = EV_[2]**2
         E = np.exp(-R/S)
         f_   = EV_[0]*E
@@ -259,16 +254,16 @@ class  SPECANNE(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = E
-            g_[1] = 2.0*(pbm.elpar[iel_][0]-EV_[1])*EV_[0]*E/S
+            g_[1] = 2.0*(self.elpar[iel_][0]-EV_[1])*EV_[0]*E/S
             g_[2] = 2.0*R*EV_[0]*E/(S*EV_[2])
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = 2.0*(pbm.elpar[iel_][0]-EV_[1])*E/S
+                H_[0,1] = 2.0*(self.elpar[iel_][0]-EV_[1])*E/S
                 H_[1,0] = H_[0,1]
                 H_[0,2] = 2.0*R*E/(S*EV_[2])
                 H_[2,0] = H_[0,2]
                 H_[1,1] = (2.0*EV_[0]*E/S)*(2.0*R/S-1.0)
-                H_[1,2] = 4.0*(pbm.elpar[iel_][0]-EV_[1])*EV_[0]*E/(S*EV_[2])*(R/S-1.0)
+                H_[1,2] = 4.0*(self.elpar[iel_][0]-EV_[1])*EV_[0]*E/(S*EV_[2])*(R/S-1.0)
                 H_[2,1] = H_[1,2]
                 H_[2,2] = 2.0*R*EV_[0]*E/(S**3)*(2.0*R-3.0*S)
         if nargout == 1:

@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. Toint (this version 7 VI 2024)
+#   Programming: S. Gratton and Ph. Toint (this version 25 VI 2024)
 #
 #####################################################################################################
 #####################################################################################################
@@ -42,11 +42,11 @@ class CUTEst_problem:
 
     def getglobs( self ):
         try:
-            eval( 'self.'+'e_globs(self.pbm)' )
+            eval( 'self.'+'e_globs(self)' )
         except:
             pass
         try:
-            eval( 'self.'+'g_globs(self.pbm)' )
+            eval( 'self.'+'g_globs(self)' )
         except:
             pass
 
@@ -58,185 +58,185 @@ class CUTEst_problem:
    
     def fx( self, x ):              # input = ( x )
         x = x.reshape(-1,1)
-        if hasattr( self.pbm, "objgrps" ) or hasattr( self.pbm, "H" ):
+        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
             self.getglobs()
-            return self.evalgrsum( True, self.pbm.objgrps, x, 1 )
+            return self.evalgrsum( True, self.objgrps, x, 1 )
         else:
-            print( "ERROR: no objective groups in "+self.pbm.name+"!" )
+            print( "ERROR: no objective groups in "+self.name+"!" )
         
     def fgx( self, x ):             # input = ( x )
         x = x.reshape(-1,1)
-        if hasattr( self.pbm, "objgrps" ) or hasattr( self.pbm, "H" ):
+        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
             self.getglobs()
-            return self.evalgrsum( True, self.pbm.objgrps, x, 2 )
+            return self.evalgrsum( True, self.objgrps, x, 2 )
         else:
-            print( "ERROR: no objective groups in "+self.pbm.name+"!" )
+            print( "ERROR: no objective groups in "+self.name+"!" )
         
     def fgHx( self, x ):            # input = ( x )
         x = x.reshape(-1,1)
-        if hasattr( self.pbm, "objgrps" ) or hasattr( self.pbm, "H" ):
+        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
             self.getglobs()
-            return self.evalgrsum( True, self.pbm.objgrps, x, 3 )
+            return self.evalgrsum( True, self.objgrps, x, 3 )
         else:
-            print( "ERROR: no objective groups in "+self.pbm.name+"!" )
+            print( "ERROR: no objective groups in "+self.name+"!" )
         
     def fHxv( self, x, v ):          # input = ( x, v )
         x = x.reshape(-1,1)
         v = v.reshape(-1,1)
-        if hasattr( self.pbm, "objgrps" ) or hasattr( self.pbm, "H" ):
+        if hasattr( self, "objgrps" ) or hasattr( self, "H" ):
             self.getglobs()
-            return self.evalHJv( "Hv", self.pbm.objgrps, x, v, [] )
+            return self.evalHJv( "Hv", self.objgrps, x, v, [] )
         else:
-            print( "ERROR: no objective groups in "+self.pbm.name+"!" )
+            print( "ERROR: no objective groups in "+self.name+"!" )
         
     def cx( self, x ):               # input = ( x )
         x = x.reshape(-1,1)
-        if hasattr( self.pbm, "congrps" ):
+        if hasattr( self, "congrps" ):
             self.getglobs()
-            return self.evalgrsum( False, self.pbm.congrps, x, 1 )
+            return self.evalgrsum( False, self.congrps, x, 1 )
         else:
-            print( 'ERROR: no constraint groups in '+self.pbm.name+'!' )
+            print( 'ERROR: no constraint groups in '+self.name+'!' )
         
     def cJx( self, x ):              # input = ( x )
         x = x.reshape(-1,1)
-        if hasattr( self.pbm, "congrps" ):
+        if hasattr( self, "congrps" ):
             self.getglobs()
-            return self.evalgrsum( False, self.pbm.congrps, x, 2 )
+            return self.evalgrsum( False, self.congrps, x, 2 )
         else:
-            print( 'ERROR: no constraint groups in '+self.pbm.name+'!' )
+            print( 'ERROR: no constraint groups in '+self.name+'!' )
         
     def cJHx( self, x ):             # input = ( x )
         x = x.reshape(-1,1)
-        if hasattr( self.pbm, "congrps" ):
+        if hasattr( self, "congrps" ):
             self.getglobs()
-            return self.evalgrsum( False, self.pbm.congrps, x, 3 )
+            return self.evalgrsum( False, self.congrps, x, 3 )
         else:
-            print( 'ERROR: no constraint groups in '+self.pbm.name+'!' )
+            print( 'ERROR: no constraint groups in '+self.name+'!' )
 
     def cJxv( self, x, v ):          # input = ( x, v )
         x = x.reshape(-1,1)
         v = v.reshape(-1,1)
-        if hasattr( self.pbm, "congrps" ):
+        if hasattr( self, "congrps" ):
             self.getglobs()
-            return evalHJv( "Jv", self.pbm.congrps, x, v, [] )
+            return evalHJv( "Jv", self.congrps, x, v, [] )
         else:
-            print( 'ERROR: no constraint groups in '+self.pbm.name+'!' )
+            print( 'ERROR: no constraint groups in '+self.name+'!' )
         
     def cIx( self, x, clist ):       # input = ( x, clist )
         x      = x.reshape(-1,1)
-        iclist = [ self.pbm.congrps[i] for i in clist ]
-        if hasattr( self.pbm, "congrps" ) and len( iclist ):
+        iclist = [ self.congrps[i] for i in clist ]
+        if hasattr( self, "congrps" ) and len( iclist ):
             self.getglobs()
             return self.evalgrsum( False, iclist , x, 1 )
         else:
-            print( 'ERROR: empty list of constraints for '+self.pbm.name+'!' )
+            print( 'ERROR: empty list of constraints for '+self.name+'!' )
         
     def cIJx( self, x, clist ):          # input = ( x , clist )
         x      = x.reshape(-1,1)
-        iclist = [ self.pbm.congrps[i] for i in clist ]
-        if hasattr( self.pbm, "congrps" ) and len( iclist  ):
+        iclist = [ self.congrps[i] for i in clist ]
+        if hasattr( self, "congrps" ) and len( iclist  ):
             self.getglobs()
             return self.evalgrsum( False, iclist, x, 2 )
         else:
-            print( 'ERROR: empty list of constraints for '+self.pbm.name+'!' )
+            print( 'ERROR: empty list of constraints for '+self.name+'!' )
         
     def cIJHx( self, x , clist ):        # input = ( x, clist )
         x      = x.reshape(-1,1)
-        iclist = [ self.pbm.congrps[i] for i in clist ]
-        if hasattr( self.pbm, "congrps" ) and len(iclist ):
+        iclist = [ self.congrps[i] for i in clist ]
+        if hasattr( self, "congrps" ) and len(iclist ):
             self.getglobs()
             return self.evalgrsum( False, iclist, x, 3 )
         else:
-            print( 'ERROR: empty list of constraints for '+self.pbm.name+'!' )
+            print( 'ERROR: empty list of constraints for '+self.name+'!' )
         
     def cIJxv( self, x, v, clist ):      # input = ( x, v, clist )
         x      = x.reshape(-1,1)
         v      = v.reshape(-1,1)
-        iclist = [ self.pbm.congrps[i] for i in clist ]
-        if hasattr( self.pbm, "congrps" ) and len( iclist ):
+        iclist = [ self.congrps[i] for i in clist ]
+        if hasattr( self, "congrps" ) and len( iclist ):
             self.getglobs()
             return self.evalHJv( "Jv", iclist, x, v, [] )
         else:
-            print( 'ERROR: empty list of constraints for '+self.pbm.name+'!' )
+            print( 'ERROR: empty list of constraints for '+self.name+'!' )
         
     def Lxy( self, x, y ):           # input = ( x, y )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLx( self.pbm.objgrps, self.pbm.congrps, x, y, 1 )
+        if hasattr( self, "congrps" ):
+            return self.evalLx( self.objgrps, self.congrps, x, y, 1 )
         else:
-            return self.evalgrsum( True, self.pbm.objgrps, x, 1 )
+            return self.evalgrsum( True, self.objgrps, x, 1 )
         
     def Lgxy( self, x, y ):          # input = ( x, y )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLx( self.pbm.objgrps, self.pbm.congrps, x, y, 2 )
+        if hasattr( self, "congrps" ):
+            return self.evalLx( self.objgrps, self.congrps, x, y, 2 )
         else:
-            return self.evalgrsum( True, self.pbm.objgrps, x, 2 )
+            return self.evalgrsum( True, self.objgrps, x, 2 )
         
     def LgHxy( self, x, y ):         # input = ( x, y )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLx( self.pbm.objgrps, self.pbm.congrps, x, y, 3 )
+        if hasattr( self, "congrps" ):
+            return self.evalLx( self.objgrps, self.congrps, x, y, 3 )
         else:
-            return self.evalgrsum( True, self.pbm.objgrps, x, 3 )
+            return self.evalgrsum( True, self.objgrps, x, 3 )
         
     def LHxyv( self, x, y, v ):      # input = ( x, y, v )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         v = v.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLHxyv( self.pbm.objgrps, self.pbm.congrps, x, y, v )
+        if hasattr( self, "congrps" ):
+            return self.evalLHxyv( self.objgrps, self.congrps, x, y, v )
         else:
-            return self.evalHJv( "Hv", self.pbm.objgrps, x, v, [] )
+            return self.evalHJv( "Hv", self.objgrps, x, v, [] )
         
     def LIxy( self, x, y, clist ):       # input = ( x, y, clist )
         x  = x.reshape(-1,1)
         y  = y.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLx( self.pbm.objgrps, [ self.pbm.congrps[i] for i in clist ], x, y, 1 )
+        if hasattr( self, "congrps" ):
+            return self.evalLx( self.objgrps, [ self.congrps[i] for i in clist ], x, y, 1 )
         else:
-            return self.evalgrsum( True, self.pbm.objgrps, x, 1 )
+            return self.evalgrsum( True, self.objgrps, x, 1 )
         
     def LIgxy( self, x, y, clist ):      # input = ( x, y, clist )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLx( self.pbm.objgrps, [ self.pbm.congrps[i] for i in clist ], x, y, 2 )
+        if hasattr( self, "congrps" ):
+            return self.evalLx( self.objgrps, [ self.congrps[i] for i in clist ], x, y, 2 )
         else:
-            return self.evalgrsum( True, self.pbm.objgrps, x, 2 )
+            return self.evalgrsum( True, self.objgrps, x, 2 )
         
     def LIgHxy( self, x, y, clist  ):    # input = ( x, y, clist )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLx( self.pbm.objgrps, [ self.pbm.congrps[i] for i in clist ], x, y, 3 )
+        if hasattr( self, "congrps" ):
+            return self.evalLx( self.objgrps, [ self.congrps[i] for i in clist ], x, y, 3 )
         else:
-            return self.evalgrsum( True, self.pbm.objgrps, x, 3 )
+            return self.evalgrsum( True, self.objgrps, x, 3 )
         
     def LIHxyv( self, x, y, v, I ):  # input = ( x, y, v, clist )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
         v = v.reshape(-1,1)
         self.getglobs()
-        if hasattr( self.pbm, "congrps" ):
-            return self.evalLHxyv( self.pbm.objgrps, [ self.pbm.congrps[i] for i in clist ], x, y, v )
+        if hasattr( self, "congrps" ):
+            return self.evalLHxyv( self.objgrps, [ self.congrps[i] for i in clist ], x, y, v )
         else:
-            return self.evalHJv( "Hv", self.pbm.objgrps, x, v, [] )
+            return self.evalHJv( "Hv", self.objgrps, x, v, [] )
             
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     #
     #   Evaluate the value of a sum of groups (and, if requested, that of of its gradient and Hessian)
-    #   at x, given the problem data available in the self.pbm struct.
+    #   at x, given the problem data available in the self struct.
     #
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -246,7 +246,6 @@ class CUTEst_problem:
         
         #   Initializations
         
-        pbm = self.pbm
         n   = len( x )
         m   = len( glist )
         if isobj:
@@ -269,28 +268,28 @@ class CUTEst_problem:
 
         #  Check for the presence and size of a linear term
 
-        if hasattr( pbm, "A" ):
-            sA1 = pbm.Ashape[0]
-            sA2 = pbm.Ashape[1]
+        if hasattr( self, "A" ):
+            sA1 = self.Ashape[0]
+            sA2 = self.Ashape[1]
             has_A = True
         else:
             has_A = False
 
         #  Evaluate the quadratic term, if any.
 
-        if isobj and hasattr( pbm, "H" ):
+        if isobj and hasattr( self, "H" ):
             
-            Htimesx = pbm.H .dot(x)
+            Htimesx = self.H .dot(x)
             if nargout ==  1:
                 fx += 0.5 * x.T .dot(Htimesx)
             elif nargout == 2:
                 gx += Htimesx
                 fx += 0.5 * x.T .dot(Htimesx)
             elif nargout == 3:
-                Htimesx = pbm.H .dot(x);
+                Htimesx = self.H .dot(x);
                 gx += Htimesx
                 fx += 0.5 * x.T .dot(Htimesx)
-                Hx += pbm.H
+                Hx += self.H
                 
         if debug: #D
             if isobj:
@@ -302,13 +301,13 @@ class CUTEst_problem:
         #    Loop on the groups list 
 
         for iig in range( len( glist )):
-            ig = glist[ iig ]
+            ig = int( glist[ iig ] )
             
             #  Find the group's scaling.
             
-            if hasattr(pbm,"gscale"):
-                if ig < len(pbm.gscale) and not pbm.gscale[ig] is None and abs( pbm.gscale[ig] ) > 1.0e-15:
-                    gsc = pbm.gscale[ig]
+            if hasattr(self,"gscale"):
+                if ig < len(self.gscale) and not self.gscale[ig] is None and abs( self.gscale[ig] ) > 1.0e-15:
+                    gsc = self.gscale[ig]
                 else:
                     gsc = 1.0
             else:
@@ -316,13 +315,13 @@ class CUTEst_problem:
 
             #  Evaluate the linear term, if any.
 
-            if hasattr(pbm,"gconst") and ig < len(pbm.gconst) and not pbm.gconst[ig] is None:
-                fin = float(-pbm.gconst[ig])
+            if hasattr(self,"gconst") and ig < len(self.gconst) and not self.gconst[ig] is None:
+                fin = float(-self.gconst[ig])
             else:
                 fin = 0
             if has_A and ig < sA1:
                 gin           = np.zeros( (n, 1) )
-                gin[:sA2, :1] = pbm.A[ ig, :sA2 ].T.toarray()
+                gin[:sA2, :1] = self.A[ ig, :sA2 ].T.toarray()
                 fin           = float(fin + gin.T .dot(x))
             elif nargout == 2 or nargout == 3:
                 gin =  np.zeros(( n, 1 ))
@@ -331,25 +330,25 @@ class CUTEst_problem:
                 Hin = lil_matrix(( n, n ))
 
             if debug:
-                print( "ig = ", ig, "  fin(linear)", fin ) #D
+                print( "ig = ", ig, "  fin(linear)", fin )
 
-            if hasattr(pbm,"grelt") and ig < len(pbm.grelt) and not pbm.grelt[ig] is None:
-                for iiel in range(len( pbm.grelt[ ig ] ) ):  #  loop on elements
-                    iel    = pbm.grelt[ ig ][ iiel ]         #  the element's index
-                    efname = pbm.elftype[ iel ]              #  the element's ftype
-                    irange = [iv for iv in pbm.elvar[ iel ]] #  the elemental variable's indeces
-                    xiel   = x[ np.array(irange) ]           #  the elemental variable's values
+            if hasattr( self, "grelt" ) and ig < len( self.grelt ) and not self.grelt[ ig ] is None:
+                for iiel in range(len( self.grelt[ ig ] ) ):  #  loop on elements
+                    iel    = self.grelt[ ig ][ iiel ]         #  the element's index
+                    efname = self.elftype[ iel ]              #  the element's ftype
+                    irange = [iv for iv in self.elvar[ iel ]] #  the elemental variable's indeces 
+                    xiel   = x[ np.array(irange) ]            #  the elemental variable's values
 
-                    if  hasattr( pbm, 'grelw' ) and ig <= len( pbm.grelw ) and not pbm.grelw[ig] is None :
+                    if  hasattr( self, 'grelw' ) and ig <= len( self.grelw ) and not self.grelw[ig] is None :
                         has_weights = True;
-                        wiel        = pbm.grelw[ ig ][ iiel ]
+                        wiel        = self.grelw[ ig ][ iiel ]
                     else:
                         has_weights = False
 
                     # Only the value is requested.
                     
                     if nargout == 1:
-                        fiel = eval('self.'+efname +'( self.pbm, 1, xiel, iel )')
+                        fiel = eval('self.'+efname +'( self, 1, xiel, iel )')
                         if ( has_weights ):
                             fin += wiel * fiel
                         else:
@@ -358,7 +357,7 @@ class CUTEst_problem:
                     #  The value and its gradient are requested.
                     
                     elif nargout == 2:
-                        fiel, giel = eval('self.'+efname +'( self.pbm, 2, xiel, iel)')
+                        fiel, giel = eval('self.'+efname +'( self, 2, xiel, iel)')
                         if  has_weights:
                             fin += wiel * fiel
                             for ir in range(len(irange)):
@@ -371,7 +370,7 @@ class CUTEst_problem:
                                 gin[ ii ] += giel[ ir ]
 
                     elif nargout == 3:
-                        fiel, giel, Hiel = eval('self.'+efname +'( self.pbm, 3, xiel, iel )')
+                        fiel, giel, Hiel = eval('self.'+efname +'( self, 3, xiel, iel )')
                         if has_weights:
                             fin += wiel * fiel
                             for ir in range(len(irange)):
@@ -379,7 +378,6 @@ class CUTEst_problem:
                                 gin[ ii ] += wiel * giel[ ir ]
                                 for jr in range(len( irange )):
                                     jj  = irange[ jr ]
-#                                    print( "Hiel", Hiel, " efname = ", efname )#D
                                     Hin[ ii, jj ] += wiel * Hiel[ ir, jr ]
                         else:
                             fin = fin + fiel;
@@ -400,20 +398,20 @@ class CUTEst_problem:
             
             #  1) the non-TRIVIAL case
 
-            if hasattr(pbm,"grftype") and ig < len( pbm.grftype ) and not pbm.grftype[ ig ] is None:
-                egname = pbm.grftype[ ig ]
+            if hasattr(self,"grftype") and ig < len( self.grftype ) and not self.grftype[ ig ] is None:
+                egname = self.grftype[ ig ]
             else:
                 egname = "TRIVIAL"
             if egname!='TRIVIAL' and egname is not None:
                 if isobj:
                     if nargout == 1:
-                        fx += eval('self.'+egname+'( self.pbm, 1, fin, ig )') / gsc
+                        fx += eval('self.'+egname+'( self, 1, fin, ig )') / gsc
                     elif nargout == 2:
-                        [ fa, grada ] = eval('self.'+ egname+'( self.pbm, 2, fin, ig )')
+                        [ fa, grada ] = eval('self.'+ egname+'( self, 2, fin, ig )')
                         fx += fa / gsc
                         gx += grada * gin / gsc
                     elif nargout == 3:
-                        [ fa, grada, Hessa ] = eval('self.'+egname+'( self.pbm, 3, fin, ig )')
+                        [ fa, grada, Hessa ] = eval('self.'+egname+'( self, 3, fin, ig )')
                         fx   += fa / gsc
                         gx   += grada * gin / gsc
                         sgin  = lil_matrix(gin)
@@ -421,15 +419,15 @@ class CUTEst_problem:
                 else:
                     ic = ic + 1
                     if nargout == 1:
-                        fa = eval('self.'+egname+'( self.pbm, 1, fin, ig )')
+                        fa = eval('self.'+egname+'( self, 1, fin, ig )')
                         cx[ ic ] = fa / gsc
                     elif nargout == 2:
-                        fa, grada = eval('self.'+egname+'( self.pbm, 2, fin, ig )')
+                        fa, grada = eval('self.'+egname+'( self, 2, fin, ig )')
                         cx[ ic ]  = fa / gsc
                         sgin      = lil_matrix( gin )
                         Jx[ic,:]  = grada * sgin.T / gsc
                     elif nargout == 3:
-                        fa, grada, Hessa = eval('self.'+egname+'( self.pbm, 3, fin, ig )') 
+                        fa, grada, Hessa = eval('self.'+egname+'( self, 3, fin, ig )') 
                         cx[ ic ] = fa / gsc
                         sgin     = lil_matrix( gin )
                         Jx[ic,:] = grada * sgin.T / gsc
@@ -499,7 +497,6 @@ class CUTEst_problem:
         
         #   Initializations
         
-        pbm = self.pbm
         n   = len( x );
         m   = len( glist );
         if mode == "Hv":
@@ -513,29 +510,29 @@ class CUTEst_problem:
 
         #  Check for the presence and size of a linear term
 
-        if hasattr( pbm, "A" ):
-            sA1 = pbm.Ashape[0]
-            sA2 = pbm.Ashape[1]
+        if hasattr( self, "A" ):
+            sA1 = self.Ashape[0]
+            sA2 = self.Ashape[1]
             has_A = True
         else:
             has_A = False
 
         #  Evaluate the quadratic term, if any.
 
-        if mode == "Hv" and hasattr( pbm, "H" ):
-            HJv += pbm.H.dot(v);
+        if mode == "Hv" and hasattr( self, "H" ):
+            HJv += self.H.dot(v);
         
         if debug: #D
             print( "HJv(quadratic) = ", HJv )
 
         for iig in range(len( glist )):
-            ig = glist[ iig ];
+            ig = int( glist[ iig ] );
             
             #  Find the group's scaling.
             
-            if hasattr(pbm,"gscale"):
-                if ig < len(pbm.gscale) and not pbm.gscale[ig] is None and abs( pbm.gscale[ig] ) > 1.0e-15:
-                    gsc = pbm.gscale[ig];
+            if hasattr(self,"gscale"):
+                if ig < len( self.gscale ) and not self.gscale[ ig ] is None and abs( self.gscale[ ig ] ) > 1.0e-15:
+                    gsc = self.gscale[ ig ];
                 else:
                     gsc = 1.0;
             else:
@@ -543,13 +540,13 @@ class CUTEst_problem:
 
             #  Evaluate the linear term, if any.
 
-            if hasattr(pbm,"gconst") and ig < len(pbm.gconst) and not pbm.gconst[ig] is None:
-                fin = float(-pbm.gconst[ ig ] )
+            if hasattr( self, "gconst" ) and ig < len( self.gconst ) and not self.gconst[ ig ] is None:
+                fin = float(-self.gconst[ ig ] )
             else:
                 fin = 0.0
             gin = np.zeros((n,1))
             if has_A and ig < sA1:
-                gin[:sA2, :1] = pbm.A[ ig, :sA2 ].T.toarray()
+                gin[:sA2, :1] = self.A[ ig, :sA2 ].T.toarray()
                 fin           = float(fin + gin.T .dot(x))
 
             if debug:
@@ -557,26 +554,26 @@ class CUTEst_problem:
 
             Hinv = np.zeros((n,1))
 
-            if hasattr(pbm,"grelt") and ig < len(pbm.grelt) and not pbm.grelt[ig] is None:
-                for iiel in range(len( pbm.grelt[ ig ] ) ):  #  loop on elements
-                    iel    = pbm.grelt[ ig ][ iiel ]         #  the element's index
-                    efname = pbm.elftype[ iel ];             #  the element's ftype
-                    irange = [iv for iv in pbm.elvar[ iel ]] #  the elemental variable's indeces
-                    xiel   = x[ np.array(irange) ]           #  the elemental variable's values
+            if hasattr( self, "grelt" ) and ig < len( self.grelt ) and not self.grelt[ ig ] is None:
+                for iiel in range( len( self.grelt[ ig ] ) ):  #  loop on elements
+                    iel    = self.grelt[ ig ][ iiel ]          #  the element's index
+                    efname = self.elftype[ iel ];              #  the element's ftype
+                    irange = [iv for iv in self.elvar[ iel ]]  #  the elemental variable's indeces
+                    xiel   = x[ np.array(irange) ]             #  the elemental variable's values
 
-                    if  hasattr( pbm, 'grelw' ) and ig <= len( pbm.grelw ) and not pbm.grelw[ig] is None :
+                    if  hasattr( self, 'grelw' ) and ig <= len( self.grelw ) and not self.grelw[ig] is None :
                         has_weights = 1;
-                        wiel        = pbm.grelw[ ig ][ iiel ]
+                        wiel        = self.grelw[ ig ][ iiel ]
                     else:
                         has_weights = 0;
 
                     #  The group is an objective group
                     
                     if mode == "Hv" or mode == "HIv":
-                        fiel, giel, Hiel = eval('self.'+efname +'( self.pbm, 3, xiel, iel )')
+                        fiel, giel, Hiel = eval('self.'+efname +'( self, 3, xiel, iel )')
                         if has_weights:
                             fin += wiel * fiel;
-                            for ir in range(len(irange)):
+                            for ir in range( len( irange ) ):
                                 ii = irange[ ir ]
                                 gin[ ii ] = gin[ ii ] + wiel * giel[ ir ]
                                 for jr in range(len( irange )):
@@ -584,7 +581,7 @@ class CUTEst_problem:
                                     Hinv[ ii ] +=  wiel * Hiel[ ir, jr ] * v[ jj ]
                         else:
                             fin = fin + fiel;
-                            for ir in range(len(irange)):
+                            for ir in range( len( irange ) ):
                                 ii = irange[ ir ]
                                 gin[ ii ] = gin[ ii ] + giel[ ir ]
                                 for jr in range(len( irange )):
@@ -595,20 +592,17 @@ class CUTEst_problem:
 
                     else:
 
-                        fiel, giel = eval('self.'+efname +'( self.pbm, 2, xiel, iel)')
-                        if  has_weights:
+                        fiel, giel = eval('self.'+efname +'( self, 2, xiel, iel)')
+                        if has_weights:
                             fin = fin + wiel * fiel;
-                            for ir in range(len(irange)):
+                            for ir in range( len( irange ) ):
                                 ii = irange[ ir ]
                                 gin[ ii ] += wiel * giel[ ir ]
                         else:
                             fin = fin + fiel;
-                            for ir in range(len(irange)):
+                            for ir in range( len( irange ) ):
                                 ii = irange[ ir ]
                                 gin[ ii ] += giel[ ir ]
-                    #end isobj
-                #end for iiel
-            #end if hasattr(pbm,"grelt")
             
             if debug: #D
                 print( "ig = ", ig, "  Hinv(nonlinear) = ", Hinv, "  HJv = ", HJv  )#D
@@ -617,8 +611,8 @@ class CUTEst_problem:
             
             #  1) the non-TRIVIAL case
             
-            if hasattr(pbm,"grftype") and ig < len( pbm.grftype ) and not pbm.grftype[ ig ] is None:
-                egname = pbm.grftype[ ig ]; #  the group's ftype
+            if hasattr(self,"grftype") and ig < len( self.grftype ) and not self.grftype[ ig ] is None:
+                egname = self.grftype[ ig ]; #  the group's ftype
             else:
                 egname = "TRIVIAL"
                 
@@ -626,7 +620,7 @@ class CUTEst_problem:
                 if egname == "TRIVIAL":
                     HJv += Hinv / gsc
                 else:
-                    fa, grada, Hessa = eval('self.'+egname+'( self.pbm, 3, fin, ig )' )
+                    fa, grada, Hessa = eval('self.'+egname+'( self, 3, fin, ig )' )
                     sgin = lil_matrix(gin);
                     HJv  += ( ( Hessa * sgin) * (sgin.transpose().dot(v)) + grada * Hinv) / gsc
             elif mode == "HIv":
@@ -634,7 +628,7 @@ class CUTEst_problem:
                     ic  += 1
                     HJv += y[ic] * Hinv / gsc
                 else:
-                    fa, grada, Hessa = eval('self.'+egname+'( self.pbm, 3, fin, ig )' )
+                    fa, grada, Hessa = eval('self.'+egname+'( self, 3, fin, ig )' )
                     sgin = lil_matrix(gin);
                     ic  += 1
                     HJv += y[ic] * ( ( Hessa * sgin) * (sgin.transpose().dot(v)) + grada * Hinv) / gsc
@@ -643,7 +637,7 @@ class CUTEst_problem:
                 if egname == "TRIVIAL":
                     HJv[ic] = gin.transpose().dot( v ) / gsc
                 else:
-                    [ fa, grada ] = feval( pbm.name, egname, fin, ig )
+                    [ fa, grada ] = feval( self.name, egname, fin, ig )
                     HJv[ic] = grada * gin.transpose().dot( v ) / gsc
             if debug:
                 print( "ig = ", ig, "  HJv(final) = ", HJv )#D
@@ -659,7 +653,7 @@ class CUTEst_problem:
 
     def evalLx( self, gobjlist, gconlist, x, y, nargout ):
         if nargout == 1:
-            if len( gobjlist ) or hasattr( self.pbm, "H" ):
+            if len( gobjlist ) or hasattr( self, "H" ):
                Lxy = self.evalgrsum( True, gobjlist, x, 1 )
             else:
                Lxy = 0.
@@ -668,7 +662,7 @@ class CUTEst_problem:
                 Lxy = Lxy + y.T.dot(c)
             return float(Lxy)
         elif nargout == 2:
-            if len( gobjlist ) or hasattr( self.pbm, "H" ):
+            if len( gobjlist ) or hasattr( self, "H" ):
                 Lxy, Lgxy = self.evalgrsum( True, gobjlist, x, 2 )
             else:
                 Lxy  = 0.
@@ -679,7 +673,7 @@ class CUTEst_problem:
                 Lgxy = Lgxy  + J.T.dot(y)
             return float(Lxy), Lgxy
         elif nargout == 3:
-            if len( gobjlist ) or hasattr( self.pbm, "H" ):
+            if len( gobjlist ) or hasattr( self, "H" ):
                 Lxy, Lgxy, LgHxy = self.evalgrsum( True, gobjlist, x, 3 )
             else:
                 n = len( x )
@@ -738,36 +732,35 @@ def s2mpj_ii( name, List ):
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def s2mpj_nlx( name, List, pb=None, getxnames=None, xlowdef=None, xuppdef=None, x0def=None ):
+def s2mpj_nlx( self, name, List, getxnames=None, xlowdef=None, xuppdef=None, x0def=None ):
 
     iv, List, newvar = s2mpj_ii( name, List );
     if( newvar ):
-        print("here")
-        pb.n = pb.n + 1;
+        self.n = self.n + 1;
         if getxnames:
-            pb.xnames = arrset( pb.xnames, iv, name )
-        if hasattr( pb, "xlower" ):
-            thelen = len( pb.xlower )
+            self.xnames = arrset( self.xnames, iv, name )
+        if hasattr( self, "xlower" ):
+            thelen = len( self.xlower )
             if ( iv <= thelen ):
-                pb.xlower = np.append( pb.xlower, np.full( (iv-thelen+1,1), float(0.0) ), 0 )
+                self.xlower = np.append( self.xlower, np.full( (iv-thelen+1,1), float(0.0) ), 0 )
             if not xlowdef is None:
-                pb.xlower[iv] 
-        if hasattr( pb, "xupper" ):
-            thelen = len( pb.xupper )
+                self.xlower[iv] 
+        if hasattr( self, "xupper" ):
+            thelen = len( self.xupper )
             if ( iv <= thelen ):
-                pb.xupper = np.append( pb.xupper, np.full( (iv-thelen+1,1), float('Inf') ), 0 )
+                self.xupper = np.append( self.xupper, np.full( (iv-thelen+1,1), float('Inf') ), 0 )
             if not xuppdef is None:
-                pb.xupper[iv] 
+                self.xupper[iv] 
         try:
-            pb.xtype  = arrset( pb.xtype, iv, 'r' )
+            self.xtype  = arrset( self.xtype, iv, 'r' )
         except:
             pass
-        thelen = len( pb.x0 )
+        thelen = len( self.x0 )
         if ( iv <= thelen ):
-            pb.x0 = np.append( pb.x0, np.full( (iv-thelen+1,1), 0.0 ), 0 )
+            self.x0 = np.append( self.x0, np.full( (iv-thelen+1,1), 0.0 ), 0 )
         if not x0def is None:
-            pb.x0[iv] =  x0def
-    return iv, List, pb
+            self.x0[iv] =  x0def
+    return iv, List
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #

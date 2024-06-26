@@ -37,10 +37,6 @@ class  VARDIM(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -60,90 +56,89 @@ class  VARDIM(CUTEst_problem):
         v_['SUMJ'] = 0.5*v_['T']
         v_['1OVERN'] = 1.0/v_['RN']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['REALI'] = float(I)
             [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+1'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(v_['REALI'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['REALI'])+self.A[ig,iv]
             [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+2'])),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(v_['REALI'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['REALI'])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['G'+str(I)],float(1.0))
-        pbm.gconst  = (
-              arrset(pbm.gconst,ig_['G'+str(int(v_['N+1']))],float(v_['SUMJ'])))
-        pbm.gconst  = (
-              arrset(pbm.gconst,ig_['G'+str(int(v_['N+2']))],float(v_['SUMJ'])))
+            self.gconst = arrset(self.gconst,ig_['G'+str(I)],float(1.0))
+        self.gconst  = (
+              arrset(self.gconst,ig_['G'+str(int(v_['N+1']))],float(v_['SUMJ'])))
+        self.gconst  = (
+              arrset(self.gconst,ig_['G'+str(int(v_['N+2']))],float(v_['SUMJ'])))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['REALI'] = float(I)
             v_['IOVERN'] = v_['REALI']*v_['1OVERN']
             v_['MIOVN'] = -1.0*v_['IOVERN']
             v_['XI'] = 1.0+v_['MIOVN']
-            pb.x0[ix_['X'+str(I)]] = float(v_['XI'])
+            self.x0[ix_['X'+str(I)]] = float(v_['XI'])
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         [it,igt_,_] = s2mpj_ii('gL4',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['N+1'])+1):
             ig = ig_['G'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         ig = ig_['G'+str(int(v_['N+2']))]
-        pbm.grftype = arrset(pbm.grftype,ig,'gL4')
+        self.grftype = arrset(self.grftype,ig,'gL4')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OUR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OUR2-AN-V-0"
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
@@ -152,7 +147,7 @@ class  VARDIM(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -170,7 +165,7 @@ class  VARDIM(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gL4(pbm,nargout,*args):
+    def gL4(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

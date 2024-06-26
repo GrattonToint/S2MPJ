@@ -26,7 +26,7 @@ function MISTAKE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -95,7 +95,7 @@ function MISTAKE(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -447,21 +447,21 @@ function MISTAKE(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.5))
+        loaset(self.grelw,ig,posel,Float64(-0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE2"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.5))
+        loaset(self.grelw,ig,posel,Float64(-0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE4"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.5))
+        loaset(self.grelw,ig,posel,Float64(-0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE6"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
@@ -559,7 +559,7 @@ function MISTAKE(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["CE25"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -1.0
@@ -573,7 +573,7 @@ function MISTAKE(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QQR2-AY-9-13"
         return pb, pbm
 # **********************

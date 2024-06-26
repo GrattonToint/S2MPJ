@@ -30,10 +30,6 @@ class  PALMER1C(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -113,32 +109,32 @@ class  PALMER1C(CUTEst_problem):
         v_['Y34'] = 108.18086
         v_['Y35'] = 92.733676
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('A0',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A0')
+        self.xnames=arrset(self.xnames,iv,'A0')
         [iv,ix_,_] = s2mpj_ii('A2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A2')
+        self.xnames=arrset(self.xnames,iv,'A2')
         [iv,ix_,_] = s2mpj_ii('A4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A4')
+        self.xnames=arrset(self.xnames,iv,'A4')
         [iv,ix_,_] = s2mpj_ii('A6',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A6')
+        self.xnames=arrset(self.xnames,iv,'A6')
         [iv,ix_,_] = s2mpj_ii('A8',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A8')
+        self.xnames=arrset(self.xnames,iv,'A8')
         [iv,ix_,_] = s2mpj_ii('A10',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A10')
+        self.xnames=arrset(self.xnames,iv,'A10')
         [iv,ix_,_] = s2mpj_ii('A12',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A12')
+        self.xnames=arrset(self.xnames,iv,'A12')
         [iv,ix_,_] = s2mpj_ii('A14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A14')
+        self.xnames=arrset(self.xnames,iv,'A14')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['XSQR'] = v_['X'+str(I)]*v_['X'+str(I)]
@@ -151,78 +147,77 @@ class  PALMER1C(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('O'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['A0']
-            pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(1.0)+self.A[ig,iv]
             iv = ix_['A2']
-            pbm.A[ig,iv] = float(v_['XSQR'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['XSQR'])+self.A[ig,iv]
             iv = ix_['A4']
-            pbm.A[ig,iv] = float(v_['XQUART'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['XQUART'])+self.A[ig,iv]
             iv = ix_['A6']
-            pbm.A[ig,iv] = float(v_['X**6'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['X**6'])+self.A[ig,iv]
             iv = ix_['A8']
-            pbm.A[ig,iv] = float(v_['X**8'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['X**8'])+self.A[ig,iv]
             iv = ix_['A10']
-            pbm.A[ig,iv] = float(v_['X**10'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['X**10'])+self.A[ig,iv]
             iv = ix_['A12']
-            pbm.A[ig,iv] = float(v_['X**12'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['X**12'])+self.A[ig,iv]
             iv = ix_['A14']
-            pbm.A[ig,iv] = float(v_['X**14'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['X**14'])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
+            self.gconst = arrset(self.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['A0']] = -float('Inf')
-        pb.xupper[ix_['A0']] = +float('Inf')
-        pb.xlower[ix_['A2']] = -float('Inf')
-        pb.xupper[ix_['A2']] = +float('Inf')
-        pb.xlower[ix_['A4']] = -float('Inf')
-        pb.xupper[ix_['A4']] = +float('Inf')
-        pb.xlower[ix_['A6']] = -float('Inf')
-        pb.xupper[ix_['A6']] = +float('Inf')
-        pb.xlower[ix_['A8']] = -float('Inf')
-        pb.xupper[ix_['A8']] = +float('Inf')
-        pb.xlower[ix_['A10']] = -float('Inf')
-        pb.xupper[ix_['A10']] = +float('Inf')
-        pb.xlower[ix_['A12']] = -float('Inf')
-        pb.xupper[ix_['A12']] = +float('Inf')
-        pb.xlower[ix_['A14']] = -float('Inf')
-        pb.xupper[ix_['A14']] = +float('Inf')
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['A0']] = -float('Inf')
+        self.xupper[ix_['A0']] = +float('Inf')
+        self.xlower[ix_['A2']] = -float('Inf')
+        self.xupper[ix_['A2']] = +float('Inf')
+        self.xlower[ix_['A4']] = -float('Inf')
+        self.xupper[ix_['A4']] = +float('Inf')
+        self.xlower[ix_['A6']] = -float('Inf')
+        self.xupper[ix_['A6']] = +float('Inf')
+        self.xlower[ix_['A8']] = -float('Inf')
+        self.xupper[ix_['A8']] = +float('Inf')
+        self.xlower[ix_['A10']] = -float('Inf')
+        self.xupper[ix_['A10']] = +float('Inf')
+        self.xlower[ix_['A12']] = -float('Inf')
+        self.xupper[ix_['A12']] = +float('Inf')
+        self.xlower[ix_['A14']] = -float('Inf')
+        self.xupper[ix_['A14']] = +float('Inf')
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
+        self.x0 = np.full((self.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             ig = ig_['O'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN             9.7605048D-02
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "QUR2-RN-8-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "QUR2-RN-8-0"
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
@@ -231,7 +226,7 @@ class  PALMER1C(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

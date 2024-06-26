@@ -44,7 +44,7 @@ function VAREIGVL(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -213,7 +213,7 @@ function VAREIGVL(action,args...)
             arrset(pbm.grftype,ig,"gLQ")
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["P"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(-1.0))
+            loaset(self.grelw,ig,posel,Float64(-1.0))
             posgp = findfirst(x->x=="POWER",grftp[igt_[pbm.grftype[ig]]])
             loaset(pbm.grpar,ig,posgp,Float64(2.0))
         end

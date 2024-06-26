@@ -27,10 +27,6 @@ class  EG1(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -38,11 +34,11 @@ class  EG1(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('GROUP1',ig_)
         gtype = arrset(gtype,ig,'<>')
@@ -51,34 +47,34 @@ class  EG1(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('GROUP3',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         ngrp   = len(ig_)
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
+        self.xnames=arrset(self.xnames,iv,'X1')
         ig = ig_['GROUP1']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
+        self.xnames=arrset(self.xnames,iv,'X2')
         ig = ig_['GROUP3']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('X3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X3')
+        self.xnames=arrset(self.xnames,iv,'X3')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.n   = len(ix_)
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['X1']] = -float('Inf')
-        pb.xupper[ix_['X1']] = +float('Inf')
-        pb.xlower[ix_['X2']] = -1.0
-        pb.xlower[ix_['X3']] = 1.0
-        pb.xupper[ix_['X2']] = 1.0
-        pb.xupper[ix_['X3']] = 2.0
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['X1']] = -float('Inf')
+        self.xupper[ix_['X1']] = +float('Inf')
+        self.xlower[ix_['X2']] = -1.0
+        self.xlower[ix_['X3']] = 1.0
+        self.xupper[ix_['X2']] = 1.0
+        self.xupper[ix_['X3']] = 2.0
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -91,90 +87,89 @@ class  EG1(CUTEst_problem):
         elftv = loaset(elftv,it,2,'V3')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         ename = 'G2E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eETYPE1')
+        self.elftype = arrset(self.elftype,ie,'eETYPE1')
         ielftype = arrset(ielftype, ie, iet_["eETYPE1"])
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G3E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eETYPE2')
+        self.elftype = arrset(self.elftype,ie,'eETYPE2')
         ielftype = arrset(ielftype, ie, iet_["eETYPE2"])
         vname = 'X2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V3')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'G3E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
-        pbm.elftype = arrset(pbm.elftype,ie,'eETYPE1')
+        self.elftype = arrset(self.elftype,ie,'eETYPE1')
         ielftype = arrset(ielftype, ie, iet_["eETYPE1"])
         vname = 'X1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gGTYPE1',igt_)
         [it,igt_,_] = s2mpj_ii('gGTYPE2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         ig = ig_['GROUP1']
-        pbm.grftype = arrset(pbm.grftype,ig,'gGTYPE1')
+        self.grftype = arrset(self.grftype,ig,'gGTYPE1')
         ig = ig_['GROUP2']
-        pbm.grftype = arrset(pbm.grftype,ig,'gGTYPE2')
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['G2E1'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        self.grftype = arrset(self.grftype,ig,'gGTYPE2')
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['G2E1'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         ig = ig_['GROUP3']
-        posel = len(pbm.grelt[ig])
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['G3E1'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+        posel = len(self.grelt[ig])
+        self.grelt = loaset(self.grelt,ig,posel,ie_['G3E1'])
+        self.grelw = loaset(self.grelw,ig,posel,1.)
         posel = posel+1
-        pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['G3E2'])
-        pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)
+        self.grelt = loaset(self.grelt,ig,posel,ie_['G3E2'])
+        self.grelw = loaset(self.grelw,ig,posel, 1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OBR2-AY-3-0"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OBR2-AY-3-0"
+        self.x0        = np.zeros((self.n,1))
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eETYPE1(pbm,nargout,*args):
+    def eETYPE1(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -202,7 +197,7 @@ class  EG1(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eETYPE2(pbm,nargout,*args):
+    def eETYPE2(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -244,7 +239,7 @@ class  EG1(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gGTYPE1(pbm,nargout,*args):
+    def gGTYPE1(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -263,7 +258,7 @@ class  EG1(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gGTYPE2(pbm,nargout,*args):
+    def gGTYPE2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

@@ -49,10 +49,6 @@ class  NOBNDTOR(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -78,45 +74,45 @@ class  NOBNDTOR(CUTEst_problem):
         v_['1'] = 1
         v_['2'] = 2
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
+                self.xnames=arrset(self.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['2']),int(v_['P-1'])+1):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(I)+','+str(J)]
-                pbm.A[ig,iv] = float(v_['LC'])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['LC'])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         for J in range(int(v_['1']),int(v_['P'])+1):
-            pb.xlower[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
-            pb.xupper[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
-            pb.xlower[ix_['X'+str(int(v_['P']))+','+str(J)]] = 0.0
-            pb.xupper[ix_['X'+str(int(v_['P']))+','+str(J)]] = 0.0
+            self.xlower[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
+            self.xupper[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
+            self.xlower[ix_['X'+str(int(v_['P']))+','+str(J)]] = 0.0
+            self.xupper[ix_['X'+str(int(v_['P']))+','+str(J)]] = 0.0
         for I in range(int(v_['2']),int(v_['P-1'])+1):
-            pb.xlower[ix_['X'+str(I)+','+str(int(v_['P']))]] = 0.0
-            pb.xupper[ix_['X'+str(I)+','+str(int(v_['P']))]] = 0.0
-            pb.xlower[ix_['X'+str(I)+','+str(int(v_['1']))]] = 0.0
-            pb.xupper[ix_['X'+str(I)+','+str(int(v_['1']))]] = 0.0
+            self.xlower[ix_['X'+str(I)+','+str(int(v_['P']))]] = 0.0
+            self.xupper[ix_['X'+str(I)+','+str(int(v_['P']))]] = 0.0
+            self.xlower[ix_['X'+str(I)+','+str(int(v_['1']))]] = 0.0
+            self.xupper[ix_['X'+str(I)+','+str(int(v_['1']))]] = 0.0
         for I in range(int(v_['2']),int(v_['Q'])+1):
             for J in range(int(v_['2']),int(I)+1):
                 v_['J-1'] = -1+J
@@ -124,8 +120,8 @@ class  NOBNDTOR(CUTEst_problem):
                 v_['UPPL'] = v_['RJ-1']*v_['H']
                 v_['UPPL'] = 1.0e+21
                 v_['LOWL'] = -1.0*v_['UPPL']
-                pb.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWL']
-                pb.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPL']
+                self.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWL']
+                self.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPL']
             v_['MI'] = -1*I
             v_['P-I'] = v_['P']+v_['MI']
             v_['I-1'] = -1+I
@@ -135,8 +131,8 @@ class  NOBNDTOR(CUTEst_problem):
             v_['LOWM'] = -1.0*v_['UPPM']
             v_['P-I+1'] = 1+v_['P-I']
             for J in range(int(I),int(v_['P-I+1'])+1):
-                pb.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWM']
-                pb.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPM']
+                self.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWM']
+                self.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPM']
             for J in range(int(v_['P-I+1']),int(v_['P-1'])+1):
                 v_['MJ'] = -1*J
                 v_['P-J'] = v_['P']+v_['MJ']
@@ -144,8 +140,8 @@ class  NOBNDTOR(CUTEst_problem):
                 v_['UPPR'] = v_['RP-J']*v_['H']
                 v_['UPPR'] = 1.0e+21
                 v_['LOWR'] = -1.0*v_['UPPR']
-                pb.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWR']
-                pb.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPR']
+                self.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWR']
+                self.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPR']
         for I in range(int(v_['Q+1']),int(v_['P-1'])+1):
             v_['MI'] = -1*I
             v_['P-I'] = v_['P']+v_['MI']
@@ -155,36 +151,36 @@ class  NOBNDTOR(CUTEst_problem):
                 v_['RJ-1'] = float(v_['J-1'])
                 v_['UPPL'] = v_['RJ-1']*v_['H']
                 v_['LOWL'] = -1.0*v_['UPPL']
-                pb.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWL']
-                pb.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPL']
+                self.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWL']
+                self.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPL']
             v_['RP-I'] = float(v_['P-I'])
             v_['UPPM'] = v_['RP-I']*v_['H']
             v_['LOWM'] = -1.0*v_['UPPM']
             for J in range(int(v_['P-I+1']),int(I)+1):
-                pb.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWM']
-                pb.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPM']
+                self.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWM']
+                self.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPM']
             for J in range(int(I),int(v_['P-1'])+1):
                 v_['MJ'] = -1*J
                 v_['P-J'] = v_['P']+v_['MJ']
                 v_['RP-J'] = float(v_['P-J'])
                 v_['UPPR'] = v_['RP-J']*v_['H']
                 v_['LOWR'] = -1.0*v_['UPPR']
-                pb.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWR']
-                pb.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPR']
+                self.xlower[ix_['X'+str(I)+','+str(J)]] = v_['LOWR']
+                self.xupper[ix_['X'+str(I)+','+str(J)]] = v_['UPPR']
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
-            pb.x0[ix_['X'+str(int(v_['1']))+','+str(J)]] = float(0.0)
-            pb.x0[ix_['X'+str(int(v_['P']))+','+str(J)]] = float(0.0)
+            self.x0[ix_['X'+str(int(v_['1']))+','+str(J)]] = float(0.0)
+            self.x0[ix_['X'+str(int(v_['P']))+','+str(J)]] = float(0.0)
         for I in range(int(v_['2']),int(v_['P-1'])+1):
-            pb.x0[ix_['X'+str(I)+','+str(int(v_['P']))]] = float(0.0)
-            pb.x0[ix_['X'+str(I)+','+str(int(v_['1']))]] = float(0.0)
+            self.x0[ix_['X'+str(I)+','+str(int(v_['P']))]] = float(0.0)
+            self.x0[ix_['X'+str(I)+','+str(int(v_['1']))]] = float(0.0)
         for I in range(int(v_['2']),int(v_['Q'])+1):
             for J in range(int(v_['2']),int(I)+1):
                 v_['J-1'] = -1+J
                 v_['RJ-1'] = float(v_['J-1'])
                 v_['UPPL'] = v_['RJ-1']*v_['H']
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPL'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPL'])
             v_['MI'] = -1*I
             v_['P-I'] = v_['P']+v_['MI']
             v_['I-1'] = -1+I
@@ -192,13 +188,13 @@ class  NOBNDTOR(CUTEst_problem):
             v_['UPPM'] = v_['RI-1']*v_['H']
             v_['P-I+1'] = 1+v_['P-I']
             for J in range(int(I),int(v_['P-I+1'])+1):
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPM'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPM'])
             for J in range(int(v_['P-I+1']),int(v_['P-1'])+1):
                 v_['MJ'] = -1*J
                 v_['P-J'] = v_['P']+v_['MJ']
                 v_['RP-J'] = float(v_['P-J'])
                 v_['UPPR'] = v_['RP-J']*v_['H']
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPR'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPR'])
         for I in range(int(v_['Q+1']),int(v_['P-1'])+1):
             v_['MI'] = -1*I
             v_['P-I'] = v_['P']+v_['MI']
@@ -207,17 +203,17 @@ class  NOBNDTOR(CUTEst_problem):
                 v_['J-1'] = -1+J
                 v_['RJ-1'] = float(v_['J-1'])
                 v_['UPPL'] = v_['RJ-1']*v_['H']
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPL'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPL'])
             v_['RP-I'] = float(v_['P-I'])
             v_['UPPM'] = v_['RP-I']*v_['H']
             for J in range(int(v_['P-I+1']),int(I)+1):
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPM'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPM'])
             for J in range(int(I),int(v_['P-1'])+1):
                 v_['MJ'] = -1*J
                 v_['P-J'] = v_['P']+v_['MJ']
                 v_['RP-J'] = float(v_['P-J'])
                 v_['UPPR'] = v_['RP-J']*v_['H']
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPR'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['UPPR'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -226,9 +222,9 @@ class  NOBNDTOR(CUTEst_problem):
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['2']),int(v_['P-1'])+1):
             v_['I-1'] = -1+I
             v_['I+1'] = 1+I
@@ -237,74 +233,74 @@ class  NOBNDTOR(CUTEst_problem):
                 v_['J+1'] = 1+J
                 ename = 'A'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+                self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'B'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+                self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'C'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+                self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'D'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+                self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J-1']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['2']),int(v_['P-1'])+1):
             for J in range(int(v_['2']),int(v_['P-1'])+1):
                 ig = ig_['G'+str(I)+','+str(J)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['A'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(.25))
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['A'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(.25))
                 posel = posel+1
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['B'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.25))
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['C'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(.25))
+                self.grelt = loaset(self.grelt,ig,posel,ie_['B'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(0.25))
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['C'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(.25))
                 posel = posel+1
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['D'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(0.25))
+                self.grelt = loaset(self.grelt,ig,posel,ie_['D'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(0.25))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN(2)            -5.1851852D-1
@@ -316,13 +312,12 @@ class  NOBNDTOR(CUTEst_problem):
 # LO SOLTN(61)           ???
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "QBR2-AY-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "QBR2-AY-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -331,7 +326,7 @@ class  NOBNDTOR(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eISQ(pbm,nargout,*args):
+    def eISQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

@@ -29,7 +29,7 @@ function EGGCRATE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -111,11 +111,11 @@ function EGGCRATE(action,args...)
         ig = ig_["F3"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
-        loaset(pbm.grelw,ig,posel,Float64(5.0))
+        loaset(self.grelw,ig,posel,Float64(5.0))
         ig = ig_["F4"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
-        loaset(pbm.grelw,ig,posel,Float64(5.0))
+        loaset(self.grelw,ig,posel,Float64(5.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
         pb.objlower = 0.0

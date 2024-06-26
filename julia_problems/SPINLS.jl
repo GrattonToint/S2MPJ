@@ -45,7 +45,7 @@ function SPINLS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -278,40 +278,40 @@ function SPINLS(action,args...)
             ig = ig_["R"*string(I)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["MX"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(-1.0))
+            loaset(self.grelw,ig,posel,Float64(-1.0))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["OY"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             for J = Int64(v_["1"]):Int64(v_["I-1"])
                 ig = ig_["R"*string(I)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["RY"*string(I)*","*string(J)])
-                loaset(pbm.grelw,ig,posel,Float64(1.0))
+                loaset(self.grelw,ig,posel,Float64(1.0))
             end
             for J = Int64(v_["I+1"]):Int64(v_["N"])
                 ig = ig_["R"*string(I)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["RY"*string(J)*","*string(I)])
-                loaset(pbm.grelw,ig,posel,Float64(-1.0))
+                loaset(self.grelw,ig,posel,Float64(-1.0))
             end
             ig = ig_["I"*string(I)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["MY"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(-1.0))
+            loaset(self.grelw,ig,posel,Float64(-1.0))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["OX"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(-1.0))
+            loaset(self.grelw,ig,posel,Float64(-1.0))
             for J = Int64(v_["1"]):Int64(v_["I-1"])
                 ig = ig_["I"*string(I)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["RX"*string(I)*","*string(J)])
-                loaset(pbm.grelw,ig,posel,Float64(-1.0))
+                loaset(self.grelw,ig,posel,Float64(-1.0))
             end
             for J = Int64(v_["I+1"]):Int64(v_["N"])
                 ig = ig_["I"*string(I)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["RX"*string(J)*","*string(I)])
-                loaset(pbm.grelw,ig,posel,Float64(1.0))
+                loaset(self.grelw,ig,posel,Float64(1.0))
             end
         end
         for I = Int64(v_["2"]):Int64(v_["N"])
@@ -320,13 +320,13 @@ function SPINLS(action,args...)
                 ig = ig_["M"*string(I)*","*string(J)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["V"*string(I)*","*string(J)])
-                loaset(pbm.grelw,ig,posel,Float64(-1.0))
+                loaset(self.grelw,ig,posel,Float64(-1.0))
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["X"*string(I)*","*string(J)])
-                loaset(pbm.grelw,ig,posel,Float64(1.0))
+                loaset(self.grelw,ig,posel,Float64(1.0))
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["Y"*string(I)*","*string(J)])
-                loaset(pbm.grelw,ig,posel,Float64(1.0))
+                loaset(self.grelw,ig,posel,Float64(1.0))
             end
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%

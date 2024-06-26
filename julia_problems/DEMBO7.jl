@@ -28,7 +28,7 @@ function DEMBO7(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -160,7 +160,7 @@ function DEMBO7(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%
@@ -913,45 +913,45 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.231060))
+        loaset(self.grelw,ig,posel,Float64(-1.231060))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(-1.231060))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.231060))
+        loaset(self.grelw,ig,posel,Float64(-1.231060))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(-1.231060))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.231060))
+        loaset(self.grelw,ig,posel,Float64(-1.231060))
         ig = ig_["C0"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.231060))
+        loaset(self.grelw,ig,posel,Float64(-1.231060))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(-1.231060))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.231060))
+        loaset(self.grelw,ig,posel,Float64(-1.231060))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(-1.231060))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.231060))
+        loaset(self.grelw,ig,posel,Float64(-1.231060))
         ig = ig_["C1"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.034750))
+        loaset(self.grelw,ig,posel,Float64(0.034750))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E7"])
         loaset(pbm.grelw,ig,posel,Float64(-0.00975))
@@ -959,7 +959,7 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E8"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.034750))
+        loaset(self.grelw,ig,posel,Float64(0.034750))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E9"])
         loaset(pbm.grelw,ig,posel,Float64(-0.00975))
@@ -967,7 +967,7 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E10"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.034750))
+        loaset(self.grelw,ig,posel,Float64(0.034750))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E11"])
         loaset(pbm.grelw,ig,posel,Float64(-0.00975))
@@ -975,7 +975,7 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E12"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.034750))
+        loaset(self.grelw,ig,posel,Float64(0.034750))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E13"])
         loaset(pbm.grelw,ig,posel,Float64(-0.00975))
@@ -983,7 +983,7 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E14"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.034750))
+        loaset(self.grelw,ig,posel,Float64(0.034750))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E15"])
         loaset(pbm.grelw,ig,posel,Float64(-0.00975))
@@ -991,26 +991,26 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E16"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E17"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E18"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         ig = ig_["C7"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E19"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E20"])
         loaset(pbm.grelw,ig,posel,Float64(0.002))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E21"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.002))
+        loaset(self.grelw,ig,posel,Float64(0.002))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E22"])
         loaset(pbm.grelw,ig,posel,Float64(-0.002))
@@ -1018,14 +1018,14 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E23"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.002))
+        loaset(self.grelw,ig,posel,Float64(0.002))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E24"])
         loaset(pbm.grelw,ig,posel,Float64(0.002))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E25"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.002))
+        loaset(self.grelw,ig,posel,Float64(-0.002))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E26"])
         loaset(pbm.grelw,ig,posel,Float64(-0.002))
@@ -1033,45 +1033,45 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E27"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E28"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E29"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(500.0))
+        loaset(self.grelw,ig,posel,Float64(500.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E30"])
         loaset(pbm.grelw,ig,posel,Float64(-500.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E31"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         ig = ig_["C10"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E32"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E33"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E34"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(500.0))
+        loaset(self.grelw,ig,posel,Float64(500.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E35"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E36"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-500.0))
+        loaset(self.grelw,ig,posel,Float64(-500.0))
         ig = ig_["C11"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E37"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.9))
+        loaset(self.grelw,ig,posel,Float64(0.9))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E38"])
         loaset(pbm.grelw,ig,posel,Float64(-0.002))
@@ -1079,37 +1079,37 @@ function DEMBO7(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E39"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         ig = ig_["C14"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E40"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         ig = ig_["C15"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E41"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         ig = ig_["C16"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E42"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         ig = ig_["C17"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E43"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         ig = ig_["C18"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E44"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         ig = ig_["C19"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E45"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               174.788807
@@ -1125,7 +1125,7 @@ function DEMBO7(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "QOR2-MN-16-20"
         return pb, pbm
 # **********************

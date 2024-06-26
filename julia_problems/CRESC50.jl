@@ -50,7 +50,7 @@ function CRESC50(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -196,7 +196,7 @@ function CRESC50(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -385,7 +385,7 @@ function CRESC50(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["R2SQ"])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(-1.0))
+            loaset(self.grelw,ig,posel,Float64(-1.0))
             ig = ig_["OS1"*string(I)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["XV1"*string(I)])
@@ -397,7 +397,7 @@ function CRESC50(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["R1SQ"])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(-1.0))
+            loaset(self.grelw,ig,posel,Float64(-1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution             0.87189692
@@ -411,7 +411,7 @@ function CRESC50(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-MY-6-100"
         return pb, pbm
 # **********************

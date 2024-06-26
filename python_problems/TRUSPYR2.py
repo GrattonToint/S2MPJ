@@ -33,10 +33,6 @@ class  TRUSPYR2(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -96,28 +92,28 @@ class  TRUSPYR2(CUTEst_problem):
                     v_['RR'+str(I)+','+str(J)+','+str(K)] = (v_['RG'+str(I)+','+str(J)]*v_['R'+
                          str(K)+','+str(J)])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
             [iv,ix_,_] = s2mpj_ii('XAREA'+str(J),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'XAREA'+str(J))
+            self.xnames=arrset(self.xnames,iv,'XAREA'+str(J))
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
             [iv,ix_,_] = s2mpj_ii('DISPL'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'DISPL'+str(I))
+            self.xnames=arrset(self.xnames,iv,'DISPL'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
             [ig,ig_,_] = s2mpj_ii('WEIGHT',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['XAREA'+str(J)]
-            pbm.A[ig,iv] = float(v_['W'+str(J)])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['W'+str(J)])+self.A[ig,iv]
         for K in range(int(v_['1']),int(v_['NDIM'])+1):
             [ig,ig_,_] = s2mpj_ii('EQUIL'+str(K),ig_)
             gtype = arrset(gtype,ig,'==')
@@ -128,36 +124,36 @@ class  TRUSPYR2(CUTEst_problem):
                 gtype = arrset(gtype,ig,'<=')
                 cnames = arrset(cnames,ig,'STRES'+str(J))
                 iv = ix_['DISPL'+str(I)]
-                pbm.A[ig,iv] = float(v_['R'+str(I)+','+str(J)])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['R'+str(I)+','+str(J)])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for K in range(int(v_['1']),int(v_['NDIM'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['EQUIL'+str(K)],float(v_['P'+str(K)]))
+            self.gconst = arrset(self.gconst,ig_['EQUIL'+str(K)],float(v_['P'+str(K)]))
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
-            pbm.gconst  = (
-                  arrset(pbm.gconst,ig_['STRES'+str(J)],float(v_['STRUP'+str(J)])))
+            self.gconst  = (
+                  arrset(self.gconst,ig_['STRES'+str(J)],float(v_['STRUP'+str(J)])))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         for J in range(int(v_['1']),int(v_['NBAR'])+1):
-            pb.xlower[ix_['XAREA'+str(J)]] = 1.0
+            self.xlower[ix_['XAREA'+str(J)]] = 1.0
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
-            pb.xlower[ix_['DISPL'+str(I)]] = -float('Inf')
-            pb.xupper[ix_['DISPL'+str(I)]] = +float('Inf')
+            self.xlower[ix_['DISPL'+str(I)]] = -float('Inf')
+            self.xupper[ix_['DISPL'+str(I)]] = +float('Inf')
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -166,60 +162,59 @@ class  TRUSPYR2(CUTEst_problem):
         elftv = loaset(elftv,it,1,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
             for J in range(int(v_['1']),int(v_['NBAR'])+1):
                 ename = 'UX'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
+                self.elftype = arrset(self.elftype,ie,'en2PR')
                 ielftype = arrset(ielftype, ie, iet_["en2PR"])
-                pb.x0 = np.zeros((pb.n,1))
+                self.x0 = np.zeros((self.n,1))
                 vname = 'DISPL'+str(I)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='U')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='U')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'XAREA'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='X')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['NDIM'])+1):
             for J in range(int(v_['1']),int(v_['NBAR'])+1):
                 for K in range(int(v_['1']),int(v_['NDIM'])+1):
                     ig = ig_['EQUIL'+str(K)]
-                    posel = len(pbm.grelt[ig])
-                    pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['UX'+str(I)+','+str(J)])
+                    posel = len(self.grelt[ig])
+                    self.grelt = loaset(self.grelt,ig,posel,ie_['UX'+str(I)+','+str(J)])
                     nlc = np.union1d(nlc,np.array([ig]))
-                    pbm.grelw  = (
-                          loaset(pbm.grelw,ig,posel,float(v_['RR'+str(I)+','+str(J)+','+str(K)])))
+                    self.grelw  = (
+                          loaset(self.grelw,ig,posel,float(v_['RR'+str(I)+','+str(J)+','+str(K)])))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Objective function value corresponding to the local minimizer above
-        pb.objlower = 1.2287408808
+        self.objlower = 1.2287408808
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.cupper[np.arange(pb.nle)] = np.zeros((pb.nle,1))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "LQR2-MN-11-11"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "LQR2-MN-11-11"
+        self.x0        = np.zeros((self.n,1))
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -228,7 +223,7 @@ class  TRUSPYR2(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def en2PR(pbm,nargout,*args):
+    def en2PR(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

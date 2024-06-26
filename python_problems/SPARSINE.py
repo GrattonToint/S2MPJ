@@ -28,10 +28,6 @@ class  SPARSINE(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -47,34 +43,34 @@ class  SPARSINE(CUTEst_problem):
         v_['2'] = 2
         v_['4'] = 4
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [ig,ig_,_] = s2mpj_ii('OBJ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(0.5))
+        self.x0 = np.full((self.n,1),float(0.5))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -82,18 +78,18 @@ class  SPARSINE(CUTEst_problem):
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eSINE')
+            self.elftype = arrset(self.elftype,ie,'eSINE')
             ielftype = arrset(ielftype, ie, iet_["eSINE"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,0.5)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            posev = np.where(elftv[ielftype[ie]]=='X')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gSQR',igt_)
@@ -101,75 +97,74 @@ class  SPARSINE(CUTEst_problem):
         grftp = []
         grftp = loaset(grftp,it,0,'P')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
-        pbm.grpar   = []
+        self.grpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ig = ig_['OBJ'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gSQR')
+            self.grftype = arrset(self.grftype,ig,'gSQR')
             v_['RI'] = float(I)
-            posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='P')
-            pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['RI']))
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
+            posgp = np.where(grftp[igt_[self.grftype[ig]]]=='P')[0]
+            self.grpar =loaset(self.grpar,ig,posgp[0],float(v_['RI']))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,float(1.0))
             v_['J'] = 2*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
             v_['K'] = v_['K']*v_['N']
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
+            self.grelw = loaset(self.grelw,ig,posel,float(1.0))
             v_['J'] = 3*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
             v_['K'] = v_['K']*v_['N']
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
+            self.grelw = loaset(self.grelw,ig,posel,float(1.0))
             v_['J'] = 5*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
             v_['K'] = v_['K']*v_['N']
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
+            self.grelw = loaset(self.grelw,ig,posel,float(1.0))
             v_['J'] = 7*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
             v_['K'] = v_['K']*v_['N']
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
+            self.grelw = loaset(self.grelw,ig,posel,float(1.0))
             v_['J'] = 11*I
             v_['J'] = -1+v_['J']
             v_['K'] = int(np.fix(v_['J']/v_['N']))
             v_['K'] = v_['K']*v_['N']
             v_['J'] = v_['J']-v_['K']
             v_['J'] = 1+v_['J']
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(1.0))
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(int(v_['J']))])
+            self.grelw = loaset(self.grelw,ig,posel,float(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OUR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OUR2-AN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -178,7 +173,7 @@ class  SPARSINE(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eSINE(pbm,nargout,*args):
+    def eSINE(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -206,16 +201,16 @@ class  SPARSINE(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gSQR(pbm,nargout,*args):
+    def gSQR(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
-        f_= 0.5*pbm.grpar[igr_][0]*GVAR_*GVAR_
+        f_= 0.5*self.grpar[igr_][0]*GVAR_*GVAR_
         if nargout>1:
-            g_ = pbm.grpar[igr_][0]*GVAR_
+            g_ = self.grpar[igr_][0]*GVAR_
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = pbm.grpar[igr_][0]
+                H_ = self.grpar[igr_][0]
         if nargout == 1:
             return f_
         elif nargout == 2:

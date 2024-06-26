@@ -28,10 +28,6 @@ class  YFITU(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -59,44 +55,44 @@ class  YFITU(CUTEst_problem):
         v_['y15'] = -32.042552
         v_['y16'] = -35.747869
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('alpha',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'alpha')
+        self.xnames=arrset(self.xnames,iv,'alpha')
         [iv,ix_,_] = s2mpj_ii('beta',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'beta')
+        self.xnames=arrset(self.xnames,iv,'beta')
         [iv,ix_,_] = s2mpj_ii('dist',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'dist')
+        self.xnames=arrset(self.xnames,iv,'dist')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for i in range(int(v_['zero']),int(v_['p'])+1):
             [ig,ig_,_] = s2mpj_ii('diff'+str(i),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for i in range(int(v_['zero']),int(v_['p'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['diff'+str(i)],float(v_['y'+str(i)]))
+            self.gconst = arrset(self.gconst,ig_['diff'+str(i)],float(v_['y'+str(i)]))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.x0[ix_['alpha']] = float(0.60)
-        pb.x0[ix_['beta']] = float(-0.60)
-        pb.x0[ix_['dist']] = float(20.0)
+        self.x0 = np.zeros((self.n,1))
+        self.x0[ix_['alpha']] = float(0.60)
+        self.x0[ix_['beta']] = float(-0.60)
+        self.x0[ix_['dist']] = float(20.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -109,55 +105,54 @@ class  YFITU(CUTEst_problem):
         elftp = loaset(elftp,it,1,'count')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for i in range(int(v_['zero']),int(v_['p'])+1):
             v_['index'] = float(i)
             ename = 'est'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'etanab')
+            self.elftype = arrset(self.elftype,ie,'etanab')
             ielftype = arrset(ielftype, ie, iet_["etanab"])
             vname = 'alpha'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='a1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='a1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'beta'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='b1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='b1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'dist'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='d1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='point')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['index']))
-            posep = find(elftp[ielftype[ie]],lambda x:x=='count')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['realp']))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='d1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
+            posep = np.where(elftp[ielftype[ie]]=='point')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(v_['index']))
+            posep = np.where(elftp[ielftype[ie]]=='count')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(v_['realp']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gsquare',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for i in range(int(v_['zero']),int(v_['p'])+1):
             ig = ig_['diff'+str(i)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gsquare')
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['est'+str(i)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grftype = arrset(self.grftype,ig,'gsquare')
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['est'+str(i)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION            0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-MN-3-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-MN-3-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -166,12 +161,12 @@ class  YFITU(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def etanab(pbm,nargout,*args):
+    def etanab(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        frac = pbm.elpar[iel_][0]/pbm.elpar[iel_][1]
+        frac = self.elpar[iel_][0]/self.elpar[iel_][1]
         ttan = np.tan(EV_[0]*(1.0-frac)+EV_[1]*frac)
         tsec = 1.0/np.cos(EV_[0]*(1.0-frac)+EV_[1]*frac)
         tsec2 = tsec*tsec
@@ -208,7 +203,7 @@ class  YFITU(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gsquare(pbm,nargout,*args):
+    def gsquare(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

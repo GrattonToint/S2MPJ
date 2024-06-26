@@ -23,10 +23,6 @@ class  QPCBLEND(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -34,11 +30,11 @@ class  QPCBLEND(CUTEst_problem):
         ix_ = {}
         ig_ = {}
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('1',ig_)
         gtype = arrset(gtype,ig,'==')
@@ -265,1626 +261,1626 @@ class  QPCBLEND(CUTEst_problem):
         [ig,ig_,_] = s2mpj_ii('C',ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         ngrp   = len(ig_)
         [iv,ix_,_] = s2mpj_ii('1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'1')
+        self.xnames=arrset(self.xnames,iv,'1')
         ig = ig_['2']
-        pbm.A[ig,iv] = float(-.537)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.537)+self.A[ig,iv]
         ig = ig_['3']
-        pbm.A[ig,iv] = float(-.131)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.131)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'1')
+        self.xnames=arrset(self.xnames,iv,'1')
         ig = ig_['4']
-        pbm.A[ig,iv] = float(-.1155)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.1155)+self.A[ig,iv]
         ig = ig_['5']
-        pbm.A[ig,iv] = float(-.0365)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0365)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'1')
+        self.xnames=arrset(self.xnames,iv,'1')
         ig = ig_['6']
-        pbm.A[ig,iv] = float(-.143)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.143)+self.A[ig,iv]
         ig = ig_['7']
-        pbm.A[ig,iv] = float(-.037)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.037)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'1')
+        self.xnames=arrset(self.xnames,iv,'1')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.003)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.003)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.0587)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0587)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'1')
+        self.xnames=arrset(self.xnames,iv,'1')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.15)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.15)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.302)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.302)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'1')
+        self.xnames=arrset(self.xnames,iv,'1')
         ig = ig_['67']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(3.2)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.2)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['1']
-        pbm.A[ig,iv] = float(-.2931)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2931)+self.A[ig,iv]
         ig = ig_['3']
-        pbm.A[ig,iv] = float(-.117)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.117)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['4']
-        pbm.A[ig,iv] = float(-.0649)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0649)+self.A[ig,iv]
         ig = ig_['5']
-        pbm.A[ig,iv] = float(-.1233)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.1233)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['6']
-        pbm.A[ig,iv] = float(-.2217)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2217)+self.A[ig,iv]
         ig = ig_['8']
-        pbm.A[ig,iv] = float(-.18)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.18)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(.0042)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0042)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.003)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.003)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.1053)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.1053)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.185)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.185)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.384)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.384)+self.A[ig,iv]
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-.00862)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.00862)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-.00862)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.00862)+self.A[ig,iv]
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-.0101)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0101)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-.0101)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0101)+self.A[ig,iv]
         ig = ig_['68']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'2')
+        self.xnames=arrset(self.xnames,iv,'2')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(2.87)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.87)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'3')
+        self.xnames=arrset(self.xnames,iv,'3')
         ig = ig_['2']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-.0277)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0277)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'3')
+        self.xnames=arrset(self.xnames,iv,'3')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0563)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0563)+self.A[ig,iv]
         ig = ig_['11']
-        pbm.A[ig,iv] = float(-.199)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.199)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'3')
+        self.xnames=arrset(self.xnames,iv,'3')
         ig = ig_['12']
-        pbm.A[ig,iv] = float(-.6873)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.6873)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.017)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.017)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'3')
+        self.xnames=arrset(self.xnames,iv,'3')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.01303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.01303)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.0506)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0506)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'3')
+        self.xnames=arrset(self.xnames,iv,'3')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.209)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.209)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.495)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.495)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'3')
+        self.xnames=arrset(self.xnames,iv,'3')
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'4')
+        self.xnames=arrset(self.xnames,iv,'4')
         ig = ig_['1']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-.0112)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0112)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'4')
+        self.xnames=arrset(self.xnames,iv,'4')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0378)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0378)+self.A[ig,iv]
         ig = ig_['11']
-        pbm.A[ig,iv] = float(-.1502)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.1502)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'4')
+        self.xnames=arrset(self.xnames,iv,'4')
         ig = ig_['12']
-        pbm.A[ig,iv] = float(-.7953)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.7953)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.0099)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0099)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'4')
+        self.xnames=arrset(self.xnames,iv,'4')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.01303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.01303)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.0448)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0448)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'4')
+        self.xnames=arrset(self.xnames,iv,'4')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.185)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.185)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.721)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.721)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('4',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'4')
+        self.xnames=arrset(self.xnames,iv,'4')
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('5',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'5')
+        self.xnames=arrset(self.xnames,iv,'5')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-.175)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.175)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.27)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.27)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('5',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'5')
+        self.xnames=arrset(self.xnames,iv,'5')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(-.028)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.028)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.455)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.455)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('5',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'5')
+        self.xnames=arrset(self.xnames,iv,'5')
         ig = ig_['21']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.01303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.01303)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('5',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'5')
+        self.xnames=arrset(self.xnames,iv,'5')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.0506)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0506)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.209)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.209)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('5',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'5')
+        self.xnames=arrset(self.xnames,iv,'5')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.495)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.495)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('6',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'6')
+        self.xnames=arrset(self.xnames,iv,'6')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-.271)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.271)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.3285)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.3285)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('6',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'6')
+        self.xnames=arrset(self.xnames,iv,'6')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(-.0255)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0255)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.2656)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2656)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('6',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'6')
+        self.xnames=arrset(self.xnames,iv,'6')
         ig = ig_['18']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.01303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.01303)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('6',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'6')
+        self.xnames=arrset(self.xnames,iv,'6')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.0506)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0506)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.209)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.209)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('6',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'6')
+        self.xnames=arrset(self.xnames,iv,'6')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.495)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.495)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('7',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'7')
+        self.xnames=arrset(self.xnames,iv,'7')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-.2836)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2836)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.3285)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.3285)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('7',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'7')
+        self.xnames=arrset(self.xnames,iv,'7')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(-.0241)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0241)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.2502)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2502)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('7',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'7')
+        self.xnames=arrset(self.xnames,iv,'7')
         ig = ig_['17']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.01303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.01303)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('7',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'7')
+        self.xnames=arrset(self.xnames,iv,'7')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.0506)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0506)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.209)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.209)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('7',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'7')
+        self.xnames=arrset(self.xnames,iv,'7')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.495)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.495)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('8',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'8')
+        self.xnames=arrset(self.xnames,iv,'8')
         ig = ig_['12']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['14']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('8',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'8')
+        self.xnames=arrset(self.xnames,iv,'8')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(.0327)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0327)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.094)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.094)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('8',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'8')
+        self.xnames=arrset(self.xnames,iv,'8')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.045)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.045)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.793)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.793)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('8',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'8')
+        self.xnames=arrset(self.xnames,iv,'8')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0044)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0044)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('9',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'9')
+        self.xnames=arrset(self.xnames,iv,'9')
         ig = ig_['15']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['22']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('10',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'10')
+        self.xnames=arrset(self.xnames,iv,'10')
         ig = ig_['16']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['22']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('11',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'11')
+        self.xnames=arrset(self.xnames,iv,'11')
         ig = ig_['14']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['15']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('12',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'12')
+        self.xnames=arrset(self.xnames,iv,'12')
         ig = ig_['14']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['16']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('13',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'13')
+        self.xnames=arrset(self.xnames,iv,'13')
         ig = ig_['15']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['17']
-        pbm.A[ig,iv] = float(-.0588)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0588)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('13',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'13')
+        self.xnames=arrset(self.xnames,iv,'13')
         ig = ig_['19']
-        pbm.A[ig,iv] = float(-.8145)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.8145)+self.A[ig,iv]
         ig = ig_['23']
-        pbm.A[ig,iv] = float(-.0091)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0091)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('13',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'13')
+        self.xnames=arrset(self.xnames,iv,'13')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(-.8239)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.8239)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.0081)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0081)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('13',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'13')
+        self.xnames=arrset(self.xnames,iv,'13')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2112)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2112)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.387)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.387)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('13',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'13')
+        self.xnames=arrset(self.xnames,iv,'13')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(1.03)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.03)+self.A[ig,iv]
         ig = ig_['69']
-        pbm.A[ig,iv] = float(1.3)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.3)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('13',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'13')
+        self.xnames=arrset(self.xnames,iv,'13')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.07)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.07)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'14')
+        self.xnames=arrset(self.xnames,iv,'14')
         ig = ig_['16']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['18']
-        pbm.A[ig,iv] = float(-.0404)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0404)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'14')
+        self.xnames=arrset(self.xnames,iv,'14')
         ig = ig_['20']
-        pbm.A[ig,iv] = float(-.8564)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.8564)+self.A[ig,iv]
         ig = ig_['23']
-        pbm.A[ig,iv] = float(-.0069)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0069)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'14')
+        self.xnames=arrset(self.xnames,iv,'14')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(-.7689)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.7689)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.0063)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0063)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'14')
+        self.xnames=arrset(self.xnames,iv,'14')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.156)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.156)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.297)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.297)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'14')
+        self.xnames=arrset(self.xnames,iv,'14')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.792)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.792)+self.A[ig,iv]
         ig = ig_['69']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('14',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'14')
+        self.xnames=arrset(self.xnames,iv,'14')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0378)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0378)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('15',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'15')
+        self.xnames=arrset(self.xnames,iv,'15')
         ig = ig_['5']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['21']
-        pbm.A[ig,iv] = float(-.3321)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.3321)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('15',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'15')
+        self.xnames=arrset(self.xnames,iv,'15')
         ig = ig_['22']
-        pbm.A[ig,iv] = float(-.5875)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5875)+self.A[ig,iv]
         ig = ig_['23']
-        pbm.A[ig,iv] = float(-.362)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.362)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('15',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'15')
+        self.xnames=arrset(self.xnames,iv,'15')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(2.3)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.3)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2049)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2049)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('15',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'15')
+        self.xnames=arrset(self.xnames,iv,'15')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.826)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.826)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(14.61)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.61)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('15',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'15')
+        self.xnames=arrset(self.xnames,iv,'15')
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['70']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('15',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'15')
+        self.xnames=arrset(self.xnames,iv,'15')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.155)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.155)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('16',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'16')
+        self.xnames=arrset(self.xnames,iv,'16')
         ig = ig_['6']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['21']
-        pbm.A[ig,iv] = float(-.3321)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.3321)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('16',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'16')
+        self.xnames=arrset(self.xnames,iv,'16')
         ig = ig_['22']
-        pbm.A[ig,iv] = float(-.5875)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5875)+self.A[ig,iv]
         ig = ig_['23']
-        pbm.A[ig,iv] = float(-.362)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.362)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('16',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'16')
+        self.xnames=arrset(self.xnames,iv,'16')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(2.3)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.3)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2049)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2049)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('16',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'16')
+        self.xnames=arrset(self.xnames,iv,'16')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.826)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.826)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(14.61)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.61)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('16',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'16')
+        self.xnames=arrset(self.xnames,iv,'16')
         ig = ig_['66']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['70']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('16',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'16')
+        self.xnames=arrset(self.xnames,iv,'16')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.155)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.155)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('17',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'17')
+        self.xnames=arrset(self.xnames,iv,'17')
         ig = ig_['4']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['21']
-        pbm.A[ig,iv] = float(-.2414)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2414)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('17',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'17')
+        self.xnames=arrset(self.xnames,iv,'17')
         ig = ig_['22']
-        pbm.A[ig,iv] = float(-.6627)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.6627)+self.A[ig,iv]
         ig = ig_['23']
-        pbm.A[ig,iv] = float(-.293)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.293)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('17',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'17')
+        self.xnames=arrset(self.xnames,iv,'17')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(2.3)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.3)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.1531)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.1531)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('17',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'17')
+        self.xnames=arrset(self.xnames,iv,'17')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.826)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.826)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(14.61)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.61)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('17',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'17')
+        self.xnames=arrset(self.xnames,iv,'17')
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['70']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('17',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'17')
+        self.xnames=arrset(self.xnames,iv,'17')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.155)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.155)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('18',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'18')
+        self.xnames=arrset(self.xnames,iv,'18')
         ig = ig_['21']
-        pbm.A[ig,iv] = float(-.2414)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2414)+self.A[ig,iv]
         ig = ig_['22']
-        pbm.A[ig,iv] = float(-.6627)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.6627)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('18',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'18')
+        self.xnames=arrset(self.xnames,iv,'18')
         ig = ig_['23']
-        pbm.A[ig,iv] = float(-.293)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.293)+self.A[ig,iv]
         ig = ig_['28']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('18',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'18')
+        self.xnames=arrset(self.xnames,iv,'18')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(2.3)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.3)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.1531)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.1531)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('18',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'18')
+        self.xnames=arrset(self.xnames,iv,'18')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.826)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.826)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(14.61)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.61)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('18',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'18')
+        self.xnames=arrset(self.xnames,iv,'18')
         ig = ig_['70']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.155)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.155)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['5']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0185)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0185)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.0568)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0568)+self.A[ig,iv]
         ig = ig_['24']
-        pbm.A[ig,iv] = float(-.0806)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0806)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['25']
-        pbm.A[ig,iv] = float(-.0658)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0658)+self.A[ig,iv]
         ig = ig_['26']
-        pbm.A[ig,iv] = float(-.0328)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0328)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(-.4934)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.4934)+self.A[ig,iv]
         ig = ig_['28']
-        pbm.A[ig,iv] = float(-.2922)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2922)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['29']
-        pbm.A[ig,iv] = float(-.0096)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0096)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(-.0654)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0654)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2535)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2535)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.632)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.632)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.6807)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.6807)+self.A[ig,iv]
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('19',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'19')
+        self.xnames=arrset(self.xnames,iv,'19')
         ig = ig_['71']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0528)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0528)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['6']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0185)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0185)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.0568)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0568)+self.A[ig,iv]
         ig = ig_['24']
-        pbm.A[ig,iv] = float(-.0806)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0806)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['25']
-        pbm.A[ig,iv] = float(-.0658)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0658)+self.A[ig,iv]
         ig = ig_['26']
-        pbm.A[ig,iv] = float(-.0328)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0328)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(-.4934)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.4934)+self.A[ig,iv]
         ig = ig_['28']
-        pbm.A[ig,iv] = float(-.2922)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2922)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['29']
-        pbm.A[ig,iv] = float(-.0096)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0096)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(-.0654)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0654)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2535)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2535)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.632)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.632)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.6807)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.6807)+self.A[ig,iv]
         ig = ig_['66']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('20',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'20')
+        self.xnames=arrset(self.xnames,iv,'20')
         ig = ig_['71']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0528)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0528)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['4']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0184)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0184)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.0564)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0564)+self.A[ig,iv]
         ig = ig_['24']
-        pbm.A[ig,iv] = float(-.078)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.078)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['25']
-        pbm.A[ig,iv] = float(-.0655)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0655)+self.A[ig,iv]
         ig = ig_['26']
-        pbm.A[ig,iv] = float(-.0303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0303)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(-.475)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.475)+self.A[ig,iv]
         ig = ig_['28']
-        pbm.A[ig,iv] = float(-.305)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.305)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(-.0654)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0654)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2703)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2703)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.632)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.632)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.6807)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.6807)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['71']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('21',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'21')
+        self.xnames=arrset(self.xnames,iv,'21')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0528)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0528)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['3']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0184)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0184)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.0564)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0564)+self.A[ig,iv]
         ig = ig_['24']
-        pbm.A[ig,iv] = float(-.078)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.078)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['25']
-        pbm.A[ig,iv] = float(-.0655)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0655)+self.A[ig,iv]
         ig = ig_['26']
-        pbm.A[ig,iv] = float(-.0303)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0303)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(-.475)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.475)+self.A[ig,iv]
         ig = ig_['28']
-        pbm.A[ig,iv] = float(-.305)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.305)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(-.0654)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0654)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.2703)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.2703)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(.632)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.632)+self.A[ig,iv]
         ig = ig_['43']
-        pbm.A[ig,iv] = float(.6807)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.6807)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['71']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('22',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'22')
+        self.xnames=arrset(self.xnames,iv,'22')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0528)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0528)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('23',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'23')
+        self.xnames=arrset(self.xnames,iv,'23')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(.76)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.76)+self.A[ig,iv]
         ig = ig_['25']
-        pbm.A[ig,iv] = float(.5714)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.5714)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('23',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'23')
+        self.xnames=arrset(self.xnames,iv,'23')
         ig = ig_['30']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.1869)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.1869)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('23',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'23')
+        self.xnames=arrset(self.xnames,iv,'23')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.2796)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.2796)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(2.241)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.241)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('23',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'23')
+        self.xnames=arrset(self.xnames,iv,'23')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(2.766)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.766)+self.A[ig,iv]
         ig = ig_['72']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('23',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'23')
+        self.xnames=arrset(self.xnames,iv,'23')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.128)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.128)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('24',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'24')
+        self.xnames=arrset(self.xnames,iv,'24')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-.0571)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0571)+self.A[ig,iv]
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.0114)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.0114)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('24',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'24')
+        self.xnames=arrset(self.xnames,iv,'24')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(.6571)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.6571)+self.A[ig,iv]
         ig = ig_['24']
-        pbm.A[ig,iv] = float(.5714)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.5714)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('24',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'24')
+        self.xnames=arrset(self.xnames,iv,'24')
         ig = ig_['31']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['40']
-        pbm.A[ig,iv] = float(.1724)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.1724)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('24',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'24')
+        self.xnames=arrset(self.xnames,iv,'24')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(.2579)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.2579)+self.A[ig,iv]
         ig = ig_['42']
-        pbm.A[ig,iv] = float(2.067)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.067)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('24',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'24')
+        self.xnames=arrset(self.xnames,iv,'24')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(2.552)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.552)+self.A[ig,iv]
         ig = ig_['72']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('24',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'24')
+        self.xnames=arrset(self.xnames,iv,'24')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.118)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.118)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('25',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'25')
+        self.xnames=arrset(self.xnames,iv,'25')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['25']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('26',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'26')
+        self.xnames=arrset(self.xnames,iv,'26')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['24']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('27',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'27')
+        self.xnames=arrset(self.xnames,iv,'27')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('28',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'28')
+        self.xnames=arrset(self.xnames,iv,'28')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('28',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'28')
+        self.xnames=arrset(self.xnames,iv,'28')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-7.95)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-7.95)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-8.7)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.7)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('28',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'28')
+        self.xnames=arrset(self.xnames,iv,'28')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(14.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('28',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'28')
+        self.xnames=arrset(self.xnames,iv,'28')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('29',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'29')
+        self.xnames=arrset(self.xnames,iv,'29')
         ig = ig_['23']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('29',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'29')
+        self.xnames=arrset(self.xnames,iv,'29')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-8.84)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.84)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-9.45)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.45)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('29',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'29')
+        self.xnames=arrset(self.xnames,iv,'29')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(12.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(12.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('29',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'29')
+        self.xnames=arrset(self.xnames,iv,'29')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('30',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'30')
+        self.xnames=arrset(self.xnames,iv,'30')
         ig = ig_['19']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('30',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'30')
+        self.xnames=arrset(self.xnames,iv,'30')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-9.43)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.43)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-9.57)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.57)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('30',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'30')
+        self.xnames=arrset(self.xnames,iv,'30')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(3.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('30',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'30')
+        self.xnames=arrset(self.xnames,iv,'30')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(.233)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.233)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-.358)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.358)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('31',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'31')
+        self.xnames=arrset(self.xnames,iv,'31')
         ig = ig_['20']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('31',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'31')
+        self.xnames=arrset(self.xnames,iv,'31')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-9.03)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.03)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-9.32)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.32)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('31',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'31')
+        self.xnames=arrset(self.xnames,iv,'31')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(3.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('31',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'31')
+        self.xnames=arrset(self.xnames,iv,'31')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(.205)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.205)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-.333)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.333)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('32',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'32')
+        self.xnames=arrset(self.xnames,iv,'32')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('32',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'32')
+        self.xnames=arrset(self.xnames,iv,'32')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-9.23)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.23)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-9.22)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.22)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('32',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'32')
+        self.xnames=arrset(self.xnames,iv,'32')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(6.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(6.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('32',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'32')
+        self.xnames=arrset(self.xnames,iv,'32')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(.381)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.381)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-.509)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.509)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('33',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'33')
+        self.xnames=arrset(self.xnames,iv,'33')
         ig = ig_['30']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('33',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'33')
+        self.xnames=arrset(self.xnames,iv,'33')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-9.4)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.4)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-9.85)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.85)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('33',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'33')
+        self.xnames=arrset(self.xnames,iv,'33')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(2.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('33',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'33')
+        self.xnames=arrset(self.xnames,iv,'33')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(.39)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.39)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-.77)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.77)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('34',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'34')
+        self.xnames=arrset(self.xnames,iv,'34')
         ig = ig_['31']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('34',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'34')
+        self.xnames=arrset(self.xnames,iv,'34')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-9.74)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.74)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-10.1)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-10.1)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('34',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'34')
+        self.xnames=arrset(self.xnames,iv,'34')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(3.3)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.3)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('34',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'34')
+        self.xnames=arrset(self.xnames,iv,'34')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(.233)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.233)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-.58)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.58)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('35',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'35')
+        self.xnames=arrset(self.xnames,iv,'35')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['32']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('35',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'35')
+        self.xnames=arrset(self.xnames,iv,'35')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-9.74)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.74)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-9.9)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.9)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('35',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'35')
+        self.xnames=arrset(self.xnames,iv,'35')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(66.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(66.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('35',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'35')
+        self.xnames=arrset(self.xnames,iv,'35')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('36',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'36')
+        self.xnames=arrset(self.xnames,iv,'36')
         ig = ig_['44']
-        pbm.A[ig,iv] = float(-.493)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.493)+self.A[ig,iv]
         ig = ig_['45']
-        pbm.A[ig,iv] = float(-.165)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.165)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('36',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'36')
+        self.xnames=arrset(self.xnames,iv,'36')
         ig = ig_['46']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0924)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0924)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('37',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'37')
+        self.xnames=arrset(self.xnames,iv,'37')
         ig = ig_['32']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['44']
-        pbm.A[ig,iv] = float(10.03)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(10.03)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('37',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'37')
+        self.xnames=arrset(self.xnames,iv,'37')
         ig = ig_['45']
-        pbm.A[ig,iv] = float(10.03)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(10.03)+self.A[ig,iv]
         ig = ig_['47']
-        pbm.A[ig,iv] = float(-9.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('37',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'37')
+        self.xnames=arrset(self.xnames,iv,'37')
         ig = ig_['48']
-        pbm.A[ig,iv] = float(-.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5)+self.A[ig,iv]
         ig = ig_['49']
-        pbm.A[ig,iv] = float(.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('37',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'37')
+        self.xnames=arrset(self.xnames,iv,'37')
         ig = ig_['73']
-        pbm.A[ig,iv] = float(.64)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.64)+self.A[ig,iv]
         ig = ig_['74']
-        pbm.A[ig,iv] = float(.35)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.35)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('37',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'37')
+        self.xnames=arrset(self.xnames,iv,'37')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-5.36)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-5.36)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('38',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'38')
+        self.xnames=arrset(self.xnames,iv,'38')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('38',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'38')
+        self.xnames=arrset(self.xnames,iv,'38')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-7.98)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-7.98)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-8.58)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.58)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('38',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'38')
+        self.xnames=arrset(self.xnames,iv,'38')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(14.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('38',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'38')
+        self.xnames=arrset(self.xnames,iv,'38')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('39',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'39')
+        self.xnames=arrset(self.xnames,iv,'39')
         ig = ig_['23']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('39',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'39')
+        self.xnames=arrset(self.xnames,iv,'39')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-8.87)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.87)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-9.33)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.33)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('39',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'39')
+        self.xnames=arrset(self.xnames,iv,'39')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(12.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(12.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('39',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'39')
+        self.xnames=arrset(self.xnames,iv,'39')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('40',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'40')
+        self.xnames=arrset(self.xnames,iv,'40')
         ig = ig_['19']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('40',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'40')
+        self.xnames=arrset(self.xnames,iv,'40')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-9.46)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.46)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-9.45)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.45)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('40',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'40')
+        self.xnames=arrset(self.xnames,iv,'40')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(3.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('40',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'40')
+        self.xnames=arrset(self.xnames,iv,'40')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(.233)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.233)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(-.358)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.358)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('41',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'41')
+        self.xnames=arrset(self.xnames,iv,'41')
         ig = ig_['20']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('41',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'41')
+        self.xnames=arrset(self.xnames,iv,'41')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-9.06)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.06)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-9.2)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.2)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('41',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'41')
+        self.xnames=arrset(self.xnames,iv,'41')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(3.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('41',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'41')
+        self.xnames=arrset(self.xnames,iv,'41')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(.205)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.205)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(-.333)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.333)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('42',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'42')
+        self.xnames=arrset(self.xnames,iv,'42')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('42',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'42')
+        self.xnames=arrset(self.xnames,iv,'42')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-9.26)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.26)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-9.13)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.13)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('42',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'42')
+        self.xnames=arrset(self.xnames,iv,'42')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(6.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(6.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('42',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'42')
+        self.xnames=arrset(self.xnames,iv,'42')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(.318)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.318)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(-.509)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.509)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('43',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'43')
+        self.xnames=arrset(self.xnames,iv,'43')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['33']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('43',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'43')
+        self.xnames=arrset(self.xnames,iv,'43')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-9.77)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.77)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-9.78)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.78)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('43',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'43')
+        self.xnames=arrset(self.xnames,iv,'43')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(66.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(66.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('43',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'43')
+        self.xnames=arrset(self.xnames,iv,'43')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('44',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'44')
+        self.xnames=arrset(self.xnames,iv,'44')
         ig = ig_['50']
-        pbm.A[ig,iv] = float(-.435)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.435)+self.A[ig,iv]
         ig = ig_['51']
-        pbm.A[ig,iv] = float(-.208)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.208)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('44',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'44')
+        self.xnames=arrset(self.xnames,iv,'44')
         ig = ig_['52']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0924)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0924)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('45',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'45')
+        self.xnames=arrset(self.xnames,iv,'45')
         ig = ig_['33']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['50']
-        pbm.A[ig,iv] = float(9.65)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(9.65)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('45',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'45')
+        self.xnames=arrset(self.xnames,iv,'45')
         ig = ig_['51']
-        pbm.A[ig,iv] = float(9.65)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(9.65)+self.A[ig,iv]
         ig = ig_['53']
-        pbm.A[ig,iv] = float(-9.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('45',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'45')
+        self.xnames=arrset(self.xnames,iv,'45')
         ig = ig_['54']
-        pbm.A[ig,iv] = float(-.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5)+self.A[ig,iv]
         ig = ig_['55']
-        pbm.A[ig,iv] = float(.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('45',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'45')
+        self.xnames=arrset(self.xnames,iv,'45')
         ig = ig_['73']
-        pbm.A[ig,iv] = float(-.36)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.36)+self.A[ig,iv]
         ig = ig_['74']
-        pbm.A[ig,iv] = float(.35)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.35)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('45',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'45')
+        self.xnames=arrset(self.xnames,iv,'45')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-5.08)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-5.08)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('46',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'46')
+        self.xnames=arrset(self.xnames,iv,'46')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('46',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'46')
+        self.xnames=arrset(self.xnames,iv,'46')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-7.99)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-7.99)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-8.59)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.59)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('46',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'46')
+        self.xnames=arrset(self.xnames,iv,'46')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(14.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('46',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'46')
+        self.xnames=arrset(self.xnames,iv,'46')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('47',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'47')
+        self.xnames=arrset(self.xnames,iv,'47')
         ig = ig_['23']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('47',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'47')
+        self.xnames=arrset(self.xnames,iv,'47')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-8.88)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.88)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-9.34)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.34)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('47',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'47')
+        self.xnames=arrset(self.xnames,iv,'47')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(12.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(12.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('47',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'47')
+        self.xnames=arrset(self.xnames,iv,'47')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('48',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'48')
+        self.xnames=arrset(self.xnames,iv,'48')
         ig = ig_['19']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('48',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'48')
+        self.xnames=arrset(self.xnames,iv,'48')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-9.47)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.47)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-9.46)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.46)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('48',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'48')
+        self.xnames=arrset(self.xnames,iv,'48')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(3.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('48',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'48')
+        self.xnames=arrset(self.xnames,iv,'48')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(.233)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.233)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(-.358)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.358)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('49',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'49')
+        self.xnames=arrset(self.xnames,iv,'49')
         ig = ig_['20']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('49',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'49')
+        self.xnames=arrset(self.xnames,iv,'49')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-9.07)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.07)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-9.21)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.21)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('49',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'49')
+        self.xnames=arrset(self.xnames,iv,'49')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(3.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('49',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'49')
+        self.xnames=arrset(self.xnames,iv,'49')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(.205)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.205)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(-.333)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.333)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('50',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'50')
+        self.xnames=arrset(self.xnames,iv,'50')
         ig = ig_['27']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('50',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'50')
+        self.xnames=arrset(self.xnames,iv,'50')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-9.27)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.27)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-9.14)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.14)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('50',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'50')
+        self.xnames=arrset(self.xnames,iv,'50')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(6.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(6.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('50',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'50')
+        self.xnames=arrset(self.xnames,iv,'50')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(.318)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.318)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(-.509)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.509)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('51',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'51')
+        self.xnames=arrset(self.xnames,iv,'51')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['36']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('51',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'51')
+        self.xnames=arrset(self.xnames,iv,'51')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-9.78)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.78)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-9.79)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.79)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('51',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'51')
+        self.xnames=arrset(self.xnames,iv,'51')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(66.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(66.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('51',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'51')
+        self.xnames=arrset(self.xnames,iv,'51')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('52',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'52')
+        self.xnames=arrset(self.xnames,iv,'52')
         ig = ig_['56']
-        pbm.A[ig,iv] = float(-.426)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.426)+self.A[ig,iv]
         ig = ig_['57']
-        pbm.A[ig,iv] = float(-.204)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.204)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('52',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'52')
+        self.xnames=arrset(self.xnames,iv,'52')
         ig = ig_['58']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0924)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0924)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('53',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'53')
+        self.xnames=arrset(self.xnames,iv,'53')
         ig = ig_['36']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['56']
-        pbm.A[ig,iv] = float(9.05)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(9.05)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('53',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'53')
+        self.xnames=arrset(self.xnames,iv,'53')
         ig = ig_['57']
-        pbm.A[ig,iv] = float(9.05)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(9.05)+self.A[ig,iv]
         ig = ig_['59']
-        pbm.A[ig,iv] = float(-9.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-9.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('53',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'53')
+        self.xnames=arrset(self.xnames,iv,'53')
         ig = ig_['60']
-        pbm.A[ig,iv] = float(-.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5)+self.A[ig,iv]
         ig = ig_['61']
-        pbm.A[ig,iv] = float(.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('53',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'53')
+        self.xnames=arrset(self.xnames,iv,'53')
         ig = ig_['73']
-        pbm.A[ig,iv] = float(-.36)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.36)+self.A[ig,iv]
         ig = ig_['74']
-        pbm.A[ig,iv] = float(-.65)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.65)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('53',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'53')
+        self.xnames=arrset(self.xnames,iv,'53')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-4.51)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-4.51)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('54',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'54')
+        self.xnames=arrset(self.xnames,iv,'54')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['26']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('55',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'55')
+        self.xnames=arrset(self.xnames,iv,'55')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['37']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('56',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'56')
+        self.xnames=arrset(self.xnames,iv,'56')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['37']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('57',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'57')
+        self.xnames=arrset(self.xnames,iv,'57')
         ig = ig_['37']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-2.75)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-2.75)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('58',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'58')
+        self.xnames=arrset(self.xnames,iv,'58')
         ig = ig_['11']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['38']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('58',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'58')
+        self.xnames=arrset(self.xnames,iv,'58')
         ig = ig_['63']
-        pbm.A[ig,iv] = float(-14.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-14.0)+self.A[ig,iv]
         ig = ig_['64']
-        pbm.A[ig,iv] = float(14.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(14.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('59',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'59')
+        self.xnames=arrset(self.xnames,iv,'59')
         ig = ig_['12']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['38']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('59',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'59')
+        self.xnames=arrset(self.xnames,iv,'59')
         ig = ig_['63']
-        pbm.A[ig,iv] = float(-.8)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.8)+self.A[ig,iv]
         ig = ig_['64']
-        pbm.A[ig,iv] = float(.8)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.8)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('60',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'60')
+        self.xnames=arrset(self.xnames,iv,'60')
         ig = ig_['38']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['63']
-        pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('60',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'60')
+        self.xnames=arrset(self.xnames,iv,'60')
         ig = ig_['64']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-4.2)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-4.2)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('61',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'61')
+        self.xnames=arrset(self.xnames,iv,'61')
         ig = ig_['4']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['34']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('62',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'62')
+        self.xnames=arrset(self.xnames,iv,'62')
         ig = ig_['3']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['34']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('63',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'63')
+        self.xnames=arrset(self.xnames,iv,'63')
         ig = ig_['34']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('63',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'63')
+        self.xnames=arrset(self.xnames,iv,'63')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-3.6)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.6)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('64',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'64')
+        self.xnames=arrset(self.xnames,iv,'64')
         ig = ig_['7']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('64',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'64')
+        self.xnames=arrset(self.xnames,iv,'64')
         ig = ig_['62']
-        pbm.A[ig,iv] = float(10.1)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(10.1)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('65',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'65')
+        self.xnames=arrset(self.xnames,iv,'65')
         ig = ig_['8']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('65',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'65')
+        self.xnames=arrset(self.xnames,iv,'65')
         ig = ig_['62']
-        pbm.A[ig,iv] = float(12.63)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(12.63)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('66',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'66')
+        self.xnames=arrset(self.xnames,iv,'66')
         ig = ig_['6']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('66',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'66')
+        self.xnames=arrset(self.xnames,iv,'66')
         ig = ig_['62']
-        pbm.A[ig,iv] = float(8.05)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(8.05)+self.A[ig,iv]
         ig = ig_['66']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('67',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'67')
+        self.xnames=arrset(self.xnames,iv,'67')
         ig = ig_['5']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('67',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'67')
+        self.xnames=arrset(self.xnames,iv,'67')
         ig = ig_['62']
-        pbm.A[ig,iv] = float(6.9)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(6.9)+self.A[ig,iv]
         ig = ig_['65']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('68',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'68')
+        self.xnames=arrset(self.xnames,iv,'68')
         ig = ig_['29']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('68',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'68')
+        self.xnames=arrset(self.xnames,iv,'68')
         ig = ig_['62']
-        pbm.A[ig,iv] = float(8.05)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(8.05)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('69',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'69')
+        self.xnames=arrset(self.xnames,iv,'69')
         ig = ig_['28']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['35']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('69',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'69')
+        self.xnames=arrset(self.xnames,iv,'69')
         ig = ig_['62']
-        pbm.A[ig,iv] = float(4.4)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(4.4)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('70',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'70')
+        self.xnames=arrset(self.xnames,iv,'70')
         ig = ig_['35']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['62']
-        pbm.A[ig,iv] = float(-10.1)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-10.1)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('70',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'70')
+        self.xnames=arrset(self.xnames,iv,'70')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('71',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'71')
+        self.xnames=arrset(self.xnames,iv,'71')
         ig = ig_['39']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-.325)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.325)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('72',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'72')
+        self.xnames=arrset(self.xnames,iv,'72')
         ig = ig_['13']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-4.153)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-4.153)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('73',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'73')
+        self.xnames=arrset(self.xnames,iv,'73')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-4.316)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-4.316)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('74',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'74')
+        self.xnames=arrset(self.xnames,iv,'74')
         ig = ig_['9']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-3.814)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.814)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('75',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'75')
+        self.xnames=arrset(self.xnames,iv,'75')
         ig = ig_['25']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-3.808)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.808)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('76',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'76')
+        self.xnames=arrset(self.xnames,iv,'76')
         ig = ig_['24']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-4.44)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-4.44)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('77',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'77')
+        self.xnames=arrset(self.xnames,iv,'77')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['41']
-        pbm.A[ig,iv] = float(1.42)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.42)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('77',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'77')
+        self.xnames=arrset(self.xnames,iv,'77')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.04)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.04)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('78',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'78')
+        self.xnames=arrset(self.xnames,iv,'78')
         ig = ig_['40']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('79',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'79')
+        self.xnames=arrset(self.xnames,iv,'79')
         ig = ig_['10']
-        pbm.A[ig,iv] = float(-.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5)+self.A[ig,iv]
         ig = ig_['13']
-        pbm.A[ig,iv] = float(-.5)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-.5)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('79',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'79')
+        self.xnames=arrset(self.xnames,iv,'79')
         ig = ig_['C']
-        pbm.A[ig,iv] = float(3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('80',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'80')
+        self.xnames=arrset(self.xnames,iv,'80')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.4)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.4)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('81',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'81')
+        self.xnames=arrset(self.xnames,iv,'81')
         ig = ig_['41']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('82',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'82')
+        self.xnames=arrset(self.xnames,iv,'82')
         ig = ig_['42']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.0132)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.0132)+self.A[ig,iv]
         [iv,ix_,_] = s2mpj_ii('83',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'83')
+        self.xnames=arrset(self.xnames,iv,'83')
         ig = ig_['43']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         ig = ig_['C']
-        pbm.A[ig,iv] = float(.01)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(.01)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        self.n   = len(ix_)
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['65'],float(23.26))
-        pbm.gconst = arrset(pbm.gconst,ig_['66'],float(5.25))
-        pbm.gconst = arrset(pbm.gconst,ig_['67'],float(26.32))
-        pbm.gconst = arrset(pbm.gconst,ig_['68'],float(21.05))
-        pbm.gconst = arrset(pbm.gconst,ig_['69'],float(13.45))
-        pbm.gconst = arrset(pbm.gconst,ig_['70'],float(2.58))
-        pbm.gconst = arrset(pbm.gconst,ig_['71'],float(10.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['72'],float(10.0))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['65'],float(23.26))
+        self.gconst = arrset(self.gconst,ig_['66'],float(5.25))
+        self.gconst = arrset(self.gconst,ig_['67'],float(26.32))
+        self.gconst = arrset(self.gconst,ig_['68'],float(21.05))
+        self.gconst = arrset(self.gconst,ig_['69'],float(13.45))
+        self.gconst = arrset(self.gconst,ig_['70'],float(2.58))
+        self.gconst = arrset(self.gconst,ig_['71'],float(10.0))
+        self.gconst = arrset(self.gconst,ig_['72'],float(10.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -1894,968 +1890,967 @@ class  QPCBLEND(CUTEst_problem):
         elftp = loaset(elftp,it,0,'D')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         ename = 'E1'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         vname = '1'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.000000000))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.000000000))
         ename = 'E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '2'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.109756112))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.109756112))
         ename = 'E3'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '3'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.219512224))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.219512224))
         ename = 'E4'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '4'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.329268336))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.329268336))
         ename = 'E5'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '5'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.439024448))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.439024448))
         ename = 'E6'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '6'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.548780441))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.548780441))
         ename = 'E7'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '7'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.658536553))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.658536553))
         ename = 'E8'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '8'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.768292665))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.768292665))
         ename = 'E9'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '9'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.878048778))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.878048778))
         ename = 'E10'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '10'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(1.987804890))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(1.987804890))
         ename = 'E11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '11'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.097560883))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.097560883))
         ename = 'E12'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '12'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.207317114))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.207317114))
         ename = 'E13'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '13'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.317073107))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.317073107))
         ename = 'E14'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '14'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.426829338))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.426829338))
         ename = 'E15'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '15'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.536585331))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.536585331))
         ename = 'E16'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '16'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.646341562))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.646341562))
         ename = 'E17'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '17'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.756097555))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.756097555))
         ename = 'E18'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '18'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.865853548))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.865853548))
         ename = 'E19'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '19'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(2.975609779))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(2.975609779))
         ename = 'E20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '20'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.085365772))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.085365772))
         ename = 'E21'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '21'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.195122004))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.195122004))
         ename = 'E22'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '22'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.304877996))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.304877996))
         ename = 'E23'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '23'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.414634228))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.414634228))
         ename = 'E24'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '24'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.524390221))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.524390221))
         ename = 'E25'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '25'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.634146452))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.634146452))
         ename = 'E26'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '26'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.743902445))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.743902445))
         ename = 'E27'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '27'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.853658438))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.853658438))
         ename = 'E28'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '28'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(3.963414669))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(3.963414669))
         ename = 'E29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '29'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.073170662))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.073170662))
         ename = 'E30'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '30'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.182926655))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.182926655))
         ename = 'E31'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '31'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.292683125))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.292683125))
         ename = 'E32'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '32'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.402439117))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.402439117))
         ename = 'E33'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '33'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.512195110))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.512195110))
         ename = 'E34'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '34'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.621951103))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.621951103))
         ename = 'E35'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '35'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.731707096))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.731707096))
         ename = 'E36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '36'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.841463566))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.841463566))
         ename = 'E37'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '37'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(4.951219559))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(4.951219559))
         ename = 'E38'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '38'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.060975552))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.060975552))
         ename = 'E39'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '39'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.170731544))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.170731544))
         ename = 'E40'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '40'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.280488014))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.280488014))
         ename = 'E41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '41'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.390244007))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.390244007))
         ename = 'E42'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '42'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.500000000))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.500000000))
         ename = 'E43'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '43'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.609755993))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.609755993))
         ename = 'E44'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '44'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.719511986))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.719511986))
         ename = 'E45'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '45'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.829268456))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.829268456))
         ename = 'E46'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '46'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(5.939024448))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(5.939024448))
         ename = 'E47'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '47'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.048780441))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.048780441))
         ename = 'E48'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '48'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.158536434))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.158536434))
         ename = 'E49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '49'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.268292904))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.268292904))
         ename = 'E50'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '50'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.378048897))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.378048897))
         ename = 'E51'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '51'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.487804890))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.487804890))
         ename = 'E52'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '52'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.597560883))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.597560883))
         ename = 'E53'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '53'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.707316875))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.707316875))
         ename = 'E54'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '54'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.817073345))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.817073345))
         ename = 'E55'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '55'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(6.926829338))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(6.926829338))
         ename = 'E56'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '56'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.036585331))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.036585331))
         ename = 'E57'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '57'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.146341324))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.146341324))
         ename = 'E58'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '58'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.256097794))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.256097794))
         ename = 'E59'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '59'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.365853786))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.365853786))
         ename = 'E60'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '60'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.475609779))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.475609779))
         ename = 'E61'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '61'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.585365772))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.585365772))
         ename = 'E62'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '62'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.695121765))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.695121765))
         ename = 'E63'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '63'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.804878235))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.804878235))
         ename = 'E64'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '64'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(7.914634228))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(7.914634228))
         ename = 'E65'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '65'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.024390221))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.024390221))
         ename = 'E66'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '66'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.134146690))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.134146690))
         ename = 'E67'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '67'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.243902206))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.243902206))
         ename = 'E68'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '68'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.353658676))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.353658676))
         ename = 'E69'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '69'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.463414192))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.463414192))
         ename = 'E70'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '70'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.573170662))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.573170662))
         ename = 'E71'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '71'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.682927132))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.682927132))
         ename = 'E72'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '72'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.792682648))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.792682648))
         ename = 'E73'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '73'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(8.902439117))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(8.902439117))
         ename = 'E74'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '74'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.012195587))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.012195587))
         ename = 'E75'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '75'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.121951103))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.121951103))
         ename = 'E76'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '76'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.231707573))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.231707573))
         ename = 'E77'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '77'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.341463089))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.341463089))
         ename = 'E78'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '78'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.451219559))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.451219559))
         ename = 'E79'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '79'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.560976028))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.560976028))
         ename = 'E80'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '80'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.670731544))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.670731544))
         ename = 'E81'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '81'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.780488014))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.780488014))
         ename = 'E82'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '82'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(9.890243530))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(9.890243530))
         ename = 'E83'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQR')
+            self.elftype = arrset(self.elftype,ie,'eSQR')
             ielftype = arrset( ielftype,ie,iet_['eSQR'])
         vname = '83'
-        [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-        posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-        pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-        posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-        pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(10.000000000))
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+        posev = np.where(elftv[ielftype[ie]]=='X')[0]
+        self.elvar = loaset(self.elvar,ie,posev[0],iv)
+        posep = np.where(elftp[ielftype[ie]]=='D')[0]
+        self.elpar = loaset(self.elpar,ie,posep[0],float(10.000000000))
         v_['1'] = 1
         v_['N'] = 83
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             ig = ig_['C']
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)])
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)])
             nlc = np.union1d(nlc,np.array([ig]))
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),+float('Inf'))
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.cupper[np.arange(pb.nle)] = np.zeros((pb.nle,1))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "QLR2-MN-83-74"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "QLR2-MN-83-74"
+        self.x0        = np.zeros((self.n,1))
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eSQR(pbm,nargout,*args):
+    def eSQR(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = pbm.elpar[iel_][0]*EV_[0]*EV_[0]
+        f_   = self.elpar[iel_][0]*EV_[0]*EV_[0]
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -2864,10 +2859,10 @@ class  QPCBLEND(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*pbm.elpar[iel_][0]*EV_[0]
+            g_[0] = 2.0*self.elpar[iel_][0]*EV_[0]
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_[0,0] = 2.0*pbm.elpar[iel_][0]
+                H_[0,0] = 2.0*self.elpar[iel_][0]
         if nargout == 1:
             return f_
         elif nargout == 2:

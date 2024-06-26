@@ -46,10 +46,6 @@ class  CLPLATEB(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -72,20 +68,20 @@ class  CLPLATEB(CUTEst_problem):
         v_['HP2'] = 0.5*v_['RP2']
         v_['1/HP2'] = 1.0/v_['HP2']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for J in range(int(v_['1']),int(v_['P'])+1):
             for I in range(int(v_['1']),int(v_['P'])+1):
                 [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
+                self.xnames=arrset(self.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['2']),int(v_['P'])+1):
             v_['I-1'] = -1+I
@@ -93,74 +89,74 @@ class  CLPLATEB(CUTEst_problem):
                 v_['J-1'] = -1+J
                 [ig,ig_,_] = s2mpj_ii('A'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+                self.gscale = arrset(self.gscale,ig,float(2.0))
                 iv = ix_['X'+str(I)+','+str(J)]
-                pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
                 iv = ix_['X'+str(I)+','+str(int(v_['J-1']))]
-                pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
                 [ig,ig_,_] = s2mpj_ii('B'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+                self.gscale = arrset(self.gscale,ig,float(2.0))
                 iv = ix_['X'+str(I)+','+str(J)]
-                pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
                 iv = ix_['X'+str(int(v_['I-1']))+','+str(J)]
-                pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
                 [ig,ig_,_] = s2mpj_ii('C'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/HP2']))
+                self.gscale = arrset(self.gscale,ig,float(v_['1/HP2']))
                 iv = ix_['X'+str(I)+','+str(J)]
-                pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
                 iv = ix_['X'+str(I)+','+str(int(v_['J-1']))]
-                pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
                 [ig,ig_,_] = s2mpj_ii('D'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/HP2']))
+                self.gscale = arrset(self.gscale,ig,float(v_['1/HP2']))
                 iv = ix_['X'+str(I)+','+str(J)]
-                pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
                 iv = ix_['X'+str(int(v_['I-1']))+','+str(J)]
-                pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         for J in range(int(v_['1']),int(v_['P'])+1):
             [ig,ig_,_] = s2mpj_ii('W',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(int(v_['P']))+','+str(J)]
-            pbm.A[ig,iv] = float(v_['DISW'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['DISW'])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
-            pb.xlower[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
-            pb.xupper[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
+            self.xlower[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
+            self.xupper[ix_['X'+str(int(v_['1']))+','+str(J)]] = 0.0
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(0.0))
+        self.x0 = np.full((self.n,1),float(0.0))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         [it,igt_,_] = s2mpj_ii('gL4',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['2']),int(v_['P'])+1):
             for J in range(int(v_['2']),int(v_['P'])+1):
                 ig = ig_['A'+str(I)+','+str(J)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+                self.grftype = arrset(self.grftype,ig,'gL2')
                 ig = ig_['B'+str(I)+','+str(J)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+                self.grftype = arrset(self.grftype,ig,'gL2')
                 ig = ig_['C'+str(I)+','+str(J)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gL4')
+                self.grftype = arrset(self.grftype,ig,'gL4')
                 ig = ig_['D'+str(I)+','+str(J)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gL4')
+                self.grftype = arrset(self.grftype,ig,'gL4')
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN(4)            -9.3705D-03
 # LO SOLTN(7)            -6.9193D-03
@@ -170,13 +166,12 @@ class  CLPLATEB(CUTEst_problem):
 # LO SOLTN(71)           -5.0948D-03
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OXR2-MN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OXR2-MN-V-0"
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
@@ -185,7 +180,7 @@ class  CLPLATEB(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
@@ -203,7 +198,7 @@ class  CLPLATEB(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gL4(pbm,nargout,*args):
+    def gL4(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

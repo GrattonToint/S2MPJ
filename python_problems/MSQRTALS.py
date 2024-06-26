@@ -36,10 +36,6 @@ class  MSQRTALS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -66,42 +62,42 @@ class  MSQRTALS(CUTEst_problem):
                     v_['PROD'] = v_['B'+str(I)+','+str(K)]*v_['B'+str(K)+','+str(J)]
                     v_['A'+str(I)+','+str(J)] = v_['A'+str(I)+','+str(J)]+v_['PROD']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 [iv,ix_,_] = s2mpj_ii('X'+str(I)+','+str(J),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'X'+str(I)+','+str(J))
+                self.xnames=arrset(self.xnames,iv,'X'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 [ig,ig_,_] = s2mpj_ii('G'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
-                pbm.gconst  = (
-                      arrset(pbm.gconst,ig_['G'+str(I)+','+str(J)],float(v_['A'+str(I)+','+str(J)])))
+                self.gconst  = (
+                      arrset(self.gconst,ig_['G'+str(I)+','+str(J)],float(v_['A'+str(I)+','+str(J)])))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         v_['K'] = 0.0
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
@@ -110,7 +106,7 @@ class  MSQRTALS(CUTEst_problem):
                 v_['SK2'] = np.sin(v_['K2'])
                 v_['-4SK2/5'] = -0.8*v_['SK2']
                 v_['XIJ'] = v_['B'+str(I)+','+str(J)]+v_['-4SK2/5']
-                pb.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['XIJ'])
+                self.x0[ix_['X'+str(I)+','+str(J)]] = float(v_['XIJ'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -119,54 +115,53 @@ class  MSQRTALS(CUTEst_problem):
         elftv = loaset(elftv,it,1,'XTJ')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 for T in range(int(v_['1']),int(v_['P'])+1):
                     ename = 'E'+str(I)+','+str(J)+','+str(T)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                    pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
+                    self.elftype = arrset(self.elftype,ie,'en2PR')
                     ielftype = arrset(ielftype, ie, iet_["en2PR"])
                     vname = 'X'+str(I)+','+str(T)
-                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                    posev = find(elftv[ielftype[ie]],lambda x:x=='XIT')
-                    pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    posev = np.where(elftv[ielftype[ie]]=='XIT')[0]
+                    self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'X'+str(T)+','+str(J)
-                    [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                    posev = find(elftv[ielftype[ie]],lambda x:x=='XTJ')
-                    pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                    posev = np.where(elftv[ielftype[ie]]=='XTJ')[0]
+                    self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for ig in range(0,ngrp):
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         for I in range(int(v_['1']),int(v_['P'])+1):
             for J in range(int(v_['1']),int(v_['P'])+1):
                 for T in range(int(v_['1']),int(v_['P'])+1):
                     ig = ig_['G'+str(I)+','+str(J)]
-                    posel = len(pbm.grelt[ig])
-                    pbm.grelt  = (
-                          loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)+','+str(T)]))
-                    pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                    posel = len(self.grelt[ig])
+                    self.grelt  = (
+                          loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)+','+str(T)]))
+                    self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-AN-V-V"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-AN-V-V"
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def en2PR(pbm,nargout,*args):
+    def en2PR(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -196,7 +191,7 @@ class  MSQRTALS(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

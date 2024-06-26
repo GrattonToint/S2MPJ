@@ -32,10 +32,6 @@ class  MEYER3(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -45,61 +41,61 @@ class  MEYER3(CUTEst_problem):
         v_['16'] = 16
         v_['1'] = 1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('X1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X1')
-        pb.xscale = arrset(pb.xscale,iv,0.01)
+        self.xnames=arrset(self.xnames,iv,'X1')
+        self.xscale = arrset(self.xscale,iv,0.01)
         [iv,ix_,_] = s2mpj_ii('X2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X2')
-        pb.xscale = arrset(pb.xscale,iv,1000.0)
+        self.xnames=arrset(self.xnames,iv,'X2')
+        self.xscale = arrset(self.xscale,iv,1000.0)
         [iv,ix_,_] = s2mpj_ii('X3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'X3')
-        pb.xscale = arrset(pb.xscale,iv,100.0)
+        self.xnames=arrset(self.xnames,iv,'X3')
+        self.xscale = arrset(self.xscale,iv,100.0)
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['16'])+1):
             [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['G1'],float(34780.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G2'],float(28610.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G3'],float(23650.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G4'],float(19630.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G5'],float(16370.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G6'],float(13720.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G7'],float(11540.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G8'],float(9744.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G9'],float(8261.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G10'],float(7030.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G11'],float(6005.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G12'],float(5147.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G13'],float(4427.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G14'],float(3820.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G15'],float(3307.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['G16'],float(2872.0))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['G1'],float(34780.0))
+        self.gconst = arrset(self.gconst,ig_['G2'],float(28610.0))
+        self.gconst = arrset(self.gconst,ig_['G3'],float(23650.0))
+        self.gconst = arrset(self.gconst,ig_['G4'],float(19630.0))
+        self.gconst = arrset(self.gconst,ig_['G5'],float(16370.0))
+        self.gconst = arrset(self.gconst,ig_['G6'],float(13720.0))
+        self.gconst = arrset(self.gconst,ig_['G7'],float(11540.0))
+        self.gconst = arrset(self.gconst,ig_['G8'],float(9744.0))
+        self.gconst = arrset(self.gconst,ig_['G9'],float(8261.0))
+        self.gconst = arrset(self.gconst,ig_['G10'],float(7030.0))
+        self.gconst = arrset(self.gconst,ig_['G11'],float(6005.0))
+        self.gconst = arrset(self.gconst,ig_['G12'],float(5147.0))
+        self.gconst = arrset(self.gconst,ig_['G13'],float(4427.0))
+        self.gconst = arrset(self.gconst,ig_['G14'],float(3820.0))
+        self.gconst = arrset(self.gconst,ig_['G15'],float(3307.0))
+        self.gconst = arrset(self.gconst,ig_['G16'],float(2872.0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.x0[ix_['X1']] = float(0.02)
-        pb.x0[ix_['X2']] = float(4000.0)
-        pb.x0[ix_['X3']] = float(250.0)
+        self.x0 = np.zeros((self.n,1))
+        self.x0[ix_['X1']] = float(0.02)
+        self.x0[ix_['X2']] = float(4000.0)
+        self.x0[ix_['X3']] = float(250.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -111,58 +107,57 @@ class  MEYER3(CUTEst_problem):
         elftp = loaset(elftp,it,0,'T')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['16'])+1):
             v_['5I'] = 5*I
             v_['45+5I'] = 45+v_['5I']
             v_['TI'] = float(v_['45+5I'])
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eGAUSS')
+            self.elftype = arrset(self.elftype,ie,'eGAUSS')
             ielftype = arrset(ielftype, ie, iet_["eGAUSS"])
             vname = 'X1'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X2'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V3')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='T')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['TI']))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V3')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
+            posep = np.where(elftp[ielftype[ie]]=='T')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(v_['TI']))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['16'])+1):
             ig = ig_['G'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grftype = arrset(self.grftype,ig,'gL2')
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN               87.9458
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-RN-3-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-RN-3-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -171,12 +166,12 @@ class  MEYER3(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eGAUSS(pbm,nargout,*args):
+    def eGAUSS(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        TPV3 = pbm.elpar[iel_][0]+EV_[2]
+        TPV3 = self.elpar[iel_][0]+EV_[2]
         EXPA = np.exp(EV_[1]/TPV3)
         V1EXPA = EV_[0]*EXPA
         TPV3SQ = TPV3*TPV3
@@ -216,7 +211,7 @@ class  MEYER3(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

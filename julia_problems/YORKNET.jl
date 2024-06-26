@@ -31,7 +31,7 @@ function YORKNET(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -534,7 +534,7 @@ function YORKNET(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -803,7 +803,7 @@ function YORKNET(action,args...)
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["EH"*string(J)*","*string(I)])
                 arrset(nlc,length(nlc)+1,ig)
-                loaset(pbm.grelw,ig,posel,Float64(1.0))
+                loaset(self.grelw,ig,posel,Float64(1.0))
             end
         end
         for J = Int64(v_["SuPMP"]):Int64(v_["EuPMP"])
@@ -811,17 +811,17 @@ function YORKNET(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["PPW"*string(J)*","*string(Int64(v_["2"]))])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(100.0))
+            loaset(self.grelw,ig,posel,Float64(100.0))
             ig = ig_["PC"*string(J)*","*string(Int64(v_["3"]))]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["PPW"*string(J)*","*string(Int64(v_["3"]))])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(100.0))
+            loaset(self.grelw,ig,posel,Float64(100.0))
             ig = ig_["PC"*string(J)*","*string(Int64(v_["4"]))]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["PPW"*string(J)*","*string(Int64(v_["4"]))])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(100.0))
+            loaset(self.grelw,ig,posel,Float64(100.0))
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
@@ -833,7 +833,7 @@ function YORKNET(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "SOR2-AY-312-256"
         return pb, pbm
 

@@ -31,10 +31,6 @@ class  S368(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -51,19 +47,19 @@ class  S368(CUTEst_problem):
         v_['N+1'] = 1+v_['N']
         v_['RN+1'] = float(v_['N+1'])
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['N'])+1):
@@ -72,19 +68,19 @@ class  S368(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('P'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xupper = np.full((pb.n,1),1.0)
-        pb.xlower = np.zeros((pb.n,1))
+        self.xupper = np.full((self.n,1),1.0)
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         for I in range(int(v_['1']),int(v_['N'])+1):
             v_['RI'] = float(I)
             v_['T'] = v_['RI']/v_['RN+1']
-            pb.x0[ix_['X'+str(I)]] = float(v_['T'])
+            self.x0[ix_['X'+str(I)]] = float(v_['T'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -96,62 +92,61 @@ class  S368(CUTEst_problem):
         elftv = loaset(elftv,it,1,'Y')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['N'])+1):
                 ename = 'M'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'ePRODM')
+                self.elftype = arrset(self.elftype,ie,'ePRODM')
                 ielftype = arrset(ielftype, ie, iet_["ePRODM"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='X')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='Y')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'P'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'ePRODP')
+                self.elftype = arrset(self.elftype,ie,'ePRODP')
                 ielftype = arrset(ielftype, ie, iet_["ePRODP"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='X')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,1.0,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                posev = np.where(elftv[ielftype[ie]]=='Y')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for J in range(int(v_['1']),int(v_['N'])+1):
             for I in range(int(v_['1']),int(v_['N'])+1):
                 ig = ig_['M'+str(I)+','+str(J)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['M'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['M'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,1.)
                 ig = ig_['P'+str(I)+','+str(J)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['P'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['P'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               ??
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OBR2-MN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OBR2-MN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -160,7 +155,7 @@ class  S368(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def ePRODM(pbm,nargout,*args):
+    def ePRODM(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -190,7 +185,7 @@ class  S368(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def ePRODP(pbm,nargout,*args):
+    def ePRODP(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]

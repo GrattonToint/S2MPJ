@@ -89,7 +89,7 @@ switch(action)
         pb.neq = length(eqgrps);
         pb.nge = length(gegrps);
         pb.m   = pb.nle+pb.neq+pb.nge;
-        pbm.congrps = find(ismember(gtype,{'<=','==','>='}));
+        pbm.congrps = [ legrps, eqgrps, gegrps ];
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
@@ -171,7 +171,7 @@ switch(action)
         pb.clower(1:pb.nle) = -Inf*ones(pb.nle,1);
         pb.cupper(1:pb.nle) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
+        [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'LOR2-AN-3-2';
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))

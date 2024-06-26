@@ -28,7 +28,7 @@ function PFIT3LS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -195,24 +195,24 @@ function PFIT3LS(action,args...)
         ig = ig_["EF"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EA"])
-        loaset(pbm.grelw,ig,posel,Float64(-0.5))
+        loaset(self.grelw,ig,posel,Float64(-0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["EC"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["ED"])
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         ig = ig_["EG"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EA"])
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["EB"])
         loaset(pbm.grelw,ig,posel, 1.)
         ig = ig_["EH"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EE"])
-        loaset(pbm.grelw,ig,posel,Float64(-1.0))
+        loaset(self.grelw,ig,posel,Float64(-1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 #    Solution at ( 1.0, 3.0 , 2.0 )

@@ -30,10 +30,6 @@ class  PALMER1NE(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -105,24 +101,24 @@ class  PALMER1NE(CUTEst_problem):
         v_['Y30'] = 70.1630
         v_['Y31'] = 83.4221
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('A',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'A')
+        self.xnames=arrset(self.xnames,iv,'A')
         [iv,ix_,_] = s2mpj_ii('B',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'B')
+        self.xnames=arrset(self.xnames,iv,'B')
         [iv,ix_,_] = s2mpj_ii('C',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'C')
+        self.xnames=arrset(self.xnames,iv,'C')
         [iv,ix_,_] = s2mpj_ii('D',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'D')
+        self.xnames=arrset(self.xnames,iv,'D')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['XSQR'] = v_['X'+str(I)]*v_['X'+str(I)]
@@ -130,35 +126,35 @@ class  PALMER1NE(CUTEst_problem):
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'O'+str(I))
             iv = ix_['A']
-            pbm.A[ig,iv] = float(v_['XSQR'])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['XSQR'])+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
+            self.gconst = arrset(self.gconst,ig_['O'+str(I)],float(v_['Y'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['A']] = -float('Inf')
-        pb.xupper[ix_['A']] = +float('Inf')
-        pb.xlower[ix_['B']] = 0.00001
-        pb.xlower[ix_['C']] = 0.00001
-        pb.xlower[ix_['D']] = 0.00001
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['A']] = -float('Inf')
+        self.xupper[ix_['A']] = +float('Inf')
+        self.xlower[ix_['B']] = 0.00001
+        self.xlower[ix_['C']] = 0.00001
+        self.xlower[ix_['D']] = 0.00001
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
+        self.x0 = np.full((self.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -170,43 +166,43 @@ class  PALMER1NE(CUTEst_problem):
         elftp = loaset(elftp,it,0,'XSQR')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['XSQR'] = v_['X'+str(I)]*v_['X'+str(I)]
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eQUOT')
+            self.elftype = arrset(self.elftype,ie,'eQUOT')
             ielftype = arrset(ielftype, ie, iet_["eQUOT"])
             vname = 'B'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='B')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='B')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'C'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='C')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='C')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'D'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='D')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-            posep = find(elftp[ielftype[ie]],lambda x:x=='XSQR')
-            pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['XSQR']))
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='D')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
+            posep = np.where(elftp[ielftype[ie]]=='XSQR')[0]
+            self.elpar = loaset(self.elpar,ie,posep[0],float(v_['XSQR']))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             ig = ig_['O'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)])
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)])
             nlc = np.union1d(nlc,np.array([ig]))
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
 # LO PALMER1                0.0
@@ -214,19 +210,18 @@ class  PALMER1NE(CUTEst_problem):
 # LO SOLTN                  11754.6025
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-RN-4-31"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "NOR2-RN-4-31"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -235,12 +230,12 @@ class  PALMER1NE(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eQUOT(pbm,nargout,*args):
+    def eQUOT(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        DENOM = 1.0/(EV_[1]+pbm.elpar[iel_][0]/EV_[2])
+        DENOM = 1.0/(EV_[1]+self.elpar[iel_][0]/EV_[2])
         f_   = EV_[0]*DENOM
         if not isinstance( f_, float ):
             f_   = f_.item();
@@ -252,18 +247,18 @@ class  PALMER1NE(CUTEst_problem):
             g_ = np.zeros(dim)
             g_[0] = DENOM
             g_[1] = -EV_[0]*DENOM*DENOM
-            g_[2] = EV_[0]*pbm.elpar[iel_][0]*(DENOM/EV_[2])**2
+            g_[2] = EV_[0]*self.elpar[iel_][0]*(DENOM/EV_[2])**2
             if nargout>2:
                 H_ = np.zeros((3,3))
                 H_[0,1] = -DENOM*DENOM
                 H_[1,0] = H_[0,1]
-                H_[0,2] = pbm.elpar[iel_][0]*(DENOM/EV_[2])**2
+                H_[0,2] = self.elpar[iel_][0]*(DENOM/EV_[2])**2
                 H_[2,0] = H_[0,2]
                 H_[1,1] = 2.0*EV_[0]*DENOM**3
-                H_[1,2] = -2.0*EV_[0]*pbm.elpar[iel_][0]*DENOM*(DENOM/EV_[2])**2
+                H_[1,2] = -2.0*EV_[0]*self.elpar[iel_][0]*DENOM*(DENOM/EV_[2])**2
                 H_[2,1] = H_[1,2]
-                H_[2,2]  = (
-                      2.0*EV_[0]*DENOM**3*(pbm.elpar[iel_][0]/EV_[2]**2)**2-2.0*EV_[0]*DENOM**2*pbm.elpar[iel_][0]/EV_[2]**3)
+                H_[2,2] = (2.0*EV_[0]*DENOM**3*(self.elpar[iel_][0]/EV_[2]**2)**2-
+                     2.0*EV_[0]*DENOM**2*self.elpar[iel_][0]/EV_[2]**3)
         if nargout == 1:
             return f_
         elif nargout == 2:

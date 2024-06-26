@@ -25,7 +25,7 @@ function DENSCHNF(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -136,14 +136,14 @@ function DENSCHNF(action,args...)
         ig = ig_["A"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
-        loaset(pbm.grelw,ig,posel,Float64(2.0))
+        loaset(self.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel, 1.)
         ig = ig_["B"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
-        loaset(pbm.grelw,ig,posel,Float64(5.0))
+        loaset(self.grelw,ig,posel,Float64(5.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel, 1.)

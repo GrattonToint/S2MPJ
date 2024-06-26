@@ -24,7 +24,7 @@ function CAMEL6(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -135,19 +135,19 @@ function CAMEL6(action,args...)
         ig = ig_["OBJ"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
-        loaset(pbm.grelw,ig,posel,Float64(4.0))
+        loaset(self.grelw,ig,posel,Float64(4.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(-2.1))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
-        loaset(pbm.grelw,ig,posel,Float64(0.3333333333))
+        loaset(self.grelw,ig,posel,Float64(0.3333333333))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel, 1.)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
-        loaset(pbm.grelw,ig,posel,Float64(-4.0))
+        loaset(self.grelw,ig,posel,Float64(-4.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E6"])
         loaset(pbm.grelw,ig,posel,Float64(4.0))

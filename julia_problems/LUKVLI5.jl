@@ -37,7 +37,7 @@ function LUKVLI5(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -105,7 +105,7 @@ function LUKVLI5(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -207,21 +207,21 @@ function LUKVLI5(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["OBJ"*string(I)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(-2.0))
+            loaset(self.grelw,ig,posel,Float64(-2.0))
         end
         for K = Int64(v_["1"]):Int64(v_["N-4"])
             ig = ig_["C"*string(K)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["CA"*string(K)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(8.0))
+            loaset(self.grelw,ig,posel,Float64(8.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["CB"*string(K)])
             loaset(pbm.grelw,ig,posel,Float64(-4.0))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["CC"*string(K)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["CD"*string(K)])
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -240,7 +240,7 @@ function LUKVLI5(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AY-V-V"
         return pb, pbm
 # **********************

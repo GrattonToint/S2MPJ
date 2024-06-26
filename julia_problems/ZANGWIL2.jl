@@ -27,7 +27,7 @@ function ZANGWIL2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -113,13 +113,13 @@ function ZANGWIL2(action,args...)
         ig = ig_["G1"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1SQ"])
-        loaset(pbm.grelw,ig,posel,Float64(16.0))
+        loaset(self.grelw,ig,posel,Float64(16.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X2SQ"])
         loaset(pbm.grelw,ig,posel,Float64(16.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1X2"])
-        loaset(pbm.grelw,ig,posel,Float64(-8.0))
+        loaset(self.grelw,ig,posel,Float64(-8.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -18.2

@@ -28,10 +28,6 @@ class  MINSURFO(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -57,47 +53,47 @@ class  MINSURFO(CUTEst_problem):
         v_['1/HY'] = 1.0/v_['HY']
         v_['1/HY2'] = v_['1/HY']*v_['1/HY']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['NX+1'])+1):
             for J in range(int(v_['0']),int(v_['NY+1'])+1):
                 [iv,ix_,_] = s2mpj_ii('V'+str(I)+','+str(J),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'V'+str(I)+','+str(J))
+                self.xnames=arrset(self.xnames,iv,'V'+str(I)+','+str(J))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['0']),int(v_['NX'])+1):
             for J in range(int(v_['0']),int(v_['NY'])+1):
                 [ig,ig_,_] = s2mpj_ii('A'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/AREA']))
+                self.gscale = arrset(self.gscale,ig,float(v_['1/AREA']))
         for I in range(int(v_['1']),int(v_['NX+1'])+1):
             for J in range(int(v_['1']),int(v_['NY+1'])+1):
                 [ig,ig_,_] = s2mpj_ii('B'+str(I)+','+str(J),ig_)
                 gtype = arrset(gtype,ig,'<>')
-                pbm.gscale = arrset(pbm.gscale,ig,float(v_['1/AREA']))
+                self.gscale = arrset(self.gscale,ig,float(v_['1/AREA']))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['0']),int(v_['NX'])+1):
             for J in range(int(v_['0']),int(v_['NY'])+1):
-                pbm.gconst = arrset(pbm.gconst,ig_['A'+str(I)+','+str(J)],float(-1.0))
+                self.gconst = arrset(self.gconst,ig_['A'+str(I)+','+str(J)],float(-1.0))
         for I in range(int(v_['1']),int(v_['NX+1'])+1):
             for J in range(int(v_['1']),int(v_['NY+1'])+1):
-                pbm.gconst = arrset(pbm.gconst,ig_['B'+str(I)+','+str(J)],float(-1.0))
+                self.gconst = arrset(self.gconst,ig_['B'+str(I)+','+str(J)],float(-1.0))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
         v_['1/4HX'] = 0.25/v_['HX']
         v_['3/4HX'] = 0.75/v_['HX']
         v_['1/4HY'] = 0.25/v_['HY']
@@ -110,12 +106,12 @@ class  MINSURFO(CUTEst_problem):
         v_['3/4HY'] = int(np.fix(v_['3/4HY']))
         for I in range(int(v_['1/4HX']),int(v_['3/4HX'])+1):
             for J in range(int(v_['1/4HY']),int(v_['3/4HY'])+1):
-                pb.xlower[ix_['V'+str(I)+','+str(J)]] = 1.0
+                self.xlower[ix_['V'+str(I)+','+str(J)]] = 1.0
         for J in range(int(v_['0']),int(v_['NY+1'])+1):
-            pb.xlower[ix_['V'+str(int(v_['0']))+','+str(J)]] = 0.0
-            pb.xupper[ix_['V'+str(int(v_['0']))+','+str(J)]] = 0.0
-            pb.xlower[ix_['V'+str(int(v_['NX+1']))+','+str(J)]] = 0.0
-            pb.xupper[ix_['V'+str(int(v_['NX+1']))+','+str(J)]] = 0.0
+            self.xlower[ix_['V'+str(int(v_['0']))+','+str(J)]] = 0.0
+            self.xupper[ix_['V'+str(int(v_['0']))+','+str(J)]] = 0.0
+            self.xlower[ix_['V'+str(int(v_['NX+1']))+','+str(J)]] = 0.0
+            self.xupper[ix_['V'+str(int(v_['NX+1']))+','+str(J)]] = 0.0
         for I in range(int(v_['0']),int(v_['NX+1'])+1):
             v_["I"] = float(I)
             v_['VIJ'] = 2.0*I
@@ -123,12 +119,12 @@ class  MINSURFO(CUTEst_problem):
             v_['VIJ'] = -1.0+v_['VIJ']
             v_['VIJ'] = v_['VIJ']*v_['VIJ']
             v_['VIJ'] = v_['ONE']-v_['VIJ']
-            pb.xlower[ix_['V'+str(I)+','+str(int(v_['0']))]] = v_['VIJ']
-            pb.xupper[ix_['V'+str(I)+','+str(int(v_['0']))]] = v_['VIJ']
-            pb.xlower[ix_['V'+str(I)+','+str(int(v_['NY+1']))]] = v_['VIJ']
-            pb.xupper[ix_['V'+str(I)+','+str(int(v_['NY+1']))]] = v_['VIJ']
+            self.xlower[ix_['V'+str(I)+','+str(int(v_['0']))]] = v_['VIJ']
+            self.xupper[ix_['V'+str(I)+','+str(int(v_['0']))]] = v_['VIJ']
+            self.xlower[ix_['V'+str(I)+','+str(int(v_['NY+1']))]] = v_['VIJ']
+            self.xupper[ix_['V'+str(I)+','+str(int(v_['NY+1']))]] = v_['VIJ']
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         for I in range(int(v_['0']),int(v_['NX+1'])+1):
             v_["I"] = float(I)
             v_['VIJ'] = 2.0*I
@@ -137,7 +133,7 @@ class  MINSURFO(CUTEst_problem):
             v_['VIJ'] = v_['VIJ']*v_['VIJ']
             v_['VIJ'] = v_['ONE']-v_['VIJ']
             for J in range(int(v_['0']),int(v_['NY+1'])+1):
-                pb.x0[ix_['V'+str(I)+','+str(J)]] = float(v_['VIJ'])
+                self.x0[ix_['V'+str(I)+','+str(J)]] = float(v_['VIJ'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -146,107 +142,107 @@ class  MINSURFO(CUTEst_problem):
         elftv = loaset(elftv,it,1,'V2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['0']),int(v_['NX'])+1):
             v_['I+1'] = 1+I
             for J in range(int(v_['0']),int(v_['NY'])+1):
                 v_['J+1'] = 1+J
                 ename = 'I'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+                self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'V'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'J'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+                self.elftype = arrset(self.elftype,ie,'eISQ')
                 ielftype = arrset(ielftype, ie, iet_["eISQ"])
                 vname = 'V'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for J in range(int(v_['0']),int(v_['NY+1'])+1):
             v_['J1'] = 1+J
             ename = 'J'+str(int(v_['NX+1']))+','+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+            self.elftype = arrset(self.elftype,ie,'eISQ')
             ielftype = arrset(ielftype, ie, iet_["eISQ"])
             ename = 'J'+str(int(v_['NX+1']))+','+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(int(v_['NX+1']))+','+str(int(v_['J1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'J'+str(int(v_['NX+1']))+','+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(int(v_['NX+1']))+','+str(J)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['NX+1'])+1):
             v_['I1'] = 1+I
             ename = 'I'+str(I)+','+str(int(v_['NY+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eISQ')
+            self.elftype = arrset(self.elftype,ie,'eISQ')
             ielftype = arrset(ielftype, ie, iet_["eISQ"])
             ename = 'I'+str(I)+','+str(int(v_['NY+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(int(v_['I1']))+','+str(int(v_['NY+1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'I'+str(I)+','+str(int(v_['NY+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(I)+','+str(int(v_['NY+1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='V2')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='V2')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gROOT',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['0']),int(v_['NX'])+1):
             for J in range(int(v_['0']),int(v_['NY'])+1):
                 ig = ig_['A'+str(I)+','+str(J)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gROOT')
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['I'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/HX2']))
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['J'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/HY2']))
+                self.grftype = arrset(self.grftype,ig,'gROOT')
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['I'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['1/HX2']))
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['J'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['1/HY2']))
         for I in range(int(v_['1']),int(v_['NX+1'])+1):
             v_['I-1'] = -1+I
             for J in range(int(v_['1']),int(v_['NY+1'])+1):
                 v_['J-1'] = -1+J
                 ig = ig_['B'+str(I)+','+str(J)]
-                pbm.grftype = arrset(pbm.grftype,ig,'gROOT')
-                posel = len(pbm.grelt[ig])
-                pbm.grelt  = (
-                      loaset(pbm.grelt,ig,posel,ie_['I'+str(int(v_['I-1']))+','+str(J)]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/HX2']))
-                posel = len(pbm.grelt[ig])
-                pbm.grelt  = (
-                      loaset(pbm.grelt,ig,posel,ie_['J'+str(I)+','+str(int(v_['J-1']))]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['1/HY2']))
+                self.grftype = arrset(self.grftype,ig,'gROOT')
+                posel = len(self.grelt[ig])
+                self.grelt  = (
+                      loaset(self.grelt,ig,posel,ie_['I'+str(int(v_['I-1']))+','+str(J)]))
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['1/HX2']))
+                posel = len(self.grelt[ig])
+                self.grelt  = (
+                      loaset(self.grelt,ig,posel,ie_['J'+str(I)+','+str(int(v_['J-1']))]))
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['1/HY2']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLUTION            2.51948D+00    $ (NX=50,NY=25)
@@ -254,10 +250,9 @@ class  MINSURFO(CUTEst_problem):
 # LO SOLUTION            2.50568D+00    $ (NX=50,NY=75)
 # LO SOLUTION            2.50694D+00    $ (NX=50,NY=100)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OBR2-AN-V-V"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OBR2-AN-V-V"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -266,7 +261,7 @@ class  MINSURFO(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eISQ(pbm,nargout,*args):
+    def eISQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -301,7 +296,7 @@ class  MINSURFO(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gROOT(pbm,nargout,*args):
+    def gROOT(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

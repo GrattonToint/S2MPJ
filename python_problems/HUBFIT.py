@@ -26,10 +26,6 @@ class  HUBFIT(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -48,130 +44,129 @@ class  HUBFIT(CUTEst_problem):
         v_['Y5'] = 1.0
         v_['C'] = 0.85
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('a',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'a')
+        self.xnames=arrset(self.xnames,iv,'a')
         [iv,ix_,_] = s2mpj_ii('b',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'b')
+        self.xnames=arrset(self.xnames,iv,'b')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('Obj1',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
-        pbm.A[ig,iv] = float(v_['X1'])+pbm.A[ig,iv]
+        self.A[ig,iv] = float(v_['X1'])+self.A[ig,iv]
         iv = ix_['b']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        self.gscale = arrset(self.gscale,ig,float(2.0))
         [ig,ig_,_] = s2mpj_ii('Obj2',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
-        pbm.A[ig,iv] = float(v_['X2'])+pbm.A[ig,iv]
+        self.A[ig,iv] = float(v_['X2'])+self.A[ig,iv]
         iv = ix_['b']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        self.gscale = arrset(self.gscale,ig,float(2.0))
         [ig,ig_,_] = s2mpj_ii('Obj3',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
-        pbm.A[ig,iv] = float(v_['X3'])+pbm.A[ig,iv]
+        self.A[ig,iv] = float(v_['X3'])+self.A[ig,iv]
         iv = ix_['b']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        self.gscale = arrset(self.gscale,ig,float(2.0))
         [ig,ig_,_] = s2mpj_ii('Obj4',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
-        pbm.A[ig,iv] = float(v_['X4'])+pbm.A[ig,iv]
+        self.A[ig,iv] = float(v_['X4'])+self.A[ig,iv]
         iv = ix_['b']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        self.gscale = arrset(self.gscale,ig,float(2.0))
         [ig,ig_,_] = s2mpj_ii('Obj5',ig_)
         gtype = arrset(gtype,ig,'<>')
         iv = ix_['a']
-        pbm.A[ig,iv] = float(v_['X5'])+pbm.A[ig,iv]
+        self.A[ig,iv] = float(v_['X5'])+self.A[ig,iv]
         iv = ix_['b']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
-        pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
+        self.gscale = arrset(self.gscale,ig,float(2.0))
         [ig,ig_,_] = s2mpj_ii('Cons',ig_)
         gtype = arrset(gtype,ig,'<=')
         cnames = arrset(cnames,ig,'Cons')
         iv = ix_['a']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['b']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['Obj1'],float(v_['Y1']))
-        pbm.gconst = arrset(pbm.gconst,ig_['Obj2'],float(v_['Y2']))
-        pbm.gconst = arrset(pbm.gconst,ig_['Obj3'],float(v_['Y3']))
-        pbm.gconst = arrset(pbm.gconst,ig_['Obj4'],float(v_['Y4']))
-        pbm.gconst = arrset(pbm.gconst,ig_['Obj5'],float(v_['Y5']))
-        pbm.gconst = arrset(pbm.gconst,ig_['Cons'],float(v_['C']))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['Obj1'],float(v_['Y1']))
+        self.gconst = arrset(self.gconst,ig_['Obj2'],float(v_['Y2']))
+        self.gconst = arrset(self.gconst,ig_['Obj3'],float(v_['Y3']))
+        self.gconst = arrset(self.gconst,ig_['Obj4'],float(v_['Y4']))
+        self.gconst = arrset(self.gconst,ig_['Obj5'],float(v_['Y5']))
+        self.gconst = arrset(self.gconst,ig_['Cons'],float(v_['C']))
         #%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xupper = np.full((pb.n,1),float('inf'))
-        pb.xlower[ix_['b']] = -float('Inf')
-        pb.xupper[ix_['b']] = +float('Inf')
+        self.xlower = np.zeros((self.n,1))
+        self.xupper = np.full((self.n,1),float('inf'))
+        self.xlower[ix_['b']] = -float('Inf')
+        self.xupper[ix_['b']] = +float('Inf')
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gHUBER',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         ig = ig_['Obj1']
-        pbm.grftype = arrset(pbm.grftype,ig,'gHUBER')
+        self.grftype = arrset(self.grftype,ig,'gHUBER')
         ig = ig_['Obj2']
-        pbm.grftype = arrset(pbm.grftype,ig,'gHUBER')
+        self.grftype = arrset(self.grftype,ig,'gHUBER')
         ig = ig_['Obj3']
-        pbm.grftype = arrset(pbm.grftype,ig,'gHUBER')
+        self.grftype = arrset(self.grftype,ig,'gHUBER')
         ig = ig_['Obj4']
-        pbm.grftype = arrset(pbm.grftype,ig,'gHUBER')
+        self.grftype = arrset(self.grftype,ig,'gHUBER')
         ig = ig_['Obj5']
-        pbm.grftype = arrset(pbm.grftype,ig,'gHUBER')
+        self.grftype = arrset(self.grftype,ig,'gHUBER')
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.cupper[np.arange(pb.nle)] = np.zeros((pb.nle,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.lincons   = np.arange(len(pbm.congrps))
-        pb.pbclass = "OLR2-AN-2-1"
-        pb.x0          = np.zeros((pb.n,1))
-        self.pb = pb; self.pbm = pbm
+        self.lincons   = np.arange(len(self.congrps))
+        self.pbclass = "OLR2-AN-2-1"
+        self.x0        = np.zeros((self.n,1))
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gHUBER(pbm,nargout,*args):
+    def gHUBER(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

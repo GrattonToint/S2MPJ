@@ -159,7 +159,7 @@ switch(action)
         pb.neq = length(eqgrps);
         pb.nge = length(gegrps);
         pb.m   = pb.nle+pb.neq+pb.nge;
-        pbm.congrps = find(ismember(gtype,{'<=','==','>='}));
+        pbm.congrps = [ legrps, eqgrps, gegrps ];
         [pb.cnames{1:pb.m}] = deal(cnames{pbm.congrps});
         pb.nob = ngrp-pb.m;
         pbm.objgrps = find(strcmp(gtype,'<>'));
@@ -324,7 +324,7 @@ switch(action)
         pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        [~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
+        [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
         pb.pbclass = 'QQR2-AN-4-3';
         pb.x0          = zeros(pb.n,1);
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

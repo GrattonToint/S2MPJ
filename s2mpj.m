@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù%%%%%%%%%%%%
 
 function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 
@@ -373,7 +373,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %     being then performed by the __init__ method of the class. So, if the problem is given by the probname class, setting
 %     it up is achieved by the call
 %
-%         pb, pbm =  probname(problems parameters)
+%          probname(problems parameters)
 %
 %     while the evaluation task corresponding to the Matlab call [outputs] = probname( action, x, [other args] ) is
 %     performed by the Python call
@@ -384,6 +384,8 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %     present in the pb and pbm structures are column-oriented numpy.ndarrays.  Real matrices are sparse.csr matrices, or
 %     lists of sparse.csr matrices (for the Hessians of the constraints). Note that pb and pbm struct have the same fields
 %     as those described for the Matlab case, subject to the same conditions for being present or not.
+%
+%     Note that all fields of the pb and pbm structs in the Matlab case are now field of the probname class.
 %
 %     The Julia output file
 %     ---------------------
@@ -478,35 +480,35 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   where inpy is a struct describing the S2MPJ options (see next paragraph) with inpy.language = 'python' (other options
 %   may be specified if desired.)  After importing the functions of PROBNAME module by
 %
-%      from PROBNAME import *
+%       from PROBNAME import *
 %
 %   the setup of the problem is now performed by a call of the form
 %
-%       PROBNAME( arg[:] )
+%       PB = PROBNAME( arg[:] )
 %
 %   where args[:] is a comma separated list of problem-dependent arguments. The subsequent evaluation tasks are then
 %   obtained by calling one (or more) of
 %
-%       fx          = PROBNAME.fx( x )
-%       fx, gx      = PROBNAME.fgx( x )
-%       fx, gx, Hx  = PROBNAME.fgHx( x )
-%       Hxv         = PROBNAME.fHxv( x, v )
-%       cx          = PROBNAME.cx( x )
-%       cx, Jx      = PROBNAME.cJx( x )
-%       cx, Jx, HXs = PROBNAME.cJHx( x )
-%       Jxv         = PROBNAME.cJxv( x, v )
-%       cIx         = PROBNAME.cIx( x, I )
-%       cIx, cIJx   = PROBNAME.cIJx( x, I )
-%       cIx, cIJx, cIJHxs = PROBNAME.cIJHx( x, I )
-%       cIHv        = PROBNAME.cIHxv( x, v, I )
-%       Lxxy        = PROBNAME.Lxy( x, y )
-%       Lxy, Lgxy   = PROBNAME.Lgxy( x, y )
-%       Lxy, Lgxy, LgHxy = PROBNAME.LgHxy( x, y )
-%       LHxyv       = PROBNAME.LHxyv( x, y, v )
-%       LIxy        = PROBNAME.LIxy( x, y, I )
-%       LIxy, LIgxy = PROBNAME.LIgxy( x, y, I )
-%       LIxy, LIgxy, LIgHxy = PROBNAME.LIgHxy( x, y, I )
-%       LIHxyv      = PROBNAME.LIHxyv( x, y, v, I )
+%       fx          = PB.fx( x )
+%       fx, gx      = PB.fgx( x )
+%       fx, gx, Hx  = PB.fgHx( x )
+%       Hxv         = PB.fHxv( x, v )
+%       cx          = PB.cx( x )
+%       cx, Jx      = PB.cJx( x )
+%       cx, Jx, HXs = PB.cJHx( x )
+%       Jxv         = PB.cJxv( x, v )
+%       cIx         = PB.cIx( x, I )
+%       cIx, cIJx   = PB.cIJx( x, I )
+%       cIx, cIJx, cIJHxs = PB.cIJHx( x, I )
+%       cIHv        = PB.cIHxv( x, v, I )
+%       Lxxy        = PB.Lxy( x, y )
+%       Lxy, Lgxy   = PB.Lgxy( x, y )
+%       Lxy, Lgxy, LgHxy = PB.LgHxy( x, y )
+%       LHxyv       = PB.LHxyv( x, y, v )
+%       LIxy        = PB.LIxy( x, y, I )
+%       LIxy, LIgxy = PB.LIgxy( x, y, I )
+%       LIxy, LIgxy, LIgHxy = PB.LIgHxy( x, y, I )
+%       LIHxyv      = PB.LIHxyv( x, y, v, I )
 %
 %   
 %   TYPICAL USE OF JULIA OUTPUT FILES
@@ -716,7 +718,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 20 VI 2024
+%                started VI 2023, this version 24 VI 2024
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -730,7 +732,7 @@ getxnames      = 1;  %  Store the variables' names in pb.xnames
 getcnames      = 1;  %  Store the constraints' names in pb.cnames    
 getenames      = 0;  %  Do not store the elements names in pbm.elnames      
 getgnames      = 0;  %  Do not store the group names in pbm.grnames         
-keepcorder     = 1;  %  Do not reorder the constraints as <=, ==, >=, but keep the order in which they appear in the
+keepcorder     = 0;  %  Do not reorder the constraints as <=, ==, >=, but keep the order in which they appear in the
                      %  SIF file 
 keepcformat    = 0;  %  Do not keep the SIF format for constraint specification (ie specifying constants and ranges)
                      %  instead of producing lower and upper bounds on the constraints values (clowerand cupper). 
@@ -836,7 +838,7 @@ if ( nargin > 1 )
             else
                pyfile = [ outdir, '/', probname, '.py' ];
             end
-            pbs.fidpy = fopen( pyfile, 'w' );
+            pbs.fidpy = fopen( pyfile, 'w' );            
             pbs.lang  = 'python';                     %  Python code will be generated
          case 'julia'
             if ( isempty( outdir ) )
@@ -1177,12 +1179,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( 'def __init__(self, *args): ',                                           1,      bindent, pbs.fidpy );
          printpline( 'import numpy as np',                                                    2,      bindent, pbs.fidpy );
-         printpline( 'pbm      = structtype()',                                               2,      bindent, pbs.fidpy );
-         printpline( 'pb       = structtype()',                                               2,      bindent, pbs.fidpy );
-         printpline( 'pb.name  = self.name',                                                  2,      bindent, pbs.fidpy );
-         printpline( 'pbm.name = self.name',                                                  2,      bindent, pbs.fidpy );
          if ( ~strcmp( sifpbname, probname ) )
-            printpline( sprintf( 'pb.sifpbname = ''%s''', sifpbname ),                        2,      bindent, pbs.fidpy );
+            printpline( sprintf( 'self.sifpbname = ''%s''', sifpbname ),                        2,      bindent, pbs.fidpy );
          end
          printpline( 'nargin   = len(args)',                                                  2,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
@@ -1212,7 +1210,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printjline( sprintf( 'pb.sifpbname = "%s"', sifpbname ),                          2,      bindent, pbs.fidjl );
          end
          printjline( 'nargin       = length(args)',                                           2,      bindent, pbs.fidjl );
-         printjline( 'pbm.call     = eval( Meta.parse( name ) )',                             2,      bindent, pbs.fidjl );
+         printjline( 'self.call    = eval( Meta.parse( name ) )',                             2,      bindent, pbs.fidjl );
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
          printjline( '#%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
 
@@ -1282,34 +1280,33 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
           end
       case 'python'
          printpline( '#%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
-         printpline( 'pb.n   = len(ix_)',                                                     indlvl, bindent, pbs.fidpy );
+         printpline( 'self.n   = len(ix_)',                                                   indlvl, bindent, pbs.fidpy );
          if ( ~has_ngrp )
             printpline( 'ngrp   = len(ig_)',                                                  indlvl, bindent, pbs.fidpy );
             has_ngrp = 1;
          end
          if ( has_constraints )
-            printpline( 'legrps = find(gtype,lambda x:x==''<='')',                            indlvl, bindent, pbs.fidpy );
-            printpline( 'eqgrps = find(gtype,lambda x:x==''=='')',                            indlvl, bindent, pbs.fidpy );
-            printpline( 'gegrps = find(gtype,lambda x:x==''>='')',                            indlvl, bindent, pbs.fidpy );
-            printpline( 'pb.nle = len(legrps)',                                               indlvl, bindent, pbs.fidpy );
-            printpline( 'pb.neq = len(eqgrps)',                                               indlvl, bindent, pbs.fidpy );
-            printpline( 'pb.nge = len(gegrps)',                                               indlvl, bindent, pbs.fidpy );
-            printpline( 'pb.m   = pb.nle+pb.neq+pb.nge',                                      indlvl, bindent, pbs.fidpy );
+            printpline( 'legrps = np.where(gtype==''<='')[0]',                                indlvl, bindent, pbs.fidpy );
+            printpline( 'eqgrps = np.where(gtype==''=='')[0]',                                indlvl, bindent, pbs.fidpy );
+            printpline( 'gegrps = np.where(gtype==''>='')[0]',                                indlvl, bindent, pbs.fidpy );
+            printpline( 'self.nle = len(legrps)',                                             indlvl, bindent, pbs.fidpy );
+            printpline( 'self.neq = len(eqgrps)',                                             indlvl, bindent, pbs.fidpy );
+            printpline( 'self.nge = len(gegrps)',                                             indlvl, bindent, pbs.fidpy );
+            printpline( 'self.m   = self.nle+self.neq+self.nge',                              indlvl, bindent, pbs.fidpy );
             if ( keepcorder )
-               printpline( 'pbm.congrps = find(gtype,lambda x:(x==''<='' or x==''=='' or x==''>=''))', ...
+               printpline( 'self.congrps = np.where(gtype==''<='' or gtype==''=='' or gytype==''>='')[0])', ...
                                                                                               indlvl, bindent, pbs.fidpy );
             else
-%%%%%%%%%%%%%%%%%%%  PROBLEM HERE ?? %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-               printpline( 'pbm.congrps = np.concatenate((legrps,eqgrps,gegrps))',             indlvl, bindent, pbs.fidpy );
+               printpline( 'self.congrps = np.concatenate((legrps,eqgrps,gegrps))',           indlvl, bindent, pbs.fidpy );
             end
             if ( getcnames )
-               printpline( 'pb.cnames= cnames[pbm.congrps]',                                  indlvl, bindent, pbs.fidpy );
+               printpline( 'self.cnames= cnames[self.congrps]',                               indlvl, bindent, pbs.fidpy );
             end
-            printpline( 'pb.nob = ngrp-pb.m',                                                 indlvl, bindent, pbs.fidpy );
-            printpline( 'pbm.objgrps = find(gtype,lambda x:x==''<>'')',                       indlvl, bindent, pbs.fidpy );
+            printpline( 'self.nob = ngrp-self.m',                                             indlvl, bindent, pbs.fidpy );
+            printpline( 'self.objgrps = np.where(gtype==''<>'')[0]',                          indlvl, bindent, pbs.fidpy );
          else
-            printpline( 'pbm.objgrps = np.arange(ngrp)',                                      indlvl, bindent, pbs.fidpy );
-            printpline( 'pb.m        = 0',                                                    indlvl, bindent, pbs.fidpy );
+            printpline( 'self.objgrps = np.arange(ngrp)',                                     indlvl, bindent, pbs.fidpy );
+            printpline( 'self.m       = 0',                                                   indlvl, bindent, pbs.fidpy );
          end
       case 'julia'
          printjline( '#%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
@@ -1353,13 +1350,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          end
          if ( ~has_xlowdef )
             printmline( 'pb.xlower = zeros(pb.n,1);',                                         indlvl, bindent, pbs.fidma );
-            printpline( 'pb.xlower = np.zeros((pb.n,1))',                                     indlvl, bindent, pbs.fidpy );
+            printpline( 'self.xlower = np.zeros((self.n,1))',                                 indlvl, bindent, pbs.fidpy );
             printjline( 'pb.xlower = zeros(Float64,pb.n)',                                    indlvl, bindent, pbs.fidjl );
             has_xlowdef = 1;
          end
          if ( ~has_xuppdef ) 
             printmline( 'pb.xupper = Inf*ones(pb.n,1);',                                      indlvl, bindent, pbs.fidma );
-            printpline( 'pb.xupper = np.full((pb.n,1),float(''inf''))',                       indlvl, bindent, pbs.fidpy );
+            printpline( 'self.xupper = np.full((self.n,1),float(''inf''))',                   indlvl, bindent, pbs.fidpy );
             printjline( 'pb.xupper =    fill(Inf,pb.n)',                                      indlvl, bindent, pbs.fidjl );
             has_xuppdef = 1;
          end
@@ -1371,13 +1368,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          end
          if ( ~has_x0def )
             printmline( 'pb.x0(1:pb.n,1) = zeros(pb.n,1);',                                   indlvl, bindent, pbs.fidma );
-            printpline( 'pb.x0 = np.zeros((pb.n,1))',                                         indlvl, bindent, pbs.fidpy );
+            printpline( 'self.x0 = np.zeros((self.n,1))',                                     indlvl, bindent, pbs.fidpy );
             printjline( 'pb.x0 = zeros(Float64,pb.n)',                                        indlvl, bindent, pbs.fidjl );
             has_x0def = 1;
          end
          if ( has_constraints && ~has_y0def )
             printmline( 'pb.y0 = zeros(pb.m,1);',                                             indlvl, bindent, pbs.fidma );
-            printpline( 'pb.y0 = np.zeros((pb.m,1))',                                         indlvl, bindent, pbs.fidpy );
+            printpline( 'self.y0 = np.zeros((self.m,1))',                                     indlvl, bindent, pbs.fidpy );
             printjline( 'pb.y0 = zeros(Float64,pb.m)',                                        indlvl, bindent, pbs.fidjl );
             has_y0def = 1;
          end
@@ -1460,19 +1457,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printmline( 'pbm.A = sparse(0,0);',                                                  indlvl, bindent, pbs.fidma );  
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%',                  indlvl, bindent, pbs.fidpy );
-         printpline( 'pbm.A       = lil_matrix((1000000,1000000))',                           indlvl, bindent, pbs.fidpy );
-         printpline( 'pbm.gscale  = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'pbm.grnames = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'cnames      = np.array([])',                                            indlvl, bindent, pbs.fidpy ); 
-         printpline( 'pb.cnames   = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-%         if ( ~varsdef )
-            printpline( 'gtype       = np.array([])',                                         indlvl, bindent, pbs.fidpy );
-%         end
+         printpline( 'self.A       = lil_matrix((1000000,1000000))',                          indlvl, bindent, pbs.fidpy );
+         printpline( 'self.gscale  = np.array([])',                                           indlvl, bindent, pbs.fidpy );
+         printpline( 'self.grnames = np.array([])',                                            indlvl, bindent, pbs.fidpy );
+         printpline( 'cnames      = np.array([])',                                            indlvl, bindent, pbs.fidpy );
+         printpline( 'self.cnames = np.array([])',                                            indlvl, bindent, pbs.fidpy );
+         printpline( 'gtype       = np.array([])',                                            indlvl, bindent, pbs.fidpy );
       case 'julia'
          printjline( '#%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%',                  indlvl, bindent, pbs.fidjl );
-%         if ( ~varsdef )
-            printjline( 'gtype    = String[]',                                                indlvl, bindent, pbs.fidjl );
-%         end
+         printjline( 'gtype    = String[]',                                                   indlvl, bindent, pbs.fidjl );
       end
       prevgname = '';
       
@@ -1497,12 +1490,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          % a holder for the variable's names
          
          printmline( 'pb.xnames = {};',                                                       indlvl, bindent, pbs.fidma );
-         printpline( 'pb.xnames = np.array([])',                                              indlvl, bindent, pbs.fidpy );
+         printpline( 'self.xnames = np.array([])',                                            indlvl, bindent, pbs.fidpy );
       end
 
       % a holder for the variable's scalings
       
-      printpline( 'pb.xscale = np.array([])',                                                 indlvl, bindent, pbs.fidpy );
+      printpline( 'self.xscale = np.array([])',                                               indlvl, bindent, pbs.fidpy );
       printjline( 'pb.xscale = Float64[]',                                                    indlvl, bindent, pbs.fidjl );
       
        % holders for the indeces of the integer and binary variables
@@ -1530,7 +1523,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          pending{end+1} = sprintf( 'pbm.gconst = zeros(ngrp,1);' );
       case 'python'
          pending{1}   = '#%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%';
-         pending{end+1} = sprintf( 'pbm.gconst = np.zeros((ngrp,1))' );
+         pending{end+1} = sprintf( 'self.gconst = np.zeros((ngrp,1))' );
       case 'julia'
          pending{1}   = '#%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%';
          pending{end+1} = sprintf( 'pbm.gconst = zeros(Float64,ngrp)' );
@@ -1557,7 +1550,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          case 'matlab'
             pending{end+1} = sprintf( 'grange(legrps,1) = Inf*ones(pb.nle,1);' );
          case 'python'
-            pending{end+1} = sprintf( 'grange[legrps] = np.full((pb.nle,1),float(''inf''))' );
+            pending{end+1} = sprintf( 'grange[legrps] = np.full((self.nle,1),float(''inf''))' );
          case 'julia'
             pending{end+1} = sprintf( 'grange[legrps,1] = fill(Inf,pb.nle)' );
          end
@@ -1567,7 +1560,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          case 'matlab'
             pending{end+1} = sprintf( 'grange(gegrps,1) = Inf*ones(pb.nge,1);' );
          case 'python'
-            pending{end+1} = sprintf( 'grange[gegrps] = np.full((pb.nge,1),float(''inf''))' );
+            pending{end+1} = sprintf( 'grange[gegrps] = np.full((self.nge,1),float(''inf''))' );
          case 'julia'
             pending{end+1} = sprintf( 'grange[gegrps,1] = fill(Inf,pb.nge)' );
          end
@@ -1620,7 +1613,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printmline( 'pbm.H = sparse( pb.n, pb.n );',                                         indlvl, bindent, pbs.fidma );
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
-         printpline( 'pbm.H = lil_matrix((pb.n, pb.n))',                                      indlvl, bindent, pbs.fidpy );
+         printpline( 'self.H = lil_matrix((self.n, self.n))',                                 indlvl, bindent, pbs.fidpy );
       case 'julia'
          printjline( '#%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
       end
@@ -1661,7 +1654,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printmline( '%%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
          printmline( 'ie_ = configureDictionary(''string'',''double'');',                     indlvl, bindent, pbs.fidma );
          if ( getenames )
-            prinmpline( 'pbm.enames  = {};',                                                  indlvl, bindent, pbs.fidma );
+            printmline( 'pbm.enames  = {};',                                                  indlvl, bindent, pbs.fidma );
          end
          printmline( 'pbm.elftype = {};',                                                     indlvl, bindent, pbs.fidma );
          printmline( 'ielftype    = [];',                                                     indlvl, bindent, pbs.fidma );
@@ -1671,15 +1664,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          end
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
-         printpline( 'ie_ = {}',  indlvl, bindent, pbs.fidpy );
+         printpline( 'ie_ = {}',                                                              indlvl, bindent, pbs.fidpy );
          if ( getenames )
-            printpline( 'pbm.enames  = np.array([])',                                         indlvl, bindent, pbs.fidpy );
+            printpline( 'self.enames  = np.array([])',                                        indlvl, bindent, pbs.fidpy );
          end
-         printpline( 'pbm.elftype = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'ielftype    = np.array([])',                                            indlvl, bindent, pbs.fidpy );
-         printpline( 'pbm.elvar   = []',                                                      indlvl, bindent, pbs.fidpy );
+         printpline( 'self.elftype = np.array([])',                                           indlvl, bindent, pbs.fidpy );
+         printpline( 'ielftype     = np.array([])',                                           indlvl, bindent, pbs.fidpy );
+         printpline( 'self.elvar   = []',                                                     indlvl, bindent, pbs.fidpy );
          if ( has_elpar )
-            printpline( 'pbm.elpar   = []',                                                   indlvl, bindent, pbs.fidpy );
+            printpline( 'self.elpar   = []',                                                  indlvl, bindent, pbs.fidpy );
          end
       case 'julia'
          printjline( '#%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
@@ -1719,14 +1712,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printmline( 'nlc = [];',                                                             indlvl, bindent, pbs.fidma );
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%',               indlvl,     bindent, pbs.fidpy );
-         printpline( 'pbm.grelt   = []' ,                                                 indlvl,     bindent, pbs.fidpy );
+         printpline( 'self.grelt   = []' ,                                                indlvl,     bindent, pbs.fidpy );
          printpline( 'for ig in np.arange(0,ngrp):',                                      indlvl,     bindent, pbs.fidpy )
-         printpline( 'pbm.grelt.append(np.array([]))',                                    indlvl + 1, bindent, pbs.fidpy );
-         printpline( 'pbm.grftype = np.array([])',                                        indlvl,     bindent, pbs.fidpy );
-         printpline( 'pbm.grelw   = []',                                                  indlvl,     bindent, pbs.fidpy );
+         printpline( 'self.grelt.append(np.array([]))',                                   indlvl + 1, bindent, pbs.fidpy );
+         printpline( 'self.grftype = np.array([])',                                       indlvl,     bindent, pbs.fidpy );
+         printpline( 'self.grelw   = []',                                                 indlvl,     bindent, pbs.fidpy );
          printpline( 'nlc         = np.array([])',                                        indlvl,     bindent, pbs.fidpy );
          if ( has_grpar )
-            printpline( 'pbm.grpar   = []',                                               indlvl,     bindent, pbs.fidpy );
+            printpline( 'self.grpar   = []',                                              indlvl,     bindent, pbs.fidpy );
          end
       case 'julia'
          printjline( '#%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%',               indlvl,     bindent, pbs.fidjl );
@@ -1786,7 +1779,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       case 'python'
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( '@staticmethod',                                                         1,      bindent, pbs.fidpy );
-         printpline( 'def e_globs(pbm):',                                                     1,      bindent, pbs.fidpy );
+         printpline( 'def e_globs(self):',                                                     1,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( 'import numpy as np',                                                    2,      bindent, pbs.fidpy );
       case 'julia'
@@ -1857,7 +1850,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       case 'python'
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( '@staticmethod',                                                         1,      bindent, pbs.fidpy );
-         printpline( 'def g_globs(pbm):',                                                     1,      bindent, pbs.fidpy );
+         printpline( 'def g_globs(self):',                                                     1,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
       case 'julia'
          printjline( 'elseif action == "g_globs"',                                            1,      bindent, pbs.fidjl );
@@ -1904,15 +1897,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
          if ( has_intvars || has_binvars )
             printmline( 'pb.xtype = repmat(''r'',1,pb.n);',                                   indlvl, bindent, pbs.fidma );
-            printpline( 'pb.xtype = np.full(pb.n,''r'')',                                     indlvl, bindent, pbs.fidpy );
+            printpline( 'self.xtype = np.full(self.n,''r'')',                                 indlvl, bindent, pbs.fidpy );
             if ( has_intvars )
                printmline( 'pb.xtype(intvars) = ''i'';',                                      indlvl, bindent, pbs.fidma );
-               printpline( 'pb.xtype[intvars] = np.full(len(intvars),''i'')',                 indlvl, bindent, pbs.fidpy );
+               printpline( 'self.xtype[intvars] = np.full(len(intvars),''i'')',               indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xtype[intvars] = fill("i",length(intvars))',                   indlvl, bindent, pbs.fidjl );
             end
             if ( has_binvars ) 
                printmline( 'pb.xtype(binvars) = ''b'';',                                      indlvl, bindent, pbs.fidma );
-               printpline( 'pb.xtype[binvars] = np.full(len(binvars),''b'')',                 indlvl, bindent, pbs.fidpy );
+               printpline( 'self.xtype[binvars] = np.full(len(binvars),''b'')',               indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xtype[binvars] = fill("b",length(binvars))',                   indlvl, bindent, pbs.fidjl );
             end
          end
@@ -1925,8 +1918,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( 'pb.xlower = zeros(pb.n,1);',                                      indlvl, bindent, pbs.fidma );
                printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                                  indlvl, bindent, pbs.fidma );
             case 'python'
-               printpline( 'pb.xlower = np.zeros((pb.n,1))',                                  indlvl, bindent, pbs.fidpy );
-               printpline( 'pb.xupper = np.full((pb.n,1),+float(''Inf''))',                   indlvl, bindent, pbs.fidpy );
+               printpline( 'self.xlower = np.zeros((self.n,1))',                              indlvl, bindent, pbs.fidpy );
+               printpline( 'self.xupper = np.full((self.n,1),+float(''Inf''))',               indlvl, bindent, pbs.fidpy );
             case 'julia'
                printjline( 'pb.xlower = zeros(Float64,pb.n)',                                 indlvl, bindent, pbs.fidjl );
                printjline( 'pb.xupper =    fill(Inf,pb.n)',                                   indlvl, bindent, pbs.fidjl );
@@ -1943,12 +1936,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             
                if ( has_ranges )
                   printmline( 'pb.ranges = grange(pbm.congrps);',                             indlvl, bindent, pbs.fidma );
-                  printpline( 'pb.ranges = grange[pbm.congrps]',                              indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.ranges = grange[self.congrps]',                           indlvl, bindent, pbs.fidpy );
                   printjline( 'pb.ranges = grange[pbm.congrps]',                              indlvl, bindent, pbs.fidjl );
                end
                printmline( 'pb.ctypes = gtype(pbm.congrps);',                                 indlvl, bindent, pbs.fidma );
-               printpline( 'pb.ctypes = np.array([])',                                        indlvl, bindent, pbs.fidpy );
-               printpline( 'pb.ctypes = gtype[pbm.congrps]',                                  indlvl, bindent, pbs.fidpy );
+               printpline( 'self.ctypes = np.array([])',                                      indlvl, bindent, pbs.fidpy );
+               printpline( 'self.ctypes = gtype[self.congrps]',                               indlvl, bindent, pbs.fidpy );
                printjline( 'pb.ctypes = gtype[pbm.congrps]',                                  indlvl, bindent, pbs.fidjl );
                
             %  2) In the better(?) S2MPJ format: computate the lower and upper bounds on constraints values. 
@@ -1958,8 +1951,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( '%%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%',             indlvl, bindent, pbs.fidma );
                %
                printpline( '#%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%',             indlvl, bindent, pbs.fidpy );
-               printpline( 'pb.clower = np.full((pb.m,1),-float(''Inf''))',                   indlvl, bindent, pbs.fidpy );
-               printpline( 'pb.cupper = np.full((pb.m,1),+float(''Inf''))',                   indlvl, bindent, pbs.fidpy );
+               printpline( 'self.clower = np.full((self.m,1),-float(''Inf''))',               indlvl, bindent, pbs.fidpy );
+               printpline( 'self.cupper = np.full((self.m,1),+float(''Inf''))',               indlvl, bindent, pbs.fidpy );
                %
                printjline( '#%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%',             indlvl, bindent, pbs.fidjl );
                printjline( 'pb.clower = -1*fill(Inf,pb.m)',                                   indlvl, bindent, pbs.fidjl );
@@ -1975,7 +1968,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   
                   if ( has_ranges )
                      printmline( 'pb.clower(1:pb.nle) = grange(legrps);',                     indlvl, bindent, pbs.fidma );
-                     printpline( 'pb.clower[np.arange(pb.nle)] = grange[legrps]',             indlvl, bindent, pbs.fidpy );
+                     printpline( 'self.clower[np.arange(self.nle)] = grange[legrps]',         indlvl, bindent, pbs.fidpy );
                      printjline( 'pb.clower[1:pb.nle] = grange[legrps]',                      indlvl, bindent, pbs.fidjl );
                   else
                      printmline( 'pb.clower(1:pb.nle) = -Inf*ones(pb.nle,1);',                indlvl, bindent, pbs.fidma );
@@ -1984,7 +1977,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   %  Set the <= constraint's upper bound
                    
                   printmline( 'pb.cupper(1:pb.nle) = zeros(pb.nle,1);',                       indlvl, bindent, pbs.fidma );
-                  printpline( 'pb.cupper[np.arange(pb.nle)] = np.zeros((pb.nle,1))',          indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))',    indlvl, bindent, pbs.fidpy );
                   printjline( 'pb.cupper[1:pb.nle] = zeros(Float64,pb.nle)',                  indlvl, bindent, pbs.fidjl );
                end
 
@@ -1995,9 +1988,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( 'pb.clower(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);',         indlvl, bindent, pbs.fidma );
                   printmline( 'pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);',         indlvl, bindent, pbs.fidma );
                   %
-                  printpline( 'pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))', ...
+                  printpline( 'self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))', ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                  printpline( 'pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))', ...
+                  printpline( 'self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))', ...
                                                                                               indlvl, bindent, pbs.fidpy );
                   %
                   printjline( 'pb.clower[pb.nle+1:pb.nle+pb.neq] = zeros(Float64,pb.neq)',    indlvl, bindent, pbs.fidjl );
@@ -2011,7 +2004,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   %  Set the >= constraint's lower bound.
                   
                   printmline( 'pb.clower(pb.nle+pb.neq+1:pb.m) = zeros(pb.nge,1);',           indlvl, bindent, pbs.fidma );
-                  printpline( 'pb.clower[np.arange(pb.nle+pb.neq,pb.m)] = np.zeros((pb.nge,1))',  ...
+                  printpline( 'self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))',  ...
                                                                                               indlvl, bindent, pbs.fidpy );
                   printjline( 'pb.clower[pb.nle+pb.neq+1:pb.m] = zeros(Float64,pb.nge)',      indlvl, bindent, pbs.fidjl );
 
@@ -2019,7 +2012,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   
                   if ( has_ranges )
                      printmline( 'pb.cupper(1:pb.nge) = grange(gegrps);',                     indlvl, bindent, pbs.fidma );
-                     printpline( 'pb.cupper[np.arange(pb.nge)] = grange[gegrps]',             indlvl, bindent, pbs.fidpy );
+                     printpline( 'self.cupper[np.arange(self.nge)] = grange[gegrps]',         indlvl, bindent, pbs.fidpy );
                      printjline( 'pb.cupper[1:pb.nge] = grange[gegrps]',                      indlvl, bindent, pbs.fidjl );
                   else
                      printmline( 'pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);',                indlvl, bindent, pbs.fidma );
@@ -2034,10 +2027,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          if ( has_A )
 
             printpline( '#%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%',                indlvl, bindent, pbs.fidpy );
-            printpline( 'pbm.A.resize(ngrp,pb.n)',                                            indlvl, bindent, pbs.fidpy );
-            printpline( 'pbm.A      = pbm.A.tocsr()',                                         indlvl, bindent, pbs.fidpy );
-            printpline( 'sA1,sA2    = pbm.A.shape',                                           indlvl, bindent, pbs.fidpy );
-            printpline( 'pbm.Ashape = [ sA1, sA2 ]',                                          indlvl, bindent, pbs.fidpy );
+            printpline( 'self.A.resize(ngrp,self.n)',                                         indlvl, bindent, pbs.fidpy );
+            printpline( 'self.A     = self.A.tocsr()',                                        indlvl, bindent, pbs.fidpy );
+            printpline( 'sA1,sA2    = self.A.shape',                                          indlvl, bindent, pbs.fidpy );
+            printpline( 'self.Ashape = [ sA1, sA2 ]',                                         indlvl, bindent, pbs.fidpy );
             %
             printjline( 'Asave = pbm.A[1:ngrp, 1:pb.n]',                                      indlvl, bindent, pbs.fidjl );
             printjline( 'pbm.A = Asave',                                                      indlvl, bindent, pbs.fidjl );
@@ -2058,13 +2051,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printmline( 'pb.xscale = [];',                                           indlvl, bindent, pbs.fidma );
                   case 'python'
                      printpline( '#%%%%%%%%%%%%%%% VARIABLES'' SCALING %%%%%%%%%%%%%%%',      indlvl, bindent, pbs.fidpy );
-                     printpline( 'lxs = len(pb.xscale);',                                     indlvl, bindent, pbs.fidpy );
-                     printpline( 'for j in np.arange(0,min(sA2,pb.n,lxs)):',                  indlvl, bindent, pbs.fidpy );
-                     printpline( '    if not pb.xscale[j] is None and pb.xscale[j] != 0.0 and pb.xscale[j] != 1.0:',  ...
-                                                                                              indlvl, bindent, pbs.fidpy );
-                     printpline( '        for i in find(pbm.A[:,j],lambda x:x!=0):',          indlvl, bindent, pbs.fidpy );
-                     printpline( '              pbm.A[i,j] = pbm.A[i,j]/pb.xscale[j]',        indlvl, bindent, pbs.fidpy );
-                     printpline( 'pb.xscale = []',                                            indlvl, bindent, pbs.fidpy );
+                     printpline( 'lxs = len(self.xscale);',                                   indlvl, bindent, pbs.fidpy );
+                     printpline( 'for j in np.arange(0,min(sA2,self.n,lxs)):',                indlvl, bindent, pbs.fidpy );
+                     printpline( 'if not self.xscale[j] is None and self.xscale[j] != 0.0 and self.xscale[j] != 1.0:', ...
+                                                                                          indlvl + 1, bindent, pbs.fidpy );
+                     printpline( '        for i in np.where(self.A[:,j]!=0)[0]:',             indlvl, bindent, pbs.fidpy );
+                     printpline( '              self.A[i,j] = self.A[i,j]/self.xscale[j]',    indlvl, bindent, pbs.fidpy );
+                     printpline( 'self.xscale = []',                                          indlvl, bindent, pbs.fidpy );
                   case 'julia'
                      printjline( '#%%%%%%%%%%%%%%% VARIABLES'' SCALING %%%%%%%%%%%%%%%',      indlvl, bindent, pbs.fidjl );
                      printjline( 'sA2 = size(pbm.A,2);',                                      indlvl, bindent, pbs.fidjl );
@@ -2081,7 +2074,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                end
             end
          else
-            printpline( 'delattr( pbm, "A" )',                                                indlvl, bindent, pbs.fidpy );
+            printpline( 'delattr( self, "A" )',                                               indlvl, bindent, pbs.fidpy );
             printjline( 'pbm.A = spzeros(Float64,0,0)',                                       indlvl, bindent, pbs.fidjl );
          end
 
@@ -2105,26 +2098,26 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
          if ( has_constraints )
             if ( has_nonlinc )
-               printmline( '[~,lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);',             ...
+               printmline( '[~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);',             ...
                                                                                               indlvl, bindent, pbs.fidma );
-               printpline( 'lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))',   ...
+               printpline( 'self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]',   ...
                                                                                               indlvl, bindent, pbs.fidpy );
-               printjline( 'lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)',           ...
+               printjline( 'pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)',           ...
                                                                                               indlvl, bindent, pbs.fidjl );
             else
                printmline( 'pb.lincons   = [1:length(pbm.congrps)];',                         indlvl, bindent, pbs.fidma );
-               printpline( 'pb.lincons   = np.arange(len(pbm.congrps))',                      indlvl, bindent, pbs.fidpy );
+               printpline( 'self.lincons   = np.arange(len(self.congrps))',                   indlvl, bindent, pbs.fidpy );
                printjline( 'pb.lincons   = collect(1:length(pbm.congrps))',                   indlvl, bindent, pbs.fidjl );
             end
          end
 
          printmline( sprintf( 'pb.pbclass = %s;', classification ),                           indlvl, bindent, pbs.fidma );        
-         printpline( sprintf( 'pb.pbclass = %s',  classification ),                           indlvl, bindent, pbs.fidpy );        
+         printpline( sprintf( 'self.pbclass = %s',  classification ),                         indlvl, bindent, pbs.fidpy );        
          printjline( sprintf( 'pb.pbclass = %s',  classification ),                           indlvl, bindent, pbs.fidjl );
 
          if ( ~has_start )
              printmline( 'pb.x0          = zeros(pb.n,1);',                                   indlvl, bindent, pbs.fidma );
-             printpline( 'pb.x0          = np.zeros((pb.n,1))',                               indlvl, bindent, pbs.fidpy );
+             printpline( 'self.x0        = np.zeros((self.n,1))',                             indlvl, bindent, pbs.fidpy );
              printjline( 'pb.x0          = zeros(Float64,pb.n)',                              indlvl, bindent, pbs.fidjl );
          end
 
@@ -2136,8 +2129,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             if ( redprec )
                printmline( '%%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%',        indlvl,     bindent, pbs.fidma );
                printmline( 'if(strcmp(action,''setup_redprec''))',                        indlvl,     bindent, pbs.fidma );
-               printmline( 'varargout{1} = s2mpjlib(''convert'',pb,  pbm.ndigs);',        indlvl + 1, bindent, pbs.fidma );
-               printmline( 'varargout{2} = s2mpjlib(''convert'',pbm, pbm.ndigs);',        indlvl + 1, bindent, pbs.fidma );
+               printmline( 'varargout{1} = s2mpjlib(''convert'',pb, pbm.ndigs);',         indlvl + 1, bindent, pbs.fidma );
+               printmline( 'varargout{2} = s2mpjlib(''convert'',pbm,pbm.ndigs);',         indlvl + 1, bindent, pbs.fidma );
                printmline( 'else',                                                        indlvl,     bindent, pbs.fidma );
                printmline( 'varargout{1} = pb;',                                          indlvl + 1, bindent, pbs.fidma );
                printmline( 'varargout{2} = pbm;',                                         indlvl + 1, bindent, pbs.fidma );
@@ -2148,9 +2141,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             end
          case 'python'
             if ( has_H )
-               printpline( 'pbm.H = pbm.H.tocsr()',                                           indlvl, bindent, pbs.fidpy );
+               printpline( 'self.H = self.H.tocsr()',                                         indlvl, bindent, pbs.fidpy );
             end
-            printpline( 'self.pb = pb; self.pbm = pbm',                                       indlvl, bindent, pbs.fidpy );
          case 'julia'
             printjline( 'return pb, pbm',                                                     indlvl, bindent, pbs.fidjl );
          end
@@ -2595,7 +2587,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printjline( sprintf( 'iv,ix_,_ = s2mpj_ii(%s,ix_)', vname ),                         indlvl, bindent, pbs.fidjl );
          if ( getxnames )
             printmline( sprintf( 'pb.xnames{iv} = %s;', vname ),                              indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'pb.xnames=arrset(pb.xnames,iv,%s)',  vname ),               indlvl, bindent, pbs.fidpy );
+            printpline( sprintf( 'self.xnames=arrset(self.xnames,iv,%s)',  vname ),           indlvl, bindent, pbs.fidpy );
             printjline( sprintf( 'arrset(pb.xnames,iv,%s)',  vname ),                         indlvl, bindent, pbs.fidjl );
          end
          
@@ -2605,7 +2597,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                if ( ~isempty( f{1} ) && f{1}(1) == 'Z' )
                   printmline( sprintf( 'pb.xscale(iv,1) = %s;',            getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.xscale = arrset(pb.xscale,iv,%s)', getv1( f{1}, f, pbs ) ), ...
+                  printpline( sprintf( 'self.xscale = arrset(self.xscale,iv,%s)', getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'arrset(pb.xscale,iv,%s)',     getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
@@ -2614,7 +2606,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   xsc = d2e( f{4} );
                   if ( abs( str2double( xsc ) - 1 ) > 1.e-10 && abs( str2double( xsc) ) > 1.0e-15 )
                      printmline( sprintf( 'pb.xscale(iv,1) = %s;',               xsc),        indlvl, bindent, pbs.fidma );
-                     printpline( sprintf( 'pb.xscale = arrset(pb.xscale,iv,%s)', xsc),        indlvl, bindent, pbs.fidpy );
+                     printpline( sprintf( 'self.xscale = arrset(self.xscale,iv,%s)', xsc),    indlvl, bindent, pbs.fidpy );
                      printjline( sprintf( 'arrset(pb.xscale,iv,%s)',             xsc),        indlvl, bindent, pbs.fidjl );
                      has_xscale = 1;
                   end
@@ -2684,7 +2676,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printjline( sprintf( 'ig,ig_,_ = s2mpj_ii(%s,ig_)'        , gname ),           indlvl, bindent, pbs.fidjl );
                if ( getgnames )
                   printmline( sprintf( 'pbm.grnames{ig} = %s;',                   gname ),    indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pbm.grnames = arrset(pbm.grnames,ig,%s)', gname ),    indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.grnames = arrset(self.grnames,ig,%s)', gname ),  indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'arrset(pbm.grnames,ig,%s)',               gname ),    indlvl, bindent, pbs.fidjl );
                end
                prevgname = f{2};
@@ -2763,15 +2755,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                       if ( ~isempty( f{1} ) && f{1}(1) == 'Z' )
                          printmline( sprintf( 'pbm.gscale(ig,1) = %s;', getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidma );
-                         printpline( sprintf( 'pbm.gscale = arrset(pbm.gscale,ig,float(%s))', getv1( f{1}, f, pbs ) ), ...
-                                                                                              indlvl, bindent, pbs.fidpy );
+                         printpline( sprintf( 'self.gscale = arrset(self.gscale,ig,float(%s))',  ...
+                                              getv1( f{1}, f, pbs ) ),                        indlvl, bindent, pbs.fidpy );
                          printjline( sprintf( 'arrset(pbm.gscale,ig,Float64(%s))', getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
                       else
                          gsc = d2e( f{4} );
                          if ( abs( str2double( gsc ) - 1 ) > 1.e-10 )
                             printmline( sprintf( 'pbm.gscale(ig,1) = %s;',  gsc ),            indlvl, bindent, pbs.fidma );
-                            printpline( sprintf( 'pbm.gscale = arrset(pbm.gscale,ig,float(%s))', gsc ), ...
+                            printpline( sprintf( 'self.gscale = arrset(self.gscale,ig,float(%s))', gsc ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                             printjline( sprintf( 'arrset(pbm.gscale,ig,Float64(%s))', gsc ),  indlvl, bindent, pbs.fidjl );
                          end
@@ -2789,7 +2781,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             elseif ( nf > 2 && strcmp( f{3}, '''SCALE''' ) )
                printmline( sprintf( 'pbm.gscale(ig,1) = %s;',                getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pbm.gscale = arrset(pbm.gscale,ig,float(%s))', getv1(f{1},f,pbs) ), ...
+               printpline( sprintf( 'self.gscale = arrset(self.gscale,ig,float(%s))', getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'arrset(pbm.gscale,ig,Float64(%s))',              getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
@@ -2833,7 +2825,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( sprintf( 'pbm.gconst = %s*ones(ngrp,1);', getv1(f{1},f,pbs) ),     indlvl, bindent, pbs.fidma );
             case 'python'
                printpline( '#%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%',              indlvl, bindent, pbs.fidpy );
-               printpline( sprintf( 'pbm.gconst = np.full((ngrp,1),%s)', getv1(f{1},f,pbs) ), indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.gconst = np.full((ngrp,1),%s)', getv1(f{1},f,pbs) ),indlvl, bindent, pbs.fidpy );
             case 'julia'
                printjline( '#%%%%%%%%%%%%%%%%%%  CONSTANTS %%%%%%%%%%%%%%%%%%%',              indlvl, bindent, pbs.fidjl );
                printjline( sprintf( 'pbm.gconst = fill(%s,ngrp)', getv1(f{1},f,pbs) ),        indlvl, bindent, pbs.fidjl );
@@ -2843,14 +2835,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          else
             gname = s2mpjname( '', f{3}, pbs );
             printmline( sprintf( 'pbm.gconst(ig_(%s)) = %s;', gname, getv1(f{1},f,pbs) ),     indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'pbm.gconst = arrset(pbm.gconst,ig_[%s],float(%s))', gname, getv1(f{1},f,pbs) ), ...
+            printpline( sprintf( 'self.gconst = arrset(self.gconst,ig_[%s],float(%s))', gname, getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
             printjline( sprintf( 'pbm.gconst[ig_[%s]] = Float64(%s)', gname, getv1(f{1},f,pbs) ),      ...
                                                                                               indlvl, bindent, pbs.fidjl );
             if ( nf > 5 )
                gname = s2mpjname( '', f{5}, pbs );
                printmline( sprintf( 'pbm.gconst(ig_(%s)) = %s;', gname, getv2(f) ),           indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pbm.gconst = arrset(pbm.gconst,ig_[%s],float(%s))', gname, getv2(f) ), ...
+               printpline( sprintf( 'self.gconst = arrset(self.gconst,ig_[%s],float(%s))', gname, getv2(f) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pbm.gconst[ig_[%s]] = Float64(%s)', gname, getv2(f) ),   indlvl, bindent, pbs.fidjl ); 
             end
@@ -2899,9 +2891,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( sprintf( 'grange(gegrps,1) = %s',  getv1(f{1},f,pbs) ),            indlvl, bindent, pbs.fidma );
             case 'python'
                printpline( '#%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%' ,             indlvl, bindent, pbs.fidpy );
-               printpline( sprintf( 'grange = arrset(grange,legrps,np.full(pb.nle,float(%s)))',   ...
+               printpline( sprintf( 'grange = arrset(grange,legrps,np.full(self.nle,float(%s)))',   ...
                            getv1( f{1}, f, pbs ) ),                                           indlvl, bindent, pbs.fidpy );
-               printpline( sprintf( 'grange = arrset(grange,gegrps,np.full(pb.nge,float(%s)))',   ...
+               printpline( sprintf( 'grange = arrset(grange,gegrps,np.full(self.nge,float(%s)))',   ...
                            getv1( f{1}, f, pbs ) ),                                           indlvl, bindent, pbs.fidpy );
             case 'julia'
                printjline( '#%%%%%%%%%%%%%%%%%%%  RANGES %%%%%%%%%%%%%%%%%%%%%' ,             indlvl, bindent, pbs.fidjl );
@@ -2986,8 +2978,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( 'pb.xlower = -Inf*ones(pb.n,1);',                               indlvl, bindent, pbs.fidma );
                   printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                               indlvl, bindent, pbs.fidma );
                case 'python'
-                  printpline( 'pb.xlower = np.full((pb.n,1),-float(''Inf''))',                indlvl, bindent, pbs.fidpy );
-                  printpline( 'pb.xupper = np.full((pb.n,1),+float(''Inf''))',                indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.xlower = np.full((self.n,1),-float(''Inf''))',            indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.xupper = np.full((self.n,1),+float(''Inf''))',            indlvl, bindent, pbs.fidpy );
                case 'julia'
                   printjline( 'pb.xlower = -1*fill(Inf,pb.n)',                                indlvl, bindent, pbs.fidjl );
                   printjline( 'pb.xupper =    fill(Inf,pb.n)',                                indlvl, bindent, pbs.fidjl );
@@ -2997,19 +2989,19 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                pendingkey  = '';
             case { 'MI', 'XM' }
                printmline( 'pb.xlower = -Inf*ones(pb.n,1);',                                  indlvl, bindent, pbs.fidma );
-               printpline( 'pb.xlower =  np.full((pb.n,1),-float(''Inf''))',                  indlvl, bindent, pbs.fidpy );
+               printpline( 'self.xlower =  np.full((self.n,1),-float(''Inf''))',              indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xlower =  -1*fill(Inf,pb.n)',                                  indlvl, bindent, pbs.fidjl );
                has_xlowdef = 1;
             case { 'PL', 'XP' }
                printmline( 'pb.xupper = +Inf*ones(pb.n,1);',                                  indlvl, bindent, pbs.fidma );
-               printpline( 'pb.xupper = np.full((pb.n,1),+float(''Inf''))',                   indlvl, bindent, pbs.fidpy );
+               printpline( 'self.xupper = np.full((self.n,1),+float(''Inf''))',               indlvl, bindent, pbs.fidpy );
                printjline( 'pb.xupper =    fill(Inf,pb.n)',                                   indlvl, bindent, pbs.fidjl );
                MPSbounds   = MPSbounds + 1;
                has_xuppdef = 1;
             case { 'LO', 'XL', 'ZL' }
                xlowdef = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.xlower = %s*ones(pb.n,1);', xlowdef ),                indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xlower = np.full((pb.n,1),%s)', xlowdef ),            indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.xlower = np.full((self.n,1),%s)', xlowdef ),        indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xlower = fill(%s,pb.n)', xlowdef ),                   indlvl, bindent, pbs.fidjl );
                if ( abs( str2double( f{3} ) ) < 1.e-10 )
                   MPSbounds = MPSbounds + 1;
@@ -3023,8 +3015,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( sprintf( 'pb.xlower = %s*ones(pb.n,1);', xlowdef ),             indlvl, bindent, pbs.fidma );
                   printmline( sprintf( 'pb.xupper = %s*ones(pb.n,1);', xuppdef ),             indlvl, bindent, pbs.fidma );
                case 'python'
-                  printpline( sprintf( 'pb.xlower = np.full((pb.n,1),%s)', xlowdef ),         indlvl, bindent, pbs.fidpy );
-                  printpline( sprintf( 'pb.xupper = np.full((pb.n,1),%s)', xuppdef ),         indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xlower = np.full((self.n,1),%s)', xlowdef ),     indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xupper = np.full((self.n,1),%s)', xuppdef ),     indlvl, bindent, pbs.fidpy );
                case 'julia'
                   printjline( sprintf( 'pb.xlower = fill(%s,pb.n)', xlowdef ),                indlvl, bindent, pbs.fidjl );
                   printjline( sprintf( 'pb.xupper = fill(%s,pb.n)', xuppdef ),                indlvl, bindent, pbs.fidjl );
@@ -3034,7 +3026,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             case { 'UP', 'XU', 'ZU' }
                xuppdef = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.xupper = %s*ones(pb.n,1);', xuppdef ),                indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xupper = np.full((pb.n,1),%s)', xuppdef ),            indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.xupper = np.full((self.n,1),%s)', xuppdef ),        indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xupper = fill(%s,pb.n)', xuppdef ),                   indlvl, bindent, pbs.fidjl );
                has_xuppdef = 1;
             end
@@ -3044,7 +3036,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                case 'matlab'
                   pending{1} = 'pb.xlower = zeros(pb.n,1);';
                case 'python'
-                  pending{1} = 'pb.xlower = np.zeros((pb.n,1))';
+                  pending{1} = 'self.xlower = np.zeros((self.n,1))';
                case 'julia'
                   pending{1} = 'pb.xlower = zeros(Float64,pb.n)';
                end
@@ -3054,7 +3046,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                case 'matlab'
                   pending{1} = 'pb.xupper = +Inf*ones(pb.n,1);';
                case 'python'
-                  pending{1} = 'pb.xupper = np.full((pb.n,1),+float(''inf''))';
+                  pending{1} = 'self.xupper = np.full((self.n,1),+float(''inf''))';
                case 'julia'
                   pending{1} = 'pb.xupper = fill(Inf,pb.n)';
                end
@@ -3076,29 +3068,29 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( sprintf( 'pb.xlower(ix_(%s)) = -Inf;', vname ),                 indlvl, bindent, pbs.fidma );
                   printmline( sprintf( 'pb.xupper(ix_(%s),1) = +Inf;', vname ),               indlvl, bindent, pbs.fidma );
                case 'python'
-                  printpline( sprintf( 'pb.xlower[ix_[%s]] = -float(''Inf'')', vname ),       indlvl, bindent, pbs.fidpy );
-                  printpline( sprintf( 'pb.xupper[ix_[%s]] = +float(''Inf'')', vname ),       indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xlower[ix_[%s]] = -float(''Inf'')', vname ),     indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xupper[ix_[%s]] = +float(''Inf'')', vname ),     indlvl, bindent, pbs.fidpy );
                case 'julia'
                   printjline( sprintf( 'pb.xlower[ix_[%s]] = -Inf', vname ),                  indlvl, bindent, pbs.fidjl );
                   printjline( sprintf( 'pb.xupper[ix_[%s]] = +Inf', vname ),                  indlvl, bindent, pbs.fidjl );
                end
             case { 'MI', 'XM' }  
                printmline( sprintf( 'pb.xlower(ix_(%s),1) = -Inf;', vname ),                  indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xlower = arrset(pb.xlower,ix_[%s],-float(''Inf''))', vname ), ...
+               printpline( sprintf( 'self.xlower = arrset(self.xlower,ix_[%s],-float(''Inf''))', vname ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xlower[ix_[%s]] = -Inf', vname ),                     indlvl, bindent, pbs.fidjl );
                if ( MPSbounds >= 2 )
                   printmline( sprintf( 'pb.xlower(ix_(%s),1) = 0;', vname ),                  indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.xlower[ix_[%s]] = 0.',   vname ),                  indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xlower[ix_[%s]] = 0.', vname ),                  indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'pb.xlower[ix_[%s]] = 0.',   vname ),                  indlvl, bindent, pbs.fidjl );
                end
             case { 'PL', 'XP' }
                printmline( sprintf( 'pb.xupper(ix_(%s)) = +Inf;', vname ),                    indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xupper[ix_[%s]] = +float(''Inf'')', vname ),          indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.xupper[ix_[%s]] = +float(''Inf'')', vname ),        indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xupper[ix_[%s]] = +Inf', vname ),                     indlvl, bindent, pbs.fidjl );
             case { 'LO', 'XL', 'ZL' }
                printmline( sprintf( 'pb.xlower(ix_(%s),1) = %s;', vname, getv1(f{1},f,pbs) ), indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xlower[ix_[%s]] = %s', vname, getv1(f{1},f,pbs) ),    indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.xlower[ix_[%s]] = %s', vname, getv1(f{1},f,pbs) ),  indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xlower[ix_[%s]] = %s', vname, getv1(f{1},f,pbs) ),    indlvl, bindent, pbs.fidjl );
             case { 'FX', 'XX', 'ZX' }
                evalstr = getv1(f{1},f,pbs);
@@ -3107,24 +3099,24 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( sprintf( 'pb.xlower(ix_(%s),1) = %s;', vname, evalstr ),        indlvl, bindent, pbs.fidma );
                   printmline( sprintf( 'pb.xupper(ix_(%s),1) = %s;', vname, evalstr ),        indlvl, bindent, pbs.fidma );
                case 'python'
-                  printpline( sprintf( 'pb.xlower[ix_[%s]] = %s', vname, evalstr ),           indlvl, bindent, pbs.fidpy );
-                  printpline( sprintf( 'pb.xupper[ix_[%s]] = %s', vname, evalstr ),           indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xlower[ix_[%s]] = %s', vname, evalstr ),         indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xupper[ix_[%s]] = %s', vname, evalstr ),         indlvl, bindent, pbs.fidpy );
                case 'julia'
                   printjline( sprintf( 'pb.xlower[ix_[%s]] = %s', vname, evalstr ),           indlvl, bindent, pbs.fidjl );
                   printjline( sprintf( 'pb.xupper[ix_[%s]] = %s', vname, evalstr ),           indlvl, bindent, pbs.fidjl );
                end
             case { 'UP', 'XU' }
                printmline( sprintf( 'pb.xupper(ix_(%s)) = %s;', vname, getv1(f{1},f,pbs) ),   indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xupper[ix_[%s]] = %s',  vname, getv1(f{1},f,pbs) ),   indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.xupper[ix_[%s]] = %s', vname, getv1(f{1},f,pbs) ),  indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xupper[ix_[%s]] = %s',  vname, getv1(f{1},f,pbs) ),   indlvl, bindent, pbs.fidjl );
                if ( MPSbounds >= 2 && abs( str2double( f{3} ) ) < 1.e-10 )
                   printmline( sprintf( 'pb.xlower(ix_(%s),1) = -Inf;', vname ),               indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.xlower[ix_[%s]] = -float(''Inf'')', vname ),       indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.xlower[ix_[%s]] = -float(''Inf'')', vname ),     indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'pb.xlower[ix_[%s]] = -Inf', vname ),                  indlvl, bindent, pbs.fidjl );
                end
             case 'ZU'
                printmline( sprintf( 'pb.xupper(ix_(%s)) = %s;', vname, getv1(f{1},f,pbs) ),   indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.xupper[ix_[%s]] = %s',  vname, getv1(f{1},f,pbs) ),   indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.xupper[ix_[%s]] = %s', vname, getv1(f{1},f,pbs) ),  indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.xupper[ix_[%s]] = %s',  vname, getv1(f{1},f,pbs) ),   indlvl, bindent, pbs.fidjl );
                has_xupper = 1;
             end
@@ -3168,24 +3160,24 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             case  { 'V', 'XV', 'ZV' }
                x0def = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.x0 = %s*ones(pb.n,1);', x0def ),                      indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.x0 = np.full((pb.n,1),float(%s))', x0def ),           indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.x0 = np.full((self.n,1),float(%s))', x0def ),       indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.x0 = fill(Float64(%s),pb.n)', x0def ),                indlvl, bindent, pbs.fidjl );
                has_x0def = 1;
             case  { 'X', '', 'Z' }
                x0def = getv1( f{1}, f, pbs );
                printmline( sprintf( 'pb.x0 = %s*ones(pb.n,1);', x0def ),                      indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.x0 = np.full((pb.n,1),float(%s))', x0def ),           indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.x0 = np.full((self.n,1),float(%s))', x0def ),       indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.x0 = fill(Float64(%s),pb.n)', x0def ),                indlvl, bindent, pbs.fidjl );
                has_x0def = 1;
                if ( has_constraints )
                   printmline( sprintf( 'pb.y0 = %s*ones(pb.m,1);', x0def ),                   indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.y0 = np.full((pb.m,1),float(%s))', x0def ),        indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.y0 = np.full((self.m,1),float(%s))', x0def ),    indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'pb.y0 = fill(Float64(%s),pb.m)', x0def ),             indlvl, bindent, pbs.fidjl );
                   has_y0def = 1;
                end
             case { 'M', 'XM', 'ZM' }
                printmline( sprintf( 'pb.y0 = %s*ones(pb.m,1);', getv1(f{1},f,pbs) ),          indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.y0 = np.full((pb.m,1),float(%s))', getv1(f{1},f,pbs) ),  ...
+               printpline( sprintf( 'self.y0 = np.full((self.m,1),float(%s))', getv1(f{1},f,pbs) ),  ...
                                                                                               indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.y0 = fill(Float64(%s),pb.m)', getv1(f{1},f,pbs) ),    indlvl, bindent, pbs.fidjl );
                has_y0def = 1;
@@ -3202,21 +3194,21 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                vname = s2mpjname('',f{3},pbs);
                printmline( sprintf( 'pb.x0(ix_(%s),1) = %s;',       vname, getv1(f{1},f,pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.x0[ix_[%s]] = float(%s)',   vname, getv1(f{1},f,pbs ) ), ...
+               printpline( sprintf( 'self.x0[ix_[%s]] = float(%s)', vname, getv1(f{1},f,pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.x0[ix_[%s]] = Float64(%s)', vname, getv1(f{1},f,pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
                if ( nf > 5 )
                   vname = s2mpjname('',f{5},pbs);
                   printmline( sprintf( 'pb.x0(ix_(%s),1) = %s;',       vname, getv2(f) ),     indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.x0[ix_[%s]] = float(%s)',   vname, getv2(f) ),     indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.x0[ix_[%s]] = float(%s)', vname, getv2(f) ),     indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'pb.x0[ix_[%s]] = Float64(%s)', vname, getv2(f) ),     indlvl, bindent, pbs.fidjl );
                end
             case { 'M', 'XM', 'ZM' }                              %  multipliers
                gname = s2mpjname('',f{3},pbs);
-               printmline( sprintf( 'pb.y0(find(pbm.congrps==ig_(%s,1))) = %s;', gname, getv1(f{1},f,pbs ) ),        ...
+               printmline( sprintf( 'pb.y0(find(self.congrps==ig_(%s,1))) = %s;', gname, getv1(f{1},f,pbs ) ),        ...
                                                                                               indlvl, bindent, pbs.fidma );
-               printpline( sprintf( 'pb.y0 = arrset(pb.y0,find(pbm.congrps.data,lambda x:x==ig_[%s]),float(%s))',    ...
+               printpline( sprintf( 'self.y0 = arrset(self.y0,np.where(self.congrps.data==ig_[%s])[0],float(%s))',    ...
                            gname, getv1(f{1},f,pbs ) ),                                       indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'pb.y0[findall(x->x==ig[%s],pbm.congrps)] = Float64(%s)',                        ...
                            gname, getv1(f{1},f,pbs ) ),                                       indlvl, bindent, pbs.fidjl );
@@ -3224,7 +3216,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   gname = s2mpjname('',f{5},pbs);
                   printmline( sprintf( 'pb.y0(findfirst(pbm.congrps==ig_(%s)),1) = %s;', gname, getv2(f) ),          ...    
                                                                                               indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.y0 = arrset(pb.y0,find(pbm.congrps.data,lambda x:x==ig_[%s]),float(%s))', ...
+                  printpline( sprintf( 'self.y0 = arrset(self.y0,np.where(self.congrps.data==ig_[%s])[0],float(%s))', ...
                               gname, getv2(f) ),                                              indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'pb.y0[findfirst(x->x==ig_[%s],pbm.congrps)] = Float64(%s)',                  ...
                               gname, getv2(f) ),                                              indlvl, bindent, pbs.fidjl );
@@ -3244,10 +3236,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printmline( 'end',                                                   indlvl,     bindent, pbs.fidma );
                   case 'python'
                      printpline( sprintf( 'if(%s in ix_):',      vname ),                 indlvl,     bindent, pbs.fidpy );
-                     printpline( sprintf( 'pb.x0[ix_[%s]] = float(%s)', vname, evalstr ), indlvl + 1, bindent, pbs.fidpy );
+                     printpline( sprintf( 'self.x0[ix_[%s]] = float(%s)', vname, evalstr ),  ...
+                                                                                          indlvl + 1, bindent, pbs.fidpy );
                      printpline( 'else:',                                                 indlvl,     bindent, pbs.fidpy );
                      gname = s2mpjname('',f{3},pbs);
-                     printpline( sprintf( 'pb.y0 = arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_[%s]),float(%s))', ...
+                     printpline( sprintf( 'self.y0 = arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_[%s]),float(%s))', ...
                                           gname, evalstr ),                               indlvl + 1, bindent, pbs.fidpy );
                   case 'julia'
                      printjline( sprintf( 'if haskey(ix_,%s)',              vname ),      indlvl,     bindent, pbs.fidjl );
@@ -3260,7 +3253,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   end
                else
                   printmline( sprintf( 'pb.x0(ix_(%s),1) = %s;',       vname, evalstr ),  indlvl,     bindent, pbs.fidma );
-                  printpline( sprintf( 'pb.x0[ix_[%s]] = float(%s)',   vname, evalstr ),  indlvl,     bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.x0[ix_[%s]] = float(%s)', vname, evalstr ),  indlvl,     bindent, pbs.fidpy );
                   printjline( sprintf( 'pb.x0[ix_[%s]] = Float64(%s)', vname, evalstr ),  indlvl,     bindent, pbs.fidjl );
                end
                if ( nf > 5 )
@@ -3278,11 +3271,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                         printmline( 'end',                                                indlvl,     bindent, pbs.fidma );
                      case 'python'
                         printpline( sprintf( 'if(%s in ix_):', vname),                    indlvl,     bindent, pbs.fidpy );
-                        printpline( sprintf( 'pb.x0[ix_[%s]] = float(%s)', vname, evalstr ),  ...
+                        printpline( sprintf( 'self.x0[ix_[%s]] = float(%s)', vname, evalstr ),  ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
                         printpline( 'else:',                                              indlvl,     bindent, pbs.fidpy );
                         gname = s2mpjname('',f{5},pbs);
-                        printpline( sprintf( 'pb.y0 = arrset(pb.y0,find(pbm.congrps,lambda x:x==ig_[%s]),float(%s))', ...
+                        printpline( sprintf( 'self.y0 = arrset(self.y0,np.where(self.congrps==ig_[%s])[0],float(%s))', ...
                                           gname, evalstr ),                               indlvl + 1, bindent, pbs.fidpy );
                      case 'julia'
                         printjline( sprintf( 'if haskey(ix_,%s)', vname),                 indlvl,     bindent, pbs.fidjl );
@@ -3296,7 +3289,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      end
                   else
                      printmline( sprintf( 'pb.x0(ix_(%s),1) = %s;', vname, evalstr ),     indlvl,     bindent, pbs.fidma );
-                     printpline( sprintf( 'pb.y0 = arrset(pb.x0,ix_[%s],float(%s))', vname, evalstr ), ...
+                     printpline( sprintf( 'self.y0 = arrset(self.x0,ix_[%s],float(%s))', vname, evalstr ), ...
                                                                                           indlvl,     bindent, pbs.fidpy );
                      printjline( sprintf( 'pb.x0[ix_[%s]] = Float64(%s)', vname, evalstr ),  ...
                                                                                           indlvl,     bindent, pbs.fidjl );
@@ -3326,9 +3319,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                                                                                               indlvl, bindent, pbs.fidma );
                 printmline('pbm.H(ix2,ix1) = pbm.H(ix1,ix2);',                                indlvl, bindent, pbs.fidma );
              case 'python'
-                printpline( sprintf( 'pbm.H[ix1,ix2] = float(%s)+pbm.H[ix1,ix2]', getv1(f{1},f,pbs) ), ...
+                printpline( sprintf( 'self.H[ix1,ix2] = float(%s)+self.H[ix1,ix2]', getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                printpline('pbm.H[ix2,ix1] = pbm.H[ix1,ix2]',                                 indlvl, bindent, pbs.fidpy );
+                printpline('self.H[ix2,ix1] = self.H[ix1,ix2]',                               indlvl, bindent, pbs.fidpy );
              case 'julia'
                 printjline( sprintf( 'pbm.H[ix1,ix2] = Float64(%s)+pbm.H[ix1,ix2]', getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
@@ -3343,9 +3336,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                    printmline( 'pbm.H(ix2,ix1) = pbm.H(ix1,ix2);',                            indlvl, bindent, pbs.fidma );
                 case 'python'
                    printpline( sprintf( 'ix2 = ix_[%s]',vname2),                              indlvl, bindent, pbs.fidpy );
-                   printpline( sprintf( 'pbm.H[ix1,ix2] = float(%s)+pbm.H[ix1,ix2]', getv2(f) ), ...
+                   printpline( sprintf( 'self.H[ix1,ix2] = float(%s)+self.H[ix1,ix2]', getv2(f) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                   printpline( 'pbm.H[ix2,ix1] = pbm.H[ix1,ix2]',                             indlvl, bindent, pbs.fidpy );
+                   printpline( 'self.H[ix2,ix1] = self.H[ix1,ix2]',                           indlvl, bindent, pbs.fidpy );
                 case 'julia'
                    printjline( sprintf( 'ix2 = ix_[%s]',vname2),                              indlvl, bindent, pbs.fidjl );
                    printjline( sprintf( 'pbm.H[ix1,ix2] = Float64(%s)+pbm.H[ix1,ix2]', getv2(f) ),  ...
@@ -3360,9 +3353,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                                                                                               indlvl, bindent, pbs.fidma );
                 printmline( 'pbm.H(ix2,ix1) = pbm.H(ix1,ix2);',                               indlvl, bindent, pbs.fidma );
              case 'python'
-                printpline( sprintf( 'pbm.H[ix1,ix2] = float(%s)+pbm.H[ix1,ix2]', getv1( f{1}, f, pbs ) ), ...
+                printpline( sprintf( 'self.H[ix1,ix2] = float(%s)+self.H[ix1,ix2]', getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                printpline( 'pbm.H[ix2,ix1] = pbm.H[ix1,ix2]',                                indlvl, bindent, pbs.fidpy );
+                printpline( 'self.H[ix2,ix1] = self.H[ix1,ix2]',                              indlvl, bindent, pbs.fidpy );
              case 'julia'
                 printjline( sprintf( 'pbm.H[ix1,ix2] = Float64(%s)+pbm.H[ix1,ix2]', getv1( f{1}, f, pbs ) ), ...
                                                                                               indlvl, bindent, pbs.fidjl );
@@ -3517,7 +3510,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             end
             if ( getenames )        
                printmline( 'pbm.enames{ie} = ename;',                                         indlvl, bindent, pbs.fidma );
-               printpline( 'pbm.enames = arrset(pbm.enames,ie,ename)',                        indlvl, bindent, pbs.fidpy );
+               printpline( 'self.enames = arrset(self.enames,ie,ename)',                      indlvl, bindent, pbs.fidpy );
                printjline( 'arrset(pbm.enames,ie,ename)',                                     indlvl, bindent, pbs.fidjl );
             end
             prevename  = f{2};                 %  Remember the SIF name of the current element
@@ -3537,7 +3530,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( sprintf( 'pbm.elftype{ie} = ''%s'';',    tname ),                  indlvl, bindent, pbs.fidma );
                printmline( sprintf( 'ielftype(ie) = iet_(''%s'');', tname ),                  indlvl, bindent, pbs.fidma );
             case 'python'
-               printpline( sprintf( 'pbm.elftype = arrset(pbm.elftype,ie,''%s'')', tname ),   indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')', tname ), indlvl, bindent, pbs.fidpy );
                printpline( sprintf( 'ielftype = arrset(ielftype, ie, iet_["%s"])', tname ),   indlvl, bindent, pbs.fidpy );
             case 'julia'
                printjline( sprintf( 'arrset(pbm.elftype,ie,"%s")',      tname )  ,            indlvl, bindent, pbs.fidjl );
@@ -3562,7 +3555,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printmline( 'end',                                                       indlvl, bindent, pbs.fidma );
                   case 'python'
                      printpline( 'if newelt:',                                                indlvl, bindent, pbs.fidpy );
-                     printpline( sprintf( 'pbm.elftype = arrset(pbm.elftype,ie,''%s'')', defelftype ), ...
+                     printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')', defelftype ), ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
                      printpline( sprintf( 'ielftype = arrset( ielftype,ie,iet_[''%s''])', defelftype ), ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
@@ -3583,7 +3576,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             %  defaults may have been set or not (the default variable type is always defined to be 'r').
             
             if ( ~has_x0def )
-                printpline( 'pb.x0 = np.zeros((pb.n,1))',                                     indlvl, bindent, pbs.fidpy );
+                printpline( 'self.x0 = np.zeros((self.n,1))',                                 indlvl, bindent, pbs.fidpy );
                 has_x0def = 1;
             end
             vname = s2mpjname('',f{5},pbs);
@@ -3593,56 +3586,56 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             if     (  isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],[]);',      ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,None,None,None)',        ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,None)',        ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,nothing,nothing)', ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],[]);',      ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,%s,None,None)',          ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self, vname,ix_,%d,%s,None,None)',          ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,nothing,nothing)',      ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidjl );
             elseif (  isempty( xlowdef ) && ~isempty( xuppdef ) &&  isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],%s,[]);',      ...
                            getxnames, xuppdef ),                                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,None,%s,None)',          ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,%s,None)',          ...
                            getxnames, xuppdef ),                                              indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,%s,nothing)',      ...
                            getxnames, xuppdef ),                                              indlvl, bindent, pbs.fidjl );
             elseif (  isempty( xlowdef ) &&  isempty( xuppdef ) && ~isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],%s);',      ...
                            getxnames, x0def ),                                                indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,None,None,%s)',          ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,%s)',          ...
                            getxnames, x0def ),                                                indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,nothing,%s)',      ...
                            getxnames, x0def ),                                                indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) && ~isempty( xuppdef ) &&  isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,%s,[]);',      ...
                            getxnames, xlowdef, xuppdef ),                                     indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,%s,%s,None)',            ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,%s,%s,None)',            ...
                            getxnames, xlowdef, xuppdef ),                                     indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,%s,nothing)',           ...
                            getxnames, xlowdef, xuppdef ),                                     indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) &&  isempty( xuppdef ) && ~isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],%s);',      ...
                            getxnames, xlowdef, x0def ),                                       indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,%s,None,%s)',            ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,%s,None,%s)',            ...
                            getxnames, xlowdef, x0def ),                                       indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,nothing,%s)',           ...
                            getxnames, xlowdef, x0def ),                                       indlvl, bindent, pbs.fidjl );
             elseif (  isempty( xlowdef ) && ~isempty( xuppdef ) && ~isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],%s,%s);',      ...
                            getxnames, xuppdef, x0def ),                                       indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,None,%s,%s)',            ... 
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,%s,%s)',            ... 
                            getxnames, xuppdef, x0def ),                                       indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,%s,%s)',           ... 
                            getxnames, xuppdef, x0def ),                                       indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) && ~isempty( xuppdef ) && ~isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,%s,%s);', ...
                            getxnames, xlowdef, xuppdef, x0def ),                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,%d,%s,%s,%s)',         ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,%s,%s,%s)',         ...
                            getxnames, xlowdef, xuppdef, x0def ),                              indlvl, bindent, pbs.fidpy );
                printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,%s,%s)',           ...
                            getxnames, xlowdef, xuppdef, x0def ),                              indlvl, bindent, pbs.fidjl );
@@ -3656,9 +3649,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                                                                                               indlvl, bindent, pbs.fidma );
                printmline( 'pbm.elvar{ie}(posev) = iv;',                                      indlvl, bindent, pbs.fidma );
             case 'python'
-               printpline( sprintf( 'posev = find(elftv[ielftype[ie]],lambda x:x==''%s'')', nlfname( f{3} ) ), ...
+               printpline( sprintf( 'posev = np.where(elftv[ielftype[ie]]==''%s'')[0]', nlfname( f{3} ) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
-               printpline( 'pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)',                    indlvl, bindent, pbs.fidpy );
+               printpline( 'self.elvar = loaset(self.elvar,ie,posev[0],iv)',                  indlvl, bindent, pbs.fidpy );
             case 'julia'
                printpline( sprintf( 'posev = findfirst(x->x=="%s",elftv[ielftype[ie]])', nlfname( f{3} ) ),    ...
                                                                                               indlvl, bindent, pbs.fidjl );
@@ -3681,7 +3674,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printmline( 'end',                                                       indlvl, bindent, pbs.fidma );
                   case 'python'
                      printpline( 'if newelt:',                                                indlvl, bindent, pbs.fidpy );
-                     printpline( sprintf( 'pbm.elftype = arrset(pbm.elftype,ie,''%s'')',  defelftype ), ...
+                     printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')',  defelftype ), ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
                      printpline( sprintf( 'ielftype = arrset( ielftype,ie,iet_[''%s''])', defelftype ), ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
@@ -3706,9 +3699,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                                                                                               indlvl, bindent, pbs.fidma );
                printmline( sprintf( 'pbm.elpar{ie}(posep) = %s;', getv1r(f{1},f,pbs) ),       indlvl, bindent, pbs.fidma );
             case 'python'
-               printpline( sprintf( 'posep = find(elftp[ielftype[ie]],lambda x:x==''%s'')', f{3} ),       ...
+               printpline( sprintf( 'posep = np.where(elftp[ielftype[ie]]==''%s'')[0]', f{3} ),       ...
                                                                                               indlvl, bindent, pbs.fidpy );
-               printpline( sprintf( 'pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(%s))', getv1r(f{1},f,pbs) ), ...
+               printpline( sprintf( 'self.elpar = loaset(self.elpar,ie,posep[0],float(%s))', getv1r(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
             case 'julia'
                printjline( sprintf( 'posep = findfirst(x->x=="%s",elftp[ielftype[ie]])', f{3} ),          ...
@@ -3723,9 +3716,9 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                                                                                               indlvl, bindent, pbs.fidma );
                   printmline( sprintf( 'pbm.elpar{ie}(posep) = %s;', getv2r( f ) ),           indlvl, bindent, pbs.fidma );
                case 'python'
-                  printpline( sprintf( 'posep = find(elftp[ielftype[ie]],lambda x:x==''%s'')', f{5} )', ...
+                  printpline( sprintf( 'posep = np.where(elftp[ielftype[ie]]==''%s'')[0]', f{5} )', ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                  printpline( sprintf( 'loaset(pbm.elpar,ie,posep[0],float(%s))', getv2r( f ) ),        ...
+                  printpline( sprintf( 'loaset(self.elpar,ie,posep[0],float(%s))', getv2r( f ) ),        ...
                                                                                               indlvl, bindent, pbs.fidpy );
                case 'julia'
                   printjline( sprintf( 'posep = findfirst(x->x=="%s",elftp[ielftype[ie]])', f{5} )',    ...
@@ -3816,17 +3809,17 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                if ( ~strcmp( defgrftype, 'TRIVIAL' ) )
                   switch ( pbs.lang )
                   case 'matlab'
-                     printmline( 'for ig = 1:ngrp',                                           indlvl,     bindent, pbs.fidma );
-                     printmline( sprintf( 'pbm.grftype{ig} = ''%s'';', defgrftype ),          indlvl + 1, bindent, pbs.fidma );
-                     printmline( 'end',                                                       indlvl,     bindent, pbs.fidma );
+                     printmline( 'for ig = 1:ngrp',                                       indlvl,     bindent, pbs.fidma );
+                     printmline( sprintf( 'pbm.grftype{ig} = ''%s'';', defgrftype ),      indlvl + 1, bindent, pbs.fidma );
+                     printmline( 'end',                                                   indlvl,     bindent, pbs.fidma );
                   case 'python' 
-                     printpline( 'for ig in range(0,ngrp):',                                  indlvl,     bindent, pbs.fidpy );
-                     printpline( sprintf( 'pbm.grftype = arrset(pbm.grftype,ig,''%s'')', defgrftype ), ...
-                                                                                              indlvl + 1, bindent, pbs.fidpy );
+                     printpline( 'for ig in range(0,ngrp):',                              indlvl,     bindent, pbs.fidpy );
+                     printpline( sprintf( 'self.grftype = arrset(self.grftype,ig,''%s'')', defgrftype ), ...
+                                                                                          indlvl + 1, bindent, pbs.fidpy );
                   case 'julia'
-                     printjline( 'for ig in 1:ngrp',                                          indlvl,     bindent, pbs.fidjl );
-                     printjline( sprintf( 'arrset(pbm.grftype,ig,"%s")', defgrftype ),        indlvl + 1, bindent, pbs.fidjl );
-                     printjline( 'end',                                                       indlvl,     bindent, pbs.fidjl );
+                     printjline( 'for ig in 1:ngrp',                                      indlvl,     bindent, pbs.fidjl );
+                     printjline( sprintf( 'arrset(pbm.grftype,ig,"%s")', defgrftype ),    indlvl + 1, bindent, pbs.fidjl );
+                     printjline( 'end',                                                   indlvl,     bindent, pbs.fidjl );
                   end
                end
             end
@@ -3853,7 +3846,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
                   tname = [ 'g', nlfname( f{3}) ];
                   printmline( sprintf( 'pbm.grftype{ig} = ''%s'';',tname),                    indlvl, bindent, pbs.fidma );
-                  printpline( sprintf( 'pbm.grftype = arrset(pbm.grftype,ig,''%s'')',tname ), indlvl, bindent, pbs.fidpy );
+                  printpline( sprintf( 'self.grftype = arrset(self.grftype,ig,''%s'')',tname ), ...
+                                                                                              indlvl, bindent, pbs.fidpy );
                   printjline( sprintf( 'arrset(pbm.grftype,ig,"%s")',tname ),                 indlvl, bindent, pbs.fidjl );
 
                %  The group's elements
@@ -3868,8 +3862,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printmline( 'posel = length(pbm.grelt{ig})+1;',                          indlvl, bindent, pbs.fidma );
                      printmline( sprintf( 'pbm.grelt{ig}(posel) = ie_(%s);', ename ),         indlvl, bindent, pbs.fidma );
                   case 'python'
-                     printpline( 'posel = len(pbm.grelt[ig])',                                indlvl, bindent, pbs.fidpy );
-                     printpline( sprintf( 'pbm.grelt = loaset(pbm.grelt,ig,posel,ie_[%s])', ename ),     ...
+                     printpline( 'posel = len(self.grelt[ig])',                               indlvl, bindent, pbs.fidpy );
+                     printpline( sprintf( 'self.grelt = loaset(self.grelt,ig,posel,ie_[%s])', ename ),     ...
                                                                                               indlvl, bindent, pbs.fidpy );
                   case 'julia'
                      printjline( 'posel = length(pbm.grelt[ig])+1',                           indlvl, bindent, pbs.fidjl );
@@ -3888,7 +3882,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      if ( f{1}(1) == 'Z' )
                         printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv1(f{1},f,pbs) ),                      ...
                                                                                               indlvl, bindent, pbs.fidma );
-                        printpline( sprintf( 'pbm.grelw = loaset(pbm.grelw,ig,posel,float(%s))', getv1(f{1},f,pbs) ), ...
+                        printpline( sprintf( 'self.grelw = loaset(self.grelw,ig,posel,float(%s))', getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                         printjline( sprintf( 'loaset(pbm.grelw,ig,posel,Float64(%s))', getv1(f{1},f,pbs) ),           ...
                                                                                               indlvl, bindent, pbs.fidjl );
@@ -3896,13 +3890,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                         if( ~isempty( f{4} ) )
                            printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv1r(f{1},f,pbs) ),                   ...
                                                                                               indlvl, bindent, pbs.fidma );
-                           printpline( sprintf( 'pbm.grelw = loaset(pbm.grelw,ig,posel,float(%s))',                   ...
+                           printpline( sprintf( 'self.grelw = loaset(self.grelw,ig,posel,float(%s))',                   ...
                                                 getv1r(f{1},f,pbs) ),                         indlvl, bindent, pbs.fidpy );
-                           printjline( sprintf( 'loaset(pbm.grelw,ig,posel,Float64(%s))', getv1r(f{1},f,pbs) ),       ...
+                           printjline( sprintf( 'loaset(self.grelw,ig,posel,Float64(%s))', getv1r(f{1},f,pbs) ),       ...
                                                                                               indlvl, bindent, pbs.fidjl );
                         else
                            printmline( 'pbm.grelw{ig}(posel) = 1.;',                          indlvl, bindent, pbs.fidma );
-                           printpline( 'pbm.grelw = loaset(pbm.grelw,ig,posel,1.)',           indlvl, bindent, pbs.fidpy );
+                           printpline( 'self.grelw = loaset(self.grelw,ig,posel,1.)',           indlvl, bindent, pbs.fidpy );
                            printjline( 'loaset(pbm.grelw,ig,posel,1.)',                       indlvl, bindent, pbs.fidjl );
                         end
 
@@ -3917,7 +3911,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                                                                                               indlvl, bindent, pbs.fidma );
                            case 'python'
                               printpline( 'posel = posel+1',                                  indlvl, bindent, pbs.fidpy ); 
-                              printpline( sprintf( 'pbm.grelt = loaset(pbm.grelt,ig,posel,ie_[%s])', ename ), ...
+                              printpline( sprintf( 'self.grelt = loaset(self.grelt,ig,posel,ie_[%s])', ename ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
                            case 'julia'
                               printjline( 'posel = posel+1',                                  indlvl, bindent, pbs.fidjl );
@@ -3926,13 +3920,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                            end
                            if ( nf > 5 )
                               printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv2r(f) ), indlvl, bindent, pbs.fidma );
-                              printpline( sprintf( 'pbm.grelw = loaset(pbm.grelw,ig,posel,float(%s))', getv2r(f) ),   ...
+                              printpline( sprintf( 'self.grelw = loaset(self.grelw,ig,posel,float(%s))', getv2r(f) ),   ...
                                                                                               indlvl, bindent, pbs.fidpy );
                               printjline( sprintf( 'loaset(pbm.grelw,ig,posel,Float64(%s))', getv2r(f) ),             ...
                                                                                               indlvl, bindent, pbs.fidjl );
                            else
                               printmline( 'pbm.grelw{ig}(posel) = 1.;',                       indlvl, bindent, pbs.fidma );
-                              printpline( 'pbm.grelw = loaset(pbm.grelw,ig,posel, 1.)',       indlvl, bindent, pbs.fidpy );
+                              printpline( 'self.grelw = loaset(self.grelw,ig,posel, 1.)',     indlvl, bindent, pbs.fidpy );
                               printjline( 'loaset(pbm.grelw,ig,posel, 1.)',                   indlvl, bindent, pbs.fidjl );
                            end
                         
@@ -3940,7 +3934,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      end
                   else
                      printmline( 'pbm.grelw{ig}(posel) = 1.;',                                indlvl, bindent, pbs.fidma );
-                     printpline( 'pbm.grelw = loaset(pbm.grelw,ig,posel,1.)',                 indlvl, bindent, pbs.fidpy );
+                     printpline( 'self.grelw = loaset(self.grelw,ig,posel,1.)',               indlvl, bindent, pbs.fidpy );
                      printjline( 'loaset(pbm.grelw,ig,posel,1.)',                             indlvl, bindent, pbs.fidjl );
                   end
 
@@ -3964,14 +3958,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                         printmline( sprintf( 'pbm.grpar{ig}(posgp) = %s;', getv2r( f ) ),    indlvl, bindent, pbs.fidma );
                      end
                   case 'python'
-                     printpline( sprintf( 'posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x==''%s'')', f{3})',    ...
+                     printpline( sprintf( 'posgp = np.where(grftp[igt_[self.grftype[ig]]]==''%s'')[0]', f{3})',    ...
                                                                                              indlvl, bindent, pbs.fidpy );
-                     printpline( sprintf( 'pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(%s))',                       ...
+                     printpline( sprintf( 'self.grpar =loaset(self.grpar,ig,posgp[0],float(%s))',                       ...
                                            getv1r( f{1}, f, pbs ) ),                         indlvl, bindent, pbs.fidpy );
                      if ( nf > 5 )
-                        printpline( sprintf( 'posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x==''%s'')', f{5} ), ...
+                        printpline( sprintf( 'posgp = np.where(grftp[igt_[pbm.grftype[ig]]]==''%s'')[0]', f{5} ), ...
                                                                                              indlvl, bindent, pbs.fidpy );
-                        printpline( sprintf( 'pbm.grpar = loaset(pbm.grpar,ig,posgp[0],float(%s))',getv2r( f ) ),     ...
+                        printpline( sprintf( 'self.grpar = loaset(self.grpar,ig,posgp[0],float(%s))',getv2r( f ) ),     ...
                                                                                              indlvl, bindent, pbs.fidpy );
                      end
                   case 'julia'
@@ -4021,21 +4015,21 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          
          switch( f{1} )
          case { 'LO', 'XL' }
-            printmline( sprintf( 'pb.objlower = %s;', d2e( f{4}) ),                           indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'pb.objlower = %s',  d2e( f{4}) ),                           indlvl, bindent, pbs.fidpy );
-            printjline( sprintf( 'pb.objlower = %s',  d2e( f{4}) ),                           indlvl, bindent, pbs.fidjl );
+            printmline( sprintf( 'pb.objlower = %s;',  d2e( f{4}) ),                          indlvl, bindent, pbs.fidma );
+            printpline( sprintf( 'self.objlower = %s', d2e( f{4}) ),                          indlvl, bindent, pbs.fidpy );
+            printjline( sprintf( 'pb.objlower = %s',   d2e( f{4}) ),                          indlvl, bindent, pbs.fidjl );
          case 'ZL'
-            printmline( sprintf( 'pb.objlower = v_(%s);', s2mpjname('',f{5},pbs) ),           indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'pb.objlower = v_[%s]',  s2mpjname('',f{5},pbs) ),           indlvl, bindent, pbs.fidpy );
-            printjline( sprintf( 'pb.objlower = v_[%s]',  s2mpjname('',f{5},pbs) ),           indlvl, bindent, pbs.fidjl );
+            printmline( sprintf( 'pb.objlower = v_(%s);',  s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidma );
+            printpline( sprintf( 'self.objlower = v_[%s]', s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidpy );
+            printjline( sprintf( 'pb.objlower = v_[%s]',   s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidjl );
          case { 'UP', 'XU' }
-            printmline( sprintf( 'pb.objupper = %s;', d2e( f{4}) ),                           indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'pb.objupper = %s',  d2e( f{4}) ),                           indlvl, bindent, pbs.fidpy );
-            printjline( sprintf( 'pb.objupper = %s',  d2e( f{4}) ),                           indlvl, bindent, pbs.fidjl );
+            printmline( sprintf( 'pb.objupper = %s;',  d2e( f{4}) ),                          indlvl, bindent, pbs.fidma );
+            printpline( sprintf( 'self.objupper = %s', d2e( f{4}) ),                         indlvl, bindent, pbs.fidpy );
+            printjline( sprintf( 'pb.objupper = %s',   d2e( f{4}) ),                          indlvl, bindent, pbs.fidjl );
          case 'ZU'
-            printmline( sprintf( 'pb.objupper = v_(%s);', s2mpjname('',f{5},pbs) ),           indlvl, bindent, pbs.fidma );
-            printpline( sprintf( 'pb.objupper = v_[%s]',  s2mpjname('',f{5},pbs) ),           indlvl, bindent, pbs.fidpy );
-            printjline( sprintf( 'pb.objupper = v_[%s]',  s2mpjname('',f{5},pbs) ),           indlvl, bindent, pbs.fidjl );
+            printmline( sprintf( 'pb.objupper = v_(%s);',  s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidma );
+            printpline( sprintf( 'self.objupper = v_[%s]', s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidpy );
+            printjline( sprintf( 'pb.objupper = v_[%s]',   s2mpjname('',f{5},pbs) ),          indlvl, bindent, pbs.fidjl );
          end
          posdoll = strfind( line( 37:end ), '$' );
          if ( ~isempty( posdoll ) )
@@ -4096,10 +4090,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                globdict( f{2} ) = [ 'pbm.efpar(', int2str( n_eglobs ), ')' ];
             case 'python'
                if ( n_eglobs == 1 )
-                  printpline( 'pbm.efpar = np.array([]);',                                    indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.efpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
-               pending{1}    = sprintf( 'pbm.efpar = arrset( pbm.efpar,%d,%s)', n_eglobs-1, evalstr );
-               globdict( f{2} ) = [ 'pbm.efpar[', int2str( n_eglobs-1 ), ']' ];
+               pending{1}    = sprintf( 'self.efpar = arrset( self.efpar,%d,%s)', n_eglobs-1, evalstr );
+               globdict( f{2} ) = [ 'self.efpar[', int2str( n_eglobs-1 ), ']' ];
             case 'julia'
                pending{1}    = sprintf( 'arrset(pbm.efpar,%d,%s)', n_eglobs, evalstr );
                globdict( f{2} ) = [ 'pbm.efpar[', int2str( n_eglobs ), ']' ];
@@ -4126,7 +4120,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             else
                n_eglobs   = n_eglobs + 1;
                i_eglobs   = n_eglobs;
-               globdict( f{3} ) =  [ 'pbm.efpar[', int2str( n_eglobs ), ']' ];
+               switch (pbs.lang )
+               case 'matlab'
+                  globdict( f{3} ) =  [ 'pbm.efpar(', int2str( n_eglobs ), ')' ];
+               case 'python'
+                  globdict( f{3} ) =  [ 'self.efpar[', int2str( n_eglobs ), ']' ];
+               case 'julia'
+                  globdict( f{3} ) =  [ 'pbm.efpar[', int2str( n_eglobs ), ']' ];
+               end
             end
             evalstr = from_fortran( f{4}, globdict, pbs );
             switch( pbs.lang )
@@ -4135,17 +4136,17 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( 'pbm.efpar = [];',                                              indlvl, bindent, pbs.fidma );
                end
               printmline( sprintf( 'if(%s)', globdict( f{2} ) ),                              indlvl, bindent, pbs.fidma );
-              pending{1}       = sprintf( '%spbm.efpar[%d] = %s;    %% this is %s', bindent, i_eglobs, evalstr, f{3} );
+              pending{1}       = sprintf( '%spbm.efpar(%d) = %s;    %% this is %s', bindent, i_eglobs, evalstr, f{3} );
               pending{2}       = 'end';
             case 'python'
                if ( n_eglobs == 1 )
-                  printpline( 'pbm.efpar = np.array([]);', indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.efpar = np.array([]);', indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s!=0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1}     = sprintf( '%spbm.efpar = arrset( pbm.efpar,%d,%s)    # this is %s',  ...
+              pending{1}     = sprintf( '%sself.efpar = arrset( self.efpar,%d,%s)    # this is %s',  ...
                                         bindent, i_eglobs-1, evalstr, f{3} );
               if ( i_eglobs == n_eglobs )
-                 globdict( f{3} ) =  [ 'pbm.efpar[', int2str( n_eglobs-1 ), ']' ];
+                 globdict( f{3} ) =  [ 'self.efpar[', int2str( n_eglobs-1 ), ']' ];
               end
             case 'julia'
               printjline( sprintf( 'if %s!=0', globdict( f{2} ) ),                            indlvl, bindent, pbs.fidjl );
@@ -4163,23 +4164,30 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             else
                n_eglobs   = n_eglobs + 1;
                i_eglobs   = n_eglobs;
-               globdict( f{3} ) =  [ pbm.efpar{', int2str( n_eglobs ), '}' ];
+               switch ( pbs.lang )
+               case 'matlab'
+                  globdict( f{3} ) =  [ 'pbm.efpar(', int2str( n_eglobs ), ')' ];
+               case 'python'
+                  globdict( f{3} ) =  [ 'self.efpar[', int2str( n_eglobs ), ']' ];
+               case 'julia'
+                  globdict( f{3} ) =  [ 'pbm.efpar[', int2str( n_eglobs ), ']' ];
+               end
             end
             evalstr = from_fortran( f{4}, globdict, pbs );
             switch( pbs.lang )
             case 'matlab'
                if ( n_eglobs == 1 )
-                  printmline( 'pbm.efpar = {};',                                              indlvl, bindent, pbs.fidma );
+                  printmline( 'pbm.efpar = [];',                                              indlvl, bindent, pbs.fidma );
                end
               printmline( sprintf( 'if(~%s)',  globdict( f{2} ) ),                            indlvl, bindent, pbs.fidma );
-              pending{1}       = sprintf( '%spbm.efpar{%d} = %s;    %% this is %s', bindent, i_eglobs, evalstr, f{3} );
+              pending{1}       = sprintf( '%spbm.efpar(%d) = %s;    %% this is %s', bindent, i_eglobs, evalstr, f{3} );
               pending{2}       = 'end';
             case 'python'
                if ( n_eglobs == 1 )
-                  printpline( 'pbm.efpar = np.array([]);',                                    indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.efpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s==0:',  globdict( f{2} ) ),                          indlvl, bindent, pbs.fidpy );
-              pending{1}     = sprintf( '%spbm.efpar = arrset( pbm.efpar,%d,%s)    # this is %s',  ...
+              pending{1}     = sprintf( '%sself.efpar = arrset( self.efpar,%d,%s)    # this is %s',  ...
                                         bindent, i_eglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if !%s',  globdict( f{2} ) ),                          indlvl, bindent, pbs.fidjl );
@@ -4210,7 +4218,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             case 'python'
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
                printpline( '@staticmethod',                                                   1,      bindent, pbs.fidpy );
-               printpline( sprintf( 'def %s(pbm,nargout,*args):', ename ),                    1,      bindent, pbs.fidpy );
+               printpline( sprintf( 'def %s(self, nargout,*args):', ename ),                    1,      bindent, pbs.fidpy );
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
                printpline( 'import numpy as np',                                              2,      bindent, pbs.fidpy );
             case 'julia'
@@ -4279,7 +4287,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   case 'matlab'
                      locdict( elftype{post}.elpar{i} ) = sprintf( 'pbm.elpar{iel_}(%d)', i );
                   case 'python'
-                     locdict( elftype{post}.elpar{i} ) = sprintf( 'pbm.elpar[iel_][%d]', i-1 );
+                     locdict( elftype{post}.elpar{i} ) = sprintf( 'self.elpar[iel_][%d]', i-1 );
                   case 'julia'
                      locdict( elftype{post}.elpar{i} ) = sprintf( 'pbm.elpar[iel_][%d]', i );
                   end                  
@@ -4600,7 +4608,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             if ( pbs.disperrors )
                disp( pbs.errors{end} )
             end
-            errors = pb.errors;
+            switch( pbs.lang )
+            case { 'matlab', 'julia' }
+               errors = pb.errors;
+            case 'python'
+               errors = self.errors;
+            end
             exitc  = length( errors );
             return
          end
@@ -4621,11 +4634,11 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                globdict( f{2} ) = [ 'pbm.gfpar(', int2str( n_gglobs ), ')' ];
             case 'python'
                if ( n_gglobs == 1 )
-                  printpline( 'pbm.gfpar = np.array([]);',                                    indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
-               pending{1}    = sprintf( 'pbm.gfpar = arrset( pbm.gfpar,%d,%s)    # this is %s', ...
+               pending{1}    = sprintf( 'self.gfpar = arrset( self.gfpar,%d,%s)    # this is %s', ...
                                          n_gglobs-1, evalstr, f{2} );
-               globdict( f{2} ) = [ 'pbm.gfpar[', int2str( n_gglobs-1 ), ']' ];
+               globdict( f{2} ) = [ 'self.gfpar[', int2str( n_gglobs-1 ), ']' ];
             case 'julia'
                pending{1}    = sprintf( 'arrset(pbm.gfpar,%d,%s)    # this is  %s', n_gglobs, evalstr, f{2} );
                globdict( f{2} ) = [ 'pbm.gfpar[', int2str( n_gglobs ), ']' ];
@@ -4652,7 +4665,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             else
                n_gglobs   = n_gglobs + 1;
                i_gglobs   = n_gglobs;
-               globdict( f{3} ) =  [ 'pbm.gfpar[', int2str( n_gglobs ), ']' ];
+               switch (pbs.lang )
+               case 'matlab'
+                  globdict( f{3} ) =  [ 'pbm.gfpar(', int2str( n_gglobs ), ')' ];
+               case 'python'
+                  globdict( f{3} ) =  [ 'self.gfpar[', int2str( n_gglobs ), ']' ];
+               case 'julia'
+                  globdict( f{3} ) =  [ 'pbm.gfpar[', int2str( n_gglobs ), ']' ];
+               end
             end
             evalstr = from_fortran( f{4}, globdict, pbs );
             switch( pbs.lang )
@@ -4661,14 +4681,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( 'pbm.gfpar = [];',                                              indlvl, bindent, pbs.fidma );
                end
               printmline( sprintf( 'if(%s)', globdict( f{2} ) ),                              indlvl, bindent, pbs.fidma );
-              pending{1} = sprintf( '%spbm.gfpar[%d] = %s;    %% this is %s', bindent, i_gglobs, evalstr, f{3} );
+              pending{1} = sprintf( '%spbm.gfpar(%d) = %s;    %% this is %s', bindent, i_gglobs, evalstr, f{3} );
               pending{2} = 'end';
             case 'python'
                if ( n_gglobs == 1 )
-                  printpline( 'pbm.gfpar = np.array([]);', indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s!=0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1} = sprintf( '%spbm.gfpar = arrset( pbm.gfpar,%d,%s)    # this is %s', ...
+              pending{1} = sprintf( '%sself.gfpar = arrset( self.gfpar,%d,%s)    # this is %s', ...
                                      bindent, i_gglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if %s!=0', globdict( f{2} ) ),                            indlvl, bindent, pbs.fidjl );
@@ -4686,7 +4706,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             else
                n_gglobs   = n_gglobs + 1;
                i_gglobs   = n_gglobs;
-               globdict( f{3} ) =  [ 'pbm.gfpar{', int2str( n_gglobs ), '}' ];
+               switch( pbs.lang )
+               case 'matlab'
+                  globdict( f{3} ) =  [ 'pbm.gfpar(', int2str( n_gglobs ), ')' ];
+               case 'python'
+                  globdict( f{3} ) =  [ 'self.gfpar[', int2str( n_gglobs ), ']' ];
+               case 'matlab'
+                  globdict( f{3} ) =  [ 'pbm.gfpar[', int2str( n_gglobs ), ']' ];
+               end
             end
             evalstr =  from_fortran( f{4}, globdict, pbs );
             switch( pbs.lang )
@@ -4695,14 +4722,14 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printmline( 'pbm.gfpar = {};',                                              indlvl, bindent, pbs.fidma );
                end
                printmline( sprintf( 'if(2%s)', globdict( f{2} ) ),                            indlvl, bindent, pbs.fidma );
-               pending{1} = sprintf( '%spbm.gfpar[%d] = %s;    %% this is %s', bindent, i_gglobs, evalstr, f{3} );
+               pending{1} = sprintf( '%spbm.gfpar(%d) = %s;    %% this is %s', bindent, i_gglobs, evalstr, f{3} );
                pending{2} = 'end';
             case 'python'
                if ( n_gglobs == 1 )
-                  printpline( 'pbm.gfpar = np.array([]);',                                    indlvl, bindent, pbs.fidpy );
+                  printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s==0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1} = sprintf( '%spbm.gfpar = arrset( pbm.gfpar,%d,%s)    # this is  %s',  bindent, i_gglobs-1, evalstr, f{3} );
+              pending{1} = sprintf( '%sself.gfpar = arrset( self.gfpar,%d,%s)    # this is  %s',  bindent, i_gglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if !%s', globdict( f{2} ) ),                              indlvl, bindent, pbs.fidjl );
               pending{1} = sprintf( '%sarrset(pbm.gfpar,%d,%s)    # this is %s',  bindent, i_gglobs, evalstr, f{3} );
@@ -4734,7 +4761,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             ;case 'python'
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
                printpline( '@staticmethod',                                                   1,      bindent, pbs.fidpy );
-               printpline( sprintf( 'def %s(pbm,nargout,*args):', gname ),                    1,      bindent, pbs.fidpy );
+               printpline( sprintf( 'def %s(self,nargout,*args):', gname ),                    1,      bindent, pbs.fidpy );
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
             case 'julia'
                printjline( ' ',                                                               0,      bindent, pbs.fidjl );
@@ -4778,7 +4805,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   case 'matlab'
                      locdict( grftype{post}.grpar{i} ) = sprintf( 'pbm.grpar{igr_}(%d)', i );
                   case 'python'
-                     locdict( grftype{post}.grpar{i} ) = sprintf( 'pbm.grpar[igr_][%d]', i-1 );
+                     locdict( grftype{post}.grpar{i} ) = sprintf( 'self.grpar[igr_][%d]', i-1 );
                   case 'julia'
                      locdict( grftype{post}.grpar{i} ) = sprintf( 'pbm.grpar[igr_][%d]', i );
                   end
@@ -6457,17 +6484,17 @@ if ( addinA )
    printmline( sprintf( 'pbm.A(ig,iv) = %s;', val ),                                      indlvl + 1, bindent, pbs.fidma );
    printmline( 'end', indlvl, bindent, pbs.fidma );
 
-   printpline( sprintf( 'pbm.A[ig,iv] = float(%s)+pbm.A[ig,iv]', val ),                   indlvl,     bindent, pbs.fidpy );
+   printpline( sprintf( 'self.A[ig,iv] = float(%s)+self.A[ig,iv]', val ),                 indlvl,     bindent, pbs.fidpy );
    printjline( sprintf( 'pbm.A[ig,iv] += Float64(%s)', val ),                             indlvl,     bindent, pbs.fidjl );
 else
    switch( rowcol )
    case 'row'
       printmline( sprintf( 'pbm.A(ig_(%s),iv) = %s;', idx, val ),                         indlvl,     bindent, pbs.fidma );
-      printpline( sprintf( 'pbm.A[ig_[%s],iv] = float(%s)', idx, val ),                   indlvl,     bindent, pbs.fidpy );
+      printpline( sprintf( 'self.A[ig_[%s],iv] = float(%s)', idx, val ),                  indlvl,     bindent, pbs.fidpy );
       printjline( sprintf( 'pbm.A[ig_[%s],iv] = Float64(%s)', idx, val ),                 indlvl,     bindent, pbs.fidjl );
    case 'col'
       printmline( sprintf( 'pbm.A(ig,ix_(%s)) = %s;', idx, val ),                         indlvl,     bindent, pbs.fidma );
-      printpline( sprintf( 'pbm.A[ig,ix_[%s]] = float(%s)', idx, val ),                   indlvl,     bindent, pbs.fidpy );
+      printpline( sprintf( 'self.A[ig,ix_[%s]] = float(%s)', idx, val ),                  indlvl,     bindent, pbs.fidpy );
       printjline( sprintf( 'pbm.A[ig,ix_[%s]] = Float64(%s)', idx, val ),                 indlvl,     bindent, pbs.fidjl );
    end
 end

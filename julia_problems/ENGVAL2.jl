@@ -26,7 +26,7 @@ function ENGVAL2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -198,7 +198,7 @@ function ENGVAL2(action,args...)
         ig = ig_["G5"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
         loaset(pbm.grelw,ig,posel, 1.)

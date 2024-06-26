@@ -40,7 +40,7 @@ function PENTDI(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -167,17 +167,17 @@ function PENTDI(action,args...)
             ig = ig_["OBJ0"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["Z"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(6.000))
+            loaset(self.grelw,ig,posel,Float64(6.000))
         end
         for I = Int64(v_["N+1"]):Int64(v_["2"]):Int64(v_["P"])
             v_["I+1"] = 1+I
             ig = ig_["OBJ"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["Z"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(-4.000))
+            loaset(self.grelw,ig,posel,Float64(-4.000))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["Z"*string(Int64(v_["I+1"]))])
-            loaset(pbm.grelw,ig,posel,Float64(1.000))
+            loaset(self.grelw,ig,posel,Float64(1.000))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION               -0.75

@@ -45,10 +45,6 @@ class  RAYBENDL(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -70,45 +66,45 @@ class  RAYBENDL(CUTEst_problem):
         v_['2'] = 2
         v_['3'] = 3
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['0']),int(v_['NKNOTS'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
             [iv,ix_,_] = s2mpj_ii('Z'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'Z'+str(I))
+            self.xnames=arrset(self.xnames,iv,'Z'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['NKNOTS'])+1):
             [ig,ig_,_] = s2mpj_ii('TIME'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            pbm.gscale = arrset(pbm.gscale,ig,float(2.0))
+            self.gscale = arrset(self.gscale,ig,float(2.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
-        pb.xlower[ix_['X'+str(int(v_['0']))]] = v_['XSRC']
-        pb.xupper[ix_['X'+str(int(v_['0']))]] = v_['XSRC']
-        pb.xlower[ix_['Z'+str(int(v_['0']))]] = v_['ZSRC']
-        pb.xupper[ix_['Z'+str(int(v_['0']))]] = v_['ZSRC']
-        pb.xlower[ix_['X'+str(int(v_['NKNOTS']))]] = v_['XRCV']
-        pb.xupper[ix_['X'+str(int(v_['NKNOTS']))]] = v_['XRCV']
-        pb.xlower[ix_['Z'+str(int(v_['NKNOTS']))]] = v_['ZRCV']
-        pb.xupper[ix_['Z'+str(int(v_['NKNOTS']))]] = v_['ZRCV']
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
+        self.xlower[ix_['X'+str(int(v_['0']))]] = v_['XSRC']
+        self.xupper[ix_['X'+str(int(v_['0']))]] = v_['XSRC']
+        self.xlower[ix_['Z'+str(int(v_['0']))]] = v_['ZSRC']
+        self.xupper[ix_['Z'+str(int(v_['0']))]] = v_['ZSRC']
+        self.xlower[ix_['X'+str(int(v_['NKNOTS']))]] = v_['XRCV']
+        self.xupper[ix_['X'+str(int(v_['NKNOTS']))]] = v_['XRCV']
+        self.xlower[ix_['Z'+str(int(v_['NKNOTS']))]] = v_['ZRCV']
+        self.xupper[ix_['Z'+str(int(v_['NKNOTS']))]] = v_['ZRCV']
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
+        self.x0 = np.zeros((self.n,1))
         v_['XRANGE'] = v_['XRCV']-v_['XSRC']
         v_['ZRANGE'] = v_['ZRCV']-v_['ZSRC']
         v_['RKNOTS'] = float(v_['NKNOTS'])
@@ -119,8 +115,8 @@ class  RAYBENDL(CUTEst_problem):
             v_['ZINCR'] = v_['FRAC']*v_['ZRANGE']
             v_['XC'] = v_['XSRC']+v_['XINCR']
             v_['ZC'] = v_['ZSRC']+v_['ZINCR']
-            pb.x0[ix_['X'+str(I)]] = float(v_['XC'])
-            pb.x0[ix_['Z'+str(I)]] = float(v_['ZC'])
+            self.x0[ix_['X'+str(I)]] = float(v_['XC'])
+            self.x0[ix_['Z'+str(I)]] = float(v_['ZC'])
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -131,52 +127,51 @@ class  RAYBENDL(CUTEst_problem):
         elftv = loaset(elftv,it,3,'Z2')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['NKNOTS'])+1):
             v_['I-1'] = -1+I
             ename = 'T'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
-                pbm.elftype = arrset(pbm.elftype,ie,'eTT')
+                self.elftype = arrset(self.elftype,ie,'eTT')
                 ielftype = arrset( ielftype,ie,iet_['eTT'])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='X1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X2')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='X2')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Z'+str(int(v_['I-1']))
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='Z1')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Z'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='Z2')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+            posev = np.where(elftv[ielftype[ie]]=='Z2')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['NKNOTS'])+1):
             ig = ig_['TIME'+str(I)]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['T'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['T'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #   Solution of the continuous problem
 # LO RAYBENDL            96.2424
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OXR2-MY-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OXR2-MY-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -185,15 +180,15 @@ class  RAYBENDL(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def e_globs(pbm):
+    def e_globs(self):
 
         import numpy as np
-        pbm.efpar = np.array([]);
-        pbm.efpar = arrset( pbm.efpar,0,0.01)
+        self.efpar = np.array([]);
+        self.efpar = arrset( self.efpar,0,0.01)
         return pbm
 
     @staticmethod
-    def eTT(pbm,nargout,*args):
+    def eTT(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -207,9 +202,9 @@ class  RAYBENDL(CUTEst_problem):
         IV_[0] = U_[0:1,:].dot(EV_)
         IV_[1] = U_[1:2,:].dot(EV_)
         IV_[2] = U_[2:3,:].dot(EV_)
-        C0 = 1.0+pbm.efpar[0]*IV_[0]
-        C1 = 1.0+pbm.efpar[0]*IV_[1]
-        DCDZ = pbm.efpar[0]
+        C0 = 1.0+self.efpar[0]*IV_[0]
+        C1 = 1.0+self.efpar[0]*IV_[1]
+        DCDZ = self.efpar[0]
         V = 1.0/C1+1.0/C0
         VDZ0 = -DCDZ/(C0*C0)
         VDZ1 = -DCDZ/(C1*C1)

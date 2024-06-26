@@ -28,10 +28,6 @@ class  DMN37143LS(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -9329,141 +9325,141 @@ class  DMN37143LS(CUTEst_problem):
         v_['Y4642'] = 3.9506460E-1
         v_['Y4643'] = -6.604424E-1
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NVEC'])+1):
             [iv,ix_,_] = s2mpj_ii('WEIGHT'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'WEIGHT'+str(I))
+            self.xnames=arrset(self.xnames,iv,'WEIGHT'+str(I))
             [iv,ix_,_] = s2mpj_ii('WIDTH'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'WIDTH'+str(I))
+            self.xnames=arrset(self.xnames,iv,'WIDTH'+str(I))
             [iv,ix_,_] = s2mpj_ii('POSIT'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'POSIT'+str(I))
+            self.xnames=arrset(self.xnames,iv,'POSIT'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(v_['Y'+str(I)]))
+            self.gconst = arrset(self.gconst,ig_['R'+str(I)],float(v_['Y'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.x0[ix_['WEIGHT1']] = float(4.0641168384)
-        pb.x0[ix_['WEIGHT2']] = float(1.6497222E-1)
-        pb.x0[ix_['WEIGHT3']] = float(1.1602949687)
-        pb.x0[ix_['WEIGHT4']] = float(2.6776527E-1)
-        pb.x0[ix_['WEIGHT5']] = float(3.1204919E-1)
-        pb.x0[ix_['WEIGHT6']] = float(7.3935213E-2)
-        pb.x0[ix_['WEIGHT7']] = float(2.3024068E-1)
-        pb.x0[ix_['WEIGHT8']] = float(1.3683044425)
-        pb.x0[ix_['WEIGHT9']] = float(2.5260505E-1)
-        pb.x0[ix_['WEIGHT10']] = float(1.1600613899)
-        pb.x0[ix_['WEIGHT11']] = float(4.6139967E-2)
-        pb.x0[ix_['WEIGHT12']] = float(1.2450694E-1)
-        pb.x0[ix_['WEIGHT13']] = float(2.9665794E-1)
-        pb.x0[ix_['WEIGHT14']] = float(9.2098880E-2)
-        pb.x0[ix_['WEIGHT15']] = float(1.0680955E-1)
-        pb.x0[ix_['WEIGHT16']] = float(5.3729835E-1)
-        pb.x0[ix_['WEIGHT17']] = float(3.2518929E-3)
-        pb.x0[ix_['WEIGHT18']] = float(8.7101117E-2)
-        pb.x0[ix_['WEIGHT19']] = float(1.0116760E-1)
-        pb.x0[ix_['WEIGHT20']] = float(2.5500784E-2)
-        pb.x0[ix_['WEIGHT21']] = float(9.5961864E-2)
-        pb.x0[ix_['WEIGHT22']] = float(2.7293359E-1)
-        pb.x0[ix_['WEIGHT23']] = float(3.9239373E-1)
-        pb.x0[ix_['WEIGHT24']] = float(1.2955830E-1)
-        pb.x0[ix_['WEIGHT25']] = float(4.1123179E-2)
-        pb.x0[ix_['WEIGHT26']] = float(2.9625891E-1)
-        pb.x0[ix_['WEIGHT27']] = float(8.9238179E-2)
-        pb.x0[ix_['WEIGHT28']] = float(2.7724030E-1)
-        pb.x0[ix_['WEIGHT29']] = float(5.8297920E-2)
-        pb.x0[ix_['WEIGHT30']] = float(1.4615847E-1)
-        pb.x0[ix_['WEIGHT31']] = float(1.7082536E-1)
-        pb.x0[ix_['WEIGHT32']] = float(1.3884257E-1)
-        pb.x0[ix_['WEIGHT33']] = float(3.8162104E-1)
-        pb.x0[ix_['WIDTH1']] = float(0.02)
-        pb.x0[ix_['WIDTH2']] = float(0.02)
-        pb.x0[ix_['WIDTH3']] = float(0.02)
-        pb.x0[ix_['WIDTH4']] = float(0.02)
-        pb.x0[ix_['WIDTH5']] = float(0.02)
-        pb.x0[ix_['WIDTH6']] = float(0.02)
-        pb.x0[ix_['WIDTH7']] = float(0.02)
-        pb.x0[ix_['WIDTH8']] = float(0.02)
-        pb.x0[ix_['WIDTH9']] = float(0.02)
-        pb.x0[ix_['WIDTH10']] = float(0.02)
-        pb.x0[ix_['WIDTH11']] = float(0.02)
-        pb.x0[ix_['WIDTH12']] = float(0.02)
-        pb.x0[ix_['WIDTH13']] = float(0.02)
-        pb.x0[ix_['WIDTH14']] = float(0.02)
-        pb.x0[ix_['WIDTH15']] = float(0.02)
-        pb.x0[ix_['WIDTH16']] = float(0.02)
-        pb.x0[ix_['WIDTH17']] = float(0.02)
-        pb.x0[ix_['WIDTH18']] = float(0.02)
-        pb.x0[ix_['WIDTH19']] = float(0.02)
-        pb.x0[ix_['WIDTH20']] = float(0.02)
-        pb.x0[ix_['WIDTH21']] = float(0.02)
-        pb.x0[ix_['WIDTH22']] = float(0.02)
-        pb.x0[ix_['WIDTH23']] = float(0.02)
-        pb.x0[ix_['WIDTH24']] = float(0.02)
-        pb.x0[ix_['WIDTH25']] = float(0.02)
-        pb.x0[ix_['WIDTH26']] = float(0.02)
-        pb.x0[ix_['WIDTH27']] = float(0.02)
-        pb.x0[ix_['WIDTH28']] = float(0.02)
-        pb.x0[ix_['WIDTH29']] = float(0.02)
-        pb.x0[ix_['WIDTH30']] = float(0.02)
-        pb.x0[ix_['WIDTH31']] = float(0.02)
-        pb.x0[ix_['WIDTH32']] = float(0.02)
-        pb.x0[ix_['WIDTH33']] = float(0.02)
-        pb.x0[ix_['POSIT1']] = float(4.0641168384)
-        pb.x0[ix_['POSIT2']] = float(1.6497222E-1)
-        pb.x0[ix_['POSIT3']] = float(1.1602949687)
-        pb.x0[ix_['POSIT4']] = float(2.6776527E-1)
-        pb.x0[ix_['POSIT5']] = float(3.1204919E-1)
-        pb.x0[ix_['POSIT6']] = float(7.3935213E-2)
-        pb.x0[ix_['POSIT7']] = float(2.3024068E-1)
-        pb.x0[ix_['POSIT8']] = float(1.3683044425)
-        pb.x0[ix_['POSIT9']] = float(2.5260505E-1)
-        pb.x0[ix_['POSIT10']] = float(1.1600613899)
-        pb.x0[ix_['POSIT11']] = float(4.6139967E-2)
-        pb.x0[ix_['POSIT12']] = float(1.2450694E-1)
-        pb.x0[ix_['POSIT13']] = float(2.9665794E-1)
-        pb.x0[ix_['POSIT14']] = float(9.2098880E-2)
-        pb.x0[ix_['POSIT15']] = float(1.0680955E-1)
-        pb.x0[ix_['POSIT16']] = float(5.3729835E-1)
-        pb.x0[ix_['POSIT17']] = float(3.2518929E-3)
-        pb.x0[ix_['POSIT18']] = float(8.7101117E-2)
-        pb.x0[ix_['POSIT19']] = float(1.0116760E-1)
-        pb.x0[ix_['POSIT20']] = float(2.5500784E-2)
-        pb.x0[ix_['POSIT21']] = float(9.5961864E-2)
-        pb.x0[ix_['POSIT22']] = float(2.7293359E-1)
-        pb.x0[ix_['POSIT23']] = float(3.9239373E-1)
-        pb.x0[ix_['POSIT24']] = float(1.2955830E-1)
-        pb.x0[ix_['POSIT25']] = float(4.1123179E-2)
-        pb.x0[ix_['POSIT26']] = float(2.9625891E-1)
-        pb.x0[ix_['POSIT27']] = float(8.9238179E-2)
-        pb.x0[ix_['POSIT28']] = float(2.7724030E-1)
-        pb.x0[ix_['POSIT29']] = float(5.8297920E-2)
-        pb.x0[ix_['POSIT30']] = float(1.4615847E-1)
-        pb.x0[ix_['POSIT31']] = float(1.7082536E-1)
-        pb.x0[ix_['POSIT32']] = float(1.3884257E-1)
-        pb.x0[ix_['POSIT33']] = float(3.8162104E-1)
+        self.x0 = np.zeros((self.n,1))
+        self.x0[ix_['WEIGHT1']] = float(4.0641168384)
+        self.x0[ix_['WEIGHT2']] = float(1.6497222E-1)
+        self.x0[ix_['WEIGHT3']] = float(1.1602949687)
+        self.x0[ix_['WEIGHT4']] = float(2.6776527E-1)
+        self.x0[ix_['WEIGHT5']] = float(3.1204919E-1)
+        self.x0[ix_['WEIGHT6']] = float(7.3935213E-2)
+        self.x0[ix_['WEIGHT7']] = float(2.3024068E-1)
+        self.x0[ix_['WEIGHT8']] = float(1.3683044425)
+        self.x0[ix_['WEIGHT9']] = float(2.5260505E-1)
+        self.x0[ix_['WEIGHT10']] = float(1.1600613899)
+        self.x0[ix_['WEIGHT11']] = float(4.6139967E-2)
+        self.x0[ix_['WEIGHT12']] = float(1.2450694E-1)
+        self.x0[ix_['WEIGHT13']] = float(2.9665794E-1)
+        self.x0[ix_['WEIGHT14']] = float(9.2098880E-2)
+        self.x0[ix_['WEIGHT15']] = float(1.0680955E-1)
+        self.x0[ix_['WEIGHT16']] = float(5.3729835E-1)
+        self.x0[ix_['WEIGHT17']] = float(3.2518929E-3)
+        self.x0[ix_['WEIGHT18']] = float(8.7101117E-2)
+        self.x0[ix_['WEIGHT19']] = float(1.0116760E-1)
+        self.x0[ix_['WEIGHT20']] = float(2.5500784E-2)
+        self.x0[ix_['WEIGHT21']] = float(9.5961864E-2)
+        self.x0[ix_['WEIGHT22']] = float(2.7293359E-1)
+        self.x0[ix_['WEIGHT23']] = float(3.9239373E-1)
+        self.x0[ix_['WEIGHT24']] = float(1.2955830E-1)
+        self.x0[ix_['WEIGHT25']] = float(4.1123179E-2)
+        self.x0[ix_['WEIGHT26']] = float(2.9625891E-1)
+        self.x0[ix_['WEIGHT27']] = float(8.9238179E-2)
+        self.x0[ix_['WEIGHT28']] = float(2.7724030E-1)
+        self.x0[ix_['WEIGHT29']] = float(5.8297920E-2)
+        self.x0[ix_['WEIGHT30']] = float(1.4615847E-1)
+        self.x0[ix_['WEIGHT31']] = float(1.7082536E-1)
+        self.x0[ix_['WEIGHT32']] = float(1.3884257E-1)
+        self.x0[ix_['WEIGHT33']] = float(3.8162104E-1)
+        self.x0[ix_['WIDTH1']] = float(0.02)
+        self.x0[ix_['WIDTH2']] = float(0.02)
+        self.x0[ix_['WIDTH3']] = float(0.02)
+        self.x0[ix_['WIDTH4']] = float(0.02)
+        self.x0[ix_['WIDTH5']] = float(0.02)
+        self.x0[ix_['WIDTH6']] = float(0.02)
+        self.x0[ix_['WIDTH7']] = float(0.02)
+        self.x0[ix_['WIDTH8']] = float(0.02)
+        self.x0[ix_['WIDTH9']] = float(0.02)
+        self.x0[ix_['WIDTH10']] = float(0.02)
+        self.x0[ix_['WIDTH11']] = float(0.02)
+        self.x0[ix_['WIDTH12']] = float(0.02)
+        self.x0[ix_['WIDTH13']] = float(0.02)
+        self.x0[ix_['WIDTH14']] = float(0.02)
+        self.x0[ix_['WIDTH15']] = float(0.02)
+        self.x0[ix_['WIDTH16']] = float(0.02)
+        self.x0[ix_['WIDTH17']] = float(0.02)
+        self.x0[ix_['WIDTH18']] = float(0.02)
+        self.x0[ix_['WIDTH19']] = float(0.02)
+        self.x0[ix_['WIDTH20']] = float(0.02)
+        self.x0[ix_['WIDTH21']] = float(0.02)
+        self.x0[ix_['WIDTH22']] = float(0.02)
+        self.x0[ix_['WIDTH23']] = float(0.02)
+        self.x0[ix_['WIDTH24']] = float(0.02)
+        self.x0[ix_['WIDTH25']] = float(0.02)
+        self.x0[ix_['WIDTH26']] = float(0.02)
+        self.x0[ix_['WIDTH27']] = float(0.02)
+        self.x0[ix_['WIDTH28']] = float(0.02)
+        self.x0[ix_['WIDTH29']] = float(0.02)
+        self.x0[ix_['WIDTH30']] = float(0.02)
+        self.x0[ix_['WIDTH31']] = float(0.02)
+        self.x0[ix_['WIDTH32']] = float(0.02)
+        self.x0[ix_['WIDTH33']] = float(0.02)
+        self.x0[ix_['POSIT1']] = float(4.0641168384)
+        self.x0[ix_['POSIT2']] = float(1.6497222E-1)
+        self.x0[ix_['POSIT3']] = float(1.1602949687)
+        self.x0[ix_['POSIT4']] = float(2.6776527E-1)
+        self.x0[ix_['POSIT5']] = float(3.1204919E-1)
+        self.x0[ix_['POSIT6']] = float(7.3935213E-2)
+        self.x0[ix_['POSIT7']] = float(2.3024068E-1)
+        self.x0[ix_['POSIT8']] = float(1.3683044425)
+        self.x0[ix_['POSIT9']] = float(2.5260505E-1)
+        self.x0[ix_['POSIT10']] = float(1.1600613899)
+        self.x0[ix_['POSIT11']] = float(4.6139967E-2)
+        self.x0[ix_['POSIT12']] = float(1.2450694E-1)
+        self.x0[ix_['POSIT13']] = float(2.9665794E-1)
+        self.x0[ix_['POSIT14']] = float(9.2098880E-2)
+        self.x0[ix_['POSIT15']] = float(1.0680955E-1)
+        self.x0[ix_['POSIT16']] = float(5.3729835E-1)
+        self.x0[ix_['POSIT17']] = float(3.2518929E-3)
+        self.x0[ix_['POSIT18']] = float(8.7101117E-2)
+        self.x0[ix_['POSIT19']] = float(1.0116760E-1)
+        self.x0[ix_['POSIT20']] = float(2.5500784E-2)
+        self.x0[ix_['POSIT21']] = float(9.5961864E-2)
+        self.x0[ix_['POSIT22']] = float(2.7293359E-1)
+        self.x0[ix_['POSIT23']] = float(3.9239373E-1)
+        self.x0[ix_['POSIT24']] = float(1.2955830E-1)
+        self.x0[ix_['POSIT25']] = float(4.1123179E-2)
+        self.x0[ix_['POSIT26']] = float(2.9625891E-1)
+        self.x0[ix_['POSIT27']] = float(8.9238179E-2)
+        self.x0[ix_['POSIT28']] = float(2.7724030E-1)
+        self.x0[ix_['POSIT29']] = float(5.8297920E-2)
+        self.x0[ix_['POSIT30']] = float(1.4615847E-1)
+        self.x0[ix_['POSIT31']] = float(1.7082536E-1)
+        self.x0[ix_['POSIT32']] = float(1.3884257E-1)
+        self.x0[ix_['POSIT33']] = float(3.8162104E-1)
         pass
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
@@ -9476,58 +9472,57 @@ class  DMN37143LS(CUTEst_problem):
         elftp = loaset(elftp,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['NVEC'])+1):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eLORENTZ3')
+                self.elftype = arrset(self.elftype,ie,'eLORENTZ3')
                 ielftype = arrset(ielftype, ie, iet_["eLORENTZ3"])
                 vname = 'WEIGHT'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='WEIGHT')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='WEIGHT')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'WIDTH'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='WIDTH')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='WIDTH')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'POSIT'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='POSIT')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-                posep = find(elftp[ielftype[ie]],lambda x:x=='X')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['X'+str(I)]))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='POSIT')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
+                posep = np.where(elftp[ielftype[ie]]=='X')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['X'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gL2',igt_)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for ig in range(0,ngrp):
-            pbm.grftype = arrset(pbm.grftype,ig,'gL2')
+            self.grftype = arrset(self.grftype,ig,'gL2')
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['NVEC'])+1):
                 ig = ig_['R'+str(I)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "SUR2-MN-99-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "SUR2-MN-99-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -9536,25 +9531,25 @@ class  DMN37143LS(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def e_globs(pbm):
+    def e_globs(self):
 
         import numpy as np
-        pbm.efpar = np.array([]);
-        pbm.efpar = arrset( pbm.efpar,0,0.25e0/np.arctan(1.0e0))
+        self.efpar = np.array([]);
+        self.efpar = arrset( self.efpar,0,0.25e0/np.arctan(1.0e0))
         return pbm
 
     @staticmethod
-    def eLORENTZ3(pbm,nargout,*args):
+    def eLORENTZ3(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        PMX = EV_[2]-pbm.elpar[iel_][0]
+        PMX = EV_[2]-self.elpar[iel_][0]
         DENOM = PMX**2+EV_[1]**2
         DENOM2 = DENOM*DENOM
         DENOM3 = DENOM2*DENOM
         RATIO = EV_[1]/DENOM
-        WOPI = pbm.efpar[0]*EV_[0]
+        WOPI = self.efpar[0]*EV_[0]
         TWOPI = WOPI+WOPI
         TWOPIW = TWOPI*EV_[1]
         ETP = 4.0e0*TWOPIW*PMX
@@ -9567,15 +9562,15 @@ class  DMN37143LS(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = pbm.efpar[0]*RATIO
+            g_[0] = self.efpar[0]*RATIO
             g_[1] = WOPI/DENOM-TWOPI*RATIO**2
             g_[2] = -TWOPIW*PMX/DENOM2
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = pbm.efpar[0]/DENOM-2.0e0*pbm.efpar[0]*RATIO**2
+                H_[0,1] = self.efpar[0]/DENOM-2.0e0*self.efpar[0]*RATIO**2
                 H_[1,0] = H_[0,1]
                 H_[1,1] = -3.0e0*TWOPIW/DENOM2+8.0e0*WOPI*RATIO**3
-                H_[0,2] = -2.0e0*pbm.efpar[0]*EV_[1]*PMX/DENOM2
+                H_[0,2] = -2.0e0*self.efpar[0]*EV_[1]*PMX/DENOM2
                 H_[2,0] = H_[0,2]
                 H_[1,2] = -TWOPI*PMX/DENOM2+ETP*EV_[1]/DENOM3
                 H_[2,1] = H_[1,2]
@@ -9590,7 +9585,7 @@ class  DMN37143LS(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gL2(pbm,nargout,*args):
+    def gL2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]

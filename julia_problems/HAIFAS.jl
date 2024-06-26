@@ -28,7 +28,7 @@ function HAIFAS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -75,7 +75,7 @@ function HAIFAS(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -590,127 +590,127 @@ function HAIFAS(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(1.00000e+01))
         v_["J"] = 2
         v_["L"] = 2
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.40000))
+        loaset(self.grelw,ig,posel,Float64(6.40000))
         v_["J"] = 2
         v_["L"] = 3
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.40000))
+        loaset(self.grelw,ig,posel,Float64(6.40000))
         v_["J"] = 2
         v_["L"] = 4
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.60000))
+        loaset(self.grelw,ig,posel,Float64(1.60000))
         v_["J"] = 3
         v_["L"] = 5
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(4.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(4.00000e+01))
         v_["J"] = 3
         v_["L"] = 6
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-8.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(-8.00000e+01))
         v_["J"] = 3
         v_["L"] = 7
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(4.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(4.00000e+01))
         v_["J"] = 4
         v_["L"] = 8
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.40000))
+        loaset(self.grelw,ig,posel,Float64(6.40000))
         v_["J"] = 4
         v_["L"] = 9
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-6.40000))
+        loaset(self.grelw,ig,posel,Float64(-6.40000))
         v_["J"] = 4
         v_["L"] = 10
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.60000))
+        loaset(self.grelw,ig,posel,Float64(1.60000))
         v_["J"] = 5
         v_["L"] = 11
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(1.00000e+01))
         v_["J"] = 6
         v_["L"] = 12
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.40000))
+        loaset(self.grelw,ig,posel,Float64(6.40000))
         v_["J"] = 6
         v_["L"] = 13
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.40000))
+        loaset(self.grelw,ig,posel,Float64(6.40000))
         v_["J"] = 6
         v_["L"] = 14
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.60000))
+        loaset(self.grelw,ig,posel,Float64(1.60000))
         v_["J"] = 7
         v_["L"] = 15
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(4.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(4.00000e+01))
         v_["J"] = 7
         v_["L"] = 16
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-8.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(-8.00000e+01))
         v_["J"] = 7
         v_["L"] = 17
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(4.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(4.00000e+01))
         v_["J"] = 8
         v_["L"] = 18
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.40000))
+        loaset(self.grelw,ig,posel,Float64(6.40000))
         v_["J"] = 8
         v_["L"] = 19
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-6.40000))
+        loaset(self.grelw,ig,posel,Float64(-6.40000))
         v_["J"] = 8
         v_["L"] = 20
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.60000))
+        loaset(self.grelw,ig,posel,Float64(1.60000))
         v_["J"] = 9
         v_["L"] = 21
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["L"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.00000e+01))
+        loaset(self.grelw,ig,posel,Float64(1.00000e+01))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 #    Solution
@@ -723,7 +723,7 @@ function HAIFAS(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LQR2-AN-13-9"
         pb.x0          = zeros(Float64,pb.n)
         return pb, pbm

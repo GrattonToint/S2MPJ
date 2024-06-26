@@ -40,10 +40,6 @@ class  VIBRBEAMNE(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -145,65 +141,65 @@ class  VIBRBEAMNE(CUTEst_problem):
         v_['p29'] = 0.6666
         v_['p30'] = 0.8630
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         [iv,ix_,_] = s2mpj_ii('c0',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'c0')
+        self.xnames=arrset(self.xnames,iv,'c0')
         [iv,ix_,_] = s2mpj_ii('c1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'c1')
+        self.xnames=arrset(self.xnames,iv,'c1')
         [iv,ix_,_] = s2mpj_ii('c2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'c2')
+        self.xnames=arrset(self.xnames,iv,'c2')
         [iv,ix_,_] = s2mpj_ii('c3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'c3')
+        self.xnames=arrset(self.xnames,iv,'c3')
         [iv,ix_,_] = s2mpj_ii('d0',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'d0')
+        self.xnames=arrset(self.xnames,iv,'d0')
         [iv,ix_,_] = s2mpj_ii('d1',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'d1')
+        self.xnames=arrset(self.xnames,iv,'d1')
         [iv,ix_,_] = s2mpj_ii('d2',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'d2')
+        self.xnames=arrset(self.xnames,iv,'d2')
         [iv,ix_,_] = s2mpj_ii('d3',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'d3')
+        self.xnames=arrset(self.xnames,iv,'d3')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for i in range(int(v_['1']),int(v_['m'])+1):
             [ig,ig_,_] = s2mpj_ii('f'+str(i),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'f'+str(i))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for i in range(int(v_['1']),int(v_['m'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['f'+str(i)],float(v_['v'+str(i)]))
+            self.gconst = arrset(self.gconst,ig_['f'+str(i)],float(v_['v'+str(i)]))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.y0 = np.zeros((pb.m,1))
-        pb.x0[ix_['c0']] = float(-3.5)
-        pb.x0[ix_['c1']] = float(1.0)
-        pb.x0[ix_['d0']] = float(1.7)
+        self.x0 = np.zeros((self.n,1))
+        self.y0 = np.zeros((self.m,1))
+        self.x0[ix_['c0']] = float(-3.5)
+        self.x0[ix_['c1']] = float(1.0)
+        self.x0[ix_['d0']] = float(1.7)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -218,69 +214,68 @@ class  VIBRBEAMNE(CUTEst_problem):
         elftp = loaset(elftp,it,1,'q')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for i in range(int(v_['1']),int(v_['m'])+1):
             for j in range(int(v_['0']),int(v_['3'])+1):
                 ename = 'fu'+str(i)+','+str(j)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'efun')
+                self.elftype = arrset(self.elftype,ie,'efun')
                 ielftype = arrset(ielftype, ie, iet_["efun"])
                 vname = 'd0'
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='a0')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='a0')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'd1'
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='a1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='a1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'd2'
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='a2')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='a2')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'd3'
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='a3')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='a3')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'c'+str(j)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='b')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-                posep = find(elftp[ielftype[ie]],lambda x:x=='y')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['x'+str(i)]))
-                posep = find(elftp[ielftype[ie]],lambda x:x=='q')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['p'+str(i)]))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='b')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
+                posep = np.where(elftp[ielftype[ie]]=='y')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['x'+str(i)]))
+                posep = np.where(elftp[ielftype[ie]]=='q')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['p'+str(i)]))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for i in range(int(v_['1']),int(v_['m'])+1):
             v_['y'] = 1.0
             for j in range(int(v_['0']),int(v_['3'])+1):
                 ig = ig_['f'+str(i)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['fu'+str(i)+','+str(j)])
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['fu'+str(i)+','+str(j)])
                 nlc = np.union1d(nlc,np.array([ig]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['y']))
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['y']))
                 v_['y'] = v_['y']*v_['x'+str(i)]
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO SOLUTION             0.15644607137
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        delattr( pbm, "A" )
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-MN-8-30"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "NOR2-MN-8-30"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -289,18 +284,18 @@ class  VIBRBEAMNE(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def efun(pbm,nargout,*args):
+    def efun(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        y2 = pbm.elpar[iel_][0]*pbm.elpar[iel_][0]
-        y3 = pbm.elpar[iel_][0]*y2
+        y2 = self.elpar[iel_][0]*self.elpar[iel_][0]
+        y3 = self.elpar[iel_][0]*y2
         y4 = y2*y2
         y5 = y2*y3
         y6 = y3*y3
         phi  = (
-              EV_[0]+pbm.elpar[iel_][0]*(EV_[1]+pbm.elpar[iel_][0]*(EV_[2]+pbm.elpar[iel_][0]*EV_[3]))-pbm.elpar[iel_][1])
+              EV_[0]+self.elpar[iel_][0]*(EV_[1]+self.elpar[iel_][0]*(EV_[2]+self.elpar[iel_][0]*EV_[3]))-self.elpar[iel_][1])
         cosphi = np.cos(phi)
         sinphi = np.sin(phi)
         bcos = EV_[4]*cosphi
@@ -315,14 +310,14 @@ class  VIBRBEAMNE(CUTEst_problem):
                 dim = len(EV_)
             g_ = np.zeros(dim)
             g_[0] = -bsin
-            g_[1] = -bsin*pbm.elpar[iel_][0]
+            g_[1] = -bsin*self.elpar[iel_][0]
             g_[2] = -bsin*y2
             g_[3] = -bsin*y3
             g_[4] = cosphi
             if nargout>2:
                 H_ = np.zeros((5,5))
                 H_[0,0] = -bcos
-                H_[0,1] = -bcos*pbm.elpar[iel_][0]
+                H_[0,1] = -bcos*self.elpar[iel_][0]
                 H_[1,0] = H_[0,1]
                 H_[0,2] = -bcos*y2
                 H_[2,0] = H_[0,2]
@@ -335,7 +330,7 @@ class  VIBRBEAMNE(CUTEst_problem):
                 H_[2,1] = H_[1,2]
                 H_[1,3] = -bcos*y4
                 H_[3,1] = H_[1,3]
-                H_[1,4] = -sinphi*pbm.elpar[iel_][0]
+                H_[1,4] = -sinphi*self.elpar[iel_][0]
                 H_[4,1] = H_[1,4]
                 H_[2,2] = -bcos*y4
                 H_[2,3] = -bcos*y5

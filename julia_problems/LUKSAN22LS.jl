@@ -29,7 +29,7 @@ function LUKSAN22LS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -181,7 +181,7 @@ function LUKSAN22LS(action,args...)
             ig = ig_["E"*string(Int64(v_["K"]))]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["K"]))])
-            loaset(pbm.grelw,ig,posel,Float64(10.0))
+            loaset(self.grelw,ig,posel,Float64(10.0))
             ig = ig_["E"*string(Int64(v_["K+1"]))]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["K+1"]))])
@@ -194,7 +194,7 @@ function LUKSAN22LS(action,args...)
         ig = ig_["E"*string(Int64(v_["K"]))]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["K"]))])
-        loaset(pbm.grelw,ig,posel,Float64(10.0))
+        loaset(self.grelw,ig,posel,Float64(10.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 #    Solution

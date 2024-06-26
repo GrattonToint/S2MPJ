@@ -30,10 +30,6 @@ class  HS268(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -73,19 +69,19 @@ class  HS268(CUTEst_problem):
         v_['1'] = 1
         v_['5'] = 5
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['5'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         [ig,ig_,_] = s2mpj_ii('NONL',ig_)
         gtype = arrset(gtype,ig,'<>')
@@ -93,103 +89,103 @@ class  HS268(CUTEst_problem):
             [ig,ig_,_] = s2mpj_ii('LINEAR',ig_)
             gtype = arrset(gtype,ig,'<>')
             iv = ix_['X'+str(I)]
-            pbm.A[ig,iv] = float(v_['B'+str(I)])+pbm.A[ig,iv]
+            self.A[ig,iv] = float(v_['B'+str(I)])+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('LINEAR',ig_)
         gtype = arrset(gtype,ig,'<>')
-        pbm.gscale = arrset(pbm.gscale,ig,float(-0.5))
+        self.gscale = arrset(self.gscale,ig,float(-0.5))
         [ig,ig_,_] = s2mpj_ii('C1',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C1')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('C2',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C2')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(10.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(10.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(10.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(10.0)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(5.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(5.0)+self.A[ig,iv]
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(4.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(4.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('C3',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C3')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(-8.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-8.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(-5.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-5.0)+self.A[ig,iv]
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('C4',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C4')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(8.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(8.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(2.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(2.0)+self.A[ig,iv]
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(5.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(5.0)+self.A[ig,iv]
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(-3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-3.0)+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('C5',ig_)
         gtype = arrset(gtype,ig,'>=')
         cnames = arrset(cnames,ig,'C5')
         iv = ix_['X1']
-        pbm.A[ig,iv] = float(-4.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-4.0)+self.A[ig,iv]
         iv = ix_['X2']
-        pbm.A[ig,iv] = float(-2.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-2.0)+self.A[ig,iv]
         iv = ix_['X3']
-        pbm.A[ig,iv] = float(3.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(3.0)+self.A[ig,iv]
         iv = ix_['X4']
-        pbm.A[ig,iv] = float(-5.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(-5.0)+self.A[ig,iv]
         iv = ix_['X5']
-        pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+        self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
-        pbm.gconst = arrset(pbm.gconst,ig_['C1'],float(-5.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['C2'],float(20.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['C3'],float(-40.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['C4'],float(11.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['C5'],float(-30.0))
-        pbm.gconst = arrset(pbm.gconst,ig_['NONL'],float(-14463.0))
+        self.gconst = np.zeros((ngrp,1))
+        self.gconst = arrset(self.gconst,ig_['C1'],float(-5.0))
+        self.gconst = arrset(self.gconst,ig_['C2'],float(20.0))
+        self.gconst = arrset(self.gconst,ig_['C3'],float(-40.0))
+        self.gconst = arrset(self.gconst,ig_['C4'],float(11.0))
+        self.gconst = arrset(self.gconst,ig_['C5'],float(-30.0))
+        self.gconst = arrset(self.gconst,ig_['NONL'],float(-14463.0))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
+        self.x0 = np.full((self.n,1),float(1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -200,64 +196,63 @@ class  HS268(CUTEst_problem):
         elftp = loaset(elftp,it,0,'D')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['5'])+1):
             for J in range(int(v_['1']),int(v_['5'])+1):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'ePROD')
+                self.elftype = arrset(self.elftype,ie,'ePROD')
                 ielftype = arrset(ielftype, ie, iet_["ePROD"])
                 vname = 'X'+str(I)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                posev = np.where(elftv[ielftype[ie]]=='X')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='Y')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-                posep = find(elftp[ielftype[ie]],lambda x:x=='D')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['D'+str(I)+','+str(J)]))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                posev = np.where(elftv[ielftype[ie]]=='Y')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
+                posep = np.where(elftp[ielftype[ie]]=='D')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['D'+str(I)+','+str(J)]))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['5'])+1):
             for J in range(int(v_['1']),int(v_['5'])+1):
                 ig = ig_['NONL']
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
                 nlc = np.union1d(nlc,np.array([ig]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle+pb.neq,pb.m)] = np.zeros((pb.nge,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "QLR2-AN-5-5"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "QLR2-AN-5-5"
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def ePROD(pbm,nargout,*args):
+    def ePROD(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = pbm.elpar[iel_][0]*EV_[0]*EV_[1]
+        f_   = self.elpar[iel_][0]*EV_[0]*EV_[1]
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -266,13 +261,13 @@ class  HS268(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = pbm.elpar[iel_][0]*EV_[1]
-            g_[1] = pbm.elpar[iel_][0]*EV_[0]
+            g_[0] = self.elpar[iel_][0]*EV_[1]
+            g_[1] = self.elpar[iel_][0]*EV_[0]
             if nargout>2:
                 H_ = np.zeros((2,2))
                 H_[0,0] = 0.0
                 H_[1,1] = 0.0
-                H_[0,1] = pbm.elpar[iel_][0]
+                H_[0,1] = self.elpar[iel_][0]
                 H_[1,0] = H_[0,1]
         if nargout == 1:
             return f_

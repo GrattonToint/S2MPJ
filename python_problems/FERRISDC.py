@@ -24,10 +24,6 @@ class  FERRISDC(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -293,71 +289,71 @@ class  FERRISDC(CUTEst_problem):
                 v_['arg'] = v_['dij2']-v_['arg']
                 v_['K'+str(i)+','+str(j)] = v_['dij']+v_['arg']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for i in range(int(v_['1']),int(v_['k'])+1):
             for j in range(int(v_['1']),int(v_['n'])+1):
                 [iv,ix_,_] = s2mpj_ii('A'+str(i)+','+str(j),ix_)
-                pb.xnames=arrset(pb.xnames,iv,'A'+str(i)+','+str(j))
+                self.xnames=arrset(self.xnames,iv,'A'+str(i)+','+str(j))
         for i in range(int(v_['1']),int(v_['n'])+1):
             [iv,ix_,_] = s2mpj_ii('W'+str(i),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'W'+str(i))
+            self.xnames=arrset(self.xnames,iv,'W'+str(i))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for j in range(int(v_['1']),int(v_['n'])+1):
             for i in range(int(v_['1']),int(v_['k'])+1):
                 [ig,ig_,_] = s2mpj_ii('OBJ',ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['A'+str(i)+','+str(j)]
-                pbm.A[ig,iv] = float(v_['Y'+str(i)+','+str(j)])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['Y'+str(i)+','+str(j)])+self.A[ig,iv]
         for i in range(int(v_['1']),int(v_['k'])+1):
             for j in range(int(v_['1']),int(v_['n'])+1):
                 [ig,ig_,_] = s2mpj_ii('C'+str(i),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'C'+str(i))
                 iv = ix_['A'+str(i)+','+str(j)]
-                pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
                 iv = ix_['W'+str(j)]
-                pbm.A[ig,iv] = float(v_['-1/k'])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['-1/k'])+self.A[ig,iv]
         for j in range(int(v_['1']),int(v_['n'])+1):
             [ig,ig_,_] = s2mpj_ii('A'+str(j),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'A'+str(j))
             iv = ix_['W'+str(j)]
-            pbm.A[ig,iv] = float(-1.0)+pbm.A[ig,iv]
+            self.A[ig,iv] = float(-1.0)+self.A[ig,iv]
             for i in range(int(v_['1']),int(v_['k'])+1):
                 [ig,ig_,_] = s2mpj_ii('A'+str(j),ig_)
                 gtype = arrset(gtype,ig,'==')
                 cnames = arrset(cnames,ig,'A'+str(j))
                 iv = ix_['A'+str(i)+','+str(j)]
-                pbm.A[ig,iv] = float(1.0)+pbm.A[ig,iv]
+                self.A[ig,iv] = float(1.0)+self.A[ig,iv]
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),0.0)
-        pb.xupper = np.full((pb.n,1),1.0)
+        self.xlower = np.full((self.n,1),0.0)
+        self.xupper = np.full((self.n,1),1.0)
         for i in range(int(v_['1']),int(v_['n'])+1):
-            pb.xlower[ix_['W'+str(i)]] = -float('Inf')
-            pb.xupper[ix_['W'+str(i)]] = +float('Inf')
+            self.xlower[ix_['W'+str(i)]] = -float('Inf')
+            self.xupper[ix_['W'+str(i)]] = +float('Inf')
         for j in range(int(v_['1']),int(v_['n'])+1):
             v_['yj'] = v_['y'+str(j)]
             v_['yj'] = int(np.fix(v_['yj']))
@@ -371,45 +367,44 @@ class  FERRISDC(CUTEst_problem):
                 v_['f'] = int(np.fix(v_['f']))
                 v_['g'] = 2-v_['f']
                 for l in range(int(v_['g']),int(v_['0'])+1):
-                    pb.xlower[ix_['A'+str(i)+','+str(j)]] = 0.0
-                    pb.xupper[ix_['A'+str(i)+','+str(j)]] = 0.0
+                    self.xlower[ix_['A'+str(i)+','+str(j)]] = 0.0
+                    self.xupper[ix_['A'+str(i)+','+str(j)]] = 0.0
         #%%%%%%%%%%%%%%%%%%%% QUADRATIC %%%%%%%%%%%%%%%%%%%
-        pbm.H = lil_matrix((pb.n, pb.n))
+        self.H = lil_matrix((self.n, self.n))
         for i in range(int(v_['1']),int(v_['k'])+1):
             for l in range(int(v_['1']),int(v_['n'])+1):
                 for j in range(int(v_['1']),int(l)+1):
                     ix1 = ix_['A'+str(i)+','+str(j)]
                     ix2 = ix_['A'+str(i)+','+str(l)]
-                    pbm.H[ix1,ix2] = float(v_['K'+str(j)+','+str(l)])+pbm.H[ix1,ix2]
-                    pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+                    self.H[ix1,ix2] = float(v_['K'+str(j)+','+str(l)])+self.H[ix1,ix2]
+                    self.H[ix2,ix1] = self.H[ix1,ix2]
         for l in range(int(v_['1']),int(v_['n'])+1):
             for j in range(int(v_['1']),int(l)+1):
                 v_['coef'] = v_['-1/k']*v_['K'+str(j)+','+str(l)]
                 ix1 = ix_['W'+str(j)]
                 ix2 = ix_['W'+str(l)]
-                pbm.H[ix1,ix2] = float(v_['coef'])+pbm.H[ix1,ix2]
-                pbm.H[ix2,ix1] = pbm.H[ix1,ix2]
+                self.H[ix1,ix2] = float(v_['coef'])+self.H[ix1,ix2]
+                self.H[ix2,ix1] = self.H[ix1,ix2]
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # XL SOLUTION            -1.131846D+2   $ nlambda = 1.5625
 # XL SOLUTION            -8.032841E-5   $ nlambda = 1.4901E-06
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.lincons   = np.arange(len(pbm.congrps))
-        pb.pbclass = "QLR2-AN-V-V"
-        pb.x0          = np.zeros((pb.n,1))
-        pbm.H = pbm.H.tocsr()
-        self.pb = pb; self.pbm = pbm
+        self.lincons   = np.arange(len(self.congrps))
+        self.pbclass = "QLR2-AN-V-V"
+        self.x0        = np.zeros((self.n,1))
+        self.H = self.H.tocsr()
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

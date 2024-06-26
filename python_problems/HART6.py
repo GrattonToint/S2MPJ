@@ -26,10 +26,6 @@ class  HART6(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -94,34 +90,34 @@ class  HART6(CUTEst_problem):
         v_['P3,6'] = 0.6650
         v_['P4,6'] = 0.0381
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['L'])+1):
             [ig,ig_,_] = s2mpj_ii('OBJ'+str(I),ig_)
             gtype = arrset(gtype,ig,'<>')
-            pbm.gscale = arrset(pbm.gscale,ig,float(-1.0))
+            self.gscale = arrset(self.gscale,ig,float(-1.0))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),0.0)
-        pb.xupper = np.full((pb.n,1),1.0)
+        self.xlower = np.full((self.n,1),0.0)
+        self.xupper = np.full((self.n,1),1.0)
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(0.2))
+        self.x0 = np.full((self.n,1),float(0.2))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -131,22 +127,22 @@ class  HART6(CUTEst_problem):
         elftp = loaset(elftp,it,0,'PIJ')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['L'])+1):
             for J in range(int(v_['1']),int(v_['NN'])+1):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
+                self.elftype = arrset(self.elftype,ie,'eSQ')
                 ielftype = arrset(ielftype, ie, iet_["eSQ"])
                 vname = 'X'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,0.0,1.0,0.2)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='V1')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-                posep = find(elftp[ielftype[ie]],lambda x:x=='PIJ')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['P'+str(I)+','+str(J)]))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,0.2)
+                posev = np.where(elftv[ielftype[ie]]=='V1')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
+                posep = np.where(elftp[ielftype[ie]]=='PIJ')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['P'+str(I)+','+str(J)]))
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gNEXP',igt_)
@@ -154,32 +150,31 @@ class  HART6(CUTEst_problem):
         grftp = []
         grftp = loaset(grftp,it,0,'CI')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
-        pbm.grpar   = []
+        self.grpar   = []
         for I in range(int(v_['1']),int(v_['L'])+1):
             ig = ig_['OBJ'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gNEXP')
+            self.grftype = arrset(self.grftype,ig,'gNEXP')
             for J in range(int(v_['1']),int(v_['NN'])+1):
                 ig = ig_['OBJ'+str(I)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
-                pbm.grelw = loaset(pbm.grelw,ig,posel,float(v_['A'+str(I)+','+str(J)]))
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
+                self.grelw = loaset(self.grelw,ig,posel,float(v_['A'+str(I)+','+str(J)]))
             ig = ig_['OBJ'+str(I)]
-            posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='CI')
-            pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['C'+str(I)]))
+            posgp = np.where(grftp[igt_[self.grftype[ig]]]=='CI')[0]
+            self.grpar =loaset(self.grpar,ig,posgp[0],float(v_['C'+str(I)]))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               -3.32288689158
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
-        delattr( pbm, "A" )
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OBR2-AN-6-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OBR2-AN-6-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -188,12 +183,12 @@ class  HART6(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def eSQ(pbm,nargout,*args):
+    def eSQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        f_   = (EV_[0]-pbm.elpar[iel_][0])*(EV_[0]-pbm.elpar[iel_][0])
+        f_   = (EV_[0]-self.elpar[iel_][0])*(EV_[0]-self.elpar[iel_][0])
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -202,7 +197,7 @@ class  HART6(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = 2.0*(EV_[0]-pbm.elpar[iel_][0])
+            g_[0] = 2.0*(EV_[0]-self.elpar[iel_][0])
             if nargout>2:
                 H_ = np.zeros((1,1))
                 H_[0,0] = 2.0
@@ -216,16 +211,16 @@ class  HART6(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gNEXP(pbm,nargout,*args):
+    def gNEXP(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
-        f_= pbm.grpar[igr_][0]*np.exp(-GVAR_)
+        f_= self.grpar[igr_][0]*np.exp(-GVAR_)
         if nargout>1:
-            g_ = -pbm.grpar[igr_][0]*np.exp(-GVAR_)
+            g_ = -self.grpar[igr_][0]*np.exp(-GVAR_)
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = pbm.grpar[igr_][0]*np.exp(-GVAR_)
+                H_ = self.grpar[igr_][0]*np.exp(-GVAR_)
         if nargout == 1:
             return f_
         elif nargout == 2:

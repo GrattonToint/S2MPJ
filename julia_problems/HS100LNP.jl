@@ -28,7 +28,7 @@ function HS100LNP(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -90,7 +90,7 @@ function HS100LNP(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -237,7 +237,7 @@ function HS100LNP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X5P6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(10.0))
+        loaset(self.grelw,ig,posel,Float64(10.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["EL"])
         loaset(pbm.grelw,ig,posel, 1.)
@@ -249,26 +249,26 @@ function HS100LNP(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-2.0))
+        loaset(self.grelw,ig,posel,Float64(-2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X2P4"])
         loaset(pbm.grelw,ig,posel,Float64(-3.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X4SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-4.0))
+        loaset(self.grelw,ig,posel,Float64(-4.0))
         ig = ig_["C4"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-4.0))
+        loaset(self.grelw,ig,posel,Float64(-4.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X2SQ"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1X2"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(3.0))
+        loaset(self.grelw,ig,posel,Float64(3.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X3SQ"])
         loaset(pbm.grelw,ig,posel,Float64(-2.0))
@@ -285,7 +285,7 @@ function HS100LNP(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OOR2-AN-7-2"
         return pb, pbm
 # **********************

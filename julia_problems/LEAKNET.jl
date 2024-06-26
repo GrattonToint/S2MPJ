@@ -35,7 +35,7 @@ function LEAKNET(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -1653,7 +1653,7 @@ function LEAKNET(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -4162,7 +4162,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR2"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4174,7 +4174,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR2"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR3"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4186,7 +4186,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR4"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4198,7 +4198,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR4"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR5"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4210,7 +4210,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR6"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4222,7 +4222,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR26"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4234,7 +4234,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR9"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4246,7 +4246,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR304"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4258,7 +4258,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR9"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR10"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4270,7 +4270,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR10"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR12"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4282,7 +4282,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR10"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR27"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4294,7 +4294,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR12"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR13"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4306,7 +4306,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR13"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR14"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4318,7 +4318,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR13"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR19"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4330,7 +4330,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR14"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR15"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4342,7 +4342,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR16"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR17"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4354,7 +4354,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR16"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR18"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4366,7 +4366,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR16"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR26"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4378,7 +4378,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR18"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR19"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4390,7 +4390,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR19"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR20"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4402,7 +4402,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR20"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR21"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4414,7 +4414,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR22"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR404"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4426,7 +4426,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR23"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR404"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4438,7 +4438,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR27"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR404"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4450,7 +4450,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR101"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR102"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4462,7 +4462,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR102"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR103"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4474,7 +4474,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR103"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR104"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4486,7 +4486,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR103"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR111"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4498,7 +4498,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR104"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR105"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4510,7 +4510,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR104"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR110"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4522,7 +4522,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR105"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR106"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4534,7 +4534,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR105"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR112"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4546,7 +4546,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR106"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR107"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4558,7 +4558,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR106"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR109"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4570,7 +4570,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR107"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR201"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4582,7 +4582,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR108"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR109"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4594,7 +4594,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR108"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR210"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4606,7 +4606,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR112"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR509"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4618,7 +4618,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR201"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR202"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4630,7 +4630,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR201"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR510"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4642,7 +4642,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR202"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR203"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4654,7 +4654,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR202"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR211"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4666,7 +4666,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR203"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR204"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4678,7 +4678,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR203"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR502"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4690,7 +4690,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR204"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR205"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4702,7 +4702,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR204"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR208"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4714,7 +4714,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR205"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR206"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4726,7 +4726,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR205"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR207"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4738,7 +4738,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR206"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR301"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4750,7 +4750,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR208"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR209"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4762,7 +4762,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR208"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR210"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4774,7 +4774,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR210"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR211"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4786,7 +4786,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR211"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR212"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4798,7 +4798,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR301"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR302"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4810,7 +4810,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR301"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR304"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4822,7 +4822,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR302"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR303"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4834,7 +4834,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR302"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR305"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4846,7 +4846,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR303"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR401"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4858,7 +4858,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR305"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR306"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4870,7 +4870,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR305"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR309"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4882,7 +4882,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR306"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR307"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4894,7 +4894,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR306"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR308"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4906,7 +4906,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR307"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR503"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4918,7 +4918,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR401"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR402"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4930,7 +4930,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR401"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR403"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4942,7 +4942,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR403"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR404"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4954,7 +4954,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR403"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR405"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4966,7 +4966,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR405"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR406"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4978,7 +4978,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR405"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR407"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -4990,7 +4990,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR407"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR501"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5002,7 +5002,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR501"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR502"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5014,7 +5014,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR501"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR505"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5026,7 +5026,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR502"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR503"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5038,7 +5038,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR503"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR504"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5050,7 +5050,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR505"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR506"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5062,7 +5062,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR506"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR507"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5074,7 +5074,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR506"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR508"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5086,7 +5086,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR508"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR509"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5098,7 +5098,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR508"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR510"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5110,7 +5110,7 @@ function LEAKNET(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR510"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["PSQR511"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -5132,7 +5132,7 @@ function LEAKNET(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "LOR2-RN-156-153"
         return pb, pbm
 # **********************

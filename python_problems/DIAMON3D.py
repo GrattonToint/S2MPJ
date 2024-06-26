@@ -26,10 +26,6 @@ class  DIAMON3D(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -9327,548 +9323,548 @@ class  DIAMON3D(CUTEst_problem):
         v_['Y4642'] = -2.937953E-1
         v_['Y4643'] = 1.57422412
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['NVEC'])+1):
             [iv,ix_,_] = s2mpj_ii('WEIGHT'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'WEIGHT'+str(I))
+            self.xnames=arrset(self.xnames,iv,'WEIGHT'+str(I))
             [iv,ix_,_] = s2mpj_ii('WIDTH'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'WIDTH'+str(I))
+            self.xnames=arrset(self.xnames,iv,'WIDTH'+str(I))
             [iv,ix_,_] = s2mpj_ii('POSIT'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'POSIT'+str(I))
+            self.xnames=arrset(self.xnames,iv,'POSIT'+str(I))
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             [ig,ig_,_] = s2mpj_ii('R'+str(I),ig_)
             gtype = arrset(gtype,ig,'==')
             cnames = arrset(cnames,ig,'R'+str(I))
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        legrps = find(gtype,lambda x:x=='<=')
-        eqgrps = find(gtype,lambda x:x=='==')
-        gegrps = find(gtype,lambda x:x=='>=')
-        pb.nle = len(legrps)
-        pb.neq = len(eqgrps)
-        pb.nge = len(gegrps)
-        pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = find(gtype,lambda x:(x=='<=' or x=='==' or x=='>='))
-        pb.cnames= cnames[pbm.congrps]
-        pb.nob = ngrp-pb.m
-        pbm.objgrps = find(gtype,lambda x:x=='<>')
+        legrps = np.where(gtype=='<=')[0]
+        eqgrps = np.where(gtype=='==')[0]
+        gegrps = np.where(gtype=='>=')[0]
+        self.nle = len(legrps)
+        self.neq = len(eqgrps)
+        self.nge = len(gegrps)
+        self.m   = self.nle+self.neq+self.nge
+        self.congrps = np.concatenate((legrps,eqgrps,gegrps))
+        self.cnames= cnames[self.congrps]
+        self.nob = ngrp-self.m
+        self.objgrps = np.where(gtype=='<>')[0]
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
-        pbm.gconst = np.zeros((ngrp,1))
+        self.gconst = np.zeros((ngrp,1))
         for I in range(int(v_['1']),int(v_['M'])+1):
-            pbm.gconst = arrset(pbm.gconst,ig_['R'+str(I)],float(v_['Y'+str(I)]))
+            self.gconst = arrset(self.gconst,ig_['R'+str(I)],float(v_['Y'+str(I)]))
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.zeros((pb.n,1))
-        pb.y0 = np.zeros((pb.m,1))
+        self.x0 = np.zeros((self.n,1))
+        self.y0 = np.zeros((self.m,1))
         if('WEIGHT1' in ix_):
-            pb.x0[ix_['WEIGHT1']] = float(1.0215400678)
+            self.x0[ix_['WEIGHT1']] = float(1.0215400678)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT1']),float(1.0215400678)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT1']),float(1.0215400678)))
         if('WEIGHT2' in ix_):
-            pb.x0[ix_['WEIGHT2']] = float(0.0128719128)
+            self.x0[ix_['WEIGHT2']] = float(0.0128719128)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT2']),float(0.0128719128)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT2']),float(0.0128719128)))
         if('WEIGHT3' in ix_):
-            pb.x0[ix_['WEIGHT3']] = float(0.4292206739)
+            self.x0[ix_['WEIGHT3']] = float(0.4292206739)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT3']),float(0.4292206739)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT3']),float(0.4292206739)))
         if('WEIGHT4' in ix_):
-            pb.x0[ix_['WEIGHT4']] = float(0.8009548574)
+            self.x0[ix_['WEIGHT4']] = float(0.8009548574)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT4']),float(0.8009548574)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT4']),float(0.8009548574)))
         if('WEIGHT5' in ix_):
-            pb.x0[ix_['WEIGHT5']] = float(0.2202801749)
+            self.x0[ix_['WEIGHT5']] = float(0.2202801749)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT5']),float(0.2202801749)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT5']),float(0.2202801749)))
         if('WEIGHT6' in ix_):
-            pb.x0[ix_['WEIGHT6']] = float(2.6915110182)
+            self.x0[ix_['WEIGHT6']] = float(2.6915110182)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT6']),float(2.6915110182)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT6']),float(2.6915110182)))
         if('WEIGHT7' in ix_):
-            pb.x0[ix_['WEIGHT7']] = float(0.8064571417)
+            self.x0[ix_['WEIGHT7']] = float(0.8064571417)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT7']),float(0.8064571417)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT7']),float(0.8064571417)))
         if('WEIGHT8' in ix_):
-            pb.x0[ix_['WEIGHT8']] = float(2.2686398843)
+            self.x0[ix_['WEIGHT8']] = float(2.2686398843)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT8']),float(2.2686398843)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT8']),float(2.2686398843)))
         if('WEIGHT9' in ix_):
-            pb.x0[ix_['WEIGHT9']] = float(14.352901162)
+            self.x0[ix_['WEIGHT9']] = float(14.352901162)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT9']),float(14.352901162)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT9']),float(14.352901162)))
         if('WEIGHT10' in ix_):
-            pb.x0[ix_['WEIGHT10']] = float(12.161699758)
+            self.x0[ix_['WEIGHT10']] = float(12.161699758)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT10']),float(12.161699758)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT10']),float(12.161699758)))
         if('WEIGHT11' in ix_):
-            pb.x0[ix_['WEIGHT11']] = float(0.2766766620)
+            self.x0[ix_['WEIGHT11']] = float(0.2766766620)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT11']),float(0.2766766620)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT11']),float(0.2766766620)))
         if('WEIGHT12' in ix_):
-            pb.x0[ix_['WEIGHT12']] = float(0.2434602195)
+            self.x0[ix_['WEIGHT12']] = float(0.2434602195)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT12']),float(0.2434602195)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT12']),float(0.2434602195)))
         if('WEIGHT13' in ix_):
-            pb.x0[ix_['WEIGHT13']] = float(1.1650863975)
+            self.x0[ix_['WEIGHT13']] = float(1.1650863975)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT13']),float(1.1650863975)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT13']),float(1.1650863975)))
         if('WEIGHT14' in ix_):
-            pb.x0[ix_['WEIGHT14']] = float(0.1774572413)
+            self.x0[ix_['WEIGHT14']] = float(0.1774572413)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT14']),float(0.1774572413)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT14']),float(0.1774572413)))
         if('WEIGHT15' in ix_):
-            pb.x0[ix_['WEIGHT15']] = float(0.1153950601)
+            self.x0[ix_['WEIGHT15']] = float(0.1153950601)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT15']),float(0.1153950601)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT15']),float(0.1153950601)))
         if('WEIGHT16' in ix_):
-            pb.x0[ix_['WEIGHT16']] = float(3.7470242328)
+            self.x0[ix_['WEIGHT16']] = float(3.7470242328)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT16']),float(3.7470242328)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT16']),float(3.7470242328)))
         if('WEIGHT17' in ix_):
-            pb.x0[ix_['WEIGHT17']] = float(0.8335010620)
+            self.x0[ix_['WEIGHT17']] = float(0.8335010620)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT17']),float(0.8335010620)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT17']),float(0.8335010620)))
         if('WEIGHT18' in ix_):
-            pb.x0[ix_['WEIGHT18']] = float(0.1588345259)
+            self.x0[ix_['WEIGHT18']] = float(0.1588345259)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT18']),float(0.1588345259)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT18']),float(0.1588345259)))
         if('WEIGHT19' in ix_):
-            pb.x0[ix_['WEIGHT19']] = float(0.3867741611)
+            self.x0[ix_['WEIGHT19']] = float(0.3867741611)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT19']),float(0.3867741611)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT19']),float(0.3867741611)))
         if('WEIGHT20' in ix_):
-            pb.x0[ix_['WEIGHT20']] = float(0.9231772721)
+            self.x0[ix_['WEIGHT20']] = float(0.9231772721)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT20']),float(0.9231772721)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT20']),float(0.9231772721)))
         if('WEIGHT21' in ix_):
-            pb.x0[ix_['WEIGHT21']] = float(0.2596415821)
+            self.x0[ix_['WEIGHT21']] = float(0.2596415821)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT21']),float(0.2596415821)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT21']),float(0.2596415821)))
         if('WEIGHT22' in ix_):
-            pb.x0[ix_['WEIGHT22']] = float(2.0709635713)
+            self.x0[ix_['WEIGHT22']] = float(2.0709635713)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT22']),float(2.0709635713)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT22']),float(2.0709635713)))
         if('WEIGHT23' in ix_):
-            pb.x0[ix_['WEIGHT23']] = float(1.9449508030)
+            self.x0[ix_['WEIGHT23']] = float(1.9449508030)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT23']),float(1.9449508030)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT23']),float(1.9449508030)))
         if('WEIGHT24' in ix_):
-            pb.x0[ix_['WEIGHT24']] = float(1.4841998492)
+            self.x0[ix_['WEIGHT24']] = float(1.4841998492)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT24']),float(1.4841998492)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT24']),float(1.4841998492)))
         if('WEIGHT25' in ix_):
-            pb.x0[ix_['WEIGHT25']] = float(0.4816362663)
+            self.x0[ix_['WEIGHT25']] = float(0.4816362663)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT25']),float(0.4816362663)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT25']),float(0.4816362663)))
         if('WEIGHT26' in ix_):
-            pb.x0[ix_['WEIGHT26']] = float(0.4934043524)
+            self.x0[ix_['WEIGHT26']] = float(0.4934043524)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT26']),float(0.4934043524)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT26']),float(0.4934043524)))
         if('WEIGHT27' in ix_):
-            pb.x0[ix_['WEIGHT27']] = float(0.3289805969)
+            self.x0[ix_['WEIGHT27']] = float(0.3289805969)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT27']),float(0.3289805969)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT27']),float(0.3289805969)))
         if('WEIGHT28' in ix_):
-            pb.x0[ix_['WEIGHT28']] = float(0.8399929759)
+            self.x0[ix_['WEIGHT28']] = float(0.8399929759)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT28']),float(0.8399929759)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT28']),float(0.8399929759)))
         if('WEIGHT29' in ix_):
-            pb.x0[ix_['WEIGHT29']] = float(0.4600450055)
+            self.x0[ix_['WEIGHT29']] = float(0.4600450055)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT29']),float(0.4600450055)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT29']),float(0.4600450055)))
         if('WEIGHT30' in ix_):
-            pb.x0[ix_['WEIGHT30']] = float(0.4909424311)
+            self.x0[ix_['WEIGHT30']] = float(0.4909424311)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT30']),float(0.4909424311)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT30']),float(0.4909424311)))
         if('WEIGHT31' in ix_):
-            pb.x0[ix_['WEIGHT31']] = float(0.9861479337)
+            self.x0[ix_['WEIGHT31']] = float(0.9861479337)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT31']),float(0.9861479337)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT31']),float(0.9861479337)))
         if('WEIGHT32' in ix_):
-            pb.x0[ix_['WEIGHT32']] = float(-0.017883084)
+            self.x0[ix_['WEIGHT32']] = float(-0.017883084)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT32']),float(-0.017883084)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT32']),float(-0.017883084)))
         if('WEIGHT33' in ix_):
-            pb.x0[ix_['WEIGHT33']] = float(0.2654081509)
+            self.x0[ix_['WEIGHT33']] = float(0.2654081509)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WEIGHT33']),float(0.2654081509)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WEIGHT33']),float(0.2654081509)))
         if('WIDTH1' in ix_):
-            pb.x0[ix_['WIDTH1']] = float(0.02)
+            self.x0[ix_['WIDTH1']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH1']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH1']),float(0.02)))
         if('WIDTH2' in ix_):
-            pb.x0[ix_['WIDTH2']] = float(0.02)
+            self.x0[ix_['WIDTH2']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH2']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH2']),float(0.02)))
         if('WIDTH3' in ix_):
-            pb.x0[ix_['WIDTH3']] = float(0.02)
+            self.x0[ix_['WIDTH3']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH3']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH3']),float(0.02)))
         if('WIDTH4' in ix_):
-            pb.x0[ix_['WIDTH4']] = float(0.02)
+            self.x0[ix_['WIDTH4']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH4']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH4']),float(0.02)))
         if('WIDTH5' in ix_):
-            pb.x0[ix_['WIDTH5']] = float(0.02)
+            self.x0[ix_['WIDTH5']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH5']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH5']),float(0.02)))
         if('WIDTH6' in ix_):
-            pb.x0[ix_['WIDTH6']] = float(0.02)
+            self.x0[ix_['WIDTH6']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH6']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH6']),float(0.02)))
         if('WIDTH7' in ix_):
-            pb.x0[ix_['WIDTH7']] = float(0.02)
+            self.x0[ix_['WIDTH7']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH7']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH7']),float(0.02)))
         if('WIDTH8' in ix_):
-            pb.x0[ix_['WIDTH8']] = float(0.02)
+            self.x0[ix_['WIDTH8']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH8']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH8']),float(0.02)))
         if('WIDTH9' in ix_):
-            pb.x0[ix_['WIDTH9']] = float(0.02)
+            self.x0[ix_['WIDTH9']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH9']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH9']),float(0.02)))
         if('WIDTH10' in ix_):
-            pb.x0[ix_['WIDTH10']] = float(0.02)
+            self.x0[ix_['WIDTH10']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH10']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH10']),float(0.02)))
         if('WIDTH11' in ix_):
-            pb.x0[ix_['WIDTH11']] = float(0.02)
+            self.x0[ix_['WIDTH11']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH11']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH11']),float(0.02)))
         if('WIDTH12' in ix_):
-            pb.x0[ix_['WIDTH12']] = float(0.02)
+            self.x0[ix_['WIDTH12']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH12']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH12']),float(0.02)))
         if('WIDTH13' in ix_):
-            pb.x0[ix_['WIDTH13']] = float(0.02)
+            self.x0[ix_['WIDTH13']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH13']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH13']),float(0.02)))
         if('WIDTH14' in ix_):
-            pb.x0[ix_['WIDTH14']] = float(0.02)
+            self.x0[ix_['WIDTH14']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH14']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH14']),float(0.02)))
         if('WIDTH15' in ix_):
-            pb.x0[ix_['WIDTH15']] = float(0.02)
+            self.x0[ix_['WIDTH15']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH15']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH15']),float(0.02)))
         if('WIDTH16' in ix_):
-            pb.x0[ix_['WIDTH16']] = float(0.02)
+            self.x0[ix_['WIDTH16']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH16']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH16']),float(0.02)))
         if('WIDTH17' in ix_):
-            pb.x0[ix_['WIDTH17']] = float(0.02)
+            self.x0[ix_['WIDTH17']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH17']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH17']),float(0.02)))
         if('WIDTH18' in ix_):
-            pb.x0[ix_['WIDTH18']] = float(0.02)
+            self.x0[ix_['WIDTH18']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH18']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH18']),float(0.02)))
         if('WIDTH19' in ix_):
-            pb.x0[ix_['WIDTH19']] = float(0.02)
+            self.x0[ix_['WIDTH19']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH19']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH19']),float(0.02)))
         if('WIDTH20' in ix_):
-            pb.x0[ix_['WIDTH20']] = float(0.02)
+            self.x0[ix_['WIDTH20']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH20']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH20']),float(0.02)))
         if('WIDTH21' in ix_):
-            pb.x0[ix_['WIDTH21']] = float(0.02)
+            self.x0[ix_['WIDTH21']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH21']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH21']),float(0.02)))
         if('WIDTH22' in ix_):
-            pb.x0[ix_['WIDTH22']] = float(0.02)
+            self.x0[ix_['WIDTH22']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH22']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH22']),float(0.02)))
         if('WIDTH23' in ix_):
-            pb.x0[ix_['WIDTH23']] = float(0.02)
+            self.x0[ix_['WIDTH23']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH23']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH23']),float(0.02)))
         if('WIDTH24' in ix_):
-            pb.x0[ix_['WIDTH24']] = float(0.02)
+            self.x0[ix_['WIDTH24']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH24']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH24']),float(0.02)))
         if('WIDTH25' in ix_):
-            pb.x0[ix_['WIDTH25']] = float(0.02)
+            self.x0[ix_['WIDTH25']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH25']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH25']),float(0.02)))
         if('WIDTH26' in ix_):
-            pb.x0[ix_['WIDTH26']] = float(0.02)
+            self.x0[ix_['WIDTH26']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH26']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH26']),float(0.02)))
         if('WIDTH27' in ix_):
-            pb.x0[ix_['WIDTH27']] = float(0.02)
+            self.x0[ix_['WIDTH27']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH27']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH27']),float(0.02)))
         if('WIDTH28' in ix_):
-            pb.x0[ix_['WIDTH28']] = float(0.02)
+            self.x0[ix_['WIDTH28']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH28']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH28']),float(0.02)))
         if('WIDTH29' in ix_):
-            pb.x0[ix_['WIDTH29']] = float(0.02)
+            self.x0[ix_['WIDTH29']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH29']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH29']),float(0.02)))
         if('WIDTH30' in ix_):
-            pb.x0[ix_['WIDTH30']] = float(0.02)
+            self.x0[ix_['WIDTH30']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH30']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH30']),float(0.02)))
         if('WIDTH31' in ix_):
-            pb.x0[ix_['WIDTH31']] = float(0.02)
+            self.x0[ix_['WIDTH31']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH31']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH31']),float(0.02)))
         if('WIDTH32' in ix_):
-            pb.x0[ix_['WIDTH32']] = float(0.02)
+            self.x0[ix_['WIDTH32']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH32']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH32']),float(0.02)))
         if('WIDTH33' in ix_):
-            pb.x0[ix_['WIDTH33']] = float(0.02)
+            self.x0[ix_['WIDTH33']] = float(0.02)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['WIDTH33']),float(0.02)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['WIDTH33']),float(0.02)))
         if('POSIT1' in ix_):
-            pb.x0[ix_['POSIT1']] = float(1.8879065341)
+            self.x0[ix_['POSIT1']] = float(1.8879065341)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT1']),float(1.8879065341)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT1']),float(1.8879065341)))
         if('POSIT2' in ix_):
-            pb.x0[ix_['POSIT2']] = float(2.0015540313)
+            self.x0[ix_['POSIT2']] = float(2.0015540313)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT2']),float(2.0015540313)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT2']),float(2.0015540313)))
         if('POSIT3' in ix_):
-            pb.x0[ix_['POSIT3']] = float(2.1186983746)
+            self.x0[ix_['POSIT3']] = float(2.1186983746)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT3']),float(2.1186983746)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT3']),float(2.1186983746)))
         if('POSIT4' in ix_):
-            pb.x0[ix_['POSIT4']] = float(2.1624089505)
+            self.x0[ix_['POSIT4']] = float(2.1624089505)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT4']),float(2.1624089505)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT4']),float(2.1624089505)))
         if('POSIT5' in ix_):
-            pb.x0[ix_['POSIT5']] = float(2.2192326991)
+            self.x0[ix_['POSIT5']] = float(2.2192326991)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT5']),float(2.2192326991)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT5']),float(2.2192326991)))
         if('POSIT6' in ix_):
-            pb.x0[ix_['POSIT6']] = float(2.2813017168)
+            self.x0[ix_['POSIT6']] = float(2.2813017168)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT6']),float(2.2813017168)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT6']),float(2.2813017168)))
         if('POSIT7' in ix_):
-            pb.x0[ix_['POSIT7']] = float(2.3905781564)
+            self.x0[ix_['POSIT7']] = float(2.3905781564)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT7']),float(2.3905781564)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT7']),float(2.3905781564)))
         if('POSIT8' in ix_):
-            pb.x0[ix_['POSIT8']] = float(2.4884898463)
+            self.x0[ix_['POSIT8']] = float(2.4884898463)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT8']),float(2.4884898463)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT8']),float(2.4884898463)))
         if('POSIT9' in ix_):
-            pb.x0[ix_['POSIT9']] = float(2.5593009792)
+            self.x0[ix_['POSIT9']] = float(2.5593009792)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT9']),float(2.5593009792)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT9']),float(2.5593009792)))
         if('POSIT10' in ix_):
-            pb.x0[ix_['POSIT10']] = float(2.7070427255)
+            self.x0[ix_['POSIT10']] = float(2.7070427255)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT10']),float(2.7070427255)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT10']),float(2.7070427255)))
         if('POSIT11' in ix_):
-            pb.x0[ix_['POSIT11']] = float(2.9404572006)
+            self.x0[ix_['POSIT11']] = float(2.9404572006)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT11']),float(2.9404572006)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT11']),float(2.9404572006)))
         if('POSIT12' in ix_):
-            pb.x0[ix_['POSIT12']] = float(2.9666835461)
+            self.x0[ix_['POSIT12']] = float(2.9666835461)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT12']),float(2.9666835461)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT12']),float(2.9666835461)))
         if('POSIT13' in ix_):
-            pb.x0[ix_['POSIT13']] = float(3.1292868882)
+            self.x0[ix_['POSIT13']] = float(3.1292868882)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT13']),float(3.1292868882)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT13']),float(3.1292868882)))
         if('POSIT14' in ix_):
-            pb.x0[ix_['POSIT14']] = float(3.2263243666)
+            self.x0[ix_['POSIT14']] = float(3.2263243666)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT14']),float(3.2263243666)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT14']),float(3.2263243666)))
         if('POSIT15' in ix_):
-            pb.x0[ix_['POSIT15']] = float(3.2551733467)
+            self.x0[ix_['POSIT15']] = float(3.2551733467)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT15']),float(3.2551733467)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT15']),float(3.2551733467)))
         if('POSIT16' in ix_):
-            pb.x0[ix_['POSIT16']] = float(3.3801855936)
+            self.x0[ix_['POSIT16']] = float(3.3801855936)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT16']),float(3.3801855936)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT16']),float(3.3801855936)))
         if('POSIT17' in ix_):
-            pb.x0[ix_['POSIT17']] = float(3.6695496057)
+            self.x0[ix_['POSIT17']] = float(3.6695496057)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT17']),float(3.6695496057)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT17']),float(3.6695496057)))
         if('POSIT18' in ix_):
-            pb.x0[ix_['POSIT18']] = float(3.7220022967)
+            self.x0[ix_['POSIT18']] = float(3.7220022967)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT18']),float(3.7220022967)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT18']),float(3.7220022967)))
         if('POSIT19' in ix_):
-            pb.x0[ix_['POSIT19']] = float(3.8312787364)
+            self.x0[ix_['POSIT19']] = float(3.8312787364)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT19']),float(3.8312787364)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT19']),float(3.8312787364)))
         if('POSIT20' in ix_):
-            pb.x0[ix_['POSIT20']] = float(3.9589136178)
+            self.x0[ix_['POSIT20']] = float(3.9589136178)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT20']),float(3.9589136178)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT20']),float(3.9589136178)))
         if('POSIT21' in ix_):
-            pb.x0[ix_['POSIT21']] = float(4.0524542502)
+            self.x0[ix_['POSIT21']] = float(4.0524542502)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT21']),float(4.0524542502)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT21']),float(4.0524542502)))
         if('POSIT22' in ix_):
-            pb.x0[ix_['POSIT22']] = float(4.1748438625)
+            self.x0[ix_['POSIT22']] = float(4.1748438625)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT22']),float(4.1748438625)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT22']),float(4.1748438625)))
         if('POSIT23' in ix_):
-            pb.x0[ix_['POSIT23']] = float(4.4309878370)
+            self.x0[ix_['POSIT23']] = float(4.4309878370)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT23']),float(4.4309878370)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT23']),float(4.4309878370)))
         if('POSIT24' in ix_):
-            pb.x0[ix_['POSIT24']] = float(4.5594969300)
+            self.x0[ix_['POSIT24']] = float(4.5594969300)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT24']),float(4.5594969300)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT24']),float(4.5594969300)))
         if('POSIT25' in ix_):
-            pb.x0[ix_['POSIT25']] = float(4.6014590828)
+            self.x0[ix_['POSIT25']] = float(4.6014590828)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT25']),float(4.6014590828)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT25']),float(4.6014590828)))
         if('POSIT26' in ix_):
-            pb.x0[ix_['POSIT26']] = float(4.7046160418)
+            self.x0[ix_['POSIT26']] = float(4.7046160418)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT26']),float(4.7046160418)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT26']),float(4.7046160418)))
         if('POSIT27' in ix_):
-            pb.x0[ix_['POSIT27']] = float(4.8007793087)
+            self.x0[ix_['POSIT27']] = float(4.8007793087)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT27']),float(4.8007793087)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT27']),float(4.8007793087)))
         if('POSIT28' in ix_):
-            pb.x0[ix_['POSIT28']] = float(4.9686279200)
+            self.x0[ix_['POSIT28']] = float(4.9686279200)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT28']),float(4.9686279200)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT28']),float(4.9686279200)))
         if('POSIT29' in ix_):
-            pb.x0[ix_['POSIT29']] = float(5.3952431402)
+            self.x0[ix_['POSIT29']] = float(5.3952431402)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT29']),float(5.3952431402)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT29']),float(5.3952431402)))
         if('POSIT30' in ix_):
-            pb.x0[ix_['POSIT30']] = float(5.4188468512)
+            self.x0[ix_['POSIT30']] = float(5.4188468512)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT30']),float(5.4188468512)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT30']),float(5.4188468512)))
         if('POSIT31' in ix_):
-            pb.x0[ix_['POSIT31']] = float(2.5864015362)
+            self.x0[ix_['POSIT31']] = float(2.5864015362)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT31']),float(2.5864015362)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT31']),float(2.5864015362)))
         if('POSIT32' in ix_):
-            pb.x0[ix_['POSIT32']] = float(3.8618761395)
+            self.x0[ix_['POSIT32']] = float(3.8618761395)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT32']),float(3.8618761395)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT32']),float(3.8618761395)))
         if('POSIT33' in ix_):
-            pb.x0[ix_['POSIT33']] = float(5.1985455489)
+            self.x0[ix_['POSIT33']] = float(5.1985455489)
         else:
-            pb.y0  = (
-                  arrset(pb.y0,findfirst(pbm.congrps,lambda x:x==ig_['POSIT33']),float(5.1985455489)))
+            self.y0  = (
+                  arrset(self.y0,findfirst(self.congrps,lambda x:x==ig_['POSIT33']),float(5.1985455489)))
         pass
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
@@ -9881,60 +9877,59 @@ class  DIAMON3D(CUTEst_problem):
         elftp = loaset(elftp,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
-        pbm.elpar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
+        self.elpar   = []
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['NVEC'])+1):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
-                pbm.elftype = arrset(pbm.elftype,ie,'eLORENTZ3')
+                self.elftype = arrset(self.elftype,ie,'eLORENTZ3')
                 ielftype = arrset(ielftype, ie, iet_["eLORENTZ3"])
                 vname = 'WEIGHT'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='WEIGHT')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='WEIGHT')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'WIDTH'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='WIDTH')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='WIDTH')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'POSIT'+str(J)
-                [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,None)
-                posev = find(elftv[ielftype[ie]],lambda x:x=='POSIT')
-                pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
-                posep = find(elftp[ielftype[ie]],lambda x:x=='X')
-                pbm.elpar = loaset(pbm.elpar,ie,posep[0],float(v_['X'+str(I)]))
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
+                posev = np.where(elftv[ielftype[ie]]=='POSIT')[0]
+                self.elvar = loaset(self.elvar,ie,posev[0],iv)
+                posep = np.where(elftp[ielftype[ie]]=='X')[0]
+                self.elpar = loaset(self.elpar,ie,posep[0],float(v_['X'+str(I)]))
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             for J in range(int(v_['1']),int(v_['NVEC'])+1):
                 ig = ig_['R'+str(I)]
-                posel = len(pbm.grelt[ig])
-                pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
+                posel = len(self.grelt[ig])
+                self.grelt = loaset(self.grelt,ig,posel,ie_['E'+str(I)+','+str(J)])
                 nlc = np.union1d(nlc,np.array([ig]))
-                pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+                self.grelw = loaset(self.grelw,ig,posel,1.)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%% FORM clower AND cupper %%%%%%%%%%%%%
-        pb.clower = np.full((pb.m,1),-float('Inf'))
-        pb.cupper = np.full((pb.m,1),+float('Inf'))
-        pb.clower[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        pb.cupper[np.arange(pb.nle,pb.nle+pb.neq)] = np.zeros((pb.neq,1))
-        delattr( pbm, "A" )
+        self.clower = np.full((self.m,1),-float('Inf'))
+        self.cupper = np.full((self.m,1),+float('Inf'))
+        self.clower[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
+        delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        lincons =  find(pbm.congrps,lambda x:x in np.setdiff1d(nlc,pbm.congrps))
-        pb.pbclass = "NOR2-MN-99-4643"
-        self.pb = pb; self.pbm = pbm
+        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
+        self.pbclass = "NOR2-MN-99-4643"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -9943,23 +9938,23 @@ class  DIAMON3D(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def e_globs(pbm):
+    def e_globs(self):
 
         import numpy as np
-        pbm.efpar = np.array([]);
-        pbm.efpar = arrset( pbm.efpar,0,0.25e0/np.arctan(1.0e0))
+        self.efpar = np.array([]);
+        self.efpar = arrset( self.efpar,0,0.25e0/np.arctan(1.0e0))
         return pbm
 
     @staticmethod
-    def eLORENTZ3(pbm,nargout,*args):
+    def eLORENTZ3(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
         iel_ = args[1]
-        PMX = EV_[2]-pbm.elpar[iel_][0]
+        PMX = EV_[2]-self.elpar[iel_][0]
         DENOM = PMX**2+EV_[1]**2
         RATIO = EV_[1]/DENOM
-        f_   = pbm.efpar[0]*EV_[0]*RATIO
+        f_   = self.efpar[0]*EV_[0]*RATIO
         if not isinstance( f_, float ):
             f_   = f_.item();
         if nargout>1:
@@ -9968,22 +9963,22 @@ class  DIAMON3D(CUTEst_problem):
             except:
                 dim = len(EV_)
             g_ = np.zeros(dim)
-            g_[0] = pbm.efpar[0]*RATIO
-            g_[1] = pbm.efpar[0]*EV_[0]/DENOM-2.0e0*pbm.efpar[0]*EV_[0]*RATIO**2
-            g_[2] = -2.0e0*pbm.efpar[0]*EV_[0]*EV_[1]*PMX/DENOM**2
+            g_[0] = self.efpar[0]*RATIO
+            g_[1] = self.efpar[0]*EV_[0]/DENOM-2.0e0*self.efpar[0]*EV_[0]*RATIO**2
+            g_[2] = -2.0e0*self.efpar[0]*EV_[0]*EV_[1]*PMX/DENOM**2
             if nargout>2:
                 H_ = np.zeros((3,3))
-                H_[0,1] = pbm.efpar[0]/DENOM-2.0e+0*pbm.efpar[0]*RATIO**2
+                H_[0,1] = self.efpar[0]/DENOM-2.0e+0*self.efpar[0]*RATIO**2
                 H_[1,0] = H_[0,1]
                 H_[1,1]  = (
-                      -6.0e+0*pbm.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e+0*pbm.efpar[0]*EV_[0]*RATIO**3)
-                H_[0,2] = -2.0e0*pbm.efpar[0]*EV_[1]*PMX/DENOM**2
+                      -6.0e+0*self.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e+0*self.efpar[0]*EV_[0]*RATIO**3)
+                H_[0,2] = -2.0e0*self.efpar[0]*EV_[1]*PMX/DENOM**2
                 H_[2,0] = H_[0,2]
                 H_[1,2]  = (
-                      -2.0e0*pbm.efpar[0]*EV_[0]*PMX/DENOM**2+8.0e0*pbm.efpar[0]*EV_[0]*PMX*(EV_[1]**2)/(DENOM**3))
+                      -2.0e0*self.efpar[0]*EV_[0]*PMX/DENOM**2+8.0e0*self.efpar[0]*EV_[0]*PMX*(EV_[1]**2)/(DENOM**3))
                 H_[2,1] = H_[1,2]
                 H_[2,2]  = (
-                      -2.0e0*pbm.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e0*pbm.efpar[0]*EV_[0]*EV_[1]*(PMX**2)/(DENOM**3))
+                      -2.0e0*self.efpar[0]*EV_[0]*EV_[1]/DENOM**2+8.0e0*self.efpar[0]*EV_[0]*EV_[1]*(PMX**2)/(DENOM**3))
         if nargout == 1:
             return f_
         elif nargout == 2:

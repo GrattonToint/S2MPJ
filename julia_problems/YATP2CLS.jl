@@ -42,7 +42,7 @@ function YATP2CLS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -174,7 +174,7 @@ function YATP2CLS(action,args...)
                 ig = ig_["E"*string(I)*","*string(J)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["DC"*string(I)*","*string(J)])
-                loaset(pbm.grelw,ig,posel,Float64(-1.0))
+                loaset(self.grelw,ig,posel,Float64(-1.0))
             end
         end
         for I = Int64(v_["1"]):Int64(v_["N"])

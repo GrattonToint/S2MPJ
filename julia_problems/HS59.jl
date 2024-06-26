@@ -25,7 +25,7 @@ function HS59(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -70,7 +70,7 @@ function HS59(action,args...)
         pb.neq = length(eqgrps)
         pb.nge = length(gegrps)
         pb.m   = pb.nle+pb.neq+pb.nge
-        pbm.congrps = findall(x->x!="<>",gtype)
+        pbm.congrps = [[legrps;eqgrps];gegrps]
         pb.nob = ngrp-pb.m
         pbm.objgrps = findall(x->x=="<>",gtype)
         #%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -367,63 +367,63 @@ function HS59(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.0020567))
+        loaset(self.grelw,ig,posel,Float64(0.0020567))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(-1.0345e-5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.030234))
+        loaset(self.grelw,ig,posel,Float64(-0.030234))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(1.28134e-3))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.266e-7))
+        loaset(self.grelw,ig,posel,Float64(2.266e-7))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E6"])
         loaset(pbm.grelw,ig,posel,Float64(-0.25645))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E7"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(0.0034604))
+        loaset(self.grelw,ig,posel,Float64(0.0034604))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E8"])
         loaset(pbm.grelw,ig,posel,Float64(-1.3514e-5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E9"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(28.106))
+        loaset(self.grelw,ig,posel,Float64(28.106))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E10"])
         loaset(pbm.grelw,ig,posel,Float64(5.2375e-6))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E11"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(6.3e-8))
+        loaset(self.grelw,ig,posel,Float64(6.3e-8))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E12"])
         loaset(pbm.grelw,ig,posel,Float64(-7.0e-10))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E13"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-3.405e-4))
+        loaset(self.grelw,ig,posel,Float64(-3.405e-4))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E14"])
         loaset(pbm.grelw,ig,posel,Float64(1.6638e-6))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E15"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(2.8673))
+        loaset(self.grelw,ig,posel,Float64(2.8673))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E16"])
         loaset(pbm.grelw,ig,posel,Float64(-3.5256e-5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E17"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.12694))
+        loaset(self.grelw,ig,posel,Float64(-0.12694))
         ig = ig_["CON1"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
@@ -433,7 +433,7 @@ function HS59(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E17"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(pbm.grelw,ig,posel,Float64(-0.008))
+        loaset(self.grelw,ig,posel,Float64(-0.008))
         ig = ig_["CON3"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E18"])
@@ -452,7 +452,7 @@ function HS59(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
+        pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
         pb.pbclass = "OQR2-AN-2-3"
         return pb, pbm
 # **********************

@@ -33,7 +33,7 @@ function OSCIGRAD(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        self.call    = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -186,12 +186,12 @@ function OSCIGRAD(action,args...)
         ig = ig_["G1"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["B1"])
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         for I = Int64(v_["2"]):Int64(v_["N-1"])
             ig = ig_["G"*string(I)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["A"*string(I)])
-            loaset(pbm.grelw,ig,posel,Float64(1.0))
+            loaset(self.grelw,ig,posel,Float64(1.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["B"*string(I)])
             loaset(pbm.grelw,ig,posel,Float64(1.0))
@@ -199,7 +199,7 @@ function OSCIGRAD(action,args...)
         ig = ig_["G"*string(Int64(v_["N"]))]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["A"*string(Int64(v_["N"]))])
-        loaset(pbm.grelw,ig,posel,Float64(1.0))
+        loaset(self.grelw,ig,posel,Float64(1.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 #    Solution

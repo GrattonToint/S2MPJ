@@ -43,10 +43,6 @@ class  VAREIGVL(CUTEst_problem):
 
     def __init__(self, *args): 
         import numpy as np
-        pbm      = structtype()
-        pb       = structtype()
-        pb.name  = self.name
-        pbm.name = self.name
         nargin   = len(args)
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
@@ -78,21 +74,21 @@ class  VAREIGVL(CUTEst_problem):
         v_['RN2'] = float(v_['N2'])
         v_['-1/N2'] = v_['-1.0']/v_['RN2']
         #%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
-        pb.xnames = np.array([])
-        pb.xscale = np.array([])
+        self.xnames = np.array([])
+        self.xscale = np.array([])
         intvars   = np.array([])
         binvars   = np.array([])
         for I in range(int(v_['1']),int(v_['N'])+1):
             [iv,ix_,_] = s2mpj_ii('X'+str(I),ix_)
-            pb.xnames=arrset(pb.xnames,iv,'X'+str(I))
+            self.xnames=arrset(self.xnames,iv,'X'+str(I))
         [iv,ix_,_] = s2mpj_ii('MU',ix_)
-        pb.xnames=arrset(pb.xnames,iv,'MU')
+        self.xnames=arrset(self.xnames,iv,'MU')
         #%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
-        pbm.A       = lil_matrix((1000000,1000000))
-        pbm.gscale  = np.array([])
-        pbm.grnames = np.array([])
+        self.A       = lil_matrix((1000000,1000000))
+        self.gscale  = np.array([])
+        self.grnames = np.array([])
         cnames      = np.array([])
-        pb.cnames   = np.array([])
+        self.cnames = np.array([])
         gtype       = np.array([])
         for I in range(int(v_['1']),int(v_['M'])+1):
             v_['RI'] = float(I)
@@ -110,7 +106,7 @@ class  VAREIGVL(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
-                pbm.A[ig,iv] = float(v_['AIJ'])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['AIJ'])+self.A[ig,iv]
         for I in range(int(v_['M+1']),int(v_['N-M'])+1):
             v_['RI'] = float(I)
             v_['-I'] = -1.0*v_['RI']
@@ -128,7 +124,7 @@ class  VAREIGVL(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
-                pbm.A[ig,iv] = float(v_['AIJ'])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['AIJ'])+self.A[ig,iv]
         for I in range(int(v_['N-M+1']),int(v_['N'])+1):
             v_['RI'] = float(I)
             v_['-I'] = -1.0*v_['RI']
@@ -145,21 +141,21 @@ class  VAREIGVL(CUTEst_problem):
                 [ig,ig_,_] = s2mpj_ii('G'+str(I),ig_)
                 gtype = arrset(gtype,ig,'<>')
                 iv = ix_['X'+str(J)]
-                pbm.A[ig,iv] = float(v_['AIJ'])+pbm.A[ig,iv]
+                self.A[ig,iv] = float(v_['AIJ'])+self.A[ig,iv]
         [ig,ig_,_] = s2mpj_ii('G'+str(int(v_['N+1'])),ig_)
         gtype = arrset(gtype,ig,'<>')
         #%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = len(ix_)
+        self.n   = len(ix_)
         ngrp   = len(ig_)
-        pbm.objgrps = np.arange(ngrp)
-        pb.m        = 0
+        self.objgrps = np.arange(ngrp)
+        self.m       = 0
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
-        pb.xlower = np.full((pb.n,1),-float('Inf'))
-        pb.xupper = np.full((pb.n,1),+float('Inf'))
-        pb.xlower = np.zeros((pb.n,1))
+        self.xlower = np.full((self.n,1),-float('Inf'))
+        self.xupper = np.full((self.n,1),+float('Inf'))
+        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
-        pb.x0 = np.full((pb.n,1),float(1.0))
-        pb.x0[ix_['MU']] = float(0.0)
+        self.x0 = np.full((self.n,1),float(1.0))
+        self.x0[ix_['MU']] = float(0.0)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
         iet_  = {}
         elftv = []
@@ -170,30 +166,30 @@ class  VAREIGVL(CUTEst_problem):
         elftv = loaset(elftv,it,0,'X')
         #%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
         ie_ = {}
-        pbm.elftype = np.array([])
-        ielftype    = np.array([])
-        pbm.elvar   = []
+        self.elftype = np.array([])
+        ielftype     = np.array([])
+        self.elvar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'P'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'en2PR')
+            self.elftype = arrset(self.elftype,ie,'en2PR')
             ielftype = arrset(ielftype, ie, iet_["en2PR"])
             vname = 'MU'
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='M')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='M')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='X')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
-            pbm.elftype = arrset(pbm.elftype,ie,'eSQ')
+            self.elftype = arrset(self.elftype,ie,'eSQ')
             ielftype = arrset(ielftype, ie, iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_,pb] = s2mpj_nlx(vname,ix_,pb,1,None,None,1.0)
-            posev = find(elftv[ielftype[ie]],lambda x:x=='X')
-            pbm.elvar = loaset(pbm.elvar,ie,posev[0],iv)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            posev = np.where(elftv[ielftype[ie]]=='X')[0]
+            self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
         igt_ = {}
         [it,igt_,_] = s2mpj_ii('gLQ',igt_)
@@ -204,44 +200,43 @@ class  VAREIGVL(CUTEst_problem):
         [it,igt_,_] = s2mpj_ii('gLQ2',igt_)
         grftp = loaset(grftp,it,0,'POWER')
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        pbm.grelt   = []
+        self.grelt   = []
         for ig in np.arange(0,ngrp):
-            pbm.grelt.append(np.array([]))
-        pbm.grftype = np.array([])
-        pbm.grelw   = []
+            self.grelt.append(np.array([]))
+        self.grftype = np.array([])
+        self.grelw   = []
         nlc         = np.array([])
-        pbm.grpar   = []
+        self.grpar   = []
         for I in range(int(v_['1']),int(v_['N'])+1):
             ig = ig_['G'+str(I)]
-            pbm.grftype = arrset(pbm.grftype,ig,'gLQ')
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['P'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,float(-1.0))
-            posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='POWER')
-            pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(2.0))
+            self.grftype = arrset(self.grftype,ig,'gLQ')
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['P'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,float(-1.0))
+            posgp = np.where(grftp[igt_[self.grftype[ig]]]=='POWER')[0]
+            self.grpar =loaset(self.grpar,ig,posgp[0],float(2.0))
         ig = ig_['G'+str(int(v_['N+1']))]
-        pbm.grftype = arrset(pbm.grftype,ig,'gLQ2')
+        self.grftype = arrset(self.grftype,ig,'gLQ2')
         for I in range(int(v_['1']),int(v_['N'])+1):
             ig = ig_['G'+str(int(v_['N+1']))]
-            posel = len(pbm.grelt[ig])
-            pbm.grelt = loaset(pbm.grelt,ig,posel,ie_['S'+str(I)])
-            pbm.grelw = loaset(pbm.grelw,ig,posel,1.)
+            posel = len(self.grelt[ig])
+            self.grelt = loaset(self.grelt,ig,posel,ie_['S'+str(I)])
+            self.grelw = loaset(self.grelw,ig,posel,1.)
         ig = ig_['G'+str(int(v_['N+1']))]
-        posgp = find(grftp[igt_[pbm.grftype[ig]]],lambda x:x=='POWER')
-        pbm.grpar =loaset(pbm.grpar,ig,posgp[0],float(v_['Q']))
+        posgp = np.where(grftp[igt_[self.grftype[ig]]]=='POWER')[0]
+        self.grpar =loaset(self.grpar,ig,posgp[0],float(v_['Q']))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
-        pb.objlower = 0.0
+        self.objlower = 0.0
 #    Solution
 # LO SOLTN               0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         #%%%%%%%%%%%%%%%%%  RESIZE A %%%%%%%%%%%%%%%%%%%%%%
-        pbm.A.resize(ngrp,pb.n)
-        pbm.A      = pbm.A.tocsr()
-        sA1,sA2    = pbm.A.shape
-        pbm.Ashape = [ sA1, sA2 ]
+        self.A.resize(ngrp,self.n)
+        self.A     = self.A.tocsr()
+        sA1,sA2    = self.A.shape
+        self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        pb.pbclass = "OUR2-AN-V-0"
-        self.pb = pb; self.pbm = pbm
+        self.pbclass = "OUR2-AN-V-0"
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -250,7 +245,7 @@ class  VAREIGVL(CUTEst_problem):
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
     @staticmethod
-    def en2PR(pbm,nargout,*args):
+    def en2PR(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -278,7 +273,7 @@ class  VAREIGVL(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def eSQ(pbm,nargout,*args):
+    def eSQ(self, nargout,*args):
 
         import numpy as np
         EV_  = args[0]
@@ -306,13 +301,13 @@ class  VAREIGVL(CUTEst_problem):
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 
     @staticmethod
-    def gLQ(pbm,nargout,*args):
+    def gLQ(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
-        IPOWER = pbm.grpar[igr_][0]
+        IPOWER = self.grpar[igr_][0]
         PM1 = IPOWER-1
-        f_= GVAR_**IPOWER/pbm.grpar[igr_][0]
+        f_= GVAR_**IPOWER/self.grpar[igr_][0]
         if nargout>1:
             g_ = GVAR_**PM1
             if nargout>2:
@@ -326,16 +321,16 @@ class  VAREIGVL(CUTEst_problem):
             return f_,g_,H_
 
     @staticmethod
-    def gLQ2(pbm,nargout,*args):
+    def gLQ2(self,nargout,*args):
 
         GVAR_ = args[0]
         igr_  = args[1]
-        f_= GVAR_**pbm.grpar[igr_][0]/pbm.grpar[igr_][0]
+        f_= GVAR_**self.grpar[igr_][0]/self.grpar[igr_][0]
         if nargout>1:
-            g_ = GVAR_**(pbm.grpar[igr_][0]-1.0e0)
+            g_ = GVAR_**(self.grpar[igr_][0]-1.0e0)
             if nargout>2:
                 H_ = np.zeros((1,1))
-                H_ = (pbm.grpar[igr_][0]-1.0e0)*GVAR_**(pbm.grpar[igr_][0]-2.0e0)
+                H_ = (self.grpar[igr_][0]-1.0e0)*GVAR_**(self.grpar[igr_][0]-2.0e0)
         if nargout == 1:
             return f_
         elif nargout == 2:
