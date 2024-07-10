@@ -10,12 +10,12 @@ function regenerate( varargin )
 %   corresponding problems are decoded. Otherwise, all problems specified in the
 %   ./fullproblist file are decoded.
 %
-%   If varargin contains a string of the form './problist', the list of problems yo
+%   If varargin contains a string of the form './problist', the list of problems to
 %   decode is read from the ./problist file (the ./ are mandatory) and this list
-%   is used only  if no problem is explictly specified. (Default: ./fullproblist)
+%   is used only if no problem is explictly specified. (Default: ./fullproblist)
 %   Only the last occurence of a ./problist argument is taken into account.
-%   The ./problist file must contain a problem name as the first (blank separated)
-%   field on each line.
+%   Each line of the ./problist file must contain a problem name as the first
+%   (blank separated) field.
 %
 %   Examples:
 %     regenerate()           decodes all problems for the three languages
