@@ -1,7 +1,5 @@
 ACOPP14.py
-ACOPP14.py~
 ACOPP30.py
-#ACOPR14.py#
 ACOPR14.py
 ACOPR30.py
 AGG.py
@@ -869,8 +867,6 @@ PRODPL0.py
 PRODPL1.py
 PSPDOC.py
 PT.py
-__pycache__
-python.py
 QCNEW.py
 QC.py
 QINGB.py
