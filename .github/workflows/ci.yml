@@ -14,6 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up Python 3.10.14
       uses: actions/setup-python@v4
       with:
@@ -24,6 +25,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt  # Assurez-vous d'avoir un fichier requirements.txt avec les dépendances nécessaires
 
-    - name: Test with pytest
-      run: pytest -vv || echo "Pytest failed"
+    - name: Check pytest installation
+      run: pytest --version  # Vérifiez que pytest est bien installé
 
+    - name: List files for debugging
+      run: ls -R  # Liste tous les fichiers pour s'assurer que les fichiers de test sont présents
+
+    - name: Test with pytest
+      run: |
+        pytest -vv || echo "Pytest failed"
