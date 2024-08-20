@@ -1,0 +1,55 @@
+name: Compare Julia and Python Results
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out the repository
+    - uses: actions/checkout@v3
+
+    # 2. Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # Specify the Python version
+
+    # 3. Set up Julia
+    - name: Set up Julia
+      uses: julia-actions/setup-julia@v1
+      with:
+        version: '1.9'  # Specify the Julia version
+
+    # 4. Run Python code
+    - name: Run Python script
+      run: |
+        python -c "import math; print(math.sqrt(2))" > python_result.txt  # Save Python result to a file
+
+    # 5. Run Julia code
+    - name: Run Julia script
+      run: |
+        julia -e 'println(sqrt(2))' > julia_result.txt  # Save Julia result to a file
+
+    # 6. Compare the results
+    - name: Compare Results
+      run: |
+        python_result=$(cat python_result.txt)
+        julia_result=$(cat julia_result.txt)
+
+        echo "Python result: $python_result"
+        echo "Julia result: $julia_result"
+
+        if [[ "$python_result" == "$julia_result" ]]; then
+          echo "Results match."
+        else
+          echo "Results do not match!" && exit 1
+        fi
+
