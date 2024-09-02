@@ -46,7 +46,7 @@ jobs:
         grep -Eo '[0-9]+\.[0-9]+' matlab_raw.txt > matlab_result.txt  # Extract only the number from the output
 
 
-    # 8. Compare the results with a relative tolerance of 1e-15
+    # 8. Compare the results with an absolute tolerance of 1e-15
     - name: Compare Results
       run: |
         python_result=$(cat python_result.txt)
@@ -57,23 +57,23 @@ jobs:
         echo "Julia result: $julia_result"
         echo "MATLAB result: $matlab_result"
 
-        rel_tol=1e-15
+        abs_tol=1e-15
 
-        # Function to calculate the relative difference
-        relative_diff() {
-          echo "scale=20; ($1 - $2)/$2" | bc -l | tr -d '-'
-        }
+        # Convert results to floating point numbers
+        python_result=$(echo $python_result | awk '{printf "%.16f\n", $1}')
+        julia_result=$(echo $julia_result | awk '{printf "%.16f\n", $1}')
+        matlab_result=$(echo $matlab_result | awk '{printf "%.16f\n", $1}')
 
-        # Calculate relative differences
-        diff_py_julia=$(relative_diff $python_result $julia_result)
-        diff_py_matlab=$(relative_diff $python_result $matlab_result)
+        # Calculate absolute differences
+        diff_py_julia=$(awk -v py=$python_result -v jl=$julia_result 'BEGIN {print (py>jl ? py-jl : jl-py)}')
+        diff_py_matlab=$(awk -v py=$python_result -v ml=$matlab_result 'BEGIN {print (py>ml ? py-ml : ml-py)}')
 
-        echo "Relative difference between Python and Julia: $diff_py_julia"
-        echo "Relative difference between Python and MATLAB: $diff_py_matlab"
+        echo "Absolute difference between Python and Julia: $diff_py_julia"
+        echo "Absolute difference between Python and MATLAB: $diff_py_matlab"
 
         # Check if the differences are within the tolerance
-        if (( $(echo "$diff_py_julia < $rel_tol" | bc -l) )) && (( $(echo "$diff_py_matlab < $rel_tol" | bc -l) )); then
-          echo "Results match within the relative tolerance of $rel_tol."
+        if (( $(echo "$diff_py_julia < $abs_tol" | bc -l) )) && (( $(echo "$diff_py_matlab < $abs_tol" | bc -l) )); then
+          echo "Results match within the absolute tolerance of $abs_tol."
         else
-          echo "Results do not match within the relative tolerance of $rel_tol!" && exit 1
+          echo "Results do not match within the absolute tolerance of $abs_tol!" && exit 1
         fi
