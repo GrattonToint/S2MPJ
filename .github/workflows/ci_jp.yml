@@ -42,7 +42,7 @@ jobs:
     # 7. Run MATLAB code
     - name: Run MATLAB script
       run: |
-        matlab -batch "result = sqrt(2); disp(result);" > matlab_raw.txt  # Save raw MATLAB result to a file
+        matlab -batch "format long; result = sqrt(2); disp(result);" > matlab_raw.txt  # Save raw MATLAB result to a file
         grep -Eo '[0-9]+\.[0-9]+' matlab_raw.txt > matlab_result.txt  # Extract only the number from the output
 
 
