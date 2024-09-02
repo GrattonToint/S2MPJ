@@ -35,7 +35,7 @@ function TWOBARS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -150,12 +150,12 @@ function TWOBARS(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["COEL1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.124))
+        loaset(pbm.grelw,ig,posel,Float64(0.124))
         ig = ig_["CONS2"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["COEL2"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.124))
+        loaset(pbm.grelw,ig,posel,Float64(0.124))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
 #    Solution

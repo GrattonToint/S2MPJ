@@ -42,9 +42,9 @@ switch(action)
         pb.name   = name;
         pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
-        v_  = configureDictionary('string','double');
-        ix_ = configureDictionary('string','double');
-        ig_ = configureDictionary('string','double');
+        v_  = containers.Map('KeyType','char', 'ValueType', 'double');
+        ix_ = containers.Map('KeyType','char', 'ValueType', 'double');
+        ig_ = containers.Map('KeyType','char', 'ValueType', 'double');
         v_('0') = 0;
         v_('1') = 1;
         v_('N') = 6;
@@ -148,8 +148,8 @@ switch(action)
             pbm.gscale(ig,1) = 1.0e+10;
         end
         %%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = numEntries(ix_);
-        ngrp   = numEntries(ig_);
+        pb.n   = ix_.Count;
+        ngrp   = ig_.Count;
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
         %%%%%%%%%%%%%%%%%%% CONSTANTS %%%%%%%%%%%%%%%%%%%%%
@@ -212,7 +212,7 @@ switch(action)
             pb.x0(ix_(['V',int2str(I)]),1) = 300.0;
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
-        iet_ = configureDictionary('string','double');
+        iet_ = containers.Map('KeyType', 'char', 'ValueType','double');
         [it,iet_] = s2mpjlib( 'ii', 'en2PROD',iet_);
         elftv{it}{1} = 'V1';
         elftv{it}{2} = 'V2';
@@ -264,7 +264,7 @@ switch(action)
         elftp{it}{7} = 'P7';
         elftp{it}{8} = 'P8';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
-        ie_ = configureDictionary('string','double');
+        ie_ = containers.Map('KeyType','char','ValueType','double');
         pbm.elftype = {};
         ielftype    = [];
         pbm.elvar   = {};
@@ -699,7 +699,7 @@ switch(action)
             end
         end
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
-        igt_ = configureDictionary('string','double');
+        igt_ = containers.Map('KeyType','char','ValueType','double');
         [it,igt_] = s2mpjlib('ii','gL2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
         [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
@@ -774,8 +774,8 @@ switch(action)
         pb.pbclass = 'SUR2-AN-29-0';
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
-            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
-            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+            varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm,pbm.ndigs);
         else
             varargout{1} = pb;
             varargout{2} = pbm;

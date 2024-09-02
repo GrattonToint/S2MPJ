@@ -42,9 +42,9 @@ switch(action)
         pb.name   = name;
         pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
-        v_  = configureDictionary('string','double');
-        ix_ = configureDictionary('string','double');
-        ig_ = configureDictionary('string','double');
+        v_  = containers.Map('KeyType','char', 'ValueType', 'double');
+        ix_ = containers.Map('KeyType','char', 'ValueType', 'double');
+        ig_ = containers.Map('KeyType','char', 'ValueType', 'double');
         %%%%%%%%%%%%%%%%%%%  DATA GROUPS %%%%%%%%%%%%%%%%%%%
         pbm.A = sparse(0,0);
         [ig,ig_] = s2mpjlib('ii','GROUP1',ig_);
@@ -55,7 +55,7 @@ switch(action)
         gtype{ig} = '<>';
         %%%%%%%%%%%%%%%%%%%%  VARIABLES %%%%%%%%%%%%%%%%%%%%
         pb.xnames = {};
-        ngrp   = numEntries(ig_);
+        ngrp   = ig_.Count;
         [iv,ix_] = s2mpjlib('ii','X1',ix_);
         pb.xnames{iv} = 'X1';
         ig = ig_('GROUP1');
@@ -75,7 +75,7 @@ switch(action)
         [iv,ix_] = s2mpjlib('ii','X3',ix_);
         pb.xnames{iv} = 'X3';
         %%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = numEntries(ix_);
+        pb.n   = ix_.Count;
         pbm.objgrps = [1:ngrp];
         pb.m        = 0;
         %%%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
@@ -88,7 +88,7 @@ switch(action)
         pb.xupper(ix_('X2')) = 1.0;
         pb.xupper(ix_('X3')) = 2.0;
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
-        iet_ = configureDictionary('string','double');
+        iet_ = containers.Map('KeyType', 'char', 'ValueType','double');
         [it,iet_] = s2mpjlib( 'ii', 'eETYPE1',iet_);
         elftv{it}{1} = 'V1';
         elftv{it}{2} = 'V2';
@@ -97,7 +97,7 @@ switch(action)
         elftv{it}{2} = 'V2';
         elftv{it}{3} = 'V3';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
-        ie_ = configureDictionary('string','double');
+        ie_ = containers.Map('KeyType','char','ValueType','double');
         pbm.elftype = {};
         ielftype    = [];
         pbm.elvar   = {};
@@ -142,7 +142,7 @@ switch(action)
         posev = find(strcmp('V2',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
-        igt_ = configureDictionary('string','double');
+        igt_ = containers.Map('KeyType','char','ValueType','double');
         [it,igt_] = s2mpjlib('ii','gGTYPE1',igt_);
         [it,igt_] = s2mpjlib('ii','gGTYPE2',igt_);
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -168,8 +168,8 @@ switch(action)
         pb.x0          = zeros(pb.n,1);
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
-            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
-            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+            varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm,pbm.ndigs);
         else
             varargout{1} = pb;
             varargout{2} = pbm;

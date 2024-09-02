@@ -34,7 +34,7 @@ function LUKVLI10(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -182,7 +182,7 @@ function LUKVLI10(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["C"*string(K)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(-2.0))
+            loaset(pbm.grelw,ig,posel,Float64(-2.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0

@@ -53,9 +53,9 @@ switch(action)
         pb.name   = name;
         pbm.name  = name;
         %%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
-        v_  = configureDictionary('string','double');
-        ix_ = configureDictionary('string','double');
-        ig_ = configureDictionary('string','double');
+        v_  = containers.Map('KeyType','char', 'ValueType', 'double');
+        ix_ = containers.Map('KeyType','char', 'ValueType', 'double');
+        ig_ = containers.Map('KeyType','char', 'ValueType', 'double');
         v_('N') = 6;
         v_('A') = 131.078;
         v_('B') = 1.48577;
@@ -112,8 +112,8 @@ switch(action)
         gtype{ig}  = '==';
         cnames{ig} = 'C4';
         %%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%
-        pb.n   = numEntries(ix_);
-        ngrp   = numEntries(ig_);
+        pb.n   = ix_.Count;
+        ngrp   = ig_.Count;
         legrps = find(strcmp(gtype,'<='));
         eqgrps = find(strcmp(gtype,'=='));
         gegrps = find(strcmp(gtype,'>='));
@@ -175,7 +175,7 @@ switch(action)
             pb.y0(find(pbm.congrps==ig('X6')),1) = 0.153292;
         end
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
-        iet_ = configureDictionary('string','double');
+        iet_ = containers.Map('KeyType', 'char', 'ValueType','double');
         [it,iet_] = s2mpjlib( 'ii', 'eF1',iet_);
         elftv{it}{1} = 'V';
         [it,iet_] = s2mpjlib( 'ii', 'eF2',iet_);
@@ -193,7 +193,7 @@ switch(action)
         [it,iet_] = s2mpjlib( 'ii', 'eSQUARE',iet_);
         elftv{it}{1} = 'V';
         %%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%
-        ie_ = configureDictionary('string','double');
+        ie_ = containers.Map('KeyType','char','ValueType','double');
         pbm.elftype = {};
         ielftype    = [];
         pbm.elvar   = {};
@@ -377,8 +377,8 @@ switch(action)
         pb.pbclass = 'OOI2-MN-6-4';
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
-            varargout{1} = s2mpjlib('convert',pb,  pbm.ndigs);
-            varargout{2} = s2mpjlib('convert',pbm, pbm.ndigs);
+            varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
+            varargout{2} = s2mpjlib('convert',pbm,pbm.ndigs);
         else
             varargout{1} = pb;
             varargout{2} = pbm;

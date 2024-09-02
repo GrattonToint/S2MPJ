@@ -27,7 +27,7 @@ function POLAK6(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -227,14 +227,14 @@ function POLAK6(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X3SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(2.0))
+        loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X4SQ"])
         loaset(pbm.grelw,ig,posel, 1.)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(5.0))
+        loaset(pbm.grelw,ig,posel,Float64(5.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(5.0))
@@ -242,21 +242,21 @@ function POLAK6(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(11.0))
+        loaset(pbm.grelw,ig,posel,Float64(11.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(11.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X3SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(12.0))
+        loaset(pbm.grelw,ig,posel,Float64(12.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X4SQ"])
         loaset(pbm.grelw,ig,posel,Float64(11.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-5.0))
+        loaset(pbm.grelw,ig,posel,Float64(-5.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(15.0))
@@ -264,21 +264,21 @@ function POLAK6(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(11.0))
+        loaset(pbm.grelw,ig,posel,Float64(11.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(21.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X3SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(12.0))
+        loaset(pbm.grelw,ig,posel,Float64(12.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X4SQ"])
         loaset(pbm.grelw,ig,posel,Float64(21.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(15.0))
+        loaset(pbm.grelw,ig,posel,Float64(15.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(5.0))
@@ -286,21 +286,21 @@ function POLAK6(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(11.0))
+        loaset(pbm.grelw,ig,posel,Float64(11.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(11.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X3SQ"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(12.0))
+        loaset(pbm.grelw,ig,posel,Float64(12.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X4SQ"])
         loaset(pbm.grelw,ig,posel, 1.)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-15.0))
+        loaset(pbm.grelw,ig,posel,Float64(-15.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(15.0))

@@ -34,7 +34,7 @@ function LUKVLI6(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -230,7 +230,7 @@ function LUKVLI6(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["C"*string(I)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(5.0))
+            loaset(pbm.grelw,ig,posel,Float64(5.0))
             v_["A"] = v_["I-5"]
             v_["B"] = v_["1"]
             v_["A"] = Float64(v_["A"])
@@ -278,7 +278,7 @@ function LUKVLI6(action,args...)
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["S"*string(J)])
                 arrset(nlc,length(nlc)+1,ig)
-                loaset(self.grelw,ig,posel,Float64(1.0))
+                loaset(pbm.grelw,ig,posel,Float64(1.0))
             end
         end
         for K = Int64(v_["1"]):Int64(v_["N/2"])
@@ -286,7 +286,7 @@ function LUKVLI6(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["P"*string(K)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(-1.0))
+            loaset(pbm.grelw,ig,posel,Float64(-1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0

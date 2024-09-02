@@ -36,7 +36,7 @@ function OSLBQP(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -169,25 +169,25 @@ function OSLBQP(action,args...)
         ig = ig_["OBJ"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1"])
-        loaset(self.grelw,ig,posel,Float64(0.5))
+        loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3"])
-        loaset(self.grelw,ig,posel,Float64(0.5))
+        loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E4"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E5"])
-        loaset(self.grelw,ig,posel,Float64(0.5))
+        loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E6"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E7"])
-        loaset(self.grelw,ig,posel,Float64(0.5))
+        loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E8"])
         loaset(pbm.grelw,ig,posel,Float64(0.5))

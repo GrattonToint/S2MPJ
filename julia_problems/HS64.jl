@@ -25,7 +25,7 @@ function HS64(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -114,26 +114,26 @@ function HS64(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OBJE1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(50000.0))
+        loaset(pbm.grelw,ig,posel,Float64(50000.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OBJE2"])
         loaset(pbm.grelw,ig,posel,Float64(72000.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OBJE3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(144000.0))
+        loaset(pbm.grelw,ig,posel,Float64(144000.0))
         ig = ig_["CONSTR"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["CONE1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(4.0))
+        loaset(pbm.grelw,ig,posel,Float64(4.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["CONE2"])
         loaset(pbm.grelw,ig,posel,Float64(32.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["CONE3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(120.0))
+        loaset(pbm.grelw,ig,posel,Float64(120.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               6299.842428

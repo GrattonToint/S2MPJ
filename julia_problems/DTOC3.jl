@@ -48,7 +48,7 @@ function DTOC3(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -195,14 +195,14 @@ function DTOC3(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["Y1SQ"*string(Int64(v_["T+1"]))])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(2.0))
+            loaset(pbm.grelw,ig,posel,Float64(2.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["Y2SQ"*string(Int64(v_["T+1"]))])
             loaset(pbm.grelw,ig,posel,Float64(1.0))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["XSQ"*string(T)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(6.0))
+            loaset(pbm.grelw,ig,posel,Float64(6.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0

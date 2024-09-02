@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ù%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 
@@ -247,7 +247,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %         pbm.gfpar     is a real vector containing the values of global GROUPS parameters, once computed in the g_globs
 %                        section using their Fortran expression
 %         pbm.ndigs     if present and >0, indicates that reduced precision arithmetic with pbm.ndigs digits is requested
-%         
+% 
 %         Depending on the problem's nature, some fields may be missing from the pbm struct.  Only the fields name and
 %         A are mandatory (a problem only containing those would be an homogeneous linear system). The presence of the
 %         fields enames and gnames in the pbm struct depends on the specific S2MPJ options defined (see below).
@@ -648,6 +648,11 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %                arithmetic to be used in evaluations
 %                (default: 1 )
 %
+%        * varargin{1}.dicttype is a string indicating the type of dictionary facility to be used by Matlab.
+%                'native'   : use the dictionary facility included in the Matlab language,
+%                'custom'   : use a dictionary based on containers maps.
+%                (default: 'custom')
+%
 %        Not every of the above fields must be defined, each field being tested for presence and value individually.
 %
 %   If varargin{1} is not a struct or is not present, all options take their default values.
@@ -718,7 +723,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 24 VI 2024
+%                started VI 2023, this version 31 VIII 2024
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -748,6 +753,8 @@ pbs.disperrors = 1;  %  Display error messages asap
 extxscale      = 1;  %  Apply the variable's scaling internally, instead of passing them the the user in pb.xscale
 sifdir         = ''; %  Find the problem in the Matlab path
 outdir         = ''; %  Write the output file in the current directory
+pbs.dicttype   = 'custom'; % use a custom dictionary based on containers maps.
+%pbs.dicttype  = 'native'; % use a the native Matlab dictionary functions
 
 %  Determine if the Symbolic Math Toolbox is installed, in which case request support of reduced precision arithmetic
 %  by default for Matlab output files (by setting redprec to 1).
@@ -818,6 +825,9 @@ if ( nargin > 1 )
       end
       if ( isfield( options, 'redprec' ) )
          redprec = options.redprec;
+      end
+      if ( isfield( options, 'dicttype' ) )
+         pbs.dicttype = options.dicttype;
       end
       
       % Prepare for the desired output language.
@@ -994,13 +1004,23 @@ prevlineispass  = 0; % true if the previous line written in the Python output fi
 %  dictionary thus provides a mechanism to extract the current (during decoding) (string) valueof an index, irrespective
 %  of it being a past loop index or a standard integer parameter.
 
-pbs.irpdict = configureDictionary( 'string', 'string' );
+switch ( pbs.dicttype )
+case 'native'
+   pbs.irpdict = configureDictionary( 'string', 'string' );
+case 'custom'
+   pbs.irpdict = containers.Map( 'KeyType', 'char', 'ValueType', 'char' );
+end
 
 %  A translation table (dictionary) is necessary to define the correspondance between the internal names (in pbm) of
 %  parameters and the names used in Fortran expressions in the nonlinear ELEMENTS and GROUPS sections. The global ELEMENTS
 %  and GROUPS parameters are stored in pbm.efpar and pbm.gfpar, respectively.
 
-globdict = configureDictionary( 'string', 'string' );  % for elements
+switch( pbs.dicttype )
+case 'native'
+   globdict = configureDictionary( 'string', 'string' );  % for elements
+case 'custom'
+   globdict = containers.Map( 'KeyType', 'char', 'ValueType', 'char' );  % for elements
+end
 n_eglobs = 0;     % the number of global Fortran parameters for nonlinear elements
 n_gglobs = 0;     % the number of global Fortran parameters for nonlinear elements
 
@@ -1163,10 +1183,19 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          %  Initialize the dictionaries for parameters' values (v_), variables' 'flat'
          %  indeces and groups' 'flat' indeces. 
 
-         printmline( 'v_  = configureDictionary(''string'',''double'');',                     indlvl, bindent, pbs.fidma );
-         printmline( 'ix_ = configureDictionary(''string'',''double'');',                     indlvl, bindent, pbs.fidma );
-         printmline( 'ig_ = configureDictionary(''string'',''double'');',                     indlvl, bindent, pbs.fidma );
-
+         switch( pbs.dicttype )
+         case 'native'
+            printmline( 'v_  = configureDictionary(''string'',''double'');',                  indlvl, bindent, pbs.fidma );
+            printmline( 'ix_ = configureDictionary(''string'',''double'');',                  indlvl, bindent, pbs.fidma );
+            printmline( 'ig_ = configureDictionary(''string'',''double'');',                  indlvl, bindent, pbs.fidma );
+         case 'custom'
+            printmline( 'v_  = containers.Map(''KeyType'',''char'', ''ValueType'', ''double'');', ...
+                                                                                              indlvl, bindent, pbs.fidma );
+            printmline( 'ix_ = containers.Map(''KeyType'',''char'', ''ValueType'', ''double'');', ...
+                                                                                              indlvl, bindent, pbs.fidma );
+            printmline( 'ig_ = containers.Map(''KeyType'',''char'', ''ValueType'', ''double'');', ...
+                                                                                              indlvl, bindent, pbs.fidma );
+         end
       case 'python'
       
          printcpline( ' ',                                                                            bindent, pbs.fidpy );
@@ -1210,7 +1239,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printjline( sprintf( 'pb.sifpbname = "%s"', sifpbname ),                          2,      bindent, pbs.fidjl );
          end
          printjline( 'nargin       = length(args)',                                           2,      bindent, pbs.fidjl );
-         printjline( 'self.call    = eval( Meta.parse( name ) )',                             2,      bindent, pbs.fidjl );
+         printjline( 'pbm.call     = eval( Meta.parse( name ) )',                             2,      bindent, pbs.fidjl );
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
          printjline( '#%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
 
@@ -1250,11 +1279,19 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%% GLOBAL DIMENSIONS %%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
-         printmline( 'pb.n   = numEntries(ix_);',                                             indlvl, bindent, pbs.fidma );
-         if ( ~has_ngrp )
-            printmline( 'ngrp   = numEntries(ig_);',                                          indlvl, bindent, pbs.fidma );
-            printpline( 'ngrp   = len(ig_)',                                                  indlvl, bindent, pbs.fidpy );
-            has_ngrp = 1;
+         switch ( pbs.dicttype )
+         case 'native'
+            printmline( 'pb.n    = numEntries(ix_);',                                         indlvl, bindent, pbs.fidma );
+            if ( ~has_ngrp )
+               printmline( 'ngrp = numEntries(ig_);',                                         indlvl, bindent, pbs.fidma );
+               has_ngrp = 1;
+            end
+         case 'custom'
+            printmline( 'pb.n   = ix_.Count;',                                                indlvl, bindent, pbs.fidma );
+            if ( ~has_ngrp )
+               printmline( 'ngrp   = ig_.Count;',                                             indlvl, bindent, pbs.fidma );
+               has_ngrp = 1;
+            end
          end
          if ( has_constraints )
             printmline( 'legrps = find(strcmp(gtype,''<=''));',                               indlvl, bindent, pbs.fidma );
@@ -1506,7 +1543,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       printjline( 'intvars = Int64[]',                                                        indlvl, bindent, pbs.fidjl );
       printjline( 'binvars = Int64[]',                                                        indlvl, bindent, pbs.fidjl );
       if ( grpsdef )
-         printmline( 'ngrp   = numEntries(ig_);',                                             indlvl, bindent, pbs.fidma );
+         switch ( pbs.dicttype )
+         case 'native'
+            printmline( 'ngrp   = numEntries(ig_);',                                          indlvl, bindent, pbs.fidma );
+         case 'custom'
+            printmline( 'ngrp   = ig_.Count;',                                                indlvl, bindent, pbs.fidma );
+         end
          printpline( 'ngrp   = len(ig_)',                                                     indlvl, bindent, pbs.fidpy );
          printjline( 'ngrp   = length(ig_)',                                                  indlvl, bindent, pbs.fidjl );
          has_ngrp = 1;
@@ -1626,7 +1668,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
-         printmline( 'iet_ = configureDictionary(''string'',''double'');',                    indlvl, bindent, pbs.fidma );
+         switch( pbs.dicttype )
+         case 'native'
+            printmline( 'iet_ = configureDictionary(''string'',''double'');',                 indlvl, bindent, pbs.fidma );
+         case 'custom'
+            printmline( 'iet_ = containers.Map(''KeyType'', ''char'', ''ValueType'',''double'');', ...
+                                                                                              indlvl, bindent, pbs.fidma );
+         end
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
          printpline( 'iet_  = {}',                                                            indlvl, bindent, pbs.fidpy );
@@ -1652,7 +1700,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%%%%%% ELEMENT USES %%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
-         printmline( 'ie_ = configureDictionary(''string'',''double'');',                     indlvl, bindent, pbs.fidma );
+         switch ( pbs.dicttype )
+         case 'native'
+            printmline( 'ie_ = configureDictionary(''string'',''double'');',                  indlvl, bindent, pbs.fidma );
+         case 'custom'
+            printmline( 'ie_ = containers.Map(''KeyType'',''char'',''ValueType'',''double'');',indlvl, bindent, pbs.fidma);
+         end
          if ( getenames )
             printmline( 'pbm.enames  = {};',                                                  indlvl, bindent, pbs.fidma );
          end
@@ -1691,7 +1744,13 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
-         printmline( 'igt_ = configureDictionary(''string'',''double'');',                    indlvl, bindent, pbs.fidma );
+         switch (pbs.dicttype )
+         case 'native'
+            printmline( 'igt_ = configureDictionary(''string'',''double'');',                 indlvl, bindent, pbs.fidma );
+         case 'custom'
+            printmline( 'igt_ = containers.Map(''KeyType'',''char'',''ValueType'',''double'');', ...
+                                                                                              indlvl, bindent, pbs.fidma );
+         end
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidpy );
          printpline( 'igt_ = {}',                                                             indlvl, bindent, pbs.fidpy );
@@ -1779,7 +1838,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       case 'python'
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( '@staticmethod',                                                         1,      bindent, pbs.fidpy );
-         printpline( 'def e_globs(self):',                                                     1,      bindent, pbs.fidpy );
+         printpline( 'def e_globs(self):',                                                    1,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( 'import numpy as np',                                                    2,      bindent, pbs.fidpy );
       case 'julia'
@@ -1822,7 +1881,16 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printjline( '#%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%',              indlvl - 1, bindent, pbs.fidjl );
       end
       ingroups  = 1;
-      globdict  = configureDictionary( 'string', 'string' ); %  Reset the global dictionary for ELEMENTS/GROUPS
+
+      %  Reset the global dictionary for ELEMENTS/GROUPS
+      
+      switch (pbs.dicttype )
+      case 'native'
+         globdict  = configureDictionary( 'string', 'string' ); 
+      case 'custom'
+         globdict  = containers.Map('KeyType','char','ValueType','char' );
+      end
+      
       codeg     = {};                  % the Matlab holder for code describing the group function's gradient
       codeH     = {};                  % the Matlab holder for code describing the group function's Hessian
       inobounds = 0;
@@ -1850,7 +1918,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       case 'python'
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( '@staticmethod',                                                         1,      bindent, pbs.fidpy );
-         printpline( 'def g_globs(self):',                                                     1,      bindent, pbs.fidpy );
+         printpline( 'def g_globs(self):',                                                    1,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
       case 'julia'
          printjline( 'elseif action == "g_globs"',                                            1,      bindent, pbs.fidjl );
@@ -3880,23 +3948,23 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
                   if ( nf > 3 )
                      if ( f{1}(1) == 'Z' )
-                        printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv1(f{1},f,pbs) ),                      ...
+                        printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv1(f{1},f,pbs) ),                         ...
                                                                                               indlvl, bindent, pbs.fidma );
                         printpline( sprintf( 'self.grelw = loaset(self.grelw,ig,posel,float(%s))', getv1(f{1},f,pbs) ), ...
                                                                                               indlvl, bindent, pbs.fidpy );
-                        printjline( sprintf( 'loaset(pbm.grelw,ig,posel,Float64(%s))', getv1(f{1},f,pbs) ),           ...
+                        printjline( sprintf( 'loaset(pbm.grelw,ig,posel,Float64(%s))', getv1(f{1},f,pbs) ),             ...
                                                                                               indlvl, bindent, pbs.fidjl );
                      else
                         if( ~isempty( f{4} ) )
-                           printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv1r(f{1},f,pbs) ),                   ...
+                           printmline( sprintf( 'pbm.grelw{ig}(posel) = %s;', getv1r(f{1},f,pbs) ),                     ...
                                                                                               indlvl, bindent, pbs.fidma );
                            printpline( sprintf( 'self.grelw = loaset(self.grelw,ig,posel,float(%s))',                   ...
                                                 getv1r(f{1},f,pbs) ),                         indlvl, bindent, pbs.fidpy );
-                           printjline( sprintf( 'loaset(self.grelw,ig,posel,Float64(%s))', getv1r(f{1},f,pbs) ),       ...
+                           printjline( sprintf( 'loaset(pbm.grelw,ig,posel,Float64(%s))', getv1r(f{1},f,pbs) ),         ...
                                                                                               indlvl, bindent, pbs.fidjl );
                         else
                            printmline( 'pbm.grelw{ig}(posel) = 1.;',                          indlvl, bindent, pbs.fidma );
-                           printpline( 'self.grelw = loaset(self.grelw,ig,posel,1.)',           indlvl, bindent, pbs.fidpy );
+                           printpline( 'self.grelw = loaset(self.grelw,ig,posel,1.)',         indlvl, bindent, pbs.fidpy );
                            printjline( 'loaset(pbm.grelw,ig,posel,1.)',                       indlvl, bindent, pbs.fidjl );
                         end
 
@@ -3949,35 +4017,35 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   switch ( pbs.lang )
                   case 'matlab'
                      printmline( sprintf( '[~,posgp] = ismember(''%s'',grftp{igt_(pbm.grftype{ig})});',f{3})',        ...
-                                                                                             indlvl, bindent, pbs.fidma );
+                                                                                              indlvl, bindent, pbs.fidma );
                      printmline( sprintf( 'pbm.grpar{ig}(posgp) = %s;', getv1r( f{1}, f, pbs ) ),                     ...
-                                                                                             indlvl, bindent, pbs.fidma );
+                                                                                              indlvl, bindent, pbs.fidma );
                      if ( nf > 5 )
                         printmline( sprintf( '[~,posgp] = ismember(''%s'',grftp[igt_(pbm.grftype[ig])]);', f{5} ),    ...
-                                                                                             indlvl, bindent, pbs.fidma );
-                        printmline( sprintf( 'pbm.grpar{ig}(posgp) = %s;', getv2r( f ) ),    indlvl, bindent, pbs.fidma );
+                                                                                              indlvl, bindent, pbs.fidma );
+                        printmline( sprintf( 'pbm.grpar{ig}(posgp) = %s;', getv2r( f ) ),     indlvl, bindent, pbs.fidma );
                      end
                   case 'python'
                      printpline( sprintf( 'posgp = np.where(grftp[igt_[self.grftype[ig]]]==''%s'')[0]', f{3})',    ...
-                                                                                             indlvl, bindent, pbs.fidpy );
+                                                                                              indlvl, bindent, pbs.fidpy );
                      printpline( sprintf( 'self.grpar =loaset(self.grpar,ig,posgp[0],float(%s))',                       ...
-                                           getv1r( f{1}, f, pbs ) ),                         indlvl, bindent, pbs.fidpy );
+                                           getv1r( f{1}, f, pbs ) ),                          indlvl, bindent, pbs.fidpy );
                      if ( nf > 5 )
                         printpline( sprintf( 'posgp = np.where(grftp[igt_[pbm.grftype[ig]]]==''%s'')[0]', f{5} ), ...
-                                                                                             indlvl, bindent, pbs.fidpy );
+                                                                                              indlvl, bindent, pbs.fidpy );
                         printpline( sprintf( 'self.grpar = loaset(self.grpar,ig,posgp[0],float(%s))',getv2r( f ) ),     ...
-                                                                                             indlvl, bindent, pbs.fidpy );
+                                                                                              indlvl, bindent, pbs.fidpy );
                      end
                   case 'julia'
                      printjline( sprintf( 'posgp = findfirst(x->x=="%s",grftp[igt_[pbm.grftype[ig]]])', f{3})',       ...
-                                                                                             indlvl, bindent, pbs.fidjl );
+                                                                                              indlvl, bindent, pbs.fidjl );
                      printjline( sprintf( 'loaset(pbm.grpar,ig,posgp,Float64(%s))', getv1r( f{1}, f, pbs ) ),         ...
-                                                                                             indlvl, bindent, pbs.fidjl );
+                                                                                              indlvl, bindent, pbs.fidjl );
                      if ( nf > 5 )
                         printjline( sprintf( 'posgp = findfirst(x=="%s",grftp[igt_[pbm.grftype[ig]]])', f{5} ),       ...
-                                                                                             indlvl, bindent, pbs.fidjl );
+                                                                                              indlvl, bindent, pbs.fidjl );
                         printjline( sprintf( 'loaset(pbm.grpar,ig,posgp,Float64(%s))', getv2r( f ) ),                 ...
-                                                                                             indlvl, bindent, pbs.fidjl );
+                                                                                              indlvl, bindent, pbs.fidjl );
                      end
                   end
                end
@@ -4062,7 +4130,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
 
          switch( f{1} )
          case 'F'
-            pbs.errors{end+1} = '*** UNSUPPORTED: calls to external functions in the element''s definitions are not supported ***';
+            pbs.errors{end+1} = ...
+                        '*** UNSUPPORTED: calls to external functions in the element''s definitions are not supported ***';
             if ( pbs.disperrors)
                disp( pbs.errors{end} )
             end
@@ -4420,8 +4489,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                            '+-', '-' );
                   printmline( updU,                                                           indlvl, bindent, pbs.fidma );
                case 'python'
-                  updU = replace( sprintf( 'U_[%d,%d] = U_[%d,%d]+%d', pos-1, ev2-1, pos-1, ev2-1, str2double( d2e(f{6}) ) ), ...
-                           '+-', '-' );
+                  updU = replace( sprintf( 'U_[%d,%d] = U_[%d,%d]+%d', pos-1, ev2-1, pos-1, ev2-1, ...
+                                  str2double( d2e(f{6}) ) ), '+-', '-' );
                   printpline( updU,                                                           indlvl, bindent, pbs.fidpy );
                case 'julia'
                   updU = replace( sprintf( 'U_[%d,%d] = U_[%d,%d]+%d', pos, ev2, pos, ev2, str2double( d2e(f{6}) ) ), ...
@@ -4604,7 +4673,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       
          switch( f{1} )
          case 'F'
-            pbs.errors{end+1} = ' *** UNSUPPORTED: calls to external functions in the group''s definitions are not supported ***';
+            pbs.errors{end+1} = ...
+                        ' *** UNSUPPORTED: calls to external functions in the group''s definitions are not supported ***';
             if ( pbs.disperrors )
                disp( pbs.errors{end} )
             end
@@ -4729,7 +4799,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s==0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1} = sprintf( '%sself.gfpar = arrset( self.gfpar,%d,%s)    # this is  %s',  bindent, i_gglobs-1, evalstr, f{3} );
+              pending{1} = sprintf( '%sself.gfpar = arrset( self.gfpar,%d,%s)    # this is  %s',  ...
+                                     bindent, i_gglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if !%s', globdict( f{2} ) ),                              indlvl, bindent, pbs.fidjl );
               pending{1} = sprintf( '%sarrset(pbm.gfpar,%d,%s)    # this is %s',  bindent, i_gglobs, evalstr, f{3} );
@@ -4761,7 +4832,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             ;case 'python'
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
                printpline( '@staticmethod',                                                   1,      bindent, pbs.fidpy );
-               printpline( sprintf( 'def %s(self,nargout,*args):', gname ),                    1,      bindent, pbs.fidpy );
+               printpline( sprintf( 'def %s(self,nargout,*args):', gname ),                   1,      bindent, pbs.fidpy );
                printpline( ' ',                                                               0,      bindent, pbs.fidpy );
             case 'julia'
                printjline( ' ',                                                               0,      bindent, pbs.fidjl );
@@ -5471,10 +5542,15 @@ end
 %  Substitute the internal references to reserved names
 %  according to the supplied dictionary
 %
-%  First sort the dictionary by order og decreasing key length.
+%  First sort the dictionary by order of decreasing key length.
 
-ldict = numEntries( dict );
-lend  = zeros( ldict, 1 );
+switch ( pbs.dicttype )
+case 'native'
+   ldict = numEntries( dict );
+case 'custom'
+   ldict = dict.Count ;
+end
+lend    = zeros( ldict, 1 );
 thekeys = cellstr( keys( dict ) );
 for i = 1:ldict
    lend(i)  = length( thekeys{i} );
@@ -5704,11 +5780,11 @@ if( ~isempty( codeg ) )
            inds = split( codeH{ih}(opar(1)+1:cpar(1)-1), ',' );
            if ( ~strcmp( inds{1}, inds{2} ) )
               printmline( sprintf( 'H_(%s,%s) = H_(%s,%s);', inds{2}, inds{1}, inds{1}, inds{2} ), ...
-                                                                     indlvl + 2, bindent, pbs.fidma );
+                                                                                          indlvl + 2, bindent, pbs.fidma );
               printpline( sprintf( 'H_[%s,%s] = H_[%s,%s]',  inds{2}, inds{1}, inds{1}, inds{2} ), ...
-                                                                     indlvl + 2, bindent, pbs.fidpy );
+                                                                                          indlvl + 2, bindent, pbs.fidpy );
               printjline( sprintf( 'H_[%s,%s] = H_[%s,%s]',  inds{2}, inds{1}, inds{1}, inds{2} ), ...
-                                                                      indlvl + 2, bindent, pbs.fidjl );
+                                                                                          indlvl + 2, bindent, pbs.fidjl );
            end                          
         end
      end
@@ -6516,9 +6592,9 @@ function todefine = initIV( todefine, pbs, indlvl, bindent )
 
 for indiv = 1:length( todefine )
    if ( todefine( indiv ) )
-      printmline( sprintf('IV_(%d) = U_(%d,:)*EV_;', indiv, indiv ),                       indlvl, bindent, pbs.fidma );
-      printpline( sprintf('IV_[%d] = U_[%d:%d,:].dot(EV_)', indiv-1, indiv-1, indiv ),     indlvl, bindent, pbs.fidpy );
-      printjline( sprintf('IV_[%d] = dot(U_[%d,:],EV_)', indiv, indiv ),                   indlvl, bindent, pbs.fidjl );
+      printmline( sprintf('IV_(%d) = U_(%d,:)*EV_;', indiv, indiv ),                          indlvl, bindent, pbs.fidma );
+      printpline( sprintf('IV_[%d] = U_[%d:%d,:].dot(EV_)', indiv-1, indiv-1, indiv ),        indlvl, bindent, pbs.fidpy );
+      printjline( sprintf('IV_[%d] = dot(U_[%d,:],EV_)', indiv, indiv ),                      indlvl, bindent, pbs.fidjl );
       todefine( indiv ) = 0;
    end
 end

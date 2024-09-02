@@ -27,7 +27,7 @@ function HS62(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -202,21 +202,21 @@ function HS62(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE1N"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-8204.37))
+        loaset(pbm.grelw,ig,posel,Float64(-8204.37))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE1D"])
         loaset(pbm.grelw,ig,posel,Float64(8204.37))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE2N"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-9008.72))
+        loaset(pbm.grelw,ig,posel,Float64(-9008.72))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE2D"])
         loaset(pbm.grelw,ig,posel,Float64(9008.72))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE3N"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-9330.46))
+        loaset(pbm.grelw,ig,posel,Float64(-9330.46))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE3D"])
         loaset(pbm.grelw,ig,posel,Float64(9330.46))

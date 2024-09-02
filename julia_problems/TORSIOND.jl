@@ -50,7 +50,7 @@ function TORSIOND(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -268,7 +268,7 @@ function TORSIOND(action,args...)
                 ig = ig_["GR"*string(I)*","*string(J)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["A"*string(I)*","*string(J)])
-                loaset(self.grelw,ig,posel,Float64(0.25))
+                loaset(pbm.grelw,ig,posel,Float64(0.25))
                 posel = posel+1
                 loaset(pbm.grelt,ig,posel,ie_["B"*string(I)*","*string(J)])
                 loaset(pbm.grelw,ig,posel,Float64(0.25))
@@ -279,7 +279,7 @@ function TORSIOND(action,args...)
                 ig = ig_["GL"*string(I)*","*string(J)]
                 posel = length(pbm.grelt[ig])+1
                 loaset(pbm.grelt,ig,posel,ie_["C"*string(I)*","*string(J)])
-                loaset(self.grelw,ig,posel,Float64(0.25))
+                loaset(pbm.grelw,ig,posel,Float64(0.25))
                 posel = posel+1
                 loaset(pbm.grelt,ig,posel,ie_["D"*string(I)*","*string(J)])
                 loaset(pbm.grelw,ig,posel,Float64(0.25))

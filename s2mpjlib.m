@@ -34,7 +34,12 @@ case 'ii'
          varargout{3} = 0;
       end
    else
-      varargout{1} = numEntries( List ) + 1;
+      switch( class( List ) )
+      case 'dictionary'
+         varargout{1} = numEntries( List ) + 1;
+      case 'containers.Map'
+         varargout{1} = List.Count + 1;
+      end      
       List( name ) = varargout{1};
       if ( nargout > 2 )
          varargout{3} = 1;

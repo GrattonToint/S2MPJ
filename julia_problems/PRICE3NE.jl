@@ -31,7 +31,7 @@ function PRICE3NE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -134,7 +134,7 @@ function PRICE3NE(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E2"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(6.4))
+        loaset(pbm.grelw,ig,posel,Float64(6.4))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
         pb.objlower = 0.0

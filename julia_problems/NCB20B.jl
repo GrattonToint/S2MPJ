@@ -30,7 +30,7 @@ function NCB20B(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -252,7 +252,7 @@ function NCB20B(action,args...)
             ig = ig_["O"*string(I)]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(I)])
-            loaset(self.grelw,ig,posel,Float64(100.0))
+            loaset(pbm.grelw,ig,posel,Float64(100.0))
         end
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         Asave = pbm.A[1:ngrp, 1:pb.n]

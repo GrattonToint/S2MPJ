@@ -31,7 +31,7 @@ function AIRCRFTA(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -287,14 +287,14 @@ function AIRCRFTA(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1A"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.727))
+        loaset(pbm.grelw,ig,posel,Float64(-0.727))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E1B"])
         loaset(pbm.grelw,ig,posel,Float64(8.39))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1C"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-684.4))
+        loaset(pbm.grelw,ig,posel,Float64(-684.4))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E1D"])
         loaset(pbm.grelw,ig,posel,Float64(63.5))
@@ -302,7 +302,7 @@ function AIRCRFTA(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E2A"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.949))
+        loaset(pbm.grelw,ig,posel,Float64(0.949))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E2B"])
         loaset(pbm.grelw,ig,posel,Float64(0.173))
@@ -310,19 +310,19 @@ function AIRCRFTA(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3A"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.716))
+        loaset(pbm.grelw,ig,posel,Float64(-0.716))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["E3B"])
         loaset(pbm.grelw,ig,posel,Float64(-1.578))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E1D"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(1.132))
+        loaset(pbm.grelw,ig,posel,Float64(1.132))
         ig = ig_["G4"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E2B"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         ig = ig_["G5"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["E3B"])

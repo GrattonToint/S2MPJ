@@ -29,7 +29,7 @@ function LUKSAN14LS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -183,11 +183,11 @@ function LUKSAN14LS(action,args...)
             ig = ig_["E"*string(Int64(v_["K"]))]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["K"]))])
-            loaset(self.grelw,ig,posel,Float64(10.0))
+            loaset(pbm.grelw,ig,posel,Float64(10.0))
             ig = ig_["E"*string(Int64(v_["K+6"]))]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["K+6"]))])
-            loaset(self.grelw,ig,posel,Float64(10.0))
+            loaset(pbm.grelw,ig,posel,Float64(10.0))
             v_["K"] = 7+v_["K"]
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%

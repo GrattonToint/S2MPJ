@@ -32,7 +32,7 @@ function LAUNCH(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -967,22 +967,22 @@ function LAUNCH(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPROD1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(5272.77))
+        loaset(pbm.grelw,ig,posel,Float64(5272.77))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(160.909))
+        loaset(pbm.grelw,ig,posel,Float64(160.909))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["XPG"])
         loaset(pbm.grelw,ig,posel,Float64(282.874))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPROD2"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.64570846))
+        loaset(pbm.grelw,ig,posel,Float64(0.64570846))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPL"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(31.136196))
+        loaset(pbm.grelw,ig,posel,Float64(31.136196))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["XPM"])
         loaset(pbm.grelw,ig,posel,Float64(12.092112))
@@ -990,23 +990,23 @@ function LAUNCH(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPROD3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(5272.77))
+        loaset(pbm.grelw,ig,posel,Float64(5272.77))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X2PF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(160.909))
+        loaset(pbm.grelw,ig,posel,Float64(160.909))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X2PG"])
         loaset(pbm.grelw,ig,posel,Float64(282.874))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPROD4"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.64570846))
+        loaset(pbm.grelw,ig,posel,Float64(0.64570846))
         ig = ig_["STA1"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X2PL"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(31.136196))
+        loaset(pbm.grelw,ig,posel,Float64(31.136196))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X2PM"])
         loaset(pbm.grelw,ig,posel,Float64(12.092112))
@@ -1014,22 +1014,22 @@ function LAUNCH(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPROD5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(5272.77))
+        loaset(pbm.grelw,ig,posel,Float64(5272.77))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XQF"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(181.806))
+        loaset(pbm.grelw,ig,posel,Float64(181.806))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["XQG"])
         loaset(pbm.grelw,ig,posel,Float64(232.57))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XPROD6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.49783215))
+        loaset(pbm.grelw,ig,posel,Float64(0.49783215))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XQL"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.22424514))
+        loaset(pbm.grelw,ig,posel,Float64(-0.22424514))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["XQM"])
         loaset(pbm.grelw,ig,posel,Float64(20.708238))
@@ -1084,14 +1084,14 @@ function LAUNCH(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XBIG11"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-32.0))
+        loaset(pbm.grelw,ig,posel,Float64(-32.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["XBIG12"])
         loaset(pbm.grelw,ig,posel,Float64(-32.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XBIG13"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-32.0))
+        loaset(pbm.grelw,ig,posel,Float64(-32.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
         pb.objlower = 0.0
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%

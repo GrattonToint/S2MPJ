@@ -27,7 +27,7 @@ function HS118(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -252,14 +252,14 @@ function HS118(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["3K+1"]))])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(0.0001))
+            loaset(pbm.grelw,ig,posel,Float64(0.0001))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["3K+2"]))])
             loaset(pbm.grelw,ig,posel,Float64(0.0001))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E"*string(Int64(v_["3K+3"]))])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(0.00015))
+            loaset(pbm.grelw,ig,posel,Float64(0.00015))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution

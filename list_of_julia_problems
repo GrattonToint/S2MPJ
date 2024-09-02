@@ -10,6 +10,7 @@ ALJAZZAF.jl
 ALLINITA.jl
 ALLINITC.jl
 ALLINIT.jl
+ALLINIT.jl~
 ALLINITU.jl
 ALSOTAME.jl
 ANTWERP.jl
@@ -866,6 +867,7 @@ PRODPL0.jl
 PRODPL1.jl
 PSPDOC.jl
 PT.jl
+python.jl
 QC.jl
 QCNEW.jl
 QINGB.jl

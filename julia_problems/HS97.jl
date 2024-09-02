@@ -25,7 +25,7 @@ function HS97(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -227,33 +227,33 @@ function HS97(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1X3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-169.0))
+        loaset(pbm.grelw,ig,posel,Float64(-169.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X3X5"])
         loaset(pbm.grelw,ig,posel,Float64(-3580.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X4X5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-3810.0))
+        loaset(pbm.grelw,ig,posel,Float64(-3810.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X4X6"])
         loaset(pbm.grelw,ig,posel,Float64(-18500.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X5X6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-24300.0))
+        loaset(pbm.grelw,ig,posel,Float64(-24300.0))
         ig = ig_["C2"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1X3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-139.0))
+        loaset(pbm.grelw,ig,posel,Float64(-139.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X4X5"])
         loaset(pbm.grelw,ig,posel,Float64(-2450.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X4X6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-16600.0))
+        loaset(pbm.grelw,ig,posel,Float64(-16600.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["X5X6"])
         loaset(pbm.grelw,ig,posel,Float64(-17200.0))
@@ -261,12 +261,12 @@ function HS97(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X4X5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(26000.0))
+        loaset(pbm.grelw,ig,posel,Float64(26000.0))
         ig = ig_["C4"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["X1X6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-14000.0))
+        loaset(pbm.grelw,ig,posel,Float64(-14000.0))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               3.1358091

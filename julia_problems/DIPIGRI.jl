@@ -27,7 +27,7 @@ function DIPIGRI(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -314,7 +314,7 @@ function DIPIGRI(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(10.0))
+        loaset(pbm.grelw,ig,posel,Float64(10.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["O6"])
         loaset(pbm.grelw,ig,posel, 1.)
@@ -322,19 +322,19 @@ function DIPIGRI(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["C11"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(2.0))
+        loaset(pbm.grelw,ig,posel,Float64(2.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["C12"])
         loaset(pbm.grelw,ig,posel,Float64(3.0))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["C13"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(4.0))
+        loaset(pbm.grelw,ig,posel,Float64(4.0))
         ig = ig_["C2"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["C21"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(10.0))
+        loaset(pbm.grelw,ig,posel,Float64(10.0))
         ig = ig_["C3"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["C31"])

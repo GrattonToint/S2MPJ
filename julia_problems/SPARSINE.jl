@@ -29,7 +29,7 @@ function SPARSINE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -106,7 +106,7 @@ function SPARSINE(action,args...)
             loaset(pbm.grpar,ig,posgp,Float64(v_["RI"]))
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(I)])
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
             v_["J"] = 2*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
@@ -115,7 +115,7 @@ function SPARSINE(action,args...)
             v_["J"] = 1+v_["J"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(Int64(v_["J"]))])
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
             v_["J"] = 3*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
@@ -124,7 +124,7 @@ function SPARSINE(action,args...)
             v_["J"] = 1+v_["J"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(Int64(v_["J"]))])
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
             v_["J"] = 5*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
@@ -133,7 +133,7 @@ function SPARSINE(action,args...)
             v_["J"] = 1+v_["J"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(Int64(v_["J"]))])
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
             v_["J"] = 7*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
@@ -142,7 +142,7 @@ function SPARSINE(action,args...)
             v_["J"] = 1+v_["J"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(Int64(v_["J"]))])
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
             v_["J"] = 11*I
             v_["J"] = -1+v_["J"]
             v_["K"] = trunc(Int,(v_["J"]/v_["N"]))
@@ -151,7 +151,7 @@ function SPARSINE(action,args...)
             v_["J"] = 1+v_["J"]
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["S"*string(Int64(v_["J"]))])
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution

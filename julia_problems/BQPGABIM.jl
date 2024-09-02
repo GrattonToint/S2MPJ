@@ -22,7 +22,7 @@ function BQPGABIM(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -2454,520 +2454,520 @@ function BQPGABIM(action,args...)
         ig = ig_["LINGROUP"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   1   1"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  11"])
-        loaset(self.grelw,ig,posel,Float64(-9.9819e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9819e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  11  11"])
-        loaset(self.grelw,ig,posel,Float64(7.8331e+02))
+        loaset(pbm.grelw,ig,posel,Float64(7.8331e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  12"])
-        loaset(self.grelw,ig,posel,Float64(-9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  12"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  12  12"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  20"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  20  20"])
-        loaset(self.grelw,ig,posel,Float64(7.8331e+02))
+        loaset(pbm.grelw,ig,posel,Float64(7.8331e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  21"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  21"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  21  21"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  29"])
-        loaset(self.grelw,ig,posel,Float64(9.0362e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0362e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  29  29"])
-        loaset(self.grelw,ig,posel,Float64(7.8331e+02))
+        loaset(pbm.grelw,ig,posel,Float64(7.8331e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  36"])
-        loaset(self.grelw,ig,posel,Float64(6.5103e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.5103e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  36  36"])
-        loaset(self.grelw,ig,posel,Float64(7.8331e+02))
+        loaset(pbm.grelw,ig,posel,Float64(7.8331e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  37"])
-        loaset(self.grelw,ig,posel,Float64(6.5140e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.5140e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  36  37"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  37  37"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  41"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  41  41"])
-        loaset(self.grelw,ig,posel,Float64(7.8331e+02))
+        loaset(pbm.grelw,ig,posel,Float64(7.8331e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  42"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  42"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  42  42"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   1  49"])
-        loaset(self.grelw,ig,posel,Float64(-9.7537e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.7537e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  49  49"])
-        loaset(self.grelw,ig,posel,Float64(7.8331e+02))
+        loaset(pbm.grelw,ig,posel,Float64(7.8331e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   2   2"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  11"])
-        loaset(self.grelw,ig,posel,Float64(-9.9213e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9213e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  13"])
-        loaset(self.grelw,ig,posel,Float64(-9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  13"])
-        loaset(self.grelw,ig,posel,Float64(9.9608e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9608e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  13  13"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  20"])
-        loaset(self.grelw,ig,posel,Float64(-9.9698e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9698e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  22"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  22"])
-        loaset(self.grelw,ig,posel,Float64(9.9608e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9608e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  22  22"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  29"])
-        loaset(self.grelw,ig,posel,Float64(8.9945e+01))
+        loaset(pbm.grelw,ig,posel,Float64(8.9945e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  30"])
-        loaset(self.grelw,ig,posel,Float64(9.0300e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0300e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  29  30"])
-        loaset(self.grelw,ig,posel,Float64(9.9608e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9608e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  30  30"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  36"])
-        loaset(self.grelw,ig,posel,Float64(6.4885e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.4885e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  38"])
-        loaset(self.grelw,ig,posel,Float64(6.5140e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.5140e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  36  38"])
-        loaset(self.grelw,ig,posel,Float64(9.9608e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9608e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  38  38"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  41"])
-        loaset(self.grelw,ig,posel,Float64(7.5197e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5197e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   2  49"])
-        loaset(self.grelw,ig,posel,Float64(-9.7167e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.7167e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   3   3"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  11"])
-        loaset(self.grelw,ig,posel,Float64(8.1209e+01))
+        loaset(pbm.grelw,ig,posel,Float64(8.1209e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  20"])
-        loaset(self.grelw,ig,posel,Float64(8.1463e+01))
+        loaset(pbm.grelw,ig,posel,Float64(8.1463e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  23"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  23"])
-        loaset(self.grelw,ig,posel,Float64(-8.1463e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-8.1463e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  23  23"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  29"])
-        loaset(self.grelw,ig,posel,Float64(-7.3536e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-7.3536e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  36"])
-        loaset(self.grelw,ig,posel,Float64(-5.3119e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-5.3119e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  41"])
-        loaset(self.grelw,ig,posel,Float64(-6.1506e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-6.1506e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  43"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  43"])
-        loaset(self.grelw,ig,posel,Float64(-8.1463e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-8.1463e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  43  43"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  49"])
-        loaset(self.grelw,ig,posel,Float64(7.9480e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.9480e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   3  50"])
-        loaset(self.grelw,ig,posel,Float64(-9.7566e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.7566e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  49  50"])
-        loaset(self.grelw,ig,posel,Float64(-8.1463e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-8.1463e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  50  50"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   4   4"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  11"])
-        loaset(self.grelw,ig,posel,Float64(2.8141e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.8141e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  14"])
-        loaset(self.grelw,ig,posel,Float64(-9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  14"])
-        loaset(self.grelw,ig,posel,Float64(-2.8225e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.8225e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  14  14"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  20"])
-        loaset(self.grelw,ig,posel,Float64(2.8228e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.8228e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  29"])
-        loaset(self.grelw,ig,posel,Float64(-2.5487e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.5487e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  31"])
-        loaset(self.grelw,ig,posel,Float64(9.0300e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0300e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  29  31"])
-        loaset(self.grelw,ig,posel,Float64(-2.8225e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.8225e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  31  31"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  36"])
-        loaset(self.grelw,ig,posel,Float64(-1.8370e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-1.8370e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  41"])
-        loaset(self.grelw,ig,posel,Float64(-2.1312e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.1312e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  44"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  44"])
-        loaset(self.grelw,ig,posel,Float64(-2.8225e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.8225e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  44  44"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   4  49"])
-        loaset(self.grelw,ig,posel,Float64(2.7539e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.7539e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   5   5"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  11"])
-        loaset(self.grelw,ig,posel,Float64(2.6350e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.6350e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  15"])
-        loaset(self.grelw,ig,posel,Float64(-9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  15"])
-        loaset(self.grelw,ig,posel,Float64(-2.6427e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.6427e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  15  15"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  20"])
-        loaset(self.grelw,ig,posel,Float64(2.6427e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.6427e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  24"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  24"])
-        loaset(self.grelw,ig,posel,Float64(-2.6427e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.6427e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  24  24"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  29"])
-        loaset(self.grelw,ig,posel,Float64(-2.3863e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.3863e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  32"])
-        loaset(self.grelw,ig,posel,Float64(9.0300e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0300e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  29  32"])
-        loaset(self.grelw,ig,posel,Float64(-2.6427e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.6427e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  32  32"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  36"])
-        loaset(self.grelw,ig,posel,Float64(-1.7205e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-1.7205e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  39"])
-        loaset(self.grelw,ig,posel,Float64(6.5140e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.5140e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  36  39"])
-        loaset(self.grelw,ig,posel,Float64(-2.6427e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.6427e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  39  39"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  41"])
-        loaset(self.grelw,ig,posel,Float64(-1.9971e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-1.9971e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  45"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  45"])
-        loaset(self.grelw,ig,posel,Float64(-2.6427e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.6427e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  45  45"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   5  49"])
-        loaset(self.grelw,ig,posel,Float64(2.5757e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.5757e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   6   6"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  11"])
-        loaset(self.grelw,ig,posel,Float64(9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  16"])
-        loaset(self.grelw,ig,posel,Float64(-9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  16"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  16  16"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  20"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  25"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  25"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  25  25"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  29"])
-        loaset(self.grelw,ig,posel,Float64(-9.0289e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.0289e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  33"])
-        loaset(self.grelw,ig,posel,Float64(9.0300e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0300e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  29  33"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  33  33"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  36"])
-        loaset(self.grelw,ig,posel,Float64(-6.5144e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-6.5144e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  41"])
-        loaset(self.grelw,ig,posel,Float64(-7.5509e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-7.5509e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  46"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  46"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  46  46"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   6  49"])
-        loaset(self.grelw,ig,posel,Float64(9.7565e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.7565e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   7   7"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  11"])
-        loaset(self.grelw,ig,posel,Float64(-9.9320e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9320e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  17"])
-        loaset(self.grelw,ig,posel,Float64(-9.9709e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9709e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  17"])
-        loaset(self.grelw,ig,posel,Float64(9.9610e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9610e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  17  17"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  20"])
-        loaset(self.grelw,ig,posel,Float64(-9.9631e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.9631e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  29"])
-        loaset(self.grelw,ig,posel,Float64(8.9946e+01))
+        loaset(pbm.grelw,ig,posel,Float64(8.9946e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  34"])
-        loaset(self.grelw,ig,posel,Float64(9.0300e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0300e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  29  34"])
-        loaset(self.grelw,ig,posel,Float64(9.9610e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.9610e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  34  34"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  36"])
-        loaset(self.grelw,ig,posel,Float64(6.4890e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.4890e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  41"])
-        loaset(self.grelw,ig,posel,Float64(7.5199e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5199e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   7  49"])
-        loaset(self.grelw,ig,posel,Float64(-9.7188e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.7188e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   8   8"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  11"])
-        loaset(self.grelw,ig,posel,Float64(9.7157e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.7157e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  20"])
-        loaset(self.grelw,ig,posel,Float64(9.7417e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.7417e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  29"])
-        loaset(self.grelw,ig,posel,Float64(-8.7973e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-8.7973e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  36"])
-        loaset(self.grelw,ig,posel,Float64(-6.3446e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-6.3446e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  40"])
-        loaset(self.grelw,ig,posel,Float64(6.5140e+01))
+        loaset(pbm.grelw,ig,posel,Float64(6.5140e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  36  40"])
-        loaset(self.grelw,ig,posel,Float64(-9.7431e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-9.7431e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  40  40"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  41"])
-        loaset(self.grelw,ig,posel,Float64(-7.3586e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-7.3586e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   8  49"])
-        loaset(self.grelw,ig,posel,Float64(9.5052e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.5052e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D   9   9"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  11"])
-        loaset(self.grelw,ig,posel,Float64(-2.9055))
+        loaset(pbm.grelw,ig,posel,Float64(-2.9055))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  20"])
-        loaset(self.grelw,ig,posel,Float64(-2.9605))
+        loaset(pbm.grelw,ig,posel,Float64(-2.9605))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  26"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  26"])
-        loaset(self.grelw,ig,posel,Float64(2.9604))
+        loaset(pbm.grelw,ig,posel,Float64(2.9604))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  26  26"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  29"])
-        loaset(self.grelw,ig,posel,Float64(2.6517))
+        loaset(pbm.grelw,ig,posel,Float64(2.6517))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  35"])
-        loaset(self.grelw,ig,posel,Float64(9.0300e+01))
+        loaset(pbm.grelw,ig,posel,Float64(9.0300e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  29  35"])
-        loaset(self.grelw,ig,posel,Float64(2.9604))
+        loaset(pbm.grelw,ig,posel,Float64(2.9604))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  35  35"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  36"])
-        loaset(self.grelw,ig,posel,Float64(1.9168))
+        loaset(pbm.grelw,ig,posel,Float64(1.9168))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  41"])
-        loaset(self.grelw,ig,posel,Float64(2.2464))
+        loaset(pbm.grelw,ig,posel,Float64(2.2464))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O   9  49"])
-        loaset(self.grelw,ig,posel,Float64(-2.9243))
+        loaset(pbm.grelw,ig,posel,Float64(-2.9243))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  10  10"])
-        loaset(self.grelw,ig,posel,Float64(1.0624e+03))
+        loaset(pbm.grelw,ig,posel,Float64(1.0624e+03))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  10  11"])
-        loaset(self.grelw,ig,posel,Float64(2.9135e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.9135e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  10  20"])
-        loaset(self.grelw,ig,posel,Float64(2.9241e+01))
+        loaset(pbm.grelw,ig,posel,Float64(2.9241e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  10  29"])
-        loaset(self.grelw,ig,posel,Float64(-2.6379e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.6379e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  10  36"])
-        loaset(self.grelw,ig,posel,Float64(-1.9046e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-1.9046e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  10  41"])
-        loaset(self.grelw,ig,posel,Float64(-2.2065e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.2065e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  10  47"])
-        loaset(self.grelw,ig,posel,Float64(7.5507e+01))
+        loaset(pbm.grelw,ig,posel,Float64(7.5507e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  47"])
-        loaset(self.grelw,ig,posel,Float64(-2.9232e+01))
+        loaset(pbm.grelw,ig,posel,Float64(-2.9232e+01))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  47  47"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  18"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  18  18"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  27"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  27  27"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  11  19"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  19  19"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  20  28"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  28  28"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["O  41  48"])
-        loaset(self.grelw,ig,posel,Float64(-1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0000e+02))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["D  48  48"])
-        loaset(self.grelw,ig,posel,Float64(1.0000e+02))
+        loaset(pbm.grelw,ig,posel,Float64(1.0000e+02))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 # LO BQPGABIM             -3.790343D-5
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%

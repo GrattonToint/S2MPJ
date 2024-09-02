@@ -25,7 +25,7 @@ function HS31(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -119,14 +119,14 @@ function HS31(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OBJE1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(9.0))
+        loaset(pbm.grelw,ig,posel,Float64(9.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OBJE2"])
         loaset(pbm.grelw,ig,posel, 1.)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OBJE3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(9.0))
+        loaset(pbm.grelw,ig,posel,Float64(9.0))
         ig = ig_["CONSTR"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["CONSTR1"])

@@ -49,7 +49,7 @@ function DTOC4(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -262,14 +262,14 @@ function DTOC4(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Y1SQ"*string(Int64(v_["1"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.5))
+        loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Y2SQ"*string(Int64(v_["1"]))])
         loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["XSQ"*string(Int64(v_["1"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(1.0))
+        loaset(pbm.grelw,ig,posel,Float64(1.0))
         for T = Int64(v_["2"]):Int64(v_["N-1"])
             ig = ig_["OBJ"]
             posel = length(pbm.grelt[ig])+1
@@ -288,7 +288,7 @@ function DTOC4(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["Y1SQ"*string(Int64(v_["N"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.5))
+        loaset(pbm.grelw,ig,posel,Float64(0.5))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["Y2SQ"*string(Int64(v_["N"]))])
         loaset(pbm.grelw,ig,posel,Float64(0.5))

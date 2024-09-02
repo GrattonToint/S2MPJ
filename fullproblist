@@ -1,4 +1,5 @@
-ACOPP14       14
+#A4X12       130       # too long to compile in Julia
+ACOPP14       14       # Julia sometimes(!) crashes
 ACOPP30       72
 ACOPR14       38
 ACOPR30       38
@@ -6,7 +7,7 @@ AGG           10
 AIRCRFTA       8
 AIRCRFTB       8
 AIRPORT       10
-ALJAZZAF    10,2
+ALJAZZAF    10,2       # has "nonlinear variables" defined in ELUSES
 ALLINIT        4
 ALLINITA       4
 ALLINITC       4
@@ -18,7 +19,7 @@ ARGLALE      4,6
 ARGLBLE      4,6
 ARGLINB       10
 ARGTRIG       10
-ARGTRIGLS    200
+ARGTRIGLS     10
 ARTIF         10
 ARWHEAD       10
 AVGASA         8
@@ -34,6 +35,7 @@ BEALE          2
 BEALENE        2
 BENNETT5       3
 BENNETT5LS    10
+#BIGBANK      10        # Julia OUT OF MEMORY
 BIGGS3        10
 BIGGS6        10
 BIGGS6NE       6
@@ -50,18 +52,21 @@ BOXBODLS      10
 BQP1VAR        1
 BQPGABIM      50
 BQPGASIM      50
+#BRAINPC0      10        # has variable scaling
+#BRAINPC1      10        # has variable scaling
 BRANIN        10
 BRATU1D       11
 BRATU2D        7
 BRATU2DT       7
 BRATU3D        3
+#BRIDGEND      10       # definition of the elemental parameters after all elements have been defined! Julia OUT OF MEMORY
 BRKMCC         2
 BROWNAL       10
 BROWNBS       10
 BROWNBSNE      2
 BROWNDEN      10
 BROWNDENE      4
-BROYDN3D      10
+BROYDN3D      10        # no objective (use 'cx')
 BROYDN3DLS     5
 BROYDNBDLS    10
 BT10           2
@@ -80,7 +85,7 @@ BT9            4
 BURKEHAN      10
 BYRDSPHR       3
 CAMEL6        10
-CAMSHAPE      10
+CAMSHAPE      10        # has constraints ranges
 CANTILVR       5
 CATENARY       4
 CATMIX        10
@@ -110,12 +115,12 @@ CLPLATEA       4
 CLPLATEB       4
 CLUSTER       10
 CLUSTERLS      2
-CmRELOAD      10
+CmRELOAD      10        # uses function renaming from C-RELOAD.SIF
 CONCON        15
 CONGIGMZ       3
 COOLHANS      10
 COOLHANSLS     9
-CORE1         10
+CORE1         10        # has if/the/else statement in NONLINEAR ELEMENTS
 CORKSCRW      10
 COSHFUN        8
 COSINE        10
@@ -145,12 +150,12 @@ DECONVB       10
 DECONVBNE     61
 DECONVC       61
 DECONVU       61
-DEGDIAG       10
+DEGDIAG       10        # no data groups, just H
 DEGENLPA      20
 DEGENLPB      20
 DEGTRID       10
 DEGTRID2      10
-DEMBO7        10
+DEMBO7        10        # has a GRUSES line without element
 DEMYMALO       2
 DENSCHNA      10
 DENSCHNB      10
@@ -200,13 +205,13 @@ DIXMAANN       5
 DIXMAANO       5
 DIXMAANP       5
 DIXON3DQ      10
-DJTL          10
+DJTL          10        # has internals and logical assignments + group parameters
 DMN15102      66
 DMN15102LS    66
 DMN15103      99
 DMN15103LS    99
-DMN15332      10
-DMN15332LS    10
+DMN15332      10        # has e_globs    TRES LENT EN MATLAB! 
+DMN15332LS    10        # has e_globs    TRES LENT EN MATLAB! 
 DMN15333      99 
 DMN15333LS    99 
 DMN37142      66 
@@ -264,8 +269,8 @@ ELEC          25
 ENGVAL1       10
 ENGVAL2       10
 ENGVAL2NE      3
-ENSO           9
-ENSOLS        10
+ENSO           9         # has e_globs
+ENSOLS        10         # has e_globs
 EQC           10
 ERRINBAR      18
 ERRINROS      10
@@ -285,6 +290,7 @@ EXTROSNB      10
 EXTROSNBNE    10
 FBRAIN2LS     10    
 FBRAIN3LS      4
+#FBRAINLS       2  # too long in Julia
 FCCU          19
 FEEDLOC       90
 FERRISDC     4,3
@@ -309,6 +315,7 @@ GAUSS1LS      10
 GAUSS2LS      10
 GAUSS3LS      10
 GAUSSIAN      10
+#GBRAINLS       2  # too long in Julia
 GENHS28       10
 GENHUMPS      10
 GENROSE       10
@@ -326,7 +333,7 @@ GROWTH         3
 GROWTHLS      10
 GULF           4
 GULFNE         3
-HADAMALS      10
+HADAMALS      10      # has g_globs
 HADAMARD      10
 HAGER1        10
 HAGER2        10
@@ -360,7 +367,11 @@ HEART8LS       8
 HARKERP2      10
 HELIX          3
 HELIXNE        3
+#HELSBY        10      # elemental parameter definition after elemental variable definitions + logicals julia OUT OF MEMORY
 HETmZ          2
+#HIE1327D      10      # quite long...
+#HIE1372D      10      # quite long...
+#HIER13        10      # Stopped after 12 hours !
 HILBERTA      10
 HILBERTB      10
 HIMMELBA       2
@@ -547,7 +558,7 @@ LANCZOS3LS     6
 LAUNCH        10
 LEAKNET       10
 LEVYMONE       5
-LEVYMONE5      5
+LEVYMONE5      5   #  all the LEVYMONT* involve ATAN( 1.0 ) (single) and give much better results with DATAN( 1.0D0 ) !
 LEVYMONE6      5
 LEVYMONE7      5
 LEVYMONE8      5
@@ -581,16 +592,17 @@ LISWET6     50,3
 LISWET7     50,3
 LISWET8     50,3
 LISWET9     50,2
-LMINSURF       4
+LMINSURF       4       # has internal variables
 LOADBAL       31
 LOGHAIRY       2
 LOGROS         2
 LOOTSMA        3
 LOTSCHD       12
+#LRIJCNN1      22      #  more that 12 hours to compile 
 LSC1           3
 LSC1LS         3
 LSC2           3
-LSC2LS       6,3
+LSC2LS       6,3       # has different values for element parameters
 LSNNODOC       5
 LSQFIT         2
 LUBRIF         5
@@ -621,7 +633,7 @@ LUKVLE17      17
 LUKVLE18      17
 LUKVLE2       10
 LUKVLE3       10
-LUKVLE4       10
+LUKVLE4       10  # pycutest gives 4 constraints instead of 8 !
 LUKVLE4C      10
 LUKVLE5       10
 LUKVLE6        9
@@ -640,7 +652,7 @@ LUKVLI17      17
 LUKVLI18      17
 LUKVLI2       10
 LUKVLI3       10
-LUKVLI4       10
+LUKVLI4       10  # pycutest gives 4 constraints instead of 8 !
 LUKVLI4C      10
 LUKVLI5       10
 LUKVLI6        9
@@ -667,7 +679,7 @@ MESH          41
 METHANB8      31
 METHANB8LS    31
 METHANL8      31
-METHANL8LS    10
+METHANL8LS    10      #  has several elemental parameters
 MEXHAT         2
 MEYER3         3
 MEYER3NE       3
@@ -686,7 +698,7 @@ MINMAXBD       5
 MINMAXRB       3
 MINPERM        2
 MINSURF       64
-MINSURFO    5,10
+MINSURFO    5,10        # has "nonlinear variables" defined in ELUSES
 MISRA1A        2
 MISRA1ALS     10
 MISRA1B        2
@@ -740,11 +752,11 @@ NONSCOMP      25
 NONSCOMPNE    25
 NUFFIELD  5.0,10
 NYSTROM5      18
-OBSTCLAE       5
-OBSTCLAL       5
-OBSTCLBL       5
-OBSTCLBM       5
-OBSTCLBU       5
+OBSTCLAE    5,20
+OBSTCLAL    5,20
+OBSTCLBL    5,20
+OBSTCLBM    5,20
+OBSTCLBU    5,20
 ODFITS        10
 OET1           3
 OET2           3
@@ -769,7 +781,7 @@ OSBORNE1       5
 OSBORNE2      11
 OSBORNEA       5
 OSBORNEB      11
-OSCIPATH      10
+OSCIPATH      10       # has group parameters
 OSCIPANE      10
 OSCIGRAD      10
 OSCIGRNE      10
@@ -833,8 +845,8 @@ PALMER8ANE     6
 PALMER8C       8
 PALMER8E       8
 PALMER8ENE     8
-PDE1          29
-PDE2          29
+PDE1           6
+PDE2           6
 PENALTY1      10
 PENALTY2      10
 PENLT1NE      10
@@ -851,7 +863,7 @@ POLAK4         3
 POLAK5         3
 POLAK6         5
 POROUS1        5
-POROUS2       32
+POROUS2        5
 PORTFL1       12
 PORTFL2       12
 PORTFL3       12
@@ -976,9 +988,10 @@ SSEBNLN       10
 SSI            3
 SSINE          3
 STANCMIN       3
+#STATIC3       10
 STNQP1         4
 STNQP2         4
-STREG         10
+STREG         10       # has a quadratic term
 STREGNE        4
 STRTCHDV      10
 SUPERSIM       2
@@ -987,6 +1000,7 @@ SWOPF         83
 SYNTHES1      10
 SYNTHES2      11
 SYNTHES3      17
+#TABLE1        10       # long
 TAME           2
 TARGUS        10
 TAX13322    1,3,3,2,2
@@ -994,6 +1008,7 @@ TENBARS1      18
 TENBARS2      18
 TENBARS3      18
 TENBARS4      18
+#TESTXSC       10       # has variable scaling
 TFI1           3
 TFI2           3
 TFI3           3
@@ -1016,11 +1031,12 @@ TORSIONC       2
 TORSIOND       2
 TORSIONE       2
 TORSIONF       2
+#TOYSARAH      2        # very long in Julia
 TQUARTIC      10
 TQUARTICNE    10
 TRAINF  1.5,2,11
 TRAINH        11
-TRIDIA         5
+TRIDIA         5        # no element (a LLS problem)
 TRIGON1       10
 TRIGON1B      10
 TRIGON2       10

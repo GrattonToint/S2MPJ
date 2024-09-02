@@ -35,7 +35,7 @@ function LUKVLI4(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -253,7 +253,7 @@ function LUKVLI4(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["CA"*string(K)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(8.0))
+            loaset(pbm.grelw,ig,posel,Float64(8.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["CB"*string(K)])
             loaset(pbm.grelw,ig,posel,Float64(-4.0))

@@ -38,7 +38,7 @@ function CYCLIC3(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -147,7 +147,7 @@ function CYCLIC3(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["C"*string(I)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(1.0))
+            loaset(pbm.grelw,ig,posel,Float64(1.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["P"*string(I)])
             loaset(pbm.grelw,ig,posel,Float64(-1.0))

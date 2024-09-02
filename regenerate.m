@@ -14,7 +14,6 @@ function regenerate( varargin )
 %   decode is read from the ./problist file (the ./ are mandatory) and this list
 %   is used only if no problem is explictly specified. (Default: ./fullproblist)
 %   Only the last occurence of a ./problist argument is taken into account.
-%   No problem list can be named 'matlab', 'python' or 'julia'.
 %   Each line of the ./problist file must contain a problem name as the first
 %   (blank separated) field.
 %

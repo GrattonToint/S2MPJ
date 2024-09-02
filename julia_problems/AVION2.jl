@@ -23,7 +23,7 @@ function AVION2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -831,37 +831,37 @@ function AVION2(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.01))
+        loaset(pbm.grelw,ig,posel,Float64(-0.01))
         ig = ig_["E6"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL2"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         ig = ig_["E7"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(0.01))
+        loaset(pbm.grelw,ig,posel,Float64(0.01))
         ig = ig_["E8"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL4"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.25))
+        loaset(pbm.grelw,ig,posel,Float64(-0.25))
         ig = ig_["E9"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL5"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.3))
+        loaset(pbm.grelw,ig,posel,Float64(-1.3))
         ig = ig_["E10"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL6"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(8.6))
+        loaset(pbm.grelw,ig,posel,Float64(8.6))
         ig = ig_["E13"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
@@ -873,13 +873,13 @@ function AVION2(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL8"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         ig = ig_["E16"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL9"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["EL10"])
         loaset(pbm.grelw,ig,posel,Float64(1.0))
@@ -888,7 +888,7 @@ function AVION2(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL11"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1000.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1000.0))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["EL12"])
         loaset(pbm.grelw,ig,posel,Float64(-12.0))
@@ -897,43 +897,43 @@ function AVION2(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL13"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.25))
+        loaset(pbm.grelw,ig,posel,Float64(-1.25))
         ig = ig_["E27"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL14"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         ig = ig_["E28"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL15"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-2.4))
+        loaset(pbm.grelw,ig,posel,Float64(-2.4))
         ig = ig_["E29"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL16"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.785))
+        loaset(pbm.grelw,ig,posel,Float64(-0.785))
         ig = ig_["E30"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL17"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-0.785))
+        loaset(pbm.grelw,ig,posel,Float64(-0.785))
         ig = ig_["E31"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL18"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-2.0))
+        loaset(pbm.grelw,ig,posel,Float64(-2.0))
         ig = ig_["E32"]
         arrset(pbm.grftype,ig,"gSQUARE")
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["EL19"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.15))
+        loaset(pbm.grelw,ig,posel,Float64(-1.15))
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               9.46801297093018D+07

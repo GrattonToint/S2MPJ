@@ -29,7 +29,7 @@ function HS93(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -265,14 +265,14 @@ function HS93(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(2.04e-2))
+        loaset(pbm.grelw,ig,posel,Float64(2.04e-2))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE2"])
         loaset(pbm.grelw,ig,posel,Float64(1.87e-2))
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(6.07e-2))
+        loaset(pbm.grelw,ig,posel,Float64(6.07e-2))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE4"])
         loaset(pbm.grelw,ig,posel,Float64(4.37e-2))
@@ -280,12 +280,12 @@ function HS93(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["C1E1"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(1.0e-3))
+        loaset(pbm.grelw,ig,posel,Float64(1.0e-3))
         ig = ig_["C2"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["OE3"])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(6.2e-4))
+        loaset(pbm.grelw,ig,posel,Float64(6.2e-4))
         posel = posel+1
         loaset(pbm.grelt,ig,posel,ie_["OE4"])
         loaset(pbm.grelw,ig,posel,Float64(5.8e-4))

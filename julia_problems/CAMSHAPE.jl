@@ -34,7 +34,7 @@ function CAMSHAPE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -260,7 +260,7 @@ function CAMSHAPE(action,args...)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["RA"*string(I)])
             arrset(nlc,length(nlc)+1,ig)
-            loaset(self.grelw,ig,posel,Float64(-1.0))
+            loaset(pbm.grelw,ig,posel,Float64(-1.0))
             posel = posel+1
             loaset(pbm.grelt,ig,posel,ie_["RA"*string(Int64(v_["I+1"]))])
             loaset(pbm.grelw,ig,posel,Float64(-1.0))
@@ -273,12 +273,12 @@ function CAMSHAPE(action,args...)
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["RA"*string(Int64(v_["2"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         ig = ig_["E3"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["RA"*string(Int64(v_["N"]))])
         arrset(nlc,length(nlc)+1,ig)
-        loaset(self.grelw,ig,posel,Float64(-1.0))
+        loaset(pbm.grelw,ig,posel,Float64(-1.0))
         ig = ig_["E4"]
         posel = length(pbm.grelt[ig])+1
         loaset(pbm.grelt,ig,posel,ie_["R2"])

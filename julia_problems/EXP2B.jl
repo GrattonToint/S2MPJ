@@ -31,7 +31,7 @@ function EXP2B(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        self.call    = eval( Meta.parse( name ) )
+        pbm.call     = eval( Meta.parse( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -133,7 +133,7 @@ function EXP2B(action,args...)
             loaset(pbm.grelw,ig,posel,1.)
             posel = length(pbm.grelt[ig])+1
             loaset(pbm.grelt,ig,posel,ie_["E2"*string(I)])
-            loaset(self.grelw,ig,posel,Float64(-5.0))
+            loaset(pbm.grelw,ig,posel,Float64(-5.0))
         end
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Least square problems are bounded below by zero
