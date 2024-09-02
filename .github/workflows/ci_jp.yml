@@ -1,12 +1,7 @@
 name: Compare Julia and Python Results
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   compare:
