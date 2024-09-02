@@ -65,8 +65,8 @@ jobs:
         matlab_result=$(echo $matlab_result | awk '{printf "%.16f\n", $1}')
 
         # Calculate absolute differences
-        diff_py_julia=$(awk -v py=$python_result -v jl=$julia_result 'BEGIN {print (py>jl ? py-jl : jl-py)}')
-        diff_py_matlab=$(awk -v py=$python_result -v ml=$matlab_result 'BEGIN {print (py>ml ? py-ml : ml-py)}')
+        diff_py_julia=$(awk -v py=$python_result -v jl=$julia_result 'BEGIN {diff=(py>jl ? py-jl : jl-py); printf "%.16f", diff}')
+        diff_py_matlab=$(awk -v py=$python_result -v ml=$matlab_result 'BEGIN {diff=(py>ml ? py-ml : ml-py); printf "%.16f", diff}')
 
         echo "Absolute difference between Python and Julia: $diff_py_julia"
         echo "Absolute difference between Python and MATLAB: $diff_py_matlab"
