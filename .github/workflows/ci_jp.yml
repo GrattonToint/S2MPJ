@@ -1,4 +1,4 @@
-name: Compare Julia, Python, and MATLAB Results
+name: Compare Julia and Python Results
 
 on:
   workflow_dispatch:
@@ -10,65 +10,75 @@ jobs:
     steps:
     # 1. Check out the repository
     - uses: actions/checkout@v3
-
-    # 2. Set up Python
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'  # Specify the Python version
-
-    # 3. Set up Julia
+    
+    # 2. Set up Julia
     - name: Set up Julia
       uses: julia-actions/setup-julia@v1
       with:
-        version: '1.9'  # Specify the Julia version
+        version: '1.10.5'  # Specify the Julia version
+        
+    # 3. Install TimerOutputs package
+    - name: Install TimerOutputs package
+      run: julia -e 'import Pkg; Pkg.add("TimerOutputs")'
 
-    # 4. Set up MATLAB
-    - name: Set up MATLAB
-      uses: matlab-actions/setup-matlab@v1
-      with:
-        release: 'R2023a'  # Specify the MATLAB release
-
-    # 5. Run Python code
-    - name: Run Python script
-      run: |
-        python -c "import math; print(math.sqrt(2))" > python_result.txt  # Save Python result to a file
-
-    # 6. Run Julia code
+    # 4. Run Julia code
     - name: Run Julia script
       run: |
         julia -e 'println(sqrt(2))' > julia_result.txt  # Save Julia result to a file
+        julia test_julia.jl 
 
-    # 7. Run MATLAB code
-    - name: Run MATLAB script
+    # 5. Add, commit, and push the file to the repository root
+    - name: Commit and push test_julia.data and test_julia.times
       run: |
-        matlab -batch "format long; result = sqrt(2); disp(result);" > matlab_raw.txt  # Save raw MATLAB result to a file
-        grep -Eo '[0-9]+\.[0-9]+' matlab_raw.txt > matlab_result.txt  # Extract only the number from the output
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add test_julia.data
+        git add test_julia.times
+        git commit -m "Add test_julia.data and times to the root directory"
+        git push origin HEAD:${{ github.ref }}  # Pousse les modifications sur la même branche    
 
+    # 6. Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8.17'  # Specify the Python version
 
-    # 8. Compare the results with an absolute tolerance of 1e-15
+    # 7. Set up Python dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Installer les dépendances
+        
+    # 8. Run Python code
+    - name: Run Python script
+      run: |
+        python -c "import math; print(math.sqrt(2))" > python_result.txt  # Save Python result to a file
+        python test_python.py
+        
+
+    # 9. Add, commit, and push the file to the repository root
+    - name: Commit and push test_python.data and test_python.times
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add test_python.data
+        git add test_python.times
+        git commit -m "Add test_python.data and times to the root directory"
+        git push origin HEAD:${{ github.ref }}  # Pousse les modifications sur la même branche
+
+   
+    # 10. Compare the results
     - name: Compare Results
       run: |
         python_result=$(cat python_result.txt)
         julia_result=$(cat julia_result.txt)
-        matlab_result=$(cat matlab_result.txt)
 
         echo "Python result: $python_result"
         echo "Julia result: $julia_result"
-        echo "MATLAB result: $matlab_result"
 
-        abs_tol=1e-15
+        if [[ "$python_result" == "$julia_result" ]]; then
+          echo "Results match."
+        else
+          echo "Results do not match!" && exit 1
+        fi
 
-        # Convert results to floating point numbers
-        python_result=$(echo $python_result | awk '{printf "%.16f\n", $1}')
-        julia_result=$(echo $julia_result | awk '{printf "%.16f\n", $1}')
-        matlab_result=$(echo $matlab_result | awk '{printf "%.16f\n", $1}')
-
-        # Calculate absolute differences
-        diff_py_julia=$(awk -v py=$python_result -v jl=$julia_result 'BEGIN {diff=(py>jl ? py-jl : jl-py); printf "%.16f", diff}')
-        diff_py_matlab=$(awk -v py=$python_result -v ml=$matlab_result 'BEGIN {diff=(py>ml ? py-ml : ml-py); printf "%.16f", diff}')
-
-        echo "Absolute difference between Python and Julia: $diff_py_julia"
-        echo "Absolute difference between Python and MATLAB: $diff_py_matlab"
-
-  
