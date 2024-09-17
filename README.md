@@ -1,1 +1,1 @@
-# Private S2MPJ
+# Public S2MPJ
