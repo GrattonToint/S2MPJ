@@ -118,7 +118,7 @@ class CUTEst_problem:
         v = v.reshape(-1,1)
         if hasattr( self, "congrps" ):
             self.getglobs()
-            return evalHJv( "Jv", self.congrps, x, v, [] )
+            return self.evalHJv( "Jv", self.congrps, x, v, [] )
         else:
             print( 'ERROR: no constraint groups in '+self.name+'!' )
         
