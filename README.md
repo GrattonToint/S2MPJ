@@ -158,7 +158,7 @@ LIxy, LIgxy = PROBLEM( "LIgxy(", pbm, x, y, I )
 LIxy, LIgxy, LIgHxy = PROBLEM( "LIgHxy", pbm, x, y, I )
 LIHxyv      = PROBLEM( "LIHxyv", pbm, x, y, v, I )
 ```
-Note that 'pbm' always occurs as the second input argument. 
+Note that `pbm` always occurs as the second input argument. 
 
 The list of Julia test problems is available in the "list_of_julia_problems" file.
 
