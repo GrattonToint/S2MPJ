@@ -1,4 +1,4 @@
-# Private S2MPJ
+# SM2PJ
 
 Thank you for your interest in S2MPJ, a collection of test problems for benchmarking
 optimization software, available in Matlab, Python and Julia. The collection contains
