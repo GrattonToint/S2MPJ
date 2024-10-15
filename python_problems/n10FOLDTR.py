@@ -18,7 +18,7 @@ class  n10FOLDTR(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Jan 2012.
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #    Problem dimension
 # 
@@ -28,6 +28,8 @@ class  n10FOLDTR(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # IE N                   1000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'n10FOLDTR'
@@ -123,7 +125,10 @@ class  n10FOLDTR(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "NOR2-AN-V-V"
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

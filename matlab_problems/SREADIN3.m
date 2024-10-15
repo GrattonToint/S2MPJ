@@ -12,7 +12,7 @@ function varargout = SREADIN3(action,varargin)
 % 
 %    SIF input: Nick Gould, July 1991.
 % 
-%    classification = 'OOR2-MN-V-V'
+%    classification = 'C-OOR2-MN-V-V'
 % 
 %    Number of discretized points in [0,1]
 % 
@@ -25,6 +25,8 @@ function varargout = SREADIN3(action,varargin)
 % IE N                   1000           $-PARAMETER n=2002, m=1001
 % IE N                   2000           $-PARAMETER n=4002, m=2001
 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Translated to Matlab by S2MPJ version 6 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -225,7 +227,7 @@ switch(action)
             pbm.elpar{ie}(posep) = v_('1/2A');
         end
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
+        [pbm.grelt{1:ngrp}] = deal([]);
         nlc = [];
         for I=v_('1'):v_('N')
             v_('I-1') = -1+I;
@@ -258,7 +260,11 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'OOR2-MN-V-V';
+        pb.pbclass = 'C-OOR2-MN-V-V';
+        pbm.objderlvl = 2;
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2];
+        pb.conderlvl  = pbm.conderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
             varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
@@ -267,6 +273,7 @@ switch(action)
             varargout{1} = pb;
             varargout{2} = pbm;
         end
+
 % ********************
 %  SET UP THE GROUPS *
 %  ROUTINE           *
@@ -313,18 +320,19 @@ switch(action)
     %%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
     case {'fx','fgx','fgHx','cx','cJx','cJHx','cIx','cIJx','cIJHx','cIJxv','fHxv',...
-          'cJxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy','LHxyv','LIHxyv'}
+          'cJxv','cJtxv','cIJtxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy',...
+          'LHxyv','LIHxyv'}
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+            [varargout{1:nargout}] = deal(NaN);
         end
 
     otherwise
-        disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])
+        disp([' ERROR: action ',action,' unavailable for problem ',name,'.m'])
     end
 
 return

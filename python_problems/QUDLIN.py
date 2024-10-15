@@ -12,7 +12,7 @@ class  QUDLIN(CUTEst_problem):
 #    SIF input: unknown.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "QBR2-AN-V-V"
+#    classification = "C-QBR2-AN-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER     original value
@@ -20,6 +20,8 @@ class  QUDLIN(CUTEst_problem):
 # IE N                   1200           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QUDLIN'
@@ -100,13 +102,13 @@ class  QUDLIN(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'en2PR')
-                ielftype = arrset( ielftype,ie,iet_['en2PR'])
+                ielftype = arrset(ielftype,ie,iet_['en2PR'])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,10.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(10.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,10.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(10.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -131,8 +133,10 @@ class  QUDLIN(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "QBR2-AN-V-V"
+        self.pbclass = "C-QBR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

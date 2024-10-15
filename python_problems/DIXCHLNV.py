@@ -18,7 +18,7 @@ class  DIXCHLNV(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Feb 1991.
 # 
-#    classification = "SOR2-AN-V-V"
+#    classification = "C-SOR2-AN-V-V"
 # 
 #    Number of variables
 #    (variable, but must be even and at least equal to 4)
@@ -29,6 +29,8 @@ class  DIXCHLNV(CUTEst_problem):
 # IE N                   100            $-PARAMETER     original value
 # IE N                   1000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXCHLNV'
@@ -163,9 +165,9 @@ class  DIXCHLNV(CUTEst_problem):
             ename = 'XSQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.0e-8,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.0e-8),None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N-3'])+1):
@@ -174,22 +176,22 @@ class  DIXCHLNV(CUTEst_problem):
             ename = 'PR'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eS2PR')
-            ielftype = arrset(ielftype, ie, iet_["eS2PR"])
+            ielftype = arrset(ielftype,ie,iet_["eS2PR"])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.0e-8,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.0e-8),None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+3']))
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.0e-8,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.0e-8),None,None)
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N'])+1):
             ename = 'LOGX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eLOGV')
-            ielftype = arrset(ielftype, ie, iet_["eLOGV"])
+            ielftype = arrset(ielftype,ie,iet_["eLOGV"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.0e-8,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.0e-8),None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -251,8 +253,12 @@ class  DIXCHLNV(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

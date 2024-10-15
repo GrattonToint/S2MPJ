@@ -1,4 +1,4 @@
-function NCB20(action,args...)
+function NCB20(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -14,7 +14,7 @@ function NCB20(action,args...)
 # 
 #    SIF input: Ph. Toint, October 1992.
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
@@ -24,6 +24,8 @@ function NCB20(action,args...)
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NCB20"
 
@@ -31,7 +33,7 @@ function NCB20(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -153,7 +155,7 @@ function NCB20(action,args...)
             ename = "E"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eBP")
-            arrset(ielftype, ie, iet_["eBP"])
+            arrset(ielftype,ie,iet_["eBP"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -239,7 +241,7 @@ function NCB20(action,args...)
             ename = "S"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eQR")
-            arrset(ielftype, ie, iet_["eQR"])
+            arrset(ielftype,ie,iet_["eQR"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
@@ -249,7 +251,7 @@ function NCB20(action,args...)
             ename = "L"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3P")
-            arrset(ielftype, ie, iet_["en3P"])
+            arrset(ielftype,ie,iet_["en3P"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -294,8 +296,11 @@ function NCB20(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OUR2-AN-V-0"
+        pb.pbclass = "C-OUR2-AN-V-0"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -882,7 +887,9 @@ function NCB20(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -894,7 +901,7 @@ function NCB20(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

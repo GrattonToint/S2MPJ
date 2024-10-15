@@ -15,10 +15,12 @@ class  LSQFIT(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1991.
 # 
-#    classification = "SLR2-AN-2-1"
+#    classification = "C-SLR2-AN-2-1"
 # 
 #    Data points
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LSQFIT'
@@ -159,8 +161,11 @@ class  LSQFIT(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "SLR2-AN-2-1"
+        self.pbclass = "C-SLR2-AN-2-1"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

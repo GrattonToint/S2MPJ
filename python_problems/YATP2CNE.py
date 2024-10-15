@@ -21,7 +21,7 @@ class  YATP2CNE(CUTEst_problem):
 #    SIF input: Ph. Toint, June 2003.
 #               corrected Nick Gould, March 2019
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #    The dimension of the matrix
 # 
@@ -33,6 +33,8 @@ class  YATP2CNE(CUTEst_problem):
 # IE N                   200            $-PARAMETER n = 40400
 # IE N                   350            $-PARAMETER n = 123200
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP2CNE'
@@ -147,7 +149,7 @@ class  YATP2CNE(CUTEst_problem):
                 ename = 'DC'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eATP2')
-                ielftype = arrset(ielftype, ie, iet_["eATP2"])
+                ielftype = arrset(ielftype,ie,iet_["eATP2"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -163,7 +165,7 @@ class  YATP2CNE(CUTEst_problem):
                 ename = 'SX'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSINX')
-                ielftype = arrset(ielftype, ie, iet_["eSINX"])
+                ielftype = arrset(ielftype,ie,iet_["eSINX"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -206,8 +208,12 @@ class  YATP2CNE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

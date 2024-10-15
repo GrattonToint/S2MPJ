@@ -15,11 +15,13 @@ class  HS117(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 1991.
 # 
-#    classification = "OQR2-AN-15-5"
+#    classification = "C-OQR2-AN-15-5"
 # 
 #    Number of constraints
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS117'
@@ -216,17 +218,17 @@ class  HS117(CUTEst_problem):
             ename = '2D'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCUBE')
-            ielftype = arrset(ielftype, ie, iet_["eCUBE"])
+            ielftype = arrset(ielftype,ie,iet_["eCUBE"])
             vname = 'X'+str(int(v_['M+J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.001)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.001))
             posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = '3D'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset(ielftype, ie, iet_["eSQUARE"])
+            ielftype = arrset(ielftype,ie,iet_["eSQUARE"])
             vname = 'X'+str(int(v_['M+J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.001)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.001))
             posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for K in range(int(v_['1']),int(v_['N'])+1):
@@ -234,13 +236,13 @@ class  HS117(CUTEst_problem):
                 ename = 'C'+str(K)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePROD')
-                ielftype = arrset(ielftype, ie, iet_["ePROD"])
+                ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 vname = 'X'+str(int(v_['M+K']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.001)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.001))
                 posev = np.where(elftv[ielftype[ie]]=='XI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['M+J']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.001)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.001))
                 posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -285,8 +287,12 @@ class  HS117(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AN-15-5"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AN-15-5"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

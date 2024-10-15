@@ -15,7 +15,7 @@ class  SINROSNB(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Ph. Toint, October, 1993.
 # 
-#    classification = "OQR2-AN-V-V"
+#    classification = "C-OQR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -26,6 +26,8 @@ class  SINROSNB(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # IE N                   1000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SINROSNB'
@@ -129,9 +131,9 @@ class  SINROSNB(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eETYPE')
-                ielftype = arrset( ielftype,ie,iet_['eETYPE'])
+                ielftype = arrset(ielftype,ie,iet_['eETYPE'])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -175,8 +177,12 @@ class  SINROSNB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -23,7 +23,7 @@ class  YATP1LS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 2003.
 # 
-#    classification = "SUR2-AN-V-V"
+#    classification = "C-SUR2-AN-V-V"
 # 
 #    The dimension of the matrix
 # 
@@ -34,6 +34,8 @@ class  YATP1LS(CUTEst_problem):
 # IE N                   200            $-PARAMETER n = 40400
 # IE N                   350            $-PARAMETER n = 123200
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP1LS'
@@ -129,7 +131,7 @@ class  YATP1LS(CUTEst_problem):
                 ename = 'CB'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eCB')
-                ielftype = arrset(ielftype, ie, iet_["eCB"])
+                ielftype = arrset(ielftype,ie,iet_["eCB"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -137,7 +139,7 @@ class  YATP1LS(CUTEst_problem):
                 ename = 'LS'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset(ielftype, ie, iet_["eSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -145,7 +147,7 @@ class  YATP1LS(CUTEst_problem):
                 ename = 'DC'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eLXC')
-                ielftype = arrset(ielftype, ie, iet_["eLXC"])
+                ielftype = arrset(ielftype,ie,iet_["eLXC"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -161,7 +163,7 @@ class  YATP1LS(CUTEst_problem):
                 ename = 'DS'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eLS')
-                ielftype = arrset(ielftype, ie, iet_["eLS"])
+                ielftype = arrset(ielftype,ie,iet_["eLS"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -177,7 +179,7 @@ class  YATP1LS(CUTEst_problem):
                 ename = 'SX'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eRAT')
-                ielftype = arrset(ielftype, ie, iet_["eRAT"])
+                ielftype = arrset(ielftype,ie,iet_["eRAT"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -222,7 +224,9 @@ class  YATP1LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-V"
+        self.pbclass = "C-SUR2-AN-V-V"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

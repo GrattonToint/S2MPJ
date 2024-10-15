@@ -21,11 +21,13 @@ class  OSBORNEA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SUR2-MN-5-0"
+#    classification = "C-SUR2-MN-5-0"
 # 
 #    Number of groups
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OSBORNEA'
@@ -140,7 +142,7 @@ class  OSBORNEA(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePEXP')
-            ielftype = arrset(ielftype, ie, iet_["ePEXP"])
+            ielftype = arrset(ielftype,ie,iet_["ePEXP"])
             vname = 'X2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -154,7 +156,7 @@ class  OSBORNEA(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePEXP')
-            ielftype = arrset(ielftype, ie, iet_["ePEXP"])
+            ielftype = arrset(ielftype,ie,iet_["ePEXP"])
             vname = 'X3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -196,7 +198,9 @@ class  OSBORNEA(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-5-0"
+        self.pbclass = "C-SUR2-MN-5-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

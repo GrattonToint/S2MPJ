@@ -23,7 +23,7 @@ class  WATSONNE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 # 
-#    classification = "NOR2-AN-V-31"
+#    classification = "C-NOR2-AN-V-31"
 # 
 #    The number of variables can be varied, but should be smaller than
 #    31
@@ -33,6 +33,8 @@ class  WATSONNE(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WATSONNE'
@@ -162,7 +164,7 @@ class  WATSONNE(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eMWSQ')
-            ielftype = arrset(ielftype, ie, iet_["eMWSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eMWSQ"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -246,7 +248,7 @@ class  WATSONNE(CUTEst_problem):
         ename = 'E'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eMSQ')
-        ielftype = arrset(ielftype, ie, iet_["eMSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eMSQ"])
         ename = 'E'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X1'
@@ -289,9 +291,13 @@ class  WATSONNE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-31"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-31"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

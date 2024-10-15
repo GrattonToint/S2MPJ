@@ -35,7 +35,7 @@ class  RDW2D52B(CUTEst_problem):
 #    SIF input: Nick Gould, May 2009
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "QLR2-AN-V-V"
+#    classification = "C-QLR2-AN-V-V"
 # 
 #    Number of nodes in each direction (a power of 2)
 # 
@@ -49,6 +49,8 @@ class  RDW2D52B(CUTEst_problem):
 # IE N                   128           $-PARAMETER
 # IE N                   256           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RDW2D52B'
@@ -306,7 +308,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eM')
-                ielftype = arrset(ielftype, ie, iet_["eM"])
+                ielftype = arrset(ielftype,ie,iet_["eM"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -341,7 +343,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'F'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eM0')
-                ielftype = arrset(ielftype, ie, iet_["eM0"])
+                ielftype = arrset(ielftype,ie,iet_["eM0"])
                 vname = 'F'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
@@ -365,7 +367,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'A'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA')
-                ielftype = arrset(ielftype, ie, iet_["eA"])
+                ielftype = arrset(ielftype,ie,iet_["eA"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -385,7 +387,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'B'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eB')
-                ielftype = arrset(ielftype, ie, iet_["eB"])
+                ielftype = arrset(ielftype,ie,iet_["eB"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -405,7 +407,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'C'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eC')
-                ielftype = arrset(ielftype, ie, iet_["eC"])
+                ielftype = arrset(ielftype,ie,iet_["eC"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -425,7 +427,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'D'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eD')
-                ielftype = arrset(ielftype, ie, iet_["eD"])
+                ielftype = arrset(ielftype,ie,iet_["eD"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -449,7 +451,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'P'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eP')
-                ielftype = arrset(ielftype, ie, iet_["eP"])
+                ielftype = arrset(ielftype,ie,iet_["eP"])
                 vname = 'F'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
@@ -469,7 +471,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'Q'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eQ')
-                ielftype = arrset(ielftype, ie, iet_["eQ"])
+                ielftype = arrset(ielftype,ie,iet_["eQ"])
                 vname = 'F'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
@@ -489,7 +491,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'R'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eR')
-                ielftype = arrset(ielftype, ie, iet_["eR"])
+                ielftype = arrset(ielftype,ie,iet_["eR"])
                 vname = 'F'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
@@ -509,7 +511,7 @@ class  RDW2D52B(CUTEst_problem):
                 ename = 'S'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eS')
-                ielftype = arrset(ielftype, ie, iet_["eS"])
+                ielftype = arrset(ielftype,ie,iet_["eS"])
                 vname = 'F'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='F1')[0]
@@ -744,9 +746,13 @@ class  RDW2D52B(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

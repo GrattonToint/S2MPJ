@@ -14,12 +14,14 @@ class  JANNSON3(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, September 2000
 # 
-#    classification = "OQR2-AN-V-3"
+#    classification = "C-OQR2-AN-V-3"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   3              $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'JANNSON3'
@@ -125,10 +127,10 @@ class  JANNSON3(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N'])+1):
@@ -136,13 +138,13 @@ class  JANNSON3(CUTEst_problem):
             ename = 'P'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['N+I']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -195,9 +197,13 @@ class  JANNSON3(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AN-V-3"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AN-V-3"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -1,4 +1,4 @@
-function BRATU1D(action,args...)
+function BRATU1D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,7 +16,7 @@ function BRATU1D(action,args...)
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OXR2-MN-V-0"
+#    classification = "C-OXR2-MN-V-0"
 # 
 #    Number of variables (must be odd)
 # 
@@ -29,6 +29,8 @@ function BRATU1D(action,args...)
 # IE N                   5001           $-PARAMETER must be odd
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BRATU1D"
 
@@ -36,7 +38,7 @@ function BRATU1D(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -124,7 +126,7 @@ function BRATU1D(action,args...)
         ename = "C"*string(Int64(v_["0"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBRA")
-        arrset(ielftype, ie, iet_["eBRA"])
+        arrset(ielftype,ie,iet_["eBRA"])
         ename = "C"*string(Int64(v_["0"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["0"]))
@@ -143,7 +145,7 @@ function BRATU1D(action,args...)
             ename = "A"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
-            arrset(ielftype, ie, iet_["eSQ"])
+            arrset(ielftype,ie,iet_["eSQ"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -151,7 +153,7 @@ function BRATU1D(action,args...)
             ename = "B"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PR")
-            arrset(ielftype, ie, iet_["en2PR"])
+            arrset(ielftype,ie,iet_["en2PR"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -163,7 +165,7 @@ function BRATU1D(action,args...)
             ename = "C"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eBRA")
-            arrset(ielftype, ie, iet_["eBRA"])
+            arrset(ielftype,ie,iet_["eBRA"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -207,8 +209,11 @@ function BRATU1D(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OXR2-MN-V-0"
+        pb.pbclass = "C-OXR2-MN-V-0"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -304,7 +309,9 @@ function BRATU1D(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -316,7 +323,7 @@ function BRATU1D(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

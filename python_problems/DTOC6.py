@@ -26,7 +26,7 @@ class  DTOC6(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "OOR2-AN-V-V"
+#    classification = "C-OOR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the value of the parameter N.
 # 
@@ -48,6 +48,8 @@ class  DTOC6(CUTEst_problem):
 # IE N                   1001           $-PARAMETER n = 2001, m =1000
 # IE N                   5001           $-PARAMETER n =10001, m =5000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DTOC6'
@@ -142,7 +144,7 @@ class  DTOC6(CUTEst_problem):
             ename = 'E'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset(ielftype, ie, iet_["eEXP"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP"])
             vname = 'X'+str(T)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -198,8 +200,12 @@ class  DTOC6(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -18,7 +18,7 @@ class  MODBEALENE(CUTEst_problem):
 #    SIF input: Ph. Toint, Mar 2003.
 #               Nick Gould (nonlinear equation version), Jan 2019
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #    The number of variables is  2 * N/2
 # 
@@ -30,6 +30,8 @@ class  MODBEALENE(CUTEst_problem):
 # IE N/2                 1000           $-PARAMETER
 # IE N/2                 10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MODBEALENE'
@@ -151,13 +153,13 @@ class  MODBEALENE(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePRODB')
-                ielftype = arrset( ielftype,ie,iet_['ePRODB'])
+                ielftype = arrset(ielftype,ie,iet_['ePRODB'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['J+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='POW')[0]
@@ -166,13 +168,13 @@ class  MODBEALENE(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePRODB')
-                ielftype = arrset( ielftype,ie,iet_['ePRODB'])
+                ielftype = arrset(ielftype,ie,iet_['ePRODB'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['J+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='POW')[0]
@@ -181,13 +183,13 @@ class  MODBEALENE(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePRODB')
-                ielftype = arrset( ielftype,ie,iet_['ePRODB'])
+                ielftype = arrset(ielftype,ie,iet_['ePRODB'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['J+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='POW')[0]
@@ -231,8 +233,12 @@ class  MODBEALENE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

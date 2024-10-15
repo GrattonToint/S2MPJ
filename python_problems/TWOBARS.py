@@ -25,9 +25,11 @@ class  TWOBARS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, November 1994
 # 
-#    classification = "OOR2-MN-2-2"
+#    classification = "C-OOR2-MN-2-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TWOBARS'
@@ -111,37 +113,37 @@ class  TWOBARS(CUTEst_problem):
         ename = 'OBEL'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eOE')
-        ielftype = arrset(ielftype, ie, iet_["eOE"])
+        ielftype = arrset(ielftype,ie,iet_["eOE"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='YY')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'COEL1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCE1')
-        ielftype = arrset(ielftype, ie, iet_["eCE1"])
+        ielftype = arrset(ielftype,ie,iet_["eCE1"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='YY')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'COEL2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCE2')
-        ielftype = arrset(ielftype, ie, iet_["eCE2"])
+        ielftype = arrset(ielftype,ie,iet_["eCE2"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='YY')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -177,8 +179,12 @@ class  TWOBARS(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-2-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-2-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

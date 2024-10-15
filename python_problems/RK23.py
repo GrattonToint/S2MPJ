@@ -18,11 +18,13 @@ class  RK23(CUTEst_problem):
 # 
 #    SIF input: S. Leyffer, January 1997.
 # 
-#    classification = "LOR2-RN-17-11"
+#    classification = "C-LOR2-RN-17-11"
 # 
 # 
 #    ... COMPUTED PARAMETERS
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RK23'
@@ -285,7 +287,7 @@ class  RK23(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -297,7 +299,7 @@ class  RK23(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -309,7 +311,7 @@ class  RK23(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'BB2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -321,7 +323,7 @@ class  RK23(CUTEst_problem):
         ename = 'E4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'BB3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -333,7 +335,7 @@ class  RK23(CUTEst_problem):
         ename = 'E5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePRODS')
-        ielftype = arrset(ielftype, ie, iet_["ePRODS"])
+        ielftype = arrset(ielftype,ie,iet_["ePRODS"])
         vname = 'BB2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='W1')[0]
@@ -345,7 +347,7 @@ class  RK23(CUTEst_problem):
         ename = 'E6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePRODS')
-        ielftype = arrset(ielftype, ie, iet_["ePRODS"])
+        ielftype = arrset(ielftype,ie,iet_["ePRODS"])
         vname = 'BB3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='W1')[0]
@@ -357,7 +359,7 @@ class  RK23(CUTEst_problem):
         ename = 'E7'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eTPROD')
-        ielftype = arrset(ielftype, ie, iet_["eTPROD"])
+        ielftype = arrset(ielftype,ie,iet_["eTPROD"])
         vname = 'BB3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
@@ -373,7 +375,7 @@ class  RK23(CUTEst_problem):
         ename = 'E8'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePRODQ')
-        ielftype = arrset(ielftype, ie, iet_["ePRODQ"])
+        ielftype = arrset(ielftype,ie,iet_["ePRODQ"])
         vname = 'BB2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X1')[0]
@@ -385,7 +387,7 @@ class  RK23(CUTEst_problem):
         ename = 'E9'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePRODQ')
-        ielftype = arrset(ielftype, ie, iet_["ePRODQ"])
+        ielftype = arrset(ielftype,ie,iet_["ePRODQ"])
         vname = 'BB3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X1')[0]
@@ -397,7 +399,7 @@ class  RK23(CUTEst_problem):
         ename = 'E10'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eQPROD')
-        ielftype = arrset(ielftype, ie, iet_["eQPROD"])
+        ielftype = arrset(ielftype,ie,iet_["eQPROD"])
         vname = 'BB3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Z1')[0]
@@ -417,7 +419,7 @@ class  RK23(CUTEst_problem):
         ename = 'E11'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eTPRODS')
-        ielftype = arrset(ielftype, ie, iet_["eTPRODS"])
+        ielftype = arrset(ielftype,ie,iet_["eTPRODS"])
         vname = 'BB3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -496,8 +498,12 @@ class  RK23(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-RN-17-11"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-RN-17-11"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -17,9 +17,11 @@ class  DIPIGRI(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "OOR2-AN-7-4"
+#    classification = "C-OOR2-AN-7-4"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIPIGRI'
@@ -185,7 +187,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'O1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -195,7 +197,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'O2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -205,7 +207,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'O3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eP4')
-        ielftype = arrset(ielftype, ie, iet_["eP4"])
+        ielftype = arrset(ielftype,ie,iet_["eP4"])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -213,7 +215,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'O4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -223,7 +225,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'O5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eP6')
-        ielftype = arrset(ielftype, ie, iet_["eP6"])
+        ielftype = arrset(ielftype,ie,iet_["eP6"])
         vname = 'X5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -231,7 +233,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'O6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eOE')
-        ielftype = arrset(ielftype, ie, iet_["eOE"])
+        ielftype = arrset(ielftype,ie,iet_["eOE"])
         vname = 'X6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -243,7 +245,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C11'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -251,7 +253,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C12'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eP4')
-        ielftype = arrset(ielftype, ie, iet_["eP4"])
+        ielftype = arrset(ielftype,ie,iet_["eP4"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -259,7 +261,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C13'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -267,7 +269,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C21'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -275,7 +277,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C31'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -283,7 +285,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C32'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -291,7 +293,7 @@ class  DIPIGRI(CUTEst_problem):
         ename = 'C41'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCE')
-        ielftype = arrset(ielftype, ie, iet_["eCE"])
+        ielftype = arrset(ielftype,ie,iet_["eCE"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -376,8 +378,12 @@ class  DIPIGRI(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-7-4"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-7-4"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

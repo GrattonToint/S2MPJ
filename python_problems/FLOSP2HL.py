@@ -30,7 +30,7 @@ class  FLOSP2HL(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 1993.
 # 
-#    classification = "NQR2-MY-V-V"
+#    classification = "C-NQR2-MY-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE M                   1              $-PARAMETER n=27
@@ -40,6 +40,8 @@ class  FLOSP2HL(CUTEst_problem):
 # IE M                   10             $-PARAMETER n=1323
 # IE M                   15             $-PARAMETER n=2883
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FLOSP2HL'
@@ -376,7 +378,7 @@ class  FLOSP2HL(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePROD')
-                ielftype = arrset(ielftype, ie, iet_["ePROD"])
+                ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'PS'+str(I)+','+str(int(v_['J+']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -397,7 +399,7 @@ class  FLOSP2HL(CUTEst_problem):
                 ename = 'F'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePROD')
-                ielftype = arrset(ielftype, ie, iet_["ePROD"])
+                ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 vname = 'PS'+str(int(v_['I+']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='PSIP')[0]
@@ -444,9 +446,13 @@ class  FLOSP2HL(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NQR2-MY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NQR2-MY-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

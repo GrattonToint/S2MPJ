@@ -406,6 +406,7 @@ HS12.py
 HS13.py
 HS14.py
 HS15.py
+HS15.py~
 HS16.py
 HS17.py
 HS18.py
@@ -867,7 +868,6 @@ PRODPL1.py
 PSPDOC.py
 PT.py
 __pycache__
-python.py
 QCNEW.py
 QC.py
 QINGB.py

@@ -23,11 +23,13 @@ class  POWELLBSLS(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Least-squares version: Nick Gould, Oct 2015.
 # 
-#    classification = "SUR2-AN-2-0"
+#    classification = "C-SUR2-AN-2-0"
 # 
 #    N is the number of free variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POWELLBSLS'
@@ -100,7 +102,7 @@ class  POWELLBSLS(CUTEst_problem):
             ename = 'AE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -112,7 +114,7 @@ class  POWELLBSLS(CUTEst_problem):
             ename = 'BE1'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXPN')
-            ielftype = arrset(ielftype, ie, iet_["eEXPN"])
+            ielftype = arrset(ielftype,ie,iet_["eEXPN"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -120,7 +122,7 @@ class  POWELLBSLS(CUTEst_problem):
             ename = 'BE2'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXPN')
-            ielftype = arrset(ielftype, ie, iet_["eEXPN"])
+            ielftype = arrset(ielftype,ie,iet_["eEXPN"])
             vname = 'X'+str(int(v_['I+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -152,7 +154,9 @@ class  POWELLBSLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-2-0"
+        self.pbclass = "C-SUR2-AN-2-0"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

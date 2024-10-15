@@ -15,9 +15,11 @@ class  YFIT(CUTEst_problem):
 #    SIF input: Brian E. Lindholm, Virginia Tech., Spring 1993.
 #               derivatives corrected by Nick Gould, June 2019.
 # 
-#    classification = "SBR2-MN-3-0"
+#    classification = "C-SBR2-MN-3-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YFIT'
@@ -114,7 +116,7 @@ class  YFIT(CUTEst_problem):
             ename = 'est'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'etanab')
-            ielftype = arrset(ielftype, ie, iet_["etanab"])
+            ielftype = arrset(ielftype,ie,iet_["etanab"])
             vname = 'alpha'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='a1')[0]
@@ -152,7 +154,9 @@ class  YFIT(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-3-0"
+        self.pbclass = "C-SBR2-MN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

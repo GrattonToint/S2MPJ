@@ -15,11 +15,13 @@ class  MRIBASIS(CUTEst_problem):
 #    SIF input: Arie Quist, TU Delft (NL), 1994.
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "LOR2-MY-36-55"
+#    classification = "C-LOR2-MY-36-55"
 # 
 #    useful constants
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MRIBASIS'
@@ -329,7 +331,7 @@ class  MRIBASIS(CUTEst_problem):
                     ename = 'e1'+str(i)+','+str(j)+','+str(k)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'euv1')
-                    ielftype = arrset(ielftype, ie, iet_["euv1"])
+                    ielftype = arrset(ielftype,ie,iet_["euv1"])
                     vname = 'X'+str(j)+','+str(int(v_['2k']))
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='v1')[0]
@@ -349,7 +351,7 @@ class  MRIBASIS(CUTEst_problem):
                     ename = 'e3'+str(i)+','+str(j)+','+str(k)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'euvw1')
-                    ielftype = arrset(ielftype, ie, iet_["euvw1"])
+                    ielftype = arrset(ielftype,ie,iet_["euvw1"])
                     vname = 'L'+str(i)+','+str(j)+','+str(k)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='v1')[0]
@@ -367,7 +369,7 @@ class  MRIBASIS(CUTEst_problem):
                     ename = 'e5'+str(i)+','+str(j)+','+str(k)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'euvw1')
-                    ielftype = arrset(ielftype, ie, iet_["euvw1"])
+                    ielftype = arrset(ielftype,ie,iet_["euvw1"])
                     vname = 'L'+str(i)+','+str(j)+','+str(int(v_['k+']))
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='v1')[0]
@@ -389,7 +391,7 @@ class  MRIBASIS(CUTEst_problem):
                     ename = 'e2'+str(i)+','+str(j)+','+str(k)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'euv2')
-                    ielftype = arrset(ielftype, ie, iet_["euv2"])
+                    ielftype = arrset(ielftype,ie,iet_["euv2"])
                     vname = 'X'+str(j)+','+str(int(v_['2k+']))
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='v1')[0]
@@ -405,7 +407,7 @@ class  MRIBASIS(CUTEst_problem):
                     ename = 'e4'+str(i)+','+str(j)+','+str(k)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'euvw1')
-                    ielftype = arrset(ielftype, ie, iet_["euvw1"])
+                    ielftype = arrset(ielftype,ie,iet_["euvw1"])
                     vname = 'L'+str(i)+','+str(j)+','+str(int(v_['k+']))
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='v1')[0]
@@ -424,7 +426,7 @@ class  MRIBASIS(CUTEst_problem):
             ename = 'factr'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'emo')
-            ielftype = arrset(ielftype, ie, iet_["emo"])
+            ielftype = arrset(ielftype,ie,iet_["emo"])
             vname = 'X'+str(int(v_['2']))+','+str(int(v_['xm']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='s1')[0]
@@ -560,8 +562,12 @@ class  MRIBASIS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-MY-36-55"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-MY-36-55"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

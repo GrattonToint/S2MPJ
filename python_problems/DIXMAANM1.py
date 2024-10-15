@@ -28,7 +28,7 @@ class  DIXMAANM1(CUTEst_problem):
 #               this version Nick Gould, June, 2013
 #               update Nick Gould, August 2022, to remove beta=0 terms.
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    M is equal to the third of the number of variables
 # 
@@ -39,6 +39,8 @@ class  DIXMAANM1(CUTEst_problem):
 # IE M                   500            $-PARAMETER n = 1500
 # IE M                   1000           $-PARAMETER n = 3000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXMAANM1'
@@ -123,9 +125,9 @@ class  DIXMAANM1(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['2M'])+1):
@@ -133,13 +135,13 @@ class  DIXMAANM1(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQC')
-            ielftype = arrset(ielftype, ie, iet_["eSQC"])
+            ielftype = arrset(ielftype,ie,iet_["eSQC"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+M']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['M'])+1):
@@ -147,13 +149,13 @@ class  DIXMAANM1(CUTEst_problem):
             ename = 'D'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+2M']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -203,7 +205,9 @@ class  DIXMAANM1(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-V-0"
+        self.pbclass = "C-OUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

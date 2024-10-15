@@ -15,9 +15,11 @@ class  ALLINITC(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 1990.
 # 
-#    classification = "OOR2-AY-4-1"
+#    classification = "C-OOR2-AY-4-1"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ALLINITC'
@@ -138,7 +140,7 @@ class  ALLINITC(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         self.x0 = np.zeros((self.n,1))
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -148,7 +150,7 @@ class  ALLINITC(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -156,7 +158,7 @@ class  ALLINITC(CUTEst_problem):
         ename = 'FT4E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR2')
-        ielftype = arrset(ielftype, ie, iet_["eSQR2"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR2"])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -168,7 +170,7 @@ class  ALLINITC(CUTEst_problem):
         ename = 'FT56E1'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSINSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSINSQR"])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -176,7 +178,7 @@ class  ALLINITC(CUTEst_problem):
         ename = 'FT5E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePRODSQR')
-        ielftype = arrset(ielftype, ie, iet_["ePRODSQR"])
+        ielftype = arrset(ielftype,ie,iet_["ePRODSQR"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -189,7 +191,7 @@ class  ALLINITC(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -198,7 +200,7 @@ class  ALLINITC(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -206,7 +208,7 @@ class  ALLINITC(CUTEst_problem):
         ename = 'FNT4E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR2')
-        ielftype = arrset(ielftype, ie, iet_["eSQR2"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR2"])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -218,7 +220,7 @@ class  ALLINITC(CUTEst_problem):
         ename = 'FNT56E1'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSINSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSINSQR"])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -226,7 +228,7 @@ class  ALLINITC(CUTEst_problem):
         ename = 'FNT5E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePRODSQR')
-        ielftype = arrset(ielftype, ie, iet_["ePRODSQR"])
+        ielftype = arrset(ielftype,ie,iet_["ePRODSQR"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -329,9 +331,13 @@ class  ALLINITC(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-4-1"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-4-1"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

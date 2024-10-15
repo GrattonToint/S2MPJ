@@ -18,7 +18,7 @@ class  LUKVLI12(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 2001
 # 
-#    classification = "OQR2-AY-V-V"
+#    classification = "C-OQR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -27,6 +27,8 @@ class  LUKVLI12(CUTEst_problem):
 # IE N                   997            $-PARAMETER
 # IE N                   9997           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLI12'
@@ -175,7 +177,7 @@ class  LUKVLI12(CUTEst_problem):
             ename = 'EA'+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(int(v_['K+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -183,7 +185,7 @@ class  LUKVLI12(CUTEst_problem):
             ename = 'EB'+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(int(v_['K+2']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -191,7 +193,7 @@ class  LUKVLI12(CUTEst_problem):
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['K+2']))
@@ -201,7 +203,7 @@ class  LUKVLI12(CUTEst_problem):
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(K)
@@ -270,8 +272,12 @@ class  LUKVLI12(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

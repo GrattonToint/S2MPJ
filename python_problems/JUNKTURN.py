@@ -25,7 +25,7 @@ class  JUNKTURN(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, February 1994.
 # 
-#    classification = "QQR2-MN-V-V"
+#    classification = "C-QQR2-MN-V-V"
 # 
 #    Number of discretized points in [0,100] - 1.
 #    The number of variables is    10 * ( N + 1 )
@@ -38,6 +38,8 @@ class  JUNKTURN(CUTEst_problem):
 # IE N                   500            $-PARAMETER n =    5010, m =   3500
 # IE N                   1000           $-PARAMETER n =   10010, m =   7000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'JUNKTURN'
@@ -197,206 +199,206 @@ class  JUNKTURN(CUTEst_problem):
             ename = 'U1S'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'U2S'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'U3S'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for T in range(int(v_['1']),int(v_['N'])+1):
             ename = 'P15'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P16'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P17'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['1']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P25'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P26'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P27'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['2']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P35'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P36'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P37'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['3']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P45'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['4']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P46'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['4']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P47'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['4']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P56'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P57'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['5']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P67'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(int(v_['6']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['7']))+','+str(T)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -515,8 +517,12 @@ class  JUNKTURN(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

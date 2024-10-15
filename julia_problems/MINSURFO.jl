@@ -1,4 +1,4 @@
-function MINSURFO(action,args...)
+function MINSURFO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,11 +16,13 @@ function MINSURFO(action,args...)
 # 
 #    SIF input: Nick Gould, December 2000
 # 
-#    classification = "OBR2-AN-V-V"
+#    classification = "C-OBR2-AN-V-V"
 # 
 #  grid points in x direction (fixed at 50 in COPS)
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MINSURFO"
@@ -29,7 +31,7 @@ function MINSURFO(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -161,7 +163,7 @@ function MINSURFO(action,args...)
                 ename = "I"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
-                arrset(ielftype, ie, iet_["eISQ"])
+                arrset(ielftype,ie,iet_["eISQ"])
                 vname = "V"*string(Int64(v_["I+1"]))*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -173,7 +175,7 @@ function MINSURFO(action,args...)
                 ename = "J"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
-                arrset(ielftype, ie, iet_["eISQ"])
+                arrset(ielftype,ie,iet_["eISQ"])
                 vname = "V"*string(I)*","*string(Int64(v_["J+1"]))
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -189,7 +191,7 @@ function MINSURFO(action,args...)
             ename = "J"*string(Int64(v_["NX+1"]))*","*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eISQ")
-            arrset(ielftype, ie, iet_["eISQ"])
+            arrset(ielftype,ie,iet_["eISQ"])
             ename = "J"*string(Int64(v_["NX+1"]))*","*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "V"*string(Int64(v_["NX+1"]))*","*string(Int64(v_["J1"]))
@@ -208,7 +210,7 @@ function MINSURFO(action,args...)
             ename = "I"*string(I)*","*string(Int64(v_["NY+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eISQ")
-            arrset(ielftype, ie, iet_["eISQ"])
+            arrset(ielftype,ie,iet_["eISQ"])
             ename = "I"*string(I)*","*string(Int64(v_["NY+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "V"*string(Int64(v_["I1"]))*","*string(Int64(v_["NY+1"]))
@@ -266,8 +268,11 @@ function MINSURFO(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OBR2-AN-V-V"
+        pb.pbclass = "C-OBR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -333,7 +338,9 @@ function MINSURFO(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -345,7 +352,7 @@ function MINSURFO(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

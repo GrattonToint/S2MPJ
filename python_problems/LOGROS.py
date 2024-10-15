@@ -14,9 +14,11 @@ class  LOGROS(CUTEst_problem):
 # 
 #    SDIF input: Ph. Toint, June 1993.
 # 
-#    classification = "OBR2-AN-2-0"
+#    classification = "C-OBR2-AN-2-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LOGROS'
@@ -70,7 +72,7 @@ class  LOGROS(CUTEst_problem):
         ename = 'F'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eROS')
-        ielftype = arrset(ielftype, ie, iet_["eROS"])
+        ielftype = arrset(ielftype,ie,iet_["eROS"])
         vname = 'X'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -101,7 +103,9 @@ class  LOGROS(CUTEst_problem):
         self.xupper = np.full((self.n,1),+float('Inf'))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-2-0"
+        self.pbclass = "C-OBR2-AN-2-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

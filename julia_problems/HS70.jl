@@ -1,4 +1,4 @@
-function HS70(action,args...)
+function HS70(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,11 +16,13 @@ function HS70(action,args...)
 # 
 #    SIF input: Nick Gould, August 1991, modified May 2024
 # 
-#    classification = "SQR2-MN-4-1"
+#    classification = "C-SQR2-MN-4-1"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS70"
@@ -29,7 +31,7 @@ function HS70(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -167,23 +169,26 @@ function HS70(action,args...)
             ename = "Y"*string(I)*","*string(Int64(v_["1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eY1")
-            arrset(ielftype, ie, iet_["eY1"])
+            arrset(ielftype,ie,iet_["eY1"])
             ename = "Y"*string(I)*","*string(Int64(v_["1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Y"*string(I)*","*string(Int64(v_["1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Y"*string(I)*","*string(Int64(v_["1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X4"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
             posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Y"*string(I)*","*string(Int64(v_["1"]))
@@ -193,23 +198,26 @@ function HS70(action,args...)
             ename = "Y"*string(I)*","*string(Int64(v_["2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eY2")
-            arrset(ielftype, ie, iet_["eY2"])
+            arrset(ielftype,ie,iet_["eY2"])
             ename = "Y"*string(I)*","*string(Int64(v_["2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Y"*string(I)*","*string(Int64(v_["2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Y"*string(I)*","*string(Int64(v_["2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X4"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
             posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Y"*string(I)*","*string(Int64(v_["2"]))
@@ -220,13 +228,15 @@ function HS70(action,args...)
         ename = "C1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
-        arrset(ielftype, ie, iet_["ePROD"])
+        arrset(ielftype,ie,iet_["ePROD"])
         vname = "X3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
         posev = findfirst(x->x=="X3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,0.00001,100.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(0.00001),Float64(100.0),nothing))
         posev = findfirst(x->x=="X4",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -267,8 +277,13 @@ function HS70(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "SQR2-MN-4-1"
+        pb.pbclass = "C-SQR2-MN-4-1"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -492,7 +507,9 @@ function HS70(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -504,7 +521,7 @@ function HS70(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

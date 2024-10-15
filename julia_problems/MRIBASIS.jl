@@ -1,4 +1,4 @@
-function MRIBASIS(action,args...)
+function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -14,11 +14,13 @@ function MRIBASIS(action,args...)
 #    SIF input: Arie Quist, TU Delft (NL), 1994.
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "LOR2-MY-36-55"
+#    classification = "C-LOR2-MY-36-55"
 # 
 #    useful constants
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MRIBASIS"
@@ -27,7 +29,7 @@ function MRIBASIS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -344,7 +346,7 @@ function MRIBASIS(action,args...)
                     ename = "e1"*string(i)*","*string(j)*","*string(k)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"euv1")
-                    arrset(ielftype, ie, iet_["euv1"])
+                    arrset(ielftype,ie,iet_["euv1"])
                     vname = "X"*string(j)*","*string(Int64(v_["2k"]))
                     iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="v1",elftv[ielftype[ie]])
@@ -364,7 +366,7 @@ function MRIBASIS(action,args...)
                     ename = "e3"*string(i)*","*string(j)*","*string(k)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"euvw1")
-                    arrset(ielftype, ie, iet_["euvw1"])
+                    arrset(ielftype,ie,iet_["euvw1"])
                     vname = "L"*string(i)*","*string(j)*","*string(k)
                     iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="v1",elftv[ielftype[ie]])
@@ -382,7 +384,7 @@ function MRIBASIS(action,args...)
                     ename = "e5"*string(i)*","*string(j)*","*string(k)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"euvw1")
-                    arrset(ielftype, ie, iet_["euvw1"])
+                    arrset(ielftype,ie,iet_["euvw1"])
                     vname = "L"*string(i)*","*string(j)*","*string(Int64(v_["k+"]))
                     iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="v1",elftv[ielftype[ie]])
@@ -405,7 +407,7 @@ function MRIBASIS(action,args...)
                     ename = "e2"*string(i)*","*string(j)*","*string(k)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"euv2")
-                    arrset(ielftype, ie, iet_["euv2"])
+                    arrset(ielftype,ie,iet_["euv2"])
                     vname = "X"*string(j)*","*string(Int64(v_["2k+"]))
                     iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="v1",elftv[ielftype[ie]])
@@ -421,7 +423,7 @@ function MRIBASIS(action,args...)
                     ename = "e4"*string(i)*","*string(j)*","*string(k)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"euvw1")
-                    arrset(ielftype, ie, iet_["euvw1"])
+                    arrset(ielftype,ie,iet_["euvw1"])
                     vname = "L"*string(i)*","*string(j)*","*string(Int64(v_["k+"]))
                     iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="v1",elftv[ielftype[ie]])
@@ -443,7 +445,7 @@ function MRIBASIS(action,args...)
             ename = "factr"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"emo")
-            arrset(ielftype, ie, iet_["emo"])
+            arrset(ielftype,ie,iet_["emo"])
             vname = "X"*string(Int64(v_["2"]))*","*string(Int64(v_["xm"]))
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="s1",elftv[ielftype[ie]])
@@ -576,8 +578,13 @@ function MRIBASIS(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LOR2-MY-36-55"
+        pb.pbclass = "C-LOR2-MY-36-55"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -722,7 +729,9 @@ function MRIBASIS(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -734,7 +743,7 @@ function MRIBASIS(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

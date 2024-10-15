@@ -27,7 +27,7 @@ class  DTOC2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "OOR2-AN-V-V"
+#    classification = "C-OOR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the value of the parameter N.
 # 
@@ -53,6 +53,8 @@ class  DTOC2(CUTEst_problem):
 # 
 # IE N                   1000           $-PARAMETER # periods  }
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DTOC2'
@@ -192,7 +194,7 @@ class  DTOC2(CUTEst_problem):
             ename = 'EO'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eOEL')
-            ielftype = arrset(ielftype, ie, iet_["eOEL"])
+            ielftype = arrset(ielftype,ie,iet_["eOEL"])
             vname = 'Y'+str(T)+','+str(int(v_['1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='YY1')[0]
@@ -221,7 +223,7 @@ class  DTOC2(CUTEst_problem):
                 ename = 'SY'+str(T)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSINE')
-                ielftype = arrset(ielftype, ie, iet_["eSINE"])
+                ielftype = arrset(ielftype,ie,iet_["eSINE"])
                 vname = 'Y'+str(T)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='ZZ')[0]
@@ -230,7 +232,7 @@ class  DTOC2(CUTEst_problem):
                 ename = 'SX'+str(T)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSINE')
-                ielftype = arrset(ielftype, ie, iet_["eSINE"])
+                ielftype = arrset(ielftype,ie,iet_["eSINE"])
                 vname = 'X'+str(T)+','+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='ZZ')[0]
@@ -239,7 +241,7 @@ class  DTOC2(CUTEst_problem):
             ename = 'YNSQ'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'Y'+str(int(v_['N']))+','+str(J)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='YY')[0]
@@ -298,8 +300,12 @@ class  DTOC2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

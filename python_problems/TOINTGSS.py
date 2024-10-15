@@ -20,7 +20,7 @@ class  TOINTGSS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989, corrected Nick Gould, July 1993.
 # 
-#    classification = "OUR2-AY-V-0"
+#    classification = "C-OUR2-AY-V-0"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER     original value
@@ -30,6 +30,8 @@ class  TOINTGSS(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TOINTGSS'
@@ -101,17 +103,17 @@ class  TOINTGSS(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eTG')
-            ielftype = arrset(ielftype, ie, iet_["eTG"])
+            ielftype = arrset(ielftype,ie,iet_["eTG"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,3.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(3.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,3.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(3.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,3.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(3.0))
             posev = np.where(elftv[ielftype[ie]]=='V3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='AP')[0]
@@ -135,7 +137,9 @@ class  TOINTGSS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AY-V-0"
+        self.pbclass = "C-OUR2-AY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

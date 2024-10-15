@@ -1,4 +1,4 @@
-function HADAMALS(action,args...)
+function HADAMALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -15,7 +15,7 @@ function HADAMALS(action,args...)
 # 
 #    SIF input: Nick Gould, Nov 1993.
 # 
-#    classification = "OBR2-RN-V-V"
+#    classification = "C-OBR2-RN-V-V"
 # 
 #    The dimension of the matrix (=> N**2 variables).
 # 
@@ -32,6 +32,8 @@ function HADAMALS(action,args...)
 # IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HADAMALS"
 
@@ -39,7 +41,7 @@ function HADAMALS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -137,13 +139,13 @@ function HADAMALS(action,args...)
                     ename = "O"*string(I)*","*string(J)*","*string(K)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PROD")
-                    arrset(ielftype, ie, iet_["en2PROD"])
+                    arrset(ielftype,ie,iet_["en2PROD"])
                     vname = "Q"*string(K)*","*string(I)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.0),Float64(1.0),nothing)
                     posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                     vname = "Q"*string(K)*","*string(J)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.0),Float64(1.0),nothing)
                     posev = findfirst(x->x=="Q2",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -154,9 +156,9 @@ function HADAMALS(action,args...)
                 ename = "S"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQR")
-                arrset(ielftype, ie, iet_["eSQR"])
+                arrset(ielftype,ie,iet_["eSQR"])
                 vname = "Q"*string(I)*","*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.0),Float64(1.0),nothing)
                 posev = findfirst(x->x=="Q1",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -195,8 +197,11 @@ function HADAMALS(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OBR2-RN-V-V"
+        pb.pbclass = "C-OBR2-RN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -303,7 +308,9 @@ function HADAMALS(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -315,7 +322,7 @@ function HADAMALS(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

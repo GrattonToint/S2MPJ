@@ -15,11 +15,13 @@ function varargout = HATFLDBNE(action,varargin)
 %    SIF input: Ph. Toint, May 1990.
 %    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 % 
-%    classification = 'NOR2-AN-4-4'
+%    classification = 'C-NOR2-AN-4-4'
 % 
 %    Number of variables
 % 
 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Translated to Matlab by S2MPJ version 6 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -122,7 +124,7 @@ switch(action)
             pbm.elvar{ie}(posev) = iv;
         end
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
+        [pbm.grelt{1:ngrp}] = deal([]);
         nlc = [];
         for I=v_('2'):v_('N')
             ig = ig_(['G',int2str(I)]);
@@ -141,7 +143,11 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'NOR2-AN-4-4';
+        pb.pbclass = 'C-NOR2-AN-4-4';
+        pbm.objderlvl = 2;
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2];
+        pb.conderlvl  = pbm.conderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
             varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
@@ -150,6 +156,7 @@ switch(action)
             varargout{1} = pb;
             varargout{2} = pbm;
         end
+
 % **********************
 %  SET UP THE FUNCTION *
 %  AND RANGE ROUTINES  *
@@ -175,18 +182,19 @@ switch(action)
     %%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
     case {'fx','fgx','fgHx','cx','cJx','cJHx','cIx','cIJx','cIJHx','cIJxv','fHxv',...
-          'cJxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy','LHxyv','LIHxyv'}
+          'cJxv','cJtxv','cIJtxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy',...
+          'LHxyv','LIHxyv'}
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+            [varargout{1:nargout}] = deal(NaN);
         end
 
     otherwise
-        disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])
+        disp([' ERROR: action ',action,' unavailable for problem ',name,'.m'])
     end
 
 return

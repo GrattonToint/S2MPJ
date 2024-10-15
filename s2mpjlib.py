@@ -1,11 +1,15 @@
+#
+#  This version handles missing derivatives
+#
 ####################################################################################################
 #####################################################################################################
 #
 #                                S2MPJ library for Python
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
+#   Also contains the problem selection tool.
 #
-#   Programming: S. Gratton and Ph. Toint (this version 25 VI 2024)
+#   Programming: S. Gratton and Ph. Toint (this version 14 X 2024)
 #
 #####################################################################################################
 #####################################################################################################
@@ -14,10 +18,13 @@ import numpy as np
 from scipy.sparse import lil_matrix
 from scipy.sparse import csr_matrix
 from pprint import pprint
+import re
+import os
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 class structtype():
+    
     def __str__(self):
         pprint(vars(self))
         return ''
@@ -97,14 +104,6 @@ class CUTEst_problem:
         else:
             print( 'ERROR: no constraint groups in '+self.name+'!' )
         
-    def cJx( self, x ):              # input = ( x )
-        x = x.reshape(-1,1)
-        if hasattr( self, "congrps" ):
-            self.getglobs()
-            return self.evalgrsum( False, self.congrps, x, 2 )
-        else:
-            print( 'ERROR: no constraint groups in '+self.name+'!' )
-        
     def cJHx( self, x ):             # input = ( x )
         x = x.reshape(-1,1)
         if hasattr( self, "congrps" ):
@@ -119,6 +118,15 @@ class CUTEst_problem:
         if hasattr( self, "congrps" ):
             self.getglobs()
             return self.evalHJv( "Jv", self.congrps, x, v, [] )
+        else:
+            print( 'ERROR: no constraint groups in '+self.name+'!' )
+        
+    def cJtxv( self, x, v ):          # input = ( x, v )
+        x = x.reshape(-1,1)
+        v = v.reshape(-1,1)
+        if hasattr( self, "congrps" ):
+            self.getglobs()
+            return self.evalHJv( "Jtv", self.congrps, x, v, [] )
         else:
             print( 'ERROR: no constraint groups in '+self.name+'!' )
         
@@ -159,6 +167,16 @@ class CUTEst_problem:
         else:
             print( 'ERROR: empty list of constraints for '+self.name+'!' )
         
+    def cIJtxv( self, x, v, clist ):      # input = ( x, v, clist )
+        x      = x.reshape(-1,1)
+        v      = v.reshape(-1,1)
+        iclist = [ self.congrps[i] for i in clist ]
+        if hasattr( self, "congrps" ) and len( iclist ):
+            self.getglobs()
+            return self.evalHJv( "Jvt", iclist, x, v, [] )
+        else:
+            print( 'ERROR: empty list of constraints for '+self.name+'!' )
+        
     def Lxy( self, x, y ):           # input = ( x, y )
         x = x.reshape(-1,1)
         y = y.reshape(-1,1)
@@ -194,6 +212,7 @@ class CUTEst_problem:
         if hasattr( self, "congrps" ):
             return self.evalLHxyv( self.objgrps, self.congrps, x, y, v )
         else:
+            print( "Hv" )
             return self.evalHJv( "Hv", self.objgrps, x, v, [] )
         
     def LIxy( self, x, y, clist ):       # input = ( x, y, clist )
@@ -232,7 +251,8 @@ class CUTEst_problem:
             return self.evalLHxyv( self.objgrps, [ self.congrps[i] for i in clist ], x, y, v )
         else:
             return self.evalHJv( "Hv", self.objgrps, x, v, [] )
-            
+
+
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     #
     #   Evaluate the value of a sum of groups (and, if requested, that of of its gradient and Hessian)
@@ -251,18 +271,42 @@ class CUTEst_problem:
         if isobj:
             fx = 0.0
         else:
-            cx = np.zeros(( m, 1 ))
-            ic = -1
+            cx   = np.zeros(( m, 1 ))
+            ic   = -1
+            if hasattr( self, "conderlvl" ):
+               lder = len( self.conderlvl )
 
         if nargout > 1:
             if isobj:
-                gx = np.zeros(( n, 1))
+                if hasattr( self, "objderlvl" ):
+                    if self.objderlvl >= 1:
+                        gx = np.zeros(( n, 1 ))
+                    else:
+                        gx = np.zeros(( n, 1 ))
+                        gx[0]  = np.nan
+                else:
+                    gx = np.zeros(( n, 1 ))
+                    
             else:
-                Jx = lil_matrix(( m, n ))
-
+                if hasattr( self, "conderlvl" ):
+                   if any( x >=1 for x in  self.conderlvl ):
+                       Jx = lil_matrix(( m, n ))
+                   else:
+                       Jx = lil_matrix(( m, n ))
+                       Jx[0,0] = np.nan
+                else:
+                    Jx = lil_matrix(( m, n ))
+                    
             if nargout > 2:
                 if ( isobj ):
-                    Hx = lil_matrix(( n, n ))
+                    if hasattr( self, "objderlvl" ):
+                       if self.objderlvl >= 2:
+                          Hx = lil_matrix(( n, n ))
+                       else:
+                          Hx = lil_matrix(( n, n ))
+                          Hx[0,0] = np.nan
+                    else:
+                        Hx = lil_matrix(( n, n ))
                 else:
                     Hx = []
 
@@ -303,6 +347,24 @@ class CUTEst_problem:
         for iig in range( len( glist )):
             ig = int( glist[ iig ] )
             
+
+            #  Find the level of available derivatives for the group.
+
+            if  isobj:
+                if hasattr( self, "objderlvl" ):
+                   derlvl = self.objderlvl
+                else:
+                   derlvl = 2
+            else:
+                if hasattr( self, "conderlvl" ):
+                    if lder == 1:
+                        derlvl = self.conderlvl[ 0 ]
+                    else:
+                        derlvl = self.conderlvl[ np.where( self.congrps == ig )[0][0] ]
+                else:
+                    derlvl = 2
+            nout = min( nargout, derlvl + 1 );
+
             #  Find the group's scaling.
             
             if hasattr(self,"gscale"):
@@ -322,8 +384,8 @@ class CUTEst_problem:
             if has_A and ig < sA1:
                 gin           = np.zeros( (n, 1) )
                 gin[:sA2, :1] = self.A[ ig, :sA2 ].T.toarray()
-                fin           = float(fin + gin.T .dot(x))
-            elif nargout == 2 or nargout == 3:
+                fin           = float( fin + gin.T .dot(x) )
+            elif nargout >= 2:
                 gin =  np.zeros(( n, 1 ))
 
             if nargout > 2:
@@ -347,7 +409,7 @@ class CUTEst_problem:
 
                     # Only the value is requested.
                     
-                    if nargout == 1:
+                    if nout == 1:
                         fiel = eval('self.'+efname +'( self, 1, xiel, iel )')
                         if ( has_weights ):
                             fin += wiel * fiel
@@ -356,7 +418,7 @@ class CUTEst_problem:
                         
                     #  The value and its gradient are requested.
                     
-                    elif nargout == 2:
+                    elif nout == 2:
                         fiel, giel = eval('self.'+efname +'( self, 2, xiel, iel)')
                         if  has_weights:
                             fin += wiel * fiel
@@ -369,7 +431,7 @@ class CUTEst_problem:
                                 ii = irange[ ir ]
                                 gin[ ii ] += giel[ ir ]
 
-                    elif nargout == 3:
+                    elif nout == 3:
                         fiel, giel, Hiel = eval('self.'+efname +'( self, 3, xiel, iel )')
                         if has_weights:
                             fin += wiel * fiel
@@ -409,13 +471,23 @@ class CUTEst_problem:
                     elif nargout == 2:
                         [ fa, grada ] = eval('self.'+ egname+'( self, 2, fin, ig )')
                         fx += fa / gsc
-                        gx += grada * gin / gsc
+                        if derlvl >= 1:
+                            gx += grada * gin / gsc
+                        else:
+                            gx = np.nan * np.ones(( n, 1 ))
                     elif nargout == 3:
                         [ fa, grada, Hessa ] = eval('self.'+egname+'( self, 3, fin, ig )')
                         fx   += fa / gsc
-                        gx   += grada * gin / gsc
-                        sgin  = lil_matrix(gin)
-                        Hx   += (Hessa * sgin.dot(sgin.transpose())+ grada * Hin) / gsc
+                        if derlvl >= 1:
+                            gx += grada * gin / gsc
+                        else:
+                            gx = np.nan * np.ones(( n, 1 ))
+                        if derlvl >= 2:
+                            sgin  = lil_matrix(gin)
+                            Hx   += (Hessa * sgin.dot(sgin.transpose())+ grada * Hin) / gsc
+                        else:
+                            Hx      = lil_matrix(( n, n ))
+                            Hx[0,0] = np.nan
                 else:
                     ic = ic + 1
                     if nargout == 1:
@@ -424,15 +496,26 @@ class CUTEst_problem:
                     elif nargout == 2:
                         fa, grada = eval('self.'+egname+'( self, 2, fin, ig )')
                         cx[ ic ]  = fa / gsc
-                        sgin      = lil_matrix( gin )
-                        Jx[ic,:]  = grada * sgin.T / gsc
+                        if derlvl >= 1:
+                            sgin      = lil_matrix( gin )
+                            Jx[ic,:]  = grada * sgin.T / gsc
+                        else:
+                            Jx[ic,:]  = np.nan*np.ones(( 1, n ))
                     elif nargout == 3:
                         fa, grada, Hessa = eval('self.'+egname+'( self, 3, fin, ig )') 
                         cx[ ic ] = fa / gsc
-                        sgin     = lil_matrix( gin )
-                        Jx[ic,:] = grada * sgin.T / gsc
-                        Hx.append( ( Hessa * sgin.dot( sgin.transpose() )+ grada * Hin ) / gsc )
-                        
+                        if derlvl >= 1:
+                            sgin      = lil_matrix( gin )
+                            Jx[ic,:]  = grada * sgin.T / gsc
+                        else:
+                            Jx[ic,:]  = np.nan*np.ones(( 1, n ))
+                        if derlvl >= 2:
+                            Hx.append( ( Hessa * sgin.dot( sgin.transpose() )+ grada * Hin ) / gsc )
+                        else:
+                            Hxi = lil_matrix(( n, n ))
+                            Hxi[0,0] = np.nan
+                            Hx.append( Hxi )
+                            
             #  2) the TRIVIAL case: the group function is the identity
             
             else:
@@ -441,22 +524,44 @@ class CUTEst_problem:
                         fx += fin / gsc 
                     if nargout == 2:
                         fx += fin / gsc
-                        gx += gin / gsc
+                        if derlvl >= 1:
+                            gx += gin / gsc
+                        else:
+                            gx = np.nan * np.ones(( n, 1 ))
                     if nargout == 3:
                         fx += fin / gsc
-                        gx += gin / gsc
-                        Hx += Hin / gsc
+                        if derlvl >= 1:
+                            gx += gin / gsc
+                        else:
+                            gx = np.zeros(( n, 1 ))
+                            gx[0] = np.nan
+                        if derlvl >= 2:
+                            Hx += Hin / gsc
+                        else:
+                            Hx = lil_matrix(( n, n ))
+                            Hx[0,0] = np.nan
                 else:
-                    ic = ic + 1
+                    ic += + 1
                     if nargout == 1:
                         cx[ic] = fin / gsc
                     elif nargout == 2:
                         cx[ic] = fin / gsc
-                        Jx[ic,:] = gin.transpose() / gsc
+                        if derlvl >= 1:
+                            Jx[ic,:] = gin.transpose() / gsc
+                        else:
+                            Jx[ic,:] = np.nan * np.ones(( 1, n ))
                     elif nargout == 3:
                         cx[ic] = fin / gsc
-                        Jx[ic,:] = gin.transpose() / gsc
-                        Hx.append( Hin / gsc )
+                        if derlvl >= 1:
+                            Jx[ic,:] = gin.transpose() / gsc
+                        else:
+                            Jx[ic,:] = np.nan * np.ones(( 1, n ))
+                        if derlvl >= 2:
+                           Hx.append( Hin / gsc )
+                        else:
+                           Hin = lil_matrix(( n, n ))
+                           Hin[0,0] = np.nan
+                           Hx.append( Hin )
 
             if debug:
                 if isobj:
@@ -485,7 +590,7 @@ class CUTEst_problem:
     #     Depending on mode:
     #     mode = "Hv"  : evaluate the product of the objective's Hessian times v (glist = obj groups)
     #     mode = "HIv" : evaluate the product of the constraints' Hessian  times v time the multiplier y
-    #                    (glist = cons groups)
+    #                 (glist = cons groups)
     #     mode = "Jv"  : evaluate the product of the constraints' Jacobian times v (glist = cons groups)
     #     The vector y is unused (and unreferenced) for modes "Hv" and "Jv".
     #
@@ -498,15 +603,53 @@ class CUTEst_problem:
         #   Initializations
         
         n   = len( x );
-        m   = len( glist );
         if mode == "Hv":
-            HJv = np.zeros((n,1))
+            if hasattr( self, "objderlvl" ):
+               if self.objderlvl < 2:
+                  HJv      = np.zeros(( n, 1 ))
+                  HJv[0,0] = np.nan
+                  return HJv.reshape(-1,1)
+               else:
+                  HJv    = np.zeros((n,1))
+                  derlvl = 2
+            else:
+                derlvl = 2
         elif mode == "HIv":
-            HJv = np.zeros((n,1))
-            ic  = -1
+            if hasattr( self, "conderlvl" ):
+               m     = len( glist )
+               if any( x < 2 for x in  self.conderlvl ) :
+                  HJv    = np.zeros(( n, 1 ))
+                  HJv[0] = np.nan
+                  return HJv.reshape(-1,1)
+               else:
+                  HJv    = np.zeros(( n, 1 ))
+                  ic     = -1
+                  derlvl = 2
+            else:
+                derlvl = 2
         else:
-            HJv = np.zeros((m,1))
-            ic = -1;
+            m     = len( glist )
+            if hasattr( self, "conderlvl" ):
+                if any( x < 1 for x in  self.conderlvl ) :
+                    if mode == "Jv":
+                        HJv    = np.zeros(( m, 1 ))
+                        HJv[0] = np.nan
+                        return HJv.reshape(-1,1)
+                    else:
+                        HJv    = np.zeros(( n, 1 ))
+                        HJv[0] = np.nan
+                        return HJv.reshape(-1,1)
+                else:
+                    if mode == "Jv":
+                        HJv  = np.zeros(( m, 1 ))
+                        ic   = -1
+                        lder = len( self.conderlvl )
+                    else:
+                        HJv  = np.zeros(( n, 1 ))
+                        ic   = -1
+                        lder = len( self.conderlvl )
+            else:
+                derlvl = 2
 
         #  Check for the presence and size of a linear term
 
@@ -527,7 +670,25 @@ class CUTEst_problem:
 
         for iig in range(len( glist )):
             ig = int( glist[ iig ] );
-            
+
+            #  Find the level of available derivatives for the group.
+
+            if mode == "Jv" or mode == "Jtv":
+                if hasattr( self, "conderlvl" ):
+                    if lder == 1:
+                        derlvl = self.conderlvl[0]
+                    else:
+                        derlvl = self.conderlvl[ np.where( self.congrps == ig )[0][0] ]
+                else:
+                    derlvl = 2
+
+                #  Avoid computation for group ig if its first derivative is missing
+
+                if derlvl < 1:
+                    ic += 1
+                    HJv[ic] = np.nan
+                    continue
+                    
             #  Find the group's scaling.
             
             if hasattr(self,"gscale"):
@@ -590,7 +751,7 @@ class CUTEst_problem:
 
                      #   The group is a constraint group.
 
-                    else:
+                    elif derlvl >= 1:
 
                         fiel, giel = eval('self.'+efname +'( self, 2, xiel, iel)')
                         if has_weights:
@@ -632,13 +793,26 @@ class CUTEst_problem:
                     sgin = lil_matrix(gin);
                     ic  += 1
                     HJv += y[ic] * ( ( Hessa * sgin) * (sgin.transpose().dot(v)) + grada * Hinv) / gsc
-            else:
+            elif  mode == "Jv":
                 ic += 1
-                if egname == "TRIVIAL":
-                    HJv[ic] = gin.transpose().dot( v ) / gsc
+                if derlvl >= 1:
+                    if egname == "TRIVIAL":
+                        HJv[ic] = gin.transpose().dot( v ) / gsc
+                    else:
+                        fa, grada = feval( self.name, egname, fin, ig )
+                        HJv[ic] = grada * gin.transpose().dot( v ) / gsc
                 else:
-                    [ fa, grada ] = feval( self.name, egname, fin, ig )
-                    HJv[ic] = grada * gin.transpose().dot( v ) / gsc
+                    HJv[ic] = np.nan
+            elif mode == "Jtv":
+                if derlvl >= 1:
+                    if egname == "TRIVIAL":
+                        HJv += gin * v[ic] / gsc
+                    else:
+                        fa, grada = feval( self.name, egname, fin, ig )
+                        HJv += grada * gin * v[ic] / gsc
+                else:
+                    HJv[ic] = np.nan
+                    
             if debug:
                 print( "ig = ", ig, "  HJv(final) = ", HJv )#D
         #end for iig
@@ -652,6 +826,7 @@ class CUTEst_problem:
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     def evalLx( self, gobjlist, gconlist, x, y, nargout ):
+        
         if nargout == 1:
             if len( gobjlist ) or hasattr( self, "H" ):
                Lxy = self.evalgrsum( True, gobjlist, x, 1 )
@@ -696,13 +871,14 @@ class CUTEst_problem:
 
     def evalLHxyv( self, gobjlist, gconlist, x, y, v ):
 
-        if len( gobjlist ):
+        if len( gobjlist ) or hasattr( self, "H" ):
             LHxyv = self.evalHJv( "Hv", gobjlist, x, v, [] )
         else:
             LHxyv = np.zeros((len(x),1))
         if len( gconlist ):
-            for ig in range( len( gconlist ) ):
-                LHxyv += self.evalHJv( "HIv", gconlist[ig:ig+1], x, v, y )
+#            for ig in range( len( gconlist ) ):
+#                LHxyv += self.evalHJv( "HIv", gconlist[ig:ig+1], x, v, y )
+            LHxyv += self.evalHJv( "HIv", gconlist, x, v, y )
            
         return LHxyv
 
@@ -715,6 +891,7 @@ class CUTEst_problem:
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def s2mpj_ii( name, List ):
+    
     if name in List:
        idx = List[ name ]
        new = 0
@@ -768,7 +945,8 @@ def s2mpj_nlx( self, name, List, getxnames=None, xlowdef=None, xuppdef=None, x0d
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-def find(lst,condition):
+def find( lst, condition ):
+    
     return np.array([i for i, elem in enumerate(lst) if condition(elem)])
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -778,6 +956,7 @@ def find(lst,condition):
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def arrset( arr, index, value ):
+    
     if isinstance( index, np.ndarray):
         maxind = np.max( index )
     else:
@@ -794,6 +973,7 @@ def arrset( arr, index, value ):
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 def loaset( loa, i, j, value ):
+    
     if len(loa) <= i:
        loa.extend( [None] * ( i - len( loa ) + 1 ) )
     if loa[i] is None:
@@ -802,6 +982,142 @@ def loaset( loa, i, j, value ):
        loa[i]= np.append(loa[i],np.full( j - len( loa[i] ) + 1, None ) )
     loa[i][j] = value
     return loa
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#
+#   This tool consider all problems in list_of_python_problems (whose files are in
+#   the ./python_problems directory) and selects those whose SIF classification matches
+#   that given by the input string classif. Matching is in the sense of  regular expressions
+#   (regexp).
+#   If varargin is empty (i.e. only classif is used as input argument), the function prints
+#   the list of matching problems on standard output. Otherwise, the list is output in the
+#   file whose name is a string passed as varargin{1} (Further components of varargin are
+#   ignored).
+#
+#   If the input string is 'help'  or 'h', a message is printed on the standard output
+#   describing the SIF classification scheme and an brief explanation of how to use the tool.
+#
+#   Thanks to Greta Malaspina (Firenze) for an inital implementation in Matlab.
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+def s2mpjlib_select( classif, *args ):
+
+    if classif in [ "help", "h" ]:
+    
+        print( "  " )
+        print( " === The classification scheme ===" )
+        print( "  " )
+        print( " A problem is classified by a string of the form" )
+        print( "    X-XXXr-XX-n-m" )
+        print( " The first character in the string identifies the problem collection" )
+        print( " from which the problem is extracted. Possible values are" )
+        print( "    C the CUTEst collection" )
+        print( "    S the SPARCO collection" )
+        print( "    N none of the above" )
+        print( " The character immediately following the first hyphen defines the type" )
+        print( " of the problem''s objective function. Its possible values are" )
+        print( "    N no objective function is defined;" )
+        print( "    C the objective function is constant;" )
+        print( "    L the objective function is linear;" )
+        print( "    Q the objective function is quadratic;" )
+        print( "    S the objective function is a sum of squares; and" )
+        print( "    O the objective function is none of the above." )
+        print( " The second character after the first hyphen defines the type of" )
+        print( " constraints of the problem. Its possible values are" )
+        print( "    U the problem is unconstrained;" )
+        print( "    X the problem’s only constraints are fixed variables;" )
+        print( "    B the problem’s only constraints are bounds on the variables;" )
+        print( "    N the problem’s constraints represent the adjacency matrix of a (linear)" )
+        print( "      network;" )
+        print( "    L the problem’s constraints are linear;" )
+        print( "    Q the problem’s constraints are quadratic; and" )
+        print( "    O the problem’s constraints are more general than any of the above alone." )
+        print( " The third character after the first hyphen indicates the smoothness of" )
+        print( " the problem. There are two possible choices" )
+        print( "    R the problem is regular, that is, its first and second derivatives " )
+        print( "      exist and are continuous everywhere; or" )
+        print( "    I the problem is irregular." )
+        print( " The integer (r) which corresponds to the fourth character of the string is" )
+        print( " the degree of the highest derivatives provided analytically within the problem" )
+        print( " description. It is restricted to being one of the single characters O, 1, or 2." )
+        print( " The character immediately following the second hyphen indicates the primary" )
+        print( " origin and/or interest of the problem. Its possible values are" )
+        print( "    A the problem is academic, that is, has been constructed specifically by" )
+        print( "      researchers to test one or more algorithms;" )
+        print( "    M the problem is part of a modeling exercise where the actual value of the" )
+        print( "      solution is not used in a genuine practical application; and" )
+        print( "    R the problem’s solution is (or has been) actually used in a real")
+        print( "      application for purposes other than testing algorithms." )
+        print( " The next character in the string indicates whether or not the problem" )
+        print( " description contains explicit internal variables. There are two possible" )
+        print( " values, namely," )
+        print( "    Y the problem description contains explicit internal variables; or" )
+        print( "    N the problem description does not contain any explicit internal variables." )
+        print( " The symbol(s) between the third and fourth hyphen indicate the number of" )
+        print( " variables in the problem. Possible values are" )
+        print( "    V the number of variables in the problem can be chosen by the user; or" )
+        print( "    n a positive integer giving the actual (fixed) number of problem variables." )
+        print( " The symbol(s) after the fourth hyphen indicate the number of constraints" )
+        print( " (other than fixed variables and bounds) in the problem. Note that fixed" )
+        print( " variables are not considered as general constraints here. The two possible" )
+        print( " values are" )
+        print( "    V the number of constraints in the problem can be chosen by the user; or" )
+        print( "    m a nonnegative integer giving the actual (fixed) number of constraints." )
+        print( "  " )
+        print( " === Using the problem selection tool ===" )
+        print( "  " )
+        print( " In order to use the selection too, you should first import the present function" )
+        print( " by issuing the command" )
+        print( "    from s2mpjlib import *" )
+        print( " or, more specifiaclly," )
+        print( "    from s2mpjlib import s2mpjlib_select")
+        print( " The select tool may then be called with its first argument being a string ")
+        print( " which specifies the class of problems of interest.  This string is constructed" )
+        print( " by replacing by a dot each character in the classification string for which" )
+        print( " all possible values are acceptable (the dot is a wildcard character)." )
+        print( " For instance" )
+        print( "    s2mpjlib_select( \"C-SU..-..-2-0\" ) ")
+        print( " lists all CUTEst unconstrained ""sum-of-squares"" problems in two variables," )
+        print( " while " )
+        print( "    s2mpjlib_select( ""C-....-..-V-V"" ) " )
+        print( " lists all CUTEst problems with variable number of variables and variable" )
+        print( " number of constraints." )
+        print( " NOTE: any regular expression may be used as the first argument of select " )
+        print( "       to specify the problem class, so that, for instance, the previous " )
+        print( "       selection can also be achieved by s2mpjlib_select( \"C-.*V_V\" ) ")
+        print( " Writing the list of selected problems to a file is obtained by specifying" )
+        print( " the name of the file as a second argument of select, as in ")
+        print( "    s2mpjlib_select( \"C-....-..-V-V\", filename )" )
+
+    else:
+    
+        list_of_problems = "./list_of_python_problems"
+        python_problems  = "./python_problems/"
+
+        if len(args) > 0:
+            fid = open( args[0], "w" )
+        else:
+            fid = None
+
+        filter_pattern = f'classification = .*{classif}'
+        with open( list_of_problems, 'r' ) as f:
+            allprobs = f.readlines()
+
+        for theprob in allprobs:
+            theprob = theprob.strip()
+            problem_path = os.path.join( python_problems, theprob )
+            if os.path.isfile( problem_path ):
+                with open( problem_path, 'r' ) as prob_file:
+                    content = prob_file.read()
+                if re.search( filter_pattern, content ):
+                    if fid:
+                        fid.write(f'{theprob}\n')
+                    else:
+                        print( theprob )
+
+        if fid:
+            fid.close()
 
 ######################################################################################################
 ######################################################################################################

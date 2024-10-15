@@ -17,7 +17,7 @@ class  TWIRIMD1(CUTEst_problem):
 #    Optimization and Search Heuristics",
 #    Delft University, January 1998.
 # 
-#    classification = "LOI2-RN-1247-544"
+#    classification = "C-LOI2-RN-1247-544"
 # 
 #    SIF input: Arie Quist, Delft, 1998.
 #               correction by S. Gratton & Ph. Toint, May 2024
@@ -25,6 +25,8 @@ class  TWIRIMD1(CUTEst_problem):
 #  Some useful constants
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TWIRIMD1'
@@ -7471,7 +7473,7 @@ class  TWIRIMD1(CUTEst_problem):
                 ename = 'kphi'+str(i)+','+str(t)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eBILIN')
-                ielftype = arrset(ielftype, ie, iet_["eBILIN"])
+                ielftype = arrset(ielftype,ie,iet_["eBILIN"])
                 vname = 'k'+str(i)+','+str(t)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='u')[0]
@@ -7485,7 +7487,7 @@ class  TWIRIMD1(CUTEst_problem):
                 ename = 'kefph'+str(i)+','+str(t)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eBILIN')
-                ielftype = arrset(ielftype, ie, iet_["eBILIN"])
+                ielftype = arrset(ielftype,ie,iet_["eBILIN"])
                 vname = 'keff'+str(t)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='u')[0]
@@ -7501,7 +7503,7 @@ class  TWIRIMD1(CUTEst_problem):
                     ename = 'xa'+str(i)+','+str(j)+','+str(m)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eTRILIN')
-                    ielftype = arrset(ielftype, ie, iet_["eTRILIN"])
+                    ielftype = arrset(ielftype,ie,iet_["eTRILIN"])
                     vname = 'x'+str(i)+','+str(int(v_['2']))+','+str(m)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='u')[0]
@@ -7517,7 +7519,7 @@ class  TWIRIMD1(CUTEst_problem):
                     ename = 'xb'+str(i)+','+str(j)+','+str(m)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eTRILIN')
-                    ielftype = arrset(ielftype, ie, iet_["eTRILIN"])
+                    ielftype = arrset(ielftype,ie,iet_["eTRILIN"])
                     vname = 'x'+str(i)+','+str(int(v_['3']))+','+str(m)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='u')[0]
@@ -7533,7 +7535,7 @@ class  TWIRIMD1(CUTEst_problem):
                     ename = 'xc'+str(i)+','+str(j)+','+str(m)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eTRILIN')
-                    ielftype = arrset(ielftype, ie, iet_["eTRILIN"])
+                    ielftype = arrset(ielftype,ie,iet_["eTRILIN"])
                     vname = 'x'+str(i)+','+str(int(v_['4']))+','+str(m)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='u')[0]
@@ -7623,8 +7625,12 @@ class  TWIRIMD1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOI2-RN-1247-544"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOI2-RN-1247-544"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

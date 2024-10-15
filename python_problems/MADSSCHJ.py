@@ -17,7 +17,7 @@ class  MADSSCHJ(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993.
 # 
-#    classification = "LQR2-AN-V-V"
+#    classification = "C-LQR2-AN-V-V"
 # 
 #    N is the number of variables - 1, and must be even and at least 4.
 #    The number of inequality constraints is 2*N - 2.
@@ -36,6 +36,8 @@ class  MADSSCHJ(CUTEst_problem):
 # IE N                   100            $-PARAMETER  n=101, m=198
 # IE N                   200            $-PARAMETER  n=201, m=398
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MADSSCHJ'
@@ -206,9 +208,9 @@ class  MADSSCHJ(CUTEst_problem):
             ename = 'XSQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -277,8 +279,12 @@ class  MADSSCHJ(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -130,7 +130,7 @@ class  FCCU(CUTEst_problem):
 # 
 #    SIF input: W. Korchinski, Spring 1993.
 # 
-#    classification = "SLR2-MN-19-8"
+#    classification = "C-SLR2-MN-19-8"
 # 
 # ***************************************************************
 #  PROBLEM SPECIFICATION BEGINS HERE.
@@ -140,6 +140,8 @@ class  FCCU(CUTEst_problem):
 #  Define objective function weights. *
 # *************************************
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FCCU'
@@ -535,7 +537,10 @@ class  FCCU(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "SLR2-MN-19-8"
+        self.pbclass = "C-SLR2-MN-19-8"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%%%% NONLINEAR GROUPS  %%%%%%%%%%%%%%%
 

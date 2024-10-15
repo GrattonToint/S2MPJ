@@ -15,9 +15,11 @@ class  DENSCHNF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1990.
 # 
-#    classification = "SUR2-AY-2-0"
+#    classification = "C-SUR2-AY-2-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DENSCHNF'
@@ -89,7 +91,7 @@ class  DENSCHNF(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQP')
-        ielftype = arrset(ielftype, ie, iet_["eISQP"])
+        ielftype = arrset(ielftype,ie,iet_["eISQP"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -101,7 +103,7 @@ class  DENSCHNF(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQM')
-        ielftype = arrset(ielftype, ie, iet_["eISQM"])
+        ielftype = arrset(ielftype,ie,iet_["eISQM"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -113,7 +115,7 @@ class  DENSCHNF(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -123,7 +125,7 @@ class  DENSCHNF(CUTEst_problem):
         ename = 'E4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -163,7 +165,9 @@ class  DENSCHNF(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AY-2-0"
+        self.pbclass = "C-SUR2-AY-2-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -17,11 +17,13 @@ class  ELATVIDU(CUTEst_problem):
 # 
 #    SIF input: Nick Gould
 # 
-#    classification = "SUR2-MN-2-0"
+#    classification = "C-SUR2-MN-2-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ELATVIDU'
@@ -95,7 +97,7 @@ class  ELATVIDU(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -103,7 +105,7 @@ class  ELATVIDU(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -111,7 +113,7 @@ class  ELATVIDU(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBE')
-        ielftype = arrset(ielftype, ie, iet_["eCUBE"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBE"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -155,7 +157,9 @@ class  ELATVIDU(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-2-0"
+        self.pbclass = "C-SUR2-MN-2-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -16,9 +16,11 @@ class  CANTILVR(CUTEst_problem):
 #    SIF input: Ph. Toint, November 1994
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "LOR2-MN-5-1"
+#    classification = "C-LOR2-MN-5-1"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CANTILVR'
@@ -104,45 +106,45 @@ class  CANTILVR(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eINVCUBE')
-            ielftype = arrset( ielftype,ie,iet_['eINVCUBE'])
+            ielftype = arrset(ielftype,ie,iet_['eINVCUBE'])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.000001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.000001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eINVCUBE')
-            ielftype = arrset( ielftype,ie,iet_['eINVCUBE'])
+            ielftype = arrset(ielftype,ie,iet_['eINVCUBE'])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.000001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.000001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eINVCUBE')
-            ielftype = arrset( ielftype,ie,iet_['eINVCUBE'])
+            ielftype = arrset(ielftype,ie,iet_['eINVCUBE'])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.000001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.000001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eINVCUBE')
-            ielftype = arrset( ielftype,ie,iet_['eINVCUBE'])
+            ielftype = arrset(ielftype,ie,iet_['eINVCUBE'])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.000001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.000001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eINVCUBE')
-            ielftype = arrset( ielftype,ie,iet_['eINVCUBE'])
+            ielftype = arrset(ielftype,ie,iet_['eINVCUBE'])
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.000001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.000001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -186,8 +188,12 @@ class  CANTILVR(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-MN-5-1"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-MN-5-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

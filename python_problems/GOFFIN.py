@@ -17,9 +17,11 @@ class  GOFFIN(CUTEst_problem):
 #    SIF input: Ph. Toint, Nov 1993
 #               comments updated Feb 2001.
 # 
-#    classification = "LLR2-AN-51-50"
+#    classification = "C-LLR2-AN-51-50"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GOFFIN'
@@ -113,7 +115,10 @@ class  GOFFIN(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "LLR2-AN-51-50"
+        self.pbclass = "C-LLR2-AN-51-50"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

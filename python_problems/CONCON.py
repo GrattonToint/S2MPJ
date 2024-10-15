@@ -12,10 +12,12 @@ class  CONCON(CUTEst_problem):
 #    SIF input: Sybille Schachler, Oxford, August 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "LOI2-MN-15-11"
+#    classification = "C-LOI2-MN-15-11"
 # 
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CONCON'
@@ -167,7 +169,7 @@ class  CONCON(CUTEst_problem):
             ename = 'PSQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'P'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -176,7 +178,7 @@ class  CONCON(CUTEst_problem):
             ename = 'QTO'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFORQ')
-            ielftype = arrset(ielftype, ie, iet_["eFORQ"])
+            ielftype = arrset(ielftype,ie,iet_["eFORQ"])
             vname = 'Q'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -249,8 +251,12 @@ class  CONCON(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOI2-MN-15-11"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOI2-MN-15-11"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

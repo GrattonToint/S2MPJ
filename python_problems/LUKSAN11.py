@@ -15,11 +15,13 @@ class  LUKSAN11(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 2017.
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #   seed for dimensions
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKSAN11'
@@ -112,7 +114,7 @@ class  LUKSAN11(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eL1')
-                ielftype = arrset( ielftype,ie,iet_['eL1'])
+                ielftype = arrset(ielftype,ie,iet_['eL1'])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -149,8 +151,12 @@ class  LUKSAN11(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

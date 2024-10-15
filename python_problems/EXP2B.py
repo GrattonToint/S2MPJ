@@ -19,11 +19,13 @@ class  EXP2B(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2021
 # 
-#    classification = "SBR2-MN-2-0"
+#    classification = "C-SBR2-MN-2-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXP2B'
@@ -102,9 +104,9 @@ class  EXP2B(CUTEst_problem):
             ename = 'E1'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset(ielftype, ie, iet_["eEXP"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP"])
             vname = 'X1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,20.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(20.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -112,9 +114,9 @@ class  EXP2B(CUTEst_problem):
             ename = 'E2'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset(ielftype, ie, iet_["eEXP"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP"])
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,20.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(20.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -147,7 +149,9 @@ class  EXP2B(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-2-0"
+        self.pbclass = "C-SBR2-MN-2-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

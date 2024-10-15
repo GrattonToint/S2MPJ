@@ -17,9 +17,11 @@ class  MADSEN(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1992.
 # 
-#    classification = "LOR2-AN-3-6"
+#    classification = "C-LOR2-AN-3-6"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MADSEN'
@@ -128,7 +130,7 @@ class  MADSEN(CUTEst_problem):
         ename = 'X1SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -136,7 +138,7 @@ class  MADSEN(CUTEst_problem):
         ename = 'X2SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -144,7 +146,7 @@ class  MADSEN(CUTEst_problem):
         ename = 'X1X2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -156,7 +158,7 @@ class  MADSEN(CUTEst_problem):
         ename = 'SX1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSIN')
-        ielftype = arrset(ielftype, ie, iet_["eSIN"])
+        ielftype = arrset(ielftype,ie,iet_["eSIN"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -164,7 +166,7 @@ class  MADSEN(CUTEst_problem):
         ename = 'CX2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOS')
-        ielftype = arrset(ielftype, ie, iet_["eCOS"])
+        ielftype = arrset(ielftype,ie,iet_["eCOS"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -234,8 +236,12 @@ class  MADSEN(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-AN-3-6"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-AN-3-6"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

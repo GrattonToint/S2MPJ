@@ -1,4 +1,4 @@
-function JANNSON4(action,args...)
+function JANNSON4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -13,12 +13,14 @@ function JANNSON4(action,args...)
 # 
 #    SIF input: Nick Gould, September 2000
 # 
-#    classification = "OQR2-AN-V-2"
+#    classification = "C-OQR2-AN-V-2"
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   3              $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "JANNSON4"
@@ -27,7 +29,7 @@ function JANNSON4(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -110,22 +112,22 @@ function JANNSON4(action,args...)
             ename = "E"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
-            arrset(ielftype, ie, iet_["eSQR"])
+            arrset(ielftype,ie,iet_["eSQR"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.0),Float64(1.0),nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "P"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
-        arrset(ielftype, ie, iet_["ePROD"])
+        arrset(ielftype,ie,iet_["ePROD"])
         vname = "X1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.0),Float64(1.0),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.0,1.0,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.0),Float64(1.0),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -174,9 +176,14 @@ function JANNSON4(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OQR2-AN-V-2"
+        pb.pbclass = "C-OQR2-AN-V-2"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -282,7 +289,9 @@ function JANNSON4(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -294,7 +303,7 @@ function JANNSON4(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

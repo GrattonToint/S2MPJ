@@ -1,4 +1,4 @@
-function RK23(action,args...)
+function RK23(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -17,11 +17,13 @@ function RK23(action,args...)
 # 
 #    SIF input: S. Leyffer, January 1997.
 # 
-#    classification = "LOR2-RN-17-11"
+#    classification = "C-LOR2-RN-17-11"
 # 
 # 
 #    ... COMPUTED PARAMETERS
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RK23"
@@ -30,7 +32,7 @@ function RK23(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -277,7 +279,7 @@ function RK23(action,args...)
         ename = "E1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
-        arrset(ielftype, ie, iet_["ePROD"])
+        arrset(ielftype,ie,iet_["ePROD"])
         vname = "B2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -289,7 +291,7 @@ function RK23(action,args...)
         ename = "E2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
-        arrset(ielftype, ie, iet_["ePROD"])
+        arrset(ielftype,ie,iet_["ePROD"])
         vname = "B3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -301,7 +303,7 @@ function RK23(action,args...)
         ename = "E3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
-        arrset(ielftype, ie, iet_["ePROD"])
+        arrset(ielftype,ie,iet_["ePROD"])
         vname = "BB2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -313,7 +315,7 @@ function RK23(action,args...)
         ename = "E4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePROD")
-        arrset(ielftype, ie, iet_["ePROD"])
+        arrset(ielftype,ie,iet_["ePROD"])
         vname = "BB3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -325,7 +327,7 @@ function RK23(action,args...)
         ename = "E5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODS")
-        arrset(ielftype, ie, iet_["ePRODS"])
+        arrset(ielftype,ie,iet_["ePRODS"])
         vname = "BB2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W1",elftv[ielftype[ie]])
@@ -337,7 +339,7 @@ function RK23(action,args...)
         ename = "E6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODS")
-        arrset(ielftype, ie, iet_["ePRODS"])
+        arrset(ielftype,ie,iet_["ePRODS"])
         vname = "BB3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W1",elftv[ielftype[ie]])
@@ -349,7 +351,7 @@ function RK23(action,args...)
         ename = "E7"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eTPROD")
-        arrset(ielftype, ie, iet_["eTPROD"])
+        arrset(ielftype,ie,iet_["eTPROD"])
         vname = "BB3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
@@ -365,7 +367,7 @@ function RK23(action,args...)
         ename = "E8"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODQ")
-        arrset(ielftype, ie, iet_["ePRODQ"])
+        arrset(ielftype,ie,iet_["ePRODQ"])
         vname = "BB2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
@@ -377,7 +379,7 @@ function RK23(action,args...)
         ename = "E9"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODQ")
-        arrset(ielftype, ie, iet_["ePRODQ"])
+        arrset(ielftype,ie,iet_["ePRODQ"])
         vname = "BB3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X1",elftv[ielftype[ie]])
@@ -389,7 +391,7 @@ function RK23(action,args...)
         ename = "E10"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eQPROD")
-        arrset(ielftype, ie, iet_["eQPROD"])
+        arrset(ielftype,ie,iet_["eQPROD"])
         vname = "BB3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z1",elftv[ielftype[ie]])
@@ -409,7 +411,7 @@ function RK23(action,args...)
         ename = "E11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eTPRODS")
-        arrset(ielftype, ie, iet_["eTPRODS"])
+        arrset(ielftype,ie,iet_["eTPRODS"])
         vname = "BB3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
@@ -485,8 +487,13 @@ function RK23(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LOR2-RN-17-11"
+        pb.pbclass = "C-LOR2-RN-17-11"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -673,7 +680,9 @@ function RK23(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -685,7 +694,7 @@ function RK23(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -62,13 +62,15 @@ class  NUFFIELD(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, February 2001
 # 
-#    classification = "LQR2-AN-V-V"
+#    classification = "C-LQR2-AN-V-V"
 # 
 #    The parameter a
 # 
 #           Alternative values for the SIF file parameters:
 # RE A                   5.0            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NUFFIELD'
@@ -384,7 +386,7 @@ class  NUFFIELD(CUTEst_problem):
                 ename = 'C'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eCONVEX')
-                ielftype = arrset(ielftype, ie, iet_["eCONVEX"])
+                ielftype = arrset(ielftype,ie,iet_["eCONVEX"])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'V'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -452,9 +454,13 @@ class  NUFFIELD(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

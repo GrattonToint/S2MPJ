@@ -15,9 +15,11 @@ class  HS8(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn March 1990
 # 
-#    classification = "CQR2-AN-2-2"
+#    classification = "C-CQR2-AN-2-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS8'
@@ -106,7 +108,7 @@ class  HS8(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -114,7 +116,7 @@ class  HS8(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -122,7 +124,7 @@ class  HS8(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PROD')
-        ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+        ielftype = arrset(ielftype,ie,iet_["en2PROD"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -162,8 +164,12 @@ class  HS8(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "CQR2-AN-2-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-CQR2-AN-2-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

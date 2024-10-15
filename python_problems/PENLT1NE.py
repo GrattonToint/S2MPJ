@@ -22,7 +22,7 @@ class  PENLT1NE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #    N is the number of free variables
 # 
@@ -30,6 +30,8 @@ class  PENLT1NE(CUTEst_problem):
 # IE N                   4              $-PARAMETER
 # IE N                   10             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PENLT1NE'
@@ -125,7 +127,7 @@ class  PENLT1NE(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -165,8 +167,12 @@ class  PENLT1NE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

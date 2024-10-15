@@ -19,13 +19,15 @@ class  TRIGON2B(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2021
 # 
-#    classification = "SBR2-MN-V-0"
+#    classification = "C-SBR2-MN-V-0"
 # 
 #    Number of variables
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRIGON2B'
@@ -114,9 +116,9 @@ class  TRIGON2B(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSINF')
-            ielftype = arrset(ielftype, ie, iet_["eSINF"])
+            ielftype = arrset(ielftype,ie,iet_["eSINF"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-500.0,500.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-500.0),float(500.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -124,9 +126,9 @@ class  TRIGON2B(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSINF')
-            ielftype = arrset(ielftype, ie, iet_["eSINF"])
+            ielftype = arrset(ielftype,ie,iet_["eSINF"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-500.0,500.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-500.0),float(500.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -163,7 +165,9 @@ class  TRIGON2B(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-V-0"
+        self.pbclass = "C-SBR2-MN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

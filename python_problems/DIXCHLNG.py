@@ -15,11 +15,13 @@ class  DIXCHLNG(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Feb 1991.
 # 
-#    classification = "SOR2-AN-10-5"
+#    classification = "C-SOR2-AN-10-5"
 # 
 #    Other parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXCHLNG'
@@ -186,7 +188,7 @@ class  DIXCHLNG(CUTEst_problem):
             ename = 'XSQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -197,7 +199,7 @@ class  DIXCHLNG(CUTEst_problem):
             ename = 'PR'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eS2PR')
-            ielftype = arrset(ielftype, ie, iet_["eS2PR"])
+            ielftype = arrset(ielftype,ie,iet_["eS2PR"])
             vname = 'X'+str(int(v_['I+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -209,7 +211,7 @@ class  DIXCHLNG(CUTEst_problem):
         ename = 'PRD2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePR2')
-        ielftype = arrset(ielftype, ie, iet_["ePR2"])
+        ielftype = arrset(ielftype,ie,iet_["ePR2"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -221,7 +223,7 @@ class  DIXCHLNG(CUTEst_problem):
         ename = 'PRD4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePR4')
-        ielftype = arrset(ielftype, ie, iet_["ePR4"])
+        ielftype = arrset(ielftype,ie,iet_["ePR4"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -241,7 +243,7 @@ class  DIXCHLNG(CUTEst_problem):
         ename = 'PRD6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePR6')
-        ielftype = arrset(ielftype, ie, iet_["ePR6"])
+        ielftype = arrset(ielftype,ie,iet_["ePR6"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -269,7 +271,7 @@ class  DIXCHLNG(CUTEst_problem):
         ename = 'PRD8'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePR8')
-        ielftype = arrset(ielftype, ie, iet_["ePR8"])
+        ielftype = arrset(ielftype,ie,iet_["ePR8"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -305,7 +307,7 @@ class  DIXCHLNG(CUTEst_problem):
         ename = 'PRD10'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePR10')
-        ielftype = arrset(ielftype, ie, iet_["ePR10"])
+        ielftype = arrset(ielftype,ie,iet_["ePR10"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -404,8 +406,12 @@ class  DIXCHLNG(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SOR2-AN-10-5"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SOR2-AN-10-5"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

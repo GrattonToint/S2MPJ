@@ -14,11 +14,13 @@ class  LSC2LS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 2016
 # 
-#    classification = "SUR2-MN-3-0"
+#    classification = "C-SUR2-MN-3-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LSC2LS'
@@ -103,7 +105,7 @@ class  LSC2LS(CUTEst_problem):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eS')
-            ielftype = arrset(ielftype, ie, iet_["eS"])
+            ielftype = arrset(ielftype,ie,iet_["eS"])
             vname = 'X'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -145,7 +147,9 @@ class  LSC2LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-3-0"
+        self.pbclass = "C-SUR2-MN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

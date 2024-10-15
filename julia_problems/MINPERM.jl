@@ -1,4 +1,4 @@
-function MINPERM(action,args...)
+function MINPERM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -11,7 +11,7 @@ function MINPERM(action,args...)
 #    SIF input: N. Gould and Ph. Toint, December 1990.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "LQR2-AN-V-V"
+#    classification = "C-LQR2-AN-V-V"
 # 
 #    Size of matrix
 # 
@@ -27,6 +27,8 @@ function MINPERM(action,args...)
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MINPERM"
 
@@ -34,7 +36,7 @@ function MINPERM(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -191,7 +193,7 @@ function MINPERM(action,args...)
                     ename = "E"*string(K)*","*string(I)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PR")
-                    arrset(ielftype, ie, iet_["en2PR"])
+                    arrset(ielftype,ie,iet_["en2PR"])
                     vname = "A"*string(Int64(v_["ID"]))*","*string(Int64(v_["J"]))
                     iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                     posev = findfirst(x->x=="A",elftv[ielftype[ie]])
@@ -209,7 +211,7 @@ function MINPERM(action,args...)
                     ename = "E"*string(K)*","*string(Int64(v_["1"]))
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PR")
-                    arrset(ielftype, ie, iet_["en2PR"])
+                    arrset(ielftype,ie,iet_["en2PR"])
                     ename = "E"*string(K)*","*string(Int64(v_["1"]))
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     vname = "A"*string(Int64(v_["2"]))*","*string(Int64(v_["J"]))
@@ -225,7 +227,7 @@ function MINPERM(action,args...)
                     ename = "E"*string(K)*","*string(Int64(v_["2"]))
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"en2PR")
-                    arrset(ielftype, ie, iet_["en2PR"])
+                    arrset(ielftype,ie,iet_["en2PR"])
                     ename = "E"*string(K)*","*string(Int64(v_["2"]))
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     vname = "A"*string(Int64(v_["2"]))*","*string(Int64(v_["JJ"]))
@@ -299,9 +301,14 @@ function MINPERM(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LQR2-AN-V-V"
+        pb.pbclass = "C-LQR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -337,7 +344,9 @@ function MINPERM(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -349,7 +358,7 @@ function MINPERM(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -17,11 +17,13 @@ class  HELIX(CUTEst_problem):
 #    See also Buckley#12 (p. 58)
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SUR2-AN-3-0"
+#    classification = "C-SUR2-AN-3-0"
 # 
 #    Define useful parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HELIX'
@@ -97,25 +99,25 @@ class  HELIX(CUTEst_problem):
         ename = 'AE'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eTHETA')
-        ielftype = arrset(ielftype, ie, iet_["eTHETA"])
+        ielftype = arrset(ielftype,ie,iet_["eTHETA"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'BE'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eTWONRM')
-        ielftype = arrset(ielftype, ie, iet_["eTWONRM"])
+        ielftype = arrset(ielftype,ie,iet_["eTWONRM"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -149,7 +151,9 @@ class  HELIX(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-3-0"
+        self.pbclass = "C-SUR2-AN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

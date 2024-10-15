@@ -16,11 +16,13 @@ function varargout = HIMMELP1(action,varargin)
 % 
 %    SIF input: Ph. Toint, December 1994.
 % 
-%    classification = 'OBR2-AN-2-0'
+%    classification = 'C-OBR2-AN-2-0'
 % 
 %    Problem data
 % 
 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Translated to Matlab by S2MPJ version 6 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -118,7 +120,7 @@ switch(action)
         posev = find(strcmp('Y',elftv{ielftype(ie)}));
         pbm.elvar{ie}(posev) = iv;
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
+        [pbm.grelt{1:ngrp}] = deal([]);
         nlc = [];
         ig = ig_('OBJ');
         posel = length(pbm.grelt{ig})+1;
@@ -129,7 +131,9 @@ switch(action)
 % LO SOLTN                -62.053869846
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'OBR2-AN-2-0';
+        pb.pbclass = 'C-OBR2-AN-2-0';
+        pbm.objderlvl = 2;
+        pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
             varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
@@ -138,6 +142,7 @@ switch(action)
             varargout{1} = pb;
             varargout{2} = pbm;
         end
+
 % **********************
 %  SET UP THE FUNCTION *
 %  AND RANGE ROUTINES  *
@@ -210,18 +215,19 @@ switch(action)
     %%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
     case {'fx','fgx','fgHx','cx','cJx','cJHx','cIx','cIJx','cIJHx','cIJxv','fHxv',...
-          'cJxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy','LHxyv','LIHxyv'}
+          'cJxv','cJtxv','cIJtxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy',...
+          'LHxyv','LIHxyv'}
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+            [varargout{1:nargout}] = deal(NaN);
         end
 
     otherwise
-        disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])
+        disp([' ERROR: action ',action,' unavailable for problem ',name,'.m'])
     end
 
 return

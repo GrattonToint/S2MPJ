@@ -11,9 +11,11 @@ class  STREG(CUTEst_problem):
 # 
 #    SIF input: N. Gould, Aug 2001
 # 
-#    classification = "SUR2-AN-4-0"
+#    classification = "C-SUR2-AN-4-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'STREG'
@@ -96,7 +98,7 @@ class  STREG(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -129,8 +131,10 @@ class  STREG(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-4-0"
+        self.pbclass = "C-SUR2-AN-4-0"
+        self.objderlvl = 2
         self.H = self.H.tocsr()
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

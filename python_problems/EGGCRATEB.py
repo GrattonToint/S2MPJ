@@ -19,11 +19,13 @@ class  EGGCRATEB(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2021
 # 
-#    classification = "SBR2-MN-4-0"
+#    classification = "C-SBR2-MN-4-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EGGCRATEB'
@@ -92,17 +94,17 @@ class  EGGCRATEB(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSIN')
-        ielftype = arrset(ielftype, ie, iet_["eSIN"])
+        ielftype = arrset(ielftype,ie,iet_["eSIN"])
         vname = 'X'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-5.0,5.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-5.0),float(5.0),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSIN')
-        ielftype = arrset(ielftype, ie, iet_["eSIN"])
+        ielftype = arrset(ielftype,ie,iet_["eSIN"])
         vname = 'Y'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-5.0,5.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-5.0),float(5.0),None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -137,7 +139,9 @@ class  EGGCRATEB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-4-0"
+        self.pbclass = "C-SBR2-MN-4-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

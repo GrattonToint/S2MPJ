@@ -1,4 +1,4 @@
-function ALLINIT(action,args...)
+function ALLINIT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -14,9 +14,11 @@ function ALLINIT(action,args...)
 # 
 #    SIF input: Nick Gould, June 1990.
 # 
-#    classification = "OBR2-AY-4-0"
+#    classification = "C-OBR2-AY-4-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ALLINIT"
@@ -25,7 +27,7 @@ function ALLINIT(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -137,7 +139,7 @@ function ALLINIT(action,args...)
         ename = "FT4E2"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR2")
-        arrset(ielftype, ie, iet_["eSQR2"])
+        arrset(ielftype,ie,iet_["eSQR2"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -149,7 +151,7 @@ function ALLINIT(action,args...)
         ename = "FT56E1"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINSQR")
-        arrset(ielftype, ie, iet_["eSINSQR"])
+        arrset(ielftype,ie,iet_["eSINSQR"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -157,7 +159,7 @@ function ALLINIT(action,args...)
         ename = "FT5E2"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODSQR")
-        arrset(ielftype, ie, iet_["ePRODSQR"])
+        arrset(ielftype,ie,iet_["ePRODSQR"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -189,7 +191,7 @@ function ALLINIT(action,args...)
         ename = "FNT4E2"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR2")
-        arrset(ielftype, ie, iet_["eSQR2"])
+        arrset(ielftype,ie,iet_["eSQR2"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -201,7 +203,7 @@ function ALLINIT(action,args...)
         ename = "FNT56E1"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSINSQR")
-        arrset(ielftype, ie, iet_["eSINSQR"])
+        arrset(ielftype,ie,iet_["eSINSQR"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -209,7 +211,7 @@ function ALLINIT(action,args...)
         ename = "FNT5E2"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePRODSQR")
-        arrset(ielftype, ie, iet_["ePRODSQR"])
+        arrset(ielftype,ie,iet_["ePRODSQR"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -287,9 +289,12 @@ function ALLINIT(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OBR2-AY-4-0"
+        pb.pbclass = "C-OBR2-AY-4-0"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -452,7 +457,9 @@ function ALLINIT(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -464,7 +471,7 @@ function ALLINIT(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

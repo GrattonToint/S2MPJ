@@ -15,9 +15,11 @@ class  HS19(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn April 1990
 # 
-#    classification = "OQR2-AN-2-2"
+#    classification = "C-OQR2-AN-2-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS19'
@@ -110,7 +112,7 @@ class  HS19(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCBm10')
-        ielftype = arrset(ielftype, ie, iet_["eCBm10"])
+        ielftype = arrset(ielftype,ie,iet_["eCBm10"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -118,7 +120,7 @@ class  HS19(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCBm20')
-        ielftype = arrset(ielftype, ie, iet_["eCBm20"])
+        ielftype = arrset(ielftype,ie,iet_["eCBm20"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -126,7 +128,7 @@ class  HS19(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQm5')
-        ielftype = arrset(ielftype, ie, iet_["eSQm5"])
+        ielftype = arrset(ielftype,ie,iet_["eSQm5"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -134,7 +136,7 @@ class  HS19(CUTEst_problem):
         ename = 'E4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQm5')
-        ielftype = arrset(ielftype, ie, iet_["eSQm5"])
+        ielftype = arrset(ielftype,ie,iet_["eSQm5"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -142,7 +144,7 @@ class  HS19(CUTEst_problem):
         ename = 'E5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQm6')
-        ielftype = arrset(ielftype, ie, iet_["eSQm6"])
+        ielftype = arrset(ielftype,ie,iet_["eSQm6"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -189,8 +191,12 @@ class  HS19(CUTEst_problem):
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AN-2-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AN-2-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

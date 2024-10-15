@@ -25,7 +25,7 @@ class  LUBRIFC(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "QOR2-MN-V-V"
+#    classification = "C-QOR2-MN-V-V"
 # 
 #    Number of discretized points per unit length
 # 
@@ -34,6 +34,8 @@ class  LUBRIFC(CUTEst_problem):
 # IE NN                  50             $-PARAMETER n = 751
 # IE NN                  250            $-PARAMETER n = 3751
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUBRIFC'
@@ -293,17 +295,17 @@ class  LUBRIFC(CUTEst_problem):
             ename = 'ER'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eREY')
-            ielftype = arrset(ielftype, ie, iet_["eREY"])
+            ielftype = arrset(ielftype,ie,iet_["eREY"])
             vname = 'P'+str(int(v_['I-']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='PA')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'H'+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'P'+str(int(v_['I+']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='PB')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -312,13 +314,13 @@ class  LUBRIFC(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'P'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='P')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'R'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='R')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -362,8 +364,12 @@ class  LUBRIFC(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

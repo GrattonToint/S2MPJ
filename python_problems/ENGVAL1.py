@@ -20,7 +20,7 @@ class  ENGVAL1(CUTEst_problem):
 #    See also Buckley#172 (p. 52)
 #    SIF input: Ph. Toint and N. Gould, Dec 1989.
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    N is the number of variables
 # 
@@ -31,6 +31,8 @@ class  ENGVAL1(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ENGVAL1'
@@ -103,18 +105,18 @@ class  ENGVAL1(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset( ielftype,ie,iet_['eSQ'])
+                ielftype = arrset(ielftype,ie,iet_['eSQ'])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'Z'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset( ielftype,ie,iet_['eSQ'])
+                ielftype = arrset(ielftype,ie,iet_['eSQ'])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -147,7 +149,9 @@ class  ENGVAL1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-V-0"
+        self.pbclass = "C-OUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

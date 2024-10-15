@@ -15,9 +15,11 @@ class  HS61(CUTEst_problem):
 # 
 #    SIF input: Ph.L. Toint, November 1990.
 # 
-#    classification = "QQR2-AN-3-2"
+#    classification = "C-QQR2-AN-3-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS61'
@@ -104,27 +106,27 @@ class  HS61(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset( ielftype,ie,iet_['eSQ'])
+            ielftype = arrset(ielftype,ie,iet_['eSQ'])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset( ielftype,ie,iet_['eSQ'])
+            ielftype = arrset(ielftype,ie,iet_['eSQ'])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset( ielftype,ie,iet_['eSQ'])
+            ielftype = arrset(ielftype,ie,iet_['eSQ'])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -171,8 +173,12 @@ class  HS61(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-AN-3-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-AN-3-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

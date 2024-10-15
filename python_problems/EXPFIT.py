@@ -15,11 +15,13 @@ class  EXPFIT(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1991.
 # 
-#    classification = "SUR2-AN-2-0"
+#    classification = "C-SUR2-AN-2-0"
 # 
 #    Number of points
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPFIT'
@@ -88,7 +90,7 @@ class  EXPFIT(CUTEst_problem):
             ename = 'E'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXPIH')
-            ielftype = arrset(ielftype, ie, iet_["eEXPIH"])
+            ielftype = arrset(ielftype,ie,iet_["eEXPIH"])
             self.x0 = np.zeros((self.n,1))
             vname = 'ALPHA'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -120,8 +122,10 @@ class  EXPFIT(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-2-0"
+        self.pbclass = "C-SUR2-AN-2-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

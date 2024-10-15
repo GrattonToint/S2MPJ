@@ -16,7 +16,7 @@ class  LUKVLE11(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 2001
 # 
-#    classification = "OOR2-AY-V-V"
+#    classification = "C-OOR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -25,6 +25,8 @@ class  LUKVLE11(CUTEst_problem):
 # IE N                   998            $-PARAMETER
 # IE N                   9998           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLE11'
@@ -163,7 +165,7 @@ class  LUKVLE11(CUTEst_problem):
             ename = 'EA'+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eC21')
-            ielftype = arrset(ielftype, ie, iet_["eC21"])
+            ielftype = arrset(ielftype,ie,iet_["eC21"])
             vname = 'X'+str(K)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -175,7 +177,7 @@ class  LUKVLE11(CUTEst_problem):
             ename = 'EB'+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eS')
-            ielftype = arrset(ielftype, ie, iet_["eS"])
+            ielftype = arrset(ielftype,ie,iet_["eS"])
             vname = 'X'+str(int(v_['K+3']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -187,7 +189,7 @@ class  LUKVLE11(CUTEst_problem):
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eC21')
-            ielftype = arrset(ielftype, ie, iet_["eC21"])
+            ielftype = arrset(ielftype,ie,iet_["eC21"])
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['K+2']))
@@ -252,8 +254,12 @@ class  LUKVLE11(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

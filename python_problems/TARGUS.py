@@ -20,9 +20,11 @@ class  TARGUS(CUTEst_problem):
 #    SIF input: Jordi Castro, 2006 as L2_targus.mps
 #    see http://www-eio.upc.es/~jcastro/data.html
 # 
-#    classification = "QLR2-RN-162-63"
+#    classification = "C-QLR2-RN-162-63"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TARGUS'
@@ -2637,9 +2639,12 @@ class  TARGUS(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "QLR2-RN-162-63"
+        self.pbclass = "C-QLR2-RN-162-63"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
         self.H = self.H.tocsr()
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -21,13 +21,15 @@ class  SCW1(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2020
 # 
-#    classification = "SLR2-MN-V-V"
+#    classification = "C-SLR2-MN-V-V"
 # 
 #    Number of internal knots
 # 
 #           Alternative values for the SIF file parameters:
 # IE K                   1              $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCW1'
@@ -141,7 +143,7 @@ class  SCW1(CUTEst_problem):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSINT')
-            ielftype = arrset(ielftype, ie, iet_["eSINT"])
+            ielftype = arrset(ielftype,ie,iet_["eSINT"])
             vname = 'T'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -149,7 +151,7 @@ class  SCW1(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOST')
-            ielftype = arrset(ielftype, ie, iet_["eCOST"])
+            ielftype = arrset(ielftype,ie,iet_["eCOST"])
             vname = 'T'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -222,8 +224,12 @@ class  SCW1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SLR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SLR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

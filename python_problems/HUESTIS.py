@@ -13,7 +13,7 @@ class  HUESTIS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, January 1993.
 # 
-#    classification = "QLR2-MN-V-V"
+#    classification = "C-QLR2-MN-V-V"
 # 
 #    Number of variables
 # 
@@ -23,6 +23,8 @@ class  HUESTIS(CUTEst_problem):
 # IE K                   1000           $-PARAMETER    original value
 # IE K                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HUESTIS'
@@ -128,9 +130,9 @@ class  HUESTIS(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset( ielftype,ie,iet_['eSQ'])
+                ielftype = arrset(ielftype,ie,iet_['eSQ'])
             vname = 'M'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='U1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -164,8 +166,12 @@ class  HUESTIS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

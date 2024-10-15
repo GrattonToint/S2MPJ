@@ -34,7 +34,7 @@ class  FMINSRF2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, November 1991.
 # 
-#    classification = "OUR2-MY-V-0"
+#    classification = "C-OUR2-MY-V-0"
 # 
 #    P is the number of points in one side of the unit square
 # 
@@ -47,6 +47,8 @@ class  FMINSRF2(CUTEst_problem):
 # IE P                   32             $-PARAMETER n = 1024
 # IE P                   75             $-PARAMETER n = 5625
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FMINSRF2'
@@ -161,25 +163,25 @@ class  FMINSRF2(CUTEst_problem):
                 ename = 'A'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'B'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -216,7 +218,9 @@ class  FMINSRF2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-MY-V-0"
+        self.pbclass = "C-OUR2-MY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -1,4 +1,4 @@
-function FLOSP2HH(action,args...)
+function FLOSP2HH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -29,7 +29,7 @@ function FLOSP2HH(action,args...)
 # 
 #    SIF input: Nick Gould, August 1993.
 # 
-#    classification = "NQR2-MY-V-V"
+#    classification = "C-NQR2-MY-V-V"
 # 
 #    Half the number of discretization intervals
 #    Number of variables = 3(2M+1)**2 
@@ -43,6 +43,8 @@ function FLOSP2HH(action,args...)
 # IE M                   15             $-PARAMETER n=2883
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FLOSP2HH"
 
@@ -50,7 +52,7 @@ function FLOSP2HH(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -380,7 +382,7 @@ function FLOSP2HH(action,args...)
                 ename = "E"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePROD")
-                arrset(ielftype, ie, iet_["ePROD"])
+                arrset(ielftype,ie,iet_["ePROD"])
                 vname = "PS"*string(I)*","*string(Int64(v_["J+"]))
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="PSIP",elftv[ielftype[ie]])
@@ -400,7 +402,7 @@ function FLOSP2HH(action,args...)
                 ename = "F"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePROD")
-                arrset(ielftype, ie, iet_["ePROD"])
+                arrset(ielftype,ie,iet_["ePROD"])
                 vname = "PS"*string(Int64(v_["I+"]))*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="PSIP",elftv[ielftype[ie]])
@@ -448,9 +450,14 @@ function FLOSP2HH(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NQR2-MY-V-V"
+        pb.pbclass = "C-NQR2-MY-V-V"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -492,7 +499,9 @@ function FLOSP2HH(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -504,7 +513,7 @@ function FLOSP2HH(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

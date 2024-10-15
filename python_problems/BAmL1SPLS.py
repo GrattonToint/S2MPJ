@@ -14,11 +14,13 @@ class  BAmL1SPLS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 2016
 # 
-#    classification = "SUR2-MN-57-0"
+#    classification = "C-SUR2-MN-57-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BAmL1SPLS'
@@ -402,7 +404,7 @@ class  BAmL1SPLS(CUTEst_problem):
             ename = 'P'+str(I)+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -412,7 +414,7 @@ class  BAmL1SPLS(CUTEst_problem):
                 ename = 'P'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePROD')
-                ielftype = arrset(ielftype, ie, iet_["ePROD"])
+                ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 vname = 'X'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -15415,8 +15417,10 @@ class  BAmL1SPLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-57-0"
+        self.pbclass = "C-SUR2-MN-57-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

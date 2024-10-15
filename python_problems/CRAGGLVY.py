@@ -19,7 +19,7 @@ class  CRAGGLVY(CUTEst_problem):
 #    See  also Buckley#18
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OUR2-AY-V-0"
+#    classification = "C-OUR2-AY-V-0"
 # 
 #    M is the number of group sets
 # 
@@ -32,6 +32,8 @@ class  CRAGGLVY(CUTEst_problem):
 # IE M                   499            $-PARAMETER n = 1000
 # IE M                   2499           $-PARAMETER n = 5000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CRAGGLVY'
@@ -133,21 +135,21 @@ class  CRAGGLVY(CUTEst_problem):
             ename = 'AE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXPN')
-            ielftype = arrset(ielftype, ie, iet_["eEXPN"])
+            ielftype = arrset(ielftype,ie,iet_["eEXPN"])
             vname = 'X'+str(int(v_['2I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'CE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eTANG')
-            ielftype = arrset(ielftype, ie, iet_["eTANG"])
+            ielftype = arrset(ielftype,ie,iet_["eTANG"])
             vname = 'X'+str(int(v_['2I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -197,7 +199,9 @@ class  CRAGGLVY(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AY-V-0"
+        self.pbclass = "C-OUR2-AY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

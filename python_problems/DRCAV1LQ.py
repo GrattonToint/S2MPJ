@@ -28,7 +28,7 @@ class  DRCAV1LQ(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1995.
 # 
-#    classification = "OXR2-MY-V-V"
+#    classification = "C-OXR2-MY-V-V"
 # 
 #    Discretization mesh: n = (M+3)**2 - fixed variables
 # 
@@ -37,6 +37,8 @@ class  DRCAV1LQ(CUTEst_problem):
 # IE M                   31             $-PARAMETER  n =   961
 # IE M                   63             $-PARAMETER  n =  3969
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRCAV1LQ'
@@ -185,7 +187,7 @@ class  DRCAV1LQ(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eIPR')
-                    ielftype = arrset( ielftype,ie,iet_['eIPR'])
+                    ielftype = arrset(ielftype,ie,iet_['eIPR'])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'Y'+str(I)+','+str(int(v_['J+1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -231,7 +233,7 @@ class  DRCAV1LQ(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eIPR')
-                    ielftype = arrset( ielftype,ie,iet_['eIPR'])
+                    ielftype = arrset(ielftype,ie,iet_['eIPR'])
                 vname = 'Y'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='A1')[0]
@@ -304,8 +306,10 @@ class  DRCAV1LQ(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OXR2-MY-V-V"
+        self.pbclass = "C-OXR2-MY-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

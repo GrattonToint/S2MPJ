@@ -15,12 +15,14 @@ class  LINSPANH(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Sept 1990.
 # 
-#    classification = "LNR2-MN-97-33"
+#    classification = "C-LNR2-MN-97-33"
 # 
 #    Number of arcs = 97
 #    Number of nodes
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LINSPANH'
@@ -1126,7 +1128,10 @@ class  LINSPANH(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "LNR2-MN-97-33"
+        self.pbclass = "C-LNR2-MN-97-33"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

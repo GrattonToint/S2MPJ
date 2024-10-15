@@ -11,7 +11,7 @@ function varargout = INDEF(action,varargin)
 % 
 %    SIF input: Nick Gould, Oct 1992.
 % 
-%    classification = 'OUR2-AN-V-0'
+%    classification = 'C-OUR2-AN-V-0'
 % 
 %    The number of variables is N.
 % 
@@ -22,6 +22,8 @@ function varargout = INDEF(action,varargin)
 % IE N                   1000           $-PARAMETER     original value
 % IE N                   5000           $-PARAMETER
 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Translated to Matlab by S2MPJ version 6 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -129,7 +131,7 @@ switch(action)
         [it,igt_] = s2mpjlib('ii','gCOS',igt_);
         grftp{it}{1} = 'ALPHA';
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
+        [pbm.grelt{1:ngrp}] = deal([]);
         nlc = [];
         for I=v_('2'):v_('N-1')
             ig = ig_(['COS',int2str(I)]);
@@ -142,7 +144,9 @@ switch(action)
 % LO SOLTN               ??
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'OUR2-AN-V-0';
+        pb.pbclass = 'C-OUR2-AN-V-0';
+        pbm.objderlvl = 2;
+        pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
             varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
@@ -151,6 +155,7 @@ switch(action)
             varargout{1} = pb;
             varargout{2} = pbm;
         end
+
 % ********************
 %  SET UP THE GROUPS *
 %  ROUTINE           *
@@ -189,18 +194,19 @@ switch(action)
     %%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
     case {'fx','fgx','fgHx','cx','cJx','cJHx','cIx','cIJx','cIJHx','cIJxv','fHxv',...
-          'cJxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy','LHxyv','LIHxyv'}
+          'cJxv','cJtxv','cIJtxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy',...
+          'LHxyv','LIHxyv'}
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+            [varargout{1:nargout}] = deal(NaN);
         end
 
     otherwise
-        disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])
+        disp([' ERROR: action ',action,' unavailable for problem ',name,'.m'])
     end
 
 return

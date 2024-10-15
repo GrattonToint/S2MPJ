@@ -11,7 +11,7 @@ class  EXPLIN2(CUTEst_problem):
 # 
 #    SIF input:  Ph. Toint, 1992.
 # 
-#    classification = "OBR2-AN-V-V"
+#    classification = "C-OBR2-AN-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
@@ -22,6 +22,8 @@ class  EXPLIN2(CUTEst_problem):
 # 
 # IE N                   1200           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPLIN2'
@@ -103,13 +105,13 @@ class  EXPLIN2(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eEXP')
-                ielftype = arrset( ielftype,ie,iet_['eEXP'])
+                ielftype = arrset(ielftype,ie,iet_['eEXP'])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,10.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(10.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,10.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(10.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -136,8 +138,10 @@ class  EXPLIN2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-V-V"
+        self.pbclass = "C-OBR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

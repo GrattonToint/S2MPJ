@@ -1,4 +1,4 @@
-function SCOND1LS(action,args...)
+function SCOND1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -19,7 +19,7 @@ function SCOND1LS(action,args...)
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SBR2-AN-V-V"
+#    classification = "C-SBR2-AN-V-V"
 # 
 #    N  = Number of discretized point inside the interval [a, b]
 #    LN = Index of the last negative discretization point
@@ -29,6 +29,8 @@ function SCOND1LS(action,args...)
 # IE N                   10             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SCOND1LS"
 
@@ -36,7 +38,7 @@ function SCOND1LS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -158,9 +160,10 @@ function SCOND1LS(action,args...)
             ename = "EA"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWE1")
-            arrset(ielftype, ie, iet_["eWE1"])
+            arrset(ielftype,ie,iet_["eWE1"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,v_["ULW"],v_["UUP"],0.0)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(v_["ULW"]),Float64(v_["UUP"]),Float64(0.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="LAC",elftp[ielftype[ie]])
@@ -172,9 +175,10 @@ function SCOND1LS(action,args...)
             ename = "EB"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eWE1")
-            arrset(ielftype, ie, iet_["eWE1"])
+            arrset(ielftype,ie,iet_["eWE1"])
             vname = "U"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,v_["ULW"],v_["UUP"],0.0)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(v_["ULW"]),Float64(v_["UUP"]),Float64(0.0)))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="LAC",elftp[ielftype[ie]])
@@ -209,8 +213,11 @@ function SCOND1LS(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "SBR2-AN-V-V"
+        pb.pbclass = "C-SBR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -266,7 +273,9 @@ function SCOND1LS(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -278,7 +287,7 @@ function SCOND1LS(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

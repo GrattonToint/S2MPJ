@@ -11,12 +11,14 @@ class  HONG(CUTEst_problem):
 # 
 #    SIF input: A.R.Conn, Jan 1991.
 # 
-#    classification = "OLR2-AN-4-1"
+#    classification = "C-OLR2-AN-4-1"
 # 
 #   Problem parameters
 # 
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HONG'
@@ -105,9 +107,9 @@ class  HONG(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset( ielftype,ie,iet_['eEXP'])
+            ielftype = arrset(ielftype,ie,iet_['eEXP'])
         vname = 'T1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -124,9 +126,9 @@ class  HONG(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset( ielftype,ie,iet_['eEXP'])
+            ielftype = arrset(ielftype,ie,iet_['eEXP'])
         vname = 'T2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -143,9 +145,9 @@ class  HONG(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset( ielftype,ie,iet_['eEXP'])
+            ielftype = arrset(ielftype,ie,iet_['eEXP'])
         vname = 'T3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -162,9 +164,9 @@ class  HONG(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset( ielftype,ie,iet_['eEXP'])
+            ielftype = arrset(ielftype,ie,iet_['eEXP'])
         vname = 'T4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -215,8 +217,12 @@ class  HONG(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-AN-4-1"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-AN-4-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

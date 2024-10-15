@@ -14,9 +14,11 @@ class  SYNTHES2(CUTEst_problem):
 # 
 #    SIF input: S. Leyffer, October 1997
 # 
-#    classification = "OOR2-AN-11-14"
+#    classification = "C-OOR2-AN-11-14"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SYNTHES2'
@@ -235,7 +237,7 @@ class  SYNTHES2(CUTEst_problem):
         ename = 'LOGX4X5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLOGSUM')
-        ielftype = arrset(ielftype, ie, iet_["eLOGSUM"])
+        ielftype = arrset(ielftype,ie,iet_["eLOGSUM"])
         self.x0 = np.zeros((self.n,1))
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -248,7 +250,7 @@ class  SYNTHES2(CUTEst_problem):
         ename = 'EXPX1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eEXPA')
-        ielftype = arrset(ielftype, ie, iet_["eEXPA"])
+        ielftype = arrset(ielftype,ie,iet_["eEXPA"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -258,7 +260,7 @@ class  SYNTHES2(CUTEst_problem):
         ename = 'EXPX2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eEXPA')
-        ielftype = arrset(ielftype, ie, iet_["eEXPA"])
+        ielftype = arrset(ielftype,ie,iet_["eEXPA"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -315,9 +317,13 @@ class  SYNTHES2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-11-14"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-11-14"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

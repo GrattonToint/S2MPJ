@@ -1,4 +1,4 @@
-function NET1(action,args...)
+function NET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -9,11 +9,13 @@ function NET1(action,args...)
 #    A gas network problem for the south-east of England.
 # 
 #     SIF input: Sybille Schachler, Oxford, August 1992.
-#    classification = "OOI2-RN-48-57"
+#    classification = "C-OOI2-RN-48-57"
 # 
 #    ...Problem size parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NET1"
@@ -22,7 +24,7 @@ function NET1(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -552,17 +554,17 @@ function NET1(action,args...)
         ename = "PANH1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -570,17 +572,17 @@ function NET1(action,args...)
         ename = "PANH2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -588,17 +590,17 @@ function NET1(action,args...)
         ename = "PANH3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -606,17 +608,17 @@ function NET1(action,args...)
         ename = "PANH4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -624,17 +626,17 @@ function NET1(action,args...)
         ename = "PANH5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -642,17 +644,17 @@ function NET1(action,args...)
         ename = "PANH6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -660,17 +662,17 @@ function NET1(action,args...)
         ename = "PANH7"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -678,17 +680,17 @@ function NET1(action,args...)
         ename = "PANH8"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -696,17 +698,17 @@ function NET1(action,args...)
         ename = "PANH9"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -714,17 +716,17 @@ function NET1(action,args...)
         ename = "PANH10"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -732,17 +734,17 @@ function NET1(action,args...)
         ename = "PANH11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -750,17 +752,17 @@ function NET1(action,args...)
         ename = "PANH12"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -768,17 +770,17 @@ function NET1(action,args...)
         ename = "PANH13"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -786,17 +788,17 @@ function NET1(action,args...)
         ename = "PANH14"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -804,17 +806,17 @@ function NET1(action,args...)
         ename = "PANH15"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -822,17 +824,17 @@ function NET1(action,args...)
         ename = "PANH16"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -840,17 +842,17 @@ function NET1(action,args...)
         ename = "PANH17"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA0PANHAN")
-        arrset(ielftype, ie, iet_["eA0PANHAN"])
+        arrset(ielftype,ie,iet_["eA0PANHAN"])
         vname = "NOP18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PFL17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PIPRES",elftp[ielftype[ie]])
@@ -858,21 +860,21 @@ function NET1(action,args...)
         ename = "HPMAX18"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA1MAXHP")
-        arrset(ielftype, ie, iet_["eA1MAXHP"])
+        arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = "NOP2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -882,21 +884,21 @@ function NET1(action,args...)
         ename = "HPMAX19"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA1MAXHP")
-        arrset(ielftype, ie, iet_["eA1MAXHP"])
+        arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -906,21 +908,21 @@ function NET1(action,args...)
         ename = "HPMAX20"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA1MAXHP")
-        arrset(ielftype, ie, iet_["eA1MAXHP"])
+        arrset(ielftype,ie,iet_["eA1MAXHP"])
         vname = "NOP7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -930,21 +932,21 @@ function NET1(action,args...)
         ename = "HPFUN18"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA2HPFUN")
-        arrset(ielftype, ie, iet_["eA2HPFUN"])
+        arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = "NOP2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -954,21 +956,21 @@ function NET1(action,args...)
         ename = "HPFUN19"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA2HPFUN")
-        arrset(ielftype, ie, iet_["eA2HPFUN"])
+        arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = "NOP5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -978,21 +980,21 @@ function NET1(action,args...)
         ename = "HPFUN20"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eA2HPFUN")
-        arrset(ielftype, ie, iet_["eA2HPFUN"])
+        arrset(ielftype,ie,iet_["eA2HPFUN"])
         vname = "NOP7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="PIN",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "NOP8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="POUT",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CFL20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="FLOW",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "CBV20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,5.00000e+02)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(5.00000e+02))
         posev = findfirst(x->x=="CBV",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="IPL",elftp[ielftype[ie]])
@@ -1037,8 +1039,13 @@ function NET1(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOI2-RN-48-57"
+        pb.pbclass = "C-OOI2-RN-48-57"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1194,7 +1201,9 @@ function NET1(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1206,7 +1215,7 @@ function NET1(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

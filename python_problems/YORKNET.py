@@ -17,13 +17,15 @@ class  YORKNET(CUTEst_problem):
 #               e-mail: bul@uk.ac.dmu * Tel no.0533 577070
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "SOR2-AY-312-256"
+#    classification = "C-SOR2-AY-312-256"
 # 
 # DECLARE CONSTANTS DESCRIBING NETWORK
 # 
 # STANDARD DECLARATIONS
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YORKNET'
@@ -602,143 +604,143 @@ class  YORKNET(CUTEst_problem):
                 ename = 'EA'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXPOW')
-                ielftype = arrset(ielftype, ie, iet_["eXPOW"])
+                ielftype = arrset(ielftype,ie,iet_["eXPOW"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for J in range(int(v_['SuVAL']),int(v_['EuVAL'])+1):
                 ename = 'EA'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXPOW')
-                ielftype = arrset(ielftype, ie, iet_["eXPOW"])
+                ielftype = arrset(ielftype,ie,iet_["eXPOW"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
                 ename = 'EA'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXSQ')
-                ielftype = arrset(ielftype, ie, iet_["eXSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eXSQ"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'EB'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXZ')
-                ielftype = arrset(ielftype, ie, iet_["eXZ"])
+                ielftype = arrset(ielftype,ie,iet_["eXZ"])
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'u'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'EC'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXSQ')
-                ielftype = arrset(ielftype, ie, iet_["eXSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eXSQ"])
                 vname = 'u'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'EH'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXMYZSQ')
-                ielftype = arrset(ielftype, ie, iet_["eXMYZSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eXMYZSQ"])
                 vname = 'u'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['11']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['7']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['11']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['9']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['12']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['4']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['12']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['6']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['13']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['1']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['13']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['5']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['14']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['2']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['14']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['11']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['15']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['2']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'EH'+str(int(v_['15']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'h'+str(int(v_['11']))+','+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NSTEP'])+1):
             ename = 'PPW'+str(int(v_['11']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePMP4')
-            ielftype = arrset(ielftype, ie, iet_["ePMP4"])
+            ielftype = arrset(ielftype,ie,iet_["ePMP4"])
             ename = 'PPW'+str(int(v_['12']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePMP3')
-            ielftype = arrset(ielftype, ie, iet_["ePMP3"])
+            ielftype = arrset(ielftype,ie,iet_["ePMP3"])
             ename = 'PPW'+str(int(v_['13']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePMP1')
-            ielftype = arrset(ielftype, ie, iet_["ePMP1"])
+            ielftype = arrset(ielftype,ie,iet_["ePMP1"])
             ename = 'PPW'+str(int(v_['14']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePMP2')
-            ielftype = arrset(ielftype, ie, iet_["ePMP2"])
+            ielftype = arrset(ielftype,ie,iet_["ePMP2"])
             ename = 'PPW'+str(int(v_['15']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePMP2')
-            ielftype = arrset(ielftype, ie, iet_["ePMP2"])
+            ielftype = arrset(ielftype,ie,iet_["ePMP2"])
             for J in range(int(v_['SuPMP']),int(v_['EuPMP'])+1):
                 ename = 'PPW'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 vname = 'q'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='Q')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -810,8 +812,12 @@ class  YORKNET(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SOR2-AY-312-256"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SOR2-AY-312-256"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -18,12 +18,14 @@ class  AIRCRFTB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SXR2-RN-8-0"
+#    classification = "C-SXR2-RN-8-0"
 # 
 #    Values for the controls
 #    1) Elevator
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRCRFTB'
@@ -152,143 +154,143 @@ class  AIRCRFTB(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'YAWRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E1B'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'YAWRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E1C'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E1D'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2A'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'YAWRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2B'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3A'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3B'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3C'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'PITCHRAT'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'SSLIPANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'ROLLRATE'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'ATTCKANG'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -352,7 +354,9 @@ class  AIRCRFTB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SXR2-RN-8-0"
+        self.pbclass = "C-SXR2-RN-8-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

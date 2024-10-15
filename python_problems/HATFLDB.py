@@ -15,11 +15,13 @@ class  HATFLDB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, May 1990.
 # 
-#    classification = "SBR2-AN-4-0"
+#    classification = "C-SBR2-AN-4-0"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HATFLDB'
@@ -89,9 +91,9 @@ class  HATFLDB(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eSQR')
-                ielftype = arrset( ielftype,ie,iet_['eSQR'])
+                ielftype = arrset(ielftype,ie,iet_['eSQR'])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0000001,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0000001),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -122,7 +124,9 @@ class  HATFLDB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-4-0"
+        self.pbclass = "C-SBR2-AN-4-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

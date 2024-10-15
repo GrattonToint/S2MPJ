@@ -17,9 +17,11 @@ class  GOTTFR(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "NQR2-AN-2-2"
+#    classification = "C-NQR2-AN-2-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GOTTFR'
@@ -95,25 +97,25 @@ class  GOTTFR(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eET1')
-        ielftype = arrset(ielftype, ie, iet_["eET1"])
+        ielftype = arrset(ielftype,ie,iet_["eET1"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eET2')
-        ielftype = arrset(ielftype, ie, iet_["eET2"])
+        ielftype = arrset(ielftype,ie,iet_["eET2"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -145,8 +147,12 @@ class  GOTTFR(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NQR2-AN-2-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NQR2-AN-2-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

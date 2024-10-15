@@ -17,9 +17,11 @@ class  FLETCHER(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1994.
 # 
-#    classification = "QOR2-AN-4-4"
+#    classification = "C-QOR2-AN-4-4"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FLETCHER'
@@ -125,49 +127,49 @@ class  FLETCHER(CUTEst_problem):
         ename = 'OBE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='YY')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSPEC')
-        ielftype = arrset(ielftype, ie, iet_["eSPEC"])
+        ielftype = arrset(ielftype,ie,iet_["eSPEC"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='YY')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='VV')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='WW')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'X3SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'X4SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='XX')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -210,8 +212,12 @@ class  FLETCHER(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-AN-4-4"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-AN-4-4"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

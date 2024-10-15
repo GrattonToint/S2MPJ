@@ -23,7 +23,7 @@ class  MANCINONE(CUTEst_problem):
 #               Nick Gould (nonlinear equation version), Jan 2019
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #    The definitions
 #      s_{i,j} = \sin \log v_{i,j}   and s_{i,j} = \cos \log v_{i,j}
@@ -39,6 +39,8 @@ class  MANCINONE(CUTEst_problem):
 # IE N                   50             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MANCINONE'
@@ -206,7 +208,7 @@ class  MANCINONE(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eMANC')
-                ielftype = arrset(ielftype, ie, iet_["eMANC"])
+                ielftype = arrset(ielftype,ie,iet_["eMANC"])
                 vname = 'X'+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -223,7 +225,7 @@ class  MANCINONE(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eMANC')
-                ielftype = arrset(ielftype, ie, iet_["eMANC"])
+                ielftype = arrset(ielftype,ie,iet_["eMANC"])
                 vname = 'X'+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -273,8 +275,12 @@ class  MANCINONE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

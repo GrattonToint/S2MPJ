@@ -15,11 +15,13 @@ class  MAXLIKA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "OBR2-AY-8-0"
+#    classification = "C-OBR2-AY-8-0"
 # 
 #    Constants
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MAXLIKA'
@@ -360,7 +362,7 @@ class  MAXLIKA(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eAB')
-            ielftype = arrset(ielftype, ie, iet_["eAB"])
+            ielftype = arrset(ielftype,ie,iet_["eAB"])
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -378,7 +380,7 @@ class  MAXLIKA(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eAB')
-            ielftype = arrset(ielftype, ie, iet_["eAB"])
+            ielftype = arrset(ielftype,ie,iet_["eAB"])
             vname = 'X2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -396,7 +398,7 @@ class  MAXLIKA(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eC')
-            ielftype = arrset(ielftype, ie, iet_["eC"])
+            ielftype = arrset(ielftype,ie,iet_["eC"])
             vname = 'X2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -440,7 +442,9 @@ class  MAXLIKA(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AY-8-0"
+        self.pbclass = "C-OBR2-AY-8-0"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

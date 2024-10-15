@@ -12,9 +12,11 @@ class  BQPGABIM(CUTEst_problem):
 # 
 #    SIF input: N. Gould, July 1990.
 # 
-#    classification = "QBR2-AN-50-0"
+#    classification = "C-QBR2-AN-50-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BQPGABIM'
@@ -334,2001 +336,2001 @@ class  BQPGABIM(CUTEst_problem):
         ename = 'D   1   1'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         self.x0 = np.zeros((self.n,1))
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  11  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  12'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '12'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  12'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '12'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  12  12'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '12'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  20  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  21'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '21'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  21'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '21'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  21  21'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '21'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  29  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  36  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  37'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '37'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  36  37'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '37'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  37  37'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '37'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  41  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  42'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '42'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  42'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '42'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  42  42'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '42'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   1  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  49  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   2   2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  13'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '13'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  13'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '13'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  13  13'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '13'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  22'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '22'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  22'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '22'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  22  22'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '22'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  30'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '30'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  29  30'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '30'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  30  30'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '30'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  38'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '38'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  36  38'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '38'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  38  38'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '38'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   2  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   3   3'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  23'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '23'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  23'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '23'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  23  23'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '23'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  43'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '43'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  43'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '43'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  43  43'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '43'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   3  50'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '50'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  49  50'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '50'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  50  50'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '50'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   4   4'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  14'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  14'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  14  14'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  31'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '31'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  29  31'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '31'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  31  31'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '31'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  44'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '44'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  44'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '44'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  44  44'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '44'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   4  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   5   5'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  15'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  15'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  15  15'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  24'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '24'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  24'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '24'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  24  24'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '24'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  32'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  29  32'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  32  32'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  39'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '39'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  36  39'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '39'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  39  39'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '39'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  45'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '45'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  45'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '45'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  45  45'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '45'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   5  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   6   6'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  16'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  16'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  16  16'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  25'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '25'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  25'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '25'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  25  25'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '25'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  33'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '33'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  29  33'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '33'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  33  33'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '33'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  46'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '46'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  46'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '46'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  46  46'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '46'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   6  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   7   7'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  17'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '17'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  17'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '17'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  17  17'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '17'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  34'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '34'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  29  34'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '34'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  34  34'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '34'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   7  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   8   8'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  40'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '40'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  36  40'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '40'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  40  40'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '40'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   8  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D   9   9'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  26'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '26'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  26'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '26'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  26  26'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '26'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  35'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '35'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  29  35'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '35'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  35  35'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '35'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O   9  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  10  10'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  11'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  20'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  29'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  36'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  41'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  47'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '47'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  47'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '47'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  47  47'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '47'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  10  49'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '49'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  18'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  18  18'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  27'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '27'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  27  27'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '27'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  11  19'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  19  19'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  20  28'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '28'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  28  28'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '28'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O  41  48'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-            ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+            ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
         vname = '41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = '48'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'D  48  48'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eDIAG')
-        ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+        ielftype = arrset(ielftype,ie,iet_["eDIAG"])
         vname = '48'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.1,0.1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.1),float(0.1),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -2864,8 +2866,10 @@ class  BQPGABIM(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "QBR2-AN-50-0"
+        self.pbclass = "C-QBR2-AN-50-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -15,7 +15,7 @@ class  HANGING(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, November 1994.
 # 
-#    classification = "LQR2-AY-V-V"
+#    classification = "C-LQR2-AY-V-V"
 # 
 #    dimension of the grid
 # 
@@ -34,6 +34,8 @@ class  HANGING(CUTEst_problem):
 # 
 # IE NX                  40             $-PARAMETER n = 3600
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HANGING'
@@ -181,7 +183,7 @@ class  HANGING(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eISQ')
-                    ielftype = arrset( ielftype,ie,iet_['eISQ'])
+                    ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -194,7 +196,7 @@ class  HANGING(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eISQ')
-                    ielftype = arrset( ielftype,ie,iet_['eISQ'])
+                    ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Y'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -207,7 +209,7 @@ class  HANGING(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eISQ')
-                    ielftype = arrset( ielftype,ie,iet_['eISQ'])
+                    ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Z'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -223,7 +225,7 @@ class  HANGING(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eISQ')
-                    ielftype = arrset( ielftype,ie,iet_['eISQ'])
+                    ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -236,7 +238,7 @@ class  HANGING(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eISQ')
-                    ielftype = arrset( ielftype,ie,iet_['eISQ'])
+                    ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Y'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -249,7 +251,7 @@ class  HANGING(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eISQ')
-                    ielftype = arrset( ielftype,ie,iet_['eISQ'])
+                    ielftype = arrset(ielftype,ie,iet_['eISQ'])
                 vname = 'Z'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -310,8 +312,12 @@ class  HANGING(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

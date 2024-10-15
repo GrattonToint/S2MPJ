@@ -1,4 +1,4 @@
-function LEWISPOL(action,args...)
+function LEWISPOL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -15,11 +15,13 @@ function LEWISPOL(action,args...)
 # 
 #    SIF input: A.R. Conn and Ph. Toint, March 1990.
 # 
-#    classification = "QOR2-AN-6-9"
+#    classification = "C-QOR2-AN-6-9"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LEWISPOL"
@@ -28,7 +30,7 @@ function LEWISPOL(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -159,17 +161,17 @@ function LEWISPOL(action,args...)
             ename = "O"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
-            arrset(ielftype, ie, iet_["eSQ"])
+            arrset(ielftype,ie,iet_["eSQ"])
             vname = "A"*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCB")
-            arrset(ielftype, ie, iet_["eCB"])
+            arrset(ielftype,ie,iet_["eCB"])
             vname = "A"*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -205,8 +207,13 @@ function LEWISPOL(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QOR2-AN-6-9"
+        pb.pbclass = "C-QOR2-AN-6-9"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -264,7 +271,9 @@ function LEWISPOL(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -276,7 +285,7 @@ function LEWISPOL(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

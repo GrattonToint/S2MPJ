@@ -19,7 +19,7 @@ class  SBRYBND(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint and Nick Gould, Nov 1997.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    N is the number of equations and variables (variable).
 # 
@@ -31,6 +31,8 @@ class  SBRYBND(CUTEst_problem):
 # IE N                   1000           $-PARAMETER     original value
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SBRYBND'
@@ -181,7 +183,7 @@ class  SBRYBND(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -191,7 +193,7 @@ class  SBRYBND(CUTEst_problem):
             ename = 'Q'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCB')
-            ielftype = arrset(ielftype, ie, iet_["eCB"])
+            ielftype = arrset(ielftype,ie,iet_["eCB"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -275,7 +277,9 @@ class  SBRYBND(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

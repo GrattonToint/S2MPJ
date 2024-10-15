@@ -17,7 +17,7 @@ class  CAMSHAPE(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, November 2000
 # 
-#    classification = "LOR2-AN-V-V"
+#    classification = "C-LOR2-AN-V-V"
 # 
 #    The number of discretization points
 # 
@@ -27,6 +27,8 @@ class  CAMSHAPE(CUTEst_problem):
 # IE N                   400            $-PARAMETER
 # IE N                   800            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CAMSHAPE'
@@ -202,7 +204,7 @@ class  CAMSHAPE(CUTEst_problem):
             ename = 'RA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'R'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -214,7 +216,7 @@ class  CAMSHAPE(CUTEst_problem):
             ename = 'RB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'R'+str(int(v_['I+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -226,7 +228,7 @@ class  CAMSHAPE(CUTEst_problem):
         ename = 'RA'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         ename = 'RA'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'R'+str(int(v_['N']))
@@ -242,7 +244,7 @@ class  CAMSHAPE(CUTEst_problem):
         ename = 'R2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         vname = 'R'+str(int(v_['N']))
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -303,8 +305,12 @@ class  CAMSHAPE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

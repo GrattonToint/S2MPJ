@@ -11,11 +11,13 @@ class  AVION2(CUTEst_problem):
 # 
 #    SIF input:  A. R. Conn, June 1993.
 # 
-#    classification = "OLR2-RN-49-15"
+#    classification = "C-OLR2-RN-49-15"
 # 
 #    Define useful parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AVION2'
@@ -581,7 +583,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'PK'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -593,7 +595,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eQDdSQ')
-        ielftype = arrset(ielftype, ie, iet_["eQDdSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eQDdSQ"])
         vname = 'SS'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
@@ -613,7 +615,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en12')
-        ielftype = arrset(ielftype, ie, iet_["en12"])
+        ielftype = arrset(ielftype,ie,iet_["en12"])
         vname = 'EF'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -625,7 +627,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en12d1')
-        ielftype = arrset(ielftype, ie, iet_["en12d1"])
+        ielftype = arrset(ielftype,ie,iet_["en12d1"])
         vname = 'SO'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -641,7 +643,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'SD'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -649,7 +651,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'SK'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -657,7 +659,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL7'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'MV'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -665,7 +667,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL8'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'MD'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -677,7 +679,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL9'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eQT')
-        ielftype = arrset(ielftype, ie, iet_["eQT"])
+        ielftype = arrset(ielftype,ie,iet_["eQT"])
         vname = 'MZ'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -689,7 +691,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL10'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'DV'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -701,7 +703,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL11'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en1dLIN')
-        ielftype = arrset(ielftype, ie, iet_["en1dLIN"])
+        ielftype = arrset(ielftype,ie,iet_["en1dLIN"])
         vname = 'PT'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -713,7 +715,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL12'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRT')
-        ielftype = arrset(ielftype, ie, iet_["eSQRT"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRT"])
         vname = 'PT'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -721,7 +723,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL13'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'SR'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -733,7 +735,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL14'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eQT')
-        ielftype = arrset(ielftype, ie, iet_["eQT"])
+        ielftype = arrset(ielftype,ie,iet_["eQT"])
         vname = 'MD'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -745,7 +747,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL15'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSURD')
-        ielftype = arrset(ielftype, ie, iet_["eSURD"])
+        ielftype = arrset(ielftype,ie,iet_["eSURD"])
         vname = 'SX'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -761,7 +763,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL16'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQPRD')
-        ielftype = arrset(ielftype, ie, iet_["eSQPRD"])
+        ielftype = arrset(ielftype,ie,iet_["eSQPRD"])
         vname = 'DE'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -773,7 +775,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL17'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQPRD')
-        ielftype = arrset(ielftype, ie, iet_["eSQPRD"])
+        ielftype = arrset(ielftype,ie,iet_["eSQPRD"])
         vname = 'DS'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
@@ -785,7 +787,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL18'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCBdSQQD')
-        ielftype = arrset(ielftype, ie, iet_["eCBdSQQD"])
+        ielftype = arrset(ielftype,ie,iet_["eCBdSQQD"])
         vname = 'VN'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
@@ -805,7 +807,7 @@ class  AVION2(CUTEst_problem):
         ename = 'EL19'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSREL')
-        ielftype = arrset(ielftype, ie, iet_["eSREL"])
+        ielftype = arrset(ielftype,ie,iet_["eSREL"])
         vname = 'SX'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -959,8 +961,12 @@ class  AVION2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-RN-49-15"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-RN-49-15"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ***********************
 #  SET UP THE FUNCTIONS *
 # ***********************

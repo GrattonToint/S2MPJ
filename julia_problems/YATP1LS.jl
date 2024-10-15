@@ -1,4 +1,4 @@
-function YATP1LS(action,args...)
+function YATP1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -22,7 +22,7 @@ function YATP1LS(action,args...)
 # 
 #    SIF input: Ph. Toint, June 2003.
 # 
-#    classification = "SUR2-AN-V-V"
+#    classification = "C-SUR2-AN-V-V"
 # 
 #    The dimension of the matrix
 # 
@@ -34,6 +34,8 @@ function YATP1LS(action,args...)
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YATP1LS"
 
@@ -41,7 +43,7 @@ function YATP1LS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -132,7 +134,7 @@ function YATP1LS(action,args...)
                 ename = "CB"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eCB")
-                arrset(ielftype, ie, iet_["eCB"])
+                arrset(ielftype,ie,iet_["eCB"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -140,7 +142,7 @@ function YATP1LS(action,args...)
                 ename = "LS"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
-                arrset(ielftype, ie, iet_["eSQ"])
+                arrset(ielftype,ie,iet_["eSQ"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -148,7 +150,7 @@ function YATP1LS(action,args...)
                 ename = "DC"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eLXC")
-                arrset(ielftype, ie, iet_["eLXC"])
+                arrset(ielftype,ie,iet_["eLXC"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -164,7 +166,7 @@ function YATP1LS(action,args...)
                 ename = "DS"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eLS")
-                arrset(ielftype, ie, iet_["eLS"])
+                arrset(ielftype,ie,iet_["eLS"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -180,7 +182,7 @@ function YATP1LS(action,args...)
                 ename = "SX"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eRAT")
-                arrset(ielftype, ie, iet_["eRAT"])
+                arrset(ielftype,ie,iet_["eRAT"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -231,8 +233,11 @@ function YATP1LS(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "SUR2-AN-V-V"
+        pb.pbclass = "C-SUR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -412,7 +417,9 @@ function YATP1LS(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -424,7 +431,7 @@ function YATP1LS(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

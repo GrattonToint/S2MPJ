@@ -1,4 +1,4 @@
-function SWOPF(action,args...)
+function SWOPF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -14,13 +14,15 @@ function SWOPF(action,args...)
 #    SIF input: R. Bacher, Dept of Electrical Engineering, ETH Zurich, 
 #               November 1994.
 # 
-#    classification = "LQR2-RN-83-92"
+#    classification = "C-LQR2-RN-83-92"
 # 
 #    Number of nodes       =   7
 #    Number of branches    =   7
 #    Number of generators  =   3
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SWOPF"
@@ -29,7 +31,7 @@ function SWOPF(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -1307,7 +1309,7 @@ function SWOPF(action,args...)
         ename = "E20001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1315,7 +1317,7 @@ function SWOPF(action,args...)
         ename = "F20001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1323,7 +1325,7 @@ function SWOPF(action,args...)
         ename = "E20002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1331,7 +1333,7 @@ function SWOPF(action,args...)
         ename = "F20002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1339,7 +1341,7 @@ function SWOPF(action,args...)
         ename = "E20003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1347,7 +1349,7 @@ function SWOPF(action,args...)
         ename = "F20003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1355,7 +1357,7 @@ function SWOPF(action,args...)
         ename = "E20004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1363,7 +1365,7 @@ function SWOPF(action,args...)
         ename = "F20004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1371,7 +1373,7 @@ function SWOPF(action,args...)
         ename = "E20005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1379,7 +1381,7 @@ function SWOPF(action,args...)
         ename = "F20005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1387,7 +1389,7 @@ function SWOPF(action,args...)
         ename = "E20006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1395,7 +1397,7 @@ function SWOPF(action,args...)
         ename = "F20006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1403,7 +1405,7 @@ function SWOPF(action,args...)
         ename = "E20007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VE0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1411,7 +1413,7 @@ function SWOPF(action,args...)
         ename = "F20007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "VF0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1419,7 +1421,7 @@ function SWOPF(action,args...)
         ename = "EIEI0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1431,7 +1433,7 @@ function SWOPF(action,args...)
         ename = "FIFI0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1443,7 +1445,7 @@ function SWOPF(action,args...)
         ename = "EIFI0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1455,7 +1457,7 @@ function SWOPF(action,args...)
         ename = "FIEI0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1467,7 +1469,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1479,7 +1481,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1491,7 +1493,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1503,7 +1505,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1515,7 +1517,7 @@ function SWOPF(action,args...)
         ename = "PI20001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1523,7 +1525,7 @@ function SWOPF(action,args...)
         ename = "QI20001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1531,7 +1533,7 @@ function SWOPF(action,args...)
         ename = "PJ20001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1539,7 +1541,7 @@ function SWOPF(action,args...)
         ename = "QJ20001"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1547,7 +1549,7 @@ function SWOPF(action,args...)
         ename = "EIEI0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1559,7 +1561,7 @@ function SWOPF(action,args...)
         ename = "FIFI0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1571,7 +1573,7 @@ function SWOPF(action,args...)
         ename = "EIFI0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1583,7 +1585,7 @@ function SWOPF(action,args...)
         ename = "FIEI0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1595,7 +1597,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1607,7 +1609,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1619,7 +1621,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1631,7 +1633,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1643,7 +1645,7 @@ function SWOPF(action,args...)
         ename = "PI20002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1651,7 +1653,7 @@ function SWOPF(action,args...)
         ename = "QI20002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1659,7 +1661,7 @@ function SWOPF(action,args...)
         ename = "PJ20002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1667,7 +1669,7 @@ function SWOPF(action,args...)
         ename = "QJ20002"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1675,7 +1677,7 @@ function SWOPF(action,args...)
         ename = "EIEI0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1687,7 +1689,7 @@ function SWOPF(action,args...)
         ename = "FIFI0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1699,7 +1701,7 @@ function SWOPF(action,args...)
         ename = "EIFI0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1711,7 +1713,7 @@ function SWOPF(action,args...)
         ename = "FIEI0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1723,7 +1725,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1735,7 +1737,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1747,7 +1749,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1759,7 +1761,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1771,7 +1773,7 @@ function SWOPF(action,args...)
         ename = "PI20003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1779,7 +1781,7 @@ function SWOPF(action,args...)
         ename = "QI20003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1787,7 +1789,7 @@ function SWOPF(action,args...)
         ename = "PJ20003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1795,7 +1797,7 @@ function SWOPF(action,args...)
         ename = "QJ20003"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1803,7 +1805,7 @@ function SWOPF(action,args...)
         ename = "EIEI0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1815,7 +1817,7 @@ function SWOPF(action,args...)
         ename = "FIFI0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1827,7 +1829,7 @@ function SWOPF(action,args...)
         ename = "EIFI0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1839,7 +1841,7 @@ function SWOPF(action,args...)
         ename = "FIEI0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1851,7 +1853,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1863,7 +1865,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1875,7 +1877,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1887,7 +1889,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1899,7 +1901,7 @@ function SWOPF(action,args...)
         ename = "PI20004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1907,7 +1909,7 @@ function SWOPF(action,args...)
         ename = "QI20004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1915,7 +1917,7 @@ function SWOPF(action,args...)
         ename = "PJ20004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1923,7 +1925,7 @@ function SWOPF(action,args...)
         ename = "QJ20004"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1931,7 +1933,7 @@ function SWOPF(action,args...)
         ename = "EIEI0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1943,7 +1945,7 @@ function SWOPF(action,args...)
         ename = "FIFI0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1955,7 +1957,7 @@ function SWOPF(action,args...)
         ename = "EIFI0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1967,7 +1969,7 @@ function SWOPF(action,args...)
         ename = "FIEI0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1979,7 +1981,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1991,7 +1993,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2003,7 +2005,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2015,7 +2017,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2027,7 +2029,7 @@ function SWOPF(action,args...)
         ename = "PI20005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2035,7 +2037,7 @@ function SWOPF(action,args...)
         ename = "QI20005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2043,7 +2045,7 @@ function SWOPF(action,args...)
         ename = "PJ20005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2051,7 +2053,7 @@ function SWOPF(action,args...)
         ename = "QJ20005"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2059,7 +2061,7 @@ function SWOPF(action,args...)
         ename = "EIEI0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2071,7 +2073,7 @@ function SWOPF(action,args...)
         ename = "FIFI0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2083,7 +2085,7 @@ function SWOPF(action,args...)
         ename = "EIFI0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2095,7 +2097,7 @@ function SWOPF(action,args...)
         ename = "FIEI0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2107,7 +2109,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2119,7 +2121,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2131,7 +2133,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2143,7 +2145,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2155,7 +2157,7 @@ function SWOPF(action,args...)
         ename = "PI20006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2163,7 +2165,7 @@ function SWOPF(action,args...)
         ename = "QI20006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2171,7 +2173,7 @@ function SWOPF(action,args...)
         ename = "PJ20006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2179,7 +2181,7 @@ function SWOPF(action,args...)
         ename = "QJ20006"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2187,7 +2189,7 @@ function SWOPF(action,args...)
         ename = "EIEI0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2199,7 +2201,7 @@ function SWOPF(action,args...)
         ename = "FIFI0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2211,7 +2213,7 @@ function SWOPF(action,args...)
         ename = "EIFI0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EI0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2223,7 +2225,7 @@ function SWOPF(action,args...)
         ename = "FIEI0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FI0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2235,7 +2237,7 @@ function SWOPF(action,args...)
         ename = "EJEJ0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2247,7 +2249,7 @@ function SWOPF(action,args...)
         ename = "FJFJ0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2259,7 +2261,7 @@ function SWOPF(action,args...)
         ename = "EJFJ0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "EJ0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2271,7 +2273,7 @@ function SWOPF(action,args...)
         ename = "FJEJ0007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXTIMESY")
-        arrset(ielftype, ie, iet_["eXTIMESY"])
+        arrset(ielftype,ie,iet_["eXTIMESY"])
         vname = "FJ0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2283,7 +2285,7 @@ function SWOPF(action,args...)
         ename = "PI20007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PI0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2291,7 +2293,7 @@ function SWOPF(action,args...)
         ename = "QI20007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QI0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2299,7 +2301,7 @@ function SWOPF(action,args...)
         ename = "PJ20007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "PJ0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2307,7 +2309,7 @@ function SWOPF(action,args...)
         ename = "QJ20007"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXSQUARE")
-        arrset(ielftype, ie, iet_["eXSQUARE"])
+        arrset(ielftype,ie,iet_["eXSQUARE"])
         vname = "QJ0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -2774,8 +2776,13 @@ function SWOPF(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LQR2-RN-83-92"
+        pb.pbclass = "C-LQR2-RN-83-92"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -2835,7 +2842,9 @@ function SWOPF(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -2847,7 +2856,7 @@ function SWOPF(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

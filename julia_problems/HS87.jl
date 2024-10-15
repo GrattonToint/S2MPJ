@@ -1,4 +1,4 @@
-function HS87(action,args...)
+function HS87(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -26,11 +26,13 @@ function HS87(action,args...)
 # 
 #    SIF input: Nick Gould, August 1991.
 # 
-#    classification = "OOI2-MN-6-4"
+#    classification = "C-OOI2-MN-6-4"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS87"
@@ -39,7 +41,7 @@ function HS87(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -178,7 +180,7 @@ function HS87(action,args...)
         ename = "OF1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eF1")
-        arrset(ielftype, ie, iet_["eF1"])
+        arrset(ielftype,ie,iet_["eF1"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -186,7 +188,7 @@ function HS87(action,args...)
         ename = "OF2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eF2")
-        arrset(ielftype, ie, iet_["eF2"])
+        arrset(ielftype,ie,iet_["eF2"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -194,7 +196,7 @@ function HS87(action,args...)
         ename = "C1E1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOS")
-        arrset(ielftype, ie, iet_["eCOS"])
+        arrset(ielftype,ie,iet_["eCOS"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -212,7 +214,7 @@ function HS87(action,args...)
         ename = "C1E2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQUARE")
-        arrset(ielftype, ie, iet_["eSQUARE"])
+        arrset(ielftype,ie,iet_["eSQUARE"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -220,7 +222,7 @@ function HS87(action,args...)
         ename = "C2E1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOS")
-        arrset(ielftype, ie, iet_["eCOS"])
+        arrset(ielftype,ie,iet_["eCOS"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -238,7 +240,7 @@ function HS87(action,args...)
         ename = "C2E2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQUARE")
-        arrset(ielftype, ie, iet_["eSQUARE"])
+        arrset(ielftype,ie,iet_["eSQUARE"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -246,7 +248,7 @@ function HS87(action,args...)
         ename = "C3E1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSIN")
-        arrset(ielftype, ie, iet_["eSIN"])
+        arrset(ielftype,ie,iet_["eSIN"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -264,7 +266,7 @@ function HS87(action,args...)
         ename = "C3E2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQUARE")
-        arrset(ielftype, ie, iet_["eSQUARE"])
+        arrset(ielftype,ie,iet_["eSQUARE"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -272,7 +274,7 @@ function HS87(action,args...)
         ename = "C4E1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSIN")
-        arrset(ielftype, ie, iet_["eSIN"])
+        arrset(ielftype,ie,iet_["eSIN"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -290,7 +292,7 @@ function HS87(action,args...)
         ename = "C4E2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQUARE")
-        arrset(ielftype, ie, iet_["eSQUARE"])
+        arrset(ielftype,ie,iet_["eSQUARE"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -358,8 +360,13 @@ function HS87(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOI2-MN-6-4"
+        pb.pbclass = "C-OOI2-MN-6-4"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -544,7 +551,9 @@ function HS87(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -556,7 +565,7 @@ function HS87(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -203,6 +203,14 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %         pb.objupper  is a real upper bound of the objective function's value, if known
 %         pb.xnames    is a cell of strings containing the name of the variables
 %         pb.cnames    is a cell of strings containing the name of the constraints
+%         pb.objderlvl is the level of derivatives available for the objective function
+%                       (0 = function value, 1 = function value and gradient, 2 = function value, gradient and Hessian)
+%                       NOTE: all CUTEst problems have objective function's value, gradient and Hessian available.
+%         pb.conderlvl is the level of derivatives available for the constraints.  If of length = 1, the level is
+%                       the same for all constraints.  Otherwise, it is of length pb.m and the derivative level
+%                       for the i-th constraint (that is the constraint whose group number is pb.congrps(i))
+%                       is given by pbm.conderlvl(i).
+%                       NOTE: all CUTEst problems have value, gradient and Hessian available for all constraints.
 %
 %         Here, 'problem parameters' are parameters identified by a $-PARAMETER string in the SIF file. They are assigned
 %         in the order where they appear in varargin, which is the same as that used in the SIF and Matlab/Python/Julia
@@ -246,6 +254,13 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %                       section using their Fortran expression
 %         pbm.gfpar     is a real vector containing the values of global GROUPS parameters, once computed in the g_globs
 %                        section using their Fortran expression
+%         pbm.objderlvl is the level of derivatives available for the objective function
+%                       (0 = function value, 1 = function value and gradient, 2 = function value, gradient and Hessian)
+%                       NOTE: all CUTEst problems have value, gradient and Hessian available.
+%         pbm.conderlvl is the level of derivatives available for the constraints.  If of length = 1, the level is
+%                       the same for all constraints.  Otherwise, it is of length pb.m and the derivative level for the i-th
+%                       constraint (that is the constraint whose group number is pbm.congrps(i)) is given by pbm.conderlvl(i).
+%                       NOTE: all CUTEst problems have value, gradient and Hessian available.
 %         pbm.ndigs     if present and >0, indicates that reduced precision arithmetic with pbm.ndigs digits is requested
 % 
 %         Depending on the problem's nature, some fields may be missing from the pbm struct.  Only the fields name and
@@ -448,6 +463,12 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %
 %         Jxv  = PROBLEM( 'cJxv' , x, v );
 %         JIxv = PROBLEM( 'cIJxv', x, v, I );
+%
+%       and the product of the (potentially I restrticted) constraints' Jacobian (at x) transposed times v is 
+%       computed by issuing one of the commands
+%
+%         Jtxv  = PROBLEM( 'cJtxv' , x, v );
+%         JItxv = PROBLEM( 'cIJtxv', x, v, I );
 %
 %       Finally,  the value (and derivatives) of the Lagrangian function L(x,y) with respect to x times a user-supplied
 %       vector v is obtained by one of the commands
@@ -719,11 +740,17 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %      nonlinear functions, because they may be continued using continuation lines (A+, I+, E+, F+, G+ and H+): the
 %      definition code is stored (in codeg for gradients and codeH for Hessians) until a non-continuation line is found.
 %
+%   8) Because all CUTEst problems provide values, gradients and Hessians for all elements, the level of available
+%      derivatives for the objective function and constraints is set to 2.  Should one consider decoding problems where
+%      some values or derivatives are missing, this has to be implemented (by storing information when decoding ELEMENTS
+%      and GROUPS).
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
-%                started VI 2023, this version 31 VIII 2024
+%                started VI 2023,
+                 this_version = '7 X 2024';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -754,7 +781,6 @@ extxscale      = 1;  %  Apply the variable's scaling internally, instead of pass
 sifdir         = ''; %  Find the problem in the Matlab path
 outdir         = ''; %  Write the output file in the current directory
 pbs.dicttype   = 'custom'; % use a custom dictionary based on containers maps.
-%pbs.dicttype  = 'native'; % use a the native Matlab dictionary functions
 
 %  Determine if the Symbolic Math Toolbox is installed, in which case request support of reduced precision arithmetic
 %  by default for Matlab output files (by setting redprec to 1).
@@ -992,7 +1018,7 @@ has_ranges      = 0; % true if group ranges are explicitly specified
 has_start       = 0; % true if starting point(s) are explicitly specified
 has_elpar       = 0; % true if at least one element type has a parameter
 has_grpar       = 0; % true if at least one group type has a parameter
-has_H           = 0; % true if a quadratic term idefined (in the QUADRATICS section)
+has_H           = 0; % true if a quadratic term is defined (in the QUADRATICS section)
 has_ngrp         =0; % true if ngrp has been defined.  The idea is to define ngrp before
                      % it is actually used (for instance in defining defaults for constants or ranges) and at the latest
                      % in the GLOBAL DIMENSIONS section of the output file
@@ -1093,12 +1119,12 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          if ( ~isempty( posc ) )
              switch ( pbs.lang )
              case 'matlab'
-                classification = [ '''',   strtrim( line( posc+15:end ) ), '''' ];
-                printcmline( sprintf( '    classification = %s',classification ),                     bindent, pbs.fidma );
+                classification = [ '''C-',   strtrim( line( posc+15:end ) ), '''' ];
+                printcmline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidma );
              case { 'python', 'julia' }
-                classification = [ '"',    strtrim( line( posc+15:end ) ), '"' ];
-                printcpline( sprintf( '    classification = %s',classification ),                     bindent, pbs.fidpy );
-                printcjline( sprintf( '    classification = %s',classification ),                     bindent, pbs.fidjl );
+                classification = [ '"C-',    strtrim( line( posc+15:end ) ), '"' ];
+                printcpline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidpy );
+                printcjline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidjl );
              end 
          elseif ( contains( line, 'Problem :' ) )
              printcmline( sprintf( '    Problem : %s', probname ),                                    bindent, pbs.fidma );
@@ -1145,6 +1171,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       case 'matlab'
       
          printcmline( ' ',                                                                            bindent, pbs.fidma );
+         printcmline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidma );
+         printcmline( ['   Translated to Matlab by S2MPJ version ', this_version ],                   bindent, pbs.fidma );
          printcmline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidma );
          printmline( ' ',                                                                     0,      bindent, pbs.fidma );
          printmline( 'persistent pbm;',                                                       0,      bindent, pbs.fidma );
@@ -1200,6 +1228,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       
          printcpline( ' ',                                                                            bindent, pbs.fidpy );
          printcpline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidpy );
+         printcpline( ['   Translated to Python by S2MPJ version ', this_version ],                   bindent, pbs.fidpy );
+         printcpline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
          printpline( sprintf( 'name = ''%s''', probname ),                                    1,      bindent, pbs.fidpy );
 
@@ -1209,7 +1239,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printpline( 'def __init__(self, *args): ',                                           1,      bindent, pbs.fidpy );
          printpline( 'import numpy as np',                                                    2,      bindent, pbs.fidpy );
          if ( ~strcmp( sifpbname, probname ) )
-            printpline( sprintf( 'self.sifpbname = ''%s''', sifpbname ),                        2,      bindent, pbs.fidpy );
+            printpline( sprintf( 'self.sifpbname = ''%s''', sifpbname ),                      2,      bindent, pbs.fidpy );
          end
          printpline( 'nargin   = len(args)',                                                  2,      bindent, pbs.fidpy );
          printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
@@ -1226,6 +1256,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       
          printcjline( ' ',                                                                            bindent, pbs.fidjl );
          printcjline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidjl );
+         printcjline( ['   Translated to Julia by S2MPJ version ', this_version ],                    bindent, pbs.fidjl );
+         printcjline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidjl );
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
          printjline( sprintf( 'name = "%s"', probname ),                                      1,      bindent, pbs.fidjl );
 
@@ -1239,7 +1271,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printjline( sprintf( 'pb.sifpbname = "%s"', sifpbname ),                          2,      bindent, pbs.fidjl );
          end
          printjline( 'nargin       = length(args)',                                           2,      bindent, pbs.fidjl );
-         printjline( 'pbm.call     = eval( Meta.parse( name ) )',                             2,      bindent, pbs.fidjl );
+         printjline( 'pbm.call     = getfield( Main, Symbol( name ) )',                       2,      bindent, pbs.fidjl );
          printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
          printjline( '#%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidjl );
 
@@ -1465,7 +1497,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printcpline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',   bindent, pbs.fidpy );
          printcpline( ' ', bindent, pbs.fidpy );
       case 'julia'
-         printjline( sprintf( 'function %s(action,args...)', probname ),                           0, bindent, pbs.fidjl );
+         printjline( sprintf( 'function %s(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)', ...
+                              probname ),                                                          0, bindent, pbs.fidjl );
          printcjline( ' ',                                                                            bindent, pbs.fidjl );
          printcjline( '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%',    bindent, pbs.fidjl );
          printcjline( ' ',                                                                            bindent, pbs.fidjl );
@@ -1767,7 +1800,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
       switch ( pbs.lang )
       case 'matlab'
          printmline( '%%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%',                   indlvl, bindent, pbs.fidma );
-         printmline( '[pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));',                        indlvl, bindent, pbs.fidma );
+         printmline( '[pbm.grelt{1:ngrp}] = deal([]);',                                       indlvl, bindent, pbs.fidma );
          printmline( 'nlc = [];',                                                             indlvl, bindent, pbs.fidma );
       case 'python'
          printpline( '#%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%',               indlvl,     bindent, pbs.fidpy );
@@ -2164,13 +2197,15 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          printpline( '#%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%',                   indlvl, bindent, pbs.fidpy );
          printjline( '#%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%',                   indlvl, bindent, pbs.fidjl );
 
+         %  1) Indeces of linear constraints, if relevant
+         
          if ( has_constraints )
             if ( has_nonlinc )
-               printmline( '[~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);',             ...
+               printmline( '[~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);',                ...
                                                                                               indlvl, bindent, pbs.fidma );
-               printpline( 'self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]',   ...
+               printpline( 'self.lincons = np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0]', ...
                                                                                               indlvl, bindent, pbs.fidpy );
-               printjline( 'pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)',           ...
+               printjline( 'pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)',             ...
                                                                                               indlvl, bindent, pbs.fidjl );
             else
                printmline( 'pb.lincons   = [1:length(pbm.congrps)];',                         indlvl, bindent, pbs.fidma );
@@ -2178,6 +2213,8 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printjline( 'pb.lincons   = collect(1:length(pbm.congrps))',                   indlvl, bindent, pbs.fidjl );
             end
          end
+
+         %  2) Problem classification
 
          printmline( sprintf( 'pb.pbclass = %s;', classification ),                           indlvl, bindent, pbs.fidma );        
          printpline( sprintf( 'self.pbclass = %s',  classification ),                         indlvl, bindent, pbs.fidpy );        
@@ -2189,6 +2226,24 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
              printjline( 'pb.x0          = zeros(Float64,pb.n)',                              indlvl, bindent, pbs.fidjl );
          end
 
+         %  3) level of available derivatives
+         %     Note that first and second derivatives are availabvle for all CUTEst problems.
+
+         printmline( 'pbm.objderlvl = 2;',                                                    indlvl, bindent, pbs.fidma );
+         printmline( 'pb.objderlvl = pbm.objderlvl;',                                         indlvl, bindent, pbs.fidma );
+         printpline( 'self.objderlvl = 2',                                                    indlvl, bindent, pbs.fidpy );
+         printjline( 'pbm.objderlvl = 2',                                                     indlvl, bindent, pbs.fidjl );
+         printjline( 'pb.objderlvl = pbm.objderlvl;',                                         indlvl, bindent, pbs.fidjl );
+         if ( has_constraints )
+             printmline( 'pbm.conderlvl = [2];',                                              indlvl, bindent, pbs.fidma );
+             printmline( 'pb.conderlvl  = pbm.conderlvl;',                                    indlvl, bindent, pbs.fidma );
+             printpline( 'self.conderlvl = [2]',                                              indlvl, bindent, pbs.fidpy );
+             printjline( 'pbm.conderlvl = [2]',                                               indlvl, bindent, pbs.fidjl );
+             printjline( 'pb.conderlvl  = pbm.conderlvl;',                                    indlvl, bindent, pbs.fidjl );
+         end
+
+         %  4) Reduced precision option
+         
          switch( pbs.lang )
          case 'matlab'
 
@@ -2214,7 +2269,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          case 'julia'
             printjline( 'return pb, pbm',                                                     indlvl, bindent, pbs.fidjl );
          end
-         
+         printmline( ' ',                                                                     0,      bindent, pbs.fidma );
+         printpline( ' ',                                                                     0,      bindent, pbs.fidpy );
+         printjline( ' ',                                                                     0,      bindent, pbs.fidjl );
+
       elseif ( inelements )
       
          %  Conclude the code for the last element by writing pending code  for derivatives.
@@ -3599,10 +3657,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                printmline( sprintf( 'ielftype(ie) = iet_(''%s'');', tname ),                  indlvl, bindent, pbs.fidma );
             case 'python'
                printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')', tname ), indlvl, bindent, pbs.fidpy );
-               printpline( sprintf( 'ielftype = arrset(ielftype, ie, iet_["%s"])', tname ),   indlvl, bindent, pbs.fidpy );
+               printpline( sprintf( 'ielftype = arrset(ielftype,ie,iet_["%s"])', tname ),     indlvl, bindent, pbs.fidpy );
             case 'julia'
                printjline( sprintf( 'arrset(pbm.elftype,ie,"%s")',      tname )  ,            indlvl, bindent, pbs.fidjl );
-               printjline( sprintf( 'arrset(ielftype, ie, iet_["%s"])', tname ),              indlvl, bindent, pbs.fidjl );
+               printjline( sprintf( 'arrset(ielftype,ie,iet_["%s"])', tname ),                indlvl, bindent, pbs.fidjl );
             end
             ehas_eltyp = 1;                    %  The element type has now been defined
             
@@ -3625,7 +3683,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printpline( 'if newelt:',                                                indlvl, bindent, pbs.fidpy );
                      printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')', defelftype ), ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
-                     printpline( sprintf( 'ielftype = arrset( ielftype,ie,iet_[''%s''])', defelftype ), ...
+                     printpline( sprintf( 'ielftype = arrset(ielftype,ie,iet_[''%s''])', defelftype ),   ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
                   case 'julia'
                      printjline( 'if newelt > 0',                                             indlvl, bindent, pbs.fidjl );
@@ -3652,60 +3710,60 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
             printpline( sprintf( 'vname = %s',  vname ),                                      indlvl, bindent, pbs.fidpy );
             printjline( sprintf( 'vname = %s',  vname ),                                      indlvl, bindent, pbs.fidjl );
             if     (  isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],[]);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],[]);',               ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,None)',        ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,None)',                  ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,nothing,nothing)', ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,nothing,nothing)',          ...
                            getxnames ),                                                       indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) &&  isempty( xuppdef ) &&  isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],[]);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],[]);',               ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self, vname,ix_,%d,%s,None,None)',          ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self, vname,ix_,%d,float(%s),None,None)',            ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,nothing,nothing)',      ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,Float64(%s),nothing,nothing)',      ...
                            getxnames, xlowdef ),                                              indlvl, bindent, pbs.fidjl );
             elseif (  isempty( xlowdef ) && ~isempty( xuppdef ) &&  isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],%s,[]);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],%s,[]);',               ...
                            getxnames, xuppdef ),                                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,%s,None)',          ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,float(%s),None)',             ...
                            getxnames, xuppdef ),                                              indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,%s,nothing)',      ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,Float64(%s),nothing)',      ...
                            getxnames, xuppdef ),                                              indlvl, bindent, pbs.fidjl );
             elseif (  isempty( xlowdef ) &&  isempty( xuppdef ) && ~isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],%s);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],[],%s);',               ...
                            getxnames, x0def ),                                                indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,%s)',          ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,None,float(%s))',             ...
                            getxnames, x0def ),                                                indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,nothing,%s)',      ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,nothing,Float64(%s))',      ...
                            getxnames, x0def ),                                                indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) && ~isempty( xuppdef ) &&  isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,%s,[]);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,%s,[]);',               ...
                            getxnames, xlowdef, xuppdef ),                                     indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,%s,%s,None)',            ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,float(%s),float(%s),None)',        ...
                            getxnames, xlowdef, xuppdef ),                                     indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,%s,nothing)',           ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,Float64(%s),Float64(%s),nothing)',           ...
                            getxnames, xlowdef, xuppdef ),                                     indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) &&  isempty( xuppdef ) && ~isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],%s);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,[],%s);',               ...
                            getxnames, xlowdef, x0def ),                                       indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,%s,None,%s)',            ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,float(%s),None,float(%s))',            ...
                            getxnames, xlowdef, x0def ),                                       indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,nothing,%s)',           ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,Float64(%s),nothing,Float64(%s))',           ...
                            getxnames, xlowdef, x0def ),                                       indlvl, bindent, pbs.fidjl );
             elseif (  isempty( xlowdef ) && ~isempty( xuppdef ) && ~isempty( x0def ) )
-               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],%s,%s);',      ...
+               printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,[],%s,%s);',               ...
                            getxnames, xuppdef, x0def ),                                       indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,%s,%s)',            ... 
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,None,float(%s),float(%s))',            ... 
                            getxnames, xuppdef, x0def ),                                       indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,%s,%s)',           ... 
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,nothing,Float64(%s),Float64(%s))',  ... 
                            getxnames, xuppdef, x0def ),                                       indlvl, bindent, pbs.fidjl );
             elseif ( ~isempty( xlowdef ) && ~isempty( xuppdef ) && ~isempty( x0def ) )
                printmline( sprintf( '[iv,ix_,pb] = s2mpjlib(''nlx'',vname,ix_,pb,%d,%s,%s,%s);', ...
                            getxnames, xlowdef, xuppdef, x0def ),                              indlvl, bindent, pbs.fidma );
-               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,%s,%s,%s)',         ...
+               printpline( sprintf( '[iv,ix_] = s2mpj_nlx(self,vname,ix_,%d,float(%s),float(%s),float(%s))',   ...
                            getxnames, xlowdef, xuppdef, x0def ),                              indlvl, bindent, pbs.fidpy );
-               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,%s,%s,%s)',           ...
+               printjline( sprintf( 'iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,%d,Float64(%s),Float64(%s),Float64(%s))',   ...
                            getxnames, xlowdef, xuppdef, x0def ),                              indlvl, bindent, pbs.fidjl );
             end
 
@@ -3744,7 +3802,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                      printpline( 'if newelt:',                                                indlvl, bindent, pbs.fidpy );
                      printpline( sprintf( 'self.elftype = arrset(self.elftype,ie,''%s'')',  defelftype ), ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
-                     printpline( sprintf( 'ielftype = arrset( ielftype,ie,iet_[''%s''])', defelftype ), ...
+                     printpline( sprintf( 'ielftype = arrset(ielftype,ie,iet_[''%s''])', defelftype ),    ...
                                                                                           indlvl + 1, bindent, pbs.fidpy );
                   case 'julia'
                      printjline('if newelt > 0',                                              indlvl, bindent, pbs.fidjl );
@@ -4212,7 +4270,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printpline( 'self.efpar = np.array([]);', indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s!=0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1}     = sprintf( '%sself.efpar = arrset( self.efpar,%d,%s)    # this is %s',  ...
+              pending{1}     = sprintf( '%sself.efpar = arrset(self.efpar,%d,%s)     # this is %s',  ...
                                         bindent, i_eglobs-1, evalstr, f{3} );
               if ( i_eglobs == n_eglobs )
                  globdict( f{3} ) =  [ 'self.efpar[', int2str( n_eglobs-1 ), ']' ];
@@ -4256,7 +4314,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printpline( 'self.efpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s==0:',  globdict( f{2} ) ),                          indlvl, bindent, pbs.fidpy );
-              pending{1}     = sprintf( '%sself.efpar = arrset( self.efpar,%d,%s)    # this is %s',  ...
+              pending{1}     = sprintf( '%sself.efpar = arrset(self.efpar,%d,%s)     # this is %s',  ...
                                         bindent, i_eglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if !%s',  globdict( f{2} ) ),                          indlvl, bindent, pbs.fidjl );
@@ -4706,7 +4764,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                if ( n_gglobs == 1 )
                   printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
-               pending{1}    = sprintf( 'self.gfpar = arrset( self.gfpar,%d,%s)    # this is %s', ...
+               pending{1}    = sprintf( 'self.gfpar = arrset(self.gfpar,%d,%s)     # this is %s', ...
                                          n_gglobs-1, evalstr, f{2} );
                globdict( f{2} ) = [ 'self.gfpar[', int2str( n_gglobs-1 ), ']' ];
             case 'julia'
@@ -4758,7 +4816,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s!=0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1} = sprintf( '%sself.gfpar = arrset( self.gfpar,%d,%s)    # this is %s', ...
+              pending{1} = sprintf( '%sself.gfpar = arrset(self.gfpar,%d,%s)     # this is %s', ...
                                      bindent, i_gglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if %s!=0', globdict( f{2} ) ),                            indlvl, bindent, pbs.fidjl );
@@ -4799,7 +4857,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printpline( 'self.gfpar = np.array([]);',                                   indlvl, bindent, pbs.fidpy );
                end
               printpline( sprintf( 'if %s==0:', globdict( f{2} ) ),                           indlvl, bindent, pbs.fidpy );
-              pending{1} = sprintf( '%sself.gfpar = arrset( self.gfpar,%d,%s)    # this is  %s',  ...
+              pending{1} = sprintf( '%sself.gfpar = arrset(self.gfpar,%d,%s)     # this is  %s',  ...
                                      bindent, i_gglobs-1, evalstr, f{3} );
             case 'julia'
               printjline( sprintf( 'if !%s', globdict( f{2} ) ),                              indlvl, bindent, pbs.fidjl );
@@ -5043,18 +5101,19 @@ case 'matlab'
    printmline( ' ',                                                                           0,      bindent, pbs.fidma );
    printmline( '%%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%',                           1,      bindent, pbs.fidma );
    printmline( ' ',                                                                           0,      bindent, pbs.fidma );
-   printmline(                                                                                          ...
-      'case {''fx'',''fgx'',''fgHx'',''cx'',''cJx'',''cJHx'',''cIx'',''cIJx'',''cIJHx'',''cIJxv'',''fHxv'',...' , ...
-      1, bindent, pbs.fidma  );
-   printmline( '      ''cJxv'',''Lxy'',''Lgxy'',''LgHxy'',''LIxy'',''LIgxy'',''LIgHxy'',''LHxyv'',''LIHxyv''}',   ...
-      1, bindent, pbs.fidma  );
+   printmline(                                                                                                     ...
+      'case {''fx'',''fgx'',''fgHx'',''cx'',''cJx'',''cJHx'',''cIx'',''cIJx'',''cIJHx'',''cIJxv'',''fHxv'',...' ,  ...
+                                                                                              1,      bindent, pbs.fidma );
+   printmline( '      ''cJxv'',''cJtxv'',''cIJtxv'',''Lxy'',''Lgxy'',''LgHxy'',''LIxy'',''LIgxy'',''LIgHxy'',...', ...
+                                                                                              1,      bindent, pbs.fidma );
+   printmline( '      ''LHxyv'',''LIHxyv''}',                                                 1,      bindent, pbs.fidma );
    printmline( ' ',                                                                           0,      bindent, pbs.fidma );
    printmline( 'if(isfield(pbm,''name'')&&strcmp(pbm.name,name))',                            2,      bindent, pbs.fidma );
    printmline( sprintf( 'pbm.has_globs = [%d,%d];', n_eglobs, n_gglobs ),                     3,      bindent, pbs.fidma );
    printmline( '[varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});',           3,      bindent, pbs.fidma );
    printmline( 'else',                                                                        2,      bindent, pbs.fidma );
    printmline( 'disp([''ERROR: please run '',name,'' with action = setup''])',                3,      bindent, pbs.fidma );
-   printmline( '[varargout{1:nargout}] = deal(repmat(NaN,1:nargout));',                       3,      bindent, pbs.fidma );
+   printmline( '[varargout{1:nargout}] = deal(NaN);',                                         3,      bindent, pbs.fidma );
    printmline( 'end',                                                                         2,      bindent, pbs.fidma );
 case 'python'
    %  Nothing to do here: everything is managed within s2mpjlib.py.
@@ -5062,8 +5121,11 @@ case 'julia'
    printjline( ' ',                                                                           0,      bindent, pbs.fidjl );
    printjline( '#%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%',                           1,      bindent, pbs.fidjl );
    printjline( ' ',                                                                           0,      bindent, pbs.fidjl );
-   printjline( 'elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]',                                                                   ...
-      1, bindent, pbs.fidjl  ); 
+   printjline( 'elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",', ...
+                                                                                              1,      bindent, pbs.fidjl ); 
+   printjline( '                   "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",',    ...
+                                                                                              1,      bindent, pbs.fidjl ); 
+   printjline( '                   "LHxyv","LIHxyv"]',                                        1,      bindent, pbs.fidjl ); 
    printjline( ' ',                                                                           0,      bindent, pbs.fidjl );
    printjline( 'pbm = args[1]',                                                               2,      bindent, pbs.fidjl );
    printjline( 'if pbm.name == name',                                                         2,      bindent, pbs.fidjl );
@@ -5091,14 +5153,14 @@ switch( pbs.lang )
 case 'matlab'
    printmline( ' ',                                                                           0,      bindent, pbs.fidma );
    printmline( 'otherwise',                                                                   1,      bindent, pbs.fidma );
-   printmline( 'disp(['' ERROR: unknown action '',action,'' requested from '',name,''.m''])', 2,      bindent, pbs.fidma );
+   printmline( 'disp(['' ERROR: action '',action,'' unavailable for problem '',name,''.m''])', 2,     bindent, pbs.fidma );
    printmline( 'end',                                                                         1,      bindent, pbs.fidma );
 case 'python'
    %  The python output files are pretty terse...   
 case 'julia'
    printjline( ' ',                                                                           0,      bindent, pbs.fidjl );
    printjline( 'else',                                                                        1,      bindent, pbs.fidjl );
-   printjline( 'println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")',    2,      bindent, pbs.fidjl );
+   printjline( 'println("ERROR: action "*action*" unavailable for problem "*name*".jl")',     2,      bindent, pbs.fidjl );
    printjline( 'return ntuple(i->undef,args[end])',                                           2,      bindent, pbs.fidjl );
    printjline( 'end',                                                                         1,      bindent, pbs.fidjl );
 end

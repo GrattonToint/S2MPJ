@@ -20,11 +20,13 @@ class  MGH09LS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "SUR2-MN-4-0"
+#    classification = "C-SUR2-MN-4-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH09LS'
@@ -120,7 +122,7 @@ class  MGH09LS(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE10')
-            ielftype = arrset(ielftype, ie, iet_["eE10"])
+            ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'B1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -164,7 +166,9 @@ class  MGH09LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-4-0"
+        self.pbclass = "C-SUR2-MN-4-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

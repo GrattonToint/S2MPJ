@@ -31,7 +31,7 @@ class  OPTMASS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "QQR2-AN-V-V"
+#    classification = "C-QQR2-AN-V-V"
 # 
 #    Number of discretization steps in the time interval
 #    The number of variables is 6 * (N + 2) -2 , 4 of which are fixed.
@@ -42,6 +42,8 @@ class  OPTMASS(CUTEst_problem):
 # IE N                   200            $-PARAMETER n = 1210
 # IE N                   500            $-PARAMETER n = 3010
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OPTMASS'
@@ -176,33 +178,33 @@ class  OPTMASS(CUTEst_problem):
         ename = 'O1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X'+str(int(v_['1']))+','+str(int(v_['N+1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X'+str(int(v_['2']))+','+str(int(v_['N+1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'V'+str(int(v_['1']))+','+str(int(v_['N+1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'V'+str(int(v_['2']))+','+str(int(v_['N+1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N'])+1):
@@ -210,9 +212,9 @@ class  OPTMASS(CUTEst_problem):
                 ename = 'D'+str(J)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset(ielftype, ie, iet_["eSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'F'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -268,8 +270,12 @@ class  OPTMASS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

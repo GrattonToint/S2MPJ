@@ -1,4 +1,4 @@
-function LUKVLI11(action,args...)
+function LUKVLI11(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -17,7 +17,7 @@ function LUKVLI11(action,args...)
 # 
 #    SIF input: Nick Gould, April 2001
 # 
-#    classification = "OOR2-AY-V-V"
+#    classification = "C-OOR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -27,6 +27,8 @@ function LUKVLI11(action,args...)
 # IE N                   9998           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LUKVLI11"
 
@@ -34,7 +36,7 @@ function LUKVLI11(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -166,7 +168,7 @@ function LUKVLI11(action,args...)
             ename = "EA"*string(K)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eC21")
-            arrset(ielftype, ie, iet_["eC21"])
+            arrset(ielftype,ie,iet_["eC21"])
             vname = "X"*string(K)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -178,7 +180,7 @@ function LUKVLI11(action,args...)
             ename = "EB"*string(K)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eS")
-            arrset(ielftype, ie, iet_["eS"])
+            arrset(ielftype,ie,iet_["eS"])
             vname = "X"*string(Int64(v_["K+3"]))
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -190,7 +192,7 @@ function LUKVLI11(action,args...)
             ename = "E"*string(Int64(v_["K+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eC21")
-            arrset(ielftype, ie, iet_["eC21"])
+            arrset(ielftype,ie,iet_["eC21"])
             ename = "E"*string(Int64(v_["K+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["K+2"]))
@@ -254,8 +256,13 @@ function LUKVLI11(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-AY-V-V"
+        pb.pbclass = "C-OOR2-AY-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -420,7 +427,9 @@ function LUKVLI11(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -432,7 +441,7 @@ function LUKVLI11(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

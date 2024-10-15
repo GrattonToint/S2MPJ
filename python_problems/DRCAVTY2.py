@@ -27,7 +27,7 @@ class  DRCAVTY2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1995.
 # 
-#    classification = "NQR2-MY-V-V"
+#    classification = "C-NQR2-MY-V-V"
 # 
 #    Discretization mesh: n = (M+3)**2 - fixed variables
 # 
@@ -36,6 +36,8 @@ class  DRCAVTY2(CUTEst_problem):
 # IE M                   31             $-PARAMETER  n =   961
 # IE M                   63             $-PARAMETER  n =  3969   original value
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRCAVTY2'
@@ -194,7 +196,7 @@ class  DRCAVTY2(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eIPR')
-                    ielftype = arrset( ielftype,ie,iet_['eIPR'])
+                    ielftype = arrset(ielftype,ie,iet_['eIPR'])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'Y'+str(I)+','+str(int(v_['J+1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -240,7 +242,7 @@ class  DRCAVTY2(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eIPR')
-                    ielftype = arrset( ielftype,ie,iet_['eIPR'])
+                    ielftype = arrset(ielftype,ie,iet_['eIPR'])
                 vname = 'Y'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='A1')[0]
@@ -315,9 +317,13 @@ class  DRCAVTY2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NQR2-MY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NQR2-MY-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

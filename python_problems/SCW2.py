@@ -21,7 +21,7 @@ class  SCW2(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2020
 # 
-#    classification = "SLR2-MN-V-V"
+#    classification = "C-SLR2-MN-V-V"
 # 
 #    Number of internal knots
 # 
@@ -31,6 +31,8 @@ class  SCW2(CUTEst_problem):
 # IE K                   100            $-PARAMETER
 # IE K                   1000           $-PARAMETER     original value
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCW2'
@@ -160,7 +162,7 @@ class  SCW2(CUTEst_problem):
             ename = 'US'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eUSINT')
-            ielftype = arrset(ielftype, ie, iet_["eUSINT"])
+            ielftype = arrset(ielftype,ie,iet_["eUSINT"])
             vname = 'T'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -172,7 +174,7 @@ class  SCW2(CUTEst_problem):
             ename = 'USP'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eUSINT')
-            ielftype = arrset(ielftype, ie, iet_["eUSINT"])
+            ielftype = arrset(ielftype,ie,iet_["eUSINT"])
             vname = 'T'+str(int(v_['I+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -184,7 +186,7 @@ class  SCW2(CUTEst_problem):
             ename = 'UC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eUCOST')
-            ielftype = arrset(ielftype, ie, iet_["eUCOST"])
+            ielftype = arrset(ielftype,ie,iet_["eUCOST"])
             vname = 'T'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -196,7 +198,7 @@ class  SCW2(CUTEst_problem):
             ename = 'UCP'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eUCOST')
-            ielftype = arrset(ielftype, ie, iet_["eUCOST"])
+            ielftype = arrset(ielftype,ie,iet_["eUCOST"])
             vname = 'T'+str(int(v_['I+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -251,8 +253,12 @@ class  SCW2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SLR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SLR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

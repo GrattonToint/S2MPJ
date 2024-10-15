@@ -23,7 +23,7 @@ class  QR3DLS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1994.
 # 
-#    classification = "SBR2-AN-V-V"
+#    classification = "C-SBR2-AN-V-V"
 # 
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
@@ -33,6 +33,8 @@ class  QR3DLS(CUTEst_problem):
 # IE M                   10             $-PARAMETER  n = 155  original value
 # IE M                   20             $-PARAMETER  n = 610
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QR3DLS'
@@ -163,7 +165,7 @@ class  QR3DLS(CUTEst_problem):
                     [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         self.elftype = arrset(self.elftype,ie,'en2PR')
-                        ielftype = arrset( ielftype,ie,iet_['en2PR'])
+                        ielftype = arrset(ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -179,7 +181,7 @@ class  QR3DLS(CUTEst_problem):
                     [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         self.elftype = arrset(self.elftype,ie,'en2PR')
-                        ielftype = arrset( ielftype,ie,iet_['en2PR'])
+                        ielftype = arrset(ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -222,7 +224,9 @@ class  QR3DLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-V-V"
+        self.pbclass = "C-SBR2-AN-V-V"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -13,9 +13,11 @@ class  DUALC1(CUTEst_problem):
 # 
 #    SIF input: Irv Lustig and Nick Gould, June 1996.
 # 
-#    classification = "QLR2-MN-9-215"
+#    classification = "C-QLR2-MN-9-215"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DUALC1'
@@ -6556,10 +6558,10 @@ class  DUALC1(CUTEst_problem):
             ename = 'x'+str(i)+','+str(i)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDIAG')
-            ielftype = arrset(ielftype, ie, iet_["eDIAG"])
+            ielftype = arrset(ielftype,ie,iet_["eDIAG"])
             self.x0 = np.zeros((self.n,1))
             vname = 'x'+str(i)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             v_['i+1'] = 1+i
@@ -6568,13 +6570,13 @@ class  DUALC1(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eOFFDIAG')
-                    ielftype = arrset( ielftype,ie,iet_['eOFFDIAG'])
+                    ielftype = arrset(ielftype,ie,iet_['eOFFDIAG'])
                 vname = 'x'+str(i)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'x'+str(j)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -6782,9 +6784,13 @@ class  DUALC1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-MN-9-215"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-MN-9-215"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

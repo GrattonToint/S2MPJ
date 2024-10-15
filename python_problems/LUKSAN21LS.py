@@ -17,11 +17,13 @@ class  LUKSAN21LS(CUTEst_problem):
 # 
 #    least-squares version
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #   number of unknowns
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKSAN21LS'
@@ -124,7 +126,7 @@ class  LUKSAN21LS(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eCUBE')
-                ielftype = arrset( ielftype,ie,iet_['eCUBE'])
+                ielftype = arrset(ielftype,ie,iet_['eCUBE'])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -159,7 +161,9 @@ class  LUKSAN21LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

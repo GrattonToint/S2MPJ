@@ -1,4 +1,4 @@
-function DIPIGRI(action,args...)
+function DIPIGRI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,9 +16,11 @@ function DIPIGRI(action,args...)
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "OOR2-AN-7-4"
+#    classification = "C-OOR2-AN-7-4"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DIPIGRI"
@@ -27,7 +29,7 @@ function DIPIGRI(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -176,7 +178,7 @@ function DIPIGRI(action,args...)
         ename = "O1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSSQ")
-        arrset(ielftype, ie, iet_["eSSQ"])
+        arrset(ielftype,ie,iet_["eSSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -186,7 +188,7 @@ function DIPIGRI(action,args...)
         ename = "O2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSSQ")
-        arrset(ielftype, ie, iet_["eSSQ"])
+        arrset(ielftype,ie,iet_["eSSQ"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -196,7 +198,7 @@ function DIPIGRI(action,args...)
         ename = "O3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eP4")
-        arrset(ielftype, ie, iet_["eP4"])
+        arrset(ielftype,ie,iet_["eP4"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -204,7 +206,7 @@ function DIPIGRI(action,args...)
         ename = "O4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSSQ")
-        arrset(ielftype, ie, iet_["eSSQ"])
+        arrset(ielftype,ie,iet_["eSSQ"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -214,7 +216,7 @@ function DIPIGRI(action,args...)
         ename = "O5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eP6")
-        arrset(ielftype, ie, iet_["eP6"])
+        arrset(ielftype,ie,iet_["eP6"])
         vname = "X5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -222,7 +224,7 @@ function DIPIGRI(action,args...)
         ename = "O6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eOE")
-        arrset(ielftype, ie, iet_["eOE"])
+        arrset(ielftype,ie,iet_["eOE"])
         vname = "X6"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -234,7 +236,7 @@ function DIPIGRI(action,args...)
         ename = "C11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -242,7 +244,7 @@ function DIPIGRI(action,args...)
         ename = "C12"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eP4")
-        arrset(ielftype, ie, iet_["eP4"])
+        arrset(ielftype,ie,iet_["eP4"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -250,7 +252,7 @@ function DIPIGRI(action,args...)
         ename = "C13"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -258,7 +260,7 @@ function DIPIGRI(action,args...)
         ename = "C21"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -266,7 +268,7 @@ function DIPIGRI(action,args...)
         ename = "C31"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -274,7 +276,7 @@ function DIPIGRI(action,args...)
         ename = "C32"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X6"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -282,7 +284,7 @@ function DIPIGRI(action,args...)
         ename = "C41"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCE")
-        arrset(ielftype, ie, iet_["eCE"])
+        arrset(ielftype,ie,iet_["eCE"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -364,8 +366,13 @@ function DIPIGRI(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-AN-7-4"
+        pb.pbclass = "C-OOR2-AN-7-4"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -527,7 +534,9 @@ function DIPIGRI(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -539,7 +548,7 @@ function DIPIGRI(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

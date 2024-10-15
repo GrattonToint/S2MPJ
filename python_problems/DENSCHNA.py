@@ -15,9 +15,11 @@ class  DENSCHNA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1990.
 # 
-#    classification = "OUR2-AN-2-0"
+#    classification = "C-OUR2-AN-2-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DENSCHNA'
@@ -85,9 +87,9 @@ class  DENSCHNA(CUTEst_problem):
         ename = 'E'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eEX')
-        ielftype = arrset(ielftype, ie, iet_["eEX"])
+        ielftype = arrset(ielftype,ie,iet_["eEX"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -120,7 +122,9 @@ class  DENSCHNA(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-2-0"
+        self.pbclass = "C-OUR2-AN-2-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

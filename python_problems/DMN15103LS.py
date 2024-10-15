@@ -17,11 +17,13 @@ class  DMN15103LS(CUTEst_problem):
 #    Least-squares version of DMN15103.SIF, Nick Gould, Jan 2020.
 #    corrected May 2024
 # 
-#    classification = "SUR2-MN-99-0"
+#    classification = "C-SUR2-MN-99-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DMN15103LS'
@@ -9481,7 +9483,7 @@ class  DMN15103LS(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eLORENTZ3')
-                ielftype = arrset(ielftype, ie, iet_["eLORENTZ3"])
+                ielftype = arrset(ielftype,ie,iet_["eLORENTZ3"])
                 vname = 'WEIGHT'+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='WEIGHT')[0]
@@ -9522,7 +9524,9 @@ class  DMN15103LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-99-0"
+        self.pbclass = "C-SUR2-MN-99-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

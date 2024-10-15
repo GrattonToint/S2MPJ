@@ -1,5 +1,4 @@
 ACOPP14.m
-ACOPP14.m.bak
 ACOPP30.m
 ACOPR14.m
 ACOPR30.m
@@ -867,7 +866,6 @@ PRODPL0.m
 PRODPL1.m
 PSPDOC.m
 PT.m
-python.m
 QC.m
 QCNEW.m
 QINGB.m

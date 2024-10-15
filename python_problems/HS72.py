@@ -17,9 +17,11 @@ class  HS72(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, March 1990.
 # 
-#    classification = "LOR2-MN-4-2"
+#    classification = "C-LOR2-MN-4-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS72'
@@ -109,33 +111,33 @@ class  HS72(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en1dX')
-        ielftype = arrset(ielftype, ie, iet_["en1dX"])
+        ielftype = arrset(ielftype,ie,iet_["en1dX"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en1dX')
-        ielftype = arrset(ielftype, ie, iet_["en1dX"])
+        ielftype = arrset(ielftype,ie,iet_["en1dX"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en1dX')
-        ielftype = arrset(ielftype, ie, iet_["en1dX"])
+        ielftype = arrset(ielftype,ie,iet_["en1dX"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en1dX')
-        ielftype = arrset(ielftype, ie, iet_["en1dX"])
+        ielftype = arrset(ielftype,ie,iet_["en1dX"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.001,None,1.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.001),None,float(1.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -189,8 +191,12 @@ class  HS72(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-MN-4-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-MN-4-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

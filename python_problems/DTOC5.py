@@ -27,7 +27,7 @@ class  DTOC5(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "QQR2-AN-V-V"
+#    classification = "C-QQR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the value of the parameter N.
 # 
@@ -42,6 +42,8 @@ class  DTOC5(CUTEst_problem):
 # IE N                   1000           $-PARAMETER n =  1999, m =   999
 # IE N                   5000           $-PARAMETER n =  9999, m =  4999
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DTOC5'
@@ -135,7 +137,7 @@ class  DTOC5(CUTEst_problem):
             ename = 'YSQ'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'Y'+str(T)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -143,7 +145,7 @@ class  DTOC5(CUTEst_problem):
             ename = 'XSQ'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(T)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -189,8 +191,12 @@ class  DTOC5(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

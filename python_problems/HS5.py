@@ -15,9 +15,11 @@ class  HS5(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn March 1990
 # 
-#    classification = "OBR2-AN-2-0"
+#    classification = "C-OBR2-AN-2-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS5'
@@ -106,8 +108,10 @@ class  HS5(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-2-0"
+        self.pbclass = "C-OBR2-AN-2-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

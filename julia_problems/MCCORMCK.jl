@@ -1,4 +1,4 @@
-function MCCORMCK(action,args...)
+function MCCORMCK(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,7 +16,7 @@ function MCCORMCK(action,args...)
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OBR2-AY-V-0"
+#    classification = "C-OBR2-AY-V-0"
 # 
 #    This problem is a sum of n-1 groups containing each 2 nonlinear
 #    elements.
@@ -32,6 +32,8 @@ function MCCORMCK(action,args...)
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MCCORMCK"
 
@@ -39,7 +41,7 @@ function MCCORMCK(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -101,25 +103,25 @@ function MCCORMCK(action,args...)
             ename = "Y"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQUARE")
-            arrset(ielftype, ie, iet_["eSQUARE"])
+            arrset(ielftype,ie,iet_["eSQUARE"])
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.5,3.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.5),Float64(3.0),nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.5,3.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.5),Float64(3.0),nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "Z"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSINE")
-            arrset(ielftype, ie, iet_["eSINE"])
+            arrset(ielftype,ie,iet_["eSINE"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.5,3.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.5),Float64(3.0),nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["I+1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1.5,3.0,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-1.5),Float64(3.0),nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -145,9 +147,12 @@ function MCCORMCK(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OBR2-AY-V-0"
+        pb.pbclass = "C-OBR2-AY-V-0"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -219,7 +224,9 @@ function MCCORMCK(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -231,7 +238,7 @@ function MCCORMCK(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

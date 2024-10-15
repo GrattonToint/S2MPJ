@@ -17,11 +17,13 @@ class  VESUVIALS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "SUR2-MN-8-0"
+#    classification = "C-SUR2-MN-8-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'VESUVIALS'
@@ -3183,7 +3185,7 @@ class  VESUVIALS(CUTEst_problem):
             ename = 'GA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eGAUSSIANT')
-            ielftype = arrset(ielftype, ie, iet_["eGAUSSIANT"])
+            ielftype = arrset(ielftype,ie,iet_["eGAUSSIANT"])
             vname = 'B3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
@@ -3201,7 +3203,7 @@ class  VESUVIALS(CUTEst_problem):
             ename = 'GB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eGAUSSIANT')
-            ielftype = arrset(ielftype, ie, iet_["eGAUSSIANT"])
+            ielftype = arrset(ielftype,ie,iet_["eGAUSSIANT"])
             vname = 'B6'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
@@ -3250,7 +3252,9 @@ class  VESUVIALS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-8-0"
+        self.pbclass = "C-SUR2-MN-8-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

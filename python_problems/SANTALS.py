@@ -98,11 +98,13 @@ class  SANTALS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Dec 2016.
 # 
-#    classification = "SBR2-AN-21-0"
+#    classification = "C-SBR2-AN-21-0"
 # 
 #    Number of stops on Santa's path (path goes from index 0 to 12)
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SANTALS'
@@ -282,9 +284,9 @@ class  SANTALS(CUTEst_problem):
         ename = 'E0,1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE1')
-        ielftype = arrset(ielftype, ie, iet_["eE1"])
+        ielftype = arrset(ielftype,ie,iet_["eE1"])
         vname = 'PHI1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PHIF')[0]
@@ -296,13 +298,13 @@ class  SANTALS(CUTEst_problem):
         ename = 'E0,2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE2')
-        ielftype = arrset(ielftype, ie, iet_["eE2"])
+        ielftype = arrset(ielftype,ie,iet_["eE2"])
         vname = 'PHI2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PHIF')[0]
@@ -312,17 +314,17 @@ class  SANTALS(CUTEst_problem):
         ename = 'E1,2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE3')
-        ielftype = arrset(ielftype, ie, iet_["eE3"])
+        ielftype = arrset(ielftype,ie,iet_["eE3"])
         vname = 'PHI1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PHI2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='LAMF')[0]
@@ -330,17 +332,17 @@ class  SANTALS(CUTEst_problem):
         ename = 'E1,3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE3')
-        ielftype = arrset(ielftype, ie, iet_["eE3"])
+        ielftype = arrset(ielftype,ie,iet_["eE3"])
         vname = 'PHI1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PHI3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='LAMF')[0]
@@ -348,21 +350,21 @@ class  SANTALS(CUTEst_problem):
         ename = 'E2,3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE')
-        ielftype = arrset(ielftype, ie, iet_["eE"])
+        ielftype = arrset(ielftype,ie,iet_["eE"])
         vname = 'PHI2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'PHI3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['4']),int(v_['S-1'])+1):
@@ -370,70 +372,70 @@ class  SANTALS(CUTEst_problem):
             ename = 'E'+str(int(v_['I2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE')
-            ielftype = arrset(ielftype, ie, iet_["eE"])
+            ielftype = arrset(ielftype,ie,iet_["eE"])
             ename = 'E'+str(int(v_['I2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(int(v_['I2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='PHI2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(int(v_['I2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I2']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='LAM2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             v_['I1'] = -1+I
             ename = 'E'+str(int(v_['I1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE')
-            ielftype = arrset(ielftype, ie, iet_["eE"])
+            ielftype = arrset(ielftype,ie,iet_["eE"])
             ename = 'E'+str(int(v_['I1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(int(v_['I1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'PHI'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='PHI2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(int(v_['I1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['I1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'LAM'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
             posev = np.where(elftv[ielftype[ie]]=='LAM2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E10,12'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE2')
-        ielftype = arrset(ielftype, ie, iet_["eE2"])
+        ielftype = arrset(ielftype,ie,iet_["eE2"])
         vname = 'PHI10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PHIF')[0]
@@ -443,13 +445,13 @@ class  SANTALS(CUTEst_problem):
         ename = 'E11,12'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eE2')
-        ielftype = arrset(ielftype, ie, iet_["eE2"])
+        ielftype = arrset(ielftype,ie,iet_["eE2"])
         vname = 'PHI11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='PHI1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'LAM11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1000.0,1000.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1000.0),float(1000.0),None)
         posev = np.where(elftv[ielftype[ie]]=='LAM1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='PHIF')[0]
@@ -491,7 +493,9 @@ class  SANTALS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-21-0"
+        self.pbclass = "C-SBR2-AN-21-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -18,7 +18,7 @@ class  BRATU2D(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "NOR2-MN-V-V"
+#    classification = "C-NOR2-MN-V-V"
 # 
 #    P is the number of points in one side of the unit square.
 #    There are P*P variables.
@@ -30,6 +30,8 @@ class  BRATU2D(CUTEst_problem):
 # IE P                   32             $-PARAMETER  n=P**2
 # IE P                   72             $-PARAMETER  n=P**2
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRATU2D'
@@ -138,7 +140,7 @@ class  BRATU2D(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eEXP')
-                    ielftype = arrset( ielftype,ie,iet_['eEXP'])
+                    ielftype = arrset(ielftype,ie,iet_['eEXP'])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -174,9 +176,13 @@ class  BRATU2D(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

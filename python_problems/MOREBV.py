@@ -20,7 +20,7 @@ class  MOREBV(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989 and Nick Gould, Oct 1992.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "SUR2-MN-V-0"
+#    classification = "C-SUR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
@@ -32,6 +32,8 @@ class  MOREBV(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MOREBV'
@@ -133,7 +135,7 @@ class  MOREBV(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eWCUBE')
-                ielftype = arrset( ielftype,ie,iet_['eWCUBE'])
+                ielftype = arrset(ielftype,ie,iet_['eWCUBE'])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -167,7 +169,9 @@ class  MOREBV(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-V-0"
+        self.pbclass = "C-SUR2-MN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

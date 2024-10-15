@@ -14,7 +14,7 @@ class  GPP(CUTEst_problem):
 # 
 #    SIF input: N. Gould, Jan 1998
 # 
-#    classification = "OOR2-AY-V-V"
+#    classification = "C-OOR2-AY-V-V"
 # 
 #    number of variables
 # 
@@ -24,6 +24,8 @@ class  GPP(CUTEst_problem):
 # IE N                   750            $-PARAMETER
 # IE N                   1000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GPP'
@@ -115,9 +117,9 @@ class  GPP(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset(ielftype, ie, iet_["eEXP"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['N-1'])+1):
@@ -126,13 +128,13 @@ class  GPP(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXPDIF')
-                ielftype = arrset(ielftype, ie, iet_["eEXPDIF"])
+                ielftype = arrset(ielftype,ie,iet_["eEXPDIF"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='XI')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -173,8 +175,12 @@ class  GPP(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

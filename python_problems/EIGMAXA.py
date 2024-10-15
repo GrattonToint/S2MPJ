@@ -18,7 +18,7 @@ class  EIGMAXA(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 1992.
 # 
-#    classification = "LQR2-AN-V-V"
+#    classification = "C-LQR2-AN-V-V"
 # 
 #    The dimension of the matrix.
 # 
@@ -27,6 +27,8 @@ class  EIGMAXA(CUTEst_problem):
 # IE N                   10             $-PARAMETER     original value
 # IE N                   100            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EIGMAXA'
@@ -126,13 +128,13 @@ class  EIGMAXA(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
-                ielftype = arrset( ielftype,ie,iet_['en2PROD'])
+                ielftype = arrset(ielftype,ie,iet_['en2PROD'])
             vname = 'Q'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'D'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for K in range(int(v_['1']),int(v_['N'])+1):
@@ -140,13 +142,13 @@ class  EIGMAXA(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
-                ielftype = arrset( ielftype,ie,iet_['en2PROD'])
+                ielftype = arrset(ielftype,ie,iet_['en2PROD'])
             vname = 'Q'+str(K)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Q'+str(K)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
             posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -180,8 +182,12 @@ class  EIGMAXA(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

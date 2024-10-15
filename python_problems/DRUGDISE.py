@@ -29,7 +29,7 @@ class  DRUGDISE(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1993.
 # 
-#    classification = "LOR2-MY-V-V"
+#    classification = "C-LOR2-MY-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
@@ -38,6 +38,8 @@ class  DRUGDISE(CUTEst_problem):
 # IE NI                  100            $-PARAMETER n=603, m=500   original value
 # IE NI                  100            $-PARAMETER n=6003, m=5000 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRUGDISE'
@@ -262,7 +264,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'WA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3S')
-            ielftype = arrset(ielftype, ie, iet_["en3S"])
+            ielftype = arrset(ielftype,ie,iet_["en3S"])
             vname = 'TF'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -282,7 +284,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'WB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3D2')
-            ielftype = arrset(ielftype, ie, iet_["en3D2"])
+            ielftype = arrset(ielftype,ie,iet_["en3D2"])
             vname = 'TF'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -306,7 +308,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'PA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3D2')
-            ielftype = arrset(ielftype, ie, iet_["en3D2"])
+            ielftype = arrset(ielftype,ie,iet_["en3D2"])
             vname = 'TF'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -330,7 +332,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'PB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3S')
-            ielftype = arrset(ielftype, ie, iet_["en3S"])
+            ielftype = arrset(ielftype,ie,iet_["en3S"])
             vname = 'TF'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -350,7 +352,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'DD'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDSQ')
-            ielftype = arrset(ielftype, ie, iet_["eDSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eDSQ"])
             vname = 'W'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -362,7 +364,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'CA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3PR')
-            ielftype = arrset(ielftype, ie, iet_["en3PR"])
+            ielftype = arrset(ielftype,ie,iet_["en3PR"])
             vname = 'C'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -378,7 +380,7 @@ class  DRUGDISE(CUTEst_problem):
             ename = 'CB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3PR')
-            ielftype = arrset(ielftype, ie, iet_["en3PR"])
+            ielftype = arrset(ielftype,ie,iet_["en3PR"])
             vname = 'C'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -455,8 +457,12 @@ class  DRUGDISE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-MY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-MY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

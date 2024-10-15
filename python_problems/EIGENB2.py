@@ -21,7 +21,7 @@ class  EIGENB2(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 1992.
 # 
-#    classification = "QQR2-AN-V-V"
+#    classification = "C-QQR2-AN-V-V"
 # 
 #    The dimension of the matrix.
 # 
@@ -30,6 +30,8 @@ class  EIGENB2(CUTEst_problem):
 # IE N                   10             $-PARAMETER     original value
 # IE N                   50             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EIGENB2'
@@ -131,13 +133,13 @@ class  EIGENB2(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'en2PROD')
-                    ielftype = arrset( ielftype,ie,iet_['en2PROD'])
+                    ielftype = arrset(ielftype,ie,iet_['en2PROD'])
                 vname = 'Q'+str(J)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'D'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for I in range(int(v_['1']),int(J)+1):
@@ -146,13 +148,13 @@ class  EIGENB2(CUTEst_problem):
                     [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         self.elftype = arrset(self.elftype,ie,'en2PROD')
-                        ielftype = arrset( ielftype,ie,iet_['en2PROD'])
+                        ielftype = arrset(ielftype,ie,iet_['en2PROD'])
                     vname = 'Q'+str(K)+','+str(I)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(K)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -193,8 +195,12 @@ class  EIGENB2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

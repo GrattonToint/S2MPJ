@@ -15,11 +15,13 @@ class  HATFLDF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, May 1990.
 # 
-#    classification = "NOR2-AN-3-3"
+#    classification = "C-NOR2-AN-3-3"
 # 
 #    Constants
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HATFLDF'
@@ -103,13 +105,13 @@ class  HATFLDF(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eXPEXP')
-                ielftype = arrset( ielftype,ie,iet_['eXPEXP'])
+                ielftype = arrset(ielftype,ie,iet_['eXPEXP'])
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='T')[0]
@@ -139,8 +141,12 @@ class  HATFLDF(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-3-3"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-3-3"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

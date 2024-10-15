@@ -1,4 +1,4 @@
-function HS60(action,args...)
+function HS60(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -14,11 +14,13 @@ function HS60(action,args...)
 # 
 #    SIF input: J-M Collin, April 1990.
 # 
-#    classification = "OOR2-AY-3-1"
+#    classification = "C-OOR2-AY-3-1"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS60"
@@ -27,7 +29,7 @@ function HS60(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -97,9 +99,10 @@ function HS60(action,args...)
         ename = "E1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePS1VP")
-        arrset(ielftype, ie, iet_["ePS1VP"])
+        arrset(ielftype,ie,iet_["ePS1VP"])
         vname = "X1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="A",elftp[ielftype[ie]])
@@ -107,45 +110,52 @@ function HS60(action,args...)
         ename = "E2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eS2V")
-        arrset(ielftype, ie, iet_["eS2V"])
+        arrset(ielftype,ie,iet_["eS2V"])
         vname = "X1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eP2V")
-        arrset(ielftype, ie, iet_["eP2V"])
+        arrset(ielftype,ie,iet_["eP2V"])
         vname = "X2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eXF")
-        arrset(ielftype, ie, iet_["eXF"])
+        arrset(ielftype,ie,iet_["eXF"])
         vname = "X3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"ePXY")
-        arrset(ielftype, ie, iet_["ePXY"])
+        arrset(ielftype,ie,iet_["ePXY"])
         vname = "X1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "X2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-10.0,10.0,2.0)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-10.0),Float64(10.0),Float64(2.0)))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -188,8 +198,13 @@ function HS60(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-AY-3-1"
+        pb.pbclass = "C-OOR2-AY-3-1"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -336,7 +351,9 @@ function HS60(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -348,7 +365,7 @@ function HS60(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

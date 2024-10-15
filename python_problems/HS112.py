@@ -18,11 +18,13 @@ class  HS112(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, Mar 1990.
 # 
-#    classification = "OLR2-MY-10-3"
+#    classification = "C-OLR2-MY-10-3"
 # 
 #    N is the number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS112'
@@ -154,57 +156,57 @@ class  HS112(CUTEst_problem):
             ename = 'XLOGX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eLOG')
-            ielftype = arrset(ielftype, ie, iet_["eLOG"])
+            ielftype = arrset(ielftype,ie,iet_["eLOG"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'XLOGS'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eLOGSUM')
-            ielftype = arrset(ielftype, ie, iet_["eLOGSUM"])
+            ielftype = arrset(ielftype,ie,iet_["eLOGSUM"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X4')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X5'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X5')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X6'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X6')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X7'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X7')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X8'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X8')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X9'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X9')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X10'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-6,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-6),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X10')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -238,8 +240,12 @@ class  HS112(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-MY-10-3"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-MY-10-3"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

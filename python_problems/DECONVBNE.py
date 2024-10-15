@@ -17,9 +17,11 @@ class  DECONVBNE(CUTEst_problem):
 #    unititialized variables fixed at zero, Nick Gould, Feb, 2013
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-MN-61-0"
+#    classification = "C-NOR2-MN-61-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DECONVBNE'
@@ -209,7 +211,7 @@ class  DECONVBNE(CUTEst_problem):
                 ename = 'PROD'+str(K)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePR')
-                ielftype = arrset(ielftype, ie, iet_["ePR"])
+                ielftype = arrset(ielftype,ie,iet_["ePR"])
                 vname = 'SG'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -242,8 +244,12 @@ class  DECONVBNE(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-61-0"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-61-0"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -16,7 +16,7 @@ class  SVANBERG(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 #    Number of variables (must be even and >= 10)
 # 
@@ -35,6 +35,8 @@ class  SVANBERG(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SVANBERG'
@@ -141,18 +143,18 @@ class  SVANBERG(CUTEst_problem):
             ename = 'Q'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEP')
-            ielftype = arrset(ielftype, ie, iet_["eEP"])
+            ielftype = arrset(ielftype,ie,iet_["eEP"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.8,0.8,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.8),float(0.8),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'P'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEM')
-            ielftype = arrset(ielftype, ie, iet_["eEM"])
+            ielftype = arrset(ielftype,ie,iet_["eEM"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-0.8,0.8,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-0.8),float(0.8),None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -537,9 +539,13 @@ class  SVANBERG(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

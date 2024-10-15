@@ -17,7 +17,7 @@ class  BRATU1D(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OXR2-MN-V-0"
+#    classification = "C-OXR2-MN-V-0"
 # 
 #    Number of variables (must be odd)
 # 
@@ -29,6 +29,8 @@ class  BRATU1D(CUTEst_problem):
 # IE N                   1001           $-PARAMETER must be odd
 # IE N                   5001           $-PARAMETER must be odd
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRATU1D'
@@ -126,7 +128,7 @@ class  BRATU1D(CUTEst_problem):
         ename = 'C'+str(int(v_['0']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBRA')
-        ielftype = arrset(ielftype, ie, iet_["eBRA"])
+        ielftype = arrset(ielftype,ie,iet_["eBRA"])
         ename = 'C'+str(int(v_['0']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['0']))
@@ -145,7 +147,7 @@ class  BRATU1D(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -153,7 +155,7 @@ class  BRATU1D(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -165,7 +167,7 @@ class  BRATU1D(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eBRA')
-            ielftype = arrset(ielftype, ie, iet_["eBRA"])
+            ielftype = arrset(ielftype,ie,iet_["eBRA"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -208,7 +210,9 @@ class  BRATU1D(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OXR2-MN-V-0"
+        self.pbclass = "C-OXR2-MN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

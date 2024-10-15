@@ -12,7 +12,7 @@ class  TWOD(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 25th 2012
 # 
-#    classification = "QLR2-AN-V-V"
+#    classification = "C-QLR2-AN-V-V"
 # 
 #    the x-y discretization 
 # 
@@ -20,6 +20,8 @@ class  TWOD(CUTEst_problem):
 # IE N                    2             $-PARAMETER
 # IE N                   40             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TWOD'
@@ -240,11 +242,11 @@ class  TWOD(CUTEst_problem):
                 ename = 'E'+str(int(v_['M']))+','+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQD')
-                ielftype = arrset(ielftype, ie, iet_["eSQD"])
+                ielftype = arrset(ielftype,ie,iet_["eSQD"])
                 ename = 'E'+str(int(v_['M']))+','+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 vname = 'Y'+str(int(v_['M']))+','+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'E'+str(int(v_['M']))+','+str(I)+','+str(J)
@@ -256,9 +258,9 @@ class  TWOD(CUTEst_problem):
                 ename = 'E'+str(K)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset(ielftype, ie, iet_["eSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'U'+str(K)+','+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -345,8 +347,12 @@ class  TWOD(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

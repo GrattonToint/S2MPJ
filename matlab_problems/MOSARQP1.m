@@ -19,7 +19,7 @@ function varargout = MOSARQP1(action,varargin)
 %    SIF input: Ph. Toint, August 1993.
 %               minor correction by Ph. Shott, Jan 1995.
 % 
-%    classification = 'QLR2-AN-V-V'
+%    classification = 'C-QLR2-AN-V-V'
 % 
 %    Problem variants: these are distinguished by the triplet ( N, M, COND ),
 %    where: - N (nb of variables) must be even and have an integer square root
@@ -120,6 +120,8 @@ function varargout = MOSARQP1(action,varargin)
 % 
 % IE N                   2500           $-PARAMETER
 % 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Translated to Matlab by S2MPJ version 6 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -610,7 +612,7 @@ switch(action)
             end
         end
         %%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
-        [pbm.grelt{1:ngrp}] = deal(repmat([],1,ngrp));
+        [pbm.grelt{1:ngrp}] = deal([]);
         nlc = [];
         for I=v_('1'):v_('N')
             v_('TMP') = 0.5*v_(['D',int2str(I)]);
@@ -681,7 +683,11 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'QLR2-AN-V-V';
+        pb.pbclass = 'C-QLR2-AN-V-V';
+        pbm.objderlvl = 2;
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2];
+        pb.conderlvl  = pbm.conderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%
         if(strcmp(action,'setup_redprec'))
             varargout{1} = s2mpjlib('convert',pb, pbm.ndigs);
@@ -690,6 +696,7 @@ switch(action)
             varargout{1} = pb;
             varargout{2} = pbm;
         end
+
 % **********************
 %  SET UP THE FUNCTION *
 %  AND RANGE ROUTINES  *
@@ -731,18 +738,19 @@ switch(action)
     %%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
     case {'fx','fgx','fgHx','cx','cJx','cJHx','cIx','cIJx','cIJHx','cIJxv','fHxv',...
-          'cJxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy','LHxyv','LIHxyv'}
+          'cJxv','cJtxv','cIJtxv','Lxy','Lgxy','LgHxy','LIxy','LIgxy','LIgHxy',...
+          'LHxyv','LIHxyv'}
 
         if(isfield(pbm,'name')&&strcmp(pbm.name,name))
             pbm.has_globs = [0,0];
             [varargout{1:max(1,nargout)}] = s2mpjlib(action,pbm,varargin{:});
         else
             disp(['ERROR: please run ',name,' with action = setup'])
-            [varargout{1:nargout}] = deal(repmat(NaN,1:nargout));
+            [varargout{1:nargout}] = deal(NaN);
         end
 
     otherwise
-        disp([' ERROR: unknown action ',action,' requested from ',name,'.m'])
+        disp([' ERROR: action ',action,' unavailable for problem ',name,'.m'])
     end
 
 return

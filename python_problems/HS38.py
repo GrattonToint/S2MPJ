@@ -17,11 +17,13 @@ class  HS38(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, April 1990
 # 
-#    classification = "OBR2-AN-4-0"
+#    classification = "C-OBR2-AN-4-0"
 # 
 #    Problem dimension
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS38'
@@ -113,29 +115,29 @@ class  HS38(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eMSQ')
-        ielftype = arrset(ielftype, ie, iet_["eMSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eMSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eMSQ')
-        ielftype = arrset(ielftype, ie, iet_["eMSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eMSQ"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -176,7 +178,9 @@ class  HS38(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-4-0"
+        self.pbclass = "C-OBR2-AN-4-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

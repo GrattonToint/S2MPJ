@@ -15,11 +15,13 @@ class  HART6(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn May 1995
 # 
-#    classification = "OBR2-AN-6-0"
+#    classification = "C-OBR2-AN-6-0"
 # 
 #    Number of variables - constraints
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HART6'
@@ -136,9 +138,9 @@ class  HART6(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset(ielftype, ie, iet_["eSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,0.2)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),float(0.2))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='PIJ')[0]
@@ -174,7 +176,9 @@ class  HART6(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-6-0"
+        self.pbclass = "C-OBR2-AN-6-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

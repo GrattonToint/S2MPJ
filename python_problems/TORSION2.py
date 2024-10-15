@@ -28,7 +28,7 @@ class  TORSION2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "QBR2-MY-V-0"
+#    classification = "C-QBR2-MY-V-0"
 # 
 #           Alternative values for the SIF file parameters:
 # IE Q                   2              $-PARAMETER n= 16
@@ -37,6 +37,8 @@ class  TORSION2(CUTEst_problem):
 # IE Q                   16             $-PARAMETER n= 1024
 # IE Q                   37             $-PARAMETER n= 5476
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TORSION2'
@@ -180,7 +182,7 @@ class  TORSION2(CUTEst_problem):
                 ename = 'A'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -193,7 +195,7 @@ class  TORSION2(CUTEst_problem):
                 ename = 'B'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -205,7 +207,7 @@ class  TORSION2(CUTEst_problem):
                 ename = 'C'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(int(v_['I-1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -217,7 +219,7 @@ class  TORSION2(CUTEst_problem):
                 ename = 'D'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J-1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -264,8 +266,10 @@ class  TORSION2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "QBR2-MY-V-0"
+        self.pbclass = "C-QBR2-MY-V-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

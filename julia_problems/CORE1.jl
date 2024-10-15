@@ -1,4 +1,4 @@
-function CORE1(action,args...)
+function CORE1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -24,9 +24,11 @@ function CORE1(action,args...)
 # 
 #    SDIF input: E. Loute and D. De Wolf, September 1992.
 # 
-#    classification = "LQI2-RN-65-59"
+#    classification = "C-LQI2-RN-65-59"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CORE1"
@@ -35,7 +37,7 @@ function CORE1(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -859,7 +861,7 @@ function CORE1(action,args...)
         ename = "F00001SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0001"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -867,7 +869,7 @@ function CORE1(action,args...)
         ename = "F00002SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0002"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -875,7 +877,7 @@ function CORE1(action,args...)
         ename = "F00003SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0003"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -883,7 +885,7 @@ function CORE1(action,args...)
         ename = "F00004SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0004"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -891,7 +893,7 @@ function CORE1(action,args...)
         ename = "F00005SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0005"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -899,7 +901,7 @@ function CORE1(action,args...)
         ename = "F00006SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0006"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -907,7 +909,7 @@ function CORE1(action,args...)
         ename = "F00007SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0007"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -915,7 +917,7 @@ function CORE1(action,args...)
         ename = "F00008SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0008"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -923,7 +925,7 @@ function CORE1(action,args...)
         ename = "F00009SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0009"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -931,7 +933,7 @@ function CORE1(action,args...)
         ename = "F00010SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0010"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -939,7 +941,7 @@ function CORE1(action,args...)
         ename = "F00011SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0011"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -947,7 +949,7 @@ function CORE1(action,args...)
         ename = "F00012SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0012"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -955,7 +957,7 @@ function CORE1(action,args...)
         ename = "F00013SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0013"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -963,7 +965,7 @@ function CORE1(action,args...)
         ename = "F00014SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0014"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -971,7 +973,7 @@ function CORE1(action,args...)
         ename = "F00015SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0015"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -979,7 +981,7 @@ function CORE1(action,args...)
         ename = "F00016SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0016"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -987,7 +989,7 @@ function CORE1(action,args...)
         ename = "F00017SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0017"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -995,7 +997,7 @@ function CORE1(action,args...)
         ename = "F00018SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0018"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1003,7 +1005,7 @@ function CORE1(action,args...)
         ename = "F00019SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0019"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1011,7 +1013,7 @@ function CORE1(action,args...)
         ename = "F00020SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0020"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1019,7 +1021,7 @@ function CORE1(action,args...)
         ename = "F00021SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0021"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1027,7 +1029,7 @@ function CORE1(action,args...)
         ename = "F00022SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0022"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1035,7 +1037,7 @@ function CORE1(action,args...)
         ename = "F00023SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0023"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1043,7 +1045,7 @@ function CORE1(action,args...)
         ename = "F00024SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR")
-        arrset(ielftype, ie, iet_["eSQR"])
+        arrset(ielftype,ie,iet_["eSQR"])
         vname = "FLOW0024"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -1187,8 +1189,13 @@ function CORE1(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LQI2-RN-65-59"
+        pb.pbclass = "C-LQI2-RN-65-59"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1231,7 +1238,9 @@ function CORE1(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1243,7 +1252,7 @@ function CORE1(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

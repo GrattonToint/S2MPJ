@@ -18,12 +18,14 @@ class  S268(CUTEst_problem):
 #    SIF input: Michel Bierlaire and Annick Sartenaer,
 #    October 1992.
 # 
-#    classification = "QLR2-AN-5-5"
+#    classification = "C-QLR2-AN-5-5"
 # 
 #   the number of functions
 # 
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'S268'
@@ -205,13 +207,13 @@ class  S268(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePROD')
-                ielftype = arrset(ielftype, ie, iet_["ePROD"])
+                ielftype = arrset(ielftype,ie,iet_["ePROD"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='D')[0]
@@ -241,8 +243,12 @@ class  S268(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-AN-5-5"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-AN-5-5"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -18,7 +18,7 @@ class  BRATU3D(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "NOR2-MN-V-V"
+#    classification = "C-NOR2-MN-V-V"
 # 
 #    P is the number of points in one side of the unit cube
 #    The number of variables is equal to P**3
@@ -30,6 +30,8 @@ class  BRATU3D(CUTEst_problem):
 # IE P                   10             $-PARAMETER  n = 1000
 # IE P                   17             $-PARAMETER  n = 4913
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRATU3D'
@@ -157,9 +159,9 @@ class  BRATU3D(CUTEst_problem):
                     [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         self.elftype = arrset(self.elftype,ie,'eEXP')
-                        ielftype = arrset( ielftype,ie,iet_['eEXP'])
+                        ielftype = arrset(ielftype,ie,iet_['eEXP'])
                     vname = 'U'+str(I)+','+str(J)+','+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='U')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -194,8 +196,12 @@ class  BRATU3D(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -16,7 +16,7 @@ class  SINQUAD2(CUTEst_problem):
 #    SIF input: N. Gould, Dec 1989.
 #    modifield version of SINQUAD (formulation corrected) May 2024
 # 
-#    classification = "OUR2-AY-V-0"
+#    classification = "C-OUR2-AY-V-0"
 # 
 #    number of variables
 # 
@@ -24,6 +24,8 @@ class  SINQUAD2(CUTEst_problem):
 # IE N                   5              $-PARAMETER     original value
 # IE N                   10             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SINQUAD2'
@@ -101,31 +103,31 @@ class  SINQUAD2(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['N'])+1):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['NM1'])+1):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSINE')
-            ielftype = arrset(ielftype, ie, iet_["eSINE"])
+            ielftype = arrset(ielftype,ie,iet_["eSINE"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['N']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -166,7 +168,9 @@ class  SINQUAD2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AY-V-0"
+        self.pbclass = "C-OUR2-AY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -18,13 +18,15 @@ class  LIN(CUTEst_problem):
 # 
 #    SIF input: Marcel Mongeau, 9 February 1994.
 # 
-#    classification = "OLR2-AY-4-2"
+#    classification = "C-OLR2-AY-4-2"
 # 
 #    PARAMETERS likely to be changed for different problems:
 # 
 #    Number of variable sets (# of phases)
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LIN'
@@ -162,17 +164,17 @@ class  LIN(CUTEst_problem):
             ename = 'A'+str(int(v_['1']))+','+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXTAUG1')
-            ielftype = arrset(ielftype, ie, iet_["eXTAUG1"])
+            ielftype = arrset(ielftype,ie,iet_["eXTAUG1"])
             ename = 'A'+str(int(v_['1']))+','+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['1']))+','+str(K)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'A'+str(int(v_['1']))+','+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['2']))+','+str(K)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'A'+str(int(v_['1']))+','+str(K)
@@ -218,17 +220,17 @@ class  LIN(CUTEst_problem):
             ename = 'A'+str(int(v_['2']))+','+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXTAUG2')
-            ielftype = arrset(ielftype, ie, iet_["eXTAUG2"])
+            ielftype = arrset(ielftype,ie,iet_["eXTAUG2"])
             ename = 'A'+str(int(v_['2']))+','+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['1']))+','+str(K)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'A'+str(int(v_['2']))+','+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['2']))+','+str(K)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'A'+str(int(v_['2']))+','+str(K)
@@ -276,9 +278,9 @@ class  LIN(CUTEst_problem):
                 ename = 'B'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXLOGX')
-                ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+                ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
                 vname = 'X'+str(I)+','+str(K)
-                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for K in range(int(v_['1']),int(v_['P'])+1):
@@ -286,17 +288,17 @@ class  LIN(CUTEst_problem):
                 ename = 'C'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXLOGXC')
-                ielftype = arrset(ielftype, ie, iet_["eXLOGXC"])
+                ielftype = arrset(ielftype,ie,iet_["eXLOGXC"])
                 vname = 'X'+str(I)+','+str(K)
-                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['1']))+','+str(K)
-                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
                 posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2']))+','+str(K)
-                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,1.e-12,None,None)
+                [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(1.e-12),None,None)
                 posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -357,8 +359,12 @@ class  LIN(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-AY-4-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-AY-4-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

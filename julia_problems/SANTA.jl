@@ -1,4 +1,4 @@
-function SANTA(action,args...)
+function SANTA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -96,11 +96,13 @@ function SANTA(action,args...)
 # 
 #    SIF input: Nick Gould, Dec 2016.
 # 
-#    classification = "NOR2-AN-21-23"
+#    classification = "C-NOR2-AN-21-23"
 # 
 #    Number of stops on Santa's path (path goes from index 0 to 12)
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SANTA"
@@ -109,7 +111,7 @@ function SANTA(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -287,9 +289,10 @@ function SANTA(action,args...)
         ename = "E0,1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE1")
-        arrset(ielftype, ie, iet_["eE1"])
+        arrset(ielftype,ie,iet_["eE1"])
         vname = "PHI1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PHIF",elftp[ielftype[ie]])
@@ -301,13 +304,15 @@ function SANTA(action,args...)
         ename = "E0,2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE2")
-        arrset(ielftype, ie, iet_["eE2"])
+        arrset(ielftype,ie,iet_["eE2"])
         vname = "PHI2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PHIF",elftp[ielftype[ie]])
@@ -317,17 +322,20 @@ function SANTA(action,args...)
         ename = "E1,2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE3")
-        arrset(ielftype, ie, iet_["eE3"])
+        arrset(ielftype,ie,iet_["eE3"])
         vname = "PHI1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PHI2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="LAMF",elftp[ielftype[ie]])
@@ -335,17 +343,20 @@ function SANTA(action,args...)
         ename = "E1,3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE3")
-        arrset(ielftype, ie, iet_["eE3"])
+        arrset(ielftype,ie,iet_["eE3"])
         vname = "PHI1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PHI3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="LAMF",elftp[ielftype[ie]])
@@ -353,21 +364,25 @@ function SANTA(action,args...)
         ename = "E2,3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE")
-        arrset(ielftype, ie, iet_["eE"])
+        arrset(ielftype,ie,iet_["eE"])
         vname = "PHI2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "PHI3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["4"]):Int64(v_["S-1"])
@@ -375,71 +390,81 @@ function SANTA(action,args...)
             ename = "E"*string(Int64(v_["I2"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eE")
-            arrset(ielftype, ie, iet_["eE"])
+            arrset(ielftype,ie,iet_["eE"])
             ename = "E"*string(Int64(v_["I2"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "PHI"*string(Int64(v_["I2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["I2"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "PHI"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="PHI2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["I2"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "LAM"*string(Int64(v_["I2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["I2"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "LAM"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="LAM2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["I1"] = -1+I
             ename = "E"*string(Int64(v_["I1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eE")
-            arrset(ielftype, ie, iet_["eE"])
+            arrset(ielftype,ie,iet_["eE"])
             ename = "E"*string(Int64(v_["I1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "PHI"*string(Int64(v_["I1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["I1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "PHI"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="PHI2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["I1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "LAM"*string(Int64(v_["I1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "E"*string(Int64(v_["I1"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "LAM"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+            iv,ix_,pb  = (
+                  s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
             posev = findfirst(x->x=="LAM2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
         ename = "E10,12"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE2")
-        arrset(ielftype, ie, iet_["eE2"])
+        arrset(ielftype,ie,iet_["eE2"])
         vname = "PHI10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PHIF",elftp[ielftype[ie]])
@@ -449,13 +474,15 @@ function SANTA(action,args...)
         ename = "E11,12"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eE2")
-        arrset(ielftype, ie, iet_["eE2"])
+        arrset(ielftype,ie,iet_["eE2"])
         vname = "PHI11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="PHI1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "LAM11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-1000.0,1000.0,nothing)
+        iv,ix_,pb  = (
+              s2mpj_nlx(vname,ix_,pb,1,Float64(-1000.0),Float64(1000.0),nothing))
         posev = findfirst(x->x=="LAM1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         posep = findfirst(x->x=="PHIF",elftp[ielftype[ie]])
@@ -499,8 +526,13 @@ function SANTA(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-AN-21-23"
+        pb.pbclass = "C-NOR2-AN-21-23"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -666,7 +698,9 @@ function SANTA(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -678,7 +712,7 @@ function SANTA(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

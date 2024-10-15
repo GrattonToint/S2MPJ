@@ -15,7 +15,7 @@ class  SCURLY10(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, September 1997.
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -25,6 +25,8 @@ class  SCURLY10(CUTEst_problem):
 # IE N                   1000           $-PARAMETER     original value
 # IE N                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCURLY10'
@@ -123,7 +125,9 @@ class  SCURLY10(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-V-0"
+        self.pbclass = "C-OUR2-AN-V-0"
+        self.objderlvl = 2
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

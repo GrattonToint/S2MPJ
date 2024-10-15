@@ -15,9 +15,11 @@ class  BT2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "QQR2-AY-3-1"
+#    classification = "C-QQR2-AY-3-1"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BT2'
@@ -103,9 +105,9 @@ class  BT2(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -113,45 +115,45 @@ class  BT2(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eI4TH')
-        ielftype = arrset(ielftype, ie, iet_["eI4TH"])
+        ielftype = arrset(ielftype,ie,iet_["eI4TH"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eMISC')
-        ielftype = arrset(ielftype, ie, iet_["eMISC"])
+        ielftype = arrset(ielftype,ie,iet_["eMISC"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eFOURTH')
-        ielftype = arrset(ielftype, ie, iet_["eFOURTH"])
+        ielftype = arrset(ielftype,ie,iet_["eFOURTH"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -193,8 +195,12 @@ class  BT2(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-AY-3-1"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-AY-3-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

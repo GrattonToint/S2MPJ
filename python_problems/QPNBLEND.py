@@ -14,9 +14,11 @@ class  QPNBLEND(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, January 1993
 # 
-#    classification = "QLR2-MN-83-74"
+#    classification = "C-QLR2-MN-83-74"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QPNBLEND'
@@ -1898,7 +1900,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         self.x0 = np.zeros((self.n,1))
         vname = '1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -1910,7 +1912,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1921,7 +1923,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1932,7 +1934,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1943,7 +1945,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1954,7 +1956,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1965,7 +1967,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1976,7 +1978,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1987,7 +1989,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '9'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1998,7 +2000,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2009,7 +2011,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '11'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2020,7 +2022,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '12'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2031,7 +2033,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '13'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2042,7 +2044,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2053,7 +2055,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '15'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2064,7 +2066,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2075,7 +2077,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '17'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2086,7 +2088,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2097,7 +2099,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '19'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2108,7 +2110,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2119,7 +2121,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '21'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2130,7 +2132,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2141,7 +2143,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '23'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2152,7 +2154,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2163,7 +2165,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '25'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2174,7 +2176,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2185,7 +2187,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '27'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2196,7 +2198,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2207,7 +2209,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '29'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2218,7 +2220,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2229,7 +2231,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '31'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2240,7 +2242,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2251,7 +2253,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '33'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2262,7 +2264,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2273,7 +2275,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '35'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2284,7 +2286,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2295,7 +2297,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '37'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2306,7 +2308,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '38'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2317,7 +2319,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '39'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2328,7 +2330,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '40'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2339,7 +2341,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '41'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2350,7 +2352,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '42'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2361,7 +2363,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '43'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2372,7 +2374,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '44'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2383,7 +2385,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '45'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2394,7 +2396,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '46'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2405,7 +2407,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '47'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2416,7 +2418,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '48'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2427,7 +2429,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '49'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2438,7 +2440,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '50'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2449,7 +2451,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '51'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2460,7 +2462,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '52'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2471,7 +2473,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '53'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2482,7 +2484,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '54'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2493,7 +2495,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '55'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2504,7 +2506,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '56'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2515,7 +2517,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '57'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2526,7 +2528,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '58'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2537,7 +2539,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '59'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2548,7 +2550,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '60'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2559,7 +2561,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '61'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2570,7 +2572,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '62'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2581,7 +2583,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '63'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2592,7 +2594,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '64'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2603,7 +2605,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '65'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2614,7 +2616,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '66'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2625,7 +2627,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '67'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2636,7 +2638,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '68'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2647,7 +2649,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '69'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2658,7 +2660,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '70'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2669,7 +2671,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '71'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2680,7 +2682,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '72'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2691,7 +2693,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '73'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2702,7 +2704,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '74'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2713,7 +2715,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '75'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2724,7 +2726,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '76'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2735,7 +2737,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '77'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2746,7 +2748,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '78'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2757,7 +2759,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '79'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2768,7 +2770,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '80'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2779,7 +2781,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '81'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2790,7 +2792,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '82'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2801,7 +2803,7 @@ class  QPNBLEND(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = '83'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2838,9 +2840,13 @@ class  QPNBLEND(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-MN-83-74"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-MN-83-74"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

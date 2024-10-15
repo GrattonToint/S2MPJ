@@ -1,4 +1,4 @@
-function COSHFUN(action,args...)
+function COSHFUN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,7 +16,7 @@ function COSHFUN(action,args...)
 # 
 #    SIF input: Nick Gould, October 1992.
 # 
-#    classification = "LOR2-AN-V-V"
+#    classification = "C-LOR2-AN-V-V"
 # 
 #   the number of functions
 # 
@@ -29,6 +29,8 @@ function COSHFUN(action,args...)
 # IE M                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "COSHFUN"
 
@@ -36,7 +38,7 @@ function COSHFUN(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -145,7 +147,7 @@ function COSHFUN(action,args...)
             ename = "SQR"*string(Int64(v_["I/3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQR")
-            arrset(ielftype, ie, iet_["eSQR"])
+            arrset(ielftype,ie,iet_["eSQR"])
             ename = "SQR"*string(Int64(v_["I/3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)
@@ -155,7 +157,7 @@ function COSHFUN(action,args...)
             ename = "COSH"*string(Int64(v_["I/3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOSH")
-            arrset(ielftype, ie, iet_["eCOSH"])
+            arrset(ielftype,ie,iet_["eCOSH"])
             ename = "COSH"*string(Int64(v_["I/3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["I-1"]))
@@ -165,7 +167,7 @@ function COSHFUN(action,args...)
             ename = "PROD"*string(Int64(v_["I/3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
-            arrset(ielftype, ie, iet_["ePROD"])
+            arrset(ielftype,ie,iet_["ePROD"])
             ename = "PROD"*string(Int64(v_["I/3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["I-2"]))
@@ -208,9 +210,14 @@ function COSHFUN(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LOR2-AN-V-V"
+        pb.pbclass = "C-LOR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -292,7 +299,9 @@ function COSHFUN(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -304,7 +313,7 @@ function COSHFUN(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

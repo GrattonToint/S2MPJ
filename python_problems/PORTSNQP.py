@@ -18,7 +18,7 @@ class  PORTSNQP(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 2001
 # 
-#    classification = "QLR2-AN-V-1"
+#    classification = "C-QLR2-AN-V-1"
 # 
 #    The number of equality constraints
 # 
@@ -27,6 +27,8 @@ class  PORTSNQP(CUTEst_problem):
 # IE N                   1000
 # IE N                   10000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PORTSNQP'
@@ -143,7 +145,10 @@ class  PORTSNQP(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "QLR2-AN-V-1"
+        self.pbclass = "C-QLR2-AN-V-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

@@ -12,7 +12,7 @@ class  CHARDIS1(CUTEst_problem):
 #    SIF input: R. Felkel, Jun 1999.
 #               incorrectly decoded version (see CHARDIS12 for correction)
 # 
-#    classification = "OQR2-AY-V-V"
+#    classification = "C-OQR2-AY-V-V"
 # 
 #    Number of positive (or negative) charges -> Number of variables 2*NP1
 # 
@@ -26,6 +26,8 @@ class  CHARDIS1(CUTEst_problem):
 # IE NP1                 500            $-PARAMETER
 # IE NP1                 1000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHARDIS1'
@@ -151,7 +153,7 @@ class  CHARDIS1(CUTEst_problem):
                 ename = 'X'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eDIFSQR')
-                ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
+                ielftype = arrset(ielftype,ie,iet_["eDIFSQR"])
                 vname = 'X'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -163,7 +165,7 @@ class  CHARDIS1(CUTEst_problem):
                 ename = 'Y'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eDIFSQR')
-                ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
+                ielftype = arrset(ielftype,ie,iet_["eDIFSQR"])
                 vname = 'Y'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -176,7 +178,7 @@ class  CHARDIS1(CUTEst_problem):
             ename = 'RX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -184,7 +186,7 @@ class  CHARDIS1(CUTEst_problem):
             ename = 'RY'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'Y'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -227,8 +229,12 @@ class  CHARDIS1(CUTEst_problem):
         self.cupper[np.arange(self.nle)] = np.zeros((self.nle,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

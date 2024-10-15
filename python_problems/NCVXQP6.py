@@ -11,7 +11,7 @@ class  NCVXQP6(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 1995
 # 
-#    classification = "QLR2-AN-V-V"
+#    classification = "C-QLR2-AN-V-V"
 # 
 #    The number of variables
 # 
@@ -22,6 +22,8 @@ class  NCVXQP6(CUTEst_problem):
 # IE N                   1000           $-PARAMETER    original value
 # IE N                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NCVXQP6'
@@ -174,7 +176,10 @@ class  NCVXQP6(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "QLR2-AN-V-V"
+        self.pbclass = "C-QLR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

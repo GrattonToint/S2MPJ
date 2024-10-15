@@ -1,4 +1,4 @@
-function SVANBERG(action,args...)
+function SVANBERG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -15,7 +15,7 @@ function SVANBERG(action,args...)
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 #    Number of variables (must be even and >= 10)
 # 
@@ -35,6 +35,8 @@ function SVANBERG(action,args...)
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SVANBERG"
 
@@ -42,7 +44,7 @@ function SVANBERG(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -139,17 +141,17 @@ function SVANBERG(action,args...)
             ename = "Q"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEP")
-            arrset(ielftype, ie, iet_["eEP"])
+            arrset(ielftype,ie,iet_["eEP"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.8,0.8,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.8),Float64(0.8),nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "P"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEM")
-            arrset(ielftype, ie, iet_["eEM"])
+            arrset(ielftype,ie,iet_["eEM"])
             vname = "X"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.8,0.8,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.8),Float64(0.8),nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -537,9 +539,14 @@ function SVANBERG(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-MN-V-V"
+        pb.pbclass = "C-OOR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -601,7 +608,9 @@ function SVANBERG(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -613,7 +622,7 @@ function SVANBERG(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

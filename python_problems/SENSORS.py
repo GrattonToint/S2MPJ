@@ -16,7 +16,7 @@ class  SENSORS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 1994
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    Number of unknowns
 # 
@@ -26,6 +26,8 @@ class  SENSORS(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SENSORS'
@@ -96,7 +98,7 @@ class  SENSORS(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eSINFUN')
-                    ielftype = arrset( ielftype,ie,iet_['eSINFUN'])
+                    ielftype = arrset(ielftype,ie,iet_['eSINFUN'])
                 vname = 'THETA'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='THETAI')[0]
@@ -126,7 +128,9 @@ class  SENSORS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-V-0"
+        self.pbclass = "C-OUR2-AN-V-0"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

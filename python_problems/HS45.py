@@ -15,11 +15,13 @@ class  HS45(CUTEst_problem):
 # 
 #    SIF input: Ph.L. Toint, October 1990.
 # 
-#    classification = "OBR2-AN-5-0"
+#    classification = "C-OBR2-AN-5-0"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS45'
@@ -86,25 +88,25 @@ class  HS45(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en5PR')
-        ielftype = arrset(ielftype, ie, iet_["en5PR"])
+        ielftype = arrset(ielftype,ie,iet_["en5PR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V4')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V5')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -124,7 +126,9 @@ class  HS45(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-5-0"
+        self.pbclass = "C-OBR2-AN-5-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -19,7 +19,7 @@ class  GENROSEB(CUTEst_problem):
 # 
 #    version with simple bound constraints
 # 
-#    classification = "SBR2-AN-V-0"
+#    classification = "C-SBR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -29,6 +29,8 @@ class  GENROSEB(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # IE N                   500            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GENROSEB'
@@ -112,9 +114,9 @@ class  GENROSEB(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eMSQR')
-                ielftype = arrset( ielftype,ie,iet_['eMSQR'])
+                ielftype = arrset(ielftype,ie,iet_['eMSQR'])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.2,0.5,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.2),float(0.5),None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -145,7 +147,9 @@ class  GENROSEB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-V-0"
+        self.pbclass = "C-SBR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

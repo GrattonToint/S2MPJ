@@ -33,11 +33,13 @@ class  LOADBAL(CUTEst_problem):
 # 
 #    SIF input: Masha Sosonkina, Virginia Tech., 1995.
 # 
-#    classification = "OLR2-MN-31-31"
+#    classification = "C-OLR2-MN-31-31"
 # 
 #  Parameter assignment.
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LOADBAL'
@@ -572,7 +574,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA1')
-        ielftype = arrset(ielftype, ie, iet_["eBETA1"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA1"])
         vname = 'B1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -580,7 +582,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA1')
-        ielftype = arrset(ielftype, ie, iet_["eBETA1"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA1"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -588,7 +590,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA2')
-        ielftype = arrset(ielftype, ie, iet_["eBETA2"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA2"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -596,7 +598,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA1')
-        ielftype = arrset(ielftype, ie, iet_["eBETA1"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA1"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -604,7 +606,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA1')
-        ielftype = arrset(ielftype, ie, iet_["eBETA1"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA1"])
         vname = 'B5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -612,7 +614,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA2')
-        ielftype = arrset(ielftype, ie, iet_["eBETA2"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA2"])
         vname = 'B6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -620,7 +622,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB7'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA2')
-        ielftype = arrset(ielftype, ie, iet_["eBETA2"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA2"])
         vname = 'B7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -628,7 +630,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB8'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA1')
-        ielftype = arrset(ielftype, ie, iet_["eBETA1"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA1"])
         vname = 'B8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -636,7 +638,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB9'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA2')
-        ielftype = arrset(ielftype, ie, iet_["eBETA2"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA2"])
         vname = 'B9'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -644,7 +646,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB10'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA2')
-        ielftype = arrset(ielftype, ie, iet_["eBETA2"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA2"])
         vname = 'B10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -652,7 +654,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EB11'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eBETA2')
-        ielftype = arrset(ielftype, ie, iet_["eBETA2"])
+        ielftype = arrset(ielftype,ie,iet_["eBETA2"])
         vname = 'B11'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -661,7 +663,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMA1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMA1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMA1"])
             vname = 'X'+str(int(v_['4C']))+','+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -673,7 +675,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMB1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMB1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMB1"])
             vname = 'X'+str(int(v_['4C']))+','+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -686,7 +688,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGA'+str(int(v_['I+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMA1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMA1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMA1"])
             ename = 'EGA'+str(int(v_['I+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(I)+','+str(int(v_['4C']))
@@ -702,7 +704,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGB'+str(int(v_['I+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMB1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMB1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMB1"])
             ename = 'EGB'+str(int(v_['I+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(I)+','+str(int(v_['4C']))
@@ -720,7 +722,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGA'+str(int(v_['I+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMA1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMA1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMA1"])
             ename = 'EGA'+str(int(v_['I+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['8C']))+','+str(int(v_['I+8']))
@@ -736,7 +738,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGB'+str(int(v_['I+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMB1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMB1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMB1"])
             ename = 'EGB'+str(int(v_['I+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['8C']))+','+str(int(v_['I+8']))
@@ -753,7 +755,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGA'+str(int(v_['I+9']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMA1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMA1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMA1"])
             ename = 'EGA'+str(int(v_['I+9']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+8']))+','+str(int(v_['8C']))
@@ -769,7 +771,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGB'+str(int(v_['I+9']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMB1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMB1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMB1"])
             ename = 'EGB'+str(int(v_['I+9']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+8']))+','+str(int(v_['8C']))
@@ -788,7 +790,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGA'+str(int(v_['I2+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMA1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMA1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMA1"])
             ename = 'EGA'+str(int(v_['I2+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['5C']))+','+str(I)
@@ -804,7 +806,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGB'+str(int(v_['I2+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMB1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMB1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMB1"])
             ename = 'EGB'+str(int(v_['I2+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['5C']))+','+str(I)
@@ -821,7 +823,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGA'+str(int(v_['I2+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMA1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMA1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMA1"])
             ename = 'EGA'+str(int(v_['I2+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(I)+','+str(int(v_['5C']))
@@ -837,7 +839,7 @@ class  LOADBAL(CUTEst_problem):
             ename = 'EGB'+str(int(v_['I2+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOMB1')
-            ielftype = arrset(ielftype, ie, iet_["eCOMB1"])
+            ielftype = arrset(ielftype,ie,iet_["eCOMB1"])
             ename = 'EGB'+str(int(v_['I2+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(I)+','+str(int(v_['5C']))
@@ -853,7 +855,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGA17'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMA2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMA2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMA2"])
         vname = 'X5,4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -865,7 +867,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGB17'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMB2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMB2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMB2"])
         vname = 'X5,4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -877,7 +879,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGA18'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMA2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMA2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMA2"])
         vname = 'X4,5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -889,7 +891,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGB18'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMB2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMB2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMB2"])
         vname = 'X4,5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -901,7 +903,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGA19'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMA2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMA2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMA2"])
         vname = 'X5,8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -913,7 +915,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGB19'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMB2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMB2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMB2"])
         vname = 'X5,8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -925,7 +927,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGA20'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMA2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMA2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMA2"])
         vname = 'X8,5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -937,7 +939,7 @@ class  LOADBAL(CUTEst_problem):
         ename = 'EGB20'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOMB2')
-        ielftype = arrset(ielftype, ie, iet_["eCOMB2"])
+        ielftype = arrset(ielftype,ie,iet_["eCOMB2"])
         vname = 'X8,5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -985,8 +987,12 @@ class  LOADBAL(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-MN-31-31"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-MN-31-31"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE ELEMENTS *
 #  ROUTINE             *

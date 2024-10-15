@@ -1,4 +1,4 @@
-function HS113(action,args...)
+function HS113(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -14,11 +14,13 @@ function HS113(action,args...)
 # 
 #    SIF input: J-M Collin, Mar 1990.
 # 
-#    classification = "QQR2-AN-10-8"
+#    classification = "C-QQR2-AN-10-8"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS113"
@@ -27,7 +29,7 @@ function HS113(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -239,7 +241,7 @@ function HS113(action,args...)
         ename = "OE1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -247,7 +249,7 @@ function HS113(action,args...)
         ename = "OE2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -255,7 +257,7 @@ function HS113(action,args...)
         ename = "OE3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -263,7 +265,7 @@ function HS113(action,args...)
         ename = "OE4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -271,7 +273,7 @@ function HS113(action,args...)
         ename = "OE5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -279,7 +281,7 @@ function HS113(action,args...)
         ename = "OE6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X6"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -287,7 +289,7 @@ function HS113(action,args...)
         ename = "OE7"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X7"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -295,7 +297,7 @@ function HS113(action,args...)
         ename = "OE8"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X8"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -303,7 +305,7 @@ function HS113(action,args...)
         ename = "OE9"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X9"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -311,7 +313,7 @@ function HS113(action,args...)
         ename = "OE10"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X10"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -319,7 +321,7 @@ function HS113(action,args...)
         ename = "OE11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PR")
-        arrset(ielftype, ie, iet_["en2PR"])
+        arrset(ielftype,ie,iet_["en2PR"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -331,7 +333,7 @@ function HS113(action,args...)
         ename = "CE1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -339,7 +341,7 @@ function HS113(action,args...)
         ename = "CE2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -347,7 +349,7 @@ function HS113(action,args...)
         ename = "CE3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -355,7 +357,7 @@ function HS113(action,args...)
         ename = "CE4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -363,7 +365,7 @@ function HS113(action,args...)
         ename = "CE5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -371,7 +373,7 @@ function HS113(action,args...)
         ename = "CE6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -379,7 +381,7 @@ function HS113(action,args...)
         ename = "CE7"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -387,7 +389,7 @@ function HS113(action,args...)
         ename = "CE8"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -395,7 +397,7 @@ function HS113(action,args...)
         ename = "CE9"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -403,7 +405,7 @@ function HS113(action,args...)
         ename = "CE10"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -411,7 +413,7 @@ function HS113(action,args...)
         ename = "CE11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PR")
-        arrset(ielftype, ie, iet_["en2PR"])
+        arrset(ielftype,ie,iet_["en2PR"])
         vname = "X1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -423,7 +425,7 @@ function HS113(action,args...)
         ename = "CE12"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "X9"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -536,8 +538,13 @@ function HS113(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QQR2-AN-10-8"
+        pb.pbclass = "C-QQR2-AN-10-8"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -597,7 +604,9 @@ function HS113(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -609,7 +618,7 @@ function HS113(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

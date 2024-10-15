@@ -15,9 +15,11 @@ class  HS64(CUTEst_problem):
 # 
 #    SIF input: N. Gould, Dec 1989.
 # 
-#    classification = "OOR2-AN-3-1"
+#    classification = "C-OOR2-AN-3-1"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS64'
@@ -98,17 +100,17 @@ class  HS64(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eRECIP')
-                ielftype = arrset( ielftype,ie,iet_['eRECIP'])
+                ielftype = arrset(ielftype,ie,iet_['eRECIP'])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.00001,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.00001),None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'CONE'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eRECIP')
-            ielftype = arrset(ielftype, ie, iet_["eRECIP"])
+            ielftype = arrset(ielftype,ie,iet_["eRECIP"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.00001,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.00001),None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -156,8 +158,12 @@ class  HS64(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-3-1"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-3-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

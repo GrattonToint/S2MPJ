@@ -20,11 +20,13 @@ class  PALMER1ENE(CUTEst_problem):
 #    SIF input: Nick Gould, 1990.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-RN-8-35"
+#    classification = "C-NOR2-RN-8-35"
 # 
 #    Number of data points
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PALMER1ENE'
@@ -216,13 +218,13 @@ class  PALMER1ENE(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'K'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='K')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'L'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='L')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='XSQR')[0]
@@ -257,8 +259,12 @@ class  PALMER1ENE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-RN-8-35"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-RN-8-35"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

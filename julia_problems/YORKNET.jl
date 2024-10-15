@@ -1,4 +1,4 @@
-function YORKNET(action,args...)
+function YORKNET(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,13 +16,15 @@ function YORKNET(action,args...)
 #               e-mail: bul@uk.ac.dmu * Tel no.0533 577070
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "SOR2-AY-312-256"
+#    classification = "C-SOR2-AY-312-256"
 # 
 # DECLARE CONSTANTS DESCRIBING NETWORK
 # 
 # STANDARD DECLARATIONS
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YORKNET"
@@ -31,7 +33,7 @@ function YORKNET(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -621,9 +623,9 @@ function YORKNET(action,args...)
                 ename = "EA"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXPOW")
-                arrset(ielftype, ie, iet_["eXPOW"])
+                arrset(ielftype,ie,iet_["eXPOW"])
                 vname = "q"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -631,9 +633,9 @@ function YORKNET(action,args...)
                 ename = "EA"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXPOW")
-                arrset(ielftype, ie, iet_["eXPOW"])
+                arrset(ielftype,ie,iet_["eXPOW"])
                 vname = "q"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -641,98 +643,98 @@ function YORKNET(action,args...)
                 ename = "EA"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXSQ")
-                arrset(ielftype, ie, iet_["eXSQ"])
+                arrset(ielftype,ie,iet_["eXSQ"])
                 vname = "q"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EB"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXZ")
-                arrset(ielftype, ie, iet_["eXZ"])
+                arrset(ielftype,ie,iet_["eXZ"])
                 vname = "q"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "u"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EC"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXSQ")
-                arrset(ielftype, ie, iet_["eXSQ"])
+                arrset(ielftype,ie,iet_["eXSQ"])
                 vname = "u"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "EH"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXMYZSQ")
-                arrset(ielftype, ie, iet_["eXMYZSQ"])
+                arrset(ielftype,ie,iet_["eXMYZSQ"])
                 vname = "u"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
             ename = "EH"*string(Int64(v_["11"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["7"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["11"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["9"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["12"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["4"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["12"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["6"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["13"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["1"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["13"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["5"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["14"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["2"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["14"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["11"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["15"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["2"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "EH"*string(Int64(v_["15"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "h"*string(Int64(v_["11"]))*","*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -740,28 +742,28 @@ function YORKNET(action,args...)
             ename = "PPW"*string(Int64(v_["11"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePMP4")
-            arrset(ielftype, ie, iet_["ePMP4"])
+            arrset(ielftype,ie,iet_["ePMP4"])
             ename = "PPW"*string(Int64(v_["12"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePMP3")
-            arrset(ielftype, ie, iet_["ePMP3"])
+            arrset(ielftype,ie,iet_["ePMP3"])
             ename = "PPW"*string(Int64(v_["13"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePMP1")
-            arrset(ielftype, ie, iet_["ePMP1"])
+            arrset(ielftype,ie,iet_["ePMP1"])
             ename = "PPW"*string(Int64(v_["14"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePMP2")
-            arrset(ielftype, ie, iet_["ePMP2"])
+            arrset(ielftype,ie,iet_["ePMP2"])
             ename = "PPW"*string(Int64(v_["15"]))*","*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePMP2")
-            arrset(ielftype, ie, iet_["ePMP2"])
+            arrset(ielftype,ie,iet_["ePMP2"])
             for J = Int64(v_["SuPMP"]):Int64(v_["EuPMP"])
                 ename = "PPW"*string(J)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 vname = "q"*string(J)*","*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.0))
                 posev = findfirst(x->x=="Q",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -834,8 +836,13 @@ function YORKNET(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "SOR2-AY-312-256"
+        pb.pbclass = "C-SOR2-AY-312-256"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1056,7 +1063,9 @@ function YORKNET(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1068,7 +1077,7 @@ function YORKNET(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

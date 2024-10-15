@@ -17,7 +17,7 @@ class  MANNE(CUTEst_problem):
 # 
 #    SIF input: N. Gould and Ph. Toint, March 1990.
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 #    Number of periods
 #    The number of variables in the problem N = 3*T
@@ -28,6 +28,8 @@ class  MANNE(CUTEst_problem):
 # IE T                   1000           $-PARAMETER n = 3000
 # IE T                   2000           $-PARAMETER n = 6000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MANNE'
@@ -203,7 +205,7 @@ class  MANNE(CUTEst_problem):
             ename = 'LOGC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eLOGS')
-            ielftype = arrset(ielftype, ie, iet_["eLOGS"])
+            ielftype = arrset(ielftype,ie,iet_["eLOGS"])
             vname = 'C'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='C')[0]
@@ -211,7 +213,7 @@ class  MANNE(CUTEst_problem):
             ename = 'KS'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePOWER')
-            ielftype = arrset(ielftype, ie, iet_["ePOWER"])
+            ielftype = arrset(ielftype,ie,iet_["ePOWER"])
             vname = 'K'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='K')[0]
@@ -251,8 +253,12 @@ class  MANNE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

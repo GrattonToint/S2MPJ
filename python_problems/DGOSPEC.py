@@ -13,11 +13,13 @@ class  DGOSPEC(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "OBR2-AN-3-0"
+#    classification = "C-OBR2-AN-3-0"
 # 
 #   problem parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DGOSPEC'
@@ -102,9 +104,9 @@ class  DGOSPEC(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOS')
-        ielftype = arrset(ielftype, ie, iet_["eCOS"])
+        ielftype = arrset(ielftype,ie,iet_["eCOS"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,0.5,0.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(0.5),float(0.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='F')[0]
@@ -138,7 +140,9 @@ class  DGOSPEC(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-3-0"
+        self.pbclass = "C-OBR2-AN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

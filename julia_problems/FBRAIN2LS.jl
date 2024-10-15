@@ -1,4 +1,4 @@
-function FBRAIN2LS(action,args...)
+function FBRAIN2LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -19,11 +19,13 @@ function FBRAIN2LS(action,args...)
 # 
 #    SIF input: Nick Gould, June 2017.
 # 
-#    classification = "SBR2-AN-4-0"
+#    classification = "C-SBR2-AN-4-0"
 # 
 #    N is the number of data sets
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FBRAIN2LS"
@@ -32,7 +34,7 @@ function FBRAIN2LS(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -11156,11 +11158,11 @@ function FBRAIN2LS(action,args...)
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA1"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C01"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11174,11 +11176,11 @@ function FBRAIN2LS(action,args...)
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA1"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C01"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11192,11 +11194,11 @@ function FBRAIN2LS(action,args...)
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA2"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C02"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11210,11 +11212,11 @@ function FBRAIN2LS(action,args...)
                     arrset(ielftype,ie,iet_["eFBRAIN"])
                 end
                 vname = "ALPHA2"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="ALPHA",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "C02"
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-5.0,5.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-5.0),Float64(5.0),nothing)
                 posev = findfirst(x->x=="C0",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 posep = findfirst(x->x=="COEFF",elftp[ielftype[ie]])
@@ -11259,8 +11261,11 @@ function FBRAIN2LS(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "SBR2-AN-4-0"
+        pb.pbclass = "C-SBR2-AN-4-0"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -11324,7 +11329,9 @@ function FBRAIN2LS(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -11336,7 +11343,7 @@ function FBRAIN2LS(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

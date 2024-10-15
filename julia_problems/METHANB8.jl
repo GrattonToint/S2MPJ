@@ -1,4 +1,4 @@
-function METHANB8(action,args...)
+function METHANB8(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,9 +16,11 @@ function METHANB8(action,args...)
 # 
 #    SIF input: N. Gould and Ph. Toint, Feb 1991.
 # 
-#    classification = "NOR2-MN-31-31"
+#    classification = "C-NOR2-MN-31-31"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "METHANB8"
@@ -27,7 +29,7 @@ function METHANB8(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -395,7 +397,7 @@ function METHANB8(action,args...)
             ename = "E11-"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en2PROD")
-            arrset(ielftype, ie, iet_["en2PROD"])
+            arrset(ielftype,ie,iet_["en2PROD"])
             vname = "X"*string(Int64(v_["1"]))*","*string(J)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -411,7 +413,7 @@ function METHANB8(action,args...)
             ename = "E12-"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXP3PROD")
-            arrset(ielftype, ie, iet_["eEXP3PROD"])
+            arrset(ielftype,ie,iet_["eEXP3PROD"])
             vname = "V"*string(Int64(v_["0"]))
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -440,7 +442,7 @@ function METHANB8(action,args...)
                 ename = "E21-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"en2PROD")
-                arrset(ielftype, ie, iet_["en2PROD"])
+                arrset(ielftype,ie,iet_["en2PROD"])
                 vname = "X"*string(Int64(v_["I+1"]))*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -454,7 +456,7 @@ function METHANB8(action,args...)
                 ename = "E22-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eEXP3PROD")
-                arrset(ielftype, ie, iet_["eEXP3PROD"])
+                arrset(ielftype,ie,iet_["eEXP3PROD"])
                 vname = "V"*string(Int64(v_["I-1"]))
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -480,7 +482,7 @@ function METHANB8(action,args...)
                 ename = "E23-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"en2PROD")
-                arrset(ielftype, ie, iet_["en2PROD"])
+                arrset(ielftype,ie,iet_["en2PROD"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -494,7 +496,7 @@ function METHANB8(action,args...)
                 ename = "E24-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eEXP3PROD")
-                arrset(ielftype, ie, iet_["eEXP3PROD"])
+                arrset(ielftype,ie,iet_["eEXP3PROD"])
                 vname = "V"*string(I)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -549,7 +551,7 @@ function METHANB8(action,args...)
             ename = "E31-"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXP2PROD")
-            arrset(ielftype, ie, iet_["eEXP2PROD"])
+            arrset(ielftype,ie,iet_["eEXP2PROD"])
             vname = "X"*string(Int64(v_["N-2"]))*","*string(J)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
@@ -574,7 +576,7 @@ function METHANB8(action,args...)
                 ename = "E71-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eEXP2PROD")
-                arrset(ielftype, ie, iet_["eEXP2PROD"])
+                arrset(ielftype,ie,iet_["eEXP2PROD"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
@@ -599,7 +601,7 @@ function METHANB8(action,args...)
             ename = "E81-"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eEXP4PROD")
-            arrset(ielftype, ie, iet_["eEXP4PROD"])
+            arrset(ielftype,ie,iet_["eEXP4PROD"])
             vname = "V"*string(Int64(v_["0"]))
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -631,7 +633,7 @@ function METHANB8(action,args...)
             ename = "E82-"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePOLY1PRD")
-            arrset(ielftype, ie, iet_["ePOLY1PRD"])
+            arrset(ielftype,ie,iet_["ePOLY1PRD"])
             vname = "X"*string(Int64(v_["0"]))*","*string(J)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -651,7 +653,7 @@ function METHANB8(action,args...)
             ename = "E83-"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePOLY2PRD")
-            arrset(ielftype, ie, iet_["ePOLY2PRD"])
+            arrset(ielftype,ie,iet_["ePOLY2PRD"])
             vname = "X"*string(Int64(v_["1"]))*","*string(J)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -680,7 +682,7 @@ function METHANB8(action,args...)
                 ename = "E91-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eEXP4PROD")
-                arrset(ielftype, ie, iet_["eEXP4PROD"])
+                arrset(ielftype,ie,iet_["eEXP4PROD"])
                 vname = "V"*string(I)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -712,7 +714,7 @@ function METHANB8(action,args...)
                 ename = "E92-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePOLY2PRD")
-                arrset(ielftype, ie, iet_["ePOLY2PRD"])
+                arrset(ielftype,ie,iet_["ePOLY2PRD"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -736,7 +738,7 @@ function METHANB8(action,args...)
                 ename = "E93-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eEXP4PROD")
-                arrset(ielftype, ie, iet_["eEXP4PROD"])
+                arrset(ielftype,ie,iet_["eEXP4PROD"])
                 vname = "V"*string(Int64(v_["I-1"]))
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -768,7 +770,7 @@ function METHANB8(action,args...)
                 ename = "E94-"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePOLY2PRD")
-                arrset(ielftype, ie, iet_["ePOLY2PRD"])
+                arrset(ielftype,ie,iet_["ePOLY2PRD"])
                 vname = "X"*string(Int64(v_["I+1"]))*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -906,8 +908,13 @@ function METHANB8(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-MN-31-31"
+        pb.pbclass = "C-NOR2-MN-31-31"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -1117,7 +1124,9 @@ function METHANB8(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1129,7 +1138,7 @@ function METHANB8(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -17,9 +17,11 @@ class  BT6(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "OOR2-AY-5-2"
+#    classification = "C-OOR2-AY-5-2"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BT6'
@@ -119,9 +121,9 @@ class  BT6(CUTEst_problem):
         ename = 'O1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -129,21 +131,21 @@ class  BT6(CUTEst_problem):
         ename = 'O2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'O3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -151,9 +153,9 @@ class  BT6(CUTEst_problem):
         ename = 'O4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -161,9 +163,9 @@ class  BT6(CUTEst_problem):
         ename = 'O5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSSQ"])
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -171,37 +173,37 @@ class  BT6(CUTEst_problem):
         ename = 'C1E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C1E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISIN')
-        ielftype = arrset(ielftype, ie, iet_["eISIN"])
+        ielftype = arrset(ielftype,ie,iet_["eISIN"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'C2E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eX4Y2')
-        ielftype = arrset(ielftype, ie, iet_["eX4Y2"])
+        ielftype = arrset(ielftype,ie,iet_["eX4Y2"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='Y')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -258,8 +260,12 @@ class  BT6(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-5-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-5-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

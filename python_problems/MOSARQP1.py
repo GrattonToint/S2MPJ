@@ -20,7 +20,7 @@ class  MOSARQP1(CUTEst_problem):
 #    SIF input: Ph. Toint, August 1993.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "QLR2-AN-V-V"
+#    classification = "C-QLR2-AN-V-V"
 # 
 #    Problem variants: these are distinguished by the triplet ( N, M, COND ),
 #    where: - N (nb of variables) must be even and have an integer square root
@@ -121,6 +121,8 @@ class  MOSARQP1(CUTEst_problem):
 # 
 # IE N                   2500           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MOSARQP1'
@@ -425,9 +427,9 @@ class  MOSARQP1(CUTEst_problem):
             ename = 'XSQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NNZ'])+1):
@@ -440,13 +442,13 @@ class  MOSARQP1(CUTEst_problem):
                 ename = 'P'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PR')
-                ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                ielftype = arrset(ielftype,ie,iet_["en2PR"])
                 vname = 'X'+str(int(v_['KI']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['KJ']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -527,8 +529,12 @@ class  MOSARQP1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

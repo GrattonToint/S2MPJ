@@ -19,7 +19,7 @@ class  n10FOLDTRLS(CUTEst_problem):
 #    SIF input: Nick Gould, Jan 2012.
 #    Least-squares version of 10FOLDTR.SIF, Nick Gould, Jun 2024.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
@@ -27,6 +27,8 @@ class  n10FOLDTRLS(CUTEst_problem):
 # IE N                   10
 # IE N                   100
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'n10FOLDTRLS'
@@ -103,7 +105,9 @@ class  n10FOLDTRLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

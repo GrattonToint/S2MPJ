@@ -20,7 +20,7 @@ class  CHEMRCTA(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #               minor correction by Ph. Shott, Jan 1995 and F Ruediger, Mar 1997.
 # 
-#    classification = "NOR2-MN-V-V"
+#    classification = "C-NOR2-MN-V-V"
 # 
 #    The axial coordinate interval is [0,1]
 # 
@@ -35,6 +35,8 @@ class  CHEMRCTA(CUTEst_problem):
 # IE N                   500            $-PARAMETER n = 1000
 # IE N                   2500           $-PARAMETER n = 5000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHEMRCTA'
@@ -232,13 +234,13 @@ class  CHEMRCTA(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eREAC')
-                ielftype = arrset( ielftype,ie,iet_['eREAC'])
+                ielftype = arrset(ielftype,ie,iet_['eREAC'])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='G')[0]
@@ -247,13 +249,13 @@ class  CHEMRCTA(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eREAC')
-                ielftype = arrset( ielftype,ie,iet_['eREAC'])
+                ielftype = arrset(ielftype,ie,iet_['eREAC'])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'T'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='G')[0]
@@ -291,8 +293,12 @@ class  CHEMRCTA(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

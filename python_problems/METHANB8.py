@@ -17,9 +17,11 @@ class  METHANB8(CUTEst_problem):
 # 
 #    SIF input: N. Gould and Ph. Toint, Feb 1991.
 # 
-#    classification = "NOR2-MN-31-31"
+#    classification = "C-NOR2-MN-31-31"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'METHANB8'
@@ -397,7 +399,7 @@ class  METHANB8(CUTEst_problem):
             ename = 'E11-'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PROD')
-            ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["en2PROD"])
             vname = 'X'+str(int(v_['1']))+','+str(J)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -413,7 +415,7 @@ class  METHANB8(CUTEst_problem):
             ename = 'E12-'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP3PROD')
-            ielftype = arrset(ielftype, ie, iet_["eEXP3PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP3PROD"])
             vname = 'V'+str(int(v_['0']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -443,7 +445,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E21-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
-                ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -457,7 +459,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E22-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXP3PROD')
-                ielftype = arrset(ielftype, ie, iet_["eEXP3PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eEXP3PROD"])
                 vname = 'V'+str(int(v_['I-1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -484,7 +486,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E23-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
-                ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -498,7 +500,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E24-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXP3PROD')
-                ielftype = arrset(ielftype, ie, iet_["eEXP3PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eEXP3PROD"])
                 vname = 'V'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -550,7 +552,7 @@ class  METHANB8(CUTEst_problem):
             ename = 'E31-'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eEXP2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP2PROD"])
             vname = 'X'+str(int(v_['N-2']))+','+str(J)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
@@ -575,7 +577,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E71-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXP2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eEXP2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eEXP2PROD"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
@@ -598,7 +600,7 @@ class  METHANB8(CUTEst_problem):
             ename = 'E81-'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP4PROD')
-            ielftype = arrset(ielftype, ie, iet_["eEXP4PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP4PROD"])
             vname = 'V'+str(int(v_['0']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -631,7 +633,7 @@ class  METHANB8(CUTEst_problem):
             ename = 'E82-'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePOLY1PRD')
-            ielftype = arrset(ielftype, ie, iet_["ePOLY1PRD"])
+            ielftype = arrset(ielftype,ie,iet_["ePOLY1PRD"])
             vname = 'X'+str(int(v_['0']))+','+str(J)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -651,7 +653,7 @@ class  METHANB8(CUTEst_problem):
             ename = 'E83-'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePOLY2PRD')
-            ielftype = arrset(ielftype, ie, iet_["ePOLY2PRD"])
+            ielftype = arrset(ielftype,ie,iet_["ePOLY2PRD"])
             vname = 'X'+str(int(v_['1']))+','+str(J)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -680,7 +682,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E91-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXP4PROD')
-                ielftype = arrset(ielftype, ie, iet_["eEXP4PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eEXP4PROD"])
                 vname = 'V'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -712,7 +714,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E92-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePOLY2PRD')
-                ielftype = arrset(ielftype, ie, iet_["ePOLY2PRD"])
+                ielftype = arrset(ielftype,ie,iet_["ePOLY2PRD"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -736,7 +738,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E93-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXP4PROD')
-                ielftype = arrset(ielftype, ie, iet_["eEXP4PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eEXP4PROD"])
                 vname = 'V'+str(int(v_['I-1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -769,7 +771,7 @@ class  METHANB8(CUTEst_problem):
                 ename = 'E94-'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePOLY2PRD')
-                ielftype = arrset(ielftype, ie, iet_["ePOLY2PRD"])
+                ielftype = arrset(ielftype,ie,iet_["ePOLY2PRD"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -903,8 +905,12 @@ class  METHANB8(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-31-31"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-31-31"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

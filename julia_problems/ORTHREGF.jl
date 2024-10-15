@@ -1,4 +1,4 @@
-function ORTHREGF(action,args...)
+function ORTHREGF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -22,7 +22,7 @@ function ORTHREGF(action,args...)
 #    SIF input: Ph. Toint, June 1990.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "QOR2-AY-V-V"
+#    classification = "C-QOR2-AY-V-V"
 # 
 #    square root of the number of data points
 #    (number of variables = 3 * NPTS**2 + 5 )
@@ -36,6 +36,8 @@ function ORTHREGF(action,args...)
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHREGF"
 
@@ -43,7 +45,7 @@ function ORTHREGF(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -238,7 +240,7 @@ function ORTHREGF(action,args...)
                 ename = "EA"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eTA")
-                arrset(ielftype, ie, iet_["eTA"])
+                arrset(ielftype,ie,iet_["eTA"])
                 vname = "X"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
@@ -262,7 +264,7 @@ function ORTHREGF(action,args...)
                 ename = "EB"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eISQ")
-                arrset(ielftype, ie, iet_["eISQ"])
+                arrset(ielftype,ie,iet_["eISQ"])
                 vname = "Z"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
@@ -274,7 +276,7 @@ function ORTHREGF(action,args...)
                 ename = "EC"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSQ")
-                arrset(ielftype, ie, iet_["eSQ"])
+                arrset(ielftype,ie,iet_["eSQ"])
                 vname = "P5"
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="XX",elftv[ielftype[ie]])
@@ -330,8 +332,13 @@ function ORTHREGF(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QOR2-AY-V-V"
+        pb.pbclass = "C-QOR2-AY-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -491,7 +498,9 @@ function ORTHREGF(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -503,7 +512,7 @@ function ORTHREGF(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -19,7 +19,7 @@ class  READING2(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 1991.
 # 
-#    classification = "LLR2-MN-V-V"
+#    classification = "C-LLR2-MN-V-V"
 # 
 #    Number of discretized points in [0,1]
 # 
@@ -31,6 +31,8 @@ class  READING2(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   2000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING2'
@@ -177,8 +179,11 @@ class  READING2(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "LLR2-MN-V-V"
+        self.pbclass = "C-LLR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -19,7 +19,7 @@ class  READING9(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Ph. Toint, March 1995
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 #    Number of discretized points in [0,1] - 1
 # 
@@ -32,6 +32,8 @@ class  READING9(CUTEst_problem):
 # IE N+1                 1001           $-PARAMETER n=2002, m=1000
 # IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING9'
@@ -142,26 +144,26 @@ class  READING9(CUTEst_problem):
             ename = 'OE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD2')
-            ielftype = arrset(ielftype, ie, iet_["ePROD2"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD2"])
             vname = 'P'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.2)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.2))
             posev = np.where(elftv[ielftype[ie]]=='P')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.2)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.2))
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['0']),int(v_['N-1'])+1):
             ename = 'CE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'P'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.2)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.2))
             posev = np.where(elftv[ielftype[ie]]=='P')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.2)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.2))
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -202,8 +204,12 @@ class  READING9(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

@@ -19,7 +19,7 @@ class  BROYDN3DLS(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Least-squares version: Nick Gould, Oct 2015.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    N is the number of variables (variable).
 # 
@@ -31,6 +31,8 @@ class  BROYDN3DLS(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BROYDN3DLS'
@@ -124,9 +126,9 @@ class  BROYDN3DLS(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eBROY')
-            ielftype = arrset(ielftype, ie, iet_["eBROY"])
+            ielftype = arrset(ielftype,ie,iet_["eBROY"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,-1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='K1')[0]
@@ -158,7 +160,9 @@ class  BROYDN3DLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -19,11 +19,13 @@ class  ELATVIDUB(CUTEst_problem):
 # 
 #    SIF input: Nick Gould
 # 
-#    classification = "SBR2-MN-2-0"
+#    classification = "C-SBR2-MN-2-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ELATVIDUB'
@@ -96,25 +98,25 @@ class  ELATVIDUB(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-100.0,100.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-100.0),float(100.0),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-100.0,100.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-100.0),float(100.0),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBE')
-        ielftype = arrset(ielftype, ie, iet_["eCUBE"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBE"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-100.0,100.0,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-100.0),float(100.0),None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -156,7 +158,9 @@ class  ELATVIDUB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-2-0"
+        self.pbclass = "C-SBR2-MN-2-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -13,7 +13,7 @@ class  SPECAN(CUTEst_problem):
 # 
 #    SIF input: Michael Ferris, July 1993
 # 
-#    classification = "SBR2-AN-V-0"
+#    classification = "C-SBR2-AN-V-0"
 # 
 #    Number of Gaussians
 # 
@@ -22,6 +22,8 @@ class  SPECAN(CUTEst_problem):
 # IE K                   2              $-PARAMETER
 # IE K                   3              $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPECAN'
@@ -169,7 +171,7 @@ class  SPECAN(CUTEst_problem):
                 ename = 'E'+str(p)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eEXPSQ')
-                ielftype = arrset(ielftype, ie, iet_["eEXPSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eEXPSQ"])
                 vname = 'X'+str(p)+','+str(int(v_['1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -211,7 +213,9 @@ class  SPECAN(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-V-0"
+        self.pbclass = "C-SBR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

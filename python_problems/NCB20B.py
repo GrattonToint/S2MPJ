@@ -16,13 +16,15 @@ class  NCB20B(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1993.
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   21             $-PARAMETER     original value
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NCB20B'
@@ -145,7 +147,7 @@ class  NCB20B(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eBP')
-            ielftype = arrset(ielftype, ie, iet_["eBP"])
+            ielftype = arrset(ielftype,ie,iet_["eBP"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -231,7 +233,7 @@ class  NCB20B(CUTEst_problem):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eQR')
-            ielftype = arrset(ielftype, ie, iet_["eQR"])
+            ielftype = arrset(ielftype,ie,iet_["eQR"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -262,8 +264,10 @@ class  NCB20B(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-V-0"
+        self.pbclass = "C-OUR2-AN-V-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -14,9 +14,11 @@ class  SYNTHES1(CUTEst_problem):
 # 
 #    SIF input: S. Leyffer, October 1997
 # 
-#    classification = "OOR2-AN-6-6"
+#    classification = "C-OOR2-AN-6-6"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SYNTHES1'
@@ -147,7 +149,7 @@ class  SYNTHES1(CUTEst_problem):
         ename = 'LOGX2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLOGXP1')
-        ielftype = arrset(ielftype, ie, iet_["eLOGXP1"])
+        ielftype = arrset(ielftype,ie,iet_["eLOGXP1"])
         self.x0 = np.zeros((self.n,1))
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -156,7 +158,7 @@ class  SYNTHES1(CUTEst_problem):
         ename = 'LOGX1X2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLOGDIFF')
-        ielftype = arrset(ielftype, ie, iet_["eLOGDIFF"])
+        ielftype = arrset(ielftype,ie,iet_["eLOGDIFF"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -210,9 +212,13 @@ class  SYNTHES1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-6-6"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-6-6"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

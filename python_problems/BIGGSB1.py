@@ -17,7 +17,7 @@ class  BIGGSB1(CUTEst_problem):
 # 
 #    SIF input: Ph Toint, April 1992.
 # 
-#    classification = "QBR2-AN-V-V"
+#    classification = "C-QBR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -27,6 +27,8 @@ class  BIGGSB1(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGSB1'
@@ -116,8 +118,10 @@ class  BIGGSB1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "QBR2-AN-V-V"
+        self.pbclass = "C-QBR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

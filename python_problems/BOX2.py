@@ -16,7 +16,7 @@ class  BOX2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SXR2-AN-3-0"
+#    classification = "C-SXR2-AN-3-0"
 # 
 #    This function  is a nonlinear least squares with 10 groups.  Each
 #    group has 2 nonlinear elements of exponential type.
@@ -24,6 +24,8 @@ class  BOX2(CUTEst_problem):
 #    Number of groups
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BOX2'
@@ -104,7 +106,7 @@ class  BOX2(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eEXPT')
-                ielftype = arrset( ielftype,ie,iet_['eEXPT'])
+                ielftype = arrset(ielftype,ie,iet_['eEXPT'])
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -115,7 +117,7 @@ class  BOX2(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eEXPT')
-                ielftype = arrset( ielftype,ie,iet_['eEXPT'])
+                ielftype = arrset(ielftype,ie,iet_['eEXPT'])
             vname = 'X2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -153,7 +155,9 @@ class  BOX2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SXR2-AN-3-0"
+        self.pbclass = "C-SXR2-AN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

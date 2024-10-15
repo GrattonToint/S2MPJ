@@ -18,7 +18,7 @@ class  LUKVLI9(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 2001
 # 
-#    classification = "OOR2-AY-V-V"
+#    classification = "C-OOR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -27,6 +27,8 @@ class  LUKVLI9(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLI9'
@@ -218,7 +220,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C1'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C1'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))
@@ -228,7 +230,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C2'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C2'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))
@@ -238,7 +240,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C3'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C3'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['4']))
@@ -248,7 +250,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C1'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBEP')
-        ielftype = arrset(ielftype, ie, iet_["eCUBEP"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
         ename = 'C1'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))
@@ -264,7 +266,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C2'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C2'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))
@@ -274,7 +276,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C3'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C3'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
@@ -284,7 +286,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C4'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C4'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['4']))
@@ -294,7 +296,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C5'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C5'+str(int(v_['2']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['5']))
@@ -304,7 +306,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C1'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBEP')
-        ielftype = arrset(ielftype, ie, iet_["eCUBEP"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
         ename = 'C1'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['3']))
@@ -320,7 +322,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C2'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C2'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['4']))
@@ -330,7 +332,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C3'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C3'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['2']))
@@ -340,7 +342,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C4'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C4'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['5']))
@@ -350,7 +352,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C5'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C5'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
@@ -360,7 +362,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C6'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C6'+str(int(v_['3']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['6']))
@@ -370,7 +372,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C1'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBEP')
-        ielftype = arrset(ielftype, ie, iet_["eCUBEP"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
         ename = 'C1'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-2']))
@@ -386,7 +388,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C2'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C2'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-1']))
@@ -396,7 +398,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C3'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C3'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-3']))
@@ -406,7 +408,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C4'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C4'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N']))
@@ -416,7 +418,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C5'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C5'+str(int(v_['4']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-4']))
@@ -426,7 +428,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C1'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBEP')
-        ielftype = arrset(ielftype, ie, iet_["eCUBEP"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
         ename = 'C1'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-1']))
@@ -442,7 +444,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C2'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C2'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N']))
@@ -452,7 +454,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C3'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C3'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-2']))
@@ -462,7 +464,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C4'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C4'+str(int(v_['5']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-3']))
@@ -472,7 +474,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C1'+str(int(v_['6']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCUBEP')
-        ielftype = arrset(ielftype, ie, iet_["eCUBEP"])
+        ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
         ename = 'C1'+str(int(v_['6']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N']))
@@ -488,7 +490,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C2'+str(int(v_['6']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C2'+str(int(v_['6']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-1']))
@@ -498,7 +500,7 @@ class  LUKVLI9(CUTEst_problem):
         ename = 'C3'+str(int(v_['6']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'C3'+str(int(v_['6']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['N-2']))
@@ -646,8 +648,12 @@ class  LUKVLI9(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

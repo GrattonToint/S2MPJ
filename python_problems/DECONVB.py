@@ -16,9 +16,11 @@ class  DECONVB(CUTEst_problem):
 #    SIF input: Ph. Toint, Nov 1996.
 #    unititialized variables fixed at zero, Nick Gould, Feb, 2013
 # 
-#    classification = "SBR2-MN-61-0"
+#    classification = "C-SBR2-MN-61-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DECONVB'
@@ -197,7 +199,7 @@ class  DECONVB(CUTEst_problem):
                 ename = 'PROD'+str(K)+','+str(I)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePR')
-                ielftype = arrset(ielftype, ie, iet_["ePR"])
+                ielftype = arrset(ielftype,ie,iet_["ePR"])
                 vname = 'SG'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -229,7 +231,9 @@ class  DECONVB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-61-0"
+        self.pbclass = "C-SBR2-MN-61-0"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -25,7 +25,7 @@ class  PENALTY2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -36,6 +36,8 @@ class  PENALTY2(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # IE N                   200            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PENALTY2'
@@ -137,17 +139,17 @@ class  PENALTY2(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE10')
-            ielftype = arrset(ielftype, ie, iet_["eE10"])
+            ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE10')
-            ielftype = arrset(ielftype, ie, iet_["eE10"])
+            ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['N+1']),int(v_['M-1'])+1):
@@ -157,18 +159,18 @@ class  PENALTY2(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE10')
-            ielftype = arrset(ielftype, ie, iet_["eE10"])
+            ielftype = arrset(ielftype,ie,iet_["eE10"])
             vname = 'X'+str(int(v_['I-N+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for J in range(int(v_['1']),int(v_['N'])+1):
             ename = 'D'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -224,7 +226,9 @@ class  PENALTY2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

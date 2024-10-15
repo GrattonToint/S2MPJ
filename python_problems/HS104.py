@@ -15,11 +15,13 @@ class  HS104(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 1991.
 # 
-#    classification = "OOR2-AN-8-5"
+#    classification = "C-OOR2-AN-8-5"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS104'
@@ -165,13 +167,13 @@ class  HS104(CUTEst_problem):
         ename = 'OE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -181,13 +183,13 @@ class  HS104(CUTEst_problem):
         ename = 'OE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -197,13 +199,13 @@ class  HS104(CUTEst_problem):
         ename = 'C1E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -213,13 +215,13 @@ class  HS104(CUTEst_problem):
         ename = 'C2E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -229,13 +231,13 @@ class  HS104(CUTEst_problem):
         ename = 'C3E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -245,13 +247,13 @@ class  HS104(CUTEst_problem):
         ename = 'C3E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -261,13 +263,13 @@ class  HS104(CUTEst_problem):
         ename = 'C3E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -277,13 +279,13 @@ class  HS104(CUTEst_problem):
         ename = 'C4E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -293,13 +295,13 @@ class  HS104(CUTEst_problem):
         ename = 'C4E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -309,13 +311,13 @@ class  HS104(CUTEst_problem):
         ename = 'C4E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'ePROD')
-        ielftype = arrset(ielftype, ie, iet_["ePROD"])
+        ielftype = arrset(ielftype,ie,iet_["ePROD"])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0e-1,1.0e+1,None)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0e-1),float(1.0e+1),None)
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='P1')[0]
@@ -396,8 +398,12 @@ class  HS104(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-8-5"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-8-5"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

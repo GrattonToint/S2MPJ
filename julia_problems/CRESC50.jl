@@ -1,4 +1,4 @@
-function CRESC50(action,args...)
+function CRESC50(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -36,12 +36,14 @@ function CRESC50(action,args...)
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "OOR2-MY-6-100"
+#    classification = "C-OOR2-MY-6-100"
 # 
 #    number of points to be included in the crescent.
 #    the number of constraints is 2*NP
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CRESC50"
@@ -50,7 +52,7 @@ function CRESC50(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -256,7 +258,7 @@ function CRESC50(action,args...)
         ename = "OB"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSC")
-        arrset(ielftype, ie, iet_["eSC"])
+        arrset(ielftype,ie,iet_["eSC"])
         vname = "A"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="AZ",elftv[ielftype[ie]])
@@ -272,7 +274,7 @@ function CRESC50(action,args...)
         ename = "R2SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR2")
-        arrset(ielftype, ie, iet_["eSQR2"])
+        arrset(ielftype,ie,iet_["eSQR2"])
         vname = "D"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="D",elftv[ielftype[ie]])
@@ -284,7 +286,7 @@ function CRESC50(action,args...)
         ename = "R1SQ"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQR1")
-        arrset(ielftype, ie, iet_["eSQR1"])
+        arrset(ielftype,ie,iet_["eSQR1"])
         vname = "D"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="D",elftv[ielftype[ie]])
@@ -301,7 +303,7 @@ function CRESC50(action,args...)
             ename = "XV1"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDIST")
-            arrset(ielftype, ie, iet_["eDIST"])
+            arrset(ielftype,ie,iet_["eDIST"])
             vname = "V1"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -311,7 +313,7 @@ function CRESC50(action,args...)
             ename = "XV2"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDISTX")
-            arrset(ielftype, ie, iet_["eDISTX"])
+            arrset(ielftype,ie,iet_["eDISTX"])
             vname = "V1"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -333,7 +335,7 @@ function CRESC50(action,args...)
             ename = "YW1"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDIST")
-            arrset(ielftype, ie, iet_["eDIST"])
+            arrset(ielftype,ie,iet_["eDIST"])
             vname = "W1"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -343,7 +345,7 @@ function CRESC50(action,args...)
             ename = "YW2"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDISTY")
-            arrset(ielftype, ie, iet_["eDISTY"])
+            arrset(ielftype,ie,iet_["eDISTY"])
             vname = "W1"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -412,8 +414,13 @@ function CRESC50(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-MY-6-100"
+        pb.pbclass = "C-OOR2-MY-6-100"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -796,7 +803,9 @@ function CRESC50(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -808,7 +817,7 @@ function CRESC50(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

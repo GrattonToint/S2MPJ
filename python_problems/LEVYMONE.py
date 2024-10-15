@@ -20,7 +20,7 @@ class  LEVYMONE(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "NOR2-AY-V-V"
+#    classification = "C-NOR2-AY-V-V"
 # 
 #    N is the number of variables
 # 
@@ -33,6 +33,8 @@ class  LEVYMONE(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # IE N                   100            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEVYMONE'
@@ -153,11 +155,11 @@ class  LEVYMONE(CUTEst_problem):
         ename = 'E'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eS2')
-        ielftype = arrset(ielftype, ie, iet_["eS2"])
+        ielftype = arrset(ielftype,ie,iet_["eS2"])
         ename = 'E'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,8.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(8.0))
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E'+str(int(v_['1']))
@@ -173,13 +175,13 @@ class  LEVYMONE(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePS2')
-            ielftype = arrset(ielftype, ie, iet_["ePS2"])
+            ielftype = arrset(ielftype,ie,iet_["ePS2"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,8.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(8.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I-1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,8.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(8.0))
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='L')[0]
@@ -217,8 +219,12 @@ class  LEVYMONE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

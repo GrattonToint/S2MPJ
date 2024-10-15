@@ -22,7 +22,7 @@ class  CORKSCRW(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1991.
 # 
-#    classification = "SOR2-AN-V-V"
+#    classification = "C-SOR2-AN-V-V"
 # 
 #    Number of time intervals
 #    The number of variables is 9T+6, of which 9 are fixed.
@@ -33,6 +33,8 @@ class  CORKSCRW(CUTEst_problem):
 # IE T                   100            $-PARAMETER n = 906
 # IE T                   500            $-PARAMETER n = 4506
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CORKSCRW'
@@ -270,7 +272,7 @@ class  CORKSCRW(CUTEst_problem):
             ename = 'ES'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eERRSIN')
-            ielftype = arrset(ielftype, ie, iet_["eERRSIN"])
+            ielftype = arrset(ielftype,ie,iet_["eERRSIN"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -282,7 +284,7 @@ class  CORKSCRW(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eERRCOS')
-            ielftype = arrset(ielftype, ie, iet_["eERRCOS"])
+            ielftype = arrset(ielftype,ie,iet_["eERRCOS"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -332,8 +334,12 @@ class  CORKSCRW(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

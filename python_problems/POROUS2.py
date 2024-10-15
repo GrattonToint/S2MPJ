@@ -25,7 +25,7 @@ class  POROUS2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, July 1994.
 # 
-#    classification = "NOR2-MN-V-V"
+#    classification = "C-NOR2-MN-V-V"
 # 
 #    P is the number of points in one side of the unit square.
 #    There are P*P variables.
@@ -35,6 +35,8 @@ class  POROUS2(CUTEst_problem):
 # IE P                   64             $-PARAMETER 
 # IE P                   72             $-PARAMETER 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POROUS2'
@@ -151,7 +153,7 @@ class  POROUS2(CUTEst_problem):
                 ename = 'US'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset(ielftype, ie, iet_["eSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -159,7 +161,7 @@ class  POROUS2(CUTEst_problem):
                 ename = 'UC'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eCB')
-                ielftype = arrset(ielftype, ie, iet_["eCB"])
+                ielftype = arrset(ielftype,ie,iet_["eCB"])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -224,8 +226,12 @@ class  POROUS2(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

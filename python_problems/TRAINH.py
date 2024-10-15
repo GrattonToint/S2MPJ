@@ -37,7 +37,7 @@ class  TRAINH(CUTEst_problem):
 # 
 #    SIF input: N. Nichols and Ph. Toint, April 1993
 # 
-#    classification = "QOR2-MN-V-V"
+#    classification = "C-QOR2-MN-V-V"
 # 
 #    Number of discretized points in the interval
 # 
@@ -49,6 +49,8 @@ class  TRAINH(CUTEst_problem):
 # IE N                   501            $-PARAMETER n=2008, m=1002 
 # IE N                   1001           $-PARAMETER n=4008, m=2002
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRAINH'
@@ -268,7 +270,7 @@ class  TRAINH(CUTEst_problem):
             ename = 'VISQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'V'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='VVV')[0]
@@ -277,7 +279,7 @@ class  TRAINH(CUTEst_problem):
                 ename = 'A'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eATAN')
-                ielftype = arrset(ielftype, ie, iet_["eATAN"])
+                ielftype = arrset(ielftype,ie,iet_["eATAN"])
                 vname = 'X'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -290,7 +292,7 @@ class  TRAINH(CUTEst_problem):
             ename = 'UV'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             vname = 'UA'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='UU')[0]
@@ -357,8 +359,12 @@ class  TRAINH(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

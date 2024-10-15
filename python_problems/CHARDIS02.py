@@ -13,7 +13,7 @@ class  CHARDIS02(CUTEst_problem):
 #               correction by S. Gratton & Ph. Toint, May 2024
 #    modifield version of CHARDIS0 (formulation corrected)
 # 
-#    classification = "OBR2-AY-V-V"
+#    classification = "C-OBR2-AY-V-V"
 # 
 #    Number of positive (or negative) charges -> Number of variables 2*NP1
 # 
@@ -28,6 +28,8 @@ class  CHARDIS02(CUTEst_problem):
 # IE NP1                 500            $-PARAMETER
 # IE NP1                 1000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHARDIS02'
@@ -129,7 +131,7 @@ class  CHARDIS02(CUTEst_problem):
                 ename = 'X'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eDIFSQR')
-                ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
+                ielftype = arrset(ielftype,ie,iet_["eDIFSQR"])
                 vname = 'X'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -141,7 +143,7 @@ class  CHARDIS02(CUTEst_problem):
                 ename = 'Y'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eDIFSQR')
-                ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
+                ielftype = arrset(ielftype,ie,iet_["eDIFSQR"])
                 vname = 'Y'+str(I)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -174,7 +176,9 @@ class  CHARDIS02(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AY-V-V"
+        self.pbclass = "C-OBR2-AY-V-V"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

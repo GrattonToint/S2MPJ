@@ -1,4 +1,4 @@
-function ZAMB2(action,args...)
+function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -12,7 +12,7 @@ function ZAMB2(action,args...)
 #       JOTA 81(1994)2,221-248.
 #    E. Arnold 1/3/96 (SIF file)
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 # 
 #    The time horizon NY and the start year YEAR can be varied with
@@ -29,6 +29,8 @@ function ZAMB2(action,args...)
 # IE NY                  30             $-PARAMETER n = 3966
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ZAMB2"
 
@@ -36,7 +38,7 @@ function ZAMB2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -1703,7 +1705,7 @@ function ZAMB2(action,args...)
         ename = "FE1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eFE")
-        arrset(ielftype, ie, iet_["eFE"])
+        arrset(ielftype,ie,iet_["eFE"])
         vname = "V1"*string(Int64(v_["N"]))
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1717,7 +1719,7 @@ function ZAMB2(action,args...)
         ename = "FE2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eFE")
-        arrset(ielftype, ie, iet_["eFE"])
+        arrset(ielftype,ie,iet_["eFE"])
         vname = "V2"*string(Int64(v_["N"]))
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1731,7 +1733,7 @@ function ZAMB2(action,args...)
         ename = "FE3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eFE")
-        arrset(ielftype, ie, iet_["eFE"])
+        arrset(ielftype,ie,iet_["eFE"])
         vname = "V3"*string(Int64(v_["N"]))
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1745,7 +1747,7 @@ function ZAMB2(action,args...)
         ename = "FE4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eFE")
-        arrset(ielftype, ie, iet_["eFE"])
+        arrset(ielftype,ie,iet_["eFE"])
         vname = "V4"*string(Int64(v_["N"]))
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1760,7 +1762,7 @@ function ZAMB2(action,args...)
             ename = "FA1"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFA")
-            arrset(ielftype, ie, iet_["eFA"])
+            arrset(ielftype,ie,iet_["eFA"])
             vname = "V1"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1774,7 +1776,7 @@ function ZAMB2(action,args...)
             ename = "FA2"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFA")
-            arrset(ielftype, ie, iet_["eFA"])
+            arrset(ielftype,ie,iet_["eFA"])
             vname = "V2"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1788,7 +1790,7 @@ function ZAMB2(action,args...)
             ename = "FA3"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFA")
-            arrset(ielftype, ie, iet_["eFA"])
+            arrset(ielftype,ie,iet_["eFA"])
             vname = "V3"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1802,7 +1804,7 @@ function ZAMB2(action,args...)
             ename = "FA4"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFA")
-            arrset(ielftype, ie, iet_["eFA"])
+            arrset(ielftype,ie,iet_["eFA"])
             vname = "V4"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -1817,7 +1819,7 @@ function ZAMB2(action,args...)
             ename = "F0E1"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFHQ")
-            arrset(ielftype, ie, iet_["eFHQ"])
+            arrset(ielftype,ie,iet_["eFHQ"])
             vname = "Q1"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Q",elftv[ielftype[ie]])
@@ -1839,7 +1841,7 @@ function ZAMB2(action,args...)
             ename = "F0E3"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFHQ")
-            arrset(ielftype, ie, iet_["eFHQ"])
+            arrset(ielftype,ie,iet_["eFHQ"])
             vname = "Q3"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Q",elftv[ielftype[ie]])
@@ -1861,7 +1863,7 @@ function ZAMB2(action,args...)
             ename = "F0E4"*string(k)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eFHQ")
-            arrset(ielftype, ie, iet_["eFHQ"])
+            arrset(ielftype,ie,iet_["eFHQ"])
             vname = "Q4"*string(k)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="Q",elftv[ielftype[ie]])
@@ -1983,8 +1985,13 @@ function ZAMB2(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-MN-V-V"
+        pb.pbclass = "C-OOR2-MN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -2101,7 +2108,9 @@ function ZAMB2(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -2113,7 +2122,7 @@ function ZAMB2(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

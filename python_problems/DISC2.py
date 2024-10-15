@@ -16,11 +16,13 @@ class  DISC2(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, November 1991.
 # 
-#    classification = "LQR2-MY-29-23"
+#    classification = "C-LQR2-MY-29-23"
 # 
 #    Number of nodes
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DISC2'
@@ -244,7 +246,7 @@ class  DISC2(CUTEst_problem):
         ename = 'b162'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -260,7 +262,7 @@ class  DISC2(CUTEst_problem):
         ename = 'c162'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -276,7 +278,7 @@ class  DISC2(CUTEst_problem):
         ename = 'b273'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -292,7 +294,7 @@ class  DISC2(CUTEst_problem):
         ename = 'c273'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -308,7 +310,7 @@ class  DISC2(CUTEst_problem):
         ename = 'b384'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -324,7 +326,7 @@ class  DISC2(CUTEst_problem):
         ename = 'c384'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -340,7 +342,7 @@ class  DISC2(CUTEst_problem):
         ename = 'b495'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -356,7 +358,7 @@ class  DISC2(CUTEst_problem):
         ename = 'c495'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -372,7 +374,7 @@ class  DISC2(CUTEst_problem):
         ename = 'b5101'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -388,7 +390,7 @@ class  DISC2(CUTEst_problem):
         ename = 'c5101'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -404,7 +406,7 @@ class  DISC2(CUTEst_problem):
         ename = 'b5111'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -420,7 +422,7 @@ class  DISC2(CUTEst_problem):
         ename = 'c5111'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eLINE')
-        ielftype = arrset(ielftype, ie, iet_["eLINE"])
+        ielftype = arrset(ielftype,ie,iet_["eLINE"])
         vname = 'V1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -437,7 +439,7 @@ class  DISC2(CUTEst_problem):
             ename = 'b'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCIRCLE')
-            ielftype = arrset(ielftype, ie, iet_["eCIRCLE"])
+            ielftype = arrset(ielftype,ie,iet_["eCIRCLE"])
             vname = 'U'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -544,8 +546,12 @@ class  DISC2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-MY-29-23"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-MY-29-23"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

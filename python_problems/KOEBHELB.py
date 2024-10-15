@@ -15,11 +15,13 @@ class  KOEBHELB(CUTEst_problem):
 #    J. P. Hubert and Ph. L . Toint, Summer 2005.
 #    SIF input: Ph. Toint, June 2005.
 # 
-#    classification = "SBR2-RN-3-0"
+#    classification = "C-SBR2-RN-3-0"
 # 
 #    Useful constants
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'KOEBHELB'
@@ -407,7 +409,7 @@ class  KOEBHELB(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eKHE')
-                ielftype = arrset( ielftype,ie,iet_['eKHE'])
+                ielftype = arrset(ielftype,ie,iet_['eKHE'])
             vname = 'N'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='VN')[0]
@@ -446,7 +448,9 @@ class  KOEBHELB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-RN-3-0"
+        self.pbclass = "C-SBR2-RN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

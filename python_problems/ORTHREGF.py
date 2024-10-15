@@ -23,7 +23,7 @@ class  ORTHREGF(CUTEst_problem):
 #    SIF input: Ph. Toint, June 1990.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "QOR2-AY-V-V"
+#    classification = "C-QOR2-AY-V-V"
 # 
 #    square root of the number of data points
 #    (number of variables = 3 * NPTS**2 + 5 )
@@ -36,6 +36,8 @@ class  ORTHREGF(CUTEst_problem):
 # IE NPTS                20             $-PARAMETER n = 1205
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGF'
@@ -228,7 +230,7 @@ class  ORTHREGF(CUTEst_problem):
                 ename = 'EA'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eTA')
-                ielftype = arrset(ielftype, ie, iet_["eTA"])
+                ielftype = arrset(ielftype,ie,iet_["eTA"])
                 vname = 'X'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -252,7 +254,7 @@ class  ORTHREGF(CUTEst_problem):
                 ename = 'EB'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'Z'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -264,7 +266,7 @@ class  ORTHREGF(CUTEst_problem):
                 ename = 'EC'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQ')
-                ielftype = arrset(ielftype, ie, iet_["eSQ"])
+                ielftype = arrset(ielftype,ie,iet_["eSQ"])
                 vname = 'P5'
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -319,8 +321,12 @@ class  ORTHREGF(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

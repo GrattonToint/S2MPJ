@@ -22,7 +22,7 @@ class  POWELLBC(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Aug 2006.
 # 
-#    classification = "OBR2-AN-V-0"
+#    classification = "C-OBR2-AN-V-0"
 # 
 #    Number of points
 # 
@@ -30,6 +30,8 @@ class  POWELLBC(CUTEst_problem):
 # IE P                   2              $-PARAMETER
 # IE P                   5              $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POWELLBC'
@@ -111,21 +113,21 @@ class  POWELLBC(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eINVNRM')
-                    ielftype = arrset( ielftype,ie,iet_['eINVNRM'])
+                    ielftype = arrset(ielftype,ie,iet_['eINVNRM'])
                 vname = 'X'+str(int(v_['2J-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='XJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2K-1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='XK')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2J']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='YJ')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(int(v_['2K']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='YK')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -149,7 +151,9 @@ class  POWELLBC(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-V-0"
+        self.pbclass = "C-OBR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

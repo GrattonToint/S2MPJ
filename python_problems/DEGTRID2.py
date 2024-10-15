@@ -12,11 +12,13 @@ class  DEGTRID2(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2011
 # 
-#    classification = "QBR2-AN-V-0"
+#    classification = "C-QBR2-AN-V-0"
 # 
 #    The number of variables - 1
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEGTRID2'
@@ -110,8 +112,10 @@ class  DEGTRID2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "QBR2-AN-V-0"
+        self.pbclass = "C-QBR2-AN-V-0"
+        self.objderlvl = 2
         self.H = self.H.tocsr()
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

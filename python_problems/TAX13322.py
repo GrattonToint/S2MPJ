@@ -20,13 +20,15 @@ class  TAX13322(CUTEst_problem):
 #    "If ever there was an example that exhibited the stupidity of SIF,
 #     this is it. NIMG"
 # 
-#    classification = "OOR2-MN-72-1261"
+#    classification = "C-OOR2-MN-72-1261"
 # 
 #    parameters
 # 
 #           Alternative values for the SIF file parameters:
 # IE NA                  1              $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TAX13322'
@@ -240,9 +242,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'A1-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eA1')
-                    ielftype = arrset(ielftype, ie, iet_["eA1"])
+                    ielftype = arrset(ielftype,ie,iet_["eA1"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -251,9 +253,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'A2-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eA2')
-                    ielftype = arrset(ielftype, ie, iet_["eA2"])
+                    ielftype = arrset(ielftype,ie,iet_["eA2"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -262,9 +264,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'A3-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eA3')
-                    ielftype = arrset(ielftype, ie, iet_["eA3"])
+                    ielftype = arrset(ielftype,ie,iet_["eA3"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -273,9 +275,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'A4-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eA4')
-                    ielftype = arrset(ielftype, ie, iet_["eA4"])
+                    ielftype = arrset(ielftype,ie,iet_["eA4"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -284,9 +286,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'A5-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eA5')
-                    ielftype = arrset(ielftype, ie, iet_["eA5"])
+                    ielftype = arrset(ielftype,ie,iet_["eA5"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -295,9 +297,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'A6-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eA6')
-                    ielftype = arrset(ielftype, ie, iet_["eA6"])
+                    ielftype = arrset(ielftype,ie,iet_["eA6"])
                     vname = 'C'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='C')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -306,9 +308,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'B1-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eB1')
-                    ielftype = arrset(ielftype, ie, iet_["eB1"])
+                    ielftype = arrset(ielftype,ie,iet_["eB1"])
                     vname = 'Y'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -317,9 +319,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'B2-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eB2')
-                    ielftype = arrset(ielftype, ie, iet_["eB2"])
+                    ielftype = arrset(ielftype,ie,iet_["eB2"])
                     vname = 'Y'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['1']),int(v_['NA'])+1):
@@ -328,9 +330,9 @@ class  TAX13322(CUTEst_problem):
                     ename = 'B3-'+str(I)+','+str(P)+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eB3')
-                    ielftype = arrset(ielftype, ie, iet_["eB3"])
+                    ielftype = arrset(ielftype,ie,iet_["eB3"])
                     vname = 'Y'+str(I)+','+str(P)+','+str(Q)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.1e0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.1e0))
                     posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -12957,8 +12959,12 @@ class  TAX13322(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-72-1261"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-72-1261"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

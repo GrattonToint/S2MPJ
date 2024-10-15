@@ -18,7 +18,7 @@ class  MSQRTA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "NQR2-AN-V-V"
+#    classification = "C-NQR2-AN-V-V"
 # 
 #    Dimension of the matrix
 # 
@@ -29,6 +29,8 @@ class  MSQRTA(CUTEst_problem):
 # IE P                   23             $-PARAMETER n = 529
 # IE P                   32             $-PARAMETER n = 1024
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MSQRTA'
@@ -138,7 +140,7 @@ class  MSQRTA(CUTEst_problem):
                     ename = 'E'+str(I)+','+str(J)+','+str(T)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en2PR')
-                    ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                    ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     vname = 'X'+str(I)+','+str(T)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='XIT')[0]
@@ -171,8 +173,12 @@ class  MSQRTA(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

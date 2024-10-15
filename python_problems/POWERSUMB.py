@@ -17,13 +17,15 @@ class  POWERSUMB(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2021
 # 
-#    classification = "SBR2-MN-V-0"
+#    classification = "C-SBR2-MN-V-0"
 # 
 #    Number of variables
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   4              $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POWERSUMB'
@@ -113,9 +115,9 @@ class  POWERSUMB(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePOWER')
-                ielftype = arrset(ielftype, ie, iet_["ePOWER"])
+                ielftype = arrset(ielftype,ie,iet_["ePOWER"])
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,0.0,4.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(0.0),float(4.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='P')[0]
@@ -146,7 +148,9 @@ class  POWERSUMB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-V-0"
+        self.pbclass = "C-SBR2-MN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -1,4 +1,4 @@
-function HIMMELBJ(action,args...)
+function HIMMELBJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -16,11 +16,13 @@ function HIMMELBJ(action,args...)
 # 
 #    SIF input: Ph. Toint, March 1991.
 # 
-#    classification = "OLR2-MY-45-14"
+#    classification = "C-OLR2-MY-45-14"
 # 
 #    Number of variable sets
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HIMMELBJ"
@@ -29,7 +31,7 @@ function HIMMELBJ(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -430,9 +432,9 @@ function HIMMELBJ(action,args...)
                 ename = "A"*string(J)*","*string(K)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eXLOGX")
-                arrset(ielftype, ie, iet_["eXLOGX"])
+                arrset(ielftype,ie,iet_["eXLOGX"])
                 vname = "X"*string(J)*","*string(K)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -442,35 +444,35 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX4")
-            arrset(ielftype, ie, iet_["eXLOGX4"])
+            arrset(ielftype,ie,iet_["eXLOGX4"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,1"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,1"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3,1"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X4,1"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -479,89 +481,89 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX13")
-            arrset(ielftype, ie, iet_["eXLOGX13"])
+            arrset(ielftype,ie,iet_["eXLOGX13"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X4,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X5,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X6,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y6",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X7,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y7",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X8,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y8",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X9,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y9",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X10,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y10",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X11,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y11",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X12,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y12",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X13,2"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y13",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -570,119 +572,119 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX18")
-            arrset(ielftype, ie, iet_["eXLOGX18"])
+            arrset(ielftype,ie,iet_["eXLOGX18"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X4,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X5,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X6,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y6",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X7,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y7",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X8,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y8",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X9,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y9",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X10,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y10",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X11,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y11",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X12,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y12",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X13,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y13",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X14,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y14",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X15,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y15",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X16,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y16",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X17,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y17",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X18,3"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y18",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -691,29 +693,29 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX3")
-            arrset(ielftype, ie, iet_["eXLOGX3"])
+            arrset(ielftype,ie,iet_["eXLOGX3"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,4"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,4"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3,4"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -722,29 +724,29 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX3")
-            arrset(ielftype, ie, iet_["eXLOGX3"])
+            arrset(ielftype,ie,iet_["eXLOGX3"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,5"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,5"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X3,5"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -753,23 +755,23 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX2")
-            arrset(ielftype, ie, iet_["eXLOGX2"])
+            arrset(ielftype,ie,iet_["eXLOGX2"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,6"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,6"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -778,23 +780,23 @@ function HIMMELBJ(action,args...)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eXLOGX2")
-            arrset(ielftype, ie, iet_["eXLOGX2"])
+            arrset(ielftype,ie,iet_["eXLOGX2"])
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(J)*","*string(Int64(v_["K"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X1,7"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "B"*string(J)*","*string(Int64(v_["K"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X2,7"
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,1.e-12,nothing,0.1)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(1.e-12),nothing,Float64(0.1))
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
         end
@@ -831,8 +833,13 @@ function HIMMELBJ(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OLR2-MY-45-14"
+        pb.pbclass = "C-OLR2-MY-45-14"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -1082,7 +1089,9 @@ function HIMMELBJ(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1094,7 +1103,7 @@ function HIMMELBJ(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

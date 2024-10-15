@@ -17,7 +17,7 @@ class  MCCORMCK(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OBR2-AY-V-0"
+#    classification = "C-OBR2-AY-V-0"
 # 
 #    This problem is a sum of n-1 groups containing each 2 nonlinear
 #    elements.
@@ -32,6 +32,8 @@ class  MCCORMCK(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MCCORMCK'
@@ -105,26 +107,26 @@ class  MCCORMCK(CUTEst_problem):
             ename = 'Y'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset(ielftype, ie, iet_["eSQUARE"])
+            ielftype = arrset(ielftype,ie,iet_["eSQUARE"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.5,3.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.5),float(3.0),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.5,3.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.5),float(3.0),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'Z'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSINE')
-            ielftype = arrset(ielftype, ie, iet_["eSINE"])
+            ielftype = arrset(ielftype,ie,iet_["eSINE"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.5,3.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.5),float(3.0),None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.5,3.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.5),float(3.0),None)
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -152,8 +154,10 @@ class  MCCORMCK(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AY-V-0"
+        self.pbclass = "C-OBR2-AY-V-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

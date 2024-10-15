@@ -16,7 +16,7 @@ class  HAGER3(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1991.
 # 
-#    classification = "SLR2-AY-V-V"
+#    classification = "C-SLR2-AY-V-V"
 # 
 #    Number of discretized points in [0,1]
 # 
@@ -28,6 +28,8 @@ class  HAGER3(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   2500           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HAGER3'
@@ -137,7 +139,7 @@ class  HAGER3(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eLINSQ')
-            ielftype = arrset(ielftype, ie, iet_["eLINSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eLINSQ"])
             vname = 'X'+str(int(v_['I-1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='XA')[0]
@@ -149,7 +151,7 @@ class  HAGER3(CUTEst_problem):
             ename = 'UX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eLINU')
-            ielftype = arrset(ielftype, ie, iet_["eLINU"])
+            ielftype = arrset(ielftype,ie,iet_["eLINU"])
             vname = 'X'+str(int(v_['I-1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='XA')[0]
@@ -203,8 +205,12 @@ class  HAGER3(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SLR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SLR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

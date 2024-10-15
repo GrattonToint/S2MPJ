@@ -1,4 +1,4 @@
-function HIMMELBI(action,args...)
+function HIMMELBI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -21,11 +21,13 @@ function HIMMELBI(action,args...)
 #    SIF input: Ph. Toint, March 1991.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "OLR2-MN-100-12"
+#    classification = "C-OLR2-MN-100-12"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HIMMELBI"
@@ -34,7 +36,7 @@ function HIMMELBI(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -333,25 +335,25 @@ function HIMMELBI(action,args...)
             ename = "PP"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en5PEXP")
-            arrset(ielftype, ie, iet_["en5PEXP"])
+            arrset(ielftype,ie,iet_["en5PEXP"])
             vname = "X"*string(Int64(v_["1"]))*","*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(v_["NW"]),nothing)
             posev = findfirst(x->x=="Y1",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["2"]))*","*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(v_["NW"]),nothing)
             posev = findfirst(x->x=="Y2",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["3"]))*","*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(v_["NW"]),nothing)
             posev = findfirst(x->x=="Y3",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["4"]))*","*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(v_["NW"]),nothing)
             posev = findfirst(x->x=="Y4",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             vname = "X"*string(Int64(v_["5"]))*","*string(J)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,v_["NW"],nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(v_["NW"]),nothing)
             posev = findfirst(x->x=="Y5",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             posep = findfirst(x->x=="A1",elftp[ielftype[ie]])
@@ -392,9 +394,14 @@ function HIMMELBI(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OLR2-MN-100-12"
+        pb.pbclass = "C-OLR2-MN-100-12"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -463,7 +470,9 @@ function HIMMELBI(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -475,7 +484,7 @@ function HIMMELBI(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

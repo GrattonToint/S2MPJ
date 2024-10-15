@@ -37,12 +37,14 @@ class  CRESC50(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "OOR2-MY-6-100"
+#    classification = "C-OOR2-MY-6-100"
 # 
 #    number of points to be included in the crescent.
 #    the number of constraints is 2*NP
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CRESC50'
@@ -264,7 +266,7 @@ class  CRESC50(CUTEst_problem):
         ename = 'OB'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSC')
-        ielftype = arrset(ielftype, ie, iet_["eSC"])
+        ielftype = arrset(ielftype,ie,iet_["eSC"])
         vname = 'A'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='AZ')[0]
@@ -280,7 +282,7 @@ class  CRESC50(CUTEst_problem):
         ename = 'R2SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR2')
-        ielftype = arrset(ielftype, ie, iet_["eSQR2"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR2"])
         vname = 'D'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='D')[0]
@@ -292,7 +294,7 @@ class  CRESC50(CUTEst_problem):
         ename = 'R1SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR1')
-        ielftype = arrset(ielftype, ie, iet_["eSQR1"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR1"])
         vname = 'D'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='D')[0]
@@ -309,7 +311,7 @@ class  CRESC50(CUTEst_problem):
             ename = 'XV1'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDIST')
-            ielftype = arrset(ielftype, ie, iet_["eDIST"])
+            ielftype = arrset(ielftype,ie,iet_["eDIST"])
             vname = 'V1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -319,7 +321,7 @@ class  CRESC50(CUTEst_problem):
             ename = 'XV2'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDISTX')
-            ielftype = arrset(ielftype, ie, iet_["eDISTX"])
+            ielftype = arrset(ielftype,ie,iet_["eDISTX"])
             vname = 'V1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -341,7 +343,7 @@ class  CRESC50(CUTEst_problem):
             ename = 'YW1'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDIST')
-            ielftype = arrset(ielftype, ie, iet_["eDIST"])
+            ielftype = arrset(ielftype,ie,iet_["eDIST"])
             vname = 'W1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -351,7 +353,7 @@ class  CRESC50(CUTEst_problem):
             ename = 'YW2'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDISTY')
-            ielftype = arrset(ielftype, ie, iet_["eDISTY"])
+            ielftype = arrset(ielftype,ie,iet_["eDISTY"])
             vname = 'W1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -417,8 +419,12 @@ class  CRESC50(CUTEst_problem):
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MY-6-100"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MY-6-100"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

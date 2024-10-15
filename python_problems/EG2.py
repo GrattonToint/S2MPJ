@@ -19,9 +19,11 @@ class  EG2(CUTEst_problem):
 # 
 #    SIF input: N. Gould and Ph. Toint, June 1994.
 # 
-#    classification = "OUR2-AN-1000-0"
+#    classification = "C-OUR2-AN-1000-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EG2'
@@ -90,7 +92,7 @@ class  EG2(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset(ielftype, ie, iet_["eSQUARE"])
+            ielftype = arrset(ielftype,ie,iet_["eSQUARE"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -132,8 +134,10 @@ class  EG2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-1000-0"
+        self.pbclass = "C-OUR2-AN-1000-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -14,9 +14,11 @@ class  GROWTH(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov, 1991.
 # 
-#    classification = "NOR2-AN-3-12"
+#    classification = "C-NOR2-AN-3-12"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GROWTH'
@@ -139,7 +141,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -158,7 +160,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -177,7 +179,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -196,7 +198,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -215,7 +217,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -234,7 +236,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -253,7 +255,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -272,7 +274,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -291,7 +293,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -310,7 +312,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -329,7 +331,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -348,7 +350,7 @@ class  GROWTH(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eFIT')
-            ielftype = arrset( ielftype,ie,iet_['eFIT'])
+            ielftype = arrset(ielftype,ie,iet_['eFIT'])
         vname = 'U1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -445,8 +447,12 @@ class  GROWTH(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-3-12"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-3-12"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -34,7 +34,7 @@ class  KISSING2(CUTEst_problem):
 #            N. J. C. Sloane, Springer-Verlag, NY, 1988.
 #    SIF input: Nick Gould, September 2000
 # 
-#    classification = "QQR2-RN-V-V"
+#    classification = "C-QQR2-RN-V-V"
 # 
 # **********************************************************************
 # 
@@ -44,6 +44,8 @@ class  KISSING2(CUTEst_problem):
 # IE m                   24             $-PARAMETER  number of points
 # IE m                   25             $-PARAMETER  number of points
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'KISSING2'
@@ -179,7 +181,7 @@ class  KISSING2(CUTEst_problem):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'ePROD2')
-                    ielftype = arrset(ielftype, ie, iet_["ePROD2"])
+                    ielftype = arrset(ielftype,ie,iet_["ePROD2"])
                     vname = 'P'+str(I)+','+str(K)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='Q')[0]
@@ -192,7 +194,7 @@ class  KISSING2(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePROD1')
-                ielftype = arrset(ielftype, ie, iet_["ePROD1"])
+                ielftype = arrset(ielftype,ie,iet_["ePROD1"])
                 vname = 'P'+str(I)+','+str(K)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -202,7 +204,7 @@ class  KISSING2(CUTEst_problem):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'ePROD2')
-                    ielftype = arrset(ielftype, ie, iet_["ePROD2"])
+                    ielftype = arrset(ielftype,ie,iet_["ePROD2"])
                     vname = 'P'+str(I)+','+str(K)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='Q')[0]
@@ -245,8 +247,12 @@ class  KISSING2(CUTEst_problem):
         self.clower[np.arange(self.nle+self.neq,self.m)] = np.zeros((self.nge,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-RN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-RN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -14,7 +14,7 @@ class  ERRINROS(CUTEst_problem):
 #    An error in specifying problem CHNROSNB.
 #    SIF input: Ph. Toint, Sept 1990.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    Number of variables (at most 50)
 # 
@@ -23,6 +23,8 @@ class  ERRINROS(CUTEst_problem):
 # IE N                   25             $-PARAMETER
 # IE N                   50             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ERRINROS'
@@ -148,7 +150,7 @@ class  ERRINROS(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eETYPE')
-                ielftype = arrset( ielftype,ie,iet_['eETYPE'])
+                ielftype = arrset(ielftype,ie,iet_['eETYPE'])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -185,7 +187,9 @@ class  ERRINROS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

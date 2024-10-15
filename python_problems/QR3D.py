@@ -21,7 +21,7 @@ class  QR3D(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1993
 # 
-#    classification = "NQR2-AN-V-V"
+#    classification = "C-NQR2-AN-V-V"
 # 
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
@@ -31,6 +31,8 @@ class  QR3D(CUTEst_problem):
 # IE M                   10             $-PARAMETER  n = 155  original value
 # IE M                   20             $-PARAMETER  n = 610
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QR3D'
@@ -173,7 +175,7 @@ class  QR3D(CUTEst_problem):
                     [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         self.elftype = arrset(self.elftype,ie,'en2PR')
-                        ielftype = arrset( ielftype,ie,iet_['en2PR'])
+                        ielftype = arrset(ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -189,7 +191,7 @@ class  QR3D(CUTEst_problem):
                     [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                     if newelt:
                         self.elftype = arrset(self.elftype,ie,'en2PR')
-                        ielftype = arrset( ielftype,ie,iet_['en2PR'])
+                        ielftype = arrset(ielftype,ie,iet_['en2PR'])
                     vname = 'Q'+str(I)+','+str(K)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -234,8 +236,12 @@ class  QR3D(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

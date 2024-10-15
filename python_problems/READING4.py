@@ -19,7 +19,7 @@ class  READING4(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Aug 1992
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 #    Number of discretized points in [0,1] (n = N+1, m = N )
 # 
@@ -31,6 +31,8 @@ class  READING4(CUTEst_problem):
 # IE N                   1000           $-PARAMETER n=1001, m=1000
 # IE N                   5000           $-PARAMETER n=5001, m=5000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING4'
@@ -141,7 +143,7 @@ class  READING4(CUTEst_problem):
             ename = 'I'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eENERGY')
-            ielftype = arrset(ielftype, ie, iet_["eENERGY"])
+            ielftype = arrset(ielftype,ie,iet_["eENERGY"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -156,7 +158,7 @@ class  READING4(CUTEst_problem):
             ename = 'UC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eUC')
-            ielftype = arrset(ielftype, ie, iet_["eUC"])
+            ielftype = arrset(ielftype,ie,iet_["eUC"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -204,9 +206,13 @@ class  READING4(CUTEst_problem):
         self.cupper[np.arange(self.nge)] = grange[gegrps]
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

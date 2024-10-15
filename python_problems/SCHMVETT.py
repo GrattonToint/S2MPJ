@@ -21,7 +21,7 @@ class  SCHMVETT(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OUR2-AY-V-0"
+#    classification = "C-OUR2-AY-V-0"
 # 
 #    Number of variables
 # 
@@ -33,6 +33,8 @@ class  SCHMVETT(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCHMVETT'
@@ -106,41 +108,41 @@ class  SCHMVETT(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSCH1')
-            ielftype = arrset(ielftype, ie, iet_["eSCH1"])
+            ielftype = arrset(ielftype,ie,iet_["eSCH1"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSCH2')
-            ielftype = arrset(ielftype, ie, iet_["eSCH2"])
+            ielftype = arrset(ielftype,ie,iet_["eSCH2"])
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSCH3')
-            ielftype = arrset(ielftype, ie, iet_["eSCH3"])
+            ielftype = arrset(ielftype,ie,iet_["eSCH3"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -173,7 +175,9 @@ class  SCHMVETT(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AY-V-0"
+        self.pbclass = "C-OUR2-AY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

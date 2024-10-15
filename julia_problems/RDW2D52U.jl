@@ -1,4 +1,4 @@
-function RDW2D52U(action,args...)
+function RDW2D52U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -26,7 +26,7 @@ function RDW2D52U(action,args...)
 #    SIF input: Nick Gould, May 2009
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "QLR2-AN-V-V"
+#    classification = "C-QLR2-AN-V-V"
 # 
 #    Number of nodes in each direction (a power of 2)
 # 
@@ -41,6 +41,8 @@ function RDW2D52U(action,args...)
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RDW2D52U"
 
@@ -48,7 +50,7 @@ function RDW2D52U(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -280,7 +282,7 @@ function RDW2D52U(action,args...)
                 ename = "E"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eM")
-                arrset(ielftype, ie, iet_["eM"])
+                arrset(ielftype,ie,iet_["eM"])
                 vname = "U"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
@@ -314,7 +316,7 @@ function RDW2D52U(action,args...)
                 ename = "F"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eM0")
-                arrset(ielftype, ie, iet_["eM0"])
+                arrset(ielftype,ie,iet_["eM0"])
                 vname = "F"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="F1",elftv[ielftype[ie]])
@@ -340,7 +342,7 @@ function RDW2D52U(action,args...)
                 ename = "A"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eA")
-                arrset(ielftype, ie, iet_["eA"])
+                arrset(ielftype,ie,iet_["eA"])
                 vname = "U"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
@@ -360,7 +362,7 @@ function RDW2D52U(action,args...)
                 ename = "B"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eB")
-                arrset(ielftype, ie, iet_["eB"])
+                arrset(ielftype,ie,iet_["eB"])
                 vname = "U"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
@@ -380,7 +382,7 @@ function RDW2D52U(action,args...)
                 ename = "C"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eC")
-                arrset(ielftype, ie, iet_["eC"])
+                arrset(ielftype,ie,iet_["eC"])
                 vname = "U"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
@@ -400,7 +402,7 @@ function RDW2D52U(action,args...)
                 ename = "D"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eD")
-                arrset(ielftype, ie, iet_["eD"])
+                arrset(ielftype,ie,iet_["eD"])
                 vname = "U"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="U1",elftv[ielftype[ie]])
@@ -426,7 +428,7 @@ function RDW2D52U(action,args...)
                 ename = "P"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eP")
-                arrset(ielftype, ie, iet_["eP"])
+                arrset(ielftype,ie,iet_["eP"])
                 vname = "F"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="F1",elftv[ielftype[ie]])
@@ -446,7 +448,7 @@ function RDW2D52U(action,args...)
                 ename = "Q"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eQ")
-                arrset(ielftype, ie, iet_["eQ"])
+                arrset(ielftype,ie,iet_["eQ"])
                 vname = "F"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="F1",elftv[ielftype[ie]])
@@ -466,7 +468,7 @@ function RDW2D52U(action,args...)
                 ename = "R"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eR")
-                arrset(ielftype, ie, iet_["eR"])
+                arrset(ielftype,ie,iet_["eR"])
                 vname = "F"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="F1",elftv[ielftype[ie]])
@@ -486,7 +488,7 @@ function RDW2D52U(action,args...)
                 ename = "S"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eS")
-                arrset(ielftype, ie, iet_["eS"])
+                arrset(ielftype,ie,iet_["eS"])
                 vname = "F"*string(I)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="F1",elftv[ielftype[ie]])
@@ -705,9 +707,14 @@ function RDW2D52U(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QLR2-AN-V-V"
+        pb.pbclass = "C-QLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -1051,7 +1058,9 @@ function RDW2D52U(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1063,7 +1072,7 @@ function RDW2D52U(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -11,7 +11,7 @@ class  OSCIPATH(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Dec 2006.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -23,6 +23,8 @@ class  OSCIPATH(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # IE N                   500            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OSCIPATH'
@@ -99,7 +101,7 @@ class  OSCIPATH(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eCHEB')
-                ielftype = arrset( ielftype,ie,iet_['eCHEB'])
+                ielftype = arrset(ielftype,ie,iet_['eCHEB'])
             vname = 'X'+str(int(v_['I-1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='TAU')[0]
@@ -141,7 +143,9 @@ class  OSCIPATH(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

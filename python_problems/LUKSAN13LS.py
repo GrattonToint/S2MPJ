@@ -17,11 +17,13 @@ class  LUKSAN13LS(CUTEst_problem):
 # 
 #    least-squares version
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #   seed for dimensions
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKSAN13LS'
@@ -150,7 +152,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             ename = 'E'+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I']))
@@ -160,7 +162,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             ename = 'E'+str(int(v_['K+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+1']))
@@ -170,7 +172,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             ename = 'E'+str(int(v_['K+2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+2']))
@@ -186,7 +188,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             ename = 'E'+str(int(v_['K+3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+3']))
@@ -202,7 +204,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+5']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             ename = 'E'+str(int(v_['K+5']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I+2']))
@@ -212,7 +214,7 @@ class  LUKSAN13LS(CUTEst_problem):
             ename = 'E'+str(int(v_['K+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             ename = 'E'+str(int(v_['K+6']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I']))
@@ -287,7 +289,9 @@ class  LUKSAN13LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -28,7 +28,7 @@ class  DTOC1NB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "OQR2-AN-V-V"
+#    classification = "C-OQR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the values of
 #    the parameter vector ( N, NX, NY )
@@ -55,6 +55,8 @@ class  DTOC1NB(CUTEst_problem):
 # 
 # IE N                   1000           $-PARAMETER # periods  }
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DTOC1NB'
@@ -262,7 +264,7 @@ class  DTOC1NB(CUTEst_problem):
                 ename = 'E'+str(T)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePR')
-                ielftype = arrset(ielftype, ie, iet_["ePR"])
+                ielftype = arrset(ielftype,ie,iet_["ePR"])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'Y'+str(T)+','+str(int(v_['I']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -323,9 +325,13 @@ class  DTOC1NB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OQR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

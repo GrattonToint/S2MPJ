@@ -16,7 +16,7 @@ class  ARGLALE(CUTEst_problem):
 #    See also Buckley#80 (with different N and M)
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "NLR2-AN-V-V"
+#    classification = "C-NLR2-AN-V-V"
 # 
 #    This is a(n infeasible) linear feasibility problem 
 # 
@@ -30,6 +30,8 @@ class  ARGLALE(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # IE N                   200            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ARGLALE'
@@ -138,7 +140,10 @@ class  ARGLALE(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "NLR2-AN-V-V"
+        self.pbclass = "C-NLR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

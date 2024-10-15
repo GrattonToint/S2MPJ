@@ -1,4 +1,4 @@
-function DISC2(action,args...)
+function DISC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -15,11 +15,13 @@ function DISC2(action,args...)
 # 
 #    SIF input: A.R. Conn, November 1991.
 # 
-#    classification = "LQR2-MY-29-23"
+#    classification = "C-LQR2-MY-29-23"
 # 
 #    Number of nodes
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DISC2"
@@ -28,7 +30,7 @@ function DISC2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -241,7 +243,7 @@ function DISC2(action,args...)
         ename = "b162"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "U2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -257,7 +259,7 @@ function DISC2(action,args...)
         ename = "c162"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "V2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -273,7 +275,7 @@ function DISC2(action,args...)
         ename = "b273"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "U3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -289,7 +291,7 @@ function DISC2(action,args...)
         ename = "c273"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "V3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -305,7 +307,7 @@ function DISC2(action,args...)
         ename = "b384"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "U4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -321,7 +323,7 @@ function DISC2(action,args...)
         ename = "c384"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "V4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -337,7 +339,7 @@ function DISC2(action,args...)
         ename = "b495"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "U5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -353,7 +355,7 @@ function DISC2(action,args...)
         ename = "c495"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "V5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -369,7 +371,7 @@ function DISC2(action,args...)
         ename = "b5101"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "U1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -385,7 +387,7 @@ function DISC2(action,args...)
         ename = "c5101"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "V1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -401,7 +403,7 @@ function DISC2(action,args...)
         ename = "b5111"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "U1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -417,7 +419,7 @@ function DISC2(action,args...)
         ename = "c5111"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eLINE")
-        arrset(ielftype, ie, iet_["eLINE"])
+        arrset(ielftype,ie,iet_["eLINE"])
         vname = "V1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -434,7 +436,7 @@ function DISC2(action,args...)
             ename = "b"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCIRCLE")
-            arrset(ielftype, ie, iet_["eCIRCLE"])
+            arrset(ielftype,ie,iet_["eCIRCLE"])
             vname = "U"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -540,8 +542,13 @@ function DISC2(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LQR2-MY-29-23"
+        pb.pbclass = "C-LQR2-MY-29-23"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -616,7 +623,9 @@ function DISC2(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -628,7 +637,7 @@ function DISC2(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

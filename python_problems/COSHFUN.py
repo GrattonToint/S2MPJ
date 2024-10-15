@@ -17,7 +17,7 @@ class  COSHFUN(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, October 1992.
 # 
-#    classification = "LOR2-AN-V-V"
+#    classification = "C-LOR2-AN-V-V"
 # 
 #   the number of functions
 # 
@@ -29,6 +29,8 @@ class  COSHFUN(CUTEst_problem):
 # IE M                   200            $-PARAMETER
 # IE M                   2000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'COSHFUN'
@@ -149,7 +151,7 @@ class  COSHFUN(CUTEst_problem):
             ename = 'SQR'+str(int(v_['I/3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             ename = 'SQR'+str(int(v_['I/3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.x0 = np.zeros((self.n,1))
@@ -160,7 +162,7 @@ class  COSHFUN(CUTEst_problem):
             ename = 'COSH'+str(int(v_['I/3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOSH')
-            ielftype = arrset(ielftype, ie, iet_["eCOSH"])
+            ielftype = arrset(ielftype,ie,iet_["eCOSH"])
             ename = 'COSH'+str(int(v_['I/3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I-1']))
@@ -170,7 +172,7 @@ class  COSHFUN(CUTEst_problem):
             ename = 'PROD'+str(int(v_['I/3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset(ielftype, ie, iet_["ePROD"])
+            ielftype = arrset(ielftype,ie,iet_["ePROD"])
             ename = 'PROD'+str(int(v_['I/3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(int(v_['I-2']))
@@ -214,9 +216,13 @@ class  COSHFUN(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -19,11 +19,13 @@ class  DEVGLA2B(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Jan 2020
 # 
-#    classification = "SBR2-MN-5-0"
+#    classification = "C-SBR2-MN-5-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEVGLA2B'
@@ -121,25 +123,25 @@ class  DEVGLA2B(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDG2')
-            ielftype = arrset(ielftype, ie, iet_["eDG2"])
+            ielftype = arrset(ielftype,ie,iet_["eDG2"])
             vname = 'X1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0,60.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0),float(60.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0,60.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0),float(60.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0,60.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0),float(60.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0,60.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0),float(60.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X4')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X5'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.0,60.0,None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.0),float(60.0),None)
             posev = np.where(elftv[ielftype[ie]]=='X5')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='T')[0]
@@ -169,7 +171,9 @@ class  DEVGLA2B(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-MN-5-0"
+        self.pbclass = "C-SBR2-MN-5-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

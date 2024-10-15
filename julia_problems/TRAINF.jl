@@ -1,4 +1,4 @@
-function TRAINF(action,args...)
+function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -21,7 +21,7 @@ function TRAINF(action,args...)
 # 
 #    SIF input: N. Nichols and Ph. Toint, April 1993
 # 
-#    classification = "QQR2-MN-V-V"
+#    classification = "C-QQR2-MN-V-V"
 # 
 #    Problem variants
 # 
@@ -35,6 +35,8 @@ function TRAINF(action,args...)
 # RE TIME                1.5            $-PARAMETER  travel time
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRAINF"
 
@@ -42,7 +44,7 @@ function TRAINF(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -227,7 +229,7 @@ function TRAINF(action,args...)
             ename = "VISQ"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
-            arrset(ielftype, ie, iet_["eSQ"])
+            arrset(ielftype,ie,iet_["eSQ"])
             vname = "V"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="VVV",elftv[ielftype[ie]])
@@ -237,7 +239,7 @@ function TRAINF(action,args...)
             ename = "UV"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ePROD")
-            arrset(ielftype, ie, iet_["ePROD"])
+            arrset(ielftype,ie,iet_["ePROD"])
             vname = "UA"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="UU",elftv[ielftype[ie]])
@@ -285,8 +287,13 @@ function TRAINF(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QQR2-MN-V-V"
+        pb.pbclass = "C-QQR2-MN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
@@ -346,7 +353,9 @@ function TRAINF(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -358,7 +367,7 @@ function TRAINF(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

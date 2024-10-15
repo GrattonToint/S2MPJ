@@ -12,10 +12,12 @@ class  MINSURF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1991.
 # 
-#    classification = "OXR2-MY-64-0"
+#    classification = "C-OXR2-MY-64-0"
 # 
 #    Discretization parameter
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINSURF'
@@ -99,7 +101,7 @@ class  MINSURF(CUTEst_problem):
                 ename = 'A'+str(i)+','+str(j)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 self.x0 = np.zeros((self.n,1))
                 vname = 'X'+str(i)+','+str(j)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -112,7 +114,7 @@ class  MINSURF(CUTEst_problem):
                 ename = 'B'+str(i)+','+str(j)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(i)+','+str(int(v_['j+1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -145,8 +147,10 @@ class  MINSURF(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OXR2-MY-64-0"
+        self.pbclass = "C-OXR2-MY-64-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

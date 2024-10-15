@@ -17,7 +17,7 @@ class  CATMIX(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, November 2000
 # 
-#    classification = "OOR2-AN-V-V"
+#    classification = "C-OOR2-AN-V-V"
 # 
 #    The number of subintervals
 # 
@@ -28,6 +28,8 @@ class  CATMIX(CUTEst_problem):
 # IE NH                  400            $-PARAMETER
 # IE NH                  800            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CATMIX'
@@ -169,7 +171,7 @@ class  CATMIX(CUTEst_problem):
             ename = 'O'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDIFSQ')
-            ielftype = arrset(ielftype, ie, iet_["eDIFSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eDIFSQ"])
             vname = 'U'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U1')[0]
@@ -182,7 +184,7 @@ class  CATMIX(CUTEst_problem):
             ename = 'P1'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eP1')
-            ielftype = arrset(ielftype, ie, iet_["eP1"])
+            ielftype = arrset(ielftype,ie,iet_["eP1"])
             vname = 'U'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -198,7 +200,7 @@ class  CATMIX(CUTEst_problem):
             ename = 'P2'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eP2')
-            ielftype = arrset(ielftype, ie, iet_["eP2"])
+            ielftype = arrset(ielftype,ie,iet_["eP2"])
             vname = 'U'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -264,8 +266,12 @@ class  CATMIX(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

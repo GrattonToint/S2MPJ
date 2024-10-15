@@ -1,4 +1,4 @@
-function EQC(action,args...)
+function EQC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -12,11 +12,13 @@ function EQC(action,args...)
 # 
 #    SIF input: Andrew Conn, August 1992.
 # 
-#    classification = "OLR2-MY-9-3"
+#    classification = "C-OLR2-MY-9-3"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EQC"
@@ -25,7 +27,7 @@ function EQC(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -379,199 +381,199 @@ function EQC(action,args...)
         ename = "E"*string(Int64(v_["1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PROD")
-        arrset(ielftype, ie, iet_["en2PROD"])
+        arrset(ielftype,ie,iet_["en2PROD"])
         ename = "E"*string(Int64(v_["1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBUBG"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["2"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PROD")
-        arrset(ielftype, ie, iet_["en2PROD"])
+        arrset(ielftype,ie,iet_["en2PROD"])
         ename = "E"*string(Int64(v_["2"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["2"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBUBB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["3"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PROD")
-        arrset(ielftype, ie, iet_["en2PROD"])
+        arrset(ielftype,ie,iet_["en2PROD"])
         ename = "E"*string(Int64(v_["3"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["3"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PUBGB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["4"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PROD")
-        arrset(ielftype, ie, iet_["en2PROD"])
+        arrset(ielftype,ie,iet_["en2PROD"])
         ename = "E"*string(Int64(v_["4"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["4"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PUBBB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["5"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eI2PROD")
-        arrset(ielftype, ie, iet_["eI2PROD"])
+        arrset(ielftype,ie,iet_["eI2PROD"])
         ename = "E"*string(Int64(v_["5"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["5"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBGBG"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["5"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBUBG"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["6"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eI3PROD")
-        arrset(ielftype, ie, iet_["eI3PROD"])
+        arrset(ielftype,ie,iet_["eI3PROD"])
         ename = "E"*string(Int64(v_["6"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["6"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["6"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBGBG"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["6"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBUBG"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V4",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["7"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eI2PROD")
-        arrset(ielftype, ie, iet_["eI2PROD"])
+        arrset(ielftype,ie,iet_["eI2PROD"])
         ename = "E"*string(Int64(v_["7"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["7"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PGBGB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["7"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PUBGB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["8"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eI3PROD")
-        arrset(ielftype, ie, iet_["eI3PROD"])
+        arrset(ielftype,ie,iet_["eI3PROD"])
         ename = "E"*string(Int64(v_["8"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["8"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["8"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PGBGB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["8"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PUBGB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V4",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["9"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en3PRODI")
-        arrset(ielftype, ie, iet_["en3PRODI"])
+        arrset(ielftype,ie,iet_["en3PRODI"])
         ename = "E"*string(Int64(v_["9"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["9"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "F2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V2",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["9"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBBBB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V3",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["9"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PUBBB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V4",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "E"*string(Int64(v_["9"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "PBUBB"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,0.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),Float64(0.0))
         posev = findfirst(x->x=="V5",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -698,8 +700,13 @@ function EQC(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OLR2-MY-9-3"
+        pb.pbclass = "C-OLR2-MY-9-3"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -911,7 +918,9 @@ function EQC(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -923,7 +932,7 @@ function EQC(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

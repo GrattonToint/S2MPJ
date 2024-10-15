@@ -20,11 +20,13 @@ class  LANCZOS1(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "NOR2-MN-6-24"
+#    classification = "C-NOR2-MN-6-24"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LANCZOS1'
@@ -171,7 +173,7 @@ class  LANCZOS1(CUTEst_problem):
             ename = 'EA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE2')
-            ielftype = arrset(ielftype, ie, iet_["eE2"])
+            ielftype = arrset(ielftype,ie,iet_["eE2"])
             vname = 'B1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -185,7 +187,7 @@ class  LANCZOS1(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE2')
-            ielftype = arrset(ielftype, ie, iet_["eE2"])
+            ielftype = arrset(ielftype,ie,iet_["eE2"])
             vname = 'B3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -199,7 +201,7 @@ class  LANCZOS1(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE2')
-            ielftype = arrset(ielftype, ie, iet_["eE2"])
+            ielftype = arrset(ielftype,ie,iet_["eE2"])
             vname = 'B5'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -244,8 +246,12 @@ class  LANCZOS1(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-MN-6-24"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-MN-6-24"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -13,7 +13,7 @@ class  PDE1(CUTEst_problem):
 #    SIF input: Nick Gould, April 25th 2012
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "LLR2-AN-V-V"
+#    classification = "C-LLR2-AN-V-V"
 # 
 #    the x-y discretization 
 # 
@@ -21,6 +21,8 @@ class  PDE1(CUTEst_problem):
 # IE N                   3              $-PARAMETER
 # IE N                   299            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PDE1'
@@ -251,8 +253,11 @@ class  PDE1(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "LLR2-AN-V-V"
+        self.pbclass = "C-LLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

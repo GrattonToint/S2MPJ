@@ -1,4 +1,4 @@
-function CYCLOOCT(action,args...)
+function CYCLOOCT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -28,7 +28,7 @@ function CYCLOOCT(action,args...)
 # 
 #    SIF input: Nick Gould, Feb 2020.
 # 
-#    classification = "NQR2-MN-V-V"
+#    classification = "C-NQR2-MN-V-V"
 # 
 #    The number of molecules
 # 
@@ -39,6 +39,8 @@ function CYCLOOCT(action,args...)
 # IE P                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CYCLOOCT"
 
@@ -46,7 +48,7 @@ function CYCLOOCT(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -149,7 +151,7 @@ function CYCLOOCT(action,args...)
             ename = "AX"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQRDIF")
-            arrset(ielftype, ie, iet_["eSQRDIF"])
+            arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -161,7 +163,7 @@ function CYCLOOCT(action,args...)
             ename = "AY"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQRDIF")
-            arrset(ielftype, ie, iet_["eSQRDIF"])
+            arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = "Y"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -173,7 +175,7 @@ function CYCLOOCT(action,args...)
             ename = "AZ"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQRDIF")
-            arrset(ielftype, ie, iet_["eSQRDIF"])
+            arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = "Z"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -186,7 +188,7 @@ function CYCLOOCT(action,args...)
         ename = "AX"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "AX"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["P"]))
@@ -202,7 +204,7 @@ function CYCLOOCT(action,args...)
         ename = "AY"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "AY"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "Y"*string(Int64(v_["P"]))
@@ -218,7 +220,7 @@ function CYCLOOCT(action,args...)
         ename = "AZ"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "AZ"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "Z"*string(Int64(v_["P"]))
@@ -236,7 +238,7 @@ function CYCLOOCT(action,args...)
             ename = "BX"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQRDIF")
-            arrset(ielftype, ie, iet_["eSQRDIF"])
+            arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = "X"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -248,7 +250,7 @@ function CYCLOOCT(action,args...)
             ename = "BY"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQRDIF")
-            arrset(ielftype, ie, iet_["eSQRDIF"])
+            arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = "Y"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -260,7 +262,7 @@ function CYCLOOCT(action,args...)
             ename = "BZ"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQRDIF")
-            arrset(ielftype, ie, iet_["eSQRDIF"])
+            arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = "Z"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -273,7 +275,7 @@ function CYCLOOCT(action,args...)
         ename = "BX"*string(Int64(v_["P-1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "BX"*string(Int64(v_["P-1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["P-1"]))
@@ -289,7 +291,7 @@ function CYCLOOCT(action,args...)
         ename = "BY"*string(Int64(v_["P-1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "BY"*string(Int64(v_["P-1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "Y"*string(Int64(v_["P-1"]))
@@ -305,7 +307,7 @@ function CYCLOOCT(action,args...)
         ename = "BZ"*string(Int64(v_["P-1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "BZ"*string(Int64(v_["P-1"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "Z"*string(Int64(v_["P-1"]))
@@ -321,7 +323,7 @@ function CYCLOOCT(action,args...)
         ename = "BX"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "BX"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "X"*string(Int64(v_["P"]))
@@ -337,7 +339,7 @@ function CYCLOOCT(action,args...)
         ename = "BY"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "BY"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "Y"*string(Int64(v_["P"]))
@@ -353,7 +355,7 @@ function CYCLOOCT(action,args...)
         ename = "BZ"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRDIF")
-        arrset(ielftype, ie, iet_["eSQRDIF"])
+        arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = "BZ"*string(Int64(v_["P"]))
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         vname = "Z"*string(Int64(v_["P"]))
@@ -411,8 +413,13 @@ function CYCLOOCT(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NQR2-MN-V-V"
+        pb.pbclass = "C-NQR2-MN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -477,7 +484,9 @@ function CYCLOOCT(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -489,7 +498,7 @@ function CYCLOOCT(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

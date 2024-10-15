@@ -21,7 +21,7 @@ class  SPINOP(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 2009
 # 
-#    classification = "QOR2-AN-V-V"
+#    classification = "C-QOR2-AN-V-V"
 # 
 #    Number of particles n
 # 
@@ -39,6 +39,8 @@ class  SPINOP(CUTEst_problem):
 # IE N                   45             $-PARAMETER matrix dimension
 # IE N                   50             $-PARAMETER matrix dimension
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPINOP'
@@ -154,49 +156,49 @@ class  SPINOP(CUTEst_problem):
             ename = 'MX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'MU'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'MY'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'Y'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'MU'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'OX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'X'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'OMEGA'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'OY'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset(ielftype, ie, iet_["en2PR"])
+            ielftype = arrset(ielftype,ie,iet_["en2PR"])
             vname = 'Y'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'OMEGA'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='Y')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['N'])+1):
@@ -205,33 +207,33 @@ class  SPINOP(CUTEst_problem):
                 ename = 'RX'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eRATIO')
-                ielftype = arrset(ielftype, ie, iet_["eRATIO"])
+                ielftype = arrset(ielftype,ie,iet_["eRATIO"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='V')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'RY'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eRATIO')
-                ielftype = arrset(ielftype, ie, iet_["eRATIO"])
+                ielftype = arrset(ielftype,ie,iet_["eRATIO"])
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='V')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['2']),int(v_['N'])+1):
@@ -240,33 +242,33 @@ class  SPINOP(CUTEst_problem):
                 ename = 'V'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQR')
-                ielftype = arrset(ielftype, ie, iet_["eSQR"])
+                ielftype = arrset(ielftype,ie,iet_["eSQR"])
                 vname = 'V'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'X'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQR2')
-                ielftype = arrset(ielftype, ie, iet_["eSQR2"])
+                ielftype = arrset(ielftype,ie,iet_["eSQR2"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'Y'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQR2')
-                ielftype = arrset(ielftype, ie, iet_["eSQR2"])
+                ielftype = arrset(ielftype,ie,iet_["eSQR2"])
                 vname = 'Y'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
                 posev = np.where(elftv[ielftype[ie]]=='Z')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -353,8 +355,12 @@ class  SPINOP(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

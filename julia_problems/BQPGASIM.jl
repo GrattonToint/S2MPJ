@@ -1,4 +1,4 @@
-function BQPGASIM(action,args...)
+function BQPGASIM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -10,9 +10,11 @@ function BQPGASIM(action,args...)
 # 
 #    SIF input: N. Gould, July 1990.
 # 
-#    classification = "QBR2-AN-50-0"
+#    classification = "C-QBR2-AN-50-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BQPGASIM"
@@ -21,7 +23,7 @@ function BQPGASIM(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -320,9 +322,9 @@ function BQPGASIM(action,args...)
         ename = "D   1   1"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  11"
@@ -332,19 +334,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  11  11"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  12"
@@ -354,11 +356,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  12"
@@ -368,19 +370,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  12  12"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "12"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  20"
@@ -390,19 +392,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  20  20"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  21"
@@ -412,11 +414,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  21"
@@ -426,19 +428,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  21  21"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "21"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  29"
@@ -448,19 +450,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  29  29"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  36"
@@ -470,19 +472,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  36  36"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  37"
@@ -492,11 +494,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "37"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  36  37"
@@ -506,19 +508,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "37"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  37  37"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "37"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  41"
@@ -528,19 +530,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  41  41"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  42"
@@ -550,11 +552,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "42"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  42"
@@ -564,19 +566,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "42"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  42  42"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "42"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   1  49"
@@ -586,27 +588,27 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "1"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  49  49"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   2   2"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  11"
@@ -616,11 +618,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  13"
@@ -630,11 +632,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  13"
@@ -644,19 +646,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  13  13"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "13"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  20"
@@ -666,11 +668,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  22"
@@ -680,11 +682,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "22"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  22"
@@ -694,19 +696,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "22"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  22  22"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "22"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  29"
@@ -716,11 +718,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  30"
@@ -730,11 +732,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "30"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  29  30"
@@ -744,19 +746,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "30"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  30  30"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "30"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  36"
@@ -766,11 +768,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  38"
@@ -780,11 +782,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "38"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  36  38"
@@ -794,19 +796,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "38"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  38  38"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "38"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  41"
@@ -816,11 +818,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   2  49"
@@ -830,19 +832,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "2"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   3   3"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  11"
@@ -852,11 +854,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  20"
@@ -866,11 +868,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  23"
@@ -880,11 +882,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "23"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  23"
@@ -894,19 +896,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "23"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  23  23"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "23"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  29"
@@ -916,11 +918,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  36"
@@ -930,11 +932,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  41"
@@ -944,11 +946,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  43"
@@ -958,11 +960,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "43"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  43"
@@ -972,19 +974,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "43"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  43  43"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "43"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  49"
@@ -994,11 +996,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   3  50"
@@ -1008,11 +1010,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "3"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "50"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  49  50"
@@ -1022,27 +1024,27 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "50"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  50  50"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "50"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   4   4"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  11"
@@ -1052,11 +1054,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  14"
@@ -1066,11 +1068,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  14"
@@ -1080,19 +1082,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  14  14"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "14"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  20"
@@ -1102,11 +1104,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  29"
@@ -1116,11 +1118,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  31"
@@ -1130,11 +1132,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "31"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  29  31"
@@ -1144,19 +1146,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "31"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  31  31"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "31"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  36"
@@ -1166,11 +1168,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  41"
@@ -1180,11 +1182,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  44"
@@ -1194,11 +1196,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "44"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  44"
@@ -1208,19 +1210,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "44"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  44  44"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "44"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   4  49"
@@ -1230,19 +1232,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "4"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   5   5"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  11"
@@ -1252,11 +1254,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  15"
@@ -1266,11 +1268,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  15"
@@ -1280,19 +1282,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  15  15"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "15"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  20"
@@ -1302,11 +1304,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  24"
@@ -1316,11 +1318,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "24"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  24"
@@ -1330,19 +1332,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "24"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  24  24"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "24"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  29"
@@ -1352,11 +1354,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  32"
@@ -1366,11 +1368,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "32"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  29  32"
@@ -1380,19 +1382,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "32"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  32  32"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "32"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  36"
@@ -1402,11 +1404,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  39"
@@ -1416,11 +1418,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "39"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  36  39"
@@ -1430,19 +1432,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "39"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  39  39"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "39"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  41"
@@ -1452,11 +1454,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  45"
@@ -1466,11 +1468,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "45"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  45"
@@ -1480,19 +1482,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "45"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  45  45"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "45"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   5  49"
@@ -1502,19 +1504,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "5"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   6   6"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  11"
@@ -1524,11 +1526,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  16"
@@ -1538,11 +1540,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  16"
@@ -1552,19 +1554,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  16  16"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "16"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  20"
@@ -1574,11 +1576,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  25"
@@ -1588,11 +1590,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "25"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  25"
@@ -1602,19 +1604,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "25"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  25  25"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "25"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  29"
@@ -1624,11 +1626,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  33"
@@ -1638,11 +1640,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "33"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  29  33"
@@ -1652,19 +1654,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "33"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  33  33"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "33"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  36"
@@ -1674,11 +1676,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  41"
@@ -1688,11 +1690,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  46"
@@ -1702,11 +1704,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "46"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  46"
@@ -1716,19 +1718,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "46"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  46  46"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "46"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   6  49"
@@ -1738,19 +1740,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "6"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   7   7"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  11"
@@ -1760,11 +1762,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  17"
@@ -1774,11 +1776,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  17"
@@ -1788,19 +1790,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  17  17"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "17"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  20"
@@ -1810,11 +1812,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  29"
@@ -1824,11 +1826,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  34"
@@ -1838,11 +1840,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "34"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  29  34"
@@ -1852,19 +1854,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "34"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  34  34"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "34"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  36"
@@ -1874,11 +1876,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  41"
@@ -1888,11 +1890,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   7  49"
@@ -1902,19 +1904,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "7"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   8   8"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  11"
@@ -1924,11 +1926,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  20"
@@ -1938,11 +1940,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  29"
@@ -1952,11 +1954,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  36"
@@ -1966,11 +1968,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  40"
@@ -1980,11 +1982,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "40"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  36  40"
@@ -1994,19 +1996,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "40"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  40  40"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "40"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  41"
@@ -2016,11 +2018,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   8  49"
@@ -2030,19 +2032,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "8"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D   9   9"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  11"
@@ -2052,11 +2054,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  20"
@@ -2066,11 +2068,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  26"
@@ -2080,11 +2082,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "26"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  26"
@@ -2094,19 +2096,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "26"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  26  26"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "26"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  29"
@@ -2116,11 +2118,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  35"
@@ -2130,11 +2132,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "35"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  29  35"
@@ -2144,19 +2146,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "35"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  35  35"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "35"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  36"
@@ -2166,11 +2168,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  41"
@@ -2180,11 +2182,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O   9  49"
@@ -2194,19 +2196,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "9"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  10  10"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  11"
@@ -2216,11 +2218,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  20"
@@ -2230,11 +2232,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  29"
@@ -2244,11 +2246,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "29"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  36"
@@ -2258,11 +2260,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "36"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  41"
@@ -2272,11 +2274,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  47"
@@ -2286,11 +2288,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "47"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  47"
@@ -2300,19 +2302,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "47"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  47  47"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "47"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  10  49"
@@ -2322,11 +2324,11 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "10"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "49"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  18"
@@ -2336,19 +2338,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  18  18"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "18"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  27"
@@ -2358,19 +2360,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "27"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  27  27"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "27"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  11  19"
@@ -2380,19 +2382,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "11"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  19  19"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "19"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  20  28"
@@ -2402,19 +2404,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "20"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "28"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  28  28"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "28"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "O  41  48"
@@ -2424,19 +2426,19 @@ function BQPGASIM(action,args...)
             arrset(ielftype,ie,iet_["eOFFDIAG"])
         end
         vname = "41"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         vname = "48"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "D  48  48"
         ie,ie_,newelt = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eDIAG")
-        arrset(ielftype, ie, iet_["eDIAG"])
+        arrset(ielftype,ie,iet_["eDIAG"])
         vname = "48"
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,-0.1,0.1,nothing)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,Float64(-0.1),Float64(0.1),nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -2968,9 +2970,12 @@ function BQPGASIM(action,args...)
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "QBR2-AN-50-0"
+        pb.pbclass = "C-QBR2-AN-50-0"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -3030,7 +3035,9 @@ function BQPGASIM(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -3042,7 +3049,7 @@ function BQPGASIM(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

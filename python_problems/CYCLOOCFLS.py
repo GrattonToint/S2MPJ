@@ -31,7 +31,7 @@ class  CYCLOOCFLS(CUTEst_problem):
 # 
 #    This is a least-squares version of CYCLOOCF.SIF
 # 
-#    classification = "SUR2-MN-V-0"
+#    classification = "C-SUR2-MN-V-0"
 # 
 #    The number of molecules
 # 
@@ -41,6 +41,8 @@ class  CYCLOOCFLS(CUTEst_problem):
 # IE P                   1000           $-PARAMETER
 # IE P                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CYCLOOCFLS'
@@ -150,7 +152,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'AY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['I+1']))
@@ -160,7 +162,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'AZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['I+1']))
@@ -172,7 +174,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AX'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'AX'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['I+1']))
@@ -182,7 +184,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-        ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = 'AY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['I']))
@@ -198,7 +200,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-        ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = 'AZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['I']))
@@ -216,7 +218,7 @@ class  CYCLOOCFLS(CUTEst_problem):
             ename = 'AX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -228,7 +230,7 @@ class  CYCLOOCFLS(CUTEst_problem):
             ename = 'AY'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = 'Y'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -240,7 +242,7 @@ class  CYCLOOCFLS(CUTEst_problem):
             ename = 'AZ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = 'Z'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -252,7 +254,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AX'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'AX'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['P']))
@@ -262,7 +264,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AY'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'AY'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['P']))
@@ -272,7 +274,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'AZ'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'AZ'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['P']))
@@ -284,7 +286,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BX'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BX'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['I+2']))
@@ -294,7 +296,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['I+2']))
@@ -304,7 +306,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['I+2']))
@@ -316,7 +318,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BX'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BX'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['I+2']))
@@ -326,7 +328,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-        ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = 'BY'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['I']))
@@ -342,7 +344,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-        ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = 'BZ'+str(int(v_['I']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['I']))
@@ -360,7 +362,7 @@ class  CYCLOOCFLS(CUTEst_problem):
             ename = 'BX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -372,7 +374,7 @@ class  CYCLOOCFLS(CUTEst_problem):
             ename = 'BY'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = 'Y'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -384,7 +386,7 @@ class  CYCLOOCFLS(CUTEst_problem):
             ename = 'BZ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-            ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+            ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
             vname = 'Z'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -396,7 +398,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BX'+str(int(v_['P-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BX'+str(int(v_['P-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['P-1']))
@@ -406,7 +408,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BY'+str(int(v_['P-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BY'+str(int(v_['P-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['P-1']))
@@ -416,7 +418,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BZ'+str(int(v_['P-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BZ'+str(int(v_['P-1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['P-1']))
@@ -426,7 +428,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BX'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQR')
-        ielftype = arrset(ielftype, ie, iet_["eSQR"])
+        ielftype = arrset(ielftype,ie,iet_["eSQR"])
         ename = 'BX'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['P']))
@@ -436,7 +438,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BY'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-        ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = 'BY'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['P']))
@@ -452,7 +454,7 @@ class  CYCLOOCFLS(CUTEst_problem):
         ename = 'BZ'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQRDIF')
-        ielftype = arrset(ielftype, ie, iet_["eSQRDIF"])
+        ielftype = arrset(ielftype,ie,iet_["eSQRDIF"])
         ename = 'BZ'+str(int(v_['P']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Z'+str(int(v_['P']))
@@ -521,7 +523,9 @@ class  CYCLOOCFLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-V-0"
+        self.pbclass = "C-SUR2-MN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

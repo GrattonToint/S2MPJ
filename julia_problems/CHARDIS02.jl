@@ -1,4 +1,4 @@
-function CHARDIS02(action,args...)
+function CHARDIS02(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -12,7 +12,7 @@ function CHARDIS02(action,args...)
 #               correction by S. Gratton & Ph. Toint, May 2024
 #    modifield version of CHARDIS0 (formulation corrected)
 # 
-#    classification = "OBR2-AY-V-V"
+#    classification = "C-OBR2-AY-V-V"
 # 
 #    Number of positive (or negative) charges -> Number of variables 2*NP1
 # 
@@ -28,6 +28,8 @@ function CHARDIS02(action,args...)
 # IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CHARDIS02"
 
@@ -35,7 +37,7 @@ function CHARDIS02(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -128,7 +130,7 @@ function CHARDIS02(action,args...)
                 ename = "X"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eDIFSQR")
-                arrset(ielftype, ie, iet_["eDIFSQR"])
+                arrset(ielftype,ie,iet_["eDIFSQR"])
                 vname = "X"*string(I)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -140,7 +142,7 @@ function CHARDIS02(action,args...)
                 ename = "Y"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eDIFSQR")
-                arrset(ielftype, ie, iet_["eDIFSQR"])
+                arrset(ielftype,ie,iet_["eDIFSQR"])
                 vname = "Y"*string(I)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -176,8 +178,11 @@ function CHARDIS02(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OBR2-AY-V-V"
+        pb.pbclass = "C-OBR2-AY-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -235,7 +240,9 @@ function CHARDIS02(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -247,7 +254,7 @@ function CHARDIS02(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

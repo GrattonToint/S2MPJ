@@ -16,11 +16,13 @@ class  PFIT2LS(CUTEst_problem):
 #    SIF input: Ph. Toint, March 1994.
 #               Lower bound on H added, Nov 2002.
 # 
-#    classification = "SBR2-AN-3-0"
+#    classification = "C-SBR2-AN-3-0"
 # 
 #    Problem data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PFIT2LS'
@@ -111,7 +113,7 @@ class  PFIT2LS(CUTEst_problem):
         ename = 'EA'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT3')
-        ielftype = arrset(ielftype, ie, iet_["eT3"])
+        ielftype = arrset(ielftype,ie,iet_["eT3"])
         vname = 'A'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
@@ -127,7 +129,7 @@ class  PFIT2LS(CUTEst_problem):
         ename = 'EB'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT2')
-        ielftype = arrset(ielftype, ie, iet_["eT2"])
+        ielftype = arrset(ielftype,ie,iet_["eT2"])
         vname = 'A'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
@@ -143,7 +145,7 @@ class  PFIT2LS(CUTEst_problem):
         ename = 'EC'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT1')
-        ielftype = arrset(ielftype, ie, iet_["eT1"])
+        ielftype = arrset(ielftype,ie,iet_["eT1"])
         vname = 'A'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
@@ -159,7 +161,7 @@ class  PFIT2LS(CUTEst_problem):
         ename = 'ED'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT4')
-        ielftype = arrset(ielftype, ie, iet_["eT4"])
+        ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'A'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
@@ -175,7 +177,7 @@ class  PFIT2LS(CUTEst_problem):
         ename = 'EE'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT5')
-        ielftype = arrset(ielftype, ie, iet_["eT5"])
+        ielftype = arrset(ielftype,ie,iet_["eT5"])
         vname = 'A'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='AA')[0]
@@ -228,7 +230,9 @@ class  PFIT2LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-3-0"
+        self.pbclass = "C-SBR2-AN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

@@ -15,11 +15,13 @@ class  LUKSAN17(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 2017.
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #   seed for dimensions
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKSAN17'
@@ -136,7 +138,7 @@ class  LUKSAN17(CUTEst_problem):
                     ename = 'S'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eASINX')
-                    ielftype = arrset(ielftype, ie, iet_["eASINX"])
+                    ielftype = arrset(ielftype,ie,iet_["eASINX"])
                     ename = 'S'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'X'+str(int(v_['I+Q']))
@@ -151,7 +153,7 @@ class  LUKSAN17(CUTEst_problem):
                     ename = 'C'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eACOSX')
-                    ielftype = arrset(ielftype, ie, iet_["eACOSX"])
+                    ielftype = arrset(ielftype,ie,iet_["eACOSX"])
                     ename = 'C'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'X'+str(int(v_['I+Q']))
@@ -193,8 +195,12 @@ class  LUKSAN17(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

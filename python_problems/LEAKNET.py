@@ -23,11 +23,13 @@ class  LEAKNET(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, 25th June 1990.
 # 
-#    classification = "LOR2-RN-156-153"
+#    classification = "C-LOR2-RN-156-153"
 # 
 #    network data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEAKNET'
@@ -2625,7 +2627,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2634,7 +2636,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2643,7 +2645,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2652,7 +2654,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2661,7 +2663,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2670,7 +2672,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2679,7 +2681,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P9'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2688,7 +2690,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2697,7 +2699,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P12'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2706,7 +2708,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P13'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2715,7 +2717,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2724,7 +2726,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P15'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2733,7 +2735,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2742,7 +2744,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P17'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2751,7 +2753,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2760,7 +2762,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P19'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2769,7 +2771,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2778,7 +2780,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P21'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2787,7 +2789,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2796,7 +2798,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P23'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2805,7 +2807,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2814,7 +2816,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P27'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2823,7 +2825,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P101'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2832,7 +2834,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P102'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2841,7 +2843,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P103'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2850,7 +2852,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P104'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2859,7 +2861,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P105'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2868,7 +2870,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P106'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2877,7 +2879,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P107'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2886,7 +2888,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P108'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2895,7 +2897,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P109'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2904,7 +2906,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P110'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2913,7 +2915,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P111'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2922,7 +2924,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P112'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2931,7 +2933,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P201'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2940,7 +2942,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P202'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2949,7 +2951,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P203'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2958,7 +2960,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P204'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2967,7 +2969,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P205'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2976,7 +2978,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P206'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2985,7 +2987,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P207'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -2994,7 +2996,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P208'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3003,7 +3005,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P209'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3012,7 +3014,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P210'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3021,7 +3023,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P211'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3030,7 +3032,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P212'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3039,7 +3041,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P301'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3048,7 +3050,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P302'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3057,7 +3059,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P303'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3066,7 +3068,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P304'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3075,7 +3077,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P305'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3084,7 +3086,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P306'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3093,7 +3095,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P307'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3102,7 +3104,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P308'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3111,7 +3113,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P309'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3120,7 +3122,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P401'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3129,7 +3131,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P402'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3138,7 +3140,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P403'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3147,7 +3149,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P404'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3156,7 +3158,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P405'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3165,7 +3167,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P406'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3174,7 +3176,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P407'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3183,7 +3185,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P501'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3192,7 +3194,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P502'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3201,7 +3203,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P503'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3210,7 +3212,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P504'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3219,7 +3221,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P505'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3228,7 +3230,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P506'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3237,7 +3239,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P507'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3246,7 +3248,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P508'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3255,7 +3257,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P509'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3264,7 +3266,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P510'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3273,7 +3275,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         vname = 'P511'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='P')[0]
@@ -3282,7 +3284,7 @@ class  LEAKNET(CUTEst_problem):
             ename = 'PANH'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePANHAN')
-            ielftype = arrset(ielftype, ie, iet_["ePANHAN"])
+            ielftype = arrset(ielftype,ie,iet_["ePANHAN"])
             vname = 'Q'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
@@ -3291,7 +3293,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.07259e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3300,7 +3302,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.07259e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3309,7 +3311,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.05185e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3318,7 +3320,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.87955e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3327,7 +3329,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.97677e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3336,7 +3338,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.29902e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3345,7 +3347,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.27078e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3354,7 +3356,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.76748e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3363,7 +3365,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.89567e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3372,7 +3374,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.14621e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3381,7 +3383,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.41198e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3390,7 +3392,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.75247e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3399,7 +3401,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-3.65685e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3408,7 +3410,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.59518e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3417,7 +3419,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.63450e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3426,7 +3428,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.11371e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3435,7 +3437,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.89567e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3444,7 +3446,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.69438e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3453,7 +3455,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.32697e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3462,7 +3464,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.10099e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3471,7 +3473,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.66222e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3480,7 +3482,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.89567e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3489,7 +3491,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.27360e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3498,7 +3500,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.86381e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3507,7 +3509,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.06357e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3516,7 +3518,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.73503e-08))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3525,7 +3527,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.48586e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3534,7 +3536,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.24403e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3543,7 +3545,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.63210e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3552,7 +3554,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-4.81682e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3561,7 +3563,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.48586e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3570,7 +3572,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.30327e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3579,7 +3581,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.01888e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3588,7 +3590,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-3.97142e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3597,7 +3599,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.57077e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3606,7 +3608,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.80549e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3615,7 +3617,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.42175e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3624,7 +3626,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.80549e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3633,7 +3635,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-8.84073e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3642,7 +3644,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-6.91870e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3651,7 +3653,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.11546e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3660,7 +3662,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.82903e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3669,7 +3671,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-3.38160e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3678,7 +3680,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.04487e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3687,7 +3689,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.10876e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3696,7 +3698,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.67114e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3705,7 +3707,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.02234e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3714,7 +3716,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.93812e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3723,7 +3725,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.01663e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3732,7 +3734,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-8.29355e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3741,7 +3743,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.93441e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3750,7 +3752,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-6.63631e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3759,7 +3761,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.58268e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3768,7 +3770,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.65202e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3777,7 +3779,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.34138e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3786,7 +3788,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.51555e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3795,7 +3797,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.87793e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3804,7 +3806,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-6.81999e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3813,7 +3815,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.93032e-06))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3822,7 +3824,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-9.35987e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3831,7 +3833,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.56853e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3840,7 +3842,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-6.16093e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3849,7 +3851,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-4.14678e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3858,7 +3860,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-8.53051e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3867,7 +3869,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-5.77363e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3876,7 +3878,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-3.60852e-07))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3885,7 +3887,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.04737e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3894,7 +3896,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-9.35987e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3903,7 +3905,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.36962e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3912,7 +3914,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.58268e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3921,7 +3923,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-2.16265e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3930,7 +3932,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-4.97613e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3939,7 +3941,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-4.38374e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3948,7 +3950,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-4.14678e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3957,7 +3959,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-7.34572e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3966,7 +3968,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-8.53051e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3975,7 +3977,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.80876e-04))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3984,7 +3986,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.06631e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -3993,7 +3995,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.36962e-05))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -4002,7 +4004,7 @@ class  LEAKNET(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQUARE')
-            ielftype = arrset( ielftype,ie,iet_['eSQUARE'])
+            ielftype = arrset(ielftype,ie,iet_['eSQUARE'])
         posep = np.where(elftp[ielftype[ie]]=='A1')[0]
         self.elpar = loaset(self.elpar,ie,posep[0],float(-1.17295e-03))
         posep = np.where(elftp[ielftype[ie]]=='A2')[0]
@@ -4990,8 +4992,12 @@ class  LEAKNET(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-RN-156-153"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-RN-156-153"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

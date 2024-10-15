@@ -24,7 +24,7 @@ class  OBSTCLBL(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "QBR2-AY-V-0"
+#    classification = "C-QBR2-AY-V-0"
 # 
 #    PX is the number of points along the X side of the rectangle
 #    PY is the number of points along the Y side of the rectangle
@@ -47,6 +47,8 @@ class  OBSTCLBL(CUTEst_problem):
 # 
 # IE PX                  100            $-PARAMETER n = 10000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OBSTCLBL'
@@ -207,7 +209,7 @@ class  OBSTCLBL(CUTEst_problem):
                 ename = 'A'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -219,7 +221,7 @@ class  OBSTCLBL(CUTEst_problem):
                 ename = 'B'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J+1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -231,7 +233,7 @@ class  OBSTCLBL(CUTEst_problem):
                 ename = 'C'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(int(v_['I-1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -243,7 +245,7 @@ class  OBSTCLBL(CUTEst_problem):
                 ename = 'D'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'X'+str(I)+','+str(int(v_['J-1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -290,7 +292,9 @@ class  OBSTCLBL(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "QBR2-AY-V-0"
+        self.pbclass = "C-QBR2-AY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

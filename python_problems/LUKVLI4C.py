@@ -18,7 +18,7 @@ class  LUKVLI4C(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 2001
 # 
-#    classification = "OOR2-AY-V-V"
+#    classification = "C-OOR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -27,6 +27,8 @@ class  LUKVLI4C(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # IE N                   10000          $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLI4C'
@@ -165,7 +167,7 @@ class  LUKVLI4C(CUTEst_problem):
             ename = 'AE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXPN')
-            ielftype = arrset(ielftype, ie, iet_["eEXPN"])
+            ielftype = arrset(ielftype,ie,iet_["eEXPN"])
             vname = 'X'+str(int(v_['2I-1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -173,7 +175,7 @@ class  LUKVLI4C(CUTEst_problem):
             ename = 'CE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eTANG')
-            ielftype = arrset(ielftype, ie, iet_["eTANG"])
+            ielftype = arrset(ielftype,ie,iet_["eTANG"])
             vname = 'X'+str(int(v_['2I+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -188,7 +190,7 @@ class  LUKVLI4C(CUTEst_problem):
             ename = 'CA'+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCUBEP')
-            ielftype = arrset(ielftype, ie, iet_["eCUBEP"])
+            ielftype = arrset(ielftype,ie,iet_["eCUBEP"])
             vname = 'X'+str(int(v_['K+1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -200,7 +202,7 @@ class  LUKVLI4C(CUTEst_problem):
             ename = 'CB'+str(K)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset(ielftype, ie, iet_["eSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eSQR"])
             vname = 'X'+str(int(v_['K+2']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -261,8 +263,12 @@ class  LUKVLI4C(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

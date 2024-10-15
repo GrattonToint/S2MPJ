@@ -22,7 +22,7 @@ class  ORTHREGE(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "QOR2-AY-V-V"
+#    classification = "C-QOR2-AY-V-V"
 # 
 #    Number of data points
 #    (number of variables = 3 NPTS + 6 )
@@ -31,6 +31,8 @@ class  ORTHREGE(CUTEst_problem):
 # IE NPTS                10             $-PARAMETER n= 36    original valu
 # IE NPTS                2500           $-PARAMETER n= 7506
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGE'
@@ -215,7 +217,7 @@ class  ORTHREGE(CUTEst_problem):
             ename = 'EA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEHX')
-            ielftype = arrset(ielftype, ie, iet_["eEHX"])
+            ielftype = arrset(ielftype,ie,iet_["eEHX"])
             vname = 'Z'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -235,7 +237,7 @@ class  ORTHREGE(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEHX')
-            ielftype = arrset(ielftype, ie, iet_["eEHX"])
+            ielftype = arrset(ielftype,ie,iet_["eEHX"])
             vname = 'Z'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -295,8 +297,12 @@ class  ORTHREGE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

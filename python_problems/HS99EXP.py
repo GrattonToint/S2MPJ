@@ -15,11 +15,13 @@ class  HS99EXP(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1991.
 # 
-#    classification = "OOR2-AN-31-21"
+#    classification = "C-OOR2-AN-31-21"
 # 
 #    Problem data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS99EXP'
@@ -172,7 +174,7 @@ class  HS99EXP(CUTEst_problem):
             ename = 'SNX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSN')
-            ielftype = arrset(ielftype, ie, iet_["eSN"])
+            ielftype = arrset(ielftype,ie,iet_["eSN"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -180,7 +182,7 @@ class  HS99EXP(CUTEst_problem):
             ename = 'CSX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCS')
-            ielftype = arrset(ielftype, ie, iet_["eCS"])
+            ielftype = arrset(ielftype,ie,iet_["eCS"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -231,8 +233,12 @@ class  HS99EXP(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AN-31-21"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AN-31-21"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

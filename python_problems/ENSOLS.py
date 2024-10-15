@@ -22,11 +22,13 @@ class  ENSOLS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "SUR2-MN-9-0"
+#    classification = "C-SUR2-MN-9-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ENSOLS'
@@ -456,7 +458,7 @@ class  ENSOLS(CUTEst_problem):
             ename = 'EA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE8')
-            ielftype = arrset(ielftype, ie, iet_["eE8"])
+            ielftype = arrset(ielftype,ie,iet_["eE8"])
             vname = 'B4'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -470,7 +472,7 @@ class  ENSOLS(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE9')
-            ielftype = arrset(ielftype, ie, iet_["eE9"])
+            ielftype = arrset(ielftype,ie,iet_["eE9"])
             vname = 'B4'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -484,7 +486,7 @@ class  ENSOLS(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE8')
-            ielftype = arrset(ielftype, ie, iet_["eE8"])
+            ielftype = arrset(ielftype,ie,iet_["eE8"])
             vname = 'B7'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -498,7 +500,7 @@ class  ENSOLS(CUTEst_problem):
             ename = 'ED'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE9')
-            ielftype = arrset(ielftype, ie, iet_["eE9"])
+            ielftype = arrset(ielftype,ie,iet_["eE9"])
             vname = 'B7'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -547,7 +549,9 @@ class  ENSOLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-9-0"
+        self.pbclass = "C-SUR2-MN-9-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

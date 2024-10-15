@@ -21,11 +21,13 @@ class  OSBORNEB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SUR2-MN-11-0"
+#    classification = "C-SUR2-MN-11-0"
 # 
 #    Number of groups
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OSBORNEB'
@@ -174,7 +176,7 @@ class  OSBORNEB(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePEXP')
-            ielftype = arrset(ielftype, ie, iet_["ePEXP"])
+            ielftype = arrset(ielftype,ie,iet_["ePEXP"])
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -188,7 +190,7 @@ class  OSBORNEB(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePEXP3')
-            ielftype = arrset(ielftype, ie, iet_["ePEXP3"])
+            ielftype = arrset(ielftype,ie,iet_["ePEXP3"])
             vname = 'X2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -206,7 +208,7 @@ class  OSBORNEB(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePEXP3')
-            ielftype = arrset(ielftype, ie, iet_["ePEXP3"])
+            ielftype = arrset(ielftype,ie,iet_["ePEXP3"])
             vname = 'X3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -224,7 +226,7 @@ class  OSBORNEB(CUTEst_problem):
             ename = 'D'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ePEXP3')
-            ielftype = arrset(ielftype, ie, iet_["ePEXP3"])
+            ielftype = arrset(ielftype,ie,iet_["ePEXP3"])
             vname = 'X4'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -273,7 +275,9 @@ class  OSBORNEB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-11-0"
+        self.pbclass = "C-SUR2-MN-11-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

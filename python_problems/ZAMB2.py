@@ -13,7 +13,7 @@ class  ZAMB2(CUTEst_problem):
 #       JOTA 81(1994)2,221-248.
 #    E. Arnold 1/3/96 (SIF file)
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 # 
 #    The time horizon NY and the start year YEAR can be varied with
@@ -29,6 +29,8 @@ class  ZAMB2(CUTEst_problem):
 # IE NY                  20             $-PARAMETER n = 2646
 # IE NY                  30             $-PARAMETER n = 3966
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ZAMB2'
@@ -1697,7 +1699,7 @@ class  ZAMB2(CUTEst_problem):
         ename = 'FE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eFE')
-        ielftype = arrset(ielftype, ie, iet_["eFE"])
+        ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V1'+str(int(v_['N']))
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1711,7 +1713,7 @@ class  ZAMB2(CUTEst_problem):
         ename = 'FE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eFE')
-        ielftype = arrset(ielftype, ie, iet_["eFE"])
+        ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V2'+str(int(v_['N']))
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1725,7 +1727,7 @@ class  ZAMB2(CUTEst_problem):
         ename = 'FE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eFE')
-        ielftype = arrset(ielftype, ie, iet_["eFE"])
+        ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V3'+str(int(v_['N']))
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1739,7 +1741,7 @@ class  ZAMB2(CUTEst_problem):
         ename = 'FE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eFE')
-        ielftype = arrset(ielftype, ie, iet_["eFE"])
+        ielftype = arrset(ielftype,ie,iet_["eFE"])
         vname = 'V4'+str(int(v_['N']))
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1754,7 +1756,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'FA1'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFA')
-            ielftype = arrset(ielftype, ie, iet_["eFA"])
+            ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V1'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1768,7 +1770,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'FA2'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFA')
-            ielftype = arrset(ielftype, ie, iet_["eFA"])
+            ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V2'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1782,7 +1784,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'FA3'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFA')
-            ielftype = arrset(ielftype, ie, iet_["eFA"])
+            ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V3'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1796,7 +1798,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'FA4'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFA')
-            ielftype = arrset(ielftype, ie, iet_["eFA"])
+            ielftype = arrset(ielftype,ie,iet_["eFA"])
             vname = 'V4'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -1811,7 +1813,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'F0E1'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFHQ')
-            ielftype = arrset(ielftype, ie, iet_["eFHQ"])
+            ielftype = arrset(ielftype,ie,iet_["eFHQ"])
             vname = 'Q1'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
@@ -1833,7 +1835,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'F0E3'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFHQ')
-            ielftype = arrset(ielftype, ie, iet_["eFHQ"])
+            ielftype = arrset(ielftype,ie,iet_["eFHQ"])
             vname = 'Q3'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
@@ -1855,7 +1857,7 @@ class  ZAMB2(CUTEst_problem):
             ename = 'F0E4'+str(k)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eFHQ')
-            ielftype = arrset(ielftype, ie, iet_["eFHQ"])
+            ielftype = arrset(ielftype,ie,iet_["eFHQ"])
             vname = 'Q4'+str(k)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Q')[0]
@@ -1977,8 +1979,12 @@ class  ZAMB2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

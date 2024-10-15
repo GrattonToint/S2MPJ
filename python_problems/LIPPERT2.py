@@ -31,7 +31,7 @@ class  LIPPERT2(CUTEst_problem):
 #    SIF input: Nick Gould, September 2006
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "LQR2-MN-V-V"
+#    classification = "C-LQR2-MN-V-V"
 # 
 #    Number of nodes in x direction
 # 
@@ -42,6 +42,8 @@ class  LIPPERT2(CUTEst_problem):
 # IE NX                  40             $-PARAMETER
 # IE NX                  100            $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LIPPERT2'
@@ -193,7 +195,7 @@ class  LIPPERT2(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eSQR')
-            ielftype = arrset( ielftype,ie,iet_['eSQR'])
+            ielftype = arrset(ielftype,ie,iet_['eSQR'])
         vname = 'R'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
@@ -204,7 +206,7 @@ class  LIPPERT2(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eSQR')
-                    ielftype = arrset( ielftype,ie,iet_['eSQR'])
+                    ielftype = arrset(ielftype,ie,iet_['eSQR'])
                 vname = 'U'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
@@ -215,7 +217,7 @@ class  LIPPERT2(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'eSQR')
-                    ielftype = arrset( ielftype,ie,iet_['eSQR'])
+                    ielftype = arrset(ielftype,ie,iet_['eSQR'])
                 vname = 'V'+str(I)+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='ALPHA')[0]
@@ -303,8 +305,12 @@ class  LIPPERT2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

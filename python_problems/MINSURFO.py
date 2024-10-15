@@ -17,11 +17,13 @@ class  MINSURFO(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, December 2000
 # 
-#    classification = "OBR2-AN-V-V"
+#    classification = "C-OBR2-AN-V-V"
 # 
 #  grid points in x direction (fixed at 50 in COPS)
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINSURFO'
@@ -152,7 +154,7 @@ class  MINSURFO(CUTEst_problem):
                 ename = 'I'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'V'+str(int(v_['I+1']))+','+str(J)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -164,7 +166,7 @@ class  MINSURFO(CUTEst_problem):
                 ename = 'J'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eISQ')
-                ielftype = arrset(ielftype, ie, iet_["eISQ"])
+                ielftype = arrset(ielftype,ie,iet_["eISQ"])
                 vname = 'V'+str(I)+','+str(int(v_['J+1']))
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -178,7 +180,7 @@ class  MINSURFO(CUTEst_problem):
             ename = 'J'+str(int(v_['NX+1']))+','+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eISQ')
-            ielftype = arrset(ielftype, ie, iet_["eISQ"])
+            ielftype = arrset(ielftype,ie,iet_["eISQ"])
             ename = 'J'+str(int(v_['NX+1']))+','+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(int(v_['NX+1']))+','+str(int(v_['J1']))
@@ -196,7 +198,7 @@ class  MINSURFO(CUTEst_problem):
             ename = 'I'+str(I)+','+str(int(v_['NY+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eISQ')
-            ielftype = arrset(ielftype, ie, iet_["eISQ"])
+            ielftype = arrset(ielftype,ie,iet_["eISQ"])
             ename = 'I'+str(I)+','+str(int(v_['NY+1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(int(v_['I1']))+','+str(int(v_['NY+1']))
@@ -252,7 +254,9 @@ class  MINSURFO(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-V-V"
+        self.pbclass = "C-OBR2-AN-V-V"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

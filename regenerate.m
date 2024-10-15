@@ -8,11 +8,11 @@ function regenerate( varargin )
 %
 %   If varargin contains the name(s) of one or more problems (e.g. 'ROSENBR'), the
 %   corresponding problems are decoded. Otherwise, all problems specified in the
-%   ./fullproblist file are decoded.
+%   ./problist file are decoded.
 %
 %   If varargin contains a string of the form './problist', the list of problems to
 %   decode is read from the ./problist file (the ./ are mandatory) and this list
-%   is used only if no problem is explictly specified. (Default: ./fullproblist)
+%   is used only if no problem is explictly specified. (Default: ./problist)
 %   Only the last occurence of a ./problist argument is taken into account.
 %   Each line of the ./problist file must contain a problem name as the first
 %   (blank separated) field.
@@ -41,7 +41,7 @@ backup = 1;     % true if a backup problems directories should be created
 
 %  Process the list of arguments, if any.
 
-problist = './fullproblist';
+problist = './problist';
 versions = {};
 problems = {};
 

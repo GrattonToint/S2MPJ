@@ -25,7 +25,7 @@ class  ROBOT(CUTEst_problem):
 #    SIF input: Manish Sabu at Virginia Tech., Spring 1993.
 #               Minor modifications by Ph. L. Toint, April 1993.
 # 
-#    classification = "QOR2-MY-14-2"
+#    classification = "C-QOR2-MY-14-2"
 # 
 #  This segment describes the initial values of angles (by THnIN)
 #   and final position of the end effector (by XPOS and YPOS)
@@ -34,6 +34,8 @@ class  ROBOT(CUTEst_problem):
 #   angles (by HIGH and DOWN)
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ROBOT'
@@ -189,7 +191,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH1SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -201,7 +203,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH2SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -213,7 +215,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH3SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -225,7 +227,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH4SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -237,7 +239,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH5SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -249,7 +251,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH6SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -261,7 +263,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'TH7SQ'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eISQ')
-        ielftype = arrset(ielftype, ie, iet_["eISQ"])
+        ielftype = arrset(ielftype,ie,iet_["eISQ"])
         vname = 'TH7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -273,7 +275,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C1TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -281,7 +283,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C2TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -289,7 +291,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C3TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -297,7 +299,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C4TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -305,7 +307,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C5TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -313,7 +315,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C6TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -321,7 +323,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'C7TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCOSTH')
-        ielftype = arrset(ielftype, ie, iet_["eCOSTH"])
+        ielftype = arrset(ielftype,ie,iet_["eCOSTH"])
         vname = 'TH7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAC')[0]
@@ -329,7 +331,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S1TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -337,7 +339,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S2TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -345,7 +347,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S3TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -353,7 +355,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S4TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -361,7 +363,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S5TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -369,7 +371,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S6TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -377,7 +379,7 @@ class  ROBOT(CUTEst_problem):
         ename = 'S7TH'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSINTH')
-        ielftype = arrset(ielftype, ie, iet_["eSINTH"])
+        ielftype = arrset(ielftype,ie,iet_["eSINTH"])
         vname = 'TH7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='THETAS')[0]
@@ -477,8 +479,12 @@ class  ROBOT(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-MY-14-2"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-MY-14-2"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

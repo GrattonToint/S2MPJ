@@ -22,7 +22,7 @@ class  WATSON(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    (bug fix July 2007)
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    The number of variables can be varied, but should be smaller than
 #    31
@@ -32,6 +32,8 @@ class  WATSON(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WATSON'
@@ -150,7 +152,7 @@ class  WATSON(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eMWSQ')
-            ielftype = arrset(ielftype, ie, iet_["eMWSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eMWSQ"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -234,7 +236,7 @@ class  WATSON(CUTEst_problem):
         ename = 'E'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eMSQ')
-        ielftype = arrset(ielftype, ie, iet_["eMSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eMSQ"])
         ename = 'E'+str(int(v_['M']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X1'
@@ -275,8 +277,10 @@ class  WATSON(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

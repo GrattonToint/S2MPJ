@@ -21,7 +21,7 @@ class  EIGENBCO(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 1992.
 # 
-#    classification = "SQR2-AN-V-V"
+#    classification = "C-SQR2-AN-V-V"
 # 
 #    The dimension of the matrix.
 # 
@@ -30,6 +30,8 @@ class  EIGENBCO(CUTEst_problem):
 # IE N                   10             $-PARAMETER     original value
 # IE N                   50             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EIGENBCO'
@@ -133,29 +135,29 @@ class  EIGENBCO(CUTEst_problem):
                     ename = 'E'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en3PROD')
-                    ielftype = arrset(ielftype, ie, iet_["en3PROD"])
+                    ielftype = arrset(ielftype,ie,iet_["en3PROD"])
                     vname = 'Q'+str(K)+','+str(I)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(K)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'D'+str(K)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='D')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     ename = 'O'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en2PROD')
-                    ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+                    ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                     vname = 'Q'+str(K)+','+str(I)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(K)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.0)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.0))
                     posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -192,8 +194,12 @@ class  EIGENBCO(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

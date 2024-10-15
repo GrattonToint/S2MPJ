@@ -33,11 +33,13 @@ class  ODFITS(CUTEst_problem):
 # 
 #    SIF input: Ph Toint, Dec 1991.
 # 
-#    classification = "OLR2-MN-10-6"
+#    classification = "C-OLR2-MN-10-6"
 # 
 #    Number of available traffic counts
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ODFITS'
@@ -208,9 +210,9 @@ class  ODFITS(CUTEst_problem):
         ename = 'TFIT13'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXLOGX')
-        ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+        ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
         vname = 'T13'
-        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,0.1,None,None)
+        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(0.1),None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='DEN')[0]
@@ -218,9 +220,9 @@ class  ODFITS(CUTEst_problem):
         ename = 'TFIT23'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXLOGX')
-        ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+        ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
         vname = 'T23'
-        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,0.1,None,None)
+        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(0.1),None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='DEN')[0]
@@ -228,9 +230,9 @@ class  ODFITS(CUTEst_problem):
         ename = 'TFIT14'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXLOGX')
-        ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+        ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
         vname = 'T14'
-        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,0.1,None,None)
+        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(0.1),None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='DEN')[0]
@@ -238,9 +240,9 @@ class  ODFITS(CUTEst_problem):
         ename = 'TFIT24'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXLOGX')
-        ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+        ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
         vname = 'T24'
-        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,0.1,None,None)
+        [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(0.1),None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='DEN')[0]
@@ -249,9 +251,9 @@ class  ODFITS(CUTEst_problem):
             ename = 'CFIT'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
             vname = 'F'+str(I)
-            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,0.1,None,None)
+            [iv,ix_] = s2mpj_nlx(self, vname,ix_,1,float(0.1),None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='DEN')[0]
@@ -304,8 +306,12 @@ class  ODFITS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-MN-10-6"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-MN-10-6"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

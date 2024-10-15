@@ -26,11 +26,13 @@ class  HIMMELBK(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1991.
 # 
-#    classification = "LOR2-MN-24-14"
+#    classification = "C-LOR2-MN-24-14"
 # 
 #    Problem data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBK'
@@ -219,26 +221,26 @@ class  HIMMELBK(CUTEst_problem):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PR')
-                ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                ielftype = arrset(ielftype,ie,iet_["en2PR"])
                 vname = 'X'+str(int(v_['I+12']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.04)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.04))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.04)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.04))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
             for J in range(int(v_['13']),int(v_['24'])+1):
                 ename = 'E'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PR')
-                ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                ielftype = arrset(ielftype,ie,iet_["en2PR"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.04)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.04))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.04)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.04))
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -284,8 +286,12 @@ class  HIMMELBK(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-MN-24-14"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-MN-24-14"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

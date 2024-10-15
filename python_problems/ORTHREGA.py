@@ -20,7 +20,7 @@ class  ORTHREGA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "QQR2-AN-V-V"
+#    classification = "C-QQR2-AN-V-V"
 # 
 #    Number of levels in the generation of the data points
 #    ( number of data points =     4**LEVELS
@@ -33,6 +33,8 @@ class  ORTHREGA(CUTEst_problem):
 # IE LEVELS              5              $-PARAMETER n = 2053
 # IE LEVELS              6              $-PARAMETER n = 8197
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGA'
@@ -209,7 +211,7 @@ class  ORTHREGA(CUTEst_problem):
             ename = 'EA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eHXX')
-            ielftype = arrset(ielftype, ie, iet_["eHXX"])
+            ielftype = arrset(ielftype,ie,iet_["eHXX"])
             vname = 'H11'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
@@ -221,7 +223,7 @@ class  ORTHREGA(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eHXY')
-            ielftype = arrset(ielftype, ie, iet_["eHXY"])
+            ielftype = arrset(ielftype,ie,iet_["eHXY"])
             vname = 'H12'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
@@ -237,7 +239,7 @@ class  ORTHREGA(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eHXX')
-            ielftype = arrset(ielftype, ie, iet_["eHXX"])
+            ielftype = arrset(ielftype,ie,iet_["eHXX"])
             vname = 'H22'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='H')[0]
@@ -249,7 +251,7 @@ class  ORTHREGA(CUTEst_problem):
             ename = 'ED'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eGX')
-            ielftype = arrset(ielftype, ie, iet_["eGX"])
+            ielftype = arrset(ielftype,ie,iet_["eGX"])
             vname = 'G1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='G')[0]
@@ -261,7 +263,7 @@ class  ORTHREGA(CUTEst_problem):
             ename = 'EE'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eGX')
-            ielftype = arrset(ielftype, ie, iet_["eGX"])
+            ielftype = arrset(ielftype,ie,iet_["eGX"])
             vname = 'G2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='G')[0]
@@ -323,8 +325,12 @@ class  ORTHREGA(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QQR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

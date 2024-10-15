@@ -20,7 +20,7 @@ class  CLNLBEAM(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1993.
 # 
-#    classification = "OOR2-MN-V-V"
+#    classification = "C-OOR2-MN-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
@@ -32,6 +32,8 @@ class  CLNLBEAM(CUTEst_problem):
 # IE NI                  1000           $-PARAMETER n=3003, m=2000 original value
 # IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLNLBEAM'
@@ -165,7 +167,7 @@ class  CLNLBEAM(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCOS')
-            ielftype = arrset(ielftype, ie, iet_["eCOS"])
+            ielftype = arrset(ielftype,ie,iet_["eCOS"])
             vname = 'T'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -173,7 +175,7 @@ class  CLNLBEAM(CUTEst_problem):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSIN')
-            ielftype = arrset(ielftype, ie, iet_["eSIN"])
+            ielftype = arrset(ielftype,ie,iet_["eSIN"])
             vname = 'T'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='T')[0]
@@ -181,7 +183,7 @@ class  CLNLBEAM(CUTEst_problem):
             ename = 'USQ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'U'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='U')[0]
@@ -241,8 +243,12 @@ class  CLNLBEAM(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-MN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-MN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

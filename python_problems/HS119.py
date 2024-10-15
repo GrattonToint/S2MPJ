@@ -20,11 +20,13 @@ class  HS119(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, March 1991.
 # 
-#    classification = "OLR2-AN-16-8"
+#    classification = "C-OLR2-AN-16-8"
 # 
 #    Set useful parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS119'
@@ -220,13 +222,13 @@ class  HS119(CUTEst_problem):
                 [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
                 if newelt:
                     self.elftype = arrset(self.elftype,ie,'ePROD')
-                    ielftype = arrset( ielftype,ie,iet_['ePROD'])
+                    ielftype = arrset(ielftype,ie,iet_['ePROD'])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,5.0,10.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(5.0),float(10.0))
                 posev = np.where(elftv[ielftype[ie]]=='U1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,5.0,10.0)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(5.0),float(10.0))
                 posev = np.where(elftv[ielftype[ie]]=='U2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='AIJ')[0]
@@ -257,8 +259,12 @@ class  HS119(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-AN-16-8"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-AN-16-8"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

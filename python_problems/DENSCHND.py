@@ -15,9 +15,11 @@ class  DENSCHND(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1990.
 # 
-#    classification = "SUR2-AN-3-0"
+#    classification = "C-SUR2-AN-3-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DENSCHND'
@@ -89,80 +91,80 @@ class  DENSCHND(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eCB')
-        ielftype = arrset(ielftype, ie, iet_["eCB"])
+        ielftype = arrset(ielftype,ie,iet_["eCB"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E3'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eFR')
-        ielftype = arrset(ielftype, ie, iet_["eFR"])
+        ielftype = arrset(ielftype,ie,iet_["eFR"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E4'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V3')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E5'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E6'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E7'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'en2PR')
-            ielftype = arrset( ielftype,ie,iet_['en2PR'])
+            ielftype = arrset(ielftype,ie,iet_['en2PR'])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,10.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(10.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -211,7 +213,9 @@ class  DENSCHND(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-3-0"
+        self.pbclass = "C-SUR2-AN-3-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

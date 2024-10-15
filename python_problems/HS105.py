@@ -16,11 +16,13 @@ class  HS105(CUTEst_problem):
 #    SIF input: Nick Gould, August 1991.
 #    bug correction (line 351) Ph. Toint, May 2024
 # 
-#    classification = "OLR2-AY-8-1"
+#    classification = "C-OLR2-AY-8-1"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS105'
@@ -267,7 +269,7 @@ class  HS105(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eABI')
-            ielftype = arrset(ielftype, ie, iet_["eABI"])
+            ielftype = arrset(ielftype,ie,iet_["eABI"])
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -285,7 +287,7 @@ class  HS105(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eABI')
-            ielftype = arrset(ielftype, ie, iet_["eABI"])
+            ielftype = arrset(ielftype,ie,iet_["eABI"])
             vname = 'X2'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -303,7 +305,7 @@ class  HS105(CUTEst_problem):
             ename = 'C'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eCI')
-            ielftype = arrset(ielftype, ie, iet_["eCI"])
+            ielftype = arrset(ielftype,ie,iet_["eCI"])
             vname = 'X1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
@@ -360,8 +362,12 @@ class  HS105(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-AY-8-1"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-AY-8-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -470,7 +476,7 @@ class  HS105(CUTEst_problem):
     def g_globs(self):
 
         self.gfpar = np.array([]);
-        self.gfpar = arrset( self.gfpar,0,3.9894228040143270e-01)    # this is P
+        self.gfpar = arrset(self.gfpar,0,3.9894228040143270e-01)     # this is P
         return pbm
 
     @staticmethod

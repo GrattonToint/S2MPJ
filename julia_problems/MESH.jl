@@ -1,4 +1,4 @@
-function MESH(action,args...)
+function MESH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -19,11 +19,13 @@ function MESH(action,args...)
 # 
 #    SIF input: Prof. Dr. Michael Kraetzschmar
 # 
-#    classification = "OOR2-AY-41-48"
+#    classification = "C-OOR2-AY-41-48"
 # 
 #    Problem data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MESH"
@@ -32,7 +34,7 @@ function MESH(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -307,7 +309,7 @@ function MESH(action,args...)
             ename = "aldsq"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ediffsq")
-            arrset(ielftype, ie, iet_["ediffsq"])
+            arrset(ielftype,ie,iet_["ediffsq"])
             vname = "alpha"*string(i)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="winkel",elftv[ielftype[ie]])
@@ -319,7 +321,7 @@ function MESH(action,args...)
             ename = "bedsq"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ediffsq")
-            arrset(ielftype, ie, iet_["ediffsq"])
+            arrset(ielftype,ie,iet_["ediffsq"])
             vname = "beta"*string(i)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="winkel",elftv[ielftype[ie]])
@@ -331,7 +333,7 @@ function MESH(action,args...)
             ename = "gadsq"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ediffsq")
-            arrset(ielftype, ie, iet_["ediffsq"])
+            arrset(ielftype,ie,iet_["ediffsq"])
             vname = "gamma"*string(i)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="winkel",elftv[ielftype[ie]])
@@ -345,7 +347,7 @@ function MESH(action,args...)
             ename = "laeng"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"elaenge")
-            arrset(ielftype, ie, iet_["elaenge"])
+            arrset(ielftype,ie,iet_["elaenge"])
         end
         ename = "laeng1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
@@ -527,7 +529,7 @@ function MESH(action,args...)
             ename = "sal"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"esklprod")
-            arrset(ielftype, ie, iet_["esklprod"])
+            arrset(ielftype,ie,iet_["esklprod"])
         end
         ename = "sal1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
@@ -637,7 +639,7 @@ function MESH(action,args...)
             ename = "cal"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ecosprod")
-            arrset(ielftype, ie, iet_["ecosprod"])
+            arrset(ielftype,ie,iet_["ecosprod"])
         end
         ename = "cal1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
@@ -699,7 +701,7 @@ function MESH(action,args...)
             ename = "sbe"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"esklprod")
-            arrset(ielftype, ie, iet_["esklprod"])
+            arrset(ielftype,ie,iet_["esklprod"])
         end
         ename = "sbe1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
@@ -809,7 +811,7 @@ function MESH(action,args...)
             ename = "cbe"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"ecosprod")
-            arrset(ielftype, ie, iet_["ecosprod"])
+            arrset(ielftype,ie,iet_["ecosprod"])
         end
         ename = "cbe1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
@@ -871,7 +873,7 @@ function MESH(action,args...)
             ename = "flae"*string(i)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"evekprod")
-            arrset(ielftype, ie, iet_["evekprod"])
+            arrset(ielftype,ie,iet_["evekprod"])
         end
         ename = "flae1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
@@ -1052,8 +1054,13 @@ function MESH(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-AY-41-48"
+        pb.pbclass = "C-OOR2-AY-41-48"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -1292,7 +1299,9 @@ function MESH(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1304,7 +1313,7 @@ function MESH(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

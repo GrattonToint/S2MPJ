@@ -17,11 +17,13 @@ class  LUKSAN17LS(CUTEst_problem):
 # 
 #    least-squares version
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #   seed for dimensions
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKSAN17LS'
@@ -127,7 +129,7 @@ class  LUKSAN17LS(CUTEst_problem):
                     ename = 'S'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eASINX')
-                    ielftype = arrset(ielftype, ie, iet_["eASINX"])
+                    ielftype = arrset(ielftype,ie,iet_["eASINX"])
                     ename = 'S'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'X'+str(int(v_['I+Q']))
@@ -142,7 +144,7 @@ class  LUKSAN17LS(CUTEst_problem):
                     ename = 'C'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'eACOSX')
-                    ielftype = arrset(ielftype, ie, iet_["eACOSX"])
+                    ielftype = arrset(ielftype,ie,iet_["eACOSX"])
                     ename = 'C'+str(int(v_['K']))+','+str(Q)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'X'+str(int(v_['I+Q']))
@@ -183,7 +185,9 @@ class  LUKSAN17LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

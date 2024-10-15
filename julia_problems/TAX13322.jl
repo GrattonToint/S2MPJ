@@ -1,4 +1,4 @@
-function TAX13322(action,args...)
+function TAX13322(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -19,13 +19,15 @@ function TAX13322(action,args...)
 #    "If ever there was an example that exhibited the stupidity of SIF,
 #     this is it. NIMG"
 # 
-#    classification = "OOR2-MN-72-1261"
+#    classification = "C-OOR2-MN-72-1261"
 # 
 #    parameters
 # 
 #       Alternative values for the SIF file parameters:
 # IE NA                  1              $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TAX13322"
@@ -34,7 +36,7 @@ function TAX13322(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -251,9 +253,9 @@ function TAX13322(action,args...)
                     ename = "A1-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eA1")
-                    arrset(ielftype, ie, iet_["eA1"])
+                    arrset(ielftype,ie,iet_["eA1"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -265,9 +267,9 @@ function TAX13322(action,args...)
                     ename = "A2-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eA2")
-                    arrset(ielftype, ie, iet_["eA2"])
+                    arrset(ielftype,ie,iet_["eA2"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -279,9 +281,9 @@ function TAX13322(action,args...)
                     ename = "A3-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eA3")
-                    arrset(ielftype, ie, iet_["eA3"])
+                    arrset(ielftype,ie,iet_["eA3"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -293,9 +295,9 @@ function TAX13322(action,args...)
                     ename = "A4-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eA4")
-                    arrset(ielftype, ie, iet_["eA4"])
+                    arrset(ielftype,ie,iet_["eA4"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -307,9 +309,9 @@ function TAX13322(action,args...)
                     ename = "A5-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eA5")
-                    arrset(ielftype, ie, iet_["eA5"])
+                    arrset(ielftype,ie,iet_["eA5"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -321,9 +323,9 @@ function TAX13322(action,args...)
                     ename = "A6-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eA6")
-                    arrset(ielftype, ie, iet_["eA6"])
+                    arrset(ielftype,ie,iet_["eA6"])
                     vname = "C"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="C",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -335,9 +337,9 @@ function TAX13322(action,args...)
                     ename = "B1-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eB1")
-                    arrset(ielftype, ie, iet_["eB1"])
+                    arrset(ielftype,ie,iet_["eB1"])
                     vname = "Y"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -349,9 +351,9 @@ function TAX13322(action,args...)
                     ename = "B2-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eB2")
-                    arrset(ielftype, ie, iet_["eB2"])
+                    arrset(ielftype,ie,iet_["eB2"])
                     vname = "Y"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -363,9 +365,9 @@ function TAX13322(action,args...)
                     ename = "B3-"*string(I)*","*string(P)*","*string(Q)
                     ie,ie_,_  = s2mpj_ii(ename,ie_)
                     arrset(pbm.elftype,ie,"eB3")
-                    arrset(ielftype, ie, iet_["eB3"])
+                    arrset(ielftype,ie,iet_["eB3"])
                     vname = "Y"*string(I)*","*string(P)*","*string(Q)
-                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,0.1e0)
+                    iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(0.1e0))
                     posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                     loaset(pbm.elvar,ie,posev,iv)
                 end
@@ -11078,8 +11080,13 @@ function TAX13322(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-MN-72-1261"
+        pb.pbclass = "C-OOR2-MN-72-1261"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -11496,7 +11503,9 @@ function TAX13322(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -11508,7 +11517,7 @@ function TAX13322(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

@@ -12,9 +12,11 @@ class  CmRELOAD(CUTEst_problem):
 #    (2nd data set implemented here)
 #    SIF input: S. Leyffer, November 1997
 # 
-#    classification = "LOR2-MN-342-284"
+#    classification = "C-LOR2-MN-342-284"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CmRELOAD'
@@ -421,7 +423,7 @@ class  CmRELOAD(CUTEst_problem):
                     ename = 'Au'+str(I)+','+str(II)+','+str(J)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en3PROD')
-                    ielftype = arrset(ielftype, ie, iet_["en3PROD"])
+                    ielftype = arrset(ielftype,ie,iet_["en3PROD"])
                     vname = 'X'+str(I)+','+str(int(v_['K']))+','+str(J)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -442,7 +444,7 @@ class  CmRELOAD(CUTEst_problem):
                     ename = 'Bu'+str(I)+','+str(II)+','+str(J)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en3PROD')
-                    ielftype = arrset(ielftype, ie, iet_["en3PROD"])
+                    ielftype = arrset(ielftype,ie,iet_["en3PROD"])
                     vname = 'X'+str(I)+','+str(int(v_['K']))+','+str(J)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -463,7 +465,7 @@ class  CmRELOAD(CUTEst_problem):
                     ename = 'Cu'+str(I)+','+str(II)+','+str(J)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en3PROD')
-                    ielftype = arrset(ielftype, ie, iet_["en3PROD"])
+                    ielftype = arrset(ielftype,ie,iet_["en3PROD"])
                     vname = 'X'+str(I)+','+str(int(v_['K']))+','+str(J)
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -481,7 +483,7 @@ class  CmRELOAD(CUTEst_problem):
                 ename = 'KTP'+str(I)+','+str(S)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
-                ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                 vname = 'KEFF'+str(S)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -495,7 +497,7 @@ class  CmRELOAD(CUTEst_problem):
                 ename = 'P'+str(I)+','+str(S)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'en2PROD')
-                ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                 vname = 'KINF'+str(I)+','+str(S)
                 [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -585,8 +587,12 @@ class  CmRELOAD(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-MN-342-284"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-MN-342-284"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

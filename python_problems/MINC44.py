@@ -20,7 +20,7 @@ class  MINC44(CUTEst_problem):
 #    SIF input: Ph. Toint, April 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "LQR2-AN-V-V"
+#    classification = "C-LQR2-AN-V-V"
 # 
 #    Size of matrix
 # 
@@ -35,6 +35,8 @@ class  MINC44(CUTEst_problem):
 # IE N                   9              $-PARAMETER n = 583
 # IE N                   10             $-PARAMETER n = 1113
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINC44'
@@ -198,7 +200,7 @@ class  MINC44(CUTEst_problem):
                     ename = 'E'+str(K)+','+str(I)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en2PR')
-                    ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                    ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     vname = 'A'+str(int(v_['ID']))+','+str(int(v_['J']))
                     [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
                     posev = np.where(elftv[ielftype[ie]]=='A')[0]
@@ -215,7 +217,7 @@ class  MINC44(CUTEst_problem):
                     ename = 'E'+str(K)+','+str(int(v_['1']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en2PR')
-                    ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                    ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     ename = 'E'+str(K)+','+str(int(v_['1']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['J']))
@@ -231,7 +233,7 @@ class  MINC44(CUTEst_problem):
                     ename = 'E'+str(K)+','+str(int(v_['2']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en2PR')
-                    ielftype = arrset(ielftype, ie, iet_["en2PR"])
+                    ielftype = arrset(ielftype,ie,iet_["en2PR"])
                     ename = 'E'+str(K)+','+str(int(v_['2']))
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     vname = 'A'+str(int(v_['2']))+','+str(int(v_['JJ']))
@@ -292,9 +294,13 @@ class  MINC44(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

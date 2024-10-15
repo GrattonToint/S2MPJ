@@ -24,11 +24,13 @@ class  AIRPORT(CUTEst_problem):
 #                November 1994, DMA - IMECC- UNICAMP
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "SQR2-MN-84-42"
+#    classification = "C-SQR2-MN-84-42"
 # 
 #    Problem data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRPORT'
@@ -249,7 +251,7 @@ class  AIRPORT(CUTEst_problem):
             ename = 'A'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDIFSQR')
-            ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eDIFSQR"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -261,7 +263,7 @@ class  AIRPORT(CUTEst_problem):
             ename = 'B'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eDIFSQR')
-            ielftype = arrset(ielftype, ie, iet_["eDIFSQR"])
+            ielftype = arrset(ielftype,ie,iet_["eDIFSQR"])
             vname = 'Y'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -309,9 +311,13 @@ class  AIRPORT(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "SQR2-MN-84-42"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-SQR2-MN-84-42"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

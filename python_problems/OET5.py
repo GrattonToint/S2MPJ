@@ -32,13 +32,15 @@ class  OET5(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, February, 1994.
 # 
-#    classification = "LQR2-AN-5-V"
+#    classification = "C-LQR2-AN-5-V"
 # 
 #    Discretization
 # 
 # IE M                   2
 # IE M                   100
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OET5'
@@ -152,23 +154,23 @@ class  OET5(CUTEst_problem):
             ename = 'E'+str(int(v_['1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eQUAD')
-            ielftype = arrset(ielftype, ie, iet_["eQUAD"])
+            ielftype = arrset(ielftype,ie,iet_["eQUAD"])
             ename = 'E'+str(int(v_['1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='X3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'E'+str(int(v_['1']))+','+str(I)
@@ -206,8 +208,12 @@ class  OET5(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AN-5-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AN-5-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

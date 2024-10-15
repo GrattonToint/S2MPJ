@@ -5,7 +5,7 @@
 #
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #
-#   Programming: S. Gratton and Ph. L. Toint (this version 11 VI 2024)
+#   Programming: S. Gratton and Ph. L. Toint (this version 2 X 2024)
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,6 +39,8 @@ mutable struct PB
     objupper::Float64
     xnames::Vector{String}
     cnames::Vector{String}
+    objderlvl::Int64
+    conderlvl::Vector{Int64}
 
     PB(name::String) = new( name,      #name
                             "",        #sifpbname
@@ -61,7 +63,9 @@ mutable struct PB
                             -Inf,      #objlower
                              Inf,      #objupper
                             String[],  #xnames
-                            String[]   #cnames
+                            String[],  #cnames
+                             2,        #objderlvl
+                             Int64[]   #conderlvl
                             )
 end
 
@@ -84,7 +88,9 @@ mutable struct PBM
     grpar::Vector{Vector{Float64}}
     efpar::Vector{Float64}
     gfpar::Vector{Float64}
-    has_globs::Vector{Int64} 
+    has_globs::Vector{Int64}
+    objderlvl::Int64
+    conderlvl::Vector{Int64}
     call::Function
     
     PBM(name::String) = new( name,                             #name
@@ -105,7 +111,9 @@ mutable struct PBM
                              Vector{Vector{Float64}}(),        #grpar
                              Float64[],                        #efpar
                              Float64[],                        #gfpar
-                             [0, 0]                            #has_globs
+                             [0, 0],                           #has_globs
+                             2,                                #objderlvl
+                             Int64[]                           #conderlvl
                              )
 end
 
@@ -118,7 +126,7 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function s2mpj_ii( name, dict::Dict{String,Int} )
+function s2mpj_ii( name::String, dict::Dict{String,Int} )
     if haskey( dict, name )
         new = 0
         idx = dict[name]
@@ -138,8 +146,8 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function s2mpj_nlx( name, dict::Dict{String,Int}, pb=nothing, getxnames=nothing,
-                  xlowdef=nothing, xuppdef=nothing, x0def=nothing )
+function s2mpj_nlx( name::String, dict::Dict{String,Int}, pb::PB, getxnames::Int,
+                  xlowdef::Union{Float64,Nothing}, xuppdef::Union{Float64,Nothing}, x0def::Union{Float64,Nothing} )
 
     iv, dict, newvar = s2mpj_ii( name, dict )
 
@@ -177,14 +185,14 @@ function arrset( thelist::Vector{T}, iv::Int, value::T ) where T
     if iv > length( thelist )
        if isa( value, String )
            while length(thelist) < iv
-               push!(thelist, "" )  # Add elements to reach iv2
+               push!( thelist, "" )  # Add elements to reach iv2
            end
-        elseif isa( value, Int64)
+        elseif isa( value, Int64 )
            append!(thelist, zeros(Int,iv-length(thelist) ) )
-        elseif isa( value, Float64)
-           append!(thelist, zeros(Float64,iv-length(thelist) ) )
+        elseif isa( value, Float64 )
+           append!( thelist, zeros(Float64,iv-length(thelist) ) )
         else
-           resize!(thelist, iv )
+           resize!( thelist, iv )
         end
     end
     thelist[iv] = value
@@ -197,21 +205,11 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function loaset(list::Vector{Vector{T}}, iv1::Int, iv2::Int, value::T) where T
+function loaset( list::Vector{Vector{T}}, iv1::Int, iv2::Int, value::T ) where T
     while length(list) < iv1
         push!(list, Vector{T}())   # Add empty vectors to reach iv1
     end
     arrset( list[iv1], iv2, value )
-#    if isa( value, String )
-#        while length(list[iv1]) < iv2
-#            push!(list[iv1], "" )  # Add elements to reach iv2
-#        end
-#    else
-#        while length(list[iv1]) < iv2
-#            push!(list[iv1], -1 )  # Add elements to reach iv2
-#        end
-#    end
-#    list[iv1][iv2] = value
 end
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -222,9 +220,7 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function s2mpj_eval( action, args... )
-
-    pbm = args[1];
+function s2mpj_eval( action::String, pbm::PBM, args::Union{Vector{Int},Vector{Float64}}... )
 
     #  Get the problem data and possible global parameters' values.
     
@@ -238,48 +234,58 @@ function s2mpj_eval( action, args... )
     #  Evaluations of the objective function and constraints
     
     if action == "fx"   
-        return evalgrsum( true,  pbm.objgrps, args[2], pbm, 1 )
+        return evalgrsum( true,  pbm.objgrps, args[1], pbm, 1 )
     elseif action == "fgx" 
-        return evalgrsum( true,  pbm.objgrps, args[2], pbm, 2 )
+        return evalgrsum( true,  pbm.objgrps, args[1], pbm, 2 )
     elseif action == "fgHx"
-        return evalgrsum( true,  pbm.objgrps, args[2], pbm, 3 )
+        return evalgrsum( true,  pbm.objgrps, args[1], pbm, 3 )
     elseif action == "cx"
-        return evalgrsum( false, pbm.congrps, args[2], pbm, 1 )
+        return evalgrsum( false, pbm.congrps, args[1], pbm, 1 )
     elseif action == "cJx"
-        return evalgrsum( false, pbm.congrps, args[2], pbm, 2 )
+        return evalgrsum( false, pbm.congrps, args[1], pbm, 2 )
     elseif action == "cJHx"
-        return evalgrsum( false, pbm.congrps, args[2], pbm, 3 )
+        return evalgrsum( false, pbm.congrps, args[1], pbm, 3 )
     elseif action == "cIx"
-        return evalgrsum( false, pbm.congrps[args[3]], args[2], pbm, 1 )
+        return evalgrsum( false, pbm.congrps[args[1]], args[1], pbm, 1 )
     elseif action == "cIJx"
-        return evalgrsum( false, pbm.congrps[args[3]], args[2], pbm, 2 )
+        return evalgrsum( false, pbm.congrps[args[1]], args[1], pbm, 2 )
     elseif action == "cIJHx"
-        return evalgrsum( false, pbm.congrps[args[3]], args[2], pbm, 3 )
+        return evalgrsum( false, pbm.congrps[args[2]], args[1], pbm, 3 )
     elseif action == "fHxv"
-        return evalHJv( "Hv", pbm.objgrps, args[2], args[3], [], pbm ); 
+        return evalHJv( "Hv", pbm.objgrps, args[1], args[2], Float64[], pbm ); 
     elseif action == "cJxv"
-        return evalHJv( "Jv", pbm.congrps, args[2], args[3], [], pbm );
+        return evalHJv( "Jv", pbm.congrps, args[1], args[2], Float64[], pbm );
+    elseif action == "cJtxv"
+        return evalHJv( "Jtv", pbm.congrps, args[1], args[2], Float64[], pbm );
     elseif action == "cIJxv"
-        return evalHJv( "Jv", pbm.congrps[args[4]], args[2], args[3], [], pbm )
+        return evalHJv( "Jv", pbm.congrps[args[3]], args[1], args[2], Float64[], pbm )
+    elseif action == "cIJtxv"
+        return evalHJv( "Jtv", pbm.congrps[args[3]], args[1], args[2], Float64[], pbm )
    
     # For the Lagrangian
     
     elseif action == "Lxy"
-        return evalLx( pbm.objgrps, pbm.congrps, args[2], args[3], pbm, 1 );
+        return evalLx( pbm.objgrps, pbm.congrps, args[1], args[2], pbm, 1 );
     elseif action == "Lgxy"
-        return evalLx( pbm.objgrps, pbm.congrps, args[2], args[3], pbm, 2 );
+        return evalLx( pbm.objgrps, pbm.congrps, args[1], args[2], pbm, 2 );
     elseif action == "LgHxy"
-        return evalLx( pbm.objgrps, pbm.congrps, args[2], args[3], pbm, 3 );
+        return evalLx( pbm.objgrps, pbm.congrps, args[1], args[2], pbm, 3 );
     elseif action == "LIxy"
-        return evalLx( pbm.objgrps, pbm.congrps[args[4]], args[2], args[3], pbm, 1 )
+        return evalLx( pbm.objgrps, pbm.congrps[args[3]], args[1], args[2], pbm, 1 )
     elseif action == "LIgxy"
-        return evalLx( pbm.objgrps, pbm.congrps[args[4]], args[2], args[3], pbm, 2 )
+        return evalLx( pbm.objgrps, pbm.congrps[args[3]], args[1], args[2], pbm, 2 )
     elseif action == "LIgHxy"
-        return evalLx( pbm.objgrps, pbm.congrps[args[4]], args[2], args[3], pbm, 3 )
+        return evalLx( pbm.objgrps, pbm.congrps[args[3]], args[1], args[2], pbm, 3 )
     elseif action == "LHxyv"
-        return evalLHxyv( pbm.objgrps, pbm.congrps, args[2], args[3], args[4], pbm )
+        return evalLHxyv( pbm.objgrps, pbm.congrps, args[1], args[2], args[3], pbm )
     elseif action == "LIHxyv"
-        return evalLHxyv( pbm.objgrps, pbm.congrps[args[5]], args[2], args[3], args[4], pbm )
+        return evalLHxyv( pbm.objgrps, pbm.congrps[args[4]], args[1], args[2], args[3], pbm )
+
+    # Error
+
+    else
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
+        return ntuple(i->undef,args[end])
     end
     
 end
@@ -291,31 +297,61 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function evalgrsum( isobj, glist, x, pbm, nargout )
+function evalgrsum( isobj::Bool, glist::Vector{Int}, x::Vector{Float64}, pbm::PBM, nargout::Int )
 
    debug = false#D
 
 #  Initializations
 
-   n  = length( x );
-   if ( isobj )
-      fx = 0;
+   n  = length( x )
+   if isobj
+      fx = 0
    else
-      m  = length( glist );
-      cx = zeros( m, 1 );
-      ic = 0;
-   end
-   if ( nargout > 1 )
-      if ( isobj )
-         gx = zeros( n, 1 );
-      else
-         Jx = spzeros( m, n );
+      m    = length( glist )
+      cx   = zeros( Float64, m )
+      ic   = 0
+      if !isempty(pbm.conderlvl)
+         lder = length( pbm.conderlvl )
       end
-      if ( nargout > 2 )
-         if ( isobj )
-            Hx = spzeros( n, n );
+   end
+   if nargout > 1
+      if isobj
+         if !isempty(pbm.objderlvl)
+             if pbm.objderlvl >= 1
+                 gx = spzeros( n, 1 )
+             else
+                 gx = spzeros( n, 1 )
+                 gx[1] = NaN
+             end
+          else
+             gx = spzeros( n, 1 )
+          end
+      else
+         if !isempty(pbm.conderlvl)
+             if ( lder == 1 && pbm.conderlvl[1] >= 1) || lder > 1
+                Jx = spzeros( m, n )
+             else
+                Jx = spzeros( m, n )
+                Jx[1,1] = NaN
+             end
          else
-            Hx = [];
+             Jx = spzeros( m, n )
+         end         
+      end
+      if nargout > 2
+         if isobj
+            if !isempty(pbm.objderlvl)
+               if pbm.objderlvl >= 2
+                   Hx = spzeros( n, n )
+               else
+                   Hx = spzeros( n, n )
+                   Hx[1,1] = NaN
+               end
+            else
+               Hx = spzeros( n, n )
+            end            
+         else
+            Hx = []
          end
       end
    end
@@ -356,7 +392,27 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
 
    for iig in 1:length(glist)
        ig = glist[iig]
-   
+       #  Find the level of available derivatives for the group.
+
+       if isobj
+           if !isempty(pbm.objderlvl)
+               derlvl = pbm.objderlvl
+           else
+               derlvl = 2
+           end
+       else
+           if !isempty(pbm.conderlvl)
+               if lder == 1
+                   derlvl = pbm.conderlvl[ 1 ]
+               else
+                   derlvl = pbm.conderlvl[ findfirst( isequal(ig), pbm.congrps ) ]
+               end
+           else
+               derlvl = 2
+           end
+       end
+       nout = min( nargout, derlvl + 1 );
+
        # Find the group's scaling.
        
        gsc = 1.0 # Default value
@@ -378,7 +434,7 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
                fin += pbm.A[ig, 1:sA2]' * x[1:sA2]
            end
        elseif nargout in [2, 3]
-           gin = zeros( n, 1 )
+           gin = zeros( Float64, n )
            if has_A && ig <= sA1
                gin[1:sA2] = pbm.A[ig, 1:sA2]
                fin += gin[1:sA2]' * x[1:sA2]
@@ -406,19 +462,20 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
                else
                    has_weights = false
                end
-               if nargout == 1
+               if nout == 1
                    fiel = pbm.call( efname, x[irange], iel, 1, pbm )
                    fin += has_weights ? wiel * fiel : fiel
-               elseif nargout == 2
+               elseif nout == 2
                    fiel, giel = pbm.call( efname, x[irange], iel, 2, pbm )
                    fin       += has_weights ? wiel * fiel : fiel
                    for ir in 1:length(irange)
                        ii       = irange[ir]
                        gin[ii] += has_weights ? wiel * giel[ir] : giel[ir]
                    end
-               elseif nargout == 3
+               elseif nout == 3
                    fiel, giel, Hiel = pbm.call( efname, x[irange], iel, 3, pbm )
-#                   println( "irange = ", irange, "  x[irange] = ", x[irange], "  efname = ", efname, "  iel = ", iel, "  fiel = ", fiel, " wiel = ", wiel )#D
+#                   println( "irange = ", irange, "  x[irange] = ", x[irange],
+#                            "  efname = ", efname, "  iel = ", iel, "  fiel = ", fiel, " wiel = ", wiel )#D
 #                   println(" Hiel = ", Hiel ) #D
                    fin += has_weights ? wiel * fiel : fiel
                    for ir in 1:length(irange)
@@ -450,22 +507,35 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
     
            if isobj
            
-               # use evel(Meta.parse(.)) to replace the corresponding Matlab expression
-               
                if nargout == 1
                    fa = pbm.call( egname, fin, ig, 1, pbm )
                    fx += fa / gsc
                elseif nargout == 2
                    fa, grada = pbm.call( egname, fin, ig, 2, pbm )
                    fx += fa / gsc
-                   gx += grada[1] * gin / gsc
+                   if derlvl >= 1
+                       gx += grada[1] * gin / gsc
+                   else
+                       gx = spzeros( n, 1 )
+                       gx[1] = NaN
+                   end
                elseif nargout == 3
 #                   println( "fin = ", fin, " egname = ", egname, " gsc = ", gsc )#D
                    fa, grada, Hessa = pbm.call( egname, fin, ig, 3, pbm )
                    fx += fa / gsc
-                   gx += grada[1] * gin / gsc
-                   sgin = sparse(gin)
-                   Hx += (Hessa[1] * sgin * sgin' + grada[1] * Hin) / gsc
+                   if derlvl >= 1
+                       gx += grada[1] * gin / gsc
+                   else
+                       gx = spzeros( n, 1 )
+                       gx[1] = NaN
+                   end
+                   if derlvl >= 2
+                       sgin = sparse(gin)
+                       Hx += (Hessa[1] * sgin * sgin' + grada[1] * Hin) / gsc
+                   else
+                       Hx = spzeros( n, n )
+                       Hx[1,1] = NaN
+                   end
                end
            else
                ic += 1
@@ -475,13 +545,27 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
                elseif nargout == 2
                    fa, grada = pbm.call( egname, fin, ig, 2, pbm )
                    cx[ic] = fa / gsc
-                   Jx[ic, 1:n] = (grada[1] * gin') / gsc
+                   if derlvl >= 1
+                      Jx[ic, 1:n] = (grada[1] * gin') / gsc
+                   else
+                      Jx[ib, 1:n] = NaN* ones( 1, n )
+                   end
                elseif nargout == 3
                    fa, grada, Hessa = pbm.call( egname, fin, ig, 3, pbm )
                    cx[ic] = fa / gsc
                    sgin = sparse(gin)
-                   Jx[ic, 1:n] = (grada[1] * sgin') / gsc
-                   push!(Hx, (Hessa[1] * sgin * sgin' + grada[1] * Hin) / gsc)
+                   if derlvl >= 1
+                      Jx[ic, 1:n] = (grada[1] * gin') / gsc
+                   else
+                      Jx[ib, 1:n] = NaN* ones( 1, n )
+                   end
+                   if derlvl >= 2
+                      push!(Hx, (Hessa[1] * sgin * sgin' + grada[1] * Hin) / gsc)
+                   else
+                      Hin = spzeros( n, n )
+                      Hin[1,1] = NaN
+                      push!(Hx, Hin )
+                   end
                end
            end
        else
@@ -492,20 +576,40 @@ function evalgrsum( isobj, glist, x, pbm, nargout )
 #               println( " objective fin = ", fin, " egname = TRIVIAL", " gsc = ", gsc )#D
                fx += fin / gsc
                if nargout >= 2
-                   gx += gin / gsc
+                   if derlvl >= 1
+                      gx += gin / gsc
+                   else
+                      gx = spzeros( n, 1 )
+                      gx[1] = NaN
+                   end
                end
                if nargout == 3
-                   Hx += Hin / gsc
+                   if derlvl >= 2
+                      Hx += Hin / gsc
+                   else
+                      Hx = spzeros( n, n )
+                      Hx[1,1] = NaN
+                   end
                end
            else
 #               println( " constraint fin = ", fin, " egname = TRIVIAL", " gsc = ", gsc )#D
                ic += 1
                cx[ic] = fin / gsc
                if nargout >= 2
-                   Jx[ic, 1:n] = gin' / gsc
+                   if derlvl >= 1
+                      Jx[ic, 1:n] = gin' / gsc
+                   else
+                      Jx[ic, 1:n] = NaN * ones( 1, n )
+                   end
                end
                if nargout == 3
-                   push!( Hx, Hin / gsc)
+                   if derlvl >= 2
+                       push!( Hx, Hin / gsc)
+                   else
+                       Hin = spzeros( n, n )
+                       Hin[1,1] = NaN
+                       push!( Hx, Hin )
+                   end
                end
            end
        end
@@ -546,21 +650,74 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function evalHJv( mode, glist, x, v, y, pbm )
+function evalHJv( mode::String, glist::Vector{Int}, x::Vector{Float64},
+                  v::Vector{Float64}, y::Vector{Float64}, pbm::PBM )
 
     debug = false#D
    
     #  Initializations
+    #  Avoid computing anything when the relevant derivatives are missing.
 
     n  = length( x );
     if mode == "Hv"
-        HJv = zeros( n, 1 );
+        if !isempty(pbm.objderlvl)
+           if ( pbm.objderlvl < 2 )
+              HJv    = zeros( Float64, n )
+              HJv[1] = NaN
+              return HJv
+           else
+              HJv    = zeros( Float64, n )
+              derlvl = 2
+           end
+        else
+           HJv    = zeros( Float64, n )
+           derlvl = 2
+        end        
     elseif mode == "HIv"
-        HJv = zeros( n, 1 );
-        ic  = 0;
+        m = length( glist )
+        if !isempty(pbm.conderlvl)
+            if ( any( x -> x<2, pbm.conderlvl ) )
+                HJv    = zeros( Float64, n )
+                HJv[1] = NaN
+                return HJv
+            else
+                HJv    = zeros( Float64, n )
+                ic     = 0
+                derlvl = 2 
+            end
+        else
+            HJv    = zeros( Float64, n )
+            ic     = 0
+            derlvl = 2 
+        end
     else
-        HJv = zeros( length(glist), 1 );
-        ic  = 0;
+        m = length( glist )
+        if !isempty(pbm.conderlvl)
+            if ( any( x -> x<1, pbm.conderlvl ) )
+                if mode == "Jv"
+                    HJv = zeros( Float64, m )
+                else
+                    HJv = zeros( Float64, n )
+                end
+                HJv[1] = NaN
+                return HJv
+            else
+                if mode == "Jv"
+                    HJv = zeros( Float64, m )
+                else
+                    HJv = zeros( Float64, n )
+                end
+                ic  = 0
+                lder = length( pbm.conderlvl )
+            end
+        else
+            if mode == "Jv"
+                HJv = zeros( Float64, m )
+            elseif mode == "Jtv"
+                HJv = zeros( Float64, n )
+            end
+            ic  = 0
+        end
     end
 
    # Check if pbm.A is not empty
@@ -575,12 +732,34 @@ function evalHJv( mode, glist, x, v, y, pbm )
     # Evaluate the quadratic term, if any.
 
     if mode == "Hv" && !isempty(pbm.H)
-        HJv += pbm.H * v;
+        HJv += pbm.H * v
     end
 
     for iig in 1:length(glist)
         ig = glist[iig]
         
+        #  Find the level of available derivatives for the group.
+
+        if ( mode == "Jv" || mode == "Jtv" )
+            if !isempty( pbm.conderlvl )
+               if lder == 1 
+                   derlvl = pbm.conderlvl[ 1 ]
+               else
+                   derlvl = pbm.conderlvl[ findfirst( isequal(ig), pbm.congrps ) ]
+               end
+            else
+               derlvl = 2
+            end
+
+            #  Avoid computation for group ig if its first derivative is missing.
+      
+            if derlvl < 1 
+                ic      = ic + 1
+                HJv[ic] = NaN
+                continue
+            end
+        end
+
     # Find the group's scaling.
     
         gsc = 1.0 # Default value
@@ -597,20 +776,21 @@ function evalHJv( mode, glist, x, v, y, pbm )
         else
             fin = 0.0
         end
-        gin = zeros(n, 1)
+        gin = zeros( Float64, n )
         if has_A && ig <= sA1
             fin += pbm.A[ig, 1:sA2]' * x[1:sA2]
             gin[1:sA2] = pbm.A[ig, 1:sA2]
         end
  
-        Hin = spzeros(n, n)
+        Hin = spzeros( n, n)
  
         if debug 
             println("ig = $ig  fin(linear) = $fin")
         end
+        
         #  Initialize the Hessian.
 
-        Hinv = zeros( n, 1 );
+        Hinv = zeros( Float64, n )
 
 
         #  Loop on the group's elements.
@@ -643,8 +823,10 @@ function evalHJv( mode, glist, x, v, y, pbm )
                            Hinv[ii] += has_weights ? wiel * Hiel[ir,jr]*v[jj] : Hiel[ir,jr]*v[jj]
                         end
                     end
-                else
+
                 #  The group is an constraints group.
+
+                elseif derlvl >= 1
                     fiel, giel = pbm.call( efname, x[irange], iel, 2, pbm )
                     fin += has_weights ? wiel * fiel : fiel
                     for ir in 1:length(irange)
@@ -663,35 +845,53 @@ function evalHJv( mode, glist, x, v, y, pbm )
         else 
             egname = "TRIVIAL"
         end
- 
-  
+   
         if mode == "Hv"
             if (  egname == "TRIVIAL" )  
-                HJv = HJv + Hinv / gsc;
+                HJv = HJv + Hinv / gsc
             else
                 _, grada, Hessa = pbm.call( egname, fin, ig, 3, pbm )
                 sgin = sparse(gin)
-                HJv += ((Hessa * sgin) * dot( sgin , v ) + grada * Hinv) / gsc;
+                HJv += ((Hessa * sgin) * dot( sgin , v ) + grada * Hinv) / gsc
             end
         elseif mode == "HIv"
             ic += 1
             if (  egname == "TRIVIAL" )  
-                HJv = HJv + y[ic] * Hinv / gsc;
+                HJv = HJv + y[ic] * Hinv / gsc
             else
                 _, grada, Hessa = pbm.call( egname, fin, ig, 3, pbm )
                 sgin = sparse(gin)
-                HJv += y[ic] * ((Hessa * sgin) * dot( sgin , v ) + grada * Hinv) / gsc;
+                HJv += y[ic] * ((Hessa * sgin) * dot( sgin , v ) + grada * Hinv) / gsc
             end
-        else
+        elseif mode == "Jv"
             ic += 1
-            if (  egname == "TRIVIAL" )
-                sgin = sparse(gin)
-                HJv[ic] =  dot( sgin , v ) / gsc;
+            if derlvl >= 1
+                if (  egname == "TRIVIAL" )
+                    sgin    = sparse(gin)
+                    HJv[ic] = dot( sgin , v ) / gsc
+                else
+                    _, grada = pbm.call( egname, fin, ig, 2, pbm )
+                    sgin    = sparse(gin)
+                    HJv[ic] = grada * dot( sgin , v ) / gsc
+                end
             else
-                _, grada = pbm.call( egname, fin, ig, 2, pbm )
-                sgin = sparse(gin)
-                HJv[ic]=  grada * dot( sgin , v ) / gsc;
+                HJv[ic] = NaN
             end
+        elseif mode == "Jtv"
+            ic += 1
+            if derlvl >= 1
+                if (  egname == "TRIVIAL" )
+#                    sgin  = sparse(gin)
+                    HJv  +=  gin * v[ic] / gsc
+                else
+                    _, grada = pbm.call( egname, fin, ig, 2, pbm )
+#                    sgin  = sparse(gin)
+                    HJv  += grada *  gin * v[ic] / gsc
+                end
+            else
+                HJv[ic] = NaN
+            end
+         
         end
 
     end
@@ -709,7 +909,8 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function evalLx( gobjlist, gconlist, x, y, pbm, nargout )
+function evalLx( gobjlist::Vector{Int}, gconlist::Vector{Int},
+                 x::Vector{Float64}, y::Vector{Float64}, pbm::PBM, nargout::Int )
 
     # Handling the case of function evaluation
     
@@ -733,7 +934,7 @@ function evalLx( gobjlist, gconlist, x, y, pbm, nargout )
             Lxy, Lgxy = evalgrsum( true, gobjlist, x, pbm, 2 )
         else
             Lxy  = 0.0
-            Lgxy = zeros( length( x ), 1 )
+            Lgxy = zeros( Float64, length( x ) )
         end
         if length( gconlist ) > 0
             c, J  = evalgrsum( false, gconlist, x, pbm, 2 )
@@ -751,7 +952,7 @@ function evalLx( gobjlist, gconlist, x, y, pbm, nargout )
         else
             n     = length( x )
             Lxy   = 0.0
-            Lgxy  = zeros( n, 1 )
+            Lgxy  = zeros( Float64, n )
             LgHxy = spzeros( n, n )  # Use spzeros to create a sparse matrix
         end
         if length( gconlist ) > 0
@@ -773,21 +974,151 @@ end
 #
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function evalLHxyv( gobjlist, gconlist, x, y, v, pbm )
+function evalLHxyv( gobjlist::Vector{Int}, gconlist::Vector{Int},
+                    x::Vector{Float64}, y::Vector{Float64}, v::Vector{Float64}, pbm::PBM )
 
     if length(gobjlist) > 0 || isdefined( pbm, :H)
-        LHxyv = evalHJv( "Hv", gobjlist, x, v, [], pbm )
+        LHxyv = evalHJv( "Hv", gobjlist, x, v, Float64[], pbm )
     else
         n     = length( x )
-        LHxyv = zeros( n, 1 )  
+        LHxyv = zeros( Float64, n )
     end
     if length( gconlist ) > 0
         for ig in 1: length( gconlist )
-            LHxyv += evalHJv( "HIv", gconlist[ig], x, v, y, pbm )
+            LHxyv += evalHJv( "HIv", [gconlist[ig]], x, v, y, pbm )
         end
     end
     return LHxyv
 
+end
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#
+#   This tool consider all problems in list_of_julia_problems (whose files are in
+#   the ./julia_problems directory) and selects those whose SIF classification matches
+#   that given by the input string classif. Matching is in the sense of  regular expressions
+#   (regexp).
+#   If varargin is empty (i.e. only classif is used as input argument), the function prints
+#   the list of matching problems on standard output. Otherwise, the list is output in the
+#   file whose name is a string passed as varargin{1} (Further components of varargin are
+#   ignored).
+#
+#   If the input string is 'help'  or 'h', a message is printed on the standard output
+#   describing the SIF classification scheme and an brief explanation of how to use the tool.
+#
+#   Thanks to Greta Malaspina (Firenze) for an inital implementation in Matlab.
+#
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+function s2mpjlib_select( classif::String, args::Union{String,Any} = [] )
+
+    if classif == "help" || classif == "h"
+
+        println( "  " )
+        println( " === The classification scheme ===" )
+        println( "  " )
+        println( " A problem is classified by a string of the form" )
+        println( "    X-XXXr-XX-n-m" )
+        println( " The first character in the string identifies the problem collection" )
+        println( " from which the problem is extracted. Possible values are" )
+        println( "    C the CUTEst collection" )
+        println( "    S the SPARCO collection" )
+        println( "    N none of the above" )
+        println( " The character immediately following the first hyphen defines the type" )
+        println( " of the problem''s objective function. Its possible values are" )
+        println( "    N no objective function is defined;" )
+        println( "    C the objective function is constant;" )
+        println( "    L the objective function is linear;" )
+        println( "    Q the objective function is quadratic;" )
+        println( "    S the objective function is a sum of squares; and" )
+        println( "    O the objective function is none of the above." )
+        println( " The second character after the first hyphen defines the type of" )
+        println( "constraints of the problem. Its possible values are" )
+        println( "    U the problem is unconstrained;" )
+        println( "    X the problem’s only constraints are fixed variables;" )
+        println( "    B the problem’s only constraints are bounds on the variables;" )
+        println( "    N the problem’s constraints represent the adjacency matrix of a (linear)" )
+        println( "      network;" )
+        println( "    L the problem’s constraints are linear;" )
+        println( "    Q the problem’s constraints are quadratic; and" )
+        println( "    O the problem’s constraints are more general than any of the above alone." )
+        println( " The third character after the first hyphen indicates the smoothness of" )
+        println( " the problem. There are two possible choices" )
+        println( "    R the problem is regular, that is, its first and second derivatives " )
+        println( "      exist and are continuous everywhere; or" )
+        println( "    I the problem is irregular." )
+        println( " The integer (r) which corresponds to the fourth character of the string is" )
+        println( " the degree of the highest derivatives provided analytically within the problem" )
+        println( " description. It is restricted to being one of the single characters O, 1, or 2." )
+        println( " The character immediately following the second hyphen indicates the primary" )
+        println( " origin and/or interest of the problem. Its possible values are" )
+        println( "    A the problem is academic, that is, has been constructed specifically by" )
+        println( "      researchers to test one or more algorithms;" )
+        println( "    M the problem is part of a modeling exercise where the actual value of the" )
+        println( "      solution is not used in a genuine practical application; and" )
+        println( "    R the problem’s solution is (or has been) actually used in a real")
+        println( "      application for purposes other than testing algorithms." )
+        println( " The next character in the string indicates whether or not the problem" )
+        println( " description contains explicit internal variables. There are two possible" )
+        println( " values, namely," )
+        println( "    Y the problem description contains explicit internal variables; or" )
+        println( "    N the problem description does not contain any explicit internal variables." )
+        println( " The symbol(s) between the third and fourth hyphen indicate the number of" )
+        println( " variables in the problem. Possible values are" )
+        println( "    V the number of variables in the problem can be chosen by the user; or" )
+        println( "    n a positive integer giving the actual (fixed) number of problem variables." )
+        println( " The symbol(s) after the fourth hyphen indicate the number of constraints" )
+        println( " (other than fixed variables and bounds) in the problem. Note that fixed" )
+        println( " variables are not considered as general constraints here. The two possible" )
+        println( " values are" )
+        println( "    V the number of constraints in the problem can be chosen by the user; or" )
+        println( "    m a nonnegative integer giving the actual (fixed) number of constraints." )
+        println( "  " )
+        println( " === Using the problem selection tool ===" )
+        println( "  " )
+        println( " To use the selection tool, you should first include the present file" )
+        println( "    include( \"s2mpjlib.jl\" ) " )
+        println( " and then call the selection function 's2mpjlib_select' itself." )
+        println( " This function's first argument is a string specifying the class of problems" )
+        println( " of interest.  This string is constructed by replacing by a dot each " )
+        println( " character in the classification string for which all possible values are" )
+        println( " acceptable (the dot is a wildcard character). For instance" )
+        println( "    s2mpjlib_select( \"C-SU..-..-2-0\" ) ")
+        println( " lists all CUTEst unconstrained \"sum-of-squares\" problems in two variables," )
+        println( " while " )
+        println( "    s2mpjlib_select( \"C-....-..-V-V\" ) " )
+        println( " lists all CUTEst problems with variable number of variables and variable" )
+        println( " number of constraints." )
+        println( " NOTE: any regular expression may be used as the first argument of " )
+        println( "       s2mpj_select.problems to specify the problem class, so that, for" )
+        println( "       instance, the previous selection can also be achieved by the command" )
+        println( "            s2mpjlib_select( \"C-.*V_V\" ) ")
+        println( " Writing the list of selected problems to a file is obtained by specifying" )
+        println( " the name of the file as a second argument of select, as in ")
+        println( "    s2mpjlib_select( \"C-....-..-V-V\", filename )" )
+
+    else
+
+        list_of_problems = "./list_of_julia_problems"
+        julia_problems   = "./julia_problems/"
+
+        fid = ( length( args ) > 0 ) ? open( args, "w" ) : stdout
+        
+        filter   = Regex( "classification = \"" * classif )
+        allprobs = readlines( list_of_problems )
+        
+        for theprob in allprobs
+            problem = string( julia_problems, theprob )
+            if isfile( problem ) && occursin( filter, read( problem, String ) )
+                println( fid, theprob ) 
+            end
+        end
+
+        if fid != stdout
+            close(fid)
+        end
+    end
+    
 end
 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -12,9 +12,11 @@ class  FEEDLOC(CUTEst_problem):
 # 
 #    SIF input: S. Leyffer, October 1997
 # 
-#    classification = "LOR2-AN-90-259"
+#    classification = "C-LOR2-AN-90-259"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FEEDLOC'
@@ -383,13 +385,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'PHE'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'X'+str(I)+','+str(K)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -397,13 +399,13 @@ class  FEEDLOC(CUTEst_problem):
         ename = 'DEFLE'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eA2PROD')
-        ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+        ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
         vname = 'R'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'P1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -412,13 +414,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'CMB11u'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'P2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['1']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -426,13 +428,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'CMB12u'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'V'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(int(v_['1']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -440,13 +442,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'CMB13u'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'L'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -457,13 +459,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'CM11'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'L'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -471,13 +473,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'CM12'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'P1'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -485,13 +487,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'CM13'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'V'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -499,13 +501,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'CM21'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'L'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -513,13 +515,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'CM22'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'P1'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -527,13 +529,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'CM23'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'V'
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'Y'+str(int(v_['I-1']))+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -544,13 +546,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C11'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'L'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -559,13 +561,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'C12'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'X'+str(I)+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'W'+str(K)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -573,13 +575,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C13'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'V'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(I)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -587,13 +589,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C14'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'L'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -603,13 +605,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'C15'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'W'+str(K)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -617,13 +619,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C16'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'V'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(int(v_['I-1']))+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -631,13 +633,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C21'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'L'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(I)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -646,13 +648,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'C22'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'X'+str(I)+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'W'+str(K)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -660,13 +662,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C23'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'V'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(I)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -674,13 +676,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C24'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'L'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -690,13 +692,13 @@ class  FEEDLOC(CUTEst_problem):
                 ename = 'C25'+str(I)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eA2PROD')
-                ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+                ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
                 vname = 'X'+str(int(v_['I+1']))+','+str(int(v_['1']))
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'W'+str(K)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
                 posev = np.where(elftv[ielftype[ie]]=='V2')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -704,13 +706,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'C26'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'V'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(int(v_['I-1']))+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -719,13 +721,13 @@ class  FEEDLOC(CUTEst_problem):
             ename = 'REC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eA2PROD')
-            ielftype = arrset(ielftype, ie, iet_["eA2PROD"])
+            ielftype = arrset(ielftype,ie,iet_["eA2PROD"])
             vname = 'P1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'Y'+str(I)+','+str(int(v_['1']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,0.5)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(0.5))
             posev = np.where(elftv[ielftype[ie]]=='V2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A')[0]
@@ -864,8 +866,12 @@ class  FEEDLOC(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-AN-90-259"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-AN-90-259"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

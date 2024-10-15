@@ -1,4 +1,4 @@
-function DRUGDISE(action,args...)
+function DRUGDISE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -28,7 +28,7 @@ function DRUGDISE(action,args...)
 # 
 #    SIF input: Ph. Toint, Nov 1993.
 # 
-#    classification = "LOR2-MY-V-V"
+#    classification = "C-LOR2-MY-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
@@ -38,6 +38,8 @@ function DRUGDISE(action,args...)
 # IE NI                  100            $-PARAMETER n=6003, m=5000 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRUGDISE"
 
@@ -45,7 +47,7 @@ function DRUGDISE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -273,7 +275,7 @@ function DRUGDISE(action,args...)
             ename = "WA"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3S")
-            arrset(ielftype, ie, iet_["en3S"])
+            arrset(ielftype,ie,iet_["en3S"])
             vname = "TF"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -293,7 +295,7 @@ function DRUGDISE(action,args...)
             ename = "WB"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3D2")
-            arrset(ielftype, ie, iet_["en3D2"])
+            arrset(ielftype,ie,iet_["en3D2"])
             vname = "TF"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -317,7 +319,7 @@ function DRUGDISE(action,args...)
             ename = "PA"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3D2")
-            arrset(ielftype, ie, iet_["en3D2"])
+            arrset(ielftype,ie,iet_["en3D2"])
             vname = "TF"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -341,7 +343,7 @@ function DRUGDISE(action,args...)
             ename = "PB"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3S")
-            arrset(ielftype, ie, iet_["en3S"])
+            arrset(ielftype,ie,iet_["en3S"])
             vname = "TF"
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -361,7 +363,7 @@ function DRUGDISE(action,args...)
             ename = "DD"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDSQ")
-            arrset(ielftype, ie, iet_["eDSQ"])
+            arrset(ielftype,ie,iet_["eDSQ"])
             vname = "W"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -373,7 +375,7 @@ function DRUGDISE(action,args...)
             ename = "CA"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3PR")
-            arrset(ielftype, ie, iet_["en3PR"])
+            arrset(ielftype,ie,iet_["en3PR"])
             vname = "C"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -389,7 +391,7 @@ function DRUGDISE(action,args...)
             ename = "CB"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"en3PR")
-            arrset(ielftype, ie, iet_["en3PR"])
+            arrset(ielftype,ie,iet_["en3PR"])
             vname = "C"*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V1",elftv[ielftype[ie]])
@@ -465,8 +467,13 @@ function DRUGDISE(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "LOR2-MY-V-V"
+        pb.pbclass = "C-LOR2-MY-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -634,7 +641,9 @@ function DRUGDISE(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -646,7 +655,7 @@ function DRUGDISE(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

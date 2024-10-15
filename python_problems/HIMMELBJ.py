@@ -17,11 +17,13 @@ class  HIMMELBJ(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1991.
 # 
-#    classification = "OLR2-MY-45-14"
+#    classification = "C-OLR2-MY-45-14"
 # 
 #    Number of variable sets
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBJ'
@@ -436,9 +438,9 @@ class  HIMMELBJ(CUTEst_problem):
                 ename = 'A'+str(J)+','+str(K)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eXLOGX')
-                ielftype = arrset(ielftype, ie, iet_["eXLOGX"])
+                ielftype = arrset(ielftype,ie,iet_["eXLOGX"])
                 vname = 'X'+str(J)+','+str(K)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 1
@@ -446,35 +448,35 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX4')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX4"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX4"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3,1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X4,1'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y4')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 2
@@ -482,89 +484,89 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX13')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX13"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX13"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X4,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y4')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X5,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y5')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X6,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y6')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X7,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y7')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X8,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y8')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X9,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y9')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X10,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y10')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X11,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y11')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X12,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y12')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X13,2'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y13')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 3
@@ -572,119 +574,119 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX18')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX18"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX18"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X4,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y4')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X5,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y5')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X6,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y6')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X7,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y7')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X8,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y8')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X9,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y9')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X10,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y10')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X11,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y11')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X12,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y12')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X13,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y13')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X14,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y14')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X15,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y15')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X16,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y16')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X17,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y17')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X18,3'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y18')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 4
@@ -692,29 +694,29 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX3')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX3"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX3"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3,4'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 5
@@ -722,29 +724,29 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX3')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX3"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX3"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,5'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,5'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X3,5'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 6
@@ -752,23 +754,23 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX2')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX2"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX2"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,6'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,6'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         v_['K'] = 7
@@ -776,23 +778,23 @@ class  HIMMELBJ(CUTEst_problem):
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eXLOGX2')
-            ielftype = arrset(ielftype, ie, iet_["eXLOGX2"])
+            ielftype = arrset(ielftype,ie,iet_["eXLOGX2"])
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X'+str(J)+','+str(int(v_['K']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X1,7'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(J)+','+str(int(v_['K']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'X2,7'
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,1.e-12,None,0.1)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(1.e-12),None,float(0.1))
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -829,8 +831,12 @@ class  HIMMELBJ(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-MY-45-14"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-MY-45-14"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

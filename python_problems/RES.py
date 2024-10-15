@@ -11,12 +11,14 @@ class  RES(CUTEst_problem):
 # 
 #    SIF input:  A. R. Conn, June 1993.
 # 
-#    classification = "NLR2-MN-20-14"
+#    classification = "C-NLR2-MN-20-14"
 # 
 # 
 # 
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RES'
@@ -283,7 +285,7 @@ class  RES(CUTEst_problem):
         ename = 'EL1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en311d14')
-        ielftype = arrset(ielftype, ie, iet_["en311d14"])
+        ielftype = arrset(ielftype,ie,iet_["en311d14"])
         vname = 'DM'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -307,7 +309,7 @@ class  RES(CUTEst_problem):
         ename = 'EL2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en14d31')
-        ielftype = arrset(ielftype, ie, iet_["en14d31"])
+        ielftype = arrset(ielftype,ie,iet_["en14d31"])
         vname = 'G'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
@@ -327,7 +329,7 @@ class  RES(CUTEst_problem):
         ename = 'EL3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'NU'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -339,7 +341,7 @@ class  RES(CUTEst_problem):
         ename = 'EL4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en11d3')
-        ielftype = arrset(ielftype, ie, iet_["en11d3"])
+        ielftype = arrset(ielftype,ie,iet_["en11d3"])
         vname = 'P0'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -355,7 +357,7 @@ class  RES(CUTEst_problem):
         ename = 'EL5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en111d2')
-        ielftype = arrset(ielftype, ie, iet_["en111d2"])
+        ielftype = arrset(ielftype,ie,iet_["en111d2"])
         vname = 'G'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='W')[0]
@@ -386,7 +388,10 @@ class  RES(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "NLR2-MN-20-14"
+        self.pbclass = "C-NLR2-MN-20-14"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

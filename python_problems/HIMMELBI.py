@@ -22,11 +22,13 @@ class  HIMMELBI(CUTEst_problem):
 #    SIF input: Ph. Toint, March 1991.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "OLR2-MN-100-12"
+#    classification = "C-OLR2-MN-100-12"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELBI'
@@ -327,26 +329,26 @@ class  HIMMELBI(CUTEst_problem):
             ename = 'PP'+str(J)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en5PEXP')
-            ielftype = arrset(ielftype, ie, iet_["en5PEXP"])
+            ielftype = arrset(ielftype,ie,iet_["en5PEXP"])
             self.x0 = np.zeros((self.n,1))
             vname = 'X'+str(int(v_['1']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,v_['NW'],None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(v_['NW']),None)
             posev = np.where(elftv[ielftype[ie]]=='Y1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['2']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,v_['NW'],None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(v_['NW']),None)
             posev = np.where(elftv[ielftype[ie]]=='Y2')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['3']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,v_['NW'],None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(v_['NW']),None)
             posev = np.where(elftv[ielftype[ie]]=='Y3')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['4']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,v_['NW'],None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(v_['NW']),None)
             posev = np.where(elftv[ielftype[ie]]=='Y4')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             vname = 'X'+str(int(v_['5']))+','+str(J)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,v_['NW'],None)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(v_['NW']),None)
             posev = np.where(elftv[ielftype[ie]]=='Y5')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='A1')[0]
@@ -392,9 +394,13 @@ class  HIMMELBI(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OLR2-MN-100-12"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OLR2-MN-100-12"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

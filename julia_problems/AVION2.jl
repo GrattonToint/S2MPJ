@@ -1,4 +1,4 @@
-function AVION2(action,args...)
+function AVION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -10,11 +10,13 @@ function AVION2(action,args...)
 # 
 #    SIF input:  A. R. Conn, June 1993.
 # 
-#    classification = "OLR2-RN-49-15"
+#    classification = "C-OLR2-RN-49-15"
 # 
 #    Define useful parameters
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "AVION2"
@@ -23,7 +25,7 @@ function AVION2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -573,7 +575,7 @@ function AVION2(action,args...)
         ename = "EL1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PR")
-        arrset(ielftype, ie, iet_["en2PR"])
+        arrset(ielftype,ie,iet_["en2PR"])
         vname = "PK"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -585,7 +587,7 @@ function AVION2(action,args...)
         ename = "EL2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eQDdSQ")
-        arrset(ielftype, ie, iet_["eQDdSQ"])
+        arrset(ielftype,ie,iet_["eQDdSQ"])
         vname = "SS"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
@@ -605,7 +607,7 @@ function AVION2(action,args...)
         ename = "EL3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en12")
-        arrset(ielftype, ie, iet_["en12"])
+        arrset(ielftype,ie,iet_["en12"])
         vname = "EF"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -617,7 +619,7 @@ function AVION2(action,args...)
         ename = "EL4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en12d1")
-        arrset(ielftype, ie, iet_["en12d1"])
+        arrset(ielftype,ie,iet_["en12d1"])
         vname = "SO"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -633,7 +635,7 @@ function AVION2(action,args...)
         ename = "EL5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "SD"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
@@ -641,7 +643,7 @@ function AVION2(action,args...)
         ename = "EL6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "SK"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
@@ -649,7 +651,7 @@ function AVION2(action,args...)
         ename = "EL7"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQ")
-        arrset(ielftype, ie, iet_["eSQ"])
+        arrset(ielftype,ie,iet_["eSQ"])
         vname = "MV"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
@@ -657,7 +659,7 @@ function AVION2(action,args...)
         ename = "EL8"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PR")
-        arrset(ielftype, ie, iet_["en2PR"])
+        arrset(ielftype,ie,iet_["en2PR"])
         vname = "MD"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -669,7 +671,7 @@ function AVION2(action,args...)
         ename = "EL9"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eQT")
-        arrset(ielftype, ie, iet_["eQT"])
+        arrset(ielftype,ie,iet_["eQT"])
         vname = "MZ"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -681,7 +683,7 @@ function AVION2(action,args...)
         ename = "EL10"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PR")
-        arrset(ielftype, ie, iet_["en2PR"])
+        arrset(ielftype,ie,iet_["en2PR"])
         vname = "DV"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -693,7 +695,7 @@ function AVION2(action,args...)
         ename = "EL11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en1dLIN")
-        arrset(ielftype, ie, iet_["en1dLIN"])
+        arrset(ielftype,ie,iet_["en1dLIN"])
         vname = "PT"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -705,7 +707,7 @@ function AVION2(action,args...)
         ename = "EL12"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQRT")
-        arrset(ielftype, ie, iet_["eSQRT"])
+        arrset(ielftype,ie,iet_["eSQRT"])
         vname = "PT"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Z",elftv[ielftype[ie]])
@@ -713,7 +715,7 @@ function AVION2(action,args...)
         ename = "EL13"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"en2PR")
-        arrset(ielftype, ie, iet_["en2PR"])
+        arrset(ielftype,ie,iet_["en2PR"])
         vname = "SR"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -725,7 +727,7 @@ function AVION2(action,args...)
         ename = "EL14"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eQT")
-        arrset(ielftype, ie, iet_["eQT"])
+        arrset(ielftype,ie,iet_["eQT"])
         vname = "MD"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -737,7 +739,7 @@ function AVION2(action,args...)
         ename = "EL15"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSURD")
-        arrset(ielftype, ie, iet_["eSURD"])
+        arrset(ielftype,ie,iet_["eSURD"])
         vname = "SX"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
@@ -753,7 +755,7 @@ function AVION2(action,args...)
         ename = "EL16"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQPRD")
-        arrset(ielftype, ie, iet_["eSQPRD"])
+        arrset(ielftype,ie,iet_["eSQPRD"])
         vname = "DE"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -765,7 +767,7 @@ function AVION2(action,args...)
         ename = "EL17"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSQPRD")
-        arrset(ielftype, ie, iet_["eSQPRD"])
+        arrset(ielftype,ie,iet_["eSQPRD"])
         vname = "DS"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
@@ -777,7 +779,7 @@ function AVION2(action,args...)
         ename = "EL18"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCBdSQQD")
-        arrset(ielftype, ie, iet_["eCBdSQQD"])
+        arrset(ielftype,ie,iet_["eCBdSQQD"])
         vname = "VN"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="W",elftv[ielftype[ie]])
@@ -797,7 +799,7 @@ function AVION2(action,args...)
         ename = "EL19"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eSREL")
-        arrset(ielftype, ie, iet_["eSREL"])
+        arrset(ielftype,ie,iet_["eSREL"])
         vname = "SX"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -948,8 +950,13 @@ function AVION2(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OLR2-RN-49-15"
+        pb.pbclass = "C-OLR2-RN-49-15"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # ***********************
 #  SET UP THE FUNCTIONS *
 # ***********************
@@ -1379,7 +1386,9 @@ function AVION2(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1391,7 +1400,7 @@ function AVION2(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

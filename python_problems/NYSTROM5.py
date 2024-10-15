@@ -35,9 +35,11 @@ class  NYSTROM5(CUTEst_problem):
 #    SIF input: Ph. Toint, March 1991.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "NOR2-RY-18-20"
+#    classification = "C-NOR2-RY-18-20"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NYSTROM5'
@@ -285,7 +287,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3BE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -297,7 +299,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3BE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -309,7 +311,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3BE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -321,7 +323,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3BE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -333,7 +335,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3CE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -345,7 +347,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3CE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -357,7 +359,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3CE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -369,7 +371,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3CE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -381,7 +383,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3DE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -393,7 +395,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3DE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -405,7 +407,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3DE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -417,7 +419,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '3DE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -429,7 +431,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4AE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'A2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -441,7 +443,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4AE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PRI2')
-        ielftype = arrset(ielftype, ie, iet_["en2PRI2"])
+        ielftype = arrset(ielftype,ie,iet_["en2PRI2"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -457,7 +459,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4AE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PRI3')
-        ielftype = arrset(ielftype, ie, iet_["en2PRI3"])
+        ielftype = arrset(ielftype,ie,iet_["en2PRI3"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -477,7 +479,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4BE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -493,7 +495,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4BE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PRI2')
-        ielftype = arrset(ielftype, ie, iet_["en3PRI2"])
+        ielftype = arrset(ielftype,ie,iet_["en3PRI2"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -513,7 +515,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4BE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PRI3')
-        ielftype = arrset(ielftype, ie, iet_["en3PRI3"])
+        ielftype = arrset(ielftype,ie,iet_["en3PRI3"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -537,7 +539,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4CE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -553,7 +555,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4CE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -569,7 +571,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4CE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -585,7 +587,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4CE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -601,7 +603,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4CE5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -617,7 +619,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '4CE6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'A4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -633,7 +635,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B1AL1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -645,7 +647,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B2AL2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -657,7 +659,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B3AL3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -669,7 +671,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B4AL4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -681,7 +683,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B1AL1S'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -693,7 +695,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B2AL2S'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -705,7 +707,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B3AL3S'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -717,7 +719,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B4AL4S'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -729,7 +731,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B1AL1C'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -741,7 +743,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B2AL2C'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -753,7 +755,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B3AL3C'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -765,7 +767,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B4AL4C'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY3')
-        ielftype = arrset(ielftype, ie, iet_["eXY3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY3"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -777,7 +779,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B1AL1F'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY4')
-        ielftype = arrset(ielftype, ie, iet_["eXY4"])
+        ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -789,7 +791,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B2AL2F'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY4')
-        ielftype = arrset(ielftype, ie, iet_["eXY4"])
+        ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -801,7 +803,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B3AL3F'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY4')
-        ielftype = arrset(ielftype, ie, iet_["eXY4"])
+        ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -813,7 +815,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B4AL4F'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY4')
-        ielftype = arrset(ielftype, ie, iet_["eXY4"])
+        ielftype = arrset(ielftype,ie,iet_["eXY4"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -825,7 +827,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = 'B2BE21'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PR')
-        ielftype = arrset(ielftype, ie, iet_["en2PR"])
+        ielftype = arrset(ielftype,ie,iet_["en2PR"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -837,7 +839,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6AE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PRI2')
-        ielftype = arrset(ielftype, ie, iet_["en2PRI2"])
+        ielftype = arrset(ielftype,ie,iet_["en2PRI2"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -853,7 +855,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6AE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en2PRI3')
-        ielftype = arrset(ielftype, ie, iet_["en2PRI3"])
+        ielftype = arrset(ielftype,ie,iet_["en2PRI3"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -873,7 +875,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6BE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -889,7 +891,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6BE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PRI2')
-        ielftype = arrset(ielftype, ie, iet_["en3PRI2"])
+        ielftype = arrset(ielftype,ie,iet_["en3PRI2"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -909,7 +911,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6BE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PRI3')
-        ielftype = arrset(ielftype, ie, iet_["en3PRI3"])
+        ielftype = arrset(ielftype,ie,iet_["en3PRI3"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -933,7 +935,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6CE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
-        ielftype = arrset(ielftype, ie, iet_["eXY2Z"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -949,7 +951,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6CE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2ZI2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2ZI2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2ZI2"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -969,7 +971,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '6CE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2ZI3')
-        ielftype = arrset(ielftype, ie, iet_["eXY2ZI3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2ZI3"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -993,7 +995,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '7E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1005,7 +1007,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '7E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2I2')
-        ielftype = arrset(ielftype, ie, iet_["eXY2I2"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2I2"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1021,7 +1023,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '7E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2I3')
-        ielftype = arrset(ielftype, ie, iet_["eXY2I3"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2I3"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1041,7 +1043,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8AE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1057,7 +1059,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8AE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1073,7 +1075,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8AE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1089,7 +1091,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8AE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1105,7 +1107,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8AE5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1121,7 +1123,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8AE6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1137,7 +1139,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8BE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en4PR')
-        ielftype = arrset(ielftype, ie, iet_["en4PR"])
+        ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1157,7 +1159,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8BE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en4PR')
-        ielftype = arrset(ielftype, ie, iet_["en4PR"])
+        ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1177,7 +1179,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8BE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en4PR')
-        ielftype = arrset(ielftype, ie, iet_["en4PR"])
+        ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1197,7 +1199,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8BE4'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en4PR')
-        ielftype = arrset(ielftype, ie, iet_["en4PR"])
+        ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1217,7 +1219,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8BE5'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en4PR')
-        ielftype = arrset(ielftype, ie, iet_["en4PR"])
+        ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1237,7 +1239,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8BE6'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en4PR')
-        ielftype = arrset(ielftype, ie, iet_["en4PR"])
+        ielftype = arrset(ielftype,ie,iet_["en4PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1257,7 +1259,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8CE1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
-        ielftype = arrset(ielftype, ie, iet_["eXY2Z"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1273,7 +1275,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8CE2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
-        ielftype = arrset(ielftype, ie, iet_["eXY2Z"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1289,7 +1291,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '8CE3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eXY2Z')
-        ielftype = arrset(ielftype, ie, iet_["eXY2Z"])
+        ielftype = arrset(ielftype,ie,iet_["eXY2Z"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1305,7 +1307,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '9E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1321,7 +1323,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '9E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PR')
-        ielftype = arrset(ielftype, ie, iet_["en3PR"])
+        ielftype = arrset(ielftype,ie,iet_["en3PR"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1337,7 +1339,7 @@ class  NYSTROM5(CUTEst_problem):
         ename = '9E3'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'en3PRI2')
-        ielftype = arrset(ielftype, ie, iet_["en3PRI2"])
+        ielftype = arrset(ielftype,ie,iet_["en3PRI2"])
         vname = 'B4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1640,8 +1642,12 @@ class  NYSTROM5(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-RY-18-20"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-RY-18-20"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

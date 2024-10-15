@@ -1,4 +1,4 @@
-function S368(action,args...)
+function S368(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -17,13 +17,15 @@ function S368(action,args...)
 # 
 #    See also Schittkowski #368 (for N = 8)
 # 
-#    classification = "OBR2-MN-V-0"
+#    classification = "C-OBR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   8              $-PARAMETER Schittkowski #368
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "S368"
@@ -32,7 +34,7 @@ function S368(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -98,25 +100,25 @@ function S368(action,args...)
                 ename = "M"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePRODM")
-                arrset(ielftype, ie, iet_["ePRODM"])
+                arrset(ielftype,ie,iet_["ePRODM"])
                 vname = "X"*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "P"*string(I)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"ePRODP")
-                arrset(ielftype, ie, iet_["ePRODP"])
+                arrset(ielftype,ie,iet_["ePRODP"])
                 vname = "X"*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "X"*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1.0,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1.0),nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -147,8 +149,11 @@ function S368(action,args...)
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "OBR2-MN-V-0"
+        pb.pbclass = "C-OBR2-MN-V-0"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -214,7 +219,9 @@ function S368(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -226,7 +233,7 @@ function S368(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

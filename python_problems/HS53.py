@@ -15,11 +15,13 @@ class  HS53(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, April 1990
 # 
-#    classification = "QLR2-AY-5-3"
+#    classification = "C-QLR2-AY-5-3"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS53'
@@ -116,25 +118,25 @@ class  HS53(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ1M2')
-        ielftype = arrset(ielftype, ie, iet_["eSQ1M2"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ1M2"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         ename = 'E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ1P2')
-        ielftype = arrset(ielftype, ie, iet_["eSQ1P2"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ1P2"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,2.0)
+        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(2.0))
         posev = np.where(elftv[ielftype[ie]]=='V2')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for I in range(int(v_['3']),int(v_['4'])+1):
@@ -142,9 +144,9 @@ class  HS53(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQM1')
-            ielftype = arrset(ielftype, ie, iet_["eSQM1"])
+            ielftype = arrset(ielftype,ie,iet_["eSQM1"])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-10.0,10.0,2.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-10.0),float(10.0),float(2.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%% GROUP USES %%%%%%%%%%%%%%%%%%%
@@ -185,8 +187,12 @@ class  HS53(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QLR2-AY-5-3"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QLR2-AY-5-3"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

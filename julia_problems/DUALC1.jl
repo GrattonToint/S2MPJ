@@ -1,4 +1,4 @@
-function DUALC1(action,args...)
+function DUALC1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -12,9 +12,11 @@ function DUALC1(action,args...)
 # 
 #    SIF input: Irv Lustig and Nick Gould, June 1996.
 # 
-#    classification = "QLR2-MN-9-215"
+#    classification = "C-QLR2-MN-9-215"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DUALC1"
@@ -23,7 +25,7 @@ function DUALC1(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -6548,9 +6550,9 @@ function DUALC1(action,args...)
             ename = "x"*string(i)*","*string(i)
             ie,ie_,newelt = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eDIAG")
-            arrset(ielftype, ie, iet_["eDIAG"])
+            arrset(ielftype,ie,iet_["eDIAG"])
             vname = "x"*string(i)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1,nothing)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1),nothing)
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             v_["i+1"] = 1+i
@@ -6562,11 +6564,11 @@ function DUALC1(action,args...)
                     arrset(ielftype,ie,iet_["eOFFDIAG"])
                 end
                 vname = "x"*string(i)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1),nothing)
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "x"*string(j)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,1,nothing)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,Float64(1),nothing)
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -6774,9 +6776,14 @@ function DUALC1(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "QLR2-MN-9-215"
+        pb.pbclass = "C-QLR2-MN-9-215"
         pb.x0          = zeros(Float64,pb.n)
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -6836,7 +6843,9 @@ function DUALC1(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -6848,7 +6857,7 @@ function DUALC1(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

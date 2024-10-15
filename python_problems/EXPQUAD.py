@@ -12,7 +12,7 @@ class  EXPQUAD(CUTEst_problem):
 #    SIF input: Ph. Toint, 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "OBR2-AN-V-V"
+#    classification = "C-OBR2-AN-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
@@ -23,6 +23,8 @@ class  EXPQUAD(CUTEst_problem):
 # 
 # IE N                   1200           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPQUAD'
@@ -112,7 +114,7 @@ class  EXPQUAD(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eEXP')
-            ielftype = arrset(ielftype, ie, iet_["eEXP"])
+            ielftype = arrset(ielftype,ie,iet_["eEXP"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -128,7 +130,7 @@ class  EXPQUAD(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eQUAD')
-                ielftype = arrset( ielftype,ie,iet_['eQUAD'])
+                ielftype = arrset(ielftype,ie,iet_['eQUAD'])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -159,8 +161,10 @@ class  EXPQUAD(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AN-V-V"
+        self.pbclass = "C-OBR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

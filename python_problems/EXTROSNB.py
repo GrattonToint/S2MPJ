@@ -18,13 +18,15 @@ class  EXTROSNB(CUTEst_problem):
 #    See also Buckley#116.  Note that MGH#21 is the separable version.
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SUR2-AN-V-0"
+#    classification = "C-SUR2-AN-V-0"
 # 
 #    Number of variables
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   5              $-PARAMETER     original value
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXTROSNB'
@@ -102,9 +104,9 @@ class  EXTROSNB(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eETYPE')
-                ielftype = arrset( ielftype,ie,iet_['eETYPE'])
+                ielftype = arrset(ielftype,ie,iet_['eETYPE'])
             vname = 'X'+str(int(v_['J']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,-1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(-1.0))
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -135,7 +137,9 @@ class  EXTROSNB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-AN-V-0"
+        self.pbclass = "C-SUR2-AN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

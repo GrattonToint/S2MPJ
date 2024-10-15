@@ -25,7 +25,7 @@ class  RAYBENDL(CUTEst_problem):
 # 
 #    SIF input: Ph Toint, Dec 1991.
 # 
-#    classification = "OXR2-MY-V-0"
+#    classification = "C-OXR2-MY-V-0"
 # 
 #    number of  knots  ( >= 4 )
 #    ( n = 2( NKNOTS - 1 ) ) 
@@ -39,6 +39,8 @@ class  RAYBENDL(CUTEst_problem):
 # IE NKNOTS              512            $-PARAMETER n = 1022
 # IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RAYBENDL'
@@ -136,7 +138,7 @@ class  RAYBENDL(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'eTT')
-                ielftype = arrset( ielftype,ie,iet_['eTT'])
+                ielftype = arrset(ielftype,ie,iet_['eTT'])
             vname = 'X'+str(int(v_['I-1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X1')[0]
@@ -171,7 +173,9 @@ class  RAYBENDL(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OXR2-MY-V-0"
+        self.pbclass = "C-OXR2-MY-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

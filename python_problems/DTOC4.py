@@ -27,7 +27,7 @@ class  DTOC4(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "QOR2-AN-V-V"
+#    classification = "C-QOR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the value of the parameter N.
 # 
@@ -42,6 +42,8 @@ class  DTOC4(CUTEst_problem):
 # IE N                   1000           $-PARAMETER  n= 2999,m=1998
 # IE N                   1500           $-PARAMETER  n= 4499,m=2998
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DTOC4'
@@ -168,7 +170,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y1SQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         ename = 'Y1SQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['1']))+','+str(int(v_['1']))
@@ -178,7 +180,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y2SQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         ename = 'Y2SQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['1']))+','+str(int(v_['2']))
@@ -188,7 +190,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'XSQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         ename = 'XSQ'+str(int(v_['1']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'X'+str(int(v_['1']))
@@ -199,7 +201,7 @@ class  DTOC4(CUTEst_problem):
             ename = 'Y1SQ'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'Y'+str(T)+','+str(int(v_['1']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -207,7 +209,7 @@ class  DTOC4(CUTEst_problem):
             ename = 'Y2SQ'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'Y'+str(T)+','+str(int(v_['2']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -215,7 +217,7 @@ class  DTOC4(CUTEst_problem):
             ename = 'XSQ'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eSQ')
-            ielftype = arrset(ielftype, ie, iet_["eSQ"])
+            ielftype = arrset(ielftype,ie,iet_["eSQ"])
             vname = 'X'+str(T)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='Z')[0]
@@ -223,7 +225,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y1SQ'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         ename = 'Y1SQ'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['N']))+','+str(int(v_['1']))
@@ -233,7 +235,7 @@ class  DTOC4(CUTEst_problem):
         ename = 'Y2SQ'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eSQ')
-        ielftype = arrset(ielftype, ie, iet_["eSQ"])
+        ielftype = arrset(ielftype,ie,iet_["eSQ"])
         ename = 'Y2SQ'+str(int(v_['N']))
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'Y'+str(int(v_['N']))+','+str(int(v_['2']))
@@ -244,7 +246,7 @@ class  DTOC4(CUTEst_problem):
             ename = 'E'+str(T)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eAAB')
-            ielftype = arrset(ielftype, ie, iet_["eAAB"])
+            ielftype = arrset(ielftype,ie,iet_["eAAB"])
             vname = 'Y'+str(T)+','+str(int(v_['2']))
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='A')[0]
@@ -319,8 +321,12 @@ class  DTOC4(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-AN-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-AN-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

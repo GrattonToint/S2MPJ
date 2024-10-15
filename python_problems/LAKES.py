@@ -43,9 +43,11 @@ class  LAKES(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Jafar Sadjadi, November 1995
 # 
-#    classification = "QOR2-RN-90-78"
+#    classification = "C-QOR2-RN-90-78"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LAKES'
@@ -548,17 +550,17 @@ class  LAKES(CUTEst_problem):
             ename = 'B'+str(i)+','+str(int(v_['1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2VAR')
-            ielftype = arrset(ielftype, ie, iet_["en2VAR"])
+            ielftype = arrset(ielftype,ie,iet_["en2VAR"])
             ename = 'B'+str(i)+','+str(int(v_['1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(i)+','+str(int(v_['2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['1']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'W'+str(i)+','+str(int(v_['2']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['1']))
@@ -568,17 +570,17 @@ class  LAKES(CUTEst_problem):
             ename = 'B'+str(i)+','+str(int(v_['2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en2VAR')
-            ielftype = arrset(ielftype, ie, iet_["en2VAR"])
+            ielftype = arrset(ielftype,ie,iet_["en2VAR"])
             ename = 'B'+str(i)+','+str(int(v_['2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(i)+','+str(int(v_['3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['2']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'W'+str(i)+','+str(int(v_['3']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='W')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['2']))
@@ -588,11 +590,11 @@ class  LAKES(CUTEst_problem):
             ename = 'B'+str(i)+','+str(int(v_['3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en1VAR')
-            ielftype = arrset(ielftype, ie, iet_["en1VAR"])
+            ielftype = arrset(ielftype,ie,iet_["en1VAR"])
             ename = 'B'+str(i)+','+str(int(v_['3']))
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             vname = 'V'+str(i)+','+str(int(v_['4']))
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,1.0)
+            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,float(1.0))
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             ename = 'B'+str(i)+','+str(int(v_['3']))
@@ -647,8 +649,12 @@ class  LAKES(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "QOR2-RN-90-78"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-QOR2-RN-90-78"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

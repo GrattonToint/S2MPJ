@@ -18,7 +18,7 @@ class  YAO(CUTEst_problem):
 #    SIF input: Aixiang Yao, Virginia Tech., May 1995
 #               modifications by Nick Gould
 # 
-#    classification = "QLR2-AN-V-V"
+#    classification = "C-QLR2-AN-V-V"
 # 
 #   Number of discretization points
 # 
@@ -27,6 +27,8 @@ class  YAO(CUTEst_problem):
 # IE P                   200            $-PARAMETER
 # IE P                   2000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YAO'
@@ -148,8 +150,11 @@ class  YAO(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "QLR2-AN-V-V"
+        self.pbclass = "C-QLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *

@@ -19,11 +19,13 @@ class  LANCZOS1LS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 # 
-#    classification = "SUR2-MN-6-0"
+#    classification = "C-SUR2-MN-6-0"
 # 
 #    Number of data values
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LANCZOS1LS'
@@ -135,7 +137,7 @@ class  LANCZOS1LS(CUTEst_problem):
             ename = 'EA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE2')
-            ielftype = arrset(ielftype, ie, iet_["eE2"])
+            ielftype = arrset(ielftype,ie,iet_["eE2"])
             vname = 'B1'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -149,7 +151,7 @@ class  LANCZOS1LS(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE2')
-            ielftype = arrset(ielftype, ie, iet_["eE2"])
+            ielftype = arrset(ielftype,ie,iet_["eE2"])
             vname = 'B3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -163,7 +165,7 @@ class  LANCZOS1LS(CUTEst_problem):
             ename = 'EC'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eE2')
-            ielftype = arrset(ielftype, ie, iet_["eE2"])
+            ielftype = arrset(ielftype,ie,iet_["eE2"])
             vname = 'B5'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -205,7 +207,9 @@ class  LANCZOS1LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SUR2-MN-6-0"
+        self.pbclass = "C-SUR2-MN-6-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

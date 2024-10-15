@@ -16,7 +16,7 @@ class  HADAMALS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 1993.
 # 
-#    classification = "OBR2-RN-V-V"
+#    classification = "C-OBR2-RN-V-V"
 # 
 #    The dimension of the matrix (=> N**2 variables).
 # 
@@ -32,6 +32,8 @@ class  HADAMALS(CUTEst_problem):
 # IE N                   18             $-PARAMETER
 # IE N                   20             $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HADAMALS'
@@ -129,13 +131,13 @@ class  HADAMALS(CUTEst_problem):
                     ename = 'O'+str(I)+','+str(J)+','+str(K)
                     [ie,ie_,_] = s2mpj_ii(ename,ie_)
                     self.elftype = arrset(self.elftype,ie,'en2PROD')
-                    ielftype = arrset(ielftype, ie, iet_["en2PROD"])
+                    ielftype = arrset(ielftype,ie,iet_["en2PROD"])
                     vname = 'Q'+str(K)+','+str(I)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
                     posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
                     vname = 'Q'+str(K)+','+str(J)
-                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+                    [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
                     posev = np.where(elftv[ielftype[ie]]=='Q2')[0]
                     self.elvar = loaset(self.elvar,ie,posev[0],iv)
         for J in range(int(v_['1']),int(v_['N'])+1):
@@ -143,9 +145,9 @@ class  HADAMALS(CUTEst_problem):
                 ename = 'S'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'eSQR')
-                ielftype = arrset(ielftype, ie, iet_["eSQR"])
+                ielftype = arrset(ielftype,ie,iet_["eSQR"])
                 vname = 'Q'+str(I)+','+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-1.0,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,float(-1.0),float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='Q1')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -179,7 +181,9 @@ class  HADAMALS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-RN-V-V"
+        self.pbclass = "C-OBR2-RN-V-V"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 
@@ -243,7 +247,7 @@ class  HADAMALS(CUTEst_problem):
     def g_globs(self):
 
         self.gfpar = np.array([]);
-        self.gfpar = arrset( self.gfpar,0,1.0e+0)    # this is FACTOR
+        self.gfpar = arrset(self.gfpar,0,1.0e+0)     # this is FACTOR
         return pbm
 
     @staticmethod

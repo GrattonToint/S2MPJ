@@ -20,7 +20,7 @@ class  SCOND1LS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SBR2-AN-V-V"
+#    classification = "C-SBR2-AN-V-V"
 # 
 #    N  = Number of discretized point inside the interval [a, b]
 #    LN = Index of the last negative discretization point
@@ -29,6 +29,8 @@ class  SCOND1LS(CUTEst_problem):
 #           Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER     original value
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCOND1LS'
@@ -159,9 +161,10 @@ class  SCOND1LS(CUTEst_problem):
             ename = 'EA'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eWE1')
-            ielftype = arrset(ielftype, ie, iet_["eWE1"])
+            ielftype = arrset(ielftype,ie,iet_["eWE1"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,v_['ULW'],v_['UUP'],0.0)
+            [iv,ix_]  = (
+                  s2mpj_nlx(self,vname,ix_,1,float(v_['ULW']),float(v_['UUP']),float(0.0)))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='LAC')[0]
@@ -173,9 +176,10 @@ class  SCOND1LS(CUTEst_problem):
             ename = 'EB'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eWE1')
-            ielftype = arrset(ielftype, ie, iet_["eWE1"])
+            ielftype = arrset(ielftype,ie,iet_["eWE1"])
             vname = 'U'+str(I)
-            [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,v_['ULW'],v_['UUP'],0.0)
+            [iv,ix_]  = (
+                  s2mpj_nlx(self,vname,ix_,1,float(v_['ULW']),float(v_['UUP']),float(0.0)))
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
             self.elvar = loaset(self.elvar,ie,posev[0],iv)
             posep = np.where(elftp[ielftype[ie]]=='LAC')[0]
@@ -211,7 +215,9 @@ class  SCOND1LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SBR2-AN-V-V"
+        self.pbclass = "C-SBR2-AN-V-V"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

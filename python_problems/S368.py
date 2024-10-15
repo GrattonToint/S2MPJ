@@ -18,13 +18,15 @@ class  S368(CUTEst_problem):
 # 
 #    See also Schittkowski #368 (for N = 8)
 # 
-#    classification = "OBR2-MN-V-0"
+#    classification = "C-OBR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   8              $-PARAMETER Schittkowski #368
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'S368'
@@ -100,25 +102,25 @@ class  S368(CUTEst_problem):
                 ename = 'M'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePRODM')
-                ielftype = arrset(ielftype, ie, iet_["ePRODM"])
+                ielftype = arrset(ielftype,ie,iet_["ePRODM"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 ename = 'P'+str(I)+','+str(J)
                 [ie,ie_,_] = s2mpj_ii(ename,ie_)
                 self.elftype = arrset(self.elftype,ie,'ePRODP')
-                ielftype = arrset(ielftype, ie, iet_["ePRODP"])
+                ielftype = arrset(ielftype,ie,iet_["ePRODP"])
                 vname = 'X'+str(I)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='X')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
                 vname = 'X'+str(J)
-                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,1.0,None)
+                [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,float(1.0),None)
                 posev = np.where(elftv[ielftype[ie]]=='Y')[0]
                 self.elvar = loaset(self.elvar,ie,posev[0],iv)
         #%%%%%%%%%%%%%%%%%%%%% GRFTYPE %%%%%%%%%%%%%%%%%%%%
@@ -146,7 +148,9 @@ class  S368(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-MN-V-0"
+        self.pbclass = "C-OBR2-MN-V-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

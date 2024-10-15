@@ -19,11 +19,13 @@ class  TOINTGOR(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "OUR2-MN-50-0"
+#    classification = "C-OUR2-MN-50-0"
 # 
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TOINTGOR'
@@ -488,8 +490,10 @@ class  TOINTGOR(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-MN-50-0"
+        self.pbclass = "C-OUR2-MN-50-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
@@ -501,8 +505,8 @@ class  TOINTGOR(CUTEst_problem):
     def g_globs(self):
 
         self.gfpar = np.array([]);
-        self.gfpar = arrset( self.gfpar,0,1.0e0)    # this is ONE
-        self.gfpar = arrset( self.gfpar,1,0.0e0)    # this is ZERO
+        self.gfpar = arrset(self.gfpar,0,1.0e0)     # this is ONE
+        self.gfpar = arrset(self.gfpar,1,0.0e0)     # this is ZERO
         return pbm
 
     @staticmethod

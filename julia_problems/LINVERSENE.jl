@@ -1,4 +1,4 @@
-function LINVERSENE(action,args...)
+function LINVERSENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -29,7 +29,7 @@ function LINVERSENE(action,args...)
 #    SIF input: Ph. Toint, March 1991.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "NOR2-AN-V-V"
+#    classification = "C-NOR2-AN-V-V"
 # 
 #    Dimension of the matrix
 # 
@@ -40,6 +40,8 @@ function LINVERSENE(action,args...)
 # IE N                   1000           $-PARAMETER  n = 1999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LINVERSENE"
 
@@ -47,7 +49,7 @@ function LINVERSENE(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -175,7 +177,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["1"]))*","*string(Int64(v_["1"]))
@@ -185,7 +187,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["2"]))*","*string(Int64(v_["1"]))
@@ -195,7 +197,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["2"]))*","*string(Int64(v_["1"]))
@@ -205,7 +207,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["2"]))*","*string(Int64(v_["1"]))
@@ -215,7 +217,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["2"]))*","*string(Int64(v_["1"]))
@@ -225,7 +227,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["3"]))*","*string(Int64(v_["1"]))
@@ -235,7 +237,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["3"]))*","*string(Int64(v_["1"]))
@@ -245,7 +247,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["3"]))*","*string(Int64(v_["1"]))
@@ -255,7 +257,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["3"]))*","*string(Int64(v_["1"]))
@@ -265,7 +267,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -275,7 +277,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -285,7 +287,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "U"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -295,7 +297,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "U"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -305,7 +307,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -315,7 +317,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -325,7 +327,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -335,7 +337,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W"*string(Int64(v_["2"]))*","*string(Int64(v_["2"]))
@@ -345,7 +347,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -355,7 +357,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -365,7 +367,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "U"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -375,7 +377,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "U"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -385,7 +387,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -395,7 +397,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -405,7 +407,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -415,7 +417,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W"*string(Int64(v_["3"]))*","*string(Int64(v_["2"]))
@@ -425,7 +427,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["1"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -435,7 +437,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "S"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -445,7 +447,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "U"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -455,7 +457,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "U"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -465,7 +467,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -475,7 +477,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "A"*string(Int64(v_["3"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "V"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -485,7 +487,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -495,7 +497,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="X",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         ename = "W"*string(Int64(v_["3"]))*","*string(Int64(v_["3"]))
@@ -505,7 +507,7 @@ function LINVERSENE(action,args...)
             arrset(ielftype,ie,iet_["en2PR"])
         end
         vname = "B"*string(Int64(v_["2"]))
-        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+        iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
         posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
         loaset(pbm.elvar,ie,posev,iv)
         for I = Int64(v_["4"]):Int64(v_["N"])
@@ -518,7 +520,7 @@ function LINVERSENE(action,args...)
                 arrset(ielftype,ie,iet_["en2PR"])
             end
             vname = "A"*string(I)
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "S"*string(I)*","*string(Int64(v_["I-2"]))
@@ -528,7 +530,7 @@ function LINVERSENE(action,args...)
                 arrset(ielftype,ie,iet_["en2PR"])
             end
             vname = "A"*string(Int64(v_["I-2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "V"*string(I)*","*string(Int64(v_["I-2"]))
@@ -538,7 +540,7 @@ function LINVERSENE(action,args...)
                 arrset(ielftype,ie,iet_["en2PR"])
             end
             vname = "B"*string(Int64(v_["I-1"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
             posev = findfirst(x->x=="X",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             ename = "V"*string(I)*","*string(Int64(v_["I-2"]))
@@ -548,7 +550,7 @@ function LINVERSENE(action,args...)
                 arrset(ielftype,ie,iet_["en2PR"])
             end
             vname = "A"*string(Int64(v_["I-2"]))
-            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+            iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
             posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
             loaset(pbm.elvar,ie,posev,iv)
             for J = Int64(v_["I-1"]):Int64(I)
@@ -560,11 +562,11 @@ function LINVERSENE(action,args...)
                     arrset(ielftype,ie,iet_["en2PR"])
                 end
                 vname = "A"*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "A"*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "U"*string(I)*","*string(J)
@@ -574,11 +576,11 @@ function LINVERSENE(action,args...)
                     arrset(ielftype,ie,iet_["en2PR"])
                 end
                 vname = "A"*string(I)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "B"*string(Int64(v_["J-1"]))
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "V"*string(I)*","*string(J)
@@ -588,11 +590,11 @@ function LINVERSENE(action,args...)
                     arrset(ielftype,ie,iet_["en2PR"])
                 end
                 vname = "B"*string(Int64(v_["I-1"]))
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "A"*string(J)
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 ename = "W"*string(I)*","*string(J)
@@ -602,11 +604,11 @@ function LINVERSENE(action,args...)
                     arrset(ielftype,ie,iet_["en2PR"])
                 end
                 vname = "B"*string(Int64(v_["I-1"]))
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="X",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
                 vname = "B"*string(Int64(v_["J-1"]))
-                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,-1.0)
+                iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,Float64(-1.0))
                 posev = findfirst(x->x=="Y",elftv[ielftype[ie]])
                 loaset(pbm.elvar,ie,posev,iv)
             end
@@ -753,8 +755,13 @@ function LINVERSENE(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "NOR2-AN-V-V"
+        pb.pbclass = "C-NOR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -790,7 +797,9 @@ function LINVERSENE(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -802,7 +811,7 @@ function LINVERSENE(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

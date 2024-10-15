@@ -18,9 +18,11 @@ class  EG1(CUTEst_problem):
 # 
 #    SIF input: N. Gould and Ph. Toint, June 1994.
 # 
-#    classification = "OBR2-AY-3-0"
+#    classification = "C-OBR2-AY-3-0"
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EG1'
@@ -93,7 +95,7 @@ class  EG1(CUTEst_problem):
         ename = 'G2E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eETYPE1')
-        ielftype = arrset(ielftype, ie, iet_["eETYPE1"])
+        ielftype = arrset(ielftype,ie,iet_["eETYPE1"])
         self.x0 = np.zeros((self.n,1))
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
@@ -106,7 +108,7 @@ class  EG1(CUTEst_problem):
         ename = 'G3E1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eETYPE2')
-        ielftype = arrset(ielftype, ie, iet_["eETYPE2"])
+        ielftype = arrset(ielftype,ie,iet_["eETYPE2"])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -122,7 +124,7 @@ class  EG1(CUTEst_problem):
         ename = 'G3E2'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eETYPE1')
-        ielftype = arrset(ielftype, ie, iet_["eETYPE1"])
+        ielftype = arrset(ielftype,ie,iet_["eETYPE1"])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -163,8 +165,10 @@ class  EG1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OBR2-AY-3-0"
+        self.pbclass = "C-OBR2-AY-3-0"
         self.x0        = np.zeros((self.n,1))
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

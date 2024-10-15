@@ -18,11 +18,13 @@ class  DALLASS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "ONR2-MN-46-31"
+#    classification = "C-ONR2-MN-46-31"
 # 
 #    Number of arcs
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DALLASS'
@@ -607,9 +609,10 @@ class  DALLASS(CUTEst_problem):
         ename = 'E1'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT4')
-        ielftype = arrset(ielftype, ie, iet_["eT4"])
+        ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'X1'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -619,9 +622,10 @@ class  DALLASS(CUTEst_problem):
         ename = 'E2'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT4')
-        ielftype = arrset(ielftype, ie, iet_["eT4"])
+        ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'X2'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -631,9 +635,10 @@ class  DALLASS(CUTEst_problem):
         ename = 'E3'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT4')
-        ielftype = arrset(ielftype, ie, iet_["eT4"])
+        ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'X3'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -644,9 +649,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X4'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -659,9 +665,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X5'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -674,9 +681,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X6'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -689,9 +697,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X7'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -704,9 +713,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X8'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -719,9 +729,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X9'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -734,9 +745,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X10'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -749,9 +761,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X11'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -764,9 +777,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X12'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -779,9 +793,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X13'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -794,9 +809,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X14'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -809,9 +825,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X15'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -824,9 +841,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X16'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -839,9 +857,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X17'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -854,9 +873,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X18'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -868,9 +888,10 @@ class  DALLASS(CUTEst_problem):
         ename = 'E19'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT4')
-        ielftype = arrset(ielftype, ie, iet_["eT4"])
+        ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'X19'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -881,9 +902,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X20'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -895,9 +917,10 @@ class  DALLASS(CUTEst_problem):
         ename = 'E21'
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         self.elftype = arrset(self.elftype,ie,'eT4')
-        ielftype = arrset(ielftype, ie, iet_["eT4"])
+        ielftype = arrset(ielftype,ie,iet_["eT4"])
         vname = 'X21'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -908,9 +931,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X22'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -923,9 +947,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X23'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -938,9 +963,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X24'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -953,9 +979,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X25'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -968,9 +995,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X26'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -983,9 +1011,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X27'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -998,9 +1027,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X28'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1013,9 +1043,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X29'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1028,9 +1059,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X30'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1043,9 +1075,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X31'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1058,9 +1091,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X32'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1073,9 +1107,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X33'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1088,9 +1123,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X34'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1103,9 +1139,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X35'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1118,9 +1155,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X36'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1133,9 +1171,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X37'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1148,9 +1187,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X38'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1163,9 +1203,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X39'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1178,9 +1219,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X40'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1193,9 +1235,10 @@ class  DALLASS(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'eT1')
-            ielftype = arrset( ielftype,ie,iet_['eT1'])
+            ielftype = arrset(ielftype,ie,iet_['eT1'])
         vname = 'X41'
-        [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,-2.00000e+02,2.00000e+02,-2.00000e+02)
+        [iv,ix_]  = (
+              s2mpj_nlx(self,vname,ix_,1,float(-2.00000e+02),float(2.00000e+02),float(-2.00000e+02)))
         posev = np.where(elftv[ielftype[ie]]=='ARC')[0]
         self.elvar = loaset(self.elvar,ie,posev[0],iv)
         posep = np.where(elftp[ielftype[ie]]=='C1')[0]
@@ -1371,8 +1414,12 @@ class  DALLASS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "ONR2-MN-46-31"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-ONR2-MN-46-31"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

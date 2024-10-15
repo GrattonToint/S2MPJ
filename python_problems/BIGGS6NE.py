@@ -18,7 +18,7 @@ class  BIGGS6NE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 # 
-#    classification = "NOR2-AN-6-13"
+#    classification = "C-NOR2-AN-6-13"
 # 
 #    The number of groups can be varied, but should be larger or equal
 #    to the number of variables.
@@ -26,6 +26,8 @@ class  BIGGS6NE(CUTEst_problem):
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGS6NE'
@@ -157,7 +159,7 @@ class  BIGGS6NE(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePEXP')
-                ielftype = arrset( ielftype,ie,iet_['ePEXP'])
+                ielftype = arrset(ielftype,ie,iet_['ePEXP'])
             vname = 'X3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -172,7 +174,7 @@ class  BIGGS6NE(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePEXP')
-                ielftype = arrset( ielftype,ie,iet_['ePEXP'])
+                ielftype = arrset(ielftype,ie,iet_['ePEXP'])
             vname = 'X4'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -187,7 +189,7 @@ class  BIGGS6NE(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePEXP')
-                ielftype = arrset( ielftype,ie,iet_['ePEXP'])
+                ielftype = arrset(ielftype,ie,iet_['ePEXP'])
             vname = 'X6'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -230,8 +232,12 @@ class  BIGGS6NE(CUTEst_problem):
         self.cupper[np.arange(self.nle,self.nle+self.neq)] = np.zeros((self.neq,1))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "NOR2-AN-6-13"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-NOR2-AN-6-13"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

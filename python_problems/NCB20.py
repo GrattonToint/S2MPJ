@@ -15,7 +15,7 @@ class  NCB20(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, October 1992.
 # 
-#    classification = "OUR2-AN-V-0"
+#    classification = "C-OUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
@@ -24,6 +24,8 @@ class  NCB20(CUTEst_problem):
 # IE N                   1000           $-PARAMETER     original value
 # IE N                   5000           $-PARAMETER
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NCB20'
@@ -153,7 +155,7 @@ class  NCB20(CUTEst_problem):
             ename = 'E'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eBP')
-            ielftype = arrset(ielftype, ie, iet_["eBP"])
+            ielftype = arrset(ielftype,ie,iet_["eBP"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -238,7 +240,7 @@ class  NCB20(CUTEst_problem):
             ename = 'S'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eQR')
-            ielftype = arrset(ielftype, ie, iet_["eQR"])
+            ielftype = arrset(ielftype,ie,iet_["eQR"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='XX')[0]
@@ -247,7 +249,7 @@ class  NCB20(CUTEst_problem):
             ename = 'L'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'en3P')
-            ielftype = arrset(ielftype, ie, iet_["en3P"])
+            ielftype = arrset(ielftype,ie,iet_["en3P"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -292,7 +294,9 @@ class  NCB20(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "OUR2-AN-V-0"
+        self.pbclass = "C-OUR2-AN-V-0"
+        self.objderlvl = 2
+
 
     #%%%%%%%%%%%%%%% NONLINEAR ELEMENTS %%%%%%%%%%%%%%%
 

@@ -19,11 +19,13 @@ class  TRO4X4(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 2009.
 # 
-#    classification = "LOR2-RN-63-25"
+#    classification = "C-LOR2-RN-63-25"
 # 
 #    number of bars
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRO4X4'
@@ -121,7 +123,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X1'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -136,7 +138,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -151,7 +153,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -166,7 +168,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -181,7 +183,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X2'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -196,7 +198,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -211,7 +213,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -226,7 +228,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -241,7 +243,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X3'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -256,7 +258,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -271,7 +273,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -286,7 +288,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -301,7 +303,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X4'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -316,7 +318,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X5'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -331,7 +333,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -346,7 +348,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -361,7 +363,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -376,7 +378,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X6'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -391,7 +393,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -406,7 +408,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -421,7 +423,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -436,7 +438,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X7'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -451,7 +453,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -466,7 +468,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -481,7 +483,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -496,7 +498,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X8'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -511,7 +513,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X9'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -526,7 +528,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -541,7 +543,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -556,7 +558,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -571,7 +573,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X10'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -586,7 +588,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X11'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -601,7 +603,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X11'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -616,7 +618,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X11'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -631,7 +633,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X11'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -646,7 +648,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X12'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -661,7 +663,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X12'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -676,7 +678,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X12'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -691,7 +693,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X12'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -706,7 +708,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X13'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -721,7 +723,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X13'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -736,7 +738,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X13'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -751,7 +753,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X13'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -766,7 +768,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -781,7 +783,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -796,7 +798,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -811,7 +813,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -826,7 +828,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -841,7 +843,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -856,7 +858,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -871,7 +873,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -886,7 +888,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -901,7 +903,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -916,7 +918,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -931,7 +933,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -946,7 +948,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -961,7 +963,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -976,7 +978,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -991,7 +993,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X14'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1006,7 +1008,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X15'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1021,7 +1023,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X15'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1036,7 +1038,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X15'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1051,7 +1053,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X15'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1066,7 +1068,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1081,7 +1083,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1096,7 +1098,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1111,7 +1113,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1126,7 +1128,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1141,7 +1143,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1156,7 +1158,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1171,7 +1173,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1186,7 +1188,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1201,7 +1203,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1216,7 +1218,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1231,7 +1233,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1246,7 +1248,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1261,7 +1263,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1276,7 +1278,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1291,7 +1293,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X16'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1306,7 +1308,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X17'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1321,7 +1323,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X17'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1336,7 +1338,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X17'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1351,7 +1353,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X17'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1366,7 +1368,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1381,7 +1383,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1396,7 +1398,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1411,7 +1413,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1426,7 +1428,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1441,7 +1443,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1456,7 +1458,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1471,7 +1473,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1486,7 +1488,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1501,7 +1503,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1516,7 +1518,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1531,7 +1533,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1546,7 +1548,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1561,7 +1563,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1576,7 +1578,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1591,7 +1593,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X18'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1606,7 +1608,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X19'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1621,7 +1623,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X19'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1636,7 +1638,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X19'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1651,7 +1653,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X19'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1666,7 +1668,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1681,7 +1683,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1696,7 +1698,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1711,7 +1713,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1726,7 +1728,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1741,7 +1743,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1756,7 +1758,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1771,7 +1773,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1786,7 +1788,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1801,7 +1803,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1816,7 +1818,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1831,7 +1833,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1846,7 +1848,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1861,7 +1863,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1876,7 +1878,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1891,7 +1893,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X20'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1906,7 +1908,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X21'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1921,7 +1923,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X21'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1936,7 +1938,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X21'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1951,7 +1953,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X21'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1966,7 +1968,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1981,7 +1983,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -1996,7 +1998,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2011,7 +2013,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2026,7 +2028,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2041,7 +2043,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2056,7 +2058,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2071,7 +2073,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2086,7 +2088,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2101,7 +2103,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2116,7 +2118,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2131,7 +2133,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2146,7 +2148,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2161,7 +2163,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2176,7 +2178,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2191,7 +2193,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X22'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2206,7 +2208,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X23'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2221,7 +2223,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X23'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2236,7 +2238,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X23'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2251,7 +2253,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X23'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2266,7 +2268,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2281,7 +2283,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2296,7 +2298,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2311,7 +2313,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2326,7 +2328,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2341,7 +2343,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2356,7 +2358,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2371,7 +2373,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2386,7 +2388,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2401,7 +2403,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2416,7 +2418,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2431,7 +2433,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2446,7 +2448,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2461,7 +2463,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2476,7 +2478,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2491,7 +2493,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X24'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2506,7 +2508,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X25'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2521,7 +2523,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X25'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2536,7 +2538,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X25'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2551,7 +2553,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X25'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2566,7 +2568,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2581,7 +2583,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2596,7 +2598,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2611,7 +2613,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2626,7 +2628,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2641,7 +2643,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2656,7 +2658,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2671,7 +2673,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2686,7 +2688,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2701,7 +2703,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2716,7 +2718,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2731,7 +2733,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2746,7 +2748,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2761,7 +2763,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2776,7 +2778,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2791,7 +2793,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X26'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2806,7 +2808,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X27'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2821,7 +2823,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X27'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2836,7 +2838,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X27'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2851,7 +2853,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X27'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2866,7 +2868,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2881,7 +2883,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2896,7 +2898,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2911,7 +2913,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2926,7 +2928,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2941,7 +2943,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2956,7 +2958,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2971,7 +2973,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -2986,7 +2988,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3001,7 +3003,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3016,7 +3018,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3031,7 +3033,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3046,7 +3048,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3061,7 +3063,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3076,7 +3078,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3091,7 +3093,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X28'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3106,7 +3108,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X29'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3121,7 +3123,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X29'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3136,7 +3138,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X29'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3151,7 +3153,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X29'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3166,7 +3168,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3181,7 +3183,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3196,7 +3198,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3211,7 +3213,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3226,7 +3228,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3241,7 +3243,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3256,7 +3258,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3271,7 +3273,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3286,7 +3288,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3301,7 +3303,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3316,7 +3318,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3331,7 +3333,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3346,7 +3348,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3361,7 +3363,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3376,7 +3378,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3391,7 +3393,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X30'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3406,7 +3408,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X31'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3421,7 +3423,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X31'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3436,7 +3438,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X31'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3451,7 +3453,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X31'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3466,7 +3468,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3481,7 +3483,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3496,7 +3498,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3511,7 +3513,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3526,7 +3528,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3541,7 +3543,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3556,7 +3558,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3571,7 +3573,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3586,7 +3588,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3601,7 +3603,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3616,7 +3618,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3631,7 +3633,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3646,7 +3648,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3661,7 +3663,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3676,7 +3678,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3691,7 +3693,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X32'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3706,7 +3708,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X33'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3721,7 +3723,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X33'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3736,7 +3738,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X33'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3751,7 +3753,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X33'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3766,7 +3768,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3781,7 +3783,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3796,7 +3798,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3811,7 +3813,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3826,7 +3828,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3841,7 +3843,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3856,7 +3858,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3871,7 +3873,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3886,7 +3888,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3901,7 +3903,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3916,7 +3918,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3931,7 +3933,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3946,7 +3948,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3961,7 +3963,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3976,7 +3978,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -3991,7 +3993,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X34'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4006,7 +4008,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X35'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4021,7 +4023,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X35'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4036,7 +4038,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X35'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4051,7 +4053,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X35'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4066,7 +4068,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4081,7 +4083,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4096,7 +4098,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4111,7 +4113,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4126,7 +4128,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4141,7 +4143,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4156,7 +4158,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4171,7 +4173,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4186,7 +4188,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4201,7 +4203,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4216,7 +4218,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4231,7 +4233,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4246,7 +4248,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4261,7 +4263,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4276,7 +4278,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4291,7 +4293,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X36'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4306,7 +4308,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X37'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4321,7 +4323,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X38'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4336,7 +4338,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X38'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4351,7 +4353,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X38'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4366,7 +4368,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X38'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4381,7 +4383,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X39'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4396,7 +4398,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X39'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4411,7 +4413,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X39'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -4426,7 +4428,7 @@ class  TRO4X4(CUTEst_problem):
         [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
         if newelt:
             self.elftype = arrset(self.elftype,ie,'ePROD')
-            ielftype = arrset( ielftype,ie,iet_['ePROD'])
+            ielftype = arrset(ielftype,ie,iet_['ePROD'])
         vname = 'X39'
         [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
         posev = np.where(elftv[ielftype[ie]]=='X')[0]
@@ -5898,8 +5900,12 @@ class  TRO4X4(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LOR2-RN-63-25"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LOR2-RN-63-25"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

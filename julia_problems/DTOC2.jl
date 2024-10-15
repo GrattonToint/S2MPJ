@@ -1,4 +1,4 @@
-function DTOC2(action,args...)
+function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -26,7 +26,7 @@ function DTOC2(action,args...)
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "OOR2-AN-V-V"
+#    classification = "C-OOR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the value of the parameter N.
 # 
@@ -53,6 +53,8 @@ function DTOC2(action,args...)
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC2"
 
@@ -60,7 +62,7 @@ function DTOC2(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -198,7 +200,7 @@ function DTOC2(action,args...)
             ename = "EO"*string(T)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eOEL")
-            arrset(ielftype, ie, iet_["eOEL"])
+            arrset(ielftype,ie,iet_["eOEL"])
             vname = "Y"*string(T)*","*string(Int64(v_["1"]))
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="YY1",elftv[ielftype[ie]])
@@ -227,7 +229,7 @@ function DTOC2(action,args...)
                 ename = "SY"*string(T)*","*string(J)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSINE")
-                arrset(ielftype, ie, iet_["eSINE"])
+                arrset(ielftype,ie,iet_["eSINE"])
                 vname = "Y"*string(T)*","*string(J)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="ZZ",elftv[ielftype[ie]])
@@ -237,7 +239,7 @@ function DTOC2(action,args...)
                 ename = "SX"*string(T)*","*string(I)
                 ie,ie_,_  = s2mpj_ii(ename,ie_)
                 arrset(pbm.elftype,ie,"eSINE")
-                arrset(ielftype, ie, iet_["eSINE"])
+                arrset(ielftype,ie,iet_["eSINE"])
                 vname = "X"*string(T)*","*string(I)
                 iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
                 posev = findfirst(x->x=="ZZ",elftv[ielftype[ie]])
@@ -248,7 +250,7 @@ function DTOC2(action,args...)
             ename = "YNSQ"*string(J)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eSQ")
-            arrset(ielftype, ie, iet_["eSQ"])
+            arrset(ielftype,ie,iet_["eSQ"])
             vname = "Y"*string(Int64(v_["N"]))*","*string(J)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="YY",elftv[ielftype[ie]])
@@ -310,8 +312,13 @@ function DTOC2(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OOR2-AN-V-V"
+        pb.pbclass = "C-OOR2-AN-V-V"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *
@@ -429,7 +436,9 @@ function DTOC2(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -441,7 +450,7 @@ function DTOC2(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

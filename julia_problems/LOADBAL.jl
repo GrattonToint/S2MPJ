@@ -1,4 +1,4 @@
-function LOADBAL(action,args...)
+function LOADBAL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float64}}...)
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 # 
@@ -32,11 +32,13 @@ function LOADBAL(action,args...)
 # 
 #    SIF input: Masha Sosonkina, Virginia Tech., 1995.
 # 
-#    classification = "OLR2-MN-31-31"
+#    classification = "C-OLR2-MN-31-31"
 # 
 #  Parameter assignment.
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Julia by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LOADBAL"
@@ -45,7 +47,7 @@ function LOADBAL(action,args...)
         pb           = PB(name)
         pbm          = PBM(name)
         nargin       = length(args)
-        pbm.call     = eval( Meta.parse( name ) )
+        pbm.call     = getfield( Main, Symbol( name ) )
 
         #%%%%%%%%%%%%%%%%%%%  PREAMBLE %%%%%%%%%%%%%%%%%%%%
         v_  = Dict{String,Float64}();
@@ -570,7 +572,7 @@ function LOADBAL(action,args...)
         ename = "EB1"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA1")
-        arrset(ielftype, ie, iet_["eBETA1"])
+        arrset(ielftype,ie,iet_["eBETA1"])
         vname = "B1"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -578,7 +580,7 @@ function LOADBAL(action,args...)
         ename = "EB2"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA1")
-        arrset(ielftype, ie, iet_["eBETA1"])
+        arrset(ielftype,ie,iet_["eBETA1"])
         vname = "B2"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -586,7 +588,7 @@ function LOADBAL(action,args...)
         ename = "EB3"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA2")
-        arrset(ielftype, ie, iet_["eBETA2"])
+        arrset(ielftype,ie,iet_["eBETA2"])
         vname = "B3"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -594,7 +596,7 @@ function LOADBAL(action,args...)
         ename = "EB4"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA1")
-        arrset(ielftype, ie, iet_["eBETA1"])
+        arrset(ielftype,ie,iet_["eBETA1"])
         vname = "B4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -602,7 +604,7 @@ function LOADBAL(action,args...)
         ename = "EB5"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA1")
-        arrset(ielftype, ie, iet_["eBETA1"])
+        arrset(ielftype,ie,iet_["eBETA1"])
         vname = "B5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -610,7 +612,7 @@ function LOADBAL(action,args...)
         ename = "EB6"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA2")
-        arrset(ielftype, ie, iet_["eBETA2"])
+        arrset(ielftype,ie,iet_["eBETA2"])
         vname = "B6"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -618,7 +620,7 @@ function LOADBAL(action,args...)
         ename = "EB7"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA2")
-        arrset(ielftype, ie, iet_["eBETA2"])
+        arrset(ielftype,ie,iet_["eBETA2"])
         vname = "B7"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -626,7 +628,7 @@ function LOADBAL(action,args...)
         ename = "EB8"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA1")
-        arrset(ielftype, ie, iet_["eBETA1"])
+        arrset(ielftype,ie,iet_["eBETA1"])
         vname = "B8"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -634,7 +636,7 @@ function LOADBAL(action,args...)
         ename = "EB9"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA2")
-        arrset(ielftype, ie, iet_["eBETA2"])
+        arrset(ielftype,ie,iet_["eBETA2"])
         vname = "B9"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -642,7 +644,7 @@ function LOADBAL(action,args...)
         ename = "EB10"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA2")
-        arrset(ielftype, ie, iet_["eBETA2"])
+        arrset(ielftype,ie,iet_["eBETA2"])
         vname = "B10"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -650,7 +652,7 @@ function LOADBAL(action,args...)
         ename = "EB11"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eBETA2")
-        arrset(ielftype, ie, iet_["eBETA2"])
+        arrset(ielftype,ie,iet_["eBETA2"])
         vname = "B11"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -659,7 +661,7 @@ function LOADBAL(action,args...)
             ename = "EGA"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMA1")
-            arrset(ielftype, ie, iet_["eCOMA1"])
+            arrset(ielftype,ie,iet_["eCOMA1"])
             vname = "X"*string(Int64(v_["4C"]))*","*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -671,7 +673,7 @@ function LOADBAL(action,args...)
             ename = "EGB"*string(I)
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMB1")
-            arrset(ielftype, ie, iet_["eCOMB1"])
+            arrset(ielftype,ie,iet_["eCOMB1"])
             vname = "X"*string(Int64(v_["4C"]))*","*string(I)
             iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
             posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -684,7 +686,7 @@ function LOADBAL(action,args...)
             ename = "EGA"*string(Int64(v_["I+3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMA1")
-            arrset(ielftype, ie, iet_["eCOMA1"])
+            arrset(ielftype,ie,iet_["eCOMA1"])
             ename = "EGA"*string(Int64(v_["I+3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)*","*string(Int64(v_["4C"]))
@@ -700,7 +702,7 @@ function LOADBAL(action,args...)
             ename = "EGB"*string(Int64(v_["I+3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMB1")
-            arrset(ielftype, ie, iet_["eCOMB1"])
+            arrset(ielftype,ie,iet_["eCOMB1"])
             ename = "EGB"*string(Int64(v_["I+3"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)*","*string(Int64(v_["4C"]))
@@ -718,7 +720,7 @@ function LOADBAL(action,args...)
             ename = "EGA"*string(Int64(v_["I+6"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMA1")
-            arrset(ielftype, ie, iet_["eCOMA1"])
+            arrset(ielftype,ie,iet_["eCOMA1"])
             ename = "EGA"*string(Int64(v_["I+6"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["8C"]))*","*string(Int64(v_["I+8"]))
@@ -734,7 +736,7 @@ function LOADBAL(action,args...)
             ename = "EGB"*string(Int64(v_["I+6"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMB1")
-            arrset(ielftype, ie, iet_["eCOMB1"])
+            arrset(ielftype,ie,iet_["eCOMB1"])
             ename = "EGB"*string(Int64(v_["I+6"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["8C"]))*","*string(Int64(v_["I+8"]))
@@ -751,7 +753,7 @@ function LOADBAL(action,args...)
             ename = "EGA"*string(Int64(v_["I+9"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMA1")
-            arrset(ielftype, ie, iet_["eCOMA1"])
+            arrset(ielftype,ie,iet_["eCOMA1"])
             ename = "EGA"*string(Int64(v_["I+9"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["I+8"]))*","*string(Int64(v_["8C"]))
@@ -767,7 +769,7 @@ function LOADBAL(action,args...)
             ename = "EGB"*string(Int64(v_["I+9"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMB1")
-            arrset(ielftype, ie, iet_["eCOMB1"])
+            arrset(ielftype,ie,iet_["eCOMB1"])
             ename = "EGB"*string(Int64(v_["I+9"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["I+8"]))*","*string(Int64(v_["8C"]))
@@ -787,7 +789,7 @@ function LOADBAL(action,args...)
             ename = "EGA"*string(Int64(v_["I2+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMA1")
-            arrset(ielftype, ie, iet_["eCOMA1"])
+            arrset(ielftype,ie,iet_["eCOMA1"])
             ename = "EGA"*string(Int64(v_["I2+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["5C"]))*","*string(I)
@@ -803,7 +805,7 @@ function LOADBAL(action,args...)
             ename = "EGB"*string(Int64(v_["I2+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMB1")
-            arrset(ielftype, ie, iet_["eCOMB1"])
+            arrset(ielftype,ie,iet_["eCOMB1"])
             ename = "EGB"*string(Int64(v_["I2+1"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(Int64(v_["5C"]))*","*string(I)
@@ -820,7 +822,7 @@ function LOADBAL(action,args...)
             ename = "EGA"*string(Int64(v_["I2+2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMA1")
-            arrset(ielftype, ie, iet_["eCOMA1"])
+            arrset(ielftype,ie,iet_["eCOMA1"])
             ename = "EGA"*string(Int64(v_["I2+2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)*","*string(Int64(v_["5C"]))
@@ -836,7 +838,7 @@ function LOADBAL(action,args...)
             ename = "EGB"*string(Int64(v_["I2+2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             arrset(pbm.elftype,ie,"eCOMB1")
-            arrset(ielftype, ie, iet_["eCOMB1"])
+            arrset(ielftype,ie,iet_["eCOMB1"])
             ename = "EGB"*string(Int64(v_["I2+2"]))
             ie,ie_,_  = s2mpj_ii(ename,ie_)
             vname = "X"*string(I)*","*string(Int64(v_["5C"]))
@@ -853,7 +855,7 @@ function LOADBAL(action,args...)
         ename = "EGA17"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMA2")
-        arrset(ielftype, ie, iet_["eCOMA2"])
+        arrset(ielftype,ie,iet_["eCOMA2"])
         vname = "X5,4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -865,7 +867,7 @@ function LOADBAL(action,args...)
         ename = "EGB17"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMB2")
-        arrset(ielftype, ie, iet_["eCOMB2"])
+        arrset(ielftype,ie,iet_["eCOMB2"])
         vname = "X5,4"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -877,7 +879,7 @@ function LOADBAL(action,args...)
         ename = "EGA18"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMA2")
-        arrset(ielftype, ie, iet_["eCOMA2"])
+        arrset(ielftype,ie,iet_["eCOMA2"])
         vname = "X4,5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -889,7 +891,7 @@ function LOADBAL(action,args...)
         ename = "EGB18"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMB2")
-        arrset(ielftype, ie, iet_["eCOMB2"])
+        arrset(ielftype,ie,iet_["eCOMB2"])
         vname = "X4,5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -901,7 +903,7 @@ function LOADBAL(action,args...)
         ename = "EGA19"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMA2")
-        arrset(ielftype, ie, iet_["eCOMA2"])
+        arrset(ielftype,ie,iet_["eCOMA2"])
         vname = "X5,8"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -913,7 +915,7 @@ function LOADBAL(action,args...)
         ename = "EGB19"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMB2")
-        arrset(ielftype, ie, iet_["eCOMB2"])
+        arrset(ielftype,ie,iet_["eCOMB2"])
         vname = "X5,8"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -925,7 +927,7 @@ function LOADBAL(action,args...)
         ename = "EGA20"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMA2")
-        arrset(ielftype, ie, iet_["eCOMA2"])
+        arrset(ielftype,ie,iet_["eCOMA2"])
         vname = "X8,5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -937,7 +939,7 @@ function LOADBAL(action,args...)
         ename = "EGB20"
         ie,ie_,_  = s2mpj_ii(ename,ie_)
         arrset(pbm.elftype,ie,"eCOMB2")
-        arrset(ielftype, ie, iet_["eCOMB2"])
+        arrset(ielftype,ie,iet_["eCOMB2"])
         vname = "X8,5"
         iv,ix_,pb = s2mpj_nlx(vname,ix_,pb,1,nothing,nothing,nothing)
         posev = findfirst(x->x=="V",elftv[ielftype[ie]])
@@ -984,8 +986,13 @@ function LOADBAL(action,args...)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "OLR2-MN-31-31"
+        pb.pbclass = "C-OLR2-MN-31-31"
+        pbm.objderlvl = 2
+        pb.objderlvl = pbm.objderlvl;
+        pbm.conderlvl = [2]
+        pb.conderlvl  = pbm.conderlvl;
         return pb, pbm
+
 # **********************
 #  SET UP THE ELEMENTS *
 #  ROUTINE             *
@@ -1188,7 +1195,9 @@ function LOADBAL(action,args...)
 
     #%%%%%%%%%%%%%%% THE MAIN ACTIONS %%%%%%%%%%%%%%%
 
-    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv","cJxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy","LHxyv","LIHxyv"]
+    elseif action in  ["fx","fgx","fgHx","cx","cJx","cJHx","cIx","cIJx","cIJHx","cIJxv","fHxv",
+                       "cJxv","cJtxv","cIJtxv","Lxy","Lgxy","LgHxy","LIxy","LIgxy","LIgHxy",
+                       "LHxyv","LIHxyv"]
 
         pbm = args[1]
         if pbm.name == name
@@ -1200,7 +1209,7 @@ function LOADBAL(action,args...)
         end
 
     else
-        println("ERROR: unknown action "*action*" requested from "*name*"%s.jl")
+        println("ERROR: action "*action*" unavailable for problem "*name*".jl")
         return ntuple(i->undef,args[end])
     end
 

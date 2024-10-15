@@ -20,11 +20,13 @@ class  MESH(CUTEst_problem):
 # 
 #    SIF input: Prof. Dr. Michael Kraetzschmar
 # 
-#    classification = "OOR2-AY-41-48"
+#    classification = "C-OOR2-AY-41-48"
 # 
 #    Problem data
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MESH'
@@ -304,7 +306,7 @@ class  MESH(CUTEst_problem):
             ename = 'aldsq'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ediffsq')
-            ielftype = arrset(ielftype, ie, iet_["ediffsq"])
+            ielftype = arrset(ielftype,ie,iet_["ediffsq"])
             vname = 'alpha'+str(i)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='winkel')[0]
@@ -316,7 +318,7 @@ class  MESH(CUTEst_problem):
             ename = 'bedsq'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ediffsq')
-            ielftype = arrset(ielftype, ie, iet_["ediffsq"])
+            ielftype = arrset(ielftype,ie,iet_["ediffsq"])
             vname = 'beta'+str(i)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='winkel')[0]
@@ -328,7 +330,7 @@ class  MESH(CUTEst_problem):
             ename = 'gadsq'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ediffsq')
-            ielftype = arrset(ielftype, ie, iet_["ediffsq"])
+            ielftype = arrset(ielftype,ie,iet_["ediffsq"])
             vname = 'gamma'+str(i)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='winkel')[0]
@@ -341,7 +343,7 @@ class  MESH(CUTEst_problem):
             ename = 'laeng'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'elaenge')
-            ielftype = arrset(ielftype, ie, iet_["elaenge"])
+            ielftype = arrset(ielftype,ie,iet_["elaenge"])
         ename = 'laeng1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'x1'
@@ -522,7 +524,7 @@ class  MESH(CUTEst_problem):
             ename = 'sal'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'esklprod')
-            ielftype = arrset(ielftype, ie, iet_["esklprod"])
+            ielftype = arrset(ielftype,ie,iet_["esklprod"])
         ename = 'sal1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'x2'
@@ -631,7 +633,7 @@ class  MESH(CUTEst_problem):
             ename = 'cal'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ecosprod')
-            ielftype = arrset(ielftype, ie, iet_["ecosprod"])
+            ielftype = arrset(ielftype,ie,iet_["ecosprod"])
         ename = 'cal1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'l3'
@@ -692,7 +694,7 @@ class  MESH(CUTEst_problem):
             ename = 'sbe'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'esklprod')
-            ielftype = arrset(ielftype, ie, iet_["esklprod"])
+            ielftype = arrset(ielftype,ie,iet_["esklprod"])
         ename = 'sbe1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'x1'
@@ -801,7 +803,7 @@ class  MESH(CUTEst_problem):
             ename = 'cbe'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'ecosprod')
-            ielftype = arrset(ielftype, ie, iet_["ecosprod"])
+            ielftype = arrset(ielftype,ie,iet_["ecosprod"])
         ename = 'cbe1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'l1'
@@ -862,7 +864,7 @@ class  MESH(CUTEst_problem):
             ename = 'flae'+str(i)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'evekprod')
-            ielftype = arrset(ielftype, ie, iet_["evekprod"])
+            ielftype = arrset(ielftype,ie,iet_["evekprod"])
         ename = 'flae1'
         [ie,ie_,_] = s2mpj_ii(ename,ie_)
         vname = 'x1'
@@ -1040,8 +1042,12 @@ class  MESH(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "OOR2-AY-41-48"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-OOR2-AY-41-48"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

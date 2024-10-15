@@ -23,7 +23,7 @@ class  CATENARY(CUTEst_problem):
 # 
 #    SIF input: Ph. L. Toint, May 1993.
 # 
-#    classification = "LQR2-AY-V-V"
+#    classification = "C-LQR2-AY-V-V"
 # 
 #    Number of beams = N+1 ; the number of variables is 3*(N+2)
 # 
@@ -34,6 +34,8 @@ class  CATENARY(CUTEst_problem):
 # IE N+1                 166            $-PARAMETER n = 501     original value
 # IE N+1                 1000           $-PARAMETER n = 3003
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CATENARY'
@@ -154,7 +156,7 @@ class  CATENARY(CUTEst_problem):
             ename = 'EX'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eISQ')
-            ielftype = arrset(ielftype, ie, iet_["eISQ"])
+            ielftype = arrset(ielftype,ie,iet_["eISQ"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -166,7 +168,7 @@ class  CATENARY(CUTEst_problem):
             ename = 'EY'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eISQ')
-            ielftype = arrset(ielftype, ie, iet_["eISQ"])
+            ielftype = arrset(ielftype,ie,iet_["eISQ"])
             vname = 'Y'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -178,7 +180,7 @@ class  CATENARY(CUTEst_problem):
             ename = 'EZ'+str(I)
             [ie,ie_,_] = s2mpj_ii(ename,ie_)
             self.elftype = arrset(self.elftype,ie,'eISQ')
-            ielftype = arrset(ielftype, ie, iet_["eISQ"])
+            ielftype = arrset(ielftype,ie,iet_["eISQ"])
             vname = 'X'+str(I)
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V')[0]
@@ -224,8 +226,12 @@ class  CATENARY(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.lincons =  np.where(self.congrps in np.setdiff1d(nlc,self.congrps))[0]
-        self.pbclass = "LQR2-AY-V-V"
+        self.lincons  = (
+              np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
+        self.pbclass = "C-LQR2-AY-V-V"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

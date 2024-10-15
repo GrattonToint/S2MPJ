@@ -16,7 +16,7 @@ class  BIGGS3(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "SXR2-AN-6-0"
+#    classification = "C-SXR2-AN-6-0"
 # 
 #    This function  is a nonlinear least squares with 13 groups.  Each
 #    group has 3 nonlinear elements.  It is obtained by fixing
@@ -29,6 +29,8 @@ class  BIGGS3(CUTEst_problem):
 #    Number of variables
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 6 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGS3'
@@ -130,7 +132,7 @@ class  BIGGS3(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePEXP')
-                ielftype = arrset( ielftype,ie,iet_['ePEXP'])
+                ielftype = arrset(ielftype,ie,iet_['ePEXP'])
             vname = 'X3'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -145,7 +147,7 @@ class  BIGGS3(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePEXP')
-                ielftype = arrset( ielftype,ie,iet_['ePEXP'])
+                ielftype = arrset(ielftype,ie,iet_['ePEXP'])
             vname = 'X4'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -160,7 +162,7 @@ class  BIGGS3(CUTEst_problem):
             [ie,ie_,newelt] = s2mpj_ii(ename,ie_)
             if newelt:
                 self.elftype = arrset(self.elftype,ie,'ePEXP')
-                ielftype = arrset( ielftype,ie,iet_['ePEXP'])
+                ielftype = arrset(ielftype,ie,iet_['ePEXP'])
             vname = 'X6'
             [iv,ix_] = s2mpj_nlx(self,vname,ix_,1,None,None,None)
             posev = np.where(elftv[ielftype[ie]]=='V1')[0]
@@ -201,7 +203,9 @@ class  BIGGS3(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "SXR2-AN-6-0"
+        self.pbclass = "C-SXR2-AN-6-0"
+        self.objderlvl = 2
+
 # **********************
 #  SET UP THE FUNCTION *
 #  AND RANGE ROUTINES  *

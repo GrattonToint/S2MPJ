@@ -34,11 +34,13 @@ class  PORTFL6(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, July 1996.
 # 
-#    classification = "SLR2-MN-12-1"
+#    classification = "C-SLR2-MN-12-1"
 # 
 #    number of sensitivities
 # 
 # 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#   Translated to Python by S2MPJ version 7 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PORTFL6'
@@ -946,7 +948,10 @@ class  PORTFL6(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "SLR2-MN-12-1"
+        self.pbclass = "C-SLR2-MN-12-1"
+        self.objderlvl = 2
+        self.conderlvl = [2]
+
 # ********************
 #  SET UP THE GROUPS *
 #  ROUTINE           *
