@@ -11,6 +11,16 @@ its objective function and/or constraints as well as their derivatives.
 A full description of the collection and associated tools is available in the paper
 's2mpj.pdf'.
 
+## NOTE:
+
+Due to a limitation on the length of displayed directory content in Github, *only a
+fraction of the test problems are listed* when showing the content of the matlab_problems,
+python_problems and julia_problems directories on the Github web site. The lists of all
+available problems can be accessed in `list_of_matlab_problems`, `list_of_python_problems` and
+`list_of_julia_problems`, respectively.  The complete set of test problems can be obtained
+by downloading `all_matlab_problems.tar.gz`, `all_python_problems.tar.gz` and/or
+`all_julia_problems.tar.gz`.
+
 ## Using the collection in Matlab
 
 To use S2MPJ in Matlab, download the contents of this repository,
