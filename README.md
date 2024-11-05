@@ -88,16 +88,16 @@ The list of Matlab test problems is available in the "list_of_matlab_problems" f
 ## Using the collection in Python
 
 The use of the collection in Python is very similar to that described for Matlab.
-After dowloading the content of the repository, make sure the directory containing
+After downloading the content of the repository, make sure the directory containing
 the file "s2mpjlib.py" and the subdirectory 'python_problems" are in sys.path.
 Consider now using the problem `PROBLEM.py` in an optimization code.
 After importing the functions of the PROBLEM module by
 ```
-from PROBNAME import *
+from PROBLEM import *
 ```
 the setup of the problem is now performed by a call of the form
 ```
-PROB = PROBNAME( args[:] )
+PROB = PROBLEM( args[:] )
 ```
 where `args[:]` is an optional comma separated list of problem-dependent
 arguments. The subsequent evaluation tasks are then obtained by
