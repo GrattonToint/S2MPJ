@@ -19,7 +19,7 @@ class  BRATU2DT(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NOR2-MN-V-V"
+#    classification = "C-CNOR2-MN-V-V"
 # 
 #    P is the number of points in one side of the unit square.
 # 
@@ -31,7 +31,7 @@ class  BRATU2DT(CUTEst_problem):
 # IE P                   72             $-PARAMETER  n=P**2
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BRATU2DT'
@@ -183,7 +183,7 @@ class  BRATU2DT(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-MN-V-V"
+        self.pbclass = "C-CNOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

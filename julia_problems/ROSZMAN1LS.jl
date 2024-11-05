@@ -18,13 +18,13 @@ function ROSZMAN1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #   Reference: Roszman, L., NIST (1979).  
 #     Quantum Defects for Sulfur I Atom.
 # 
-#    classification = "C-SUR2-MN-4-0"
+#    classification = "C-CSUR2-MN-4-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ROSZMAN1LS"
@@ -185,7 +185,7 @@ function ROSZMAN1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-MN-4-0"
+        pb.pbclass = "C-CSUR2-MN-4-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -36,13 +36,13 @@ function TENBARS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, August 1990.
 # 
-#    classification = "C-LOR2-MY-18-9"
+#    classification = "C-CLOR2-MY-18-9"
 # 
 #    Constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TENBARS1"
@@ -463,7 +463,7 @@ function TENBARS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-MY-18-9"
+        pb.pbclass = "C-CLOR2-MY-18-9"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -15,13 +15,13 @@ function PFIT2LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    SIF input: Ph. Toint, March 1994.
 #               Lower bound on H added, Nov 2002.
 # 
-#    classification = "C-SBR2-AN-3-0"
+#    classification = "C-CSBR2-AN-3-0"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PFIT2LS"
@@ -223,7 +223,7 @@ function PFIT2LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-AN-3-0"
+        pb.pbclass = "C-CSBR2-AN-3-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

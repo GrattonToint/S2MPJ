@@ -14,13 +14,13 @@ function varargout = HS104(action,varargin)
 % 
 %    SIF input: Nick Gould, August 1991.
 % 
-%    classification = 'C-OOR2-AN-8-5'
+%    classification = 'C-COOR2-AN-8-5'
 % 
 %    Number of variables
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -421,7 +421,7 @@ switch(action)
         pb.cupper(1:pb.nge) = grange(gegrps);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-AN-8-5';
+        pb.pbclass = 'C-COOR2-AN-8-5';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

@@ -15,7 +15,7 @@ class  SWOPF(CUTEst_problem):
 #    SIF input: R. Bacher, Dept of Electrical Engineering, ETH Zurich, 
 #               November 1994.
 # 
-#    classification = "C-LQR2-RN-83-92"
+#    classification = "C-CLQR2-RN-83-92"
 # 
 #    Number of nodes       =   7
 #    Number of branches    =   7
@@ -23,7 +23,7 @@ class  SWOPF(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SWOPF'
@@ -2789,7 +2789,7 @@ class  SWOPF(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-RN-83-92"
+        self.pbclass = "C-CLQR2-RN-83-92"
         self.objderlvl = 2
         self.conderlvl = [2]
 

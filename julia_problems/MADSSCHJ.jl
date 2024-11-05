@@ -16,7 +16,7 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, August 1993.
 # 
-#    classification = "C-LQR2-AN-V-V"
+#    classification = "C-CLQR2-AN-V-V"
 # 
 #    N is the number of variables - 1, and must be even and at least 4.
 #    The number of inequality constraints is 2*N - 2.
@@ -36,7 +36,7 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   200            $-PARAMETER  n=201, m=398
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MADSSCHJ"
@@ -281,7 +281,7 @@ function MADSSCHJ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-AN-V-V"
+        pb.pbclass = "C-CLQR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

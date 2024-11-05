@@ -16,13 +16,13 @@ class  DISC2(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, November 1991.
 # 
-#    classification = "C-LQR2-MY-29-23"
+#    classification = "C-CLQR2-MY-29-23"
 # 
 #    Number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DISC2'
@@ -548,7 +548,7 @@ class  DISC2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-MY-29-23"
+        self.pbclass = "C-CLQR2-MY-29-23"
         self.objderlvl = 2
         self.conderlvl = [2]
 

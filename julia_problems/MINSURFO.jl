@@ -16,13 +16,13 @@ function MINSURFO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, December 2000
 # 
-#    classification = "C-OBR2-AN-V-V"
+#    classification = "C-COBR2-AN-V-V"
 # 
 #  grid points in x direction (fixed at 50 in COPS)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MINSURFO"
@@ -268,7 +268,7 @@ function MINSURFO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-V-V"
+        pb.pbclass = "C-COBR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

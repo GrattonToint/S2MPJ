@@ -10,7 +10,7 @@ function NONCVXU2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, April 1996
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    The number of variables
 # 
@@ -21,7 +21,7 @@ function NONCVXU2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NONCVXU2"
@@ -173,7 +173,7 @@ function NONCVXU2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-AN-V-0"
+        pb.pbclass = "C-COUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

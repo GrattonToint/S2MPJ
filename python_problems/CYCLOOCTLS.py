@@ -31,7 +31,7 @@ class  CYCLOOCTLS(CUTEst_problem):
 # 
 #    This is a least-squares version of CYCLOOCT.SIF
 # 
-#    classification = "C-SBR2-MN-V-0"
+#    classification = "C-CSBR2-MN-V-0"
 # 
 #    The number of molecules
 # 
@@ -42,7 +42,7 @@ class  CYCLOOCTLS(CUTEst_problem):
 # IE P                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CYCLOOCTLS'
@@ -397,7 +397,7 @@ class  CYCLOOCTLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-MN-V-0"
+        self.pbclass = "C-CSBR2-MN-V-0"
         self.objderlvl = 2
 
 # **********************

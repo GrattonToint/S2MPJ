@@ -19,13 +19,13 @@ function LEVYMONE5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "C-NOR2-AY-2-4"
+#    classification = "C-CNOR2-AY-2-4"
 # 
 #    N is the number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LEVYMONE5"
@@ -188,7 +188,7 @@ function LEVYMONE5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AY-2-4"
+        pb.pbclass = "C-CNOR2-AY-2-4"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

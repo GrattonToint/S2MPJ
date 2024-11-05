@@ -21,7 +21,7 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, April 1991.
 # 
-#    classification = "C-SOR2-AN-V-V"
+#    classification = "C-CSOR2-AN-V-V"
 # 
 #    Number of time intervals
 #    The number of variables is 9T+6, of which 9 are fixed.
@@ -33,7 +33,7 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CORKSCRW"
@@ -337,7 +337,7 @@ function CORKSCRW(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-SOR2-AN-V-V"
+        pb.pbclass = "C-CSOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

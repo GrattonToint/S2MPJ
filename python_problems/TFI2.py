@@ -26,7 +26,7 @@ class  TFI2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1992.
 # 
-#    classification = "C-LLR2-AN-3-V"
+#    classification = "C-CLLR2-AN-3-V"
 # 
 #    Discretization
 # 
@@ -34,7 +34,7 @@ class  TFI2(CUTEst_problem):
 # IE M                   50
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TFI2'
@@ -135,7 +135,7 @@ class  TFI2(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-LLR2-AN-3-V"
+        self.pbclass = "C-CLLR2-AN-3-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

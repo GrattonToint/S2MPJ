@@ -16,13 +16,13 @@ class  GENHS28(CUTEst_problem):
 #    SIF input: Nick Gould, December 1991
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-QLR2-AY-10-8"
+#    classification = "C-CQLR2-AY-10-8"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GENHS28'
@@ -155,7 +155,7 @@ class  GENHS28(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AY-10-8"
+        self.pbclass = "C-CQLR2-AY-10-8"
         self.objderlvl = 2
         self.conderlvl = [2]
 

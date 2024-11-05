@@ -19,13 +19,13 @@ class  ELATVIDUNE(CUTEst_problem):
 # 
 #    SIF input: Nick Gould
 # 
-#    classification = "C-NOR2-MN-2-3"
+#    classification = "C-CNOR2-MN-2-3"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ELATVIDUNE'
@@ -185,7 +185,7 @@ class  ELATVIDUNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-MN-2-3"
+        self.pbclass = "C-CNOR2-MN-2-3"
         self.objderlvl = 2
         self.conderlvl = [2]
 

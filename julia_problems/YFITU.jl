@@ -18,11 +18,11 @@ function YFITU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 #               modified by Ph. Toint, March 1994.
 #               derivatives corrected by Nick Gould, June 2019.
 # 
-#    classification = "C-SUR2-MN-3-0"
+#    classification = "C-CSUR2-MN-3-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YFITU"
@@ -149,7 +149,7 @@ function YFITU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-MN-3-0"
+        pb.pbclass = "C-CSUR2-MN-3-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -22,13 +22,13 @@ function MGH17SLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 #    Least-squares version of MGH17S.SIF, Nick Gould, Jan 2020
 # 
-#    classification = "C-NOR2-MN-5-33"
+#    classification = "C-CNOR2-MN-5-33"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MGH17SLS"
@@ -220,7 +220,7 @@ function MGH17SLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-NOR2-MN-5-33"
+        pb.pbclass = "C-CNOR2-MN-5-33"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

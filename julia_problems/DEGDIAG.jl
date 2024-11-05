@@ -11,7 +11,7 @@ function DEGDIAG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, August 2011
 # 
-#    classification = "C-QBR2-AN-V-0"
+#    classification = "C-CQBR2-AN-V-0"
 # 
 #    The number of variables - 1
 # 
@@ -24,7 +24,7 @@ function DEGDIAG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DEGDIAG"
@@ -86,7 +86,7 @@ function DEGDIAG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-V-0"
+        pb.pbclass = "C-CQBR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

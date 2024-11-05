@@ -13,13 +13,13 @@ function varargout = PRODPL0(action,varargin)
 % 
 %    SIF input: A.R. Conn, March 1991.
 % 
-%    classification = 'C-LQR2-RY-60-29'
+%    classification = 'C-CLQR2-RY-60-29'
 % 
 %    Constants
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -1221,7 +1221,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-RY-60-29';
+        pb.pbclass = 'C-CLQR2-RY-60-29';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

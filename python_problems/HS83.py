@@ -15,13 +15,13 @@ class  HS83(CUTEst_problem):
 # 
 #    SIF input: B Baudson, Apr 1989.
 # 
-#    classification = "C-QQR2-AN-5-3"
+#    classification = "C-CQQR2-AN-5-3"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS83'
@@ -303,7 +303,7 @@ class  HS83(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QQR2-AN-5-3"
+        self.pbclass = "C-CQQR2-AN-5-3"
         self.objderlvl = 2
         self.conderlvl = [2]
 

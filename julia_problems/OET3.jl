@@ -31,7 +31,7 @@ function OET3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Nick Gould, February, 1994.
 # 
-#    classification = "C-LLR2-AN-4-V"
+#    classification = "C-CLLR2-AN-4-V"
 # 
 #    Discretization
 # 
@@ -39,7 +39,7 @@ function OET3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OET3"
@@ -148,7 +148,7 @@ function OET3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-LLR2-AN-4-V"
+        pb.pbclass = "C-CLLR2-AN-4-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

@@ -20,13 +20,13 @@ class  MESH(CUTEst_problem):
 # 
 #    SIF input: Prof. Dr. Michael Kraetzschmar
 # 
-#    classification = "C-OOR2-AY-41-48"
+#    classification = "C-COOR2-AY-41-48"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MESH'
@@ -1044,7 +1044,7 @@ class  MESH(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AY-41-48"
+        self.pbclass = "C-COOR2-AY-41-48"
         self.objderlvl = 2
         self.conderlvl = [2]
 

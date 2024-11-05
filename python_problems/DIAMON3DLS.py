@@ -17,13 +17,13 @@ class  DIAMON3DLS(CUTEst_problem):
 #    Least-squares version of DIAMON3D.SIF, Nick Gould, Jan 2020.
 #    corrected May 2024
 # 
-#    classification = "C-SUR2-MN-99-0"
+#    classification = "C-CSUR2-MN-99-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIAMON3DLS'
@@ -9524,7 +9524,7 @@ class  DIAMON3DLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-MN-99-0"
+        self.pbclass = "C-CSUR2-MN-99-0"
         self.objderlvl = 2
 
 # **********************

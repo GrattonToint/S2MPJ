@@ -97,13 +97,13 @@ function varargout = SANTALS(action,varargin)
 % 
 %    SIF input: Nick Gould, Dec 2016.
 % 
-%    classification = 'C-SBR2-AN-21-0'
+%    classification = 'C-CSBR2-AN-21-0'
 % 
 %    Number of stops on Santa's path (path goes from index 0 to 12)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -495,7 +495,7 @@ switch(action)
 % LO SANTA               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SBR2-AN-21-0';
+        pb.pbclass = 'C-CSBR2-AN-21-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

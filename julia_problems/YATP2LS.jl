@@ -19,7 +19,7 @@ function YATP2LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Ph. Toint, June 2003.
 # 
-#    classification = "C-SUR2-AN-V-V"
+#    classification = "C-CSUR2-AN-V-V"
 # 
 #   least-squares version, October 2014
 # 
@@ -34,7 +34,7 @@ function YATP2LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YATP2LS"
@@ -196,7 +196,7 @@ function YATP2LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-V-V"
+        pb.pbclass = "C-CSUR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -24,13 +24,13 @@ class  AIRPORT(CUTEst_problem):
 #                November 1994, DMA - IMECC- UNICAMP
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "C-SQR2-MN-84-42"
+#    classification = "C-CSQR2-MN-84-42"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRPORT'
@@ -313,7 +313,7 @@ class  AIRPORT(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SQR2-MN-84-42"
+        self.pbclass = "C-CSQR2-MN-84-42"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

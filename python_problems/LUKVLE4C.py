@@ -17,7 +17,7 @@ class  LUKVLE4C(CUTEst_problem):
 #    SIF input: Nick Gould, April 2001
 #    modifield version of LUKVLE4 (formulation corrected) May 2024
 # 
-#    classification = "C-OOR2-AY-V-V"
+#    classification = "C-COOR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -27,7 +27,7 @@ class  LUKVLE4C(CUTEst_problem):
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLE4C'
@@ -265,7 +265,7 @@ class  LUKVLE4C(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AY-V-V"
+        self.pbclass = "C-COOR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

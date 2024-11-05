@@ -20,7 +20,7 @@ function QR3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Ph. Toint, Nov 1993
 # 
-#    classification = "C-NQR2-AN-V-V"
+#    classification = "C-CNQR2-AN-V-V"
 # 
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
@@ -31,7 +31,7 @@ function QR3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QR3D"
@@ -256,7 +256,7 @@ function QR3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NQR2-AN-V-V"
+        pb.pbclass = "C-CNQR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

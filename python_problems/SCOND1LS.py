@@ -20,7 +20,7 @@ class  SCOND1LS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SBR2-AN-V-V"
+#    classification = "C-CSBR2-AN-V-V"
 # 
 #    N  = Number of discretized point inside the interval [a, b]
 #    LN = Index of the last negative discretization point
@@ -30,7 +30,7 @@ class  SCOND1LS(CUTEst_problem):
 # IE N                   10             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCOND1LS'
@@ -215,7 +215,7 @@ class  SCOND1LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AN-V-V"
+        self.pbclass = "C-CSBR2-AN-V-V"
         self.objderlvl = 2
 
 

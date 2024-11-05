@@ -37,13 +37,13 @@ function varargout = TENBARS4(action,varargin)
 %    SIF input: Ph. Toint, August 1990.
 %               correction by S. Gratton & Ph. Toint, May 2024
 % 
-%    classification = 'C-LOR2-MY-18-9'
+%    classification = 'C-CLOR2-MY-18-9'
 % 
 %    Constants
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -512,7 +512,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LOR2-MY-18-9';
+        pb.pbclass = 'C-CLOR2-MY-18-9';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

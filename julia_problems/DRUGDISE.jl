@@ -28,7 +28,7 @@ function DRUGDISE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Nov 1993.
 # 
-#    classification = "C-LOR2-MY-V-V"
+#    classification = "C-CLOR2-MY-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
@@ -38,7 +38,7 @@ function DRUGDISE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NI                  100            $-PARAMETER n=6003, m=5000 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRUGDISE"
@@ -467,7 +467,7 @@ function DRUGDISE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-MY-V-V"
+        pb.pbclass = "C-CLOR2-MY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -17,7 +17,7 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 #    SIF input: Aixiang Yao, Virginia Tech., May 1995
 #               modifications by Nick Gould
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #   Number of discretization points
 # 
@@ -27,7 +27,7 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # IE P                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YAO"
@@ -149,7 +149,7 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-QLR2-AN-V-V"
+        pb.pbclass = "C-CQLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

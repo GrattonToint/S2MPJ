@@ -8,10 +8,10 @@ class  FERRISDC(CUTEst_problem):
 #    *********
 # 
 #    A QP suggested by Michael Ferris
-#    classification = "C-"
+#    classification = "C-C"
 #    SIF input: Nick Gould, November 2001.
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE n                   4              $-PARAMETER
@@ -19,7 +19,7 @@ class  FERRISDC(CUTEst_problem):
 # IE n                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FERRISDC'
@@ -404,7 +404,7 @@ class  FERRISDC(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-QLR2-AN-V-V"
+        self.pbclass = "C-CQLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

@@ -31,7 +31,7 @@ class  LIPPERT2(CUTEst_problem):
 #    SIF input: Nick Gould, September 2006
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-LQR2-MN-V-V"
+#    classification = "C-CLQR2-MN-V-V"
 # 
 #    Number of nodes in x direction
 # 
@@ -43,7 +43,7 @@ class  LIPPERT2(CUTEst_problem):
 # IE NX                  100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LIPPERT2'
@@ -307,7 +307,7 @@ class  LIPPERT2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-MN-V-V"
+        self.pbclass = "C-CLQR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

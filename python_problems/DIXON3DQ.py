@@ -17,7 +17,7 @@ class  DIXON3DQ(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-QUR2-AN-V-0"
+#    classification = "C-CQUR2-AN-V-0"
 # 
 #    Number of variables (variable)
 # 
@@ -28,7 +28,7 @@ class  DIXON3DQ(CUTEst_problem):
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXON3DQ'
@@ -117,7 +117,7 @@ class  DIXON3DQ(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QUR2-AN-V-0"
+        self.pbclass = "C-CQUR2-AN-V-0"
         self.objderlvl = 2
 
 # ********************

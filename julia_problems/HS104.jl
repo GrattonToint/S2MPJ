@@ -14,13 +14,13 @@ function HS104(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SIF input: Nick Gould, August 1991.
 # 
-#    classification = "C-OOR2-AN-8-5"
+#    classification = "C-COOR2-AN-8-5"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS104"
@@ -410,7 +410,7 @@ function HS104(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOR2-AN-8-5"
+        pb.pbclass = "C-COOR2-AN-8-5"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

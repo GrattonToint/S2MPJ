@@ -16,7 +16,7 @@ function YORKNET(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #               e-mail: bul@uk.ac.dmu * Tel no.0533 577070
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-SOR2-AY-312-256"
+#    classification = "C-CSOR2-AY-312-256"
 # 
 # DECLARE CONSTANTS DESCRIBING NETWORK
 # 
@@ -24,7 +24,7 @@ function YORKNET(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YORKNET"
@@ -836,7 +836,7 @@ function YORKNET(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-SOR2-AY-312-256"
+        pb.pbclass = "C-CSOR2-AY-312-256"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

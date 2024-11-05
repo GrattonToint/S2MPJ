@@ -12,12 +12,12 @@ class  CONCON(CUTEst_problem):
 #    SIF input: Sybille Schachler, Oxford, August 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-LOI2-MN-15-11"
+#    classification = "C-CLOI2-MN-15-11"
 # 
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CONCON'
@@ -253,7 +253,7 @@ class  CONCON(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOI2-MN-15-11"
+        self.pbclass = "C-CLOI2-MN-15-11"
         self.objderlvl = 2
         self.conderlvl = [2]
 

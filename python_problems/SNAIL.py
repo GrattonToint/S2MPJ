@@ -15,13 +15,13 @@ class  SNAIL(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, May 1990.
 # 
-#    classification = "C-OUR2-AN-2-0"
+#    classification = "C-COUR2-AN-2-0"
 # 
 #    Problem parameters (CUP > CLOW > 0)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SNAIL'
@@ -115,7 +115,7 @@ class  SNAIL(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-2-0"
+        self.pbclass = "C-COUR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

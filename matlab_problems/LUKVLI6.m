@@ -17,7 +17,7 @@ function varargout = LUKVLI6(action,varargin)
 % 
 %    SIF input: Nick Gould, April 2001
 % 
-%    classification = 'C-OOR2-AY-V-V'
+%    classification = 'C-COOR2-AY-V-V'
 % 
 %    some useful parameters, including N, the number of variables.
 % 
@@ -27,7 +27,7 @@ function varargout = LUKVLI6(action,varargin)
 % IE N                   9999           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -321,7 +321,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-AY-V-V';
+        pb.pbclass = 'C-COOR2-AY-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

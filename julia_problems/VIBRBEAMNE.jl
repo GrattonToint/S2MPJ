@@ -30,11 +30,11 @@ function VIBRBEAMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #               D. E. Montgomery, Virginia Tech., April 1993.
 #    Nonlinear-equations version of VIBRBEAM.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-NOR2-MN-8-30"
+#    classification = "C-CNOR2-MN-8-30"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "VIBRBEAMNE"
@@ -273,7 +273,7 @@ function VIBRBEAMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-MN-8-30"
+        pb.pbclass = "C-CNOR2-MN-8-30"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

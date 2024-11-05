@@ -10,14 +10,14 @@ function RES(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # 
 #    SIF input:  A. R. Conn, June 1993.
 # 
-#    classification = "C-NLR2-MN-20-14"
+#    classification = "C-CNLR2-MN-20-14"
 # 
 # 
 # 
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RES"
@@ -378,7 +378,7 @@ function RES(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-NLR2-MN-20-14"
+        pb.pbclass = "C-CNLR2-MN-20-14"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

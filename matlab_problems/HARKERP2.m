@@ -18,7 +18,7 @@ function varargout = HARKERP2(action,varargin)
 % 
 %    SIF input: Nick Gould, July 1993.
 % 
-%    classification = 'C-QBR2-AN-V-V'
+%    classification = 'C-CQBR2-AN-V-V'
 % 
 %    Number of variables
 % 
@@ -29,7 +29,7 @@ function varargout = HARKERP2(action,varargin)
 % IE N                   1000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -149,7 +149,7 @@ switch(action)
         pb.xlower = zeros(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AN-V-V';
+        pb.pbclass = 'C-CQBR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

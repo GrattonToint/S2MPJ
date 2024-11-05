@@ -1,9 +1,17 @@
 Release notes for S2MPJ
 -----------------------
 
-6 X 2024 : correction of a few minor bugs,
-           addition of the problem selection tool in s2mpjlib,
-           handling of missing derivatives,
-           addition of the cJtxv and cIJtxv evaluation actions.
-           Updating of the documentation to reflect these modifications.
+6 X 2024   : correction of a few minor bugs,
+             addition of the problem selection tool in s2mpjlib,
+             handling of missing derivatives,
+             addition of the cJtxv and cIJtxv evaluation actions.
+             updating of the documentation to reflect these modifications.
 
+16 X 2024  : added a warning about the github lists of test problems in the README
+             correction of a bug in the Python library
+            
+5 XI 2024  : addition of the SPARCO*.m and NOZZLEfp.m problems
+             extension of the classifiaction scheme to reflect problem's origin and variables' types
+             updating of the documentation to reflect these modifications.
+            
+             

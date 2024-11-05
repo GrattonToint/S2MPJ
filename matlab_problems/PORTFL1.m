@@ -35,13 +35,13 @@ function varargout = PORTFL1(action,varargin)
 % 
 %    SIF input: Ph. Toint, July 1996.
 % 
-%    classification = 'C-SLR2-MN-12-1'
+%    classification = 'C-CSLR2-MN-12-1'
 % 
 %    number of sensitivities
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -957,7 +957,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-SLR2-MN-12-1';
+        pb.pbclass = 'C-CSLR2-MN-12-1';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

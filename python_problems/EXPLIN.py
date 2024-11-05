@@ -12,7 +12,7 @@ class  EXPLIN(CUTEst_problem):
 #    SIF input: Ph. Toint, 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-OBR2-AN-V-V"
+#    classification = "C-COBR2-AN-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
@@ -24,7 +24,7 @@ class  EXPLIN(CUTEst_problem):
 # IE N                   1200           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPLIN'
@@ -131,7 +131,7 @@ class  EXPLIN(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-V-V"
+        self.pbclass = "C-COBR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

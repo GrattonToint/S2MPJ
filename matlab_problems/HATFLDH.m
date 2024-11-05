@@ -16,11 +16,11 @@ function varargout = HATFLDH(action,varargin)
 % 
 %    SIF input: Ph. Toint, May 1990.
 % 
-%    classification = 'C-QLR2-AN-4-7'
+%    classification = 'C-CQLR2-AN-4-7'
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -288,7 +288,7 @@ switch(action)
         pb.cupper(1:pb.nge) = grange(gegrps);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QLR2-AN-4-7';
+        pb.pbclass = 'C-CQLR2-AN-4-7';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

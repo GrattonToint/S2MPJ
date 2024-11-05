@@ -22,7 +22,7 @@ class  YATP1CNE(CUTEst_problem):
 #    SIF input: Ph. Toint, June 2003.
 #               corrected Nick Gould, March 2019
 # 
-#    classification = "C-NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    The dimension of the matrix
 # 
@@ -36,7 +36,7 @@ class  YATP1CNE(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP1CNE'
@@ -249,7 +249,7 @@ class  YATP1CNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-V-V"
+        self.pbclass = "C-CNOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

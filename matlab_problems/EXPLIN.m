@@ -11,7 +11,7 @@ function varargout = EXPLIN(action,varargin)
 %    SIF input: Ph. Toint, 1992.
 %               minor correction by Ph. Shott, Jan 1995.
 % 
-%    classification = 'C-OBR2-AN-V-V'
+%    classification = 'C-COBR2-AN-V-V'
 % 
 %       Alternative values for the SIF file parameters:
 % IE N                   12             $-PARAMETER
@@ -23,7 +23,7 @@ function varargout = EXPLIN(action,varargin)
 % IE N                   1200           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -136,7 +136,7 @@ switch(action)
 %    Solution
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OBR2-AN-V-V';
+        pb.pbclass = 'C-COBR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

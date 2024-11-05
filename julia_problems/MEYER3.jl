@@ -20,13 +20,13 @@ function MEYER3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-RN-3-0"
+#    classification = "C-CSUR2-RN-3-0"
 # 
 #    Number of groups
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MEYER3"
@@ -153,7 +153,7 @@ function MEYER3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-RN-3-0"
+        pb.pbclass = "C-CSUR2-RN-3-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -15,7 +15,7 @@ function varargout = HADAMALS(action,varargin)
 % 
 %    SIF input: Nick Gould, Nov 1993.
 % 
-%    classification = 'C-OBR2-RN-V-V'
+%    classification = 'C-COBR2-RN-V-V'
 % 
 %    The dimension of the matrix (=> N**2 variables).
 % 
@@ -32,7 +32,7 @@ function varargout = HADAMALS(action,varargin)
 % IE N                   20             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -203,7 +203,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OBR2-RN-V-V';
+        pb.pbclass = 'C-COBR2-RN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

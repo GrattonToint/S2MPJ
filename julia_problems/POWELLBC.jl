@@ -21,7 +21,7 @@ function POWELLBC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, Aug 2006.
 # 
-#    classification = "C-OBR2-AN-V-0"
+#    classification = "C-COBR2-AN-V-0"
 # 
 #    Number of points
 # 
@@ -30,7 +30,7 @@ function POWELLBC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   5              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "POWELLBC"
@@ -151,7 +151,7 @@ function POWELLBC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-V-0"
+        pb.pbclass = "C-COBR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

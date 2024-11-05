@@ -15,11 +15,11 @@ function varargout = ROSENMMX(action,varargin)
 % 
 %    SIF input: Ph. Toint, Nov 1993.
 % 
-%    classification = 'C-LQR2-AN-5-4'
+%    classification = 'C-CLQR2-AN-5-4'
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -335,7 +335,7 @@ switch(action)
         pb.cupper(1:pb.nle) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-AN-5-4';
+        pb.pbclass = 'C-CLQR2-AN-5-4';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

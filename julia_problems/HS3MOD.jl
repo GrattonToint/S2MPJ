@@ -14,11 +14,11 @@ function HS3MOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: A.R. Conn March 1990
 # 
-#    classification = "C-QBR2-AN-2-0"
+#    classification = "C-CQBR2-AN-2-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS3MOD"
@@ -86,7 +86,7 @@ function HS3MOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-2-0"
+        pb.pbclass = "C-CQBR2-AN-2-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

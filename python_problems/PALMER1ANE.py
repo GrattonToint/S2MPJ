@@ -20,13 +20,13 @@ class  PALMER1ANE(CUTEst_problem):
 #    SIF input: Nick Gould, 1990.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "C-NOR2-RN-6-35"
+#    classification = "C-CNOR2-RN-6-35"
 # 
 #    Number of data points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PALMER1ANE'
@@ -245,7 +245,7 @@ class  PALMER1ANE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-RN-6-35"
+        self.pbclass = "C-CNOR2-RN-6-35"
         self.objderlvl = 2
         self.conderlvl = [2]
 

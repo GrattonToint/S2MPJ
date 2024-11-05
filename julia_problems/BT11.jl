@@ -16,11 +16,11 @@ function BT11(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "C-OOR2-AY-5-3"
+#    classification = "C-COOR2-AY-5-3"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BT11"
@@ -253,7 +253,7 @@ function BT11(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOR2-AY-5-3"
+        pb.pbclass = "C-COOR2-AY-5-3"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

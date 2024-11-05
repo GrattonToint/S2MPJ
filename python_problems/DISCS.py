@@ -18,7 +18,7 @@ class  DISCS(CUTEst_problem):
 #    W. Pulleyblank,
 #    private communication, 1991.
 # 
-#    classification = "C-LQR2-MY-36-66"
+#    classification = "C-CLQR2-MY-36-66"
 # 
 #    SIF input: A.R. Conn and Ph. Toint, April 1991.
 # 
@@ -26,7 +26,7 @@ class  DISCS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DISCS'
@@ -248,7 +248,7 @@ class  DISCS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-MY-36-66"
+        self.pbclass = "C-CLQR2-MY-36-66"
         self.objderlvl = 2
         self.conderlvl = [2]
 

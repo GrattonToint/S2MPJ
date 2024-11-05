@@ -18,13 +18,13 @@ function COOLHANSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #    SIF input: Ph. Toint, Feb 1995.
 #    Least-squares version of COOLHANS.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-SUR2-RN-9-0"
+#    classification = "C-CSUR2-RN-9-0"
 # 
 #    order of the matrix equation
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "COOLHANSLS"
@@ -186,7 +186,7 @@ function COOLHANSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-RN-9-0"
+        pb.pbclass = "C-CSUR2-RN-9-0"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

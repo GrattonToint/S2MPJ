@@ -15,7 +15,7 @@ function varargout = ARGAUSS(action,varargin)
 %    See also Buckley#28
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-NOR2-AN-3-15'
+%    classification = 'C-CNOR2-AN-3-15'
 % 
 %    This function  is a nonlinear least squares with 15 groups.  Each
 %    group has a nonlinear element.
@@ -24,7 +24,7 @@ function varargout = ARGAUSS(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -176,7 +176,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NOR2-AN-3-15';
+        pb.pbclass = 'C-CNOR2-AN-3-15';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

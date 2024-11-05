@@ -31,7 +31,7 @@ function varargout = NOBNDTOR(action,varargin)
 %    A variant of TORSION1 in which some of the variables are
 %    unconstrained.
 % 
-%    classification = 'C-QBR2-AY-V-0'
+%    classification = 'C-CQBR2-AY-V-0'
 % 
 %    Q is half the number of discretized points along the X axis
 % 
@@ -43,7 +43,7 @@ function varargout = NOBNDTOR(action,varargin)
 % IE Q                   37             $-PARAMETER  n= 5476
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -346,7 +346,7 @@ switch(action)
 % LO SOLTN(61)           ???
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AY-V-0';
+        pb.pbclass = 'C-CQBR2-AY-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

@@ -15,7 +15,7 @@ function ARGLBLE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    See also Buckley#93 (with different N and M)
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NLR2-AN-V-V"
+#    classification = "C-CNLR2-AN-V-V"
 # 
 #    This is a(n infeasible) linear feasibility problem 
 # 
@@ -30,7 +30,7 @@ function ARGLBLE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ARGLBLE"
@@ -119,7 +119,7 @@ function ARGLBLE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-NLR2-AN-V-V"
+        pb.pbclass = "C-CNLR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

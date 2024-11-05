@@ -16,7 +16,7 @@ function COSHFUN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, October 1992.
 # 
-#    classification = "C-LOR2-AN-V-V"
+#    classification = "C-CLOR2-AN-V-V"
 # 
 #   the number of functions
 # 
@@ -29,7 +29,7 @@ function COSHFUN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE M                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "COSHFUN"
@@ -210,7 +210,7 @@ function COSHFUN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-AN-V-V"
+        pb.pbclass = "C-CLOR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

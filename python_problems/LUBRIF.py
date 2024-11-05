@@ -22,7 +22,7 @@ class  LUBRIF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "C-QOR2-MN-V-V"
+#    classification = "C-CQOR2-MN-V-V"
 # 
 #    Number of discretized points per unit length
 # 
@@ -32,7 +32,7 @@ class  LUBRIF(CUTEst_problem):
 # IE NN                  250            $-PARAMETER n = 3751
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUBRIF'
@@ -363,7 +363,7 @@ class  LUBRIF(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-MN-V-V"
+        self.pbclass = "C-CQOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

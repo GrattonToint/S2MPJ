@@ -15,13 +15,13 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: A. R. Conn, June 1993.
 # 
-#    classification = "C-QOR2-MN-16-20"
+#    classification = "C-CQOR2-MN-16-20"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DEMBO7"
@@ -1128,7 +1128,7 @@ function DEMBO7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-MN-16-20"
+        pb.pbclass = "C-CQOR2-MN-16-20"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

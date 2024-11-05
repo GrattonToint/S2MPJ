@@ -22,7 +22,7 @@ class  CORKSCRW(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1991.
 # 
-#    classification = "C-SOR2-AN-V-V"
+#    classification = "C-CSOR2-AN-V-V"
 # 
 #    Number of time intervals
 #    The number of variables is 9T+6, of which 9 are fixed.
@@ -34,7 +34,7 @@ class  CORKSCRW(CUTEst_problem):
 # IE T                   500            $-PARAMETER n = 4506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CORKSCRW'
@@ -336,7 +336,7 @@ class  CORKSCRW(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SOR2-AN-V-V"
+        self.pbclass = "C-CSOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

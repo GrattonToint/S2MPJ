@@ -11,12 +11,12 @@ function MINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Ph. Toint, Jan 1991.
 # 
-#    classification = "C-OXR2-MY-64-0"
+#    classification = "C-COXR2-MY-64-0"
 # 
 #    Discretization parameter
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MINSURF"
@@ -151,7 +151,7 @@ function MINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OXR2-MY-64-0"
+        pb.pbclass = "C-COXR2-MY-64-0"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

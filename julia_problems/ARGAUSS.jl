@@ -15,7 +15,7 @@ function ARGAUSS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    See also Buckley#28
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NOR2-AN-3-15"
+#    classification = "C-CNOR2-AN-3-15"
 # 
 #    This function  is a nonlinear least squares with 15 groups.  Each
 #    group has a nonlinear element.
@@ -24,7 +24,7 @@ function ARGAUSS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ARGAUSS"
@@ -171,7 +171,7 @@ function ARGAUSS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AN-3-15"
+        pb.pbclass = "C-CNOR2-AN-3-15"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

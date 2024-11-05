@@ -17,13 +17,13 @@ class  SINEVAL(CUTEst_problem):
 # 
 #    SIF input: F Facchinei, M. Roma and Ph. Toint, June 1994
 # 
-#    classification = "C-SUR2-AN-2-0"
+#    classification = "C-CSUR2-AN-2-0"
 # 
 #    Problem parameter
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SINEVAL'
@@ -121,7 +121,7 @@ class  SINEVAL(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-2-0"
+        self.pbclass = "C-CSUR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

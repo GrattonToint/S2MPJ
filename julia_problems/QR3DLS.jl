@@ -22,7 +22,7 @@ function QR3DLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, March 1994.
 # 
-#    classification = "C-SBR2-AN-V-V"
+#    classification = "C-CSBR2-AN-V-V"
 # 
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
@@ -33,7 +33,7 @@ function QR3DLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QR3DLS"
@@ -245,7 +245,7 @@ function QR3DLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-AN-V-V"
+        pb.pbclass = "C-CSBR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

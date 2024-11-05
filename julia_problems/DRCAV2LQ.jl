@@ -27,7 +27,7 @@ function DRCAV2LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Jan 1995.
 # 
-#    classification = "C-OXR2-MY-V-V"
+#    classification = "C-COXR2-MY-V-V"
 # 
 #    Discretization mesh: n = (M+3)**2 - fixed variables
 # 
@@ -37,7 +37,7 @@ function DRCAV2LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE M                   63             $-PARAMETER  n =  3969
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRCAV2LQ"
@@ -311,7 +311,7 @@ function DRCAV2LQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OXR2-MY-V-V"
+        pb.pbclass = "C-COXR2-MY-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

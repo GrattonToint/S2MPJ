@@ -17,7 +17,7 @@ function EIGMAXA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, Nov 1992.
 # 
-#    classification = "C-LQR2-AN-V-V"
+#    classification = "C-CLQR2-AN-V-V"
 # 
 #    The dimension of the matrix.
 # 
@@ -27,7 +27,7 @@ function EIGMAXA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EIGMAXA"
@@ -184,7 +184,7 @@ function EIGMAXA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-AN-V-V"
+        pb.pbclass = "C-CLQR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

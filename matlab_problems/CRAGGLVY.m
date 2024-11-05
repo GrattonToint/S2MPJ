@@ -18,7 +18,7 @@ function varargout = CRAGGLVY(action,varargin)
 %    See  also Buckley#18
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-OUR2-AY-V-0'
+%    classification = 'C-COUR2-AY-V-0'
 % 
 %    M is the number of group sets
 % 
@@ -32,7 +32,7 @@ function varargout = CRAGGLVY(action,varargin)
 % IE M                   2499           $-PARAMETER n = 5000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -227,7 +227,7 @@ switch(action)
 % LO SOLTN(2499)         1.6882D+03
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OUR2-AY-V-0';
+        pb.pbclass = 'C-COUR2-AY-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

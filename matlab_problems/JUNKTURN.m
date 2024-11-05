@@ -24,7 +24,7 @@ function varargout = JUNKTURN(action,varargin)
 % 
 %    SIF input: Ph. Toint, February 1994.
 % 
-%    classification = 'C-QQR2-MN-V-V'
+%    classification = 'C-CQQR2-MN-V-V'
 % 
 %    Number of discretized points in [0,100] - 1.
 %    The number of variables is    10 * ( N + 1 )
@@ -38,7 +38,7 @@ function varargout = JUNKTURN(action,varargin)
 % IE N                   1000           $-PARAMETER n =   10010, m =   7000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -549,7 +549,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QQR2-MN-V-V';
+        pb.pbclass = 'C-CQQR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

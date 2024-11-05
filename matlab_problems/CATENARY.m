@@ -22,7 +22,7 @@ function varargout = CATENARY(action,varargin)
 % 
 %    SIF input: Ph. L. Toint, May 1993.
 % 
-%    classification = 'C-LQR2-AY-V-V'
+%    classification = 'C-CLQR2-AY-V-V'
 % 
 %    Number of beams = N+1 ; the number of variables is 3*(N+2)
 % 
@@ -34,7 +34,7 @@ function varargout = CATENARY(action,varargin)
 % IE N+1                 1000           $-PARAMETER n = 3003
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -239,7 +239,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-AY-V-V';
+        pb.pbclass = 'C-CLQR2-AY-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

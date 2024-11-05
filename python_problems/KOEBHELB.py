@@ -15,13 +15,13 @@ class  KOEBHELB(CUTEst_problem):
 #    J. P. Hubert and Ph. L . Toint, Summer 2005.
 #    SIF input: Ph. Toint, June 2005.
 # 
-#    classification = "C-SBR2-RN-3-0"
+#    classification = "C-CSBR2-RN-3-0"
 # 
 #    Useful constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'KOEBHELB'
@@ -448,7 +448,7 @@ class  KOEBHELB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-RN-3-0"
+        self.pbclass = "C-CSBR2-RN-3-0"
         self.objderlvl = 2
 
 # **********************

@@ -34,7 +34,7 @@ function varargout = RDW2D52B(action,varargin)
 %    SIF input: Nick Gould, May 2009
 %               correction by S. Gratton & Ph. Toint, May 2024
 % 
-%    classification = 'C-QLR2-AN-V-V'
+%    classification = 'C-CQLR2-AN-V-V'
 % 
 %    Number of nodes in each direction (a power of 2)
 % 
@@ -49,7 +49,7 @@ function varargout = RDW2D52B(action,varargin)
 % IE N                   256           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -750,7 +750,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QLR2-AN-V-V';
+        pb.pbclass = 'C-CQLR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

@@ -17,7 +17,7 @@ class  INTEQNELS(CUTEst_problem):
 #    SIF input: Ph. Toint, Feb 1990.
 #    Modification to remove fixed variables: Nick Gould, Oct 2015.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    N+2 is the number of discretization points .
 #    The number of free variables is N.
@@ -29,7 +29,7 @@ class  INTEQNELS(CUTEst_problem):
 # IE N                   500            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'INTEQNELS'
@@ -171,7 +171,7 @@ class  INTEQNELS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-0"
+        self.pbclass = "C-CSUR2-AN-V-0"
         self.objderlvl = 2
 
 

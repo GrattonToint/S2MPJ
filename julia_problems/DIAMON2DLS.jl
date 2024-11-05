@@ -16,13 +16,13 @@ function DIAMON2DLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #    Least-squares version of DIAMON2D.SIF, Nick Gould, Jan 2020.
 #    corrected May 2024
 # 
-#    classification = "C-SUR2-MN-66-0"
+#    classification = "C-CSUR2-MN-66-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DIAMON2DLS"
@@ -9518,7 +9518,7 @@ function DIAMON2DLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-MN-66-0"
+        pb.pbclass = "C-CSUR2-MN-66-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -18,7 +18,7 @@ function varargout = QINGNE(action,varargin)
 % 
 %    SIF input: Nick Gould, Jan 2020
 % 
-%    classification = 'C-NOR2-MN-V-V'
+%    classification = 'C-CNOR2-MN-V-V'
 % 
 %    Number of variables
 % 
@@ -26,7 +26,7 @@ function varargout = QINGNE(action,varargin)
 % IE N                   100            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -144,7 +144,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NOR2-MN-V-V';
+        pb.pbclass = 'C-CNOR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

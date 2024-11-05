@@ -15,11 +15,11 @@ class  HS59(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn and Ph.L. Toint, November 1990.
 # 
-#    classification = "C-OQR2-AN-2-3"
+#    classification = "C-COQR2-AN-2-3"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS59'
@@ -468,7 +468,7 @@ class  HS59(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OQR2-AN-2-3"
+        self.pbclass = "C-COQR2-AN-2-3"
         self.objderlvl = 2
         self.conderlvl = [2]
 

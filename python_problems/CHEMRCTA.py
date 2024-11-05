@@ -20,7 +20,7 @@ class  CHEMRCTA(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #               minor correction by Ph. Shott, Jan 1995 and F Ruediger, Mar 1997.
 # 
-#    classification = "C-NOR2-MN-V-V"
+#    classification = "C-CNOR2-MN-V-V"
 # 
 #    The axial coordinate interval is [0,1]
 # 
@@ -36,7 +36,7 @@ class  CHEMRCTA(CUTEst_problem):
 # IE N                   2500           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHEMRCTA'
@@ -295,7 +295,7 @@ class  CHEMRCTA(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-MN-V-V"
+        self.pbclass = "C-CNOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -15,7 +15,7 @@ function SINQUAD2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: N. Gould, Dec 1989.
 #    modifield version of SINQUAD (formulation corrected) May 2024
 # 
-#    classification = "C-OUR2-AY-V-0"
+#    classification = "C-COUR2-AY-V-0"
 # 
 #    number of variables
 # 
@@ -24,7 +24,7 @@ function SINQUAD2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SINQUAD2"
@@ -164,7 +164,7 @@ function SINQUAD2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-AY-V-0"
+        pb.pbclass = "C-COUR2-AY-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

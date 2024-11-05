@@ -17,7 +17,7 @@ function DIXCHLNV(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Feb 1991.
 # 
-#    classification = "C-SOR2-AN-V-V"
+#    classification = "C-CSOR2-AN-V-V"
 # 
 #    Number of variables
 #    (variable, but must be even and at least equal to 4)
@@ -29,7 +29,7 @@ function DIXCHLNV(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DIXCHLNV"
@@ -254,7 +254,7 @@ function DIXCHLNV(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-SOR2-AN-V-V"
+        pb.pbclass = "C-CSOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

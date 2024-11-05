@@ -18,7 +18,7 @@ function varargout = READING3(action,varargin)
 % 
 %    SIF input: Nick Gould, July 1991.
 % 
-%    classification = 'C-OOR2-MN-V-V'
+%    classification = 'C-COOR2-MN-V-V'
 % 
 %    Number of discretized points in [0,1]
 % 
@@ -32,7 +32,7 @@ function varargout = READING3(action,varargin)
 % IE N                   2000           $-PARAMETER n=4002, m=2001
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -262,7 +262,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-MN-V-V';
+        pb.pbclass = 'C-COOR2-MN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

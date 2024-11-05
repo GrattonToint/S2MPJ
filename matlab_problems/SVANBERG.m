@@ -15,7 +15,7 @@ function varargout = SVANBERG(action,varargin)
 % 
 %    SIF input: Ph. Toint, June 1990.
 % 
-%    classification = 'C-OOR2-MN-V-V'
+%    classification = 'C-COOR2-MN-V-V'
 % 
 %    Number of variables (must be even and >= 10)
 % 
@@ -35,7 +35,7 @@ function varargout = SVANBERG(action,varargin)
 % IE N                   5000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -546,7 +546,7 @@ switch(action)
         pb.cupper(1:pb.nle) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-MN-V-V';
+        pb.pbclass = 'C-COOR2-MN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

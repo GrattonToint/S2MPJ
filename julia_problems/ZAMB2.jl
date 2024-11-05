@@ -12,7 +12,7 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 #       JOTA 81(1994)2,221-248.
 #    E. Arnold 1/3/96 (SIF file)
 # 
-#    classification = "C-OOR2-MN-V-V"
+#    classification = "C-COOR2-MN-V-V"
 # 
 # 
 #    The time horizon NY and the start year YEAR can be varied with
@@ -29,7 +29,7 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE NY                  30             $-PARAMETER n = 3966
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ZAMB2"
@@ -1985,7 +1985,7 @@ function ZAMB2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOR2-MN-V-V"
+        pb.pbclass = "C-COOR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

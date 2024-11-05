@@ -22,7 +22,7 @@ function ORTHREGF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, June 1990.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-QOR2-AY-V-V"
+#    classification = "C-CQOR2-AY-V-V"
 # 
 #    square root of the number of data points
 #    (number of variables = 3 * NPTS**2 + 5 )
@@ -36,7 +36,7 @@ function ORTHREGF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHREGF"
@@ -332,7 +332,7 @@ function ORTHREGF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-AY-V-V"
+        pb.pbclass = "C-CQOR2-AY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

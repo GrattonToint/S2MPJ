@@ -10,14 +10,14 @@ function QPBAND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 #    SIF input: Nick Gould, December 1999.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   10000          $-PARAMETER
 # IE N                   50000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QPBAND"
@@ -124,7 +124,7 @@ function QPBAND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-QLR2-AN-V-V"
+        pb.pbclass = "C-CQLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

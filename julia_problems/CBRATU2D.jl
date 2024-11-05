@@ -18,7 +18,7 @@ function CBRATU2D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NOR2-MN-V-V"
+#    classification = "C-CNOR2-MN-V-V"
 # 
 #    P is the number of points in one side of the unit square (variable).
 #    There are 2*P**2 variables
@@ -27,7 +27,7 @@ function CBRATU2D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   4              $-PARAMETER n = 32     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CBRATU2D"
@@ -226,7 +226,7 @@ function CBRATU2D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-MN-V-V"
+        pb.pbclass = "C-CNOR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

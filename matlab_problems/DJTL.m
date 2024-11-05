@@ -16,13 +16,13 @@ function varargout = DJTL(action,varargin)
 % 
 %    SIF input: A.R. Conn August 1993
 % 
-%    classification = 'C-OUR2-AN-2-0'
+%    classification = 'C-COUR2-AN-2-0'
 % 
 %    Define multipliers and shifts
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -286,7 +286,7 @@ switch(action)
 % LO SOLTN               -8951.54472
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OUR2-AN-2-0';
+        pb.pbclass = 'C-COUR2-AN-2-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

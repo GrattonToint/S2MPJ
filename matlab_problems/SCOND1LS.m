@@ -19,7 +19,7 @@ function varargout = SCOND1LS(action,varargin)
 % 
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-SBR2-AN-V-V'
+%    classification = 'C-CSBR2-AN-V-V'
 % 
 %    N  = Number of discretized point inside the interval [a, b]
 %    LN = Index of the last negative discretization point
@@ -29,7 +29,7 @@ function varargout = SCOND1LS(action,varargin)
 % IE N                   10             $-PARAMETER     original value
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -228,7 +228,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SBR2-AN-V-V';
+        pb.pbclass = 'C-CSBR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

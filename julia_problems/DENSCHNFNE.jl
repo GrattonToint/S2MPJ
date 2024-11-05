@@ -15,11 +15,11 @@ function DENSCHNFNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #    SIF input: Ph. Toint, Nov 1990.
 #    Nonlinear-equations version of DENSCHNF.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-NOR2-AY-2-2"
+#    classification = "C-CNOR2-AY-2-2"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DENSCHNFNE"
@@ -179,7 +179,7 @@ function DENSCHNFNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AY-2-2"
+        pb.pbclass = "C-CNOR2-AY-2-2"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

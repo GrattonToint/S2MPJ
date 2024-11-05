@@ -24,7 +24,7 @@ function varargout = ROBOT(action,varargin)
 %    SIF input: Manish Sabu at Virginia Tech., Spring 1993.
 %               Minor modifications by Ph. L. Toint, April 1993.
 % 
-%    classification = 'C-QOR2-MY-14-2'
+%    classification = 'C-CQOR2-MY-14-2'
 % 
 %  This segment describes the initial values of angles (by THnIN)
 %   and final position of the end effector (by XPOS and YPOS)
@@ -34,7 +34,7 @@ function varargout = ROBOT(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -476,7 +476,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QOR2-MY-14-2';
+        pb.pbclass = 'C-CQOR2-MY-14-2';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

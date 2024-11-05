@@ -21,11 +21,11 @@ class  LOOTSMA(CUTEst_problem):
 #    SIF input: Li-zhi Liao, Dept. of Mathematics, 
 #               Hong Kong Baptist College, May 1994.
 # 
-#    classification = "C-OQR2-AN-3-2"
+#    classification = "C-COQR2-AN-3-2"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LOOTSMA'
@@ -192,7 +192,7 @@ class  LOOTSMA(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OQR2-AN-3-2"
+        self.pbclass = "C-COQR2-AN-3-2"
         self.objderlvl = 2
         self.conderlvl = [2]
 

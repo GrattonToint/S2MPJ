@@ -10,11 +10,11 @@ function varargout = BQPGASIM(action,varargin)
 % 
 %    SIF input: N. Gould, July 1990.
 % 
-%    classification = 'C-QBR2-AN-50-0'
+%    classification = 'C-CQBR2-AN-50-0'
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -3175,7 +3175,7 @@ switch(action)
 % LO BQPGASIM             -5.519814D-5
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AN-50-0';
+        pb.pbclass = 'C-CQBR2-AN-50-0';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

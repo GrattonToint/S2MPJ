@@ -31,7 +31,7 @@ class  OPTMASS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "C-QQR2-AN-V-V"
+#    classification = "C-CQQR2-AN-V-V"
 # 
 #    Number of discretization steps in the time interval
 #    The number of variables is 6 * (N + 2) -2 , 4 of which are fixed.
@@ -43,7 +43,7 @@ class  OPTMASS(CUTEst_problem):
 # IE N                   500            $-PARAMETER n = 3010
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OPTMASS'
@@ -272,7 +272,7 @@ class  OPTMASS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QQR2-AN-V-V"
+        self.pbclass = "C-CQQR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

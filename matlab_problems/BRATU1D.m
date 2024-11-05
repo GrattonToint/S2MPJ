@@ -16,7 +16,7 @@ function varargout = BRATU1D(action,varargin)
 % 
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-OXR2-MN-V-0'
+%    classification = 'C-COXR2-MN-V-0'
 % 
 %    Number of variables (must be odd)
 % 
@@ -29,7 +29,7 @@ function varargout = BRATU1D(action,varargin)
 % IE N                   5001           $-PARAMETER must be odd
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -215,7 +215,7 @@ switch(action)
 % LO SOLTN1001           -8.51893
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OXR2-MN-V-0';
+        pb.pbclass = 'C-COXR2-MN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

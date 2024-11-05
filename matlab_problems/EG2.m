@@ -18,11 +18,11 @@ function varargout = EG2(action,varargin)
 % 
 %    SIF input: N. Gould and Ph. Toint, June 1994.
 % 
-%    classification = 'C-OUR2-AN-1000-0'
+%    classification = 'C-COUR2-AN-1000-0'
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -135,7 +135,7 @@ switch(action)
         pbm.grpar{ig}(posgp) = 0.5;
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OUR2-AN-1000-0';
+        pb.pbclass = 'C-COUR2-AN-1000-0';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

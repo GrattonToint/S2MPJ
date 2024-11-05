@@ -17,13 +17,13 @@ function PALMER4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, 1990.
 # 
-#    classification = "C-SBR2-RN-4-0"
+#    classification = "C-CSBR2-RN-4-0"
 # 
 #    Number of data points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PALMER4"
@@ -185,7 +185,7 @@ function PALMER4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-RN-4-0"
+        pb.pbclass = "C-CSBR2-RN-4-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

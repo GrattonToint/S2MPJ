@@ -39,14 +39,14 @@ function CRESC4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "C-OOR2-MY-6-8"
+#    classification = "C-COOR2-MY-6-8"
 # 
 #    number of points to be included in the crescent.
 #    the number of constraints is 2*NP
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CRESC4"
@@ -325,7 +325,7 @@ function CRESC4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOR2-MY-6-8"
+        pb.pbclass = "C-COOR2-MY-6-8"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -19,7 +19,7 @@ function DIXMAANI1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #               correction by Ph. Shott, January 1995.
 #               update Nick Gould, August 2022, to remove beta=0 terms.
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    M is equal to the third of the number of variables
 # 
@@ -31,7 +31,7 @@ function DIXMAANI1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE M                   1000           $-PARAMETER n = 3000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DIXMAANI1"
@@ -200,7 +200,7 @@ function DIXMAANI1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-AN-V-0"
+        pb.pbclass = "C-COUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

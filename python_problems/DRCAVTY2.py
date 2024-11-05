@@ -27,7 +27,7 @@ class  DRCAVTY2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1995.
 # 
-#    classification = "C-NQR2-MY-V-V"
+#    classification = "C-CNQR2-MY-V-V"
 # 
 #    Discretization mesh: n = (M+3)**2 - fixed variables
 # 
@@ -37,7 +37,7 @@ class  DRCAVTY2(CUTEst_problem):
 # IE M                   63             $-PARAMETER  n =  3969   original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRCAVTY2'
@@ -319,7 +319,7 @@ class  DRCAVTY2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NQR2-MY-V-V"
+        self.pbclass = "C-CNQR2-MY-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

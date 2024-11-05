@@ -22,7 +22,7 @@ class  SIPOW2M(CUTEst_problem):
 # 
 #    SIF input: A. R. Conn and Nick Gould, August 1993
 # 
-#    classification = "C-LLR2-AN-2-V"
+#    classification = "C-CLLR2-AN-2-V"
 # 
 #    Problem variants: they are identified by the values of M (even)
 # 
@@ -31,7 +31,7 @@ class  SIPOW2M(CUTEst_problem):
 # IE M                   500 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SIPOW2M'
@@ -143,7 +143,7 @@ class  SIPOW2M(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-LLR2-AN-2-V"
+        self.pbclass = "C-CLLR2-AN-2-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

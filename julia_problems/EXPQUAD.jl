@@ -11,7 +11,7 @@ function EXPQUAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    SIF input: Ph. Toint, 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-OBR2-AN-V-V"
+#    classification = "C-COBR2-AN-V-V"
 # 
 #       Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
@@ -23,7 +23,7 @@ function EXPQUAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   1200           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EXPQUAD"
@@ -158,7 +158,7 @@ function EXPQUAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-V-V"
+        pb.pbclass = "C-COBR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

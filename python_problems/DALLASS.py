@@ -18,13 +18,13 @@ class  DALLASS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "C-ONR2-MN-46-31"
+#    classification = "C-CONR2-MN-46-31"
 # 
 #    Number of arcs
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DALLASS'
@@ -1416,7 +1416,7 @@ class  DALLASS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-ONR2-MN-46-31"
+        self.pbclass = "C-CONR2-MN-46-31"
         self.objderlvl = 2
         self.conderlvl = [2]
 

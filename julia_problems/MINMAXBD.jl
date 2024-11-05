@@ -17,13 +17,13 @@ function MINMAXBD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    See also Buckley#30
 #    SDIF input: Ph. Toint, Dec 1989, modified by Nick Gould, Oct 1992.
 # 
-#    classification = "C-LOR2-AN-5-20"
+#    classification = "C-CLOR2-AN-5-20"
 # 
 #    Number of groups
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MINMAXBD"
@@ -192,7 +192,7 @@ function MINMAXBD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-AN-5-20"
+        pb.pbclass = "C-CLOR2-AN-5-20"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

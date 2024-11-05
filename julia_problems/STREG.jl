@@ -10,11 +10,11 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SIF input: N. Gould, Aug 2001
 # 
-#    classification = "C-SUR2-AN-4-0"
+#    classification = "C-CSUR2-AN-4-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "STREG"
@@ -120,7 +120,7 @@ function STREG(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-4-0"
+        pb.pbclass = "C-CSUR2-AN-4-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -20,7 +20,7 @@ class  MOREBV(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989 and Nick Gould, Oct 1992.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-SUR2-MN-V-0"
+#    classification = "C-CSUR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
@@ -33,7 +33,7 @@ class  MOREBV(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MOREBV'
@@ -169,7 +169,7 @@ class  MOREBV(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-MN-V-0"
+        self.pbclass = "C-CSUR2-MN-V-0"
         self.objderlvl = 2
 
 # **********************

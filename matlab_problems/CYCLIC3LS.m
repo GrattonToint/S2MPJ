@@ -19,7 +19,7 @@ function varargout = CYCLIC3LS(action,varargin)
 %    SIF input: Nick Gould, Jan 2012.
 %    Least-squares version of CYCLIC3.SIF, Jan 2020.
 % 
-%    classification = 'C-NOR2-AN-V-0'
+%    classification = 'C-CNOR2-AN-V-0'
 % 
 %    dimension parameter
 % 
@@ -32,7 +32,7 @@ function varargout = CYCLIC3LS(action,varargin)
 % IE N                   100000         $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -177,7 +177,7 @@ switch(action)
         pb.objlower = 0.0;
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-NOR2-AN-V-0';
+        pb.pbclass = 'C-CNOR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

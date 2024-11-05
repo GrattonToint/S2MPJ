@@ -25,7 +25,7 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Ph. Toint, April 1992.
 # 
-#    classification = "C-LLR2-AN-3-V"
+#    classification = "C-CLLR2-AN-3-V"
 # 
 #    Discretization
 # 
@@ -33,7 +33,7 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   50
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TFI2"
@@ -129,7 +129,7 @@ function TFI2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-LLR2-AN-3-V"
+        pb.pbclass = "C-CLLR2-AN-3-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

@@ -16,7 +16,7 @@ function BROYDN3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    See also Toint#17 and Buckley#78.
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NQR2-AN-V-V"
+#    classification = "C-CNQR2-AN-V-V"
 # 
 #    N is the number of variables (variable).
 # 
@@ -29,7 +29,7 @@ function BROYDN3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BROYDN3D"
@@ -167,7 +167,7 @@ function BROYDN3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NQR2-AN-V-V"
+        pb.pbclass = "C-CNQR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

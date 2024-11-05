@@ -20,13 +20,13 @@ class  LEVYMONE5(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "C-NOR2-AY-2-4"
+#    classification = "C-CNOR2-AY-2-4"
 # 
 #    N is the number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEVYMONE5'
@@ -195,7 +195,7 @@ class  LEVYMONE5(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AY-2-4"
+        self.pbclass = "C-CNOR2-AY-2-4"
         self.objderlvl = 2
         self.conderlvl = [2]
 

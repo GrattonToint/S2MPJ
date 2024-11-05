@@ -18,7 +18,7 @@ function POWERSUMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 #    SIF input: Nick Gould, Jan 2020
 # 
-#    classification = "C-NOR2-MN-V-V"
+#    classification = "C-CNOR2-MN-V-V"
 # 
 #    Number of variables
 # 
@@ -26,7 +26,7 @@ function POWERSUMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # IE N                   4              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "POWERSUMNE"
@@ -168,7 +168,7 @@ function POWERSUMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-MN-V-V"
+        pb.pbclass = "C-CNOR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

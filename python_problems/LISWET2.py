@@ -39,7 +39,7 @@ class  LISWET2(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 1994.
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   100            $-PARAMETER 103 variables original value 
@@ -66,7 +66,7 @@ class  LISWET2(CUTEst_problem):
 # IE N                   2000           $-PARAMETER 2002 variables    
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LISWET2'
@@ -224,7 +224,7 @@ class  LISWET2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-V-V"
+        self.pbclass = "C-CQLR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

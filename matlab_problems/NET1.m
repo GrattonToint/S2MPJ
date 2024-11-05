@@ -9,13 +9,13 @@ function varargout = NET1(action,varargin)
 %    A gas network problem for the south-east of England.
 % 
 %     SIF input: Sybille Schachler, Oxford, August 1992.
-%    classification = 'C-OOI2-RN-48-57'
+%    classification = 'C-COOI2-RN-48-57'
 % 
 %    ...Problem size parameters
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -1364,7 +1364,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOI2-RN-48-57';
+        pb.pbclass = 'C-COOI2-RN-48-57';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

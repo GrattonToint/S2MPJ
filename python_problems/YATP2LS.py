@@ -20,7 +20,7 @@ class  YATP2LS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 2003.
 # 
-#    classification = "C-SUR2-AN-V-V"
+#    classification = "C-CSUR2-AN-V-V"
 # 
 #   least-squares version, October 2014
 # 
@@ -35,7 +35,7 @@ class  YATP2LS(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP2LS'
@@ -190,7 +190,7 @@ class  YATP2LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-V"
+        self.pbclass = "C-CSUR2-AN-V-V"
         self.objderlvl = 2
 
 

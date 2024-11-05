@@ -18,14 +18,14 @@ class  AIRCRFTB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SXR2-RN-8-0"
+#    classification = "C-CSXR2-RN-8-0"
 # 
 #    Values for the controls
 #    1) Elevator
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRCRFTB'
@@ -354,7 +354,7 @@ class  AIRCRFTB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SXR2-RN-8-0"
+        self.pbclass = "C-CSXR2-RN-8-0"
         self.objderlvl = 2
 
 # **********************

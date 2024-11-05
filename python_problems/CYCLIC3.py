@@ -19,7 +19,7 @@ class  CYCLIC3(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Jan 2012.
 # 
-#    classification = "C-NOR2-AN-V-0"
+#    classification = "C-CNOR2-AN-V-0"
 # 
 #    dimension parameter
 # 
@@ -32,7 +32,7 @@ class  CYCLIC3(CUTEst_problem):
 # IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CYCLIC3'
@@ -178,7 +178,7 @@ class  CYCLIC3(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-V-0"
+        self.pbclass = "C-CNOR2-AN-V-0"
         self.objderlvl = 2
         self.conderlvl = [2]
 

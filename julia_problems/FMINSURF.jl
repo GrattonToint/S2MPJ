@@ -35,7 +35,7 @@ function FMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, November 1991.
 # 
-#    classification = "C-OUR2-MY-V-0"
+#    classification = "C-COUR2-MY-V-0"
 # 
 #    P is the number of points in one side of the unit square
 # 
@@ -49,7 +49,7 @@ function FMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   75             $-PARAMETER n = 5625
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FMINSURF"
@@ -225,7 +225,7 @@ function FMINSURF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-MY-V-0"
+        pb.pbclass = "C-COUR2-MY-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

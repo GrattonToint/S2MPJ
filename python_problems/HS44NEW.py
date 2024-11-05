@@ -15,13 +15,13 @@ class  HS44NEW(CUTEst_problem):
 # 
 #    SIF input: Ph.L. Toint, October 1990.
 # 
-#    classification = "C-QLR2-AN-4-6"
+#    classification = "C-CQLR2-AN-4-6"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS44NEW'
@@ -229,7 +229,7 @@ class  HS44NEW(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-4-6"
+        self.pbclass = "C-CQLR2-AN-4-6"
         self.objderlvl = 2
         self.conderlvl = [2]
 

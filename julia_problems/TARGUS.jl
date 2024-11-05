@@ -19,11 +19,11 @@ function TARGUS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 #    SIF input: Jordi Castro, 2006 as L2_targus.mps
 #    see http://www-eio.upc.es/~jcastro/data.html
 # 
-#    classification = "C-QLR2-RN-162-63"
+#    classification = "C-CQLR2-RN-162-63"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TARGUS"
@@ -2631,7 +2631,7 @@ function TARGUS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-QLR2-RN-162-63"
+        pb.pbclass = "C-CQLR2-RN-162-63"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

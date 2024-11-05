@@ -18,11 +18,11 @@ function HIMMELBCLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #    SIF input: Ph. Toint, Dec 1989.
 #    Least-sqaures variant, Nick Gould, Jan 2020.
 # 
-#    classification = "C-OUR2-AN-2-0"
+#    classification = "C-COUR2-AN-2-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HIMMELBCLS"
@@ -122,7 +122,7 @@ function HIMMELBCLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-AN-2-0"
+        pb.pbclass = "C-COUR2-AN-2-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

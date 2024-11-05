@@ -19,7 +19,7 @@ function KSSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 #    SIF input: Nick Gould, Jan 2012.
 #    Least-squares version of KSS.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
@@ -30,7 +30,7 @@ function KSSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "KSSLS"
@@ -144,7 +144,7 @@ function KSSLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-V-0"
+        pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

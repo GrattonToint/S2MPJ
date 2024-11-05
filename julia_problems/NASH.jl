@@ -10,11 +10,11 @@ function NASH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 #    complementarity problem arising from Nash equilibrium
 #    provided by Michael Ferris
 # 
-#    classification = "C-QLR2-AN-72-24"
+#    classification = "C-CQLR2-AN-72-24"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NASH"
@@ -703,7 +703,7 @@ function NASH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-QLR2-AN-72-24"
+        pb.pbclass = "C-CQLR2-AN-72-24"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

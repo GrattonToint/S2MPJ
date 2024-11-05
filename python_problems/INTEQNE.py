@@ -16,7 +16,7 @@ class  INTEQNE(CUTEst_problem):
 #    SIF input: Ph. Toint, Feb 1990.
 #    Modification to remove fixed variables: Nick Gould, Oct 2015.
 # 
-#    classification = "C-NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    N+2 is the number of discretization points .
 #    The number of free variables is N.
@@ -25,7 +25,7 @@ class  INTEQNE(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'INTEQNE'
@@ -199,7 +199,7 @@ class  INTEQNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-V-V"
+        self.pbclass = "C-CNOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -11,12 +11,12 @@ function varargout = MINSURF(action,varargin)
 % 
 %    SIF input: Ph. Toint, Jan 1991.
 % 
-%    classification = 'C-OXR2-MY-64-0'
+%    classification = 'C-COXR2-MY-64-0'
 % 
 %    Discretization parameter
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -157,7 +157,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OXR2-MY-64-0';
+        pb.pbclass = 'C-COXR2-MY-64-0';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

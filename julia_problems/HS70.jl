@@ -16,13 +16,13 @@ function HS70(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Nick Gould, August 1991, modified May 2024
 # 
-#    classification = "C-SQR2-MN-4-1"
+#    classification = "C-CSQR2-MN-4-1"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS70"
@@ -277,7 +277,7 @@ function HS70(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-SQR2-MN-4-1"
+        pb.pbclass = "C-CSQR2-MN-4-1"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

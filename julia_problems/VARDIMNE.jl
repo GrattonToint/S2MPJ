@@ -22,7 +22,7 @@ function VARDIMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, Dec 1989.
 #    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 # 
-#    classification = "C-NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    N is the number of free variables
 # 
@@ -30,7 +30,7 @@ function VARDIMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   10             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "VARDIMNE"
@@ -155,7 +155,7 @@ function VARDIMNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-NOR2-AN-V-V"
+        pb.pbclass = "C-CNOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

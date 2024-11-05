@@ -10,7 +10,7 @@ function NCVXBQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, July 1995
 # 
-#    classification = "C-QBR2-AN-V-0"
+#    classification = "C-CQBR2-AN-V-0"
 # 
 #    The number of variables
 # 
@@ -22,7 +22,7 @@ function NCVXBQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NCVXBQP3"
@@ -131,7 +131,7 @@ function NCVXBQP3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-V-0"
+        pb.pbclass = "C-CQBR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

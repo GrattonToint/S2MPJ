@@ -18,14 +18,14 @@ class  AIRCRFTA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NOR2-RN-8-5"
+#    classification = "C-CNOR2-RN-8-5"
 # 
 #    Values for the controls
 #    1) Elevator
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AIRCRFTA'
@@ -346,7 +346,7 @@ class  AIRCRFTA(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-RN-8-5"
+        self.pbclass = "C-CNOR2-RN-8-5"
         self.objderlvl = 2
         self.conderlvl = [2]
 

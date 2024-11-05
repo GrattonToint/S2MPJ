@@ -37,7 +37,7 @@ class  TRAINH(CUTEst_problem):
 # 
 #    SIF input: N. Nichols and Ph. Toint, April 1993
 # 
-#    classification = "C-QOR2-MN-V-V"
+#    classification = "C-CQOR2-MN-V-V"
 # 
 #    Number of discretized points in the interval
 # 
@@ -50,7 +50,7 @@ class  TRAINH(CUTEst_problem):
 # IE N                   1001           $-PARAMETER n=4008, m=2002
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRAINH'
@@ -361,7 +361,7 @@ class  TRAINH(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-MN-V-V"
+        self.pbclass = "C-CQOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

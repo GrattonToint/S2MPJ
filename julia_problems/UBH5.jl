@@ -23,7 +23,7 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Ph.L. Toint, October 1993.
 # 
-#    classification = "C-LQR2-MN-V-V"
+#    classification = "C-CLQR2-MN-V-V"
 # 
 #    Number of grid points
 # 
@@ -33,7 +33,7 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "UBH5"
@@ -252,7 +252,7 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-MN-V-V"
+        pb.pbclass = "C-CLQR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

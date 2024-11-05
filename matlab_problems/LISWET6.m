@@ -38,7 +38,7 @@ function varargout = LISWET6(action,varargin)
 % 
 %    SIF input: Nick Gould, August 1994.
 % 
-%    classification = 'C-QLR2-AN-V-V'
+%    classification = 'C-CQLR2-AN-V-V'
 % 
 %       Alternative values for the SIF file parameters:
 % IE N                   100            $-PARAMETER 103 variables original value 
@@ -65,7 +65,7 @@ function varargout = LISWET6(action,varargin)
 % IE N                   2000           $-PARAMETER 2002 variables    
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -236,7 +236,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QLR2-AN-V-V';
+        pb.pbclass = 'C-CQLR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

@@ -17,13 +17,13 @@ class  LSNNODOC(CUTEst_problem):
 # 
 #   SIF input: J-M COLLIN, July 1990.
 # 
-#    classification = "C-ONR2-AY-5-4"
+#    classification = "C-CONR2-AY-5-4"
 # 
 #   Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LSNNODOC'
@@ -235,7 +235,7 @@ class  LSNNODOC(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-ONR2-AY-5-4"
+        self.pbclass = "C-CONR2-AY-5-4"
         self.objderlvl = 2
         self.conderlvl = [2]
 

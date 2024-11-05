@@ -17,13 +17,13 @@ class  HIMMELP1(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, December 1994.
 # 
-#    classification = "C-OBR2-AN-2-0"
+#    classification = "C-COBR2-AN-2-0"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HIMMELP1'
@@ -129,7 +129,7 @@ class  HIMMELP1(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-2-0"
+        self.pbclass = "C-COBR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

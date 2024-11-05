@@ -17,7 +17,7 @@ function varargout = SIPOW3(action,varargin)
 % 
 %    SIF input: A. R. Conn and Nick Gould, August 1993
 % 
-%    classification = 'C-LLR2-AN-4-V'
+%    classification = 'C-CLLR2-AN-4-V'
 % 
 %    Problem variants: they are identified by the values of M (even)
 % 
@@ -26,7 +26,7 @@ function varargout = SIPOW3(action,varargin)
 % IE M                   500 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -237,7 +237,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-LLR2-AN-4-V';
+        pb.pbclass = 'C-CLLR2-AN-4-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

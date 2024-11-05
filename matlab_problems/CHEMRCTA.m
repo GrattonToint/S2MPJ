@@ -19,7 +19,7 @@ function varargout = CHEMRCTA(action,varargin)
 %    SIF input: Ph. Toint, Dec 1989.
 %               minor correction by Ph. Shott, Jan 1995 and F Ruediger, Mar 1997.
 % 
-%    classification = 'C-NOR2-MN-V-V'
+%    classification = 'C-CNOR2-MN-V-V'
 % 
 %    The axial coordinate interval is [0,1]
 % 
@@ -35,7 +35,7 @@ function varargout = CHEMRCTA(action,varargin)
 % IE N                   2500           $-PARAMETER n = 5000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -358,7 +358,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NOR2-MN-V-V';
+        pb.pbclass = 'C-CNOR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

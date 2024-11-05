@@ -10,14 +10,14 @@ function varargout = QPBAND(action,varargin)
 %    SIF input: Nick Gould, December 1999.
 %               correction by S. Gratton & Ph. Toint, May 2024
 % 
-%    classification = 'C-QLR2-AN-V-V'
+%    classification = 'C-CQLR2-AN-V-V'
 % 
 %       Alternative values for the SIF file parameters:
 % IE N                   10000          $-PARAMETER
 % IE N                   50000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -141,7 +141,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-QLR2-AN-V-V';
+        pb.pbclass = 'C-CQLR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

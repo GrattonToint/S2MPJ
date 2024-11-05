@@ -13,13 +13,13 @@ function varargout = LSC1LS(action,varargin)
 % 
 %    SIF input: Nick Gould, Nov 2016
 % 
-%    classification = 'C-SUR2-MN-3-0'
+%    classification = 'C-CSUR2-MN-3-0'
 % 
 %    Number of data values
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -147,7 +147,7 @@ switch(action)
 % LO SOLTN
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-MN-3-0';
+        pb.pbclass = 'C-CSUR2-MN-3-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

@@ -20,7 +20,7 @@ function MOSARQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, August 1993.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #    Problem variants: these are distinguished by the triplet ( N, M, COND ),
 #    where: - N (nb of variables) must be a multiple of 3
@@ -123,7 +123,7 @@ function MOSARQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MOSARQP2"
@@ -550,7 +550,7 @@ function MOSARQP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QLR2-AN-V-V"
+        pb.pbclass = "C-CQLR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -15,13 +15,13 @@ function KOEBHELBNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #    SIF input: Ph. Toint, June 2005.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "C-NOR2-RN-3-156"
+#    classification = "C-CNOR2-RN-3-156"
 # 
 #    Useful constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "KOEBHELBNE"
@@ -469,7 +469,7 @@ function KOEBHELBNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-RN-3-156"
+        pb.pbclass = "C-CNOR2-RN-3-156"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

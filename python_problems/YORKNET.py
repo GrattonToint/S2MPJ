@@ -17,7 +17,7 @@ class  YORKNET(CUTEst_problem):
 #               e-mail: bul@uk.ac.dmu * Tel no.0533 577070
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-SOR2-AY-312-256"
+#    classification = "C-CSOR2-AY-312-256"
 # 
 # DECLARE CONSTANTS DESCRIBING NETWORK
 # 
@@ -25,7 +25,7 @@ class  YORKNET(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YORKNET'
@@ -814,7 +814,7 @@ class  YORKNET(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SOR2-AY-312-256"
+        self.pbclass = "C-CSOR2-AY-312-256"
         self.objderlvl = 2
         self.conderlvl = [2]
 

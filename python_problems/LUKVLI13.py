@@ -18,7 +18,7 @@ class  LUKVLI13(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 2001
 # 
-#    classification = "C-OQR2-AY-V-V"
+#    classification = "C-COQR2-AY-V-V"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
@@ -28,7 +28,7 @@ class  LUKVLI13(CUTEst_problem):
 # IE N                   9998           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LUKVLI13'
@@ -229,7 +229,7 @@ class  LUKVLI13(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OQR2-AY-V-V"
+        self.pbclass = "C-COQR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -7,10 +7,10 @@ function varargout = FERRISDC(action,varargin)
 %    *********
 % 
 %    A QP suggested by Michael Ferris
-%    classification = 'C-'
+%    classification = 'C-C'
 %    SIF input: Nick Gould, November 2001.
 % 
-%    classification = 'C-QLR2-AN-V-V'
+%    classification = 'C-CQLR2-AN-V-V'
 % 
 %       Alternative values for the SIF file parameters:
 % IE n                   4              $-PARAMETER
@@ -18,7 +18,7 @@ function varargout = FERRISDC(action,varargin)
 % IE n                   200            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -458,7 +458,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-QLR2-AN-V-V';
+        pb.pbclass = 'C-CQLR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

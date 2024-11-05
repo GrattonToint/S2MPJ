@@ -26,7 +26,7 @@ class  CLPLATEA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-OXR2-MN-V-0"
+#    classification = "C-COXR2-MN-V-0"
 # 
 #    P is the number of points in one side of the unit square
 #    The number of variables is P*P, of which (P-1)*(P-1) are free.
@@ -40,7 +40,7 @@ class  CLPLATEA(CUTEst_problem):
 # IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLPLATEA'
@@ -166,7 +166,7 @@ class  CLPLATEA(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OXR2-MN-V-0"
+        self.pbclass = "C-COXR2-MN-V-0"
         self.objderlvl = 2
 
 # ********************

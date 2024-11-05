@@ -17,13 +17,13 @@ class  DEGENLPA(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Aug 1990.
 # 
-#    classification = "C-LLR2-AN-20-15"
+#    classification = "C-CLLR2-AN-20-15"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEGENLPA'
@@ -322,7 +322,7 @@ class  DEGENLPA(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-LLR2-AN-20-15"
+        self.pbclass = "C-CLLR2-AN-20-15"
         self.objderlvl = 2
         self.conderlvl = [2]
 

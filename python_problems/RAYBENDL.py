@@ -25,7 +25,7 @@ class  RAYBENDL(CUTEst_problem):
 # 
 #    SIF input: Ph Toint, Dec 1991.
 # 
-#    classification = "C-OXR2-MY-V-0"
+#    classification = "C-COXR2-MY-V-0"
 # 
 #    number of  knots  ( >= 4 )
 #    ( n = 2( NKNOTS - 1 ) ) 
@@ -40,7 +40,7 @@ class  RAYBENDL(CUTEst_problem):
 # IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RAYBENDL'
@@ -173,7 +173,7 @@ class  RAYBENDL(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OXR2-MY-V-0"
+        self.pbclass = "C-COXR2-MY-V-0"
         self.objderlvl = 2
 
 # **********************

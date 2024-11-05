@@ -15,13 +15,13 @@ function HATFLDANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #    SIF input: Ph. Toint, May 1990.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "C-NOR2-AN-4-4"
+#    classification = "C-CNOR2-AN-4-4"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HATFLDANE"
@@ -131,7 +131,7 @@ function HATFLDANE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AN-4-4"
+        pb.pbclass = "C-CNOR2-AN-4-4"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

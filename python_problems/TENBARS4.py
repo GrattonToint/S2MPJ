@@ -38,13 +38,13 @@ class  TENBARS4(CUTEst_problem):
 #    SIF input: Ph. Toint, August 1990.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-LOR2-MY-18-9"
+#    classification = "C-CLOR2-MY-18-9"
 # 
 #    Constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TENBARS4'
@@ -463,7 +463,7 @@ class  TENBARS4(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-MY-18-9"
+        self.pbclass = "C-CLOR2-MY-18-9"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -24,7 +24,7 @@ function ROBOT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 #    SIF input: Manish Sabu at Virginia Tech., Spring 1993.
 #               Minor modifications by Ph. L. Toint, April 1993.
 # 
-#    classification = "C-QOR2-MY-14-2"
+#    classification = "C-CQOR2-MY-14-2"
 # 
 #  This segment describes the initial values of angles (by THnIN)
 #   and final position of the end effector (by XPOS and YPOS)
@@ -34,7 +34,7 @@ function ROBOT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ROBOT"
@@ -471,7 +471,7 @@ function ROBOT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-MY-14-2"
+        pb.pbclass = "C-CQOR2-MY-14-2"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

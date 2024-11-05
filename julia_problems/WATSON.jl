@@ -21,7 +21,7 @@ function WATSON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 #    SIF input: Ph. Toint, Dec 1989.
 #    (bug fix July 2007)
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    The number of variables can be varied, but should be smaller than
 #    31
@@ -32,7 +32,7 @@ function WATSON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   12             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "WATSON"
@@ -272,7 +272,7 @@ function WATSON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-V-0"
+        pb.pbclass = "C-CSUR2-AN-V-0"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

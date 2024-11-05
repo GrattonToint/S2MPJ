@@ -18,7 +18,7 @@ class  LIN(CUTEst_problem):
 # 
 #    SIF input: Marcel Mongeau, 9 February 1994.
 # 
-#    classification = "C-OLR2-AY-4-2"
+#    classification = "C-COLR2-AY-4-2"
 # 
 #    PARAMETERS likely to be changed for different problems:
 # 
@@ -26,7 +26,7 @@ class  LIN(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LIN'
@@ -361,7 +361,7 @@ class  LIN(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OLR2-AY-4-2"
+        self.pbclass = "C-COLR2-AY-4-2"
         self.objderlvl = 2
         self.conderlvl = [2]
 

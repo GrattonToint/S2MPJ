@@ -18,13 +18,13 @@ class  EXPFITC(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint and N. Gould, May 1990.
 # 
-#    classification = "C-OLR2-AN-5-502"
+#    classification = "C-COLR2-AN-5-502"
 # 
 #    Number of fitting points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXPFITC'
@@ -225,7 +225,7 @@ class  EXPFITC(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OLR2-AN-5-502"
+        self.pbclass = "C-COLR2-AN-5-502"
         self.objderlvl = 2
         self.conderlvl = [2]
 

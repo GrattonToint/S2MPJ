@@ -16,7 +16,7 @@ function varargout = CHNROSNB(action,varargin)
 %    See also Buckley#46 (n = 25) (p. 45).
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-SUR2-AN-V-0'
+%    classification = 'C-CSUR2-AN-V-0'
 % 
 %    Number of variables ( at most 50)
 % 
@@ -26,7 +26,7 @@ function varargout = CHNROSNB(action,varargin)
 % IE N                   50             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -198,7 +198,7 @@ switch(action)
 % LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-V-0';
+        pb.pbclass = 'C-CSUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

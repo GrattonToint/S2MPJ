@@ -12,7 +12,7 @@ function CHARDIS02(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #               correction by S. Gratton & Ph. Toint, May 2024
 #    modifield version of CHARDIS0 (formulation corrected)
 # 
-#    classification = "C-OBR2-AY-V-V"
+#    classification = "C-COBR2-AY-V-V"
 # 
 #    Number of positive (or negative) charges -> Number of variables 2*NP1
 # 
@@ -28,7 +28,7 @@ function CHARDIS02(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CHARDIS02"
@@ -178,7 +178,7 @@ function CHARDIS02(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AY-V-V"
+        pb.pbclass = "C-COBR2-AY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

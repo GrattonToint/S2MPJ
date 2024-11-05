@@ -16,13 +16,13 @@ function HS38(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: A.R. Conn, April 1990
 # 
-#    classification = "C-OBR2-AN-4-0"
+#    classification = "C-COBR2-AN-4-0"
 # 
 #    Problem dimension
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS38"
@@ -171,7 +171,7 @@ function HS38(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-4-0"
+        pb.pbclass = "C-COBR2-AN-4-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

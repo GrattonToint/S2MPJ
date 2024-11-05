@@ -17,7 +17,7 @@ function varargout = n3PK(action,varargin)
 % 
 %    SIF input: Ph. Toint, Dec 1989, Corrected July 1993.
 % 
-%    classification = 'C-SBR2-MN-30-0'
+%    classification = 'C-CSBR2-MN-30-0'
 % 
 %  Parameters
 % 
@@ -25,7 +25,7 @@ function varargout = n3PK(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -1553,7 +1553,7 @@ switch(action)
         pb.xlower = zeros(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SBR2-MN-30-0';
+        pb.pbclass = 'C-CSBR2-MN-30-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

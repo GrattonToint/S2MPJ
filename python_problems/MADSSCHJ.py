@@ -17,7 +17,7 @@ class  MADSSCHJ(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, August 1993.
 # 
-#    classification = "C-LQR2-AN-V-V"
+#    classification = "C-CLQR2-AN-V-V"
 # 
 #    N is the number of variables - 1, and must be even and at least 4.
 #    The number of inequality constraints is 2*N - 2.
@@ -37,7 +37,7 @@ class  MADSSCHJ(CUTEst_problem):
 # IE N                   200            $-PARAMETER  n=201, m=398
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MADSSCHJ'
@@ -281,7 +281,7 @@ class  MADSSCHJ(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-AN-V-V"
+        self.pbclass = "C-CLQR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

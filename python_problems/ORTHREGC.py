@@ -22,7 +22,7 @@ class  ORTHREGC(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "C-QQR2-AN-V-V"
+#    classification = "C-CQQR2-AN-V-V"
 # 
 #    Number of data points
 #    (number of variables = 2 NPTS + 5 )
@@ -35,7 +35,7 @@ class  ORTHREGC(CUTEst_problem):
 # IE NPTS                2500           $-PARAMETER n= 5005
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGC'
@@ -332,7 +332,7 @@ class  ORTHREGC(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QQR2-AN-V-V"
+        self.pbclass = "C-CQQR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

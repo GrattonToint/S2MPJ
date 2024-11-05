@@ -19,14 +19,14 @@ class  SPANHYD(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Sept 1990.
 # 
-#    classification = "C-ONR2-RN-97-33"
+#    classification = "C-CONR2-RN-97-33"
 # 
 #    Number of arcs    = 97
 #    Number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPANHYD'
@@ -1438,7 +1438,7 @@ class  SPANHYD(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-ONR2-RN-97-33"
+        self.pbclass = "C-CONR2-RN-97-33"
         self.objderlvl = 2
         self.conderlvl = [2]
 

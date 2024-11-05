@@ -129,7 +129,7 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: W. Korchinski, Spring 1993.
 # 
-#    classification = "C-SLR2-MN-19-8"
+#    classification = "C-CSLR2-MN-19-8"
 # 
 # ***************************************************************
 #  PROBLEM SPECIFICATION BEGINS HERE.
@@ -140,7 +140,7 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # *************************************
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FCCU"
@@ -527,7 +527,7 @@ function FCCU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-SLR2-MN-19-8"
+        pb.pbclass = "C-CSLR2-MN-19-8"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

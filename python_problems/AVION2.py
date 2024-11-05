@@ -11,13 +11,13 @@ class  AVION2(CUTEst_problem):
 # 
 #    SIF input:  A. R. Conn, June 1993.
 # 
-#    classification = "C-OLR2-RN-49-15"
+#    classification = "C-COLR2-RN-49-15"
 # 
 #    Define useful parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'AVION2'
@@ -963,7 +963,7 @@ class  AVION2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OLR2-RN-49-15"
+        self.pbclass = "C-COLR2-RN-49-15"
         self.objderlvl = 2
         self.conderlvl = [2]
 

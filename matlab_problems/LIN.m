@@ -17,7 +17,7 @@ function varargout = LIN(action,varargin)
 % 
 %    SIF input: Marcel Mongeau, 9 February 1994.
 % 
-%    classification = 'C-OLR2-AY-4-2'
+%    classification = 'C-COLR2-AY-4-2'
 % 
 %    PARAMETERS likely to be changed for different problems:
 % 
@@ -25,7 +25,7 @@ function varargout = LIN(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -379,7 +379,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OLR2-AY-4-2';
+        pb.pbclass = 'C-COLR2-AY-4-2';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

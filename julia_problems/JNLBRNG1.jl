@@ -19,7 +19,7 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, Dec 1989.
 #    modified by Peihuang Chen, according to MINPACK-2, Apr 1992
 # 
-#    classification = "C-QBR2-AY-V-0"
+#    classification = "C-CQBR2-AY-V-0"
 # 
 #    The rectangle is discretized into (pt-1)(py-1) little rectangles. The
 #    heights of the considered surface above the corners of these little
@@ -50,7 +50,7 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE PT                  100            $-PARAMETER  n=10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "JNLBRNG1"
@@ -325,7 +325,7 @@ function JNLBRNG1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AY-V-0"
+        pb.pbclass = "C-CQBR2-AY-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

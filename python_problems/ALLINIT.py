@@ -15,11 +15,11 @@ class  ALLINIT(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 1990.
 # 
-#    classification = "C-OBR2-AY-4-0"
+#    classification = "C-COBR2-AY-4-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ALLINIT'
@@ -296,7 +296,7 @@ class  ALLINIT(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AY-4-0"
+        self.pbclass = "C-COBR2-AY-4-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

@@ -19,7 +19,7 @@ function varargout = JNLBRNG1(action,varargin)
 %    SIF input: Ph. Toint, Dec 1989.
 %    modified by Peihuang Chen, according to MINPACK-2, Apr 1992
 % 
-%    classification = 'C-QBR2-AY-V-0'
+%    classification = 'C-CQBR2-AY-V-0'
 % 
 %    The rectangle is discretized into (pt-1)(py-1) little rectangles. The
 %    heights of the considered surface above the corners of these little
@@ -50,7 +50,7 @@ function varargout = JNLBRNG1(action,varargin)
 % IE PT                  100            $-PARAMETER  n=10000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -334,7 +334,7 @@ switch(action)
 % LO SOLTN(125)          -0.1805800
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AY-V-0';
+        pb.pbclass = 'C-CQBR2-AY-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

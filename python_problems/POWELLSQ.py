@@ -15,14 +15,14 @@ class  POWELLSQ(CUTEst_problem):
 # 
 #    See also Buckley#217 (p.84.)
 # 
-#    classification = "C-NOR2-AN-2-2"
+#    classification = "C-CNOR2-AN-2-2"
 # 
 #    SIF input: Ph. Toint, Dec 1989, correction November 2002.
 #               NIMG corrected July 2005 (thanks to Roger Fletcher)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POWELLSQ'
@@ -154,7 +154,7 @@ class  POWELLSQ(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-2-2"
+        self.pbclass = "C-CNOR2-AN-2-2"
         self.objderlvl = 2
         self.conderlvl = [2]
 

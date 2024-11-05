@@ -16,7 +16,7 @@ class  HADAMALS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 1993.
 # 
-#    classification = "C-OBR2-RN-V-V"
+#    classification = "C-COBR2-RN-V-V"
 # 
 #    The dimension of the matrix (=> N**2 variables).
 # 
@@ -33,7 +33,7 @@ class  HADAMALS(CUTEst_problem):
 # IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HADAMALS'
@@ -181,7 +181,7 @@ class  HADAMALS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-RN-V-V"
+        self.pbclass = "C-COBR2-RN-V-V"
         self.objderlvl = 2
 
 

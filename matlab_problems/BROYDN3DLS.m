@@ -18,7 +18,7 @@ function varargout = BROYDN3DLS(action,varargin)
 %    SIF input: Ph. Toint, Dec 1989.
 %    Least-squares version: Nick Gould, Oct 2015.
 % 
-%    classification = 'C-SUR2-AN-V-0'
+%    classification = 'C-CSUR2-AN-V-0'
 % 
 %    N is the number of variables (variable).
 % 
@@ -31,7 +31,7 @@ function varargout = BROYDN3DLS(action,varargin)
 % IE N                   5000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -178,7 +178,7 @@ switch(action)
 % LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-V-0';
+        pb.pbclass = 'C-CSUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

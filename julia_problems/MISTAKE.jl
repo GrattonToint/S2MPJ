@@ -11,7 +11,7 @@ function MISTAKE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    Source:
 #    Ph. Toint.
 # 
-#    classification = "C-QQR2-AY-9-13"
+#    classification = "C-CQQR2-AY-9-13"
 # 
 #    SIF input: Ph. Toint, Apr 1990.
 # 
@@ -19,7 +19,7 @@ function MISTAKE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MISTAKE"
@@ -576,7 +576,7 @@ function MISTAKE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QQR2-AY-9-13"
+        pb.pbclass = "C-CQQR2-AY-9-13"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

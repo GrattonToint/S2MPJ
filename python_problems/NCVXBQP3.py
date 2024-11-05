@@ -11,7 +11,7 @@ class  NCVXBQP3(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 1995
 # 
-#    classification = "C-QBR2-AN-V-0"
+#    classification = "C-CQBR2-AN-V-0"
 # 
 #    The number of variables
 # 
@@ -23,7 +23,7 @@ class  NCVXBQP3(CUTEst_problem):
 # IE N                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NCVXBQP3'
@@ -135,7 +135,7 @@ class  NCVXBQP3(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QBR2-AN-V-0"
+        self.pbclass = "C-CQBR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

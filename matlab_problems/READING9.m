@@ -18,7 +18,7 @@ function varargout = READING9(action,varargin)
 % 
 %    SIF input: Nick Gould and Ph. Toint, March 1995
 % 
-%    classification = 'C-OOR2-MN-V-V'
+%    classification = 'C-COOR2-MN-V-V'
 % 
 %    Number of discretized points in [0,1] - 1
 % 
@@ -32,7 +32,7 @@ function varargout = READING9(action,varargin)
 % IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -214,7 +214,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-MN-V-V';
+        pb.pbclass = 'C-COOR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

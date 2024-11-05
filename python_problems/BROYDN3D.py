@@ -17,7 +17,7 @@ class  BROYDN3D(CUTEst_problem):
 #    See also Toint#17 and Buckley#78.
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NQR2-AN-V-V"
+#    classification = "C-CNQR2-AN-V-V"
 # 
 #    N is the number of variables (variable).
 # 
@@ -30,7 +30,7 @@ class  BROYDN3D(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BROYDN3D'
@@ -173,7 +173,7 @@ class  BROYDN3D(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NQR2-AN-V-V"
+        self.pbclass = "C-CNQR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

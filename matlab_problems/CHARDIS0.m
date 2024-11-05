@@ -11,7 +11,7 @@ function varargout = CHARDIS0(action,varargin)
 %    SIF input: R. Felkel, Jun 1999.
 %               incorrectly decoded version (see CHARDIS0 for correction)
 % 
-%    classification = 'C-OBR2-AY-V-V'
+%    classification = 'C-COBR2-AY-V-V'
 % 
 %    Number of positive (or negative) charges -> Number of variables 2*NP1
 % 
@@ -27,7 +27,7 @@ function varargout = CHARDIS0(action,varargin)
 % IE NP1                 1000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -182,7 +182,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OBR2-AY-V-V';
+        pb.pbclass = 'C-COBR2-AY-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

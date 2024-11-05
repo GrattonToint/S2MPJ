@@ -22,11 +22,11 @@ class  LAUNCH(CUTEst_problem):
 #    SIF input: P. Driscoll, Virginia Tech., April 1993,
 #               corrected and simplified by Ph. L. Toint, May 1993.
 # 
-#    classification = "C-OOR2-MY-25-28"
+#    classification = "C-COOR2-MY-25-28"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LAUNCH'
@@ -1125,7 +1125,7 @@ class  LAUNCH(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MY-25-28"
+        self.pbclass = "C-COOR2-MY-25-28"
         self.objderlvl = 2
         self.conderlvl = [2]
 

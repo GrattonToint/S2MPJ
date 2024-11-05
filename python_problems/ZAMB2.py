@@ -13,7 +13,7 @@ class  ZAMB2(CUTEst_problem):
 #       JOTA 81(1994)2,221-248.
 #    E. Arnold 1/3/96 (SIF file)
 # 
-#    classification = "C-OOR2-MN-V-V"
+#    classification = "C-COOR2-MN-V-V"
 # 
 # 
 #    The time horizon NY and the start year YEAR can be varied with
@@ -30,7 +30,7 @@ class  ZAMB2(CUTEst_problem):
 # IE NY                  30             $-PARAMETER n = 3966
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ZAMB2'
@@ -1981,7 +1981,7 @@ class  ZAMB2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MN-V-V"
+        self.pbclass = "C-COOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -20,7 +20,7 @@ function varargout = SCW1(action,varargin)
 % 
 %    SIF input: Nick Gould, July 2020
 % 
-%    classification = 'C-SLR2-MN-V-V'
+%    classification = 'C-CSLR2-MN-V-V'
 % 
 %    Number of internal knots
 % 
@@ -28,7 +28,7 @@ function varargout = SCW1(action,varargin)
 % IE K                   1              $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -236,7 +236,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-SLR2-MN-V-V';
+        pb.pbclass = 'C-CSLR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

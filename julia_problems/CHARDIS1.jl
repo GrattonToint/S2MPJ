@@ -11,7 +11,7 @@ function CHARDIS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: R. Felkel, Jun 1999.
 #               incorrectly decoded version (see CHARDIS12 for correction)
 # 
-#    classification = "C-OQR2-AY-V-V"
+#    classification = "C-COQR2-AY-V-V"
 # 
 #    Number of positive (or negative) charges -> Number of variables 2*NP1
 # 
@@ -26,7 +26,7 @@ function CHARDIS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CHARDIS1"
@@ -235,7 +235,7 @@ function CHARDIS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OQR2-AY-V-V"
+        pb.pbclass = "C-COQR2-AY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

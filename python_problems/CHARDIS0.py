@@ -12,7 +12,7 @@ class  CHARDIS0(CUTEst_problem):
 #    SIF input: R. Felkel, Jun 1999.
 #               incorrectly decoded version (see CHARDIS0 for correction)
 # 
-#    classification = "C-OBR2-AY-V-V"
+#    classification = "C-COBR2-AY-V-V"
 # 
 #    Number of positive (or negative) charges -> Number of variables 2*NP1
 # 
@@ -28,7 +28,7 @@ class  CHARDIS0(CUTEst_problem):
 # IE NP1                 1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CHARDIS0'
@@ -174,7 +174,7 @@ class  CHARDIS0(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AY-V-V"
+        self.pbclass = "C-COBR2-AY-V-V"
         self.objderlvl = 2
 
 

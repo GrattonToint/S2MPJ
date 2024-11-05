@@ -12,13 +12,13 @@ class  ZAMB2m8(CUTEst_problem):
 #       JOTA 81(1994)2,221-248.
 #    E. Arnold 1/3/96 (SIF file)
 # 
-#    classification = "C-OOR2-RN-138-48"
+#    classification = "C-COOR2-RN-138-48"
 # 
 #    time horizon (years)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ZAMB2m8'
@@ -1959,7 +1959,7 @@ class  ZAMB2m8(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-RN-138-48"
+        self.pbclass = "C-COOR2-RN-138-48"
         self.objderlvl = 2
         self.conderlvl = [2]
 

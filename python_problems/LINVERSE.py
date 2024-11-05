@@ -29,7 +29,7 @@ class  LINVERSE(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1991.
 # 
-#    classification = "C-SBR2-AN-V-0"
+#    classification = "C-CSBR2-AN-V-0"
 # 
 #    Dimension of the matrix
 # 
@@ -40,7 +40,7 @@ class  LINVERSE(CUTEst_problem):
 # IE N                   1000           $-PARAMETER  n = 1999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LINVERSE'
@@ -708,7 +708,7 @@ class  LINVERSE(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AN-V-0"
+        self.pbclass = "C-CSBR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

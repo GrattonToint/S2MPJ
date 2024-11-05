@@ -26,7 +26,7 @@ function varargout = DTOC4(action,varargin)
 % 
 %    SIF input: Ph. Toint, August 1993
 % 
-%    classification = 'C-QOR2-AN-V-V'
+%    classification = 'C-CQOR2-AN-V-V'
 % 
 %    Problem variants: they are identified by the value of the parameter N.
 % 
@@ -42,7 +42,7 @@ function varargout = DTOC4(action,varargin)
 % IE N                   1500           $-PARAMETER  n= 4499,m=2998
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -352,7 +352,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QOR2-AN-V-V';
+        pb.pbclass = 'C-CQOR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

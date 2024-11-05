@@ -20,7 +20,7 @@ class  DIXMAANE1(CUTEst_problem):
 #               correction by Ph. Shott, January 1995.
 #               update Nick Gould, August 2022, to remove beta=0 terms.
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    M is equal to the third of the number of variables
 # 
@@ -32,7 +32,7 @@ class  DIXMAANE1(CUTEst_problem):
 # IE M                   1000           $-PARAMETER n = 3000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXMAANE1'
@@ -197,7 +197,7 @@ class  DIXMAANE1(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-V-0"
+        self.pbclass = "C-COUR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

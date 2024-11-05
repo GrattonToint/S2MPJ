@@ -27,7 +27,7 @@ function varargout = DRCAV1LQ(action,varargin)
 % 
 %    SIF input: Ph. Toint, Jan 1995.
 % 
-%    classification = 'C-OXR2-MY-V-V'
+%    classification = 'C-COXR2-MY-V-V'
 % 
 %    Discretization mesh: n = (M+3)**2 - fixed variables
 % 
@@ -37,7 +37,7 @@ function varargout = DRCAV1LQ(action,varargin)
 % IE M                   63             $-PARAMETER  n =  3969
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -372,7 +372,7 @@ switch(action)
 % LO SOLTN                0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OXR2-MY-V-V';
+        pb.pbclass = 'C-COXR2-MY-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

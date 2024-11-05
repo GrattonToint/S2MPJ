@@ -15,13 +15,13 @@ function HATFLDENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #    SIF input: Ph. Toint, May 1990.
 #    Nonlinear-equations version of HATFLDE.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-NOR2-AN-3-21"
+#    classification = "C-CNOR2-AN-3-21"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HATFLDENE"
@@ -207,7 +207,7 @@ function HATFLDENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AN-3-21"
+        pb.pbclass = "C-CNOR2-AN-3-21"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

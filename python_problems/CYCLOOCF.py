@@ -31,7 +31,7 @@ class  CYCLOOCF(CUTEst_problem):
 # 
 #    This is a version of CYCLOOPT.SIF without the fixed variables
 # 
-#    classification = "C-NQR2-MN-V-V"
+#    classification = "C-CNQR2-MN-V-V"
 # 
 #    The number of molecules
 # 
@@ -42,7 +42,7 @@ class  CYCLOOCF(CUTEst_problem):
 # IE P                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CYCLOOCF'
@@ -548,7 +548,7 @@ class  CYCLOOCF(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NQR2-MN-V-V"
+        self.pbclass = "C-CNQR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

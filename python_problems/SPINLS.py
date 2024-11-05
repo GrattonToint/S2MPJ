@@ -19,7 +19,7 @@ class  SPINLS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 2009
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 #    Least-squares version of SPIN.SIF, Nick Gould, Jan 2020.
 # 
 #    Number of particles n
@@ -39,7 +39,7 @@ class  SPINLS(CUTEst_problem):
 # IE N                   50             $-PARAMETER matrix dimension
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SPINLS'
@@ -321,7 +321,7 @@ class  SPINLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-0"
+        self.pbclass = "C-CSUR2-AN-V-0"
         self.objderlvl = 2
 
 

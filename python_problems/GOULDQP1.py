@@ -17,13 +17,13 @@ class  GOULDQP1(CUTEst_problem):
 # 
 #    SIF input: B Baudson, Jan 1990 modified by Nick Gould, Jan, 2011
 # 
-#    classification = "C-QLR2-AN-32-17"
+#    classification = "C-CQLR2-AN-32-17"
 # 
 #    Other useful parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GOULDQP1'
@@ -454,7 +454,7 @@ class  GOULDQP1(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-32-17"
+        self.pbclass = "C-CQLR2-AN-32-17"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -15,7 +15,7 @@ function HADAMALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, Nov 1993.
 # 
-#    classification = "C-OBR2-RN-V-V"
+#    classification = "C-COBR2-RN-V-V"
 # 
 #    The dimension of the matrix (=> N**2 variables).
 # 
@@ -32,7 +32,7 @@ function HADAMALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HADAMALS"
@@ -197,7 +197,7 @@ function HADAMALS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-RN-V-V"
+        pb.pbclass = "C-COBR2-RN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

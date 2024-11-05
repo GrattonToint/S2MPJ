@@ -27,7 +27,7 @@ function DTOC1ND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "C-OQR2-AN-V-V"
+#    classification = "C-COQR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the values of
 #    the parameter vector ( N, NX, NY )
@@ -55,7 +55,7 @@ function DTOC1ND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC1ND"
@@ -344,7 +344,7 @@ function DTOC1ND(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OQR2-AN-V-V"
+        pb.pbclass = "C-COQR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

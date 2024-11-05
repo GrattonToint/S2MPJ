@@ -16,7 +16,7 @@ class  HAGER3(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1991.
 # 
-#    classification = "C-SLR2-AY-V-V"
+#    classification = "C-CSLR2-AY-V-V"
 # 
 #    Number of discretized points in [0,1]
 # 
@@ -29,7 +29,7 @@ class  HAGER3(CUTEst_problem):
 # IE N                   2500           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HAGER3'
@@ -207,7 +207,7 @@ class  HAGER3(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SLR2-AY-V-V"
+        self.pbclass = "C-CSLR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

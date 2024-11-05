@@ -17,7 +17,7 @@ class  HILBERTB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-QUR2-AN-V-0"
+#    classification = "C-CQUR2-AN-V-0"
 # 
 #    Dimension of the problem
 # 
@@ -26,7 +26,7 @@ class  HILBERTB(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HILBERTB'
@@ -149,7 +149,7 @@ class  HILBERTB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QUR2-AN-V-0"
+        self.pbclass = "C-CQUR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

@@ -16,7 +16,7 @@ function varargout = GAUSSIAN(action,varargin)
 %    See also Buckley#28
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-SUR2-AN-3-0'
+%    classification = 'C-CSUR2-AN-3-0'
 % 
 %    This function  is a nonlinear least squares with 15 groups.  Each
 %    group has a nonlinear element.
@@ -25,7 +25,7 @@ function varargout = GAUSSIAN(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -155,7 +155,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-3-0';
+        pb.pbclass = 'C-CSUR2-AN-3-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

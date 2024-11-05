@@ -17,7 +17,7 @@ class  GENROSE(CUTEst_problem):
 #    SIF input: Nick Gould, Oct 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -28,7 +28,7 @@ class  GENROSE(CUTEst_problem):
 # IE N                   500            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GENROSE'
@@ -147,7 +147,7 @@ class  GENROSE(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-0"
+        self.pbclass = "C-CSUR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

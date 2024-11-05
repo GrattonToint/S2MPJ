@@ -18,7 +18,7 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, July 1991.
 # 
-#    classification = "C-LLR2-MN-V-V"
+#    classification = "C-CLLR2-MN-V-V"
 # 
 #    Number of discretized points in [0,1]
 # 
@@ -31,7 +31,7 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "READING2"
@@ -177,7 +177,7 @@ function READING2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-LLR2-MN-V-V"
+        pb.pbclass = "C-CLLR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

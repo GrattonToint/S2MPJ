@@ -16,13 +16,13 @@ class  DMN15333(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Tyrone Rees, Feb 2016, corrected May 2024
 # 
-#    classification = "C-NOR2-MN-99-4643"
+#    classification = "C-CNOR2-MN-99-4643"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DMN15333'
@@ -9933,7 +9933,7 @@ class  DMN15333(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-MN-99-4643"
+        self.pbclass = "C-CNOR2-MN-99-4643"
         self.objderlvl = 2
         self.conderlvl = [2]
 

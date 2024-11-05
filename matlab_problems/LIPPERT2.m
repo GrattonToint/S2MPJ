@@ -30,7 +30,7 @@ function varargout = LIPPERT2(action,varargin)
 %    SIF input: Nick Gould, September 2006
 %               correction by S. Gratton & Ph. Toint, May 2024
 % 
-%    classification = 'C-LQR2-MN-V-V'
+%    classification = 'C-CLQR2-MN-V-V'
 % 
 %    Number of nodes in x direction
 % 
@@ -42,7 +42,7 @@ function varargout = LIPPERT2(action,varargin)
 % IE NX                  100            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -340,7 +340,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-MN-V-V';
+        pb.pbclass = 'C-CLQR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

@@ -24,7 +24,7 @@ function RAYBENDL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph Toint, Dec 1991.
 # 
-#    classification = "C-OXR2-MY-V-0"
+#    classification = "C-COXR2-MY-V-0"
 # 
 #    number of  knots  ( >= 4 )
 #    ( n = 2( NKNOTS - 1 ) ) 
@@ -39,7 +39,7 @@ function RAYBENDL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RAYBENDL"
@@ -172,7 +172,7 @@ function RAYBENDL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OXR2-MY-V-0"
+        pb.pbclass = "C-COXR2-MY-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

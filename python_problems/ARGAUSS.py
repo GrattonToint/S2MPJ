@@ -16,7 +16,7 @@ class  ARGAUSS(CUTEst_problem):
 #    See also Buckley#28
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-NOR2-AN-3-15"
+#    classification = "C-CNOR2-AN-3-15"
 # 
 #    This function  is a nonlinear least squares with 15 groups.  Each
 #    group has a nonlinear element.
@@ -25,7 +25,7 @@ class  ARGAUSS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ARGAUSS'
@@ -178,7 +178,7 @@ class  ARGAUSS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-3-15"
+        self.pbclass = "C-CNOR2-AN-3-15"
         self.objderlvl = 2
         self.conderlvl = [2]
 

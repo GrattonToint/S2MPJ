@@ -14,11 +14,11 @@ class  LOGROS(CUTEst_problem):
 # 
 #    SDIF input: Ph. Toint, June 1993.
 # 
-#    classification = "C-OBR2-AN-2-0"
+#    classification = "C-COBR2-AN-2-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LOGROS'
@@ -103,7 +103,7 @@ class  LOGROS(CUTEst_problem):
         self.xupper = np.full((self.n,1),+float('Inf'))
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-2-0"
+        self.pbclass = "C-COBR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

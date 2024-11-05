@@ -17,13 +17,13 @@ class  HS38(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, April 1990
 # 
-#    classification = "C-OBR2-AN-4-0"
+#    classification = "C-COBR2-AN-4-0"
 # 
 #    Problem dimension
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS38'
@@ -178,7 +178,7 @@ class  HS38(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-4-0"
+        self.pbclass = "C-COBR2-AN-4-0"
         self.objderlvl = 2
 
 # **********************

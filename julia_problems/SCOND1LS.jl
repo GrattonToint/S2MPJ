@@ -19,7 +19,7 @@ function SCOND1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SBR2-AN-V-V"
+#    classification = "C-CSBR2-AN-V-V"
 # 
 #    N  = Number of discretized point inside the interval [a, b]
 #    LN = Index of the last negative discretization point
@@ -29,7 +29,7 @@ function SCOND1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   10             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SCOND1LS"
@@ -213,7 +213,7 @@ function SCOND1LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-AN-V-V"
+        pb.pbclass = "C-CSBR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

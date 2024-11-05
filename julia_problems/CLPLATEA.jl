@@ -25,7 +25,7 @@ function CLPLATEA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-OXR2-MN-V-0"
+#    classification = "C-COXR2-MN-V-0"
 # 
 #    P is the number of points in one side of the unit square
 #    The number of variables is P*P, of which (P-1)*(P-1) are free.
@@ -39,7 +39,7 @@ function CLPLATEA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CLPLATEA"
@@ -165,7 +165,7 @@ function CLPLATEA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OXR2-MN-V-0"
+        pb.pbclass = "C-COXR2-MN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

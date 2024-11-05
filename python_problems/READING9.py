@@ -19,7 +19,7 @@ class  READING9(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Ph. Toint, March 1995
 # 
-#    classification = "C-OOR2-MN-V-V"
+#    classification = "C-COOR2-MN-V-V"
 # 
 #    Number of discretized points in [0,1] - 1
 # 
@@ -33,7 +33,7 @@ class  READING9(CUTEst_problem):
 # IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING9'
@@ -206,7 +206,7 @@ class  READING9(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MN-V-V"
+        self.pbclass = "C-COOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

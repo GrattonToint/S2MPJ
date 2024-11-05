@@ -10,7 +10,7 @@ function varargout = NCVXBQP3(action,varargin)
 % 
 %    SIF input: Nick Gould, July 1995
 % 
-%    classification = 'C-QBR2-AN-V-0'
+%    classification = 'C-CQBR2-AN-V-0'
 % 
 %    The number of variables
 % 
@@ -22,7 +22,7 @@ function varargout = NCVXBQP3(action,varargin)
 % IE N                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -146,7 +146,7 @@ switch(action)
 % LO SOLTN               -6.60133D+05   $ (n=100)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AN-V-0';
+        pb.pbclass = 'C-CQBR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

@@ -32,7 +32,7 @@ class  OET5(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, February, 1994.
 # 
-#    classification = "C-LQR2-AN-5-V"
+#    classification = "C-CLQR2-AN-5-V"
 # 
 #    Discretization
 # 
@@ -40,7 +40,7 @@ class  OET5(CUTEst_problem):
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'OET5'
@@ -210,7 +210,7 @@ class  OET5(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-AN-5-V"
+        self.pbclass = "C-CLQR2-AN-5-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

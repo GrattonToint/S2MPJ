@@ -30,7 +30,7 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # 
 #    This is a least-squares version of CYCLOOCT.SIF
 # 
-#    classification = "C-SBR2-MN-V-0"
+#    classification = "C-CSBR2-MN-V-0"
 # 
 #    The number of molecules
 # 
@@ -41,7 +41,7 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # IE P                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CYCLOOCTLS"
@@ -398,7 +398,7 @@ function CYCLOOCTLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-MN-V-0"
+        pb.pbclass = "C-CSBR2-MN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

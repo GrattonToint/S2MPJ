@@ -37,14 +37,14 @@ class  CRESC50(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 1993.
 # 
-#    classification = "C-OOR2-MY-6-100"
+#    classification = "C-COOR2-MY-6-100"
 # 
 #    number of points to be included in the crescent.
 #    the number of constraints is 2*NP
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CRESC50'
@@ -421,7 +421,7 @@ class  CRESC50(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MY-6-100"
+        self.pbclass = "C-COOR2-MY-6-100"
         self.objderlvl = 2
         self.conderlvl = [2]
 

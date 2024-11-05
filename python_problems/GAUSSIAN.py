@@ -17,7 +17,7 @@ class  GAUSSIAN(CUTEst_problem):
 #    See also Buckley#28
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-AN-3-0"
+#    classification = "C-CSUR2-AN-3-0"
 # 
 #    This function  is a nonlinear least squares with 15 groups.  Each
 #    group has a nonlinear element.
@@ -26,7 +26,7 @@ class  GAUSSIAN(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GAUSSIAN'
@@ -153,7 +153,7 @@ class  GAUSSIAN(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-3-0"
+        self.pbclass = "C-CSUR2-AN-3-0"
         self.objderlvl = 2
 
 

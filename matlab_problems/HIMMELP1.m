@@ -16,13 +16,13 @@ function varargout = HIMMELP1(action,varargin)
 % 
 %    SIF input: Ph. Toint, December 1994.
 % 
-%    classification = 'C-OBR2-AN-2-0'
+%    classification = 'C-COBR2-AN-2-0'
 % 
 %    Problem data
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -131,7 +131,7 @@ switch(action)
 % LO SOLTN                -62.053869846
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OBR2-AN-2-0';
+        pb.pbclass = 'C-COBR2-AN-2-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

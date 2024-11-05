@@ -17,7 +17,7 @@ function HUMPS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SDIF input: Ph. Toint, May 1997.
 # 
-#    classification = "C-OUR2-AN-2-0"
+#    classification = "C-COUR2-AN-2-0"
 # 
 #    Density of humps
 # 
@@ -25,7 +25,7 @@ function HUMPS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HUMPS"
@@ -130,7 +130,7 @@ function HUMPS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-AN-2-0"
+        pb.pbclass = "C-COUR2-AN-2-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

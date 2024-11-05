@@ -16,7 +16,7 @@ class  DQRTIC(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    Number of variables (variable)
 # 
@@ -29,7 +29,7 @@ class  DQRTIC(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DQRTIC'
@@ -106,7 +106,7 @@ class  DQRTIC(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-V-0"
+        self.pbclass = "C-COUR2-AN-V-0"
         self.objderlvl = 2
 
 # ********************

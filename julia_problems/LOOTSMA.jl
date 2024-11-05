@@ -20,11 +20,11 @@ function LOOTSMA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    SIF input: Li-zhi Liao, Dept. of Mathematics, 
 #               Hong Kong Baptist College, May 1994.
 # 
-#    classification = "C-OQR2-AN-3-2"
+#    classification = "C-COQR2-AN-3-2"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LOOTSMA"
@@ -179,7 +179,7 @@ function LOOTSMA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OQR2-AN-3-2"
+        pb.pbclass = "C-COQR2-AN-3-2"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -18,7 +18,7 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-QUR2-AN-V-0"
+#    classification = "C-CQUR2-AN-V-0"
 # 
 #    This problem is decomposed in n linear groups, the last n-1 of which
 #    are 2 x 2 and singular.
@@ -36,7 +36,7 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRIDIA"
@@ -145,7 +145,7 @@ function TRIDIA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QUR2-AN-V-0"
+        pb.pbclass = "C-CQUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

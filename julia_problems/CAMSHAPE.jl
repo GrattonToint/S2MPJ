@@ -16,7 +16,7 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, November 2000
 # 
-#    classification = "C-LOR2-AN-V-V"
+#    classification = "C-CLOR2-AN-V-V"
 # 
 #    The number of discretization points
 # 
@@ -27,7 +27,7 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CAMSHAPE"
@@ -305,7 +305,7 @@ function CAMSHAPE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-AN-V-V"
+        pb.pbclass = "C-CLOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

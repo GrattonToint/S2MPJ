@@ -13,7 +13,7 @@ class  DITTERT(CUTEst_problem):
 #    SIF input: N. Gould, March 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-OQR2-AN-V-V"
+#    classification = "C-COQR2-AN-V-V"
 # 
 #    Size of matrix
 # 
@@ -29,7 +29,7 @@ class  DITTERT(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DITTERT'
@@ -355,7 +355,7 @@ class  DITTERT(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OQR2-AN-V-V"
+        self.pbclass = "C-COQR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

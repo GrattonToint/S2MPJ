@@ -750,7 +750,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '7 X 2024';
+                 this_version = '17 X 2024';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1119,10 +1119,10 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
          if ( ~isempty( posc ) )
              switch ( pbs.lang )
              case 'matlab'
-                classification = [ '''C-',   strtrim( line( posc+15:end ) ), '''' ];
+                classification = [ '''C-C',   strtrim( line( posc+15:end ) ), '''' ];
                 printcmline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidma );
              case { 'python', 'julia' }
-                classification = [ '"C-',    strtrim( line( posc+15:end ) ), '"' ];
+                classification = [ '"C-C',    strtrim( line( posc+15:end ) ), '"' ];
                 printcpline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidpy );
                 printcjline( sprintf( '    classification = %s',classification ),                   bindent, pbs.fidjl );
              end 

@@ -15,13 +15,13 @@ class  CSFI2(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn April 1995
 # 
-#    classification = "C-LOR2-RN-5-4"
+#    classification = "C-CLOR2-RN-5-4"
 # 
 #    input parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CSFI2'
@@ -234,7 +234,7 @@ class  CSFI2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-RN-5-4"
+        self.pbclass = "C-CLOR2-RN-5-4"
         self.objderlvl = 2
         self.conderlvl = [2]
 

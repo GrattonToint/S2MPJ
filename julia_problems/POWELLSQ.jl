@@ -14,14 +14,14 @@ function POWELLSQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    See also Buckley#217 (p.84.)
 # 
-#    classification = "C-NOR2-AN-2-2"
+#    classification = "C-CNOR2-AN-2-2"
 # 
 #    SIF input: Ph. Toint, Dec 1989, correction November 2002.
 #               NIMG corrected July 2005 (thanks to Roger Fletcher)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "POWELLSQ"
@@ -144,7 +144,7 @@ function POWELLSQ(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AN-2-2"
+        pb.pbclass = "C-CNOR2-AN-2-2"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

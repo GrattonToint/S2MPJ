@@ -19,7 +19,7 @@ class  SBRYBND(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint and Nick Gould, Nov 1997.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    N is the number of equations and variables (variable).
 # 
@@ -32,7 +32,7 @@ class  SBRYBND(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SBRYBND'
@@ -277,7 +277,7 @@ class  SBRYBND(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-0"
+        self.pbclass = "C-CSUR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

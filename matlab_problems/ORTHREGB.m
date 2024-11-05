@@ -20,13 +20,13 @@ function varargout = ORTHREGB(action,varargin)
 %    SIF input: Ph. Toint, June 1990.
 %               correction by Ph. Shott, Jan 1995.
 % 
-%    classification = 'C-QQR2-AN-27-6'
+%    classification = 'C-CQQR2-AN-27-6'
 % 
 %    Parameters for the generation of the data points
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -436,7 +436,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QQR2-AN-27-6';
+        pb.pbclass = 'C-CQQR2-AN-27-6';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

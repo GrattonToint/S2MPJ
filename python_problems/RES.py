@@ -11,14 +11,14 @@ class  RES(CUTEst_problem):
 # 
 #    SIF input:  A. R. Conn, June 1993.
 # 
-#    classification = "C-NLR2-MN-20-14"
+#    classification = "C-CNLR2-MN-20-14"
 # 
 # 
 # 
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RES'
@@ -388,7 +388,7 @@ class  RES(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-NLR2-MN-20-14"
+        self.pbclass = "C-CNLR2-MN-20-14"
         self.objderlvl = 2
         self.conderlvl = [2]
 

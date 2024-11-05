@@ -12,7 +12,7 @@ function varargout = ZAMB2(action,varargin)
 %       JOTA 81(1994)2,221-248.
 %    E. Arnold 1/3/96 (SIF file)
 % 
-%    classification = 'C-OOR2-MN-V-V'
+%    classification = 'C-COOR2-MN-V-V'
 % 
 % 
 %    The time horizon NY and the start year YEAR can be varied with
@@ -29,7 +29,7 @@ function varargout = ZAMB2(action,varargin)
 % IE NY                  30             $-PARAMETER n = 3966
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -2098,7 +2098,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-MN-V-V';
+        pb.pbclass = 'C-COOR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

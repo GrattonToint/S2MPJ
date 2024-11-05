@@ -11,11 +11,11 @@ function STREGNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    SIF input: N. Gould, Aug 2001
 #    Nonlinear-equations version of STRG.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-NOR2-AN-4-2"
+#    classification = "C-CNOR2-AN-4-2"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "STREGNE"
@@ -149,7 +149,7 @@ function STREGNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AN-4-2"
+        pb.pbclass = "C-CNOR2-AN-4-2"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

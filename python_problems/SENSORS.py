@@ -16,7 +16,7 @@ class  SENSORS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 1994
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    Number of unknowns
 # 
@@ -27,7 +27,7 @@ class  SENSORS(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SENSORS'
@@ -128,7 +128,7 @@ class  SENSORS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-V-0"
+        self.pbclass = "C-COUR2-AN-V-0"
         self.objderlvl = 2
 
 

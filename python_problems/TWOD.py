@@ -12,7 +12,7 @@ class  TWOD(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, April 25th 2012
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #    the x-y discretization 
 # 
@@ -21,7 +21,7 @@ class  TWOD(CUTEst_problem):
 # IE N                   40             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TWOD'
@@ -349,7 +349,7 @@ class  TWOD(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-V-V"
+        self.pbclass = "C-CQLR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

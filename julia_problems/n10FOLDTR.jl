@@ -17,7 +17,7 @@ function n10FOLDTR(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # 
 #    SIF input: Nick Gould, Jan 2012.
 # 
-#    classification = "C-NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    Problem dimension
 # 
@@ -28,7 +28,7 @@ function n10FOLDTR(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "n10FOLDTR"
@@ -119,7 +119,7 @@ function n10FOLDTR(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-NOR2-AN-V-V"
+        pb.pbclass = "C-CNOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

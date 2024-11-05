@@ -14,13 +14,13 @@ function KOEBHELB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    J. P. Hubert and Ph. L . Toint, Summer 2005.
 #    SIF input: Ph. Toint, June 2005.
 # 
-#    classification = "C-SBR2-RN-3-0"
+#    classification = "C-CSBR2-RN-3-0"
 # 
 #    Useful constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "KOEBHELB"
@@ -445,7 +445,7 @@ function KOEBHELB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-RN-3-0"
+        pb.pbclass = "C-CSBR2-RN-3-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

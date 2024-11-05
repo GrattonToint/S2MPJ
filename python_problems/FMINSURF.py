@@ -36,7 +36,7 @@ class  FMINSURF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, November 1991.
 # 
-#    classification = "C-OUR2-MY-V-0"
+#    classification = "C-COUR2-MY-V-0"
 # 
 #    P is the number of points in one side of the unit square
 # 
@@ -50,7 +50,7 @@ class  FMINSURF(CUTEst_problem):
 # IE P                   75             $-PARAMETER n = 5625
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FMINSURF'
@@ -223,7 +223,7 @@ class  FMINSURF(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-MY-V-0"
+        self.pbclass = "C-COUR2-MY-V-0"
         self.objderlvl = 2
 
 # **********************

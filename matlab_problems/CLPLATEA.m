@@ -25,7 +25,7 @@ function varargout = CLPLATEA(action,varargin)
 % 
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-OXR2-MN-V-0'
+%    classification = 'C-COXR2-MN-V-0'
 % 
 %    P is the number of points in one side of the unit square
 %    The number of variables is P*P, of which (P-1)*(P-1) are free.
@@ -39,7 +39,7 @@ function varargout = CLPLATEA(action,varargin)
 % IE P                   71             $-PARAMETER n = 5041
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -205,7 +205,7 @@ switch(action)
 % LO SOLTN(71)           -1.2592D-02
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OXR2-MN-V-0';
+        pb.pbclass = 'C-COXR2-MN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

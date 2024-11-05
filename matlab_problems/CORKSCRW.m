@@ -21,7 +21,7 @@ function varargout = CORKSCRW(action,varargin)
 % 
 %    SIF input: Ph. Toint, April 1991.
 % 
-%    classification = 'C-SOR2-AN-V-V'
+%    classification = 'C-CSOR2-AN-V-V'
 % 
 %    Number of time intervals
 %    The number of variables is 9T+6, of which 9 are fixed.
@@ -33,7 +33,7 @@ function varargout = CORKSCRW(action,varargin)
 % IE T                   500            $-PARAMETER n = 4506
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -418,7 +418,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-SOR2-AN-V-V';
+        pb.pbclass = 'C-CSOR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

@@ -19,7 +19,7 @@ class  MSQRTBLS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-AN-V-V"
+#    classification = "C-CSUR2-AN-V-V"
 # 
 #    Dimension of the matrix ( at least 3)
 # 
@@ -31,7 +31,7 @@ class  MSQRTBLS(CUTEst_problem):
 # IE P                   32             $-PARAMETER n = 1024
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MSQRTBLS'
@@ -159,7 +159,7 @@ class  MSQRTBLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-V"
+        self.pbclass = "C-CSUR2-AN-V-V"
         self.objderlvl = 2
 
 

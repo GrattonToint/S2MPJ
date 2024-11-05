@@ -18,7 +18,7 @@ function CHEBYQAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    See also Buckley#133 (p. 44).
 #    SIF input: Nick Gould, March 1990.
 # 
-#    classification = "C-SBR2-AN-V-0"
+#    classification = "C-CSBR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -36,7 +36,7 @@ function CHEBYQAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CHEBYQAD"
@@ -164,7 +164,7 @@ function CHEBYQAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-AN-V-0"
+        pb.pbclass = "C-CSBR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -17,13 +17,13 @@ function HS112(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SIF input: A.R. Conn, Mar 1990.
 # 
-#    classification = "C-OLR2-MY-10-3"
+#    classification = "C-COLR2-MY-10-3"
 # 
 #    N is the number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS112"
@@ -233,7 +233,7 @@ function HS112(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OLR2-MY-10-3"
+        pb.pbclass = "C-COLR2-MY-10-3"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

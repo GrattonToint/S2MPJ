@@ -17,7 +17,7 @@ function KOWOSB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-MN-4-0"
+#    classification = "C-CSUR2-MN-4-0"
 # 
 #    This function  is a nonlinear least squares with 11 groups.  Each
 #    group has a linear and a nonlinear element.
@@ -26,7 +26,7 @@ function KOWOSB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "KOWOSB"
@@ -192,7 +192,7 @@ function KOWOSB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-MN-4-0"
+        pb.pbclass = "C-CSUR2-MN-4-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

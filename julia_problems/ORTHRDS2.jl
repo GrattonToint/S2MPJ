@@ -28,7 +28,7 @@ function ORTHRDS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, Mar 1991.
 #               modified by T Plantagena, May 1994.
 # 
-#    classification = "C-QOR2-AY-V-V"
+#    classification = "C-CQOR2-AY-V-V"
 # 
 #    Number of data points
 #    (number of variables = 2 NPTS + 3 )
@@ -43,7 +43,7 @@ function ORTHRDS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NPTS                2500           $-PARAMETER n = 5003
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHRDS2"
@@ -282,7 +282,7 @@ function ORTHRDS2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-AY-V-V"
+        pb.pbclass = "C-CQOR2-AY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

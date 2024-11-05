@@ -18,11 +18,11 @@ class  HS2(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, March 1990.
 # 
-#    classification = "C-SBR2-AN-2-0"
+#    classification = "C-CSBR2-AN-2-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS2'
@@ -124,7 +124,7 @@ class  HS2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AN-2-0"
+        self.pbclass = "C-CSBR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

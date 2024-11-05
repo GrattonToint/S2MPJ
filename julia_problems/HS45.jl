@@ -14,13 +14,13 @@ function HS45(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Ph.L. Toint, October 1990.
 # 
-#    classification = "C-OBR2-AN-5-0"
+#    classification = "C-COBR2-AN-5-0"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HS45"
@@ -120,7 +120,7 @@ function HS45(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-5-0"
+        pb.pbclass = "C-COBR2-AN-5-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

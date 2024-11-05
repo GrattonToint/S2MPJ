@@ -29,7 +29,7 @@ function BLOWEYC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BLOWEYC"
@@ -44,7 +44,7 @@ function BLOWEYC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         v_  = Dict{String,Float64}();
         ix_ = Dict{String,Int}();
         ig_ = Dict{String,Int}();
-#    classification = "C-QLR2-MN-V-V"
+#    classification = "C-CQLR2-MN-V-V"
 #       Alternative values for the SIF file parameters:
 # IE N                   10             $-PARAMETER  n = 22, m = 12
 # IE N                   100            $-PARAMETER  n = 202, m = 102
@@ -365,7 +365,7 @@ function BLOWEYC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QLR2-MN-V-V"
+        pb.pbclass = "C-CQLR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

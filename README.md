@@ -3,7 +3,7 @@
 Thank you for your interest in S2MPJ, a collection of test problems for benchmarking
 optimization software, available in Matlab, Python and Julia. The collection contains
 most of the problems in the CUTEst collection, making them accessible without any use
-of Fortran.
+of Fortran or translation from Fortran.
 
 The collection provide simple tools to set up a problem's data structure and to evaluate
 its objective function and/or constraints as well as their derivatives.

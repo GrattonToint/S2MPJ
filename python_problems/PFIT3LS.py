@@ -16,13 +16,13 @@ class  PFIT3LS(CUTEst_problem):
 #    SIF input: Ph. Toint, March 1994.
 #               Lower bound on H added, Nov 2002.
 # 
-#    classification = "C-SBR2-AN-3-0"
+#    classification = "C-CSBR2-AN-3-0"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PFIT3LS'
@@ -230,7 +230,7 @@ class  PFIT3LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AN-3-0"
+        self.pbclass = "C-CSBR2-AN-3-0"
         self.objderlvl = 2
 
 # **********************

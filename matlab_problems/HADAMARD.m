@@ -16,7 +16,7 @@ function varargout = HADAMARD(action,varargin)
 % 
 %    SIF input: Nick Gould, Nov 1993.
 % 
-%    classification = 'C-LQR2-RN-V-V'
+%    classification = 'C-CLQR2-RN-V-V'
 % 
 %    The dimension of the matrix.
 % 
@@ -33,7 +33,7 @@ function varargout = HADAMARD(action,varargin)
 % IE N                   20             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -211,7 +211,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-RN-V-V';
+        pb.pbclass = 'C-CLQR2-RN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

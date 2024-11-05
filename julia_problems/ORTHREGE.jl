@@ -21,7 +21,7 @@ function ORTHREGE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "C-QOR2-AY-V-V"
+#    classification = "C-CQOR2-AY-V-V"
 # 
 #    Number of data points
 #    (number of variables = 3 NPTS + 6 )
@@ -31,7 +31,7 @@ function ORTHREGE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NPTS                2500           $-PARAMETER n= 7506
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHREGE"
@@ -298,7 +298,7 @@ function ORTHREGE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-AY-V-V"
+        pb.pbclass = "C-CQOR2-AY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

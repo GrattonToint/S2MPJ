@@ -23,13 +23,13 @@ class  MGH17SLS(CUTEst_problem):
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 #    Least-squares version of MGH17S.SIF, Nick Gould, Jan 2020
 # 
-#    classification = "C-NOR2-MN-5-33"
+#    classification = "C-CNOR2-MN-5-33"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MGH17SLS'
@@ -227,7 +227,7 @@ class  MGH17SLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-NOR2-MN-5-33"
+        self.pbclass = "C-CNOR2-MN-5-33"
         self.objderlvl = 2
 
 # **********************

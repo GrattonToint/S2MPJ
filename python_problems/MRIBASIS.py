@@ -15,13 +15,13 @@ class  MRIBASIS(CUTEst_problem):
 #    SIF input: Arie Quist, TU Delft (NL), 1994.
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "C-LOR2-MY-36-55"
+#    classification = "C-CLOR2-MY-36-55"
 # 
 #    useful constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MRIBASIS'
@@ -564,7 +564,7 @@ class  MRIBASIS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-MY-36-55"
+        self.pbclass = "C-CLOR2-MY-36-55"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -15,11 +15,11 @@ class  HS21(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, April 1990
 # 
-#    classification = "C-QLR2-AN-2-1"
+#    classification = "C-CQLR2-AN-2-1"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS21'
@@ -155,7 +155,7 @@ class  HS21(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-2-1"
+        self.pbclass = "C-CQLR2-AN-2-1"
         self.objderlvl = 2
         self.conderlvl = [2]
 

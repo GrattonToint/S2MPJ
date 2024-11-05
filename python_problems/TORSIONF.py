@@ -32,7 +32,7 @@ class  TORSIONF(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    modified by Peihuang Chen, according to MINPACK-2, Apr 1992.
 # 
-#    classification = "C-QBR2-MY-V-0"
+#    classification = "C-CQBR2-MY-V-0"
 # 
 #    Q is half the number of discretized points along the X axis
 # 
@@ -44,7 +44,7 @@ class  TORSIONF(CUTEst_problem):
 # IE Q                   37             $-PARAMETER n= 5476
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TORSIONF'
@@ -285,7 +285,7 @@ class  TORSIONF(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QBR2-MY-V-0"
+        self.pbclass = "C-CQBR2-MY-V-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

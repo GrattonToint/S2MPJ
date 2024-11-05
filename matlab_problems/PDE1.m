@@ -12,7 +12,7 @@ function varargout = PDE1(action,varargin)
 %    SIF input: Nick Gould, April 25th 2012
 %               correction by S. Gratton & Ph. Toint, May 2024
 % 
-%    classification = 'C-LLR2-AN-V-V'
+%    classification = 'C-CLLR2-AN-V-V'
 % 
 %    the x-y discretization 
 % 
@@ -21,7 +21,7 @@ function varargout = PDE1(action,varargin)
 % IE N                   299            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -367,7 +367,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-LLR2-AN-V-V';
+        pb.pbclass = 'C-CLLR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

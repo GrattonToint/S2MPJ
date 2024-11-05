@@ -17,13 +17,13 @@ class  MINSURFO(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, December 2000
 # 
-#    classification = "C-OBR2-AN-V-V"
+#    classification = "C-COBR2-AN-V-V"
 # 
 #  grid points in x direction (fixed at 50 in COPS)
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINSURFO'
@@ -254,7 +254,7 @@ class  MINSURFO(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-V-V"
+        self.pbclass = "C-COBR2-AN-V-V"
         self.objderlvl = 2
 
 # **********************

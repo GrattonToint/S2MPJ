@@ -17,7 +17,7 @@ class  QRTQUAD(CUTEst_problem):
 #               minor correction by Ph. Shott, Jan 1995.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-OBR2-MN-V-0"
+#    classification = "C-COBR2-MN-V-0"
 # 
 #           Alternative values for the SIF file parameters:
 # IE N                   12             $-PARAMETER
@@ -26,7 +26,7 @@ class  QRTQUAD(CUTEst_problem):
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QRTQUAD'
@@ -166,7 +166,7 @@ class  QRTQUAD(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-MN-V-0"
+        self.pbclass = "C-COBR2-MN-V-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

@@ -26,7 +26,7 @@ function DTOC4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "C-QOR2-AN-V-V"
+#    classification = "C-CQOR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the value of the parameter N.
 # 
@@ -42,7 +42,7 @@ function DTOC4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE N                   1500           $-PARAMETER  n= 4499,m=2998
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC4"
@@ -320,7 +320,7 @@ function DTOC4(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QOR2-AN-V-V"
+        pb.pbclass = "C-CQOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

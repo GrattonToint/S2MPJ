@@ -18,7 +18,7 @@ function n10FOLDTRLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vect
 #    SIF input: Nick Gould, Jan 2012.
 #    Least-squares version of 10FOLDTR.SIF, Nick Gould, Jun 2024.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
@@ -27,7 +27,7 @@ function n10FOLDTRLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vect
 # IE N                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "n10FOLDTRLS"
@@ -99,7 +99,7 @@ function n10FOLDTRLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vect
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-V-0"
+        pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

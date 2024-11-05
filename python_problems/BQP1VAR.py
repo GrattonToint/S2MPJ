@@ -11,11 +11,11 @@ class  BQP1VAR(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, March 1992
 # 
-#    classification = "C-QBR2-AN-1-0"
+#    classification = "C-CQBR2-AN-1-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BQP1VAR'
@@ -86,7 +86,7 @@ class  BQP1VAR(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QBR2-AN-1-0"
+        self.pbclass = "C-CQBR2-AN-1-0"
         self.objderlvl = 2
 
 # ********************

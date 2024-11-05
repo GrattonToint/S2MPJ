@@ -27,7 +27,7 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-QBR2-MY-V-0"
+#    classification = "C-CQBR2-MY-V-0"
 # 
 #       Alternative values for the SIF file parameters:
 # IE Q                   2              $-PARAMETER n= 16
@@ -37,7 +37,7 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE Q                   37             $-PARAMETER n= 5476
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TORSION2"
@@ -274,7 +274,7 @@ function TORSION2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-MY-V-0"
+        pb.pbclass = "C-CQBR2-MY-V-0"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

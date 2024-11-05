@@ -28,7 +28,7 @@ function varargout = CYCLOOCT(action,varargin)
 % 
 %    SIF input: Nick Gould, Feb 2020.
 % 
-%    classification = 'C-NQR2-MN-V-V'
+%    classification = 'C-CNQR2-MN-V-V'
 % 
 %    The number of molecules
 % 
@@ -39,7 +39,7 @@ function varargout = CYCLOOCT(action,varargin)
 % IE P                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -418,7 +418,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NQR2-MN-V-V';
+        pb.pbclass = 'C-CNQR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

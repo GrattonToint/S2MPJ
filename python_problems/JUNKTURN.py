@@ -25,7 +25,7 @@ class  JUNKTURN(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, February 1994.
 # 
-#    classification = "C-QQR2-MN-V-V"
+#    classification = "C-CQQR2-MN-V-V"
 # 
 #    Number of discretized points in [0,100] - 1.
 #    The number of variables is    10 * ( N + 1 )
@@ -39,7 +39,7 @@ class  JUNKTURN(CUTEst_problem):
 # IE N                   1000           $-PARAMETER n =   10010, m =   7000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'JUNKTURN'
@@ -519,7 +519,7 @@ class  JUNKTURN(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QQR2-MN-V-V"
+        self.pbclass = "C-CQQR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -17,11 +17,11 @@ class  DECONVBNE(CUTEst_problem):
 #    unititialized variables fixed at zero, Nick Gould, Feb, 2013
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "C-NOR2-MN-61-0"
+#    classification = "C-CNOR2-MN-61-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DECONVBNE'
@@ -246,7 +246,7 @@ class  DECONVBNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-MN-61-0"
+        self.pbclass = "C-CNOR2-MN-61-0"
         self.objderlvl = 2
         self.conderlvl = [2]
 

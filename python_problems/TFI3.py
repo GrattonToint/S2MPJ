@@ -26,7 +26,7 @@ class  TFI3(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1992.
 # 
-#    classification = "C-OLR2-AN-3-V"
+#    classification = "C-COLR2-AN-3-V"
 # 
 #    Discretization
 # 
@@ -34,7 +34,7 @@ class  TFI3(CUTEst_problem):
 # IE M                   50
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TFI3'
@@ -188,7 +188,7 @@ class  TFI3(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OLR2-AN-3-V"
+        self.pbclass = "C-COLR2-AN-3-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -20,13 +20,13 @@ class  FBRAIN2LS(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, June 2017.
 # 
-#    classification = "C-SBR2-AN-4-0"
+#    classification = "C-CSBR2-AN-4-0"
 # 
 #    N is the number of data sets
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'FBRAIN2LS'
@@ -11268,7 +11268,7 @@ class  FBRAIN2LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AN-4-0"
+        self.pbclass = "C-CSBR2-AN-4-0"
         self.objderlvl = 2
 
 # **********************

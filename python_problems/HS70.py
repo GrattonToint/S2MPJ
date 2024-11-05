@@ -17,13 +17,13 @@ class  HS70(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 1991, modified May 2024
 # 
-#    classification = "C-SQR2-MN-4-1"
+#    classification = "C-CSQR2-MN-4-1"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS70'
@@ -277,7 +277,7 @@ class  HS70(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SQR2-MN-4-1"
+        self.pbclass = "C-CSQR2-MN-4-1"
         self.objderlvl = 2
         self.conderlvl = [2]
 

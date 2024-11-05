@@ -16,11 +16,11 @@ class  DECONVB(CUTEst_problem):
 #    SIF input: Ph. Toint, Nov 1996.
 #    unititialized variables fixed at zero, Nick Gould, Feb, 2013
 # 
-#    classification = "C-SBR2-MN-61-0"
+#    classification = "C-CSBR2-MN-61-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DECONVB'
@@ -231,7 +231,7 @@ class  DECONVB(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-MN-61-0"
+        self.pbclass = "C-CSBR2-MN-61-0"
         self.objderlvl = 2
 
 

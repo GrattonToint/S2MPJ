@@ -20,7 +20,7 @@ class  KOWOSBNE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 # 
-#    classification = "C-NOR2-MN-4-11"
+#    classification = "C-CNOR2-MN-4-11"
 # 
 #    This function  is a nonlinear least squares with 11 groups.  Each
 #    group has a linear and a nonlinear element.
@@ -29,7 +29,7 @@ class  KOWOSBNE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'KOWOSBNE'
@@ -231,7 +231,7 @@ class  KOWOSBNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-MN-4-11"
+        self.pbclass = "C-CNOR2-MN-4-11"
         self.objderlvl = 2
         self.conderlvl = [2]
 

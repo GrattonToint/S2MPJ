@@ -14,13 +14,13 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Arie Quist, TU Delft (NL), 1994.
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "C-LOR2-MY-36-55"
+#    classification = "C-CLOR2-MY-36-55"
 # 
 #    useful constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MRIBASIS"
@@ -578,7 +578,7 @@ function MRIBASIS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LOR2-MY-36-55"
+        pb.pbclass = "C-CLOR2-MY-36-55"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

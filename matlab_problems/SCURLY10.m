@@ -14,7 +14,7 @@ function varargout = SCURLY10(action,varargin)
 % 
 %    SIF input: Nick Gould, September 1997.
 % 
-%    classification = 'C-OUR2-AN-V-0'
+%    classification = 'C-COUR2-AN-V-0'
 % 
 %    Number of variables
 % 
@@ -25,7 +25,7 @@ function varargout = SCURLY10(action,varargin)
 % IE N                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -136,7 +136,7 @@ switch(action)
 % ZL SOLTN               -1.003163D+5   $ (n=1000)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OUR2-AN-V-0';
+        pb.pbclass = 'C-COUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

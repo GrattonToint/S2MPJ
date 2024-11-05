@@ -23,7 +23,7 @@ class  QR3DLS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, March 1994.
 # 
-#    classification = "C-SBR2-AN-V-V"
+#    classification = "C-CSBR2-AN-V-V"
 # 
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
@@ -34,7 +34,7 @@ class  QR3DLS(CUTEst_problem):
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QR3DLS'
@@ -224,7 +224,7 @@ class  QR3DLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AN-V-V"
+        self.pbclass = "C-CSBR2-AN-V-V"
         self.objderlvl = 2
 
 # **********************

@@ -29,7 +29,7 @@ function LIPPERT1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, September 2006
 # 
-#    classification = "C-LQR2-MN-V-V"
+#    classification = "C-CLQR2-MN-V-V"
 # 
 #    Number of nodes in x direction
 # 
@@ -41,7 +41,7 @@ function LIPPERT1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NX                  100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LIPPERT1"
@@ -276,7 +276,7 @@ function LIPPERT1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-MN-V-V"
+        pb.pbclass = "C-CLQR2-MN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

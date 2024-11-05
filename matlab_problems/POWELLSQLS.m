@@ -14,7 +14,7 @@ function varargout = POWELLSQLS(action,varargin)
 % 
 %    See also Buckley#217 (p.84.)
 % 
-%    classification = 'C-SUR2-AN-2-0'
+%    classification = 'C-CSUR2-AN-2-0'
 % 
 %    SIF input: Ph. Toint, Dec 1989, correction November 2002.
 %               NIMG corrected July 2005 (thanks to Roger Fletcher)
@@ -22,7 +22,7 @@ function varargout = POWELLSQLS(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -130,7 +130,7 @@ switch(action)
         pbm.grelw{ig}(posel) = 2.0;
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-2-0';
+        pb.pbclass = 'C-CSUR2-AN-2-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

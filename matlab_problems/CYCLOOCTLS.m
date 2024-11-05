@@ -30,7 +30,7 @@ function varargout = CYCLOOCTLS(action,varargin)
 % 
 %    This is a least-squares version of CYCLOOCT.SIF
 % 
-%    classification = 'C-SBR2-MN-V-0'
+%    classification = 'C-CSBR2-MN-V-0'
 % 
 %    The number of molecules
 % 
@@ -41,7 +41,7 @@ function varargout = CYCLOOCTLS(action,varargin)
 % IE P                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -404,7 +404,7 @@ switch(action)
 % LO SOLUTION             0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SBR2-MN-V-0';
+        pb.pbclass = 'C-CSBR2-MN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

@@ -20,7 +20,7 @@ class  CLNLBEAM(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1993.
 # 
-#    classification = "C-OOR2-MN-V-V"
+#    classification = "C-COOR2-MN-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
@@ -33,7 +33,7 @@ class  CLNLBEAM(CUTEst_problem):
 # IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLNLBEAM'
@@ -245,7 +245,7 @@ class  CLNLBEAM(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MN-V-V"
+        self.pbclass = "C-COOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

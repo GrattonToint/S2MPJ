@@ -20,13 +20,13 @@ class  WEEDS(CUTEst_problem):
 # 
 #    SIF input: J.C. Nash and Ph. Toint, June 1992.
 # 
-#    classification = "C-SBR2-RN-3-0"
+#    classification = "C-CSBR2-RN-3-0"
 # 
 #    Number of data points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'WEEDS'
@@ -148,7 +148,7 @@ class  WEEDS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-RN-3-0"
+        self.pbclass = "C-CSBR2-RN-3-0"
         self.objderlvl = 2
 
 # **********************

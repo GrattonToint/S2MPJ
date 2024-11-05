@@ -17,13 +17,13 @@ function varargout = HS43(action,varargin)
 %    SIF input: A.R. Conn, April 1990
 %               minor correction by Ph. Shott, Jan 1995.
 % 
-%    classification = 'C-QQR2-AN-4-3'
+%    classification = 'C-CQQR2-AN-4-3'
 % 
 %    some useful parameters, including N, the number of variables.
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -327,7 +327,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QQR2-AN-4-3';
+        pb.pbclass = 'C-CQQR2-AN-4-3';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

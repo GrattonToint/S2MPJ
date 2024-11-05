@@ -17,7 +17,7 @@ function S368(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    See also Schittkowski #368 (for N = 8)
 # 
-#    classification = "C-OBR2-MN-V-0"
+#    classification = "C-COBR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
@@ -25,7 +25,7 @@ function S368(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE N                   8              $-PARAMETER Schittkowski #368
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "S368"
@@ -149,7 +149,7 @@ function S368(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-MN-V-0"
+        pb.pbclass = "C-COBR2-MN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

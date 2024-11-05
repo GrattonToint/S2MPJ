@@ -19,11 +19,11 @@ class  EG2(CUTEst_problem):
 # 
 #    SIF input: N. Gould and Ph. Toint, June 1994.
 # 
-#    classification = "C-OUR2-AN-1000-0"
+#    classification = "C-COUR2-AN-1000-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EG2'
@@ -134,7 +134,7 @@ class  EG2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-1000-0"
+        self.pbclass = "C-COUR2-AN-1000-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

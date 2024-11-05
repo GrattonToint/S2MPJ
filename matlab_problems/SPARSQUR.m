@@ -10,7 +10,7 @@ function varargout = SPARSQUR(action,varargin)
 % 
 %    SIF input: Nick Gould, November 1995
 % 
-%    classification = 'C-OUR2-AN-V-0'
+%    classification = 'C-COUR2-AN-V-0'
 % 
 %    The number of variables 
 % 
@@ -23,7 +23,7 @@ function varargout = SPARSQUR(action,varargin)
 % IE N                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -167,7 +167,7 @@ switch(action)
 % LO SOLUTION            0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OUR2-AN-V-0';
+        pb.pbclass = 'C-COUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

@@ -23,7 +23,7 @@ class  CATENARY(CUTEst_problem):
 # 
 #    SIF input: Ph. L. Toint, May 1993.
 # 
-#    classification = "C-LQR2-AY-V-V"
+#    classification = "C-CLQR2-AY-V-V"
 # 
 #    Number of beams = N+1 ; the number of variables is 3*(N+2)
 # 
@@ -35,7 +35,7 @@ class  CATENARY(CUTEst_problem):
 # IE N+1                 1000           $-PARAMETER n = 3003
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CATENARY'
@@ -228,7 +228,7 @@ class  CATENARY(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-AY-V-V"
+        self.pbclass = "C-CLQR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

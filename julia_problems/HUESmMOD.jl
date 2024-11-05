@@ -13,7 +13,7 @@ function HUESmMOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Nick Gould, January 1993.
 #    improvements by: Ruediger Franke (Ruediger.Franke@RZ.TU-Ilmenau.DE)
 # 
-#    classification = "C-QLR2-MN-V-V"
+#    classification = "C-CQLR2-MN-V-V"
 # 
 #    Number of variables
 # 
@@ -24,7 +24,7 @@ function HUESmMOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE K                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HUESmMOD"
@@ -166,7 +166,7 @@ function HUESmMOD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QLR2-MN-V-V"
+        pb.pbclass = "C-CQLR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

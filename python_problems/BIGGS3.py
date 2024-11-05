@@ -16,7 +16,7 @@ class  BIGGS3(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SXR2-AN-6-0"
+#    classification = "C-CSXR2-AN-6-0"
 # 
 #    This function  is a nonlinear least squares with 13 groups.  Each
 #    group has 3 nonlinear elements.  It is obtained by fixing
@@ -30,7 +30,7 @@ class  BIGGS3(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGS3'
@@ -203,7 +203,7 @@ class  BIGGS3(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SXR2-AN-6-0"
+        self.pbclass = "C-CSXR2-AN-6-0"
         self.objderlvl = 2
 
 # **********************

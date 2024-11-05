@@ -16,13 +16,13 @@ class  LEWISPOL(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn and Ph. Toint, March 1990.
 # 
-#    classification = "C-QOR2-AN-6-9"
+#    classification = "C-CQOR2-AN-6-9"
 # 
 #    Number of variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEWISPOL'
@@ -212,7 +212,7 @@ class  LEWISPOL(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-AN-6-9"
+        self.pbclass = "C-CQOR2-AN-6-9"
         self.objderlvl = 2
         self.conderlvl = [2]
 

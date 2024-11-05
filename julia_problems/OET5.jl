@@ -31,7 +31,7 @@ function OET5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Nick Gould, February, 1994.
 # 
-#    classification = "C-LQR2-AN-5-V"
+#    classification = "C-CLQR2-AN-5-V"
 # 
 #    Discretization
 # 
@@ -39,7 +39,7 @@ function OET5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OET5"
@@ -199,7 +199,7 @@ function OET5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-AN-5-V"
+        pb.pbclass = "C-CLQR2-AN-5-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

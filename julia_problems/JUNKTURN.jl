@@ -24,7 +24,7 @@ function JUNKTURN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, February 1994.
 # 
-#    classification = "C-QQR2-MN-V-V"
+#    classification = "C-CQQR2-MN-V-V"
 # 
 #    Number of discretized points in [0,100] - 1.
 #    The number of variables is    10 * ( N + 1 )
@@ -38,7 +38,7 @@ function JUNKTURN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   1000           $-PARAMETER n =   10010, m =   7000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "JUNKTURN"
@@ -537,7 +537,7 @@ function JUNKTURN(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QQR2-MN-V-V"
+        pb.pbclass = "C-CQQR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

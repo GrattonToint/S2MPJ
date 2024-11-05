@@ -19,7 +19,7 @@ class  READING4(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Aug 1992
 # 
-#    classification = "C-OOR2-MN-V-V"
+#    classification = "C-COOR2-MN-V-V"
 # 
 #    Number of discretized points in [0,1] (n = N+1, m = N )
 # 
@@ -32,7 +32,7 @@ class  READING4(CUTEst_problem):
 # IE N                   5000           $-PARAMETER n=5001, m=5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'READING4'
@@ -208,7 +208,7 @@ class  READING4(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MN-V-V"
+        self.pbclass = "C-COOR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

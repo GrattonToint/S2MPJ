@@ -17,7 +17,7 @@ class  QING(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Jan 2020
 # 
-#    classification = "C-SUR2-MN-V-0"
+#    classification = "C-CSUR2-MN-V-0"
 # 
 #    Number of variables
 # 
@@ -25,7 +25,7 @@ class  QING(CUTEst_problem):
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QING'
@@ -126,7 +126,7 @@ class  QING(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-MN-V-0"
+        self.pbclass = "C-CSUR2-MN-V-0"
         self.objderlvl = 2
 
 # **********************

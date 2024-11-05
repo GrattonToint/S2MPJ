@@ -61,7 +61,7 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, February 2001
 # 
-#    classification = "C-LQR2-AN-V-V"
+#    classification = "C-CLQR2-AN-V-V"
 # 
 #    The parameter a
 # 
@@ -69,7 +69,7 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # RE A                   5.0            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NUFFIELD"
@@ -479,7 +479,7 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-AN-V-V"
+        pb.pbclass = "C-CLQR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

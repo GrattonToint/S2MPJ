@@ -19,7 +19,7 @@ function LEVYMONE7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "C-NOR2-AY-4-8"
+#    classification = "C-CNOR2-AY-4-8"
 # 
 #    N is the number of variables
 # 
@@ -27,7 +27,7 @@ function LEVYMONE7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE N                   4              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LEVYMONE7"
@@ -194,7 +194,7 @@ function LEVYMONE7(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AY-4-8"
+        pb.pbclass = "C-CNOR2-AY-4-8"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

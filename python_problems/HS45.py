@@ -15,13 +15,13 @@ class  HS45(CUTEst_problem):
 # 
 #    SIF input: Ph.L. Toint, October 1990.
 # 
-#    classification = "C-OBR2-AN-5-0"
+#    classification = "C-COBR2-AN-5-0"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS45'
@@ -126,7 +126,7 @@ class  HS45(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-5-0"
+        self.pbclass = "C-COBR2-AN-5-0"
         self.objderlvl = 2
 
 # **********************

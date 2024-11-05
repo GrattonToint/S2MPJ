@@ -12,12 +12,12 @@ class  MINSURF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1991.
 # 
-#    classification = "C-OXR2-MY-64-0"
+#    classification = "C-COXR2-MY-64-0"
 # 
 #    Discretization parameter
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINSURF'
@@ -147,7 +147,7 @@ class  MINSURF(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OXR2-MY-64-0"
+        self.pbclass = "C-COXR2-MY-64-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

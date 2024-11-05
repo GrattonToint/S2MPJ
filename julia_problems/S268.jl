@@ -17,14 +17,14 @@ function S268(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 #    SIF input: Michel Bierlaire and Annick Sartenaer,
 #    October 1992.
 # 
-#    classification = "C-QLR2-AN-5-5"
+#    classification = "C-CQLR2-AN-5-5"
 # 
 #   the number of functions
 # 
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "S268"
@@ -238,7 +238,7 @@ function S268(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QLR2-AN-5-5"
+        pb.pbclass = "C-CQLR2-AN-5-5"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

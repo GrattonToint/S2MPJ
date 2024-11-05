@@ -18,13 +18,13 @@ class  COOLHANS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Feb 1995.
 # 
-#    classification = "C-NQR2-RN-9-9"
+#    classification = "C-CNQR2-RN-9-9"
 # 
 #    order of the matrix equation
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'COOLHANS'
@@ -198,7 +198,7 @@ class  COOLHANS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NQR2-RN-9-9"
+        self.pbclass = "C-CNQR2-RN-9-9"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

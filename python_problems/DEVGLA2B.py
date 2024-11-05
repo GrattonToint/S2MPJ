@@ -19,13 +19,13 @@ class  DEVGLA2B(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Jan 2020
 # 
-#    classification = "C-SBR2-MN-5-0"
+#    classification = "C-CSBR2-MN-5-0"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEVGLA2B'
@@ -171,7 +171,7 @@ class  DEVGLA2B(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-MN-5-0"
+        self.pbclass = "C-CSBR2-MN-5-0"
         self.objderlvl = 2
 
 # **********************

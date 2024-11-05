@@ -27,7 +27,7 @@ function varargout = TORSION2(action,varargin)
 % 
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-QBR2-MY-V-0'
+%    classification = 'C-CQBR2-MY-V-0'
 % 
 %       Alternative values for the SIF file parameters:
 % IE Q                   2              $-PARAMETER n= 16
@@ -37,7 +37,7 @@ function varargout = TORSION2(action,varargin)
 % IE Q                   37             $-PARAMETER n= 5476
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -283,7 +283,7 @@ switch(action)
 % LO SOLTN(61)           ???
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-MY-V-0';
+        pb.pbclass = 'C-CQBR2-MY-V-0';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

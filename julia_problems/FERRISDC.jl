@@ -7,10 +7,10 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    *********
 # 
 #    A QP suggested by Michael Ferris
-#    classification = "C-"
+#    classification = "C-C"
 #    SIF input: Nick Gould, November 2001.
 # 
-#    classification = "C-QLR2-AN-V-V"
+#    classification = "C-CQLR2-AN-V-V"
 # 
 #       Alternative values for the SIF file parameters:
 # IE n                   4              $-PARAMETER
@@ -18,7 +18,7 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE n                   200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FERRISDC"
@@ -432,7 +432,7 @@ function FERRISDC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-QLR2-AN-V-V"
+        pb.pbclass = "C-CQLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

@@ -61,7 +61,7 @@ function varargout = NUFFIELD(action,varargin)
 % 
 %    SIF input: Nick Gould, February 2001
 % 
-%    classification = 'C-LQR2-AN-V-V'
+%    classification = 'C-CLQR2-AN-V-V'
 % 
 %    The parameter a
 % 
@@ -69,7 +69,7 @@ function varargout = NUFFIELD(action,varargin)
 % RE A                   5.0            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -652,7 +652,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-AN-V-V';
+        pb.pbclass = 'C-CLQR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

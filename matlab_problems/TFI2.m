@@ -25,7 +25,7 @@ function varargout = TFI2(action,varargin)
 % 
 %    SIF input: Ph. Toint, April 1992.
 % 
-%    classification = 'C-LLR2-AN-3-V'
+%    classification = 'C-CLLR2-AN-3-V'
 % 
 %    Discretization
 % 
@@ -33,7 +33,7 @@ function varargout = TFI2(action,varargin)
 % IE M                   50
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -159,7 +159,7 @@ switch(action)
         pb.cupper(1:pb.nle) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-LLR2-AN-3-V';
+        pb.pbclass = 'C-CLLR2-AN-3-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

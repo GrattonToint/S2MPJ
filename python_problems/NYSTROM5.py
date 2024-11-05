@@ -35,11 +35,11 @@ class  NYSTROM5(CUTEst_problem):
 #    SIF input: Ph. Toint, March 1991.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-NOR2-RY-18-20"
+#    classification = "C-CNOR2-RY-18-20"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NYSTROM5'
@@ -1644,7 +1644,7 @@ class  NYSTROM5(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-RY-18-20"
+        self.pbclass = "C-CNOR2-RY-18-20"
         self.objderlvl = 2
         self.conderlvl = [2]
 

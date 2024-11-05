@@ -18,7 +18,7 @@ class  EXTROSNB(CUTEst_problem):
 #    See also Buckley#116.  Note that MGH#21 is the separable version.
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -26,7 +26,7 @@ class  EXTROSNB(CUTEst_problem):
 # IE N                   5              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXTROSNB'
@@ -137,7 +137,7 @@ class  EXTROSNB(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-0"
+        self.pbclass = "C-CSUR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

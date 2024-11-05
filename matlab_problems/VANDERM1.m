@@ -19,7 +19,7 @@ function varargout = VANDERM1(action,varargin)
 % 
 %    SIF input: Ph. L. Toint, May 1993.
 % 
-%    classification = 'C-NOR2-AN-V-V'
+%    classification = 'C-CNOR2-AN-V-V'
 % 
 %    Size of the system
 % 
@@ -33,7 +33,7 @@ function varargout = VANDERM1(action,varargin)
 % IE N                   100            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -215,7 +215,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NOR2-AN-V-V';
+        pb.pbclass = 'C-CNOR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

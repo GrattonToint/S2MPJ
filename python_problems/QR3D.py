@@ -21,7 +21,7 @@ class  QR3D(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1993
 # 
-#    classification = "C-NQR2-AN-V-V"
+#    classification = "C-CNQR2-AN-V-V"
 # 
 #    Define the matrix order M  ( M >= 3 ).
 #    There are M * ( 3M + 1) / 2 variables and equations.
@@ -32,7 +32,7 @@ class  QR3D(CUTEst_problem):
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'QR3D'
@@ -238,7 +238,7 @@ class  QR3D(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NQR2-AN-V-V"
+        self.pbclass = "C-CNQR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

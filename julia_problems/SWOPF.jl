@@ -14,7 +14,7 @@ function SWOPF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 #    SIF input: R. Bacher, Dept of Electrical Engineering, ETH Zurich, 
 #               November 1994.
 # 
-#    classification = "C-LQR2-RN-83-92"
+#    classification = "C-CLQR2-RN-83-92"
 # 
 #    Number of nodes       =   7
 #    Number of branches    =   7
@@ -22,7 +22,7 @@ function SWOPF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SWOPF"
@@ -2776,7 +2776,7 @@ function SWOPF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-RN-83-92"
+        pb.pbclass = "C-CLQR2-RN-83-92"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

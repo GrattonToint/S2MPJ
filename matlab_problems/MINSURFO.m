@@ -16,13 +16,13 @@ function varargout = MINSURFO(action,varargin)
 % 
 %    SIF input: Nick Gould, December 2000
 % 
-%    classification = 'C-OBR2-AN-V-V'
+%    classification = 'C-COBR2-AN-V-V'
 % 
 %  grid points in x direction (fixed at 50 in COPS)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -276,7 +276,7 @@ switch(action)
 % LO SOLUTION            2.50694D+00    $ (NX=50,NY=100)
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OBR2-AN-V-V';
+        pb.pbclass = 'C-COBR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

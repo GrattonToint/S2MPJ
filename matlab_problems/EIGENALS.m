@@ -20,7 +20,7 @@ function varargout = EIGENALS(action,varargin)
 % 
 %    SIF input: Nick Gould, Nov 1992.
 % 
-%    classification = 'C-SUR2-AN-V-0'
+%    classification = 'C-CSUR2-AN-V-0'
 % 
 %    The dimension of the matrix.
 % 
@@ -30,7 +30,7 @@ function varargout = EIGENALS(action,varargin)
 % IE N                   50             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -187,7 +187,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-V-0';
+        pb.pbclass = 'C-CSUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

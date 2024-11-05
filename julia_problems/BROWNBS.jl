@@ -19,13 +19,13 @@ function BROWNBS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    See also Buckley#25
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-AN-2-0"
+#    classification = "C-CSUR2-AN-2-0"
 # 
 #    N is the number of free variables
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BROWNBS"
@@ -136,7 +136,7 @@ function BROWNBS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-2-0"
+        pb.pbclass = "C-CSUR2-AN-2-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

@@ -16,7 +16,7 @@ function varargout = BIGGSB1(action,varargin)
 % 
 %    SIF input: Ph Toint, April 1992.
 % 
-%    classification = 'C-QBR2-AN-V-V'
+%    classification = 'C-CQBR2-AN-V-V'
 % 
 %    Number of variables
 % 
@@ -27,7 +27,7 @@ function varargout = BIGGSB1(action,varargin)
 % IE N                   5000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -133,7 +133,7 @@ switch(action)
 % LO BIGGSB1             0.015
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AN-V-V';
+        pb.pbclass = 'C-CQBR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

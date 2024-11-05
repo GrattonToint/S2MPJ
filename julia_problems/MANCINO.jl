@@ -20,7 +20,7 @@ function MANCINO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #               correction by Ph. Shott, January, 1995.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    The definitions
 #      s_{i,j} = \sin \log v_{i,j}   and s_{i,j} = \cos \log v_{i,j}
@@ -37,7 +37,7 @@ function MANCINO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   100            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MANCINO"
@@ -264,7 +264,7 @@ function MANCINO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-V-0"
+        pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

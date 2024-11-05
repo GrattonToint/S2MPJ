@@ -25,7 +25,7 @@ function varargout = DIXMAANO(action,varargin)
 %               correction by Ph. Shott, January 1995.
 %               this version Nick Gould, June, 2013
 % 
-%    classification = 'C-OUR2-AN-V-0'
+%    classification = 'C-COUR2-AN-V-0'
 % 
 %    M is equal to the third of the number of variables
 % 
@@ -37,7 +37,7 @@ function varargout = DIXMAANO(action,varargin)
 % IE M                   1000           $-PARAMETER n = 3000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -246,7 +246,7 @@ switch(action)
 % LO SOLTN               1.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OUR2-AN-V-0';
+        pb.pbclass = 'C-COUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

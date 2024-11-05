@@ -18,7 +18,7 @@ class  LEVYMONT7(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2021
 # 
-#    classification = "C-SBR2-AY-4-0"
+#    classification = "C-CSBR2-AY-4-0"
 # 
 #    N is the number of variables
 # 
@@ -26,7 +26,7 @@ class  LEVYMONT7(CUTEst_problem):
 # IE N                   4              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LEVYMONT7'
@@ -185,7 +185,7 @@ class  LEVYMONT7(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-AY-4-0"
+        self.pbclass = "C-CSBR2-AY-4-0"
         self.objderlvl = 2
 
 # **********************

@@ -30,7 +30,7 @@ function CYCLOOCF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    This is a version of CYCLOOPT.SIF without the fixed variables
 # 
-#    classification = "C-NQR2-MN-V-V"
+#    classification = "C-CNQR2-MN-V-V"
 # 
 #    The number of molecules
 # 
@@ -41,7 +41,7 @@ function CYCLOOCF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   10000          $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CYCLOOCF"
@@ -545,7 +545,7 @@ function CYCLOOCF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NQR2-MN-V-V"
+        pb.pbclass = "C-CNQR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

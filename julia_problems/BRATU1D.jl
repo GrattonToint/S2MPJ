@@ -16,7 +16,7 @@ function BRATU1D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-OXR2-MN-V-0"
+#    classification = "C-COXR2-MN-V-0"
 # 
 #    Number of variables (must be odd)
 # 
@@ -29,7 +29,7 @@ function BRATU1D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   5001           $-PARAMETER must be odd
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BRATU1D"
@@ -209,7 +209,7 @@ function BRATU1D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OXR2-MN-V-0"
+        pb.pbclass = "C-COXR2-MN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

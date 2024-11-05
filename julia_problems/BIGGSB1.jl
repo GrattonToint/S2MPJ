@@ -16,7 +16,7 @@ function BIGGSB1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Ph Toint, April 1992.
 # 
-#    classification = "C-QBR2-AN-V-V"
+#    classification = "C-CQBR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -27,7 +27,7 @@ function BIGGSB1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BIGGSB1"
@@ -113,7 +113,7 @@ function BIGGSB1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-V-V"
+        pb.pbclass = "C-CQBR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

@@ -17,7 +17,7 @@ function SIPOW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: A. R. Conn and Nick Gould, August 1993
 # 
-#    classification = "C-LLR2-AN-2-V"
+#    classification = "C-CLLR2-AN-2-V"
 # 
 #    Problem variants: they are identified by the values of M
 # 
@@ -26,7 +26,7 @@ function SIPOW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE M                   500 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SIPOW1"
@@ -124,7 +124,7 @@ function SIPOW1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-LLR2-AN-2-V"
+        pb.pbclass = "C-CLLR2-AN-2-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

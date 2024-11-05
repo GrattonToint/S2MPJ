@@ -24,7 +24,7 @@ function varargout = RAYBENDL(action,varargin)
 % 
 %    SIF input: Ph Toint, Dec 1991.
 % 
-%    classification = 'C-OXR2-MY-V-0'
+%    classification = 'C-COXR2-MY-V-0'
 % 
 %    number of  knots  ( >= 4 )
 %    ( n = 2( NKNOTS - 1 ) ) 
@@ -39,7 +39,7 @@ function varargout = RAYBENDL(action,varargin)
 % IE NKNOTS              1024           $-PARAMETER n = 2046
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -178,7 +178,7 @@ switch(action)
 % LO RAYBENDL            96.2424
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OXR2-MY-V-0';
+        pb.pbclass = 'C-COXR2-MY-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

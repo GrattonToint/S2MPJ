@@ -18,7 +18,7 @@ function PALMER5A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    Source:
 #    M. Palmer, Edinburgh, private communication.
 # 
-#    classification = "C-SBR2-RN-8-0"
+#    classification = "C-CSBR2-RN-8-0"
 # 
 #    SIF input: Nick Gould, 1992.
 # 
@@ -26,7 +26,7 @@ function PALMER5A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PALMER5A"
@@ -205,7 +205,7 @@ function PALMER5A(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SBR2-RN-8-0"
+        pb.pbclass = "C-CSBR2-RN-8-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

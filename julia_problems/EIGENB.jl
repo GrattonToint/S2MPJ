@@ -20,7 +20,7 @@ function EIGENB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #                Nonlinear equations version.
 # 
-#    classification = "C-NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    The dimension of the matrix.
 # 
@@ -30,7 +30,7 @@ function EIGENB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   50             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EIGENB"
@@ -197,7 +197,7 @@ function EIGENB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NOR2-AN-V-V"
+        pb.pbclass = "C-CNOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

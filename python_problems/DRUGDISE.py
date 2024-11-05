@@ -29,7 +29,7 @@ class  DRUGDISE(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Nov 1993.
 # 
-#    classification = "C-LOR2-MY-V-V"
+#    classification = "C-CLOR2-MY-V-V"
 # 
 #    Discretization: specify the number of interior points + 1
 # 
@@ -39,7 +39,7 @@ class  DRUGDISE(CUTEst_problem):
 # IE NI                  100            $-PARAMETER n=6003, m=5000 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRUGDISE'
@@ -459,7 +459,7 @@ class  DRUGDISE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-MY-V-V"
+        self.pbclass = "C-CLOR2-MY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

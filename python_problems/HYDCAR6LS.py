@@ -18,11 +18,11 @@ class  HYDCAR6LS(CUTEst_problem):
 #    SIF input : N. Gould, Dec 1989
 #    Least-squares version of HYDCAR6.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-SUR2-AN-29-0"
+#    classification = "C-CSUR2-AN-29-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HYDCAR6LS'
@@ -754,7 +754,7 @@ class  HYDCAR6LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-29-0"
+        self.pbclass = "C-CSUR2-AN-29-0"
         self.objderlvl = 2
 
 # **********************

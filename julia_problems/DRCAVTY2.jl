@@ -26,7 +26,7 @@ function DRCAVTY2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, Jan 1995.
 # 
-#    classification = "C-NQR2-MY-V-V"
+#    classification = "C-CNQR2-MY-V-V"
 # 
 #    Discretization mesh: n = (M+3)**2 - fixed variables
 # 
@@ -36,7 +36,7 @@ function DRCAVTY2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE M                   63             $-PARAMETER  n =  3969   original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DRCAVTY2"
@@ -321,7 +321,7 @@ function DRCAVTY2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-NQR2-MY-V-V"
+        pb.pbclass = "C-CNQR2-MY-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

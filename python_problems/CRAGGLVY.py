@@ -19,7 +19,7 @@ class  CRAGGLVY(CUTEst_problem):
 #    See  also Buckley#18
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-OUR2-AY-V-0"
+#    classification = "C-COUR2-AY-V-0"
 # 
 #    M is the number of group sets
 # 
@@ -33,7 +33,7 @@ class  CRAGGLVY(CUTEst_problem):
 # IE M                   2499           $-PARAMETER n = 5000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CRAGGLVY'
@@ -199,7 +199,7 @@ class  CRAGGLVY(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AY-V-0"
+        self.pbclass = "C-COUR2-AY-V-0"
         self.objderlvl = 2
 
 # **********************

@@ -30,7 +30,7 @@ class  LINVERSENE(CUTEst_problem):
 #    SIF input: Ph. Toint, March 1991.
 #    Bound-constrained nonlinear equations version: Nick Gould, June 2019.
 # 
-#    classification = "C-NOR2-AN-V-V"
+#    classification = "C-CNOR2-AN-V-V"
 # 
 #    Dimension of the matrix
 # 
@@ -41,7 +41,7 @@ class  LINVERSENE(CUTEst_problem):
 # IE N                   1000           $-PARAMETER  n = 1999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LINVERSENE'
@@ -756,7 +756,7 @@ class  LINVERSENE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-V-V"
+        self.pbclass = "C-CNOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

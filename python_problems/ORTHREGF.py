@@ -23,7 +23,7 @@ class  ORTHREGF(CUTEst_problem):
 #    SIF input: Ph. Toint, June 1990.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-QOR2-AY-V-V"
+#    classification = "C-CQOR2-AY-V-V"
 # 
 #    square root of the number of data points
 #    (number of variables = 3 * NPTS**2 + 5 )
@@ -37,7 +37,7 @@ class  ORTHREGF(CUTEst_problem):
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGF'
@@ -323,7 +323,7 @@ class  ORTHREGF(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-AY-V-V"
+        self.pbclass = "C-CQOR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

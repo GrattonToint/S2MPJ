@@ -18,7 +18,7 @@ function HARKERP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Nick Gould, July 1993.
 # 
-#    classification = "C-QBR2-AN-V-V"
+#    classification = "C-CQBR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -29,7 +29,7 @@ function HARKERP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HARKERP2"
@@ -129,7 +129,7 @@ function HARKERP2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-V-V"
+        pb.pbclass = "C-CQBR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

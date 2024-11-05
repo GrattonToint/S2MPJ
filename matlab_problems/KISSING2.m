@@ -33,7 +33,7 @@ function varargout = KISSING2(action,varargin)
 %            N. J. C. Sloane, Springer-Verlag, NY, 1988.
 %    SIF input: Nick Gould, September 2000
 % 
-%    classification = 'C-QQR2-RN-V-V'
+%    classification = 'C-CQQR2-RN-V-V'
 % 
 % **********************************************************************
 % 
@@ -44,7 +44,7 @@ function varargout = KISSING2(action,varargin)
 % IE m                   25             $-PARAMETER  number of points
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -269,7 +269,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QQR2-RN-V-V';
+        pb.pbclass = 'C-CQQR2-RN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

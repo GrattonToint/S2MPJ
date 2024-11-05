@@ -20,7 +20,7 @@ function varargout = SPINOP(action,varargin)
 % 
 %    SIF input: Nick Gould, June 2009
 % 
-%    classification = 'C-QOR2-AN-V-V'
+%    classification = 'C-CQOR2-AN-V-V'
 % 
 %    Number of particles n
 % 
@@ -39,7 +39,7 @@ function varargout = SPINOP(action,varargin)
 % IE N                   50             $-PARAMETER matrix dimension
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -375,7 +375,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QOR2-AN-V-V';
+        pb.pbclass = 'C-CQOR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

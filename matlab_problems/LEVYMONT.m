@@ -17,7 +17,7 @@ function varargout = LEVYMONT(action,varargin)
 % 
 %    SIF input: Nick Gould, August 2021
 % 
-%    classification = 'C-SBR2-AY-V-0'
+%    classification = 'C-CSBR2-AY-V-0'
 % 
 %    N is the number of variables
 % 
@@ -31,7 +31,7 @@ function varargout = LEVYMONT(action,varargin)
 % IE N                   100            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -212,7 +212,7 @@ switch(action)
 % LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SBR2-AY-V-0';
+        pb.pbclass = 'C-CSBR2-AY-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

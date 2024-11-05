@@ -17,7 +17,7 @@ function varargout = BIGGS6NE(action,varargin)
 %    SIF input: Ph. Toint, Dec 1989.
 %    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 % 
-%    classification = 'C-NOR2-AN-6-13'
+%    classification = 'C-CNOR2-AN-6-13'
 % 
 %    The number of groups can be varied, but should be larger or equal
 %    to the number of variables.
@@ -26,7 +26,7 @@ function varargout = BIGGS6NE(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -234,7 +234,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NOR2-AN-6-13';
+        pb.pbclass = 'C-CNOR2-AN-6-13';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

@@ -16,7 +16,7 @@ function varargout = MANNE(action,varargin)
 % 
 %    SIF input: N. Gould and Ph. Toint, March 1990.
 % 
-%    classification = 'C-OOR2-MN-V-V'
+%    classification = 'C-COOR2-MN-V-V'
 % 
 %    Number of periods
 %    The number of variables in the problem N = 3*T
@@ -28,7 +28,7 @@ function varargout = MANNE(action,varargin)
 % IE T                   2000           $-PARAMETER n = 6000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -286,7 +286,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OOR2-MN-V-V';
+        pb.pbclass = 'C-COOR2-MN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

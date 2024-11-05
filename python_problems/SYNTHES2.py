@@ -14,11 +14,11 @@ class  SYNTHES2(CUTEst_problem):
 # 
 #    SIF input: S. Leyffer, October 1997
 # 
-#    classification = "C-OOR2-AN-11-14"
+#    classification = "C-COOR2-AN-11-14"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SYNTHES2'
@@ -319,7 +319,7 @@ class  SYNTHES2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AN-11-14"
+        self.pbclass = "C-COOR2-AN-11-14"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

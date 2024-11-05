@@ -43,11 +43,11 @@ class  LAKES(CUTEst_problem):
 # 
 #    SIF input: Nick Gould and Jafar Sadjadi, November 1995
 # 
-#    classification = "C-QOR2-RN-90-78"
+#    classification = "C-CQOR2-RN-90-78"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LAKES'
@@ -651,7 +651,7 @@ class  LAKES(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-RN-90-78"
+        self.pbclass = "C-CQOR2-RN-90-78"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -24,7 +24,7 @@ class  UBH5(CUTEst_problem):
 # 
 #    SIF input: Ph.L. Toint, October 1993.
 # 
-#    classification = "C-LQR2-MN-V-V"
+#    classification = "C-CLQR2-MN-V-V"
 # 
 #    Number of grid points
 # 
@@ -34,7 +34,7 @@ class  UBH5(CUTEst_problem):
 # IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'UBH5'
@@ -239,7 +239,7 @@ class  UBH5(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-MN-V-V"
+        self.pbclass = "C-CLQR2-MN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

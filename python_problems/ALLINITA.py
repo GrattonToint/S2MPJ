@@ -15,11 +15,11 @@ class  ALLINITA(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, March 2013.
 # 
-#    classification = "C-OOR2-AY-4-4"
+#    classification = "C-COOR2-AY-4-4"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ALLINITA'
@@ -369,7 +369,7 @@ class  ALLINITA(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AY-4-4"
+        self.pbclass = "C-COOR2-AY-4-4"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

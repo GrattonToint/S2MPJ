@@ -17,7 +17,7 @@ function varargout = PORTSNQP(action,varargin)
 % 
 %    SIF input: Nick Gould, June 2001
 % 
-%    classification = 'C-QLR2-AN-V-1'
+%    classification = 'C-CQLR2-AN-V-1'
 % 
 %    The number of equality constraints
 % 
@@ -27,7 +27,7 @@ function varargout = PORTSNQP(action,varargin)
 % IE N                   10000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -159,7 +159,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-QLR2-AN-V-1';
+        pb.pbclass = 'C-CQLR2-AN-V-1';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

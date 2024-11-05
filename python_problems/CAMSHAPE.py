@@ -17,7 +17,7 @@ class  CAMSHAPE(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, November 2000
 # 
-#    classification = "C-LOR2-AN-V-V"
+#    classification = "C-CLOR2-AN-V-V"
 # 
 #    The number of discretization points
 # 
@@ -28,7 +28,7 @@ class  CAMSHAPE(CUTEst_problem):
 # IE N                   800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CAMSHAPE'
@@ -307,7 +307,7 @@ class  CAMSHAPE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-AN-V-V"
+        self.pbclass = "C-CLOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

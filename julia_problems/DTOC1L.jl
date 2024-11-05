@@ -28,7 +28,7 @@ function DTOC1L(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, August 1993
 # 
-#    classification = "C-OLR2-AN-V-V"
+#    classification = "C-COLR2-AN-V-V"
 # 
 #    Problem variants: they are identified by the values of
 #    the parameter vector ( N, NX, NY )
@@ -56,7 +56,7 @@ function DTOC1L(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC1L"
@@ -290,7 +290,7 @@ function DTOC1L(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-OLR2-AN-V-V"
+        pb.pbclass = "C-COLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

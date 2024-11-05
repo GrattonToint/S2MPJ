@@ -18,7 +18,7 @@ class  S368(CUTEst_problem):
 # 
 #    See also Schittkowski #368 (for N = 8)
 # 
-#    classification = "C-OBR2-MN-V-0"
+#    classification = "C-COBR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
@@ -26,7 +26,7 @@ class  S368(CUTEst_problem):
 # IE N                   8              $-PARAMETER Schittkowski #368
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'S368'
@@ -148,7 +148,7 @@ class  S368(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-MN-V-0"
+        self.pbclass = "C-COBR2-MN-V-0"
         self.objderlvl = 2
 
 # **********************

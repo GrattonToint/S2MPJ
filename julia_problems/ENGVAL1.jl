@@ -19,7 +19,7 @@ function ENGVAL1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #    See also Buckley#172 (p. 52)
 #    SIF input: Ph. Toint and N. Gould, Dec 1989.
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    N is the number of variables
 # 
@@ -31,7 +31,7 @@ function ENGVAL1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ENGVAL1"
@@ -146,7 +146,7 @@ function ENGVAL1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OUR2-AN-V-0"
+        pb.pbclass = "C-COUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

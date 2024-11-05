@@ -20,13 +20,13 @@ class  HS119(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, March 1991.
 # 
-#    classification = "C-OLR2-AN-16-8"
+#    classification = "C-COLR2-AN-16-8"
 # 
 #    Set useful parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS119'
@@ -261,7 +261,7 @@ class  HS119(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OLR2-AN-16-8"
+        self.pbclass = "C-COLR2-AN-16-8"
         self.objderlvl = 2
         self.conderlvl = [2]
 

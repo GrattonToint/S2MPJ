@@ -16,11 +16,11 @@ class  CANTILVR(CUTEst_problem):
 #    SIF input: Ph. Toint, November 1994
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-LOR2-MN-5-1"
+#    classification = "C-CLOR2-MN-5-1"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CANTILVR'
@@ -190,7 +190,7 @@ class  CANTILVR(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-MN-5-1"
+        self.pbclass = "C-CLOR2-MN-5-1"
         self.objderlvl = 2
         self.conderlvl = [2]
 

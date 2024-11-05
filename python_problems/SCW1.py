@@ -21,7 +21,7 @@ class  SCW1(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 2020
 # 
-#    classification = "C-SLR2-MN-V-V"
+#    classification = "C-CSLR2-MN-V-V"
 # 
 #    Number of internal knots
 # 
@@ -29,7 +29,7 @@ class  SCW1(CUTEst_problem):
 # IE K                   1              $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SCW1'
@@ -226,7 +226,7 @@ class  SCW1(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SLR2-MN-V-V"
+        self.pbclass = "C-CSLR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -16,11 +16,11 @@ class  MINMAXRB(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1992.
 # 
-#    classification = "C-LQR2-AN-3-4"
+#    classification = "C-CLQR2-AN-3-4"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINMAXRB'
@@ -162,7 +162,7 @@ class  MINMAXRB(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-AN-3-4"
+        self.pbclass = "C-CLQR2-AN-3-4"
         self.objderlvl = 2
         self.conderlvl = [2]
 

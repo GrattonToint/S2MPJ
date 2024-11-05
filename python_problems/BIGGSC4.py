@@ -17,11 +17,11 @@ class  BIGGSC4(CUTEst_problem):
 # 
 #    SIF input: Ph Toint, April 1992.
 # 
-#    classification = "C-QLR2-AN-4-7"
+#    classification = "C-CQLR2-AN-4-7"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGSC4'
@@ -210,7 +210,7 @@ class  BIGGSC4(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-4-7"
+        self.pbclass = "C-CQLR2-AN-4-7"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

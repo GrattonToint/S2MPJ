@@ -14,11 +14,11 @@ class  CAMEL6(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn May 1995
 # 
-#    classification = "C-OBR2-AN-2-0"
+#    classification = "C-COBR2-AN-2-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CAMEL6'
@@ -168,7 +168,7 @@ class  CAMEL6(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OBR2-AN-2-0"
+        self.pbclass = "C-COBR2-AN-2-0"
         self.objderlvl = 2
 
 # **********************

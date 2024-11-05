@@ -16,13 +16,13 @@ class  HATFLDFLS(CUTEst_problem):
 #    SIF input: Ph. Toint, May 1990.
 #    Least-squares version of HATFLDF.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-SUR2-AN-3-0"
+#    classification = "C-CSUR2-AN-3-0"
 # 
 #    Constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HATFLDFLS'
@@ -131,7 +131,7 @@ class  HATFLDFLS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-3-0"
+        self.pbclass = "C-CSUR2-AN-3-0"
         self.objderlvl = 2
 
 

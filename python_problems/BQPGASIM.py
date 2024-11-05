@@ -11,11 +11,11 @@ class  BQPGASIM(CUTEst_problem):
 # 
 #    SIF input: N. Gould, July 1990.
 # 
-#    classification = "C-QBR2-AN-50-0"
+#    classification = "C-CQBR2-AN-50-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BQPGASIM'
@@ -2859,7 +2859,7 @@ class  BQPGASIM(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QBR2-AN-50-0"
+        self.pbclass = "C-CQBR2-AN-50-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

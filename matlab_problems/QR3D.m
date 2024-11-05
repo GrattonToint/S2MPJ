@@ -20,7 +20,7 @@ function varargout = QR3D(action,varargin)
 % 
 %    SIF input: Ph. Toint, Nov 1993
 % 
-%    classification = 'C-NQR2-AN-V-V'
+%    classification = 'C-CNQR2-AN-V-V'
 % 
 %    Define the matrix order M  ( M >= 3 ).
 %    There are M * ( 3M + 1) / 2 variables and equations.
@@ -31,7 +31,7 @@ function varargout = QR3D(action,varargin)
 % IE M                   20             $-PARAMETER  n = 610
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -261,7 +261,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-NQR2-AN-V-V';
+        pb.pbclass = 'C-CNQR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

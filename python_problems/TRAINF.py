@@ -22,7 +22,7 @@ class  TRAINF(CUTEst_problem):
 # 
 #    SIF input: N. Nichols and Ph. Toint, April 1993
 # 
-#    classification = "C-QQR2-MN-V-V"
+#    classification = "C-CQQR2-MN-V-V"
 # 
 #    Problem variants
 # 
@@ -36,7 +36,7 @@ class  TRAINF(CUTEst_problem):
 # RE TIME                1.5            $-PARAMETER  travel time
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRAINF'
@@ -285,7 +285,7 @@ class  TRAINF(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QQR2-MN-V-V"
+        self.pbclass = "C-CQQR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

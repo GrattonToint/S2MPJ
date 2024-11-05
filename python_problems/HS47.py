@@ -16,13 +16,13 @@ class  HS47(CUTEst_problem):
 #    SIF input: A.R. Conn, April 1990
 #    updated to improve numerics, Nick Gould, Oct 2003
 # 
-#    classification = "C-OOR2-AY-5-3"
+#    classification = "C-COOR2-AY-5-3"
 # 
 #    some useful parameters, including N, the number of variables.
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS47'
@@ -292,7 +292,7 @@ class  HS47(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AY-5-3"
+        self.pbclass = "C-COOR2-AY-5-3"
         self.objderlvl = 2
         self.conderlvl = [2]
 

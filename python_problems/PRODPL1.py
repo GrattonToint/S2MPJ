@@ -14,13 +14,13 @@ class  PRODPL1(CUTEst_problem):
 # 
 #    SIF input: A.R. Conn, March 1991.
 # 
-#    classification = "C-LQR2-RY-60-29"
+#    classification = "C-CLQR2-RY-60-29"
 # 
 #    Constants
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PRODPL1'
@@ -803,7 +803,7 @@ class  PRODPL1(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-RY-60-29"
+        self.pbclass = "C-CLQR2-RY-60-29"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

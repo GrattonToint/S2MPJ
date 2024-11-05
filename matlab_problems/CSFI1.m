@@ -14,13 +14,13 @@ function varargout = CSFI1(action,varargin)
 % 
 %    SIF input: A.R. Conn April 1995
 % 
-%    classification = 'C-LOR2-RN-5-4'
+%    classification = 'C-CLOR2-RN-5-4'
 % 
 %    input parameters
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -237,7 +237,7 @@ switch(action)
         pb.cupper(1:pb.nge) = grange(gegrps);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LOR2-RN-5-4';
+        pb.pbclass = 'C-CLOR2-RN-5-4';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

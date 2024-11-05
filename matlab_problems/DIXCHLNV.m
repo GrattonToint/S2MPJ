@@ -17,7 +17,7 @@ function varargout = DIXCHLNV(action,varargin)
 % 
 %    SIF input: Ph. Toint, Feb 1991.
 % 
-%    classification = 'C-SOR2-AN-V-V'
+%    classification = 'C-CSOR2-AN-V-V'
 % 
 %    Number of variables
 %    (variable, but must be even and at least equal to 4)
@@ -29,7 +29,7 @@ function varargout = DIXCHLNV(action,varargin)
 % IE N                   1000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -282,7 +282,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-SOR2-AN-V-V';
+        pb.pbclass = 'C-CSOR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

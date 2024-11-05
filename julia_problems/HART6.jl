@@ -14,13 +14,13 @@ function HART6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SIF input: A.R. Conn May 1995
 # 
-#    classification = "C-OBR2-AN-6-0"
+#    classification = "C-COBR2-AN-6-0"
 # 
 #    Number of variables - constraints
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HART6"
@@ -172,7 +172,7 @@ function HART6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-6-0"
+        pb.pbclass = "C-COBR2-AN-6-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

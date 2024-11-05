@@ -14,14 +14,14 @@ function varargout = LINSPANH(action,varargin)
 % 
 %    SIF input: Ph. Toint, Sept 1990.
 % 
-%    classification = 'C-LNR2-MN-97-33'
+%    classification = 'C-CLNR2-MN-97-33'
 % 
 %    Number of arcs = 97
 %    Number of nodes
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -1906,7 +1906,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-LNR2-MN-97-33';
+        pb.pbclass = 'C-CLNR2-MN-97-33';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

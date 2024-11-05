@@ -17,13 +17,13 @@ function varargout = MINMAXBD(action,varargin)
 %    See also Buckley#30
 %    SDIF input: Ph. Toint, Dec 1989, modified by Nick Gould, Oct 1992.
 % 
-%    classification = 'C-LOR2-AN-5-20'
+%    classification = 'C-CLOR2-AN-5-20'
 % 
 %    Number of groups
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -205,7 +205,7 @@ switch(action)
         pb.cupper(1:pb.nle) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LOR2-AN-5-20';
+        pb.pbclass = 'C-CLOR2-AN-5-20';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

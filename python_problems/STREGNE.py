@@ -12,11 +12,11 @@ class  STREGNE(CUTEst_problem):
 #    SIF input: N. Gould, Aug 2001
 #    Nonlinear-equations version of STRG.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-NOR2-AN-4-2"
+#    classification = "C-CNOR2-AN-4-2"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'STREGNE'
@@ -162,7 +162,7 @@ class  STREGNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-4-2"
+        self.pbclass = "C-CNOR2-AN-4-2"
         self.objderlvl = 2
         self.conderlvl = [2]
         self.H = self.H.tocsr()

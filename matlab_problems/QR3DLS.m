@@ -22,7 +22,7 @@ function varargout = QR3DLS(action,varargin)
 % 
 %    SIF input: Ph. Toint, March 1994.
 % 
-%    classification = 'C-SBR2-AN-V-V'
+%    classification = 'C-CSBR2-AN-V-V'
 % 
 %    Define the matrix order M  ( M >= 3 ).
 %    There are M * ( 3M + 1) / 2 variables and equations.
@@ -33,7 +33,7 @@ function varargout = QR3DLS(action,varargin)
 % IE M                   20             $-PARAMETER  n = 610
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -251,7 +251,7 @@ switch(action)
 % LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SBR2-AN-V-V';
+        pb.pbclass = 'C-CSBR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

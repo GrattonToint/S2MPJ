@@ -19,7 +19,7 @@ function MOREBV(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 #    SIF input: Ph. Toint, Dec 1989 and Nick Gould, Oct 1992.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-SUR2-MN-V-0"
+#    classification = "C-CSUR2-MN-V-0"
 # 
 #    The number of variables is N.
 # 
@@ -32,7 +32,7 @@ function MOREBV(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MOREBV"
@@ -165,7 +165,7 @@ function MOREBV(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-MN-V-0"
+        pb.pbclass = "C-CSUR2-MN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

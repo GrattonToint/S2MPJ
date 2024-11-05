@@ -17,7 +17,7 @@ class  MANNE(CUTEst_problem):
 # 
 #    SIF input: N. Gould and Ph. Toint, March 1990.
 # 
-#    classification = "C-OOR2-MN-V-V"
+#    classification = "C-COOR2-MN-V-V"
 # 
 #    Number of periods
 #    The number of variables in the problem N = 3*T
@@ -29,7 +29,7 @@ class  MANNE(CUTEst_problem):
 # IE T                   2000           $-PARAMETER n = 6000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MANNE'
@@ -255,7 +255,7 @@ class  MANNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-MN-V-V"
+        self.pbclass = "C-COOR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

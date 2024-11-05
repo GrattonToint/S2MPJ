@@ -22,13 +22,13 @@ function varargout = MGH17SLS(action,varargin)
 %    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 %    Least-squares version of MGH17S.SIF, Nick Gould, Jan 2020
 % 
-%    classification = 'C-NOR2-MN-5-33'
+%    classification = 'C-CNOR2-MN-5-33'
 % 
 %    Number of data values
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -229,7 +229,7 @@ switch(action)
 % LO SOLTN
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-NOR2-MN-5-33';
+        pb.pbclass = 'C-CNOR2-MN-5-33';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

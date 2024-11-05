@@ -11,7 +11,7 @@ function varargout = MISTAKE(action,varargin)
 %    Source:
 %    Ph. Toint.
 % 
-%    classification = 'C-QQR2-AY-9-13'
+%    classification = 'C-CQQR2-AY-9-13'
 % 
 %    SIF input: Ph. Toint, Apr 1990.
 % 
@@ -19,7 +19,7 @@ function varargout = MISTAKE(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -582,7 +582,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QQR2-AY-9-13';
+        pb.pbclass = 'C-CQQR2-AY-9-13';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

@@ -17,13 +17,13 @@ class  HELIX(CUTEst_problem):
 #    See also Buckley#12 (p. 58)
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SUR2-AN-3-0"
+#    classification = "C-CSUR2-AN-3-0"
 # 
 #    Define useful parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HELIX'
@@ -151,7 +151,7 @@ class  HELIX(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-3-0"
+        self.pbclass = "C-CSUR2-AN-3-0"
         self.objderlvl = 2
 
 # **********************

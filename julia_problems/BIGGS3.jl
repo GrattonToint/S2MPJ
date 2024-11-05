@@ -15,7 +15,7 @@ function BIGGS3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SXR2-AN-6-0"
+#    classification = "C-CSXR2-AN-6-0"
 # 
 #    This function  is a nonlinear least squares with 13 groups.  Each
 #    group has 3 nonlinear elements.  It is obtained by fixing
@@ -29,7 +29,7 @@ function BIGGS3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "BIGGS3"
@@ -202,7 +202,7 @@ function BIGGS3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = spzeros(Float64,0,0)
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SXR2-AN-6-0"
+        pb.pbclass = "C-CSXR2-AN-6-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

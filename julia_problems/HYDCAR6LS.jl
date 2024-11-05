@@ -17,11 +17,11 @@ function HYDCAR6LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #    SIF input : N. Gould, Dec 1989
 #    Least-squares version of HYDCAR6.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-SUR2-AN-29-0"
+#    classification = "C-CSUR2-AN-29-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HYDCAR6LS"
@@ -760,7 +760,7 @@ function HYDCAR6LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-29-0"
+        pb.pbclass = "C-CSUR2-AN-29-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

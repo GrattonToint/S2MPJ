@@ -12,7 +12,7 @@ class  MISTAKE(CUTEst_problem):
 #    Source:
 #    Ph. Toint.
 # 
-#    classification = "C-QQR2-AY-9-13"
+#    classification = "C-CQQR2-AY-9-13"
 # 
 #    SIF input: Ph. Toint, Apr 1990.
 # 
@@ -20,7 +20,7 @@ class  MISTAKE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MISTAKE'
@@ -584,7 +584,7 @@ class  MISTAKE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QQR2-AY-9-13"
+        self.pbclass = "C-CQQR2-AY-9-13"
         self.objderlvl = 2
         self.conderlvl = [2]
 

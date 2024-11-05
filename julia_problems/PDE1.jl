@@ -12,7 +12,7 @@ function PDE1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 #    SIF input: Nick Gould, April 25th 2012
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-LLR2-AN-V-V"
+#    classification = "C-CLLR2-AN-V-V"
 # 
 #    the x-y discretization 
 # 
@@ -21,7 +21,7 @@ function PDE1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE N                   299            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PDE1"
@@ -257,7 +257,7 @@ function PDE1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = collect(1:length(pbm.congrps))
-        pb.pbclass = "C-LLR2-AN-V-V"
+        pb.pbclass = "C-CLLR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

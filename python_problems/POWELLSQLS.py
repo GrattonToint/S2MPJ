@@ -15,7 +15,7 @@ class  POWELLSQLS(CUTEst_problem):
 # 
 #    See also Buckley#217 (p.84.)
 # 
-#    classification = "C-SUR2-AN-2-0"
+#    classification = "C-CSUR2-AN-2-0"
 # 
 #    SIF input: Ph. Toint, Dec 1989, correction November 2002.
 #               NIMG corrected July 2005 (thanks to Roger Fletcher)
@@ -23,7 +23,7 @@ class  POWELLSQLS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'POWELLSQLS'
@@ -131,7 +131,7 @@ class  POWELLSQLS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-2-0"
+        self.pbclass = "C-CSUR2-AN-2-0"
         self.objderlvl = 2
 
 

@@ -25,7 +25,7 @@ class  ROBOT(CUTEst_problem):
 #    SIF input: Manish Sabu at Virginia Tech., Spring 1993.
 #               Minor modifications by Ph. L. Toint, April 1993.
 # 
-#    classification = "C-QOR2-MY-14-2"
+#    classification = "C-CQOR2-MY-14-2"
 # 
 #  This segment describes the initial values of angles (by THnIN)
 #   and final position of the end effector (by XPOS and YPOS)
@@ -35,7 +35,7 @@ class  ROBOT(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ROBOT'
@@ -481,7 +481,7 @@ class  ROBOT(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QOR2-MY-14-2"
+        self.pbclass = "C-CQOR2-MY-14-2"
         self.objderlvl = 2
         self.conderlvl = [2]
 

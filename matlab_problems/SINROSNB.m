@@ -14,7 +14,7 @@ function varargout = SINROSNB(action,varargin)
 % 
 %    SIF input: Nick Gould and Ph. Toint, October, 1993.
 % 
-%    classification = 'C-OQR2-AN-V-V'
+%    classification = 'C-COQR2-AN-V-V'
 % 
 %    Number of variables
 % 
@@ -26,7 +26,7 @@ function varargout = SINROSNB(action,varargin)
 % IE N                   1000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -189,7 +189,7 @@ switch(action)
         pb.cupper(1:pb.nge) = grange(gegrps);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-OQR2-AN-V-V';
+        pb.pbclass = 'C-COQR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

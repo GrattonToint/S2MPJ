@@ -13,7 +13,7 @@ class  ROSEPETAL(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Feb 2014
 # 
-#    classification = "C-LQR2-AN-V-V"
+#    classification = "C-CLQR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -24,7 +24,7 @@ class  ROSEPETAL(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ROSEPETAL'
@@ -159,7 +159,7 @@ class  ROSEPETAL(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-AN-V-V"
+        self.pbclass = "C-CLQR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

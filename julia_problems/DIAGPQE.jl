@@ -14,7 +14,7 @@ function DIAGPQE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould, Feb 2019
 # 
-#    classification = "C-QBR2-AN-V-0"
+#    classification = "C-CQBR2-AN-V-0"
 # 
 #    Number of variables (variable)
 # 
@@ -22,7 +22,7 @@ function DIAGPQE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DIAGPQE"
@@ -97,7 +97,7 @@ function DIAGPQE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         Hsave = pbm.H[ 1:pb.n, 1:pb.n ]
         pbm.H = Hsave
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-V-0"
+        pb.pbclass = "C-CQBR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

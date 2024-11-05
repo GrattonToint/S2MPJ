@@ -16,7 +16,7 @@ class  SINQUAD2(CUTEst_problem):
 #    SIF input: N. Gould, Dec 1989.
 #    modifield version of SINQUAD (formulation corrected) May 2024
 # 
-#    classification = "C-OUR2-AY-V-0"
+#    classification = "C-COUR2-AY-V-0"
 # 
 #    number of variables
 # 
@@ -25,7 +25,7 @@ class  SINQUAD2(CUTEst_problem):
 # IE N                   10             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SINQUAD2'
@@ -168,7 +168,7 @@ class  SINQUAD2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AY-V-0"
+        self.pbclass = "C-COUR2-AY-V-0"
         self.objderlvl = 2
 
 # **********************

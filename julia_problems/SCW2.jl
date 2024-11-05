@@ -20,7 +20,7 @@ function SCW2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 #    SIF input: Nick Gould, July 2020
 # 
-#    classification = "C-SLR2-MN-V-V"
+#    classification = "C-CSLR2-MN-V-V"
 # 
 #    Number of internal knots
 # 
@@ -31,7 +31,7 @@ function SCW2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE K                   1000           $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SCW2"
@@ -256,7 +256,7 @@ function SCW2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-SLR2-MN-V-V"
+        pb.pbclass = "C-CSLR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

@@ -15,13 +15,13 @@ class  DIXCHLNG(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Feb 1991.
 # 
-#    classification = "C-SOR2-AN-10-5"
+#    classification = "C-CSOR2-AN-10-5"
 # 
 #    Other parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXCHLNG'
@@ -408,7 +408,7 @@ class  DIXCHLNG(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-SOR2-AN-10-5"
+        self.pbclass = "C-CSOR2-AN-10-5"
         self.objderlvl = 2
         self.conderlvl = [2]
 

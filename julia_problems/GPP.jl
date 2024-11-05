@@ -13,7 +13,7 @@ function GPP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # 
 #    SIF input: N. Gould, Jan 1998
 # 
-#    classification = "C-OOR2-AY-V-V"
+#    classification = "C-COOR2-AY-V-V"
 # 
 #    number of variables
 # 
@@ -24,7 +24,7 @@ function GPP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "GPP"
@@ -174,7 +174,7 @@ function GPP(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOR2-AY-V-V"
+        pb.pbclass = "C-COOR2-AY-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

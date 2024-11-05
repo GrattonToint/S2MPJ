@@ -32,7 +32,7 @@ class  PT(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, February, 1994.
 # 
-#    classification = "C-LLR2-AN-2-V"
+#    classification = "C-CLLR2-AN-2-V"
 # 
 #    Discretization
 # 
@@ -40,7 +40,7 @@ class  PT(CUTEst_problem):
 # IE M                   100
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PT'
@@ -137,7 +137,7 @@ class  PT(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-LLR2-AN-2-V"
+        self.pbclass = "C-CLLR2-AN-2-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

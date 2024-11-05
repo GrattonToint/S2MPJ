@@ -23,13 +23,13 @@ function AIRPORT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 #                November 1994, DMA - IMECC- UNICAMP
 #    Adaptation for CUTE: Ph. Toint, November 1994.
 # 
-#    classification = "C-SQR2-MN-84-42"
+#    classification = "C-CSQR2-MN-84-42"
 # 
 #    Problem data
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 6 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "AIRPORT"
@@ -309,7 +309,7 @@ function AIRPORT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-SQR2-MN-84-42"
+        pb.pbclass = "C-CSQR2-MN-84-42"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

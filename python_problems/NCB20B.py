@@ -16,7 +16,7 @@ class  NCB20B(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, April 1993.
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    Problem dimension
 # 
@@ -24,7 +24,7 @@ class  NCB20B(CUTEst_problem):
 # IE N                   21             $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NCB20B'
@@ -264,7 +264,7 @@ class  NCB20B(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-V-0"
+        self.pbclass = "C-COUR2-AN-V-0"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

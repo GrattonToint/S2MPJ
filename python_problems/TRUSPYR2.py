@@ -22,13 +22,13 @@ class  TRUSPYR2(CUTEst_problem):
 # 
 #    SIF input: A. Forsgren, Royal Institute of Technology, December 1993.
 # 
-#    classification = "C-LQR2-MN-11-11"
+#    classification = "C-CLQR2-MN-11-11"
 # 
 #    Number of bars
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'TRUSPYR2'
@@ -216,7 +216,7 @@ class  TRUSPYR2(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-MN-11-11"
+        self.pbclass = "C-CLQR2-MN-11-11"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

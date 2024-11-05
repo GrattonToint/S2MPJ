@@ -16,7 +16,7 @@ function INTEQNELS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #    SIF input: Ph. Toint, Feb 1990.
 #    Modification to remove fixed variables: Nick Gould, Oct 2015.
 # 
-#    classification = "C-SUR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    N+2 is the number of discretization points .
 #    The number of free variables is N.
@@ -28,7 +28,7 @@ function INTEQNELS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE N                   500            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "INTEQNELS"
@@ -168,7 +168,7 @@ function INTEQNELS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-SUR2-AN-V-0"
+        pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

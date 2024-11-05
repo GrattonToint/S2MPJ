@@ -17,13 +17,13 @@ function EXPFITA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SDIF input: Ph. Toint and N. Gould, May 1990.
 # 
-#    classification = "C-OLR2-AN-5-22"
+#    classification = "C-COLR2-AN-5-22"
 # 
 #    Number of fitting points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EXPFITA"
@@ -216,7 +216,7 @@ function EXPFITA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OLR2-AN-5-22"
+        pb.pbclass = "C-COLR2-AN-5-22"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

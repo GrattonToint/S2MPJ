@@ -17,7 +17,7 @@ function varargout = EXTROSNB(action,varargin)
 %    See also Buckley#116.  Note that MGH#21 is the separable version.
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-SUR2-AN-V-0'
+%    classification = 'C-CSUR2-AN-V-0'
 % 
 %    Number of variables
 % 
@@ -25,7 +25,7 @@ function varargout = EXTROSNB(action,varargin)
 % IE N                   5              $-PARAMETER     original value
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -146,7 +146,7 @@ switch(action)
 % LO SOLTN               0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-V-0';
+        pb.pbclass = 'C-CSUR2-AN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

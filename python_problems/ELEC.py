@@ -17,7 +17,7 @@ class  ELEC(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, November 2000
 # 
-#    classification = "C-OOR2-AN-V-V"
+#    classification = "C-COOR2-AN-V-V"
 # 
 #    The number of electrons
 # 
@@ -28,7 +28,7 @@ class  ELEC(CUTEst_problem):
 # IE NP                  200            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ELEC'
@@ -251,7 +251,7 @@ class  ELEC(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AN-V-V"
+        self.pbclass = "C-COOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

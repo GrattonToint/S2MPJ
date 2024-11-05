@@ -14,7 +14,7 @@ class  GPP(CUTEst_problem):
 # 
 #    SIF input: N. Gould, Jan 1998
 # 
-#    classification = "C-OOR2-AY-V-V"
+#    classification = "C-COOR2-AY-V-V"
 # 
 #    number of variables
 # 
@@ -25,7 +25,7 @@ class  GPP(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'GPP'
@@ -177,7 +177,7 @@ class  GPP(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOR2-AY-V-V"
+        self.pbclass = "C-COOR2-AY-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

@@ -18,13 +18,13 @@ class  MINMAXBD(CUTEst_problem):
 #    See also Buckley#30
 #    SDIF input: Ph. Toint, Dec 1989, modified by Nick Gould, Oct 1992.
 # 
-#    classification = "C-LOR2-AN-5-20"
+#    classification = "C-CLOR2-AN-5-20"
 # 
 #    Number of groups
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'MINMAXBD'
@@ -201,7 +201,7 @@ class  MINMAXBD(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LOR2-AN-5-20"
+        self.pbclass = "C-CLOR2-AN-5-20"
         self.objderlvl = 2
         self.conderlvl = [2]
 

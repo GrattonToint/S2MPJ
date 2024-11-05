@@ -23,13 +23,13 @@ function varargout = AIRPORT(action,varargin)
 %                November 1994, DMA - IMECC- UNICAMP
 %    Adaptation for CUTE: Ph. Toint, November 1994.
 % 
-%    classification = 'C-SQR2-MN-84-42'
+%    classification = 'C-CSQR2-MN-84-42'
 % 
 %    Problem data
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -330,7 +330,7 @@ switch(action)
         pb.cupper(1:pb.nle) = zeros(pb.nle,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-SQR2-MN-84-42';
+        pb.pbclass = 'C-CSQR2-MN-84-42';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

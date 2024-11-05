@@ -19,7 +19,7 @@ function varargout = MINC44(action,varargin)
 %    SIF input: Ph. Toint, April 1992.
 %               minor correction by Ph. Shott, Jan 1995.
 % 
-%    classification = 'C-LQR2-AN-V-V'
+%    classification = 'C-CLQR2-AN-V-V'
 % 
 %    Size of matrix
 % 
@@ -35,7 +35,7 @@ function varargout = MINC44(action,varargin)
 % IE N                   10             $-PARAMETER n = 1113
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -329,7 +329,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LQR2-AN-V-V';
+        pb.pbclass = 'C-CLQR2-AN-V-V';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

@@ -9,13 +9,13 @@ function NET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 #    A gas network problem for the south-east of England.
 # 
 #     SIF input: Sybille Schachler, Oxford, August 1992.
-#    classification = "C-OOI2-RN-48-57"
+#    classification = "C-COOI2-RN-48-57"
 # 
 #    ...Problem size parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NET1"
@@ -1039,7 +1039,7 @@ function NET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-OOI2-RN-48-57"
+        pb.pbclass = "C-COOI2-RN-48-57"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

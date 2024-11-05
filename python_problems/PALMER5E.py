@@ -21,13 +21,13 @@ class  PALMER5E(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, 1992.
 # 
-#    classification = "C-SBR2-RN-8-0"
+#    classification = "C-CSBR2-RN-8-0"
 # 
 #    Number of data points
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'PALMER5E'
@@ -220,7 +220,7 @@ class  PALMER5E(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-RN-8-0"
+        self.pbclass = "C-CSBR2-RN-8-0"
         self.objderlvl = 2
 
 # **********************

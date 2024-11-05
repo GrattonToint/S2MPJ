@@ -23,7 +23,7 @@ class  YATP1LS(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, June 2003.
 # 
-#    classification = "C-SUR2-AN-V-V"
+#    classification = "C-CSUR2-AN-V-V"
 # 
 #    The dimension of the matrix
 # 
@@ -35,7 +35,7 @@ class  YATP1LS(CUTEst_problem):
 # IE N                   350            $-PARAMETER n = 123200
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YATP1LS'
@@ -224,7 +224,7 @@ class  YATP1LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-AN-V-V"
+        self.pbclass = "C-CSUR2-AN-V-V"
         self.objderlvl = 2
 
 

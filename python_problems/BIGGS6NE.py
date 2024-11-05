@@ -18,7 +18,7 @@ class  BIGGS6NE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #    Modification as a set of nonlinear equations: Nick Gould, Oct 2015.
 # 
-#    classification = "C-NOR2-AN-6-13"
+#    classification = "C-CNOR2-AN-6-13"
 # 
 #    The number of groups can be varied, but should be larger or equal
 #    to the number of variables.
@@ -27,7 +27,7 @@ class  BIGGS6NE(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BIGGS6NE'
@@ -234,7 +234,7 @@ class  BIGGS6NE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-NOR2-AN-6-13"
+        self.pbclass = "C-CNOR2-AN-6-13"
         self.objderlvl = 2
         self.conderlvl = [2]
 

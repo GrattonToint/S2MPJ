@@ -38,7 +38,7 @@ function varargout = LMINSURF(action,varargin)
 % 
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-OXR2-MY-V-0'
+%    classification = 'C-COXR2-MY-V-0'
 % 
 %    P is the number of points in one side of the unit square
 % 
@@ -52,7 +52,7 @@ function varargout = LMINSURF(action,varargin)
 % IE P                   75             $-PARAMETER n = 5625
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -237,7 +237,7 @@ switch(action)
 % LO SOLTN               9.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OXR2-MY-V-0';
+        pb.pbclass = 'C-COXR2-MY-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

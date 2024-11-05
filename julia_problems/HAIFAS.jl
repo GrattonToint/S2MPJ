@@ -15,13 +15,13 @@ function HAIFAS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 #   SIF input: Conn, Gould and Toint, May, 1992
 #              minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-LQR2-AN-13-9"
+#    classification = "C-CLQR2-AN-13-9"
 # 
 #   2 * Number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "HAIFAS"
@@ -726,7 +726,7 @@ function HAIFAS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQR2-AN-13-9"
+        pb.pbclass = "C-CLQR2-AN-13-9"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

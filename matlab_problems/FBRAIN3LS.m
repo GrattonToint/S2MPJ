@@ -19,13 +19,13 @@ function varargout = FBRAIN3LS(action,varargin)
 % 
 %    SIF input: Nick Gould, June 2017.
 % 
-%    classification = 'C-SUR2-AN-6-0'
+%    classification = 'C-CSUR2-AN-6-0'
 % 
 %    N is the number of data sets
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -11314,7 +11314,7 @@ switch(action)
 % LO SOLUTION            0.0
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-6-0';
+        pb.pbclass = 'C-CSUR2-AN-6-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

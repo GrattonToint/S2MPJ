@@ -30,7 +30,7 @@ function varargout = OPTMASS(action,varargin)
 % 
 %    SIF input: Ph. Toint, June 1990.
 % 
-%    classification = 'C-QQR2-AN-V-V'
+%    classification = 'C-CQQR2-AN-V-V'
 % 
 %    Number of discretization steps in the time interval
 %    The number of variables is 6 * (N + 2) -2 , 4 of which are fixed.
@@ -42,7 +42,7 @@ function varargout = OPTMASS(action,varargin)
 % IE N                   500            $-PARAMETER n = 3010
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -303,7 +303,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-QQR2-AN-V-V';
+        pb.pbclass = 'C-CQQR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

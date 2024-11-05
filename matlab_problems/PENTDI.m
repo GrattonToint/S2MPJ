@@ -21,7 +21,7 @@ function varargout = PENTDI(action,varargin)
 %    SIF input: J. Judice, University of Coimbra, January 1995.
 %               condensed by Ph. Toint, January 1995.
 % 
-%    classification = 'C-QBR2-AN-V-0'
+%    classification = 'C-CQBR2-AN-V-0'
 % 
 %    dimension of the problem (should be even)
 % 
@@ -33,7 +33,7 @@ function varargout = PENTDI(action,varargin)
 % IE N                   5000           $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -219,7 +219,7 @@ switch(action)
         pb.xlower = zeros(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-QBR2-AN-V-0';
+        pb.pbclass = 'C-CQBR2-AN-V-0';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

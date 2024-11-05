@@ -18,11 +18,11 @@ class  METHANL8LS(CUTEst_problem):
 #    SIF input: N. Gould, Dec 1989.
 #    Least-squares version of METHANL8.SIF, Nick Gould, Jan 2020.
 # 
-#    classification = "C-SUR2-MN-31-0"
+#    classification = "C-CSUR2-MN-31-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'METHANL8LS'
@@ -757,7 +757,7 @@ class  METHANL8LS(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-MN-31-0"
+        self.pbclass = "C-CSUR2-MN-31-0"
         self.objderlvl = 2
 
 # **********************

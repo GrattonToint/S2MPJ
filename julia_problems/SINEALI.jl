@@ -15,7 +15,7 @@ function SINEALI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 #    SIF input: Nick Gould and Ph. Toint, October, 1993.
 # 
-#    classification = "C-OBR2-AN-V-0"
+#    classification = "C-COBR2-AN-V-0"
 # 
 #    Number of variables
 # 
@@ -27,7 +27,7 @@ function SINEALI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SINEALI"
@@ -146,7 +146,7 @@ function SINEALI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-OBR2-AN-V-0"
+        pb.pbclass = "C-COBR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

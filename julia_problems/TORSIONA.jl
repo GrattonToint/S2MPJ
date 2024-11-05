@@ -31,7 +31,7 @@ function TORSIONA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, Dec 1989.
 #    modified by Peihuang Chen, according to MINPACK-2, Apr 1992.
 # 
-#    classification = "C-QBR2-MY-V-0"
+#    classification = "C-CQBR2-MY-V-0"
 # 
 #    Q is half the number of discretized points along the X axis
 # 
@@ -43,7 +43,7 @@ function TORSIONA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE Q                   37             $-PARAMETER n= 5476
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TORSIONA"
@@ -358,7 +358,7 @@ function TORSIONA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-MY-V-0"
+        pb.pbclass = "C-CQBR2-MY-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

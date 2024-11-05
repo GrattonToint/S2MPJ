@@ -18,7 +18,7 @@ class  DIXMAANK(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #               correction by Ph. Shott, January 1995.
 # 
-#    classification = "C-OUR2-AN-V-0"
+#    classification = "C-COUR2-AN-V-0"
 # 
 #    M is equal to the third of the number of variables
 # 
@@ -30,7 +30,7 @@ class  DIXMAANK(CUTEst_problem):
 # IE M                   1000           $-PARAMETER n = 3000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DIXMAANK'
@@ -226,7 +226,7 @@ class  DIXMAANK(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OUR2-AN-V-0"
+        self.pbclass = "C-COUR2-AN-V-0"
         self.objderlvl = 2
 
 # **********************

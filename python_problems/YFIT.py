@@ -15,11 +15,11 @@ class  YFIT(CUTEst_problem):
 #    SIF input: Brian E. Lindholm, Virginia Tech., Spring 1993.
 #               derivatives corrected by Nick Gould, June 2019.
 # 
-#    classification = "C-SBR2-MN-3-0"
+#    classification = "C-CSBR2-MN-3-0"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YFIT'
@@ -154,7 +154,7 @@ class  YFIT(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SBR2-MN-3-0"
+        self.pbclass = "C-CSBR2-MN-3-0"
         self.objderlvl = 2
 
 # **********************

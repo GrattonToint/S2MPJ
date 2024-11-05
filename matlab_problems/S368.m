@@ -17,7 +17,7 @@ function varargout = S368(action,varargin)
 % 
 %    See also Schittkowski #368 (for N = 8)
 % 
-%    classification = 'C-OBR2-MN-V-0'
+%    classification = 'C-COBR2-MN-V-0'
 % 
 %    The number of variables is N.
 % 
@@ -25,7 +25,7 @@ function varargout = S368(action,varargin)
 % IE N                   8              $-PARAMETER Schittkowski #368
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -155,7 +155,7 @@ switch(action)
 % LO SOLTN               ??
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-OBR2-MN-V-0';
+        pb.pbclass = 'C-COBR2-MN-V-0';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

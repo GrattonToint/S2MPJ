@@ -28,7 +28,7 @@ class  DRCAV3LQ(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Jan 1995.
 # 
-#    classification = "C-OXR2-MY-V-V"
+#    classification = "C-COXR2-MY-V-V"
 # 
 #    Discretization mesh: n = (M+3)**2 - fixed variables
 # 
@@ -38,7 +38,7 @@ class  DRCAV3LQ(CUTEst_problem):
 # IE M                   63             $-PARAMETER  n =  3969
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DRCAV3LQ'
@@ -306,7 +306,7 @@ class  DRCAV3LQ(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OXR2-MY-V-V"
+        self.pbclass = "C-COXR2-MY-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
 

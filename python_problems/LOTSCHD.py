@@ -15,11 +15,11 @@ class  LOTSCHD(CUTEst_problem):
 # 
 #    SIF input: T. Kuan, Virginia Tech., Spring 1993.
 # 
-#    classification = "C-QLR2-AN-12-7"
+#    classification = "C-CQLR2-AN-12-7"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LOTSCHD'
@@ -200,7 +200,7 @@ class  LOTSCHD(CUTEst_problem):
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons   = np.arange(len(self.congrps))
-        self.pbclass = "C-QLR2-AN-12-7"
+        self.pbclass = "C-CQLR2-AN-12-7"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

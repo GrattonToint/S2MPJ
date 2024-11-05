@@ -24,11 +24,11 @@ function CORE1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 #    SDIF input: E. Loute and D. De Wolf, September 1992.
 # 
-#    classification = "C-LQI2-RN-65-59"
+#    classification = "C-CLQI2-RN-65-59"
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CORE1"
@@ -1189,7 +1189,7 @@ function CORE1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-LQI2-RN-65-59"
+        pb.pbclass = "C-CLQI2-RN-65-59"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

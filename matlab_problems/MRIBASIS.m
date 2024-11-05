@@ -14,13 +14,13 @@ function varargout = MRIBASIS(action,varargin)
 %    SIF input: Arie Quist, TU Delft (NL), 1994.
 %    Adaptation for CUTE: Ph. Toint, November 1994.
 % 
-%    classification = 'C-LOR2-MY-36-55'
+%    classification = 'C-CLOR2-MY-36-55'
 % 
 %    useful constants
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -658,7 +658,7 @@ switch(action)
         pb.cupper(1:pb.nge) = +Inf*ones(pb.nge,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-LOR2-MY-36-55';
+        pb.pbclass = 'C-CLOR2-MY-36-55';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

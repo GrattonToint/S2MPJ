@@ -23,7 +23,7 @@ function varargout = YATP1CLS(action,varargin)
 %    SIF input: Ph. Toint, June 2003.
 %               corrected Nick Gould, March 2019
 % 
-%    classification = 'C-SUR2-AN-V-V'
+%    classification = 'C-CSUR2-AN-V-V'
 % 
 %    The dimension of the matrix
 % 
@@ -35,7 +35,7 @@ function varargout = YATP1CLS(action,varargin)
 % IE N                   350            $-PARAMETER n = 123200
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -240,7 +240,7 @@ switch(action)
         end
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-V-V';
+        pb.pbclass = 'C-CSUR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         %%%%%%%%%%% REDUCED-PRECISION CONVERSION %%%%%%%%%%%

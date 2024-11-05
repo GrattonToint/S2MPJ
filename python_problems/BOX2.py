@@ -16,7 +16,7 @@ class  BOX2(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-SXR2-AN-3-0"
+#    classification = "C-CSXR2-AN-3-0"
 # 
 #    This function  is a nonlinear least squares with 10 groups.  Each
 #    group has 2 nonlinear elements of exponential type.
@@ -25,7 +25,7 @@ class  BOX2(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 6 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'BOX2'
@@ -155,7 +155,7 @@ class  BOX2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SXR2-AN-3-0"
+        self.pbclass = "C-CSXR2-AN-3-0"
         self.objderlvl = 2
 
 # **********************

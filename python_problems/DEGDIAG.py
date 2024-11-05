@@ -12,7 +12,7 @@ class  DEGDIAG(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, August 2011
 # 
-#    classification = "C-QBR2-AN-V-0"
+#    classification = "C-CQBR2-AN-V-0"
 # 
 #    The number of variables - 1
 # 
@@ -25,7 +25,7 @@ class  DEGDIAG(CUTEst_problem):
 # IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'DEGDIAG'
@@ -86,7 +86,7 @@ class  DEGDIAG(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QBR2-AN-V-0"
+        self.pbclass = "C-CQBR2-AN-V-0"
         self.objderlvl = 2
         self.H = self.H.tocsr()
 

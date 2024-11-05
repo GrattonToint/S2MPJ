@@ -21,7 +21,7 @@ function ORTHREGC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 #    SIF input: Ph. Toint, June 1990.
 # 
-#    classification = "C-QQR2-AN-V-V"
+#    classification = "C-CQQR2-AN-V-V"
 # 
 #    Number of data points
 #    (number of variables = 2 NPTS + 5 )
@@ -34,7 +34,7 @@ function ORTHREGC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NPTS                2500           $-PARAMETER n= 5005
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHREGC"
@@ -329,7 +329,7 @@ function ORTHREGC(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QQR2-AN-V-V"
+        pb.pbclass = "C-CQQR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

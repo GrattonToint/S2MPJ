@@ -21,7 +21,7 @@ function PENTDI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 #    SIF input: J. Judice, University of Coimbra, January 1995.
 #               condensed by Ph. Toint, January 1995.
 # 
-#    classification = "C-QBR2-AN-V-0"
+#    classification = "C-CQBR2-AN-V-0"
 # 
 #    dimension of the problem (should be even)
 # 
@@ -33,7 +33,7 @@ function PENTDI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "PENTDI"
@@ -190,7 +190,7 @@ function PENTDI(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AN-V-0"
+        pb.pbclass = "C-CQBR2-AN-V-0"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

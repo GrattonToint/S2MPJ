@@ -17,7 +17,7 @@ class  HADAMARD(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, Nov 1993.
 # 
-#    classification = "C-LQR2-RN-V-V"
+#    classification = "C-CLQR2-RN-V-V"
 # 
 #    The dimension of the matrix.
 # 
@@ -34,7 +34,7 @@ class  HADAMARD(CUTEst_problem):
 # IE N                   20             $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HADAMARD'
@@ -184,7 +184,7 @@ class  HADAMARD(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-RN-V-V"
+        self.pbclass = "C-CLQR2-RN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

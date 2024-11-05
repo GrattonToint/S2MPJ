@@ -10,13 +10,13 @@ class  NET1(CUTEst_problem):
 #    A gas network problem for the south-east of England.
 # 
 #     SIF input: Sybille Schachler, Oxford, August 1992.
-#    classification = "C-OOI2-RN-48-57"
+#    classification = "C-COOI2-RN-48-57"
 # 
 #    ...Problem size parameters
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NET1'
@@ -1047,7 +1047,7 @@ class  NET1(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-OOI2-RN-48-57"
+        self.pbclass = "C-COOI2-RN-48-57"
         self.objderlvl = 2
         self.conderlvl = [2]
 

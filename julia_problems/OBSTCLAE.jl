@@ -24,7 +24,7 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Ph. Toint, Dec 1989.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-QBR2-AY-V-0"
+#    classification = "C-CQBR2-AY-V-0"
 # 
 #    PX is the number of points along the X side of the rectangle
 #    PY is the number of points along the Y side of the rectangle
@@ -48,7 +48,7 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE PX                  100            $-PARAMETER n = 10000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "OBSTCLAE"
@@ -265,7 +265,7 @@ function OBSTCLAE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-QBR2-AY-V-0"
+        pb.pbclass = "C-CQBR2-AY-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

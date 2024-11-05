@@ -18,14 +18,14 @@ class  HS268(CUTEst_problem):
 #    SIF input: Michel Bierlaire and Annick Sartenaer, October 1992.
 #               minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-QLR2-AN-5-5"
+#    classification = "C-CQLR2-AN-5-5"
 # 
 #   the number of functions
 # 
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HS268'
@@ -245,7 +245,7 @@ class  HS268(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-AN-5-5"
+        self.pbclass = "C-CQLR2-AN-5-5"
         self.objderlvl = 2
         self.conderlvl = [2]
 

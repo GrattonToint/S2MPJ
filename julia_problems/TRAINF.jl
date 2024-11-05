@@ -21,7 +21,7 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # 
 #    SIF input: N. Nichols and Ph. Toint, April 1993
 # 
-#    classification = "C-QQR2-MN-V-V"
+#    classification = "C-CQQR2-MN-V-V"
 # 
 #    Problem variants
 # 
@@ -35,7 +35,7 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # RE TIME                1.5            $-PARAMETER  travel time
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 7 X 2024
+#   Translated to Julia by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "TRAINF"
@@ -287,7 +287,7 @@ function TRAINF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-QQR2-MN-V-V"
+        pb.pbclass = "C-CQQR2-MN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

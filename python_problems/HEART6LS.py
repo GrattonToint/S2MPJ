@@ -20,7 +20,7 @@ class  HEART6LS(CUTEst_problem):
 #    SIF input: A.R. Conn, May 1993, modified by Ph. Toint, March 1994.
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-SUR2-MN-6-0"
+#    classification = "C-CSUR2-MN-6-0"
 # 
 # 
 #    some useful parameters.
@@ -45,7 +45,7 @@ class  HEART6LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HEART6LS'
@@ -639,7 +639,7 @@ class  HEART6LS(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-SUR2-MN-6-0"
+        self.pbclass = "C-CSUR2-MN-6-0"
         self.objderlvl = 2
 
 # **********************

@@ -21,7 +21,7 @@ function varargout = WATSON(action,varargin)
 %    SIF input: Ph. Toint, Dec 1989.
 %    (bug fix July 2007)
 % 
-%    classification = 'C-SUR2-AN-V-0'
+%    classification = 'C-CSUR2-AN-V-0'
 % 
 %    The number of variables can be varied, but should be smaller than
 %    31
@@ -32,7 +32,7 @@ function varargout = WATSON(action,varargin)
 % IE N                   12             $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -289,7 +289,7 @@ switch(action)
 % LO SOLTN(31)           1.53795068D-9
         %%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = 'C-SUR2-AN-V-0';
+        pb.pbclass = 'C-CSUR2-AN-V-0';
         pb.x0          = zeros(pb.n,1);
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;

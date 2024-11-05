@@ -16,13 +16,13 @@ class  HAIFAS(CUTEst_problem):
 #   SIF input: Conn, Gould and Toint, May, 1992
 #              minor correction by Ph. Shott, Jan 1995.
 # 
-#    classification = "C-LQR2-AN-13-9"
+#    classification = "C-CLQR2-AN-13-9"
 # 
 #   2 * Number of nodes
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HAIFAS'
@@ -695,7 +695,7 @@ class  HAIFAS(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-LQR2-AN-13-9"
+        self.pbclass = "C-CLQR2-AN-13-9"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

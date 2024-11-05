@@ -39,7 +39,7 @@ class  LMINSURF(CUTEst_problem):
 # 
 #    SIF input: Ph. Toint, Dec 1989.
 # 
-#    classification = "C-OXR2-MY-V-0"
+#    classification = "C-COXR2-MY-V-0"
 # 
 #    P is the number of points in one side of the unit square
 # 
@@ -53,7 +53,7 @@ class  LMINSURF(CUTEst_problem):
 # IE P                   75             $-PARAMETER n = 5625
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LMINSURF'
@@ -226,7 +226,7 @@ class  LMINSURF(CUTEst_problem):
         #%%%%%%%% DEFAULT FOR MISSING SECTION(S) %%%%%%%%%%
         delattr( self, "A" )
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-OXR2-MY-V-0"
+        self.pbclass = "C-COXR2-MY-V-0"
         self.objderlvl = 2
 
 # **********************

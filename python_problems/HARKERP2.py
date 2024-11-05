@@ -19,7 +19,7 @@ class  HARKERP2(CUTEst_problem):
 # 
 #    SIF input: Nick Gould, July 1993.
 # 
-#    classification = "C-QBR2-AN-V-V"
+#    classification = "C-CQBR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -30,7 +30,7 @@ class  HARKERP2(CUTEst_problem):
 # IE N                   1000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HARKERP2'
@@ -131,7 +131,7 @@ class  HARKERP2(CUTEst_problem):
         sA1,sA2    = self.A.shape
         self.Ashape = [ sA1, sA2 ]
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
-        self.pbclass = "C-QBR2-AN-V-V"
+        self.pbclass = "C-CQBR2-AN-V-V"
         self.objderlvl = 2
 
 # ********************

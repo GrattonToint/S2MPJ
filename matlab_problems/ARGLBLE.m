@@ -15,7 +15,7 @@ function varargout = ARGLBLE(action,varargin)
 %    See also Buckley#93 (with different N and M)
 %    SIF input: Ph. Toint, Dec 1989.
 % 
-%    classification = 'C-NLR2-AN-V-V'
+%    classification = 'C-CNLR2-AN-V-V'
 % 
 %    This is a(n infeasible) linear feasibility problem 
 % 
@@ -30,7 +30,7 @@ function varargout = ARGLBLE(action,varargin)
 % IE N                   200            $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 6 X 2024
+%   Translated to Matlab by S2MPJ version 17 X 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -128,7 +128,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons   = [1:length(pbm.congrps)];
-        pb.pbclass = 'C-NLR2-AN-V-V';
+        pb.pbclass = 'C-CNLR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

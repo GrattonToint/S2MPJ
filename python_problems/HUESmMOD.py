@@ -14,7 +14,7 @@ class  HUESmMOD(CUTEst_problem):
 #    SIF input: Nick Gould, January 1993.
 #    improvements by: Ruediger Franke (Ruediger.Franke@RZ.TU-Ilmenau.DE)
 # 
-#    classification = "C-QLR2-MN-V-V"
+#    classification = "C-CQLR2-MN-V-V"
 # 
 #    Number of variables
 # 
@@ -25,7 +25,7 @@ class  HUESmMOD(CUTEst_problem):
 # IE K                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 7 X 2024
+#   Translated to Python by S2MPJ version 17 X 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HUESmMOD'
@@ -172,7 +172,7 @@ class  HUESmMOD(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-QLR2-MN-V-V"
+        self.pbclass = "C-CQLR2-MN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 
