@@ -27,7 +27,7 @@ class  SREADIN3(CUTEst_problem):
 # IE N                   2000           $-PARAMETER n=4002, m=2001
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'SREADIN3'

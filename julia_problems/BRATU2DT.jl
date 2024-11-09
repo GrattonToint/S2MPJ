@@ -113,7 +113,6 @@ function BRATU2DT(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             pb.xlower[ix_["U"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
             pb.xupper[ix_["U"*string(Int64(v_["1"]))*","*string(J)]] = 0.0

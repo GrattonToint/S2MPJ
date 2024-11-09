@@ -40,7 +40,7 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   71             $-PARAMETER n = 5041
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CLPLATEB"
@@ -131,7 +131,6 @@ function CLPLATEB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             pb.xlower[ix_["X"*string(Int64(v_["1"]))*","*string(J)]] = 0.0
             pb.xupper[ix_["X"*string(Int64(v_["1"]))*","*string(J)]] = 0.0

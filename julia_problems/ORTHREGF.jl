@@ -36,7 +36,7 @@ function ORTHREGF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "ORTHREGF"
@@ -162,7 +162,6 @@ function ORTHREGF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["P4"]] = 0.001
         pb.xlower[ix_["P5"]] = 0.001
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%

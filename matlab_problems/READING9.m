@@ -32,7 +32,7 @@ function varargout = READING9(action,varargin)
 % IE N+1                 5001           $-PARAMETER n=10002, m= 5000
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;

@@ -19,7 +19,7 @@ function CYCLIC3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 #    SIF input: Nick Gould, Jan 2012.
 #    Least-squares version of CYCLIC3.SIF, Jan 2020.
 # 
-#    classification = "C-CNOR2-AN-V-0"
+#    classification = "C-CSUR2-AN-V-0"
 # 
 #    dimension parameter
 # 
@@ -32,7 +32,7 @@ function CYCLIC3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
 # IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CYCLIC3LS"
@@ -90,7 +90,6 @@ function CYCLIC3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(1000.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
@@ -156,7 +155,7 @@ function CYCLIC3LS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-CNOR2-AN-V-0"
+        pb.pbclass = "C-CSUR2-AN-V-0"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

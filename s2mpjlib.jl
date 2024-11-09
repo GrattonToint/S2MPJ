@@ -1097,6 +1097,9 @@ function s2mpjlib_select( classif::String, args::Union{String,Any} = [] )
         println( "    s2mpjlib_select( \"C-C....-..-V-V\" ) " )
         println( " lists all CUTEst problems with variable number of continuous variables and" )
         println( " variable number of constraints." )
+        println( " The classification strings \"unconstrained\", \"bound-constrained\", " )
+        println( " \"fixed-variables\", \"general-constraints\", \"variable-n\" and " )
+        println( " \"variable-m\" are also allowed." )
         println( " NOTE: any regular expression may be used as the first argument of " )
         println( "       s2mpj_select.problems to specify the problem class, so that, for" )
         println( "       instance, the previous selection can also be achieved by the command" )
@@ -1107,12 +1110,40 @@ function s2mpjlib_select( classif::String, args::Union{String,Any} = [] )
 
     else
 
+        if classif == "unconstrained"
+            classif = ".-..U.*"
+        elseif classif == "bound-constrained"
+            classif = ".-..B.*"
+        elseif classif == "fixed-variables"
+            classif = ".-..X.*"
+        elseif classif == "general-constraints"
+            classif = ".-..[LNQO].*"
+        elseif classif == "variable-n"
+            classif = ".-..B..-..-V-[V0-9]*"
+        elseif classif == "variable-m"
+            classif = ".-..B..-..-[V0-9]*-V"
+        else
+            lencl = length( classif )
+            t = classif[12] == '.'
+            if lencl > 11 && classif[12] == '.'
+                oclassif = classif
+                classif  = classif[1:11] * "[V0-9]*"
+                if lencl> 12
+                    classif = classif * oclassif[13:lencl]
+                end
+            end
+            lenclm1 = length( classif ) - 1
+            if classif[ lenclm1 ] == '.'
+                classif = classif[1:lenclm1] * "[V0-9]*"
+            end
+        end
+        filter = Regex( "classification = \"" * classif )
+
         list_of_problems = "./list_of_julia_problems"
         julia_problems   = "./julia_problems/"
 
         fid = ( length( args ) > 0 ) ? open( args, "w" ) : stdout
         
-        filter   = Regex( "classification = \"" * classif )
         allprobs = readlines( list_of_problems )
         
         for theprob in allprobs

@@ -9,7 +9,7 @@
 #   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 #   Also contains the problem selection tool.
 #
-#   Programming: S. Gratton and Ph. Toint (this version 14 X 2024)
+#   Programming: S. Gratton and Ph. Toint (this version 9 XI 2024)
 #
 #####################################################################################################
 #####################################################################################################
@@ -1090,6 +1090,9 @@ def s2mpjlib_select( classif, *args ):
         print( "    s2mpjlib_select( ""C-C....-..-V-V"" ) " )
         print( " lists all CUTEst problems with variable number of continuous variables and" )
         print( " variable number of constraints." )
+        print( " The classification strings \"unconstrained\", \"bound-constrained\", " )
+        print( " \"fixed-variables\", \"general-constraints\", \"variable-n\" and " )
+        print( " \"variable-m\" are also allowed." )
         print( " NOTE: any regular expression may be used as the first argument of select " )
         print( "       to specify the problem class, so that, for instance, the previous " )
         print( "       selection can also be achieved by s2mpjlib_select( \"C-C.*V-V\" ) ")
@@ -1099,6 +1102,33 @@ def s2mpjlib_select( classif, *args ):
 
     else:
     
+        #  Modify the filter to cope with fixed numbers of variables/constraints with more
+        #  than one digit.
+
+        if classif == "unconstrained":
+            classif = ".-..U.*"
+        elif classif == "bound-constrained":
+            classif = ".-..B.*"
+        elif classif == "fixed-variables":
+            classif = ".-..X.*"
+        elif classif == "general-constraints":
+            classif = ".-..[LNQO].*"
+        elif classif == "variable-n":
+            classif = ".-..B..-..-V-[V0-9]*"
+        elif classif == "variable-m":
+            classif = ".-..B..-..-[V0-9]*-V"
+        else:
+            lencl = len( classif )
+            if lencl > 11 and classif[11] == ".":
+                oclassif = classif
+                classif  = classif[0:11] + "[V0-9]*"
+                if lencl> 12:
+                    classif = classif + oclassif[12:lencl]
+            lenclm1 = len( classif ) - 1
+            if classif[ lenclm1 ] == ".":
+                classif = classif[0:lenclm1] + "[V0-9]*"
+        filter_pattern = f'classification = .*{classif}'
+      
         list_of_problems = "./list_of_python_problems"
         python_problems  = "./python_problems/"
 

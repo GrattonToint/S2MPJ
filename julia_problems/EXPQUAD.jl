@@ -23,7 +23,7 @@ function EXPQUAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE N                   1200           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EXPQUAD"
@@ -82,7 +82,6 @@ function EXPQUAD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pb.xlower[ix_["X"*string(I)]] = 0.0
             pb.xupper[ix_["X"*string(I)]] = 10.0

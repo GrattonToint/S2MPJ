@@ -39,7 +39,7 @@ function varargout = CYCLOOCT(action,varargin)
 % IE P                   10000          $-PARAMETER
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -126,7 +126,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_('X1'),1) = 0.0;
         pb.xupper(ix_('X1'),1) = 0.0;
         pb.xlower(ix_('Y1'),1) = 0.0;

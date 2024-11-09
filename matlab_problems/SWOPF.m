@@ -22,7 +22,7 @@ function varargout = SWOPF(action,varargin)
 % 
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -2094,7 +2094,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_('V20001'),1) = 0.810;
         pb.xupper(ix_('V20001')) = 1.210;
         pb.xlower(ix_('V20002'),1) = 0.810;

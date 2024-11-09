@@ -112,7 +112,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_(['X',int2str(round(v_('0')))]),1) = 0.0;
         pb.xupper(ix_(['X',int2str(round(v_('0')))]),1) = 0.0;
         pb.xlower(ix_(['X',int2str(round(v_('N+1')))]),1) = 0.0;

@@ -27,7 +27,7 @@ function CBRATU3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE P                   3              $-PARAMETER n = 54   original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CBRATU3D"
@@ -143,7 +143,6 @@ function CBRATU3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             for K = Int64(v_["1"]):Int64(v_["P"])
                 pb.xlower[ix_["U"*string(Int64(v_["1"]))*","*string(J)*","*string(K)]] = 0.0

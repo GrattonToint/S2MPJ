@@ -27,7 +27,7 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
 # IE P                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "YAO"
@@ -115,7 +115,6 @@ function YAO(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Float
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["1"]))]] = 0.08
         for i = Int64(v_["P+1"]):Int64(v_["P+k"])
             pb.xlower[ix_["X"*string(i)]] = 0.0

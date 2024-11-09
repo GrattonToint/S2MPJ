@@ -37,7 +37,7 @@ function varargout = DRCAV2LQ(action,varargin)
 % IE M                   63             $-PARAMETER  n =  3969
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -195,7 +195,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         for J=v_('-1'):v_('M+2')
             pb.xlower(ix_(['Y',int2str(round(v_('-1'))),',',int2str(J)]),1) = 0.0;
             pb.xupper(ix_(['Y',int2str(round(v_('-1'))),',',int2str(J)]),1) = 0.0;

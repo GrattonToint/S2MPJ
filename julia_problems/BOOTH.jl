@@ -80,7 +80,6 @@ function BOOTH(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%% OBJECT BOUNDS %%%%%%%%%%%%%%%%%
 #    Solution
 # LO SOLTN               0.0

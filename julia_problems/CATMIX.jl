@@ -28,7 +28,7 @@ function CATMIX(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
 # IE NH                  800            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CATMIX"
@@ -118,7 +118,6 @@ function CATMIX(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["0"]):Int64(v_["NH"])
             pb.xlower[ix_["U"*string(I)]] = 0.0
             pb.xupper[ix_["U"*string(I)]] = 1.0

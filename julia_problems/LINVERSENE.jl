@@ -40,7 +40,7 @@ function LINVERSENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # IE N                   1000           $-PARAMETER  n = 1999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LINVERSENE"
@@ -155,7 +155,6 @@ function LINVERSENE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["A"*string(I)]] = v_["EPSILON"]
         end

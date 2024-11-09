@@ -41,7 +41,7 @@ function varargout = DTOC3(action,varargin)
 % IE N                   1500           $-PARAMETER  n= 4499,m=2998
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -176,7 +176,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_(['Y',int2str(round(v_('1'))),',',int2str(round(v_('1')))]),1) = 15.0;
         pb.xupper(ix_(['Y',int2str(round(v_('1'))),',',int2str(round(v_('1')))]),1) = 15.0;
         pb.xlower(ix_(['Y',int2str(round(v_('1'))),',',int2str(round(v_('2')))]),1) = 5.0;

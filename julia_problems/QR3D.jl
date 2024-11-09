@@ -31,7 +31,7 @@ function QR3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE M                   20             $-PARAMETER  n = 610
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "QR3D"
@@ -148,7 +148,6 @@ function QR3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["M"])
             pb.xlower[ix_["R"*string(I)*","*string(I)]] = 0.0
         end

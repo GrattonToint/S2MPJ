@@ -55,7 +55,7 @@ function varargout = DTOC1ND(action,varargin)
 % IE N                   1000           $-PARAMETER # periods  }
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -328,7 +328,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         for I=v_('1'):v_('NY')
             pb.xlower(ix_(['Y',int2str(round(v_('1'))),',',int2str(I)]),1) = 0.0;
             pb.xupper(ix_(['Y',int2str(round(v_('1'))),',',int2str(I)]),1) = 0.0;

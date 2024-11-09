@@ -37,7 +37,7 @@ class  ORTHREGF(CUTEst_problem):
 # IE NPTS                40             $-PARAMETER n = 4805
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'ORTHREGF'
@@ -158,7 +158,6 @@ class  ORTHREGF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         self.xlower[ix_['P4']] = 0.001
         self.xlower[ix_['P5']] = 0.001
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%

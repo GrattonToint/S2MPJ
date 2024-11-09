@@ -38,7 +38,7 @@ function NYSTROM5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NYSTROM5"
@@ -187,7 +187,6 @@ function NYSTROM5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["AL1"]] = 0.0
         pb.xupper[ix_["AL1"]] = 0.0
         pb.xlower[ix_["AL2"]] = 0.2

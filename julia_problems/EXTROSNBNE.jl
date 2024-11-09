@@ -19,7 +19,7 @@ function EXTROSNBNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 #    SIF input: Ph. Toint, Dec 1989.
 #               Nick Gould (nonlinear equation version), Jan 2019
 # 
-#    classification = "C-CNOR2-AN-V-V"
+#    classification = "C-CSOR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -27,7 +27,7 @@ function EXTROSNBNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
 # IE N                   5              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "EXTROSNBNE"
@@ -94,7 +94,6 @@ function EXTROSNBNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = fill(Float64(-1.0),pb.n)
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
@@ -145,7 +144,7 @@ function EXTROSNBNE(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vecto
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-CNOR2-AN-V-V"
+        pb.pbclass = "C-CSOR2-AN-V-V"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2]

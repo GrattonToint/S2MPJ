@@ -35,7 +35,7 @@ class  HEART8LS(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'HEART8LS'
@@ -126,7 +126,6 @@ class  HEART8LS(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         self.x0 = np.full((self.n,1),float(1.0))
         self.x0[ix_['a']] = float(0.0)

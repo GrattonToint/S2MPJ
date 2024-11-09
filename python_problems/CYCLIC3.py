@@ -32,7 +32,7 @@ class  CYCLIC3(CUTEst_problem):
 # IE N                   100000         $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CYCLIC3'
@@ -103,7 +103,6 @@ class  CYCLIC3(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         self.x0 = np.full((self.n,1),float(1000.0))
         self.y0 = np.full((self.m,1),float(1000.0))

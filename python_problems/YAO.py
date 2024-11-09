@@ -28,7 +28,7 @@ class  YAO(CUTEst_problem):
 # IE P                   2000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'YAO'
@@ -115,7 +115,6 @@ class  YAO(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         self.xlower[ix_['X'+str(int(v_['1']))]] = 0.08
         for i in range(int(v_['P+1']),int(v_['P+k'])+1):
             self.xlower[ix_['X'+str(i)]] = 0.0

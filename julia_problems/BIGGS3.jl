@@ -93,7 +93,6 @@ function BIGGS3(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X3"]] = 1.0
         pb.xupper[ix_["X3"]] = 1.0
         pb.xlower[ix_["X5"]] = 4.0

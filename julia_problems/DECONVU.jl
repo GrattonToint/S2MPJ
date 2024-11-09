@@ -19,7 +19,7 @@ function DECONVU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DECONVU"
@@ -161,7 +161,6 @@ function DECONVU(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for K = Int64(v_["-LGSG"]):Int64(v_["0"])
             pb.xlower[ix_["C"*string(K)]] = 0.0
             pb.xupper[ix_["C"*string(K)]] = 0.0

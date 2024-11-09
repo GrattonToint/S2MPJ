@@ -39,7 +39,7 @@ class  NYSTROM5(CUTEst_problem):
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'NYSTROM5'
@@ -191,7 +191,6 @@ class  NYSTROM5(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         self.xlower[ix_['AL1']] = 0.0
         self.xupper[ix_['AL1']] = 0.0
         self.xlower[ix_['AL2']] = 0.2

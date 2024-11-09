@@ -143,7 +143,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         for J=v_('1'):v_('P')
             pb.xlower(ix_(['U',int2str(round(v_('1'))),',',int2str(J)]),1) = 0.0;
             pb.xupper(ix_(['U',int2str(round(v_('1'))),',',int2str(J)]),1) = 0.0;

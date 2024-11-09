@@ -23,7 +23,7 @@ function RK23(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 #    ... COMPUTED PARAMETERS
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RK23"
@@ -195,7 +195,6 @@ function RK23(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["TP1"]] = 0.0
         pb.xlower[ix_["TM1"]] = 0.0
         pb.xlower[ix_["TP2"]] = 0.0

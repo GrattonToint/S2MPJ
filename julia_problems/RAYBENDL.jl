@@ -39,7 +39,7 @@ function RAYBENDL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NKNOTS              1024           $-PARAMETER n = 2046
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RAYBENDL"
@@ -94,7 +94,6 @@ function RAYBENDL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = v_["XSRC"]
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = v_["XSRC"]
         pb.xlower[ix_["Z"*string(Int64(v_["0"]))]] = v_["ZSRC"]

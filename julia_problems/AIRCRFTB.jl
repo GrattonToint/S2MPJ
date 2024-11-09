@@ -122,7 +122,6 @@ function AIRCRFTB(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["ELEVATOR"]] = v_["ELVVAL"]
         pb.xupper[ix_["ELEVATOR"]] = v_["ELVVAL"]
         pb.xlower[ix_["AILERON"]] = v_["AILVAL"]

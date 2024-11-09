@@ -19,7 +19,7 @@ function varargout = EXTROSNBNE(action,varargin)
 %    SIF input: Ph. Toint, Dec 1989.
 %               Nick Gould (nonlinear equation version), Jan 2019
 % 
-%    classification = 'C-CNOR2-AN-V-V'
+%    classification = 'C-CSOR2-AN-V-V'
 % 
 %    Number of variables
 % 
@@ -27,7 +27,7 @@ function varargout = EXTROSNBNE(action,varargin)
 % IE N                   5              $-PARAMETER     original value
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%   Translated to Matlab by S2MPJ version 17 X 2024
+%   Translated to Matlab by S2MPJ version 9 XI 2024
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 persistent pbm;
@@ -112,7 +112,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         %%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = -1.0*ones(pb.n,1);
         %%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
@@ -157,7 +156,7 @@ switch(action)
         pb.cupper(pb.nle+1:pb.nle+pb.neq) = zeros(pb.neq,1);
         %%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         [~,pb.lincons]  = ismember(setdiff(pbm.congrps,nlc),pbm.congrps);
-        pb.pbclass = 'C-CNOR2-AN-V-V';
+        pb.pbclass = 'C-CSOR2-AN-V-V';
         pbm.objderlvl = 2;
         pb.objderlvl = pbm.objderlvl;
         pbm.conderlvl = [2];

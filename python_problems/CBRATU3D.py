@@ -28,7 +28,7 @@ class  CBRATU3D(CUTEst_problem):
 # IE P                   3              $-PARAMETER n = 54   original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CBRATU3D'
@@ -141,7 +141,6 @@ class  CBRATU3D(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
             for K in range(int(v_['1']),int(v_['P'])+1):
                 self.xlower[ix_['U'+str(int(v_['1']))+','+str(J)+','+str(K)]] = 0.0

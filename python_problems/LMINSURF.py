@@ -53,7 +53,7 @@ class  LMINSURF(CUTEst_problem):
 # IE P                   75             $-PARAMETER n = 5625
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'LMINSURF'
@@ -121,7 +121,6 @@ class  LMINSURF(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         for J in range(int(v_['1']),int(v_['P'])+1):
             v_['J-1'] = -1+J
             v_['RJ-1'] = float(v_['J-1'])

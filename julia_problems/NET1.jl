@@ -15,7 +15,7 @@ function NET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NET1"
@@ -466,7 +466,6 @@ function NET1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["SFL21"]] = 0.00000
         pb.xupper[ix_["SFL21"]] = 3.00000e+03
         pb.xlower[ix_["SFL22"]] = 0.00000

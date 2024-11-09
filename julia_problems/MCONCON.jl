@@ -12,7 +12,7 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MCONCON"
@@ -129,7 +129,6 @@ function MCONCON(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         v_["PMAX1"] = 914.73
         v_["PMAX2"] = 904.73
         pb.xupper[ix_["P3"]] = v_["PMAX2"]

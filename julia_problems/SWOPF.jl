@@ -22,7 +22,7 @@ function SWOPF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SWOPF"
@@ -1188,7 +1188,6 @@ function SWOPF(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["V20001"]] = 0.810
         pb.xupper[ix_["V20001"]] = 1.210
         pb.xlower[ix_["V20002"]] = 0.810

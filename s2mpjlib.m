@@ -5,7 +5,7 @@
 %
 %   Performs the runtime actions specific to S2MPJ, irrespective of the problem at hand.
 %
-%   Programming: Ph. Toint (this version 5 X 2024)
+%   Programming: Ph. Toint (this version 9 XI 2024)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -271,7 +271,7 @@ case { 'fx', 'fgx', 'fgHx', 'cx', 'cJx', 'cJHx', 'cIx', 'cIJx', 'cIJHx', 'fHxv',
 case 'select'
 
    classif = varargin{1};
-      if ( strcmp( classif, 'help') ||strcmp( classif, 'h' ) )
+   if ( strcmp( classif, 'help') || strcmp( classif, 'h' ) )
 
       disp( '  ' )
       disp( ' === The classification scheme ===' )
@@ -354,6 +354,9 @@ case 'select'
       disp( '    s2mpjlib(''select'', ''C-C....-..-V-V'' ) ' )
       disp( ' lists all CUTEstproblems with variable number of continuous variables and' )
       disp( 'variable  number of constraints.' )
+      disp( ' The classification strings ''unconstrained'', ''bound-constrained'', ' )
+      disp( ' ''fixed-variables'', ''general-constraints'', ''variable-n'' and ' )
+      disp( ' ''variable-m'' are also allowed.' )
       disp( ' NOTE: any regular expression may be used as the first argument of select ' )
       disp( '       to specify the problem class, so that, for instance, the previous ' )
       disp( '       selection can also be achieved by s2mpjlib(''select'', ''C-C.*V-V'' ) ')
@@ -363,6 +366,41 @@ case 'select'
       
    else
 
+      %  Modify the filter to cope with fixed numbers of variables/constraints with more
+      %  than one digit.
+
+      switch( classif )
+      case 'unconstrained'
+         classif = '.-..U.*';
+      case 'bound-constrained'
+         classif = '.-..B.*';
+      case 'fixed-variables'
+         classif = '.-..X.*';
+      case 'general-constraints'
+         classif = '.-..[LNQO].*';
+      case 'variable-n'
+         classif = '.-..B..-..-V-[V0-9]*';
+      case 'variable-m'
+         classif = '.-..B..-..-[V0-9]*-V';
+      otherwise
+         posh = strfind( classif, '-' );
+         if ( length( posh ) >= 3 )
+            oclassif = classif;
+            if ( length( classif ) > posh(3) && classif( posh(3)+1 ) == '.' )
+               classif = [ classif(1:posh(3)), '[V0-9]*' ];
+               if ( length( oclassif ) > posh(3)+1 )
+                  classif = [ classif, oclassif(posh(3)+2:end) ];
+               end
+            end
+            if ( classif(end) == '.' )
+               classif = [ classif(1:end-1), '[V0-9]*' ];
+            end
+         end
+      end
+      filter = [ 'classification = ''', classif ];
+
+      %  Loop on the problems.
+
       list_of_problems = './list_of_matlab_problems';
       matlab_problems  = './matlab_problems/';
 
@@ -371,8 +409,7 @@ case 'select'
       else
          fid = 1;
       end
-      
-      filter   = [ 'classification = ''', classif ];
+
       allprobs = readlines( list_of_problems );
       for i=1:length( allprobs )
          theprob = allprobs(i);

@@ -34,7 +34,7 @@ class  RDW2D52F(CUTEst_problem):
 #    SIF input: Nick Gould, May 2009
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-CQLR2-AN-V-V"
+#    classification = "C-CQOR2-AN-V-V"
 # 
 #    Number of nodes in each direction (a power of 2)
 # 
@@ -49,7 +49,7 @@ class  RDW2D52F(CUTEst_problem):
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'RDW2D52F'
@@ -155,7 +155,6 @@ class  RDW2D52F(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         self.xlower[ix_['U'+str(int(v_['0']))+','+str(int(v_['0']))]] = (v_['V'+
              str(int(v_['0']))+','+str(int(v_['0']))])
         self.xupper[ix_['U'+str(int(v_['0']))+','+str(int(v_['0']))]] = (v_['V'+
@@ -744,7 +743,7 @@ class  RDW2D52F(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CQLR2-AN-V-V"
+        self.pbclass = "C-CQOR2-AN-V-V"
         self.x0        = np.zeros((self.n,1))
         self.objderlvl = 2
         self.conderlvl = [2]

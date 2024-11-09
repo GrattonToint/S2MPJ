@@ -750,7 +750,7 @@ function [ probname, exitc, errors ] = s2mpj( sifpbname, varargin )
 %   PROGRAMMING: S. Gratton (Python and Julia adaptations)
 %                Ph. Toint  (Matlab code, Python and Julia adaptations),
 %                started VI 2023,
-                 this_version = '17 X 2024';
+                 this_version = '9 XI 2024';
 %                Apologies in advance for the bugs!
 %                
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -3110,6 +3110,7 @@ while ( ~feof( fidSIF ) )  %  Within the SIF file
                   printjline( 'pb.xlower = -1*fill(Inf,pb.n)',                                indlvl, bindent, pbs.fidjl );
                   printjline( 'pb.xupper =    fill(Inf,pb.n)',                                indlvl, bindent, pbs.fidjl );
                end
+               has_xlowdef = 1;
                has_xuppdef = 1;
                pending     = {};
                pendingkey  = '';

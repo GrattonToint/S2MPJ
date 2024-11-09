@@ -225,7 +225,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_('ELEVATOR'),1) = v_('ELVVAL');
         pb.xupper(ix_('ELEVATOR'),1) = v_('ELVVAL');
         pb.xlower(ix_('AILERON'),1) = v_('AILVAL');

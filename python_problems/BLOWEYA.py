@@ -239,7 +239,6 @@ class  BLOWEYA(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         for I in range(int(v_['0']),int(v_['N'])+1):
             self.xlower[ix_['U'+str(I)]] = -1.0
             self.xupper[ix_['U'+str(I)]] = 1.0

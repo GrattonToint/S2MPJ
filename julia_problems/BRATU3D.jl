@@ -123,7 +123,6 @@ function BRATU3D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             for K = Int64(v_["1"]):Int64(v_["P"])
                 pb.xlower[ix_["U"*string(Int64(v_["1"]))*","*string(J)*","*string(K)]] = 0.0

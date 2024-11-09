@@ -92,7 +92,6 @@ function BRATU1D(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["X"*string(Int64(v_["0"]))]] = 0.0
         pb.xlower[ix_["X"*string(Int64(v_["N+1"]))]] = 0.0

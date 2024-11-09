@@ -33,7 +33,7 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
 # IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "UBH5"
@@ -157,7 +157,6 @@ function UBH5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Floa
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["3"])
             for T = Int64(v_["0"]):Int64(v_["N"])
                 pb.xlower[ix_["U"*string(I)*","*string(T)]] = -1.0

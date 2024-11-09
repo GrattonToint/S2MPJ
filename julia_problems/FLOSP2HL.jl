@@ -40,7 +40,7 @@ function FLOSP2HL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE M                   15             $-PARAMETER n=2883
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "FLOSP2HL"
@@ -348,7 +348,6 @@ function FLOSP2HL(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for K = Int64(v_["-M"]):Int64(v_["M"])
             pb.xlower[ix_["PS"*string(K)*","*string(Int64(v_["-M"]))]] = 1.0
             pb.xupper[ix_["PS"*string(K)*","*string(Int64(v_["-M"]))]] = 1.0

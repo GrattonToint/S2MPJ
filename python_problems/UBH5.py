@@ -34,7 +34,7 @@ class  UBH5(CUTEst_problem):
 # IE N                   500            $-PARAMETER n=5000, m=3500
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'UBH5'
@@ -153,7 +153,6 @@ class  UBH5(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         for I in range(int(v_['1']),int(v_['3'])+1):
             for T in range(int(v_['0']),int(v_['N'])+1):
                 self.xlower[ix_['U'+str(I)+','+str(T)]] = -1.0

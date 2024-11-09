@@ -46,7 +46,7 @@ function LAKES(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "LAKES"
@@ -521,7 +521,6 @@ function LAKES(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for i = Int64(v_["1"]):Int64(v_["N"])
             pb.xlower[ix_["W"*string(i)*","*string(Int64(v_["2"]))]] = 0.0001
             pb.xlower[ix_["W"*string(i)*","*string(Int64(v_["3"]))]] = 0.0001

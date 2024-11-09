@@ -88,7 +88,6 @@ function BIGGS6(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Fl
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         pb.x0[ix_["X1"]] = Float64(1.0)

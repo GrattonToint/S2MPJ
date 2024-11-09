@@ -243,7 +243,6 @@ function BLOWEYA(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["0"]):Int64(v_["N"])
             pb.xlower[ix_["U"*string(I)]] = -1.0
             pb.xupper[ix_["U"*string(I)]] = 1.0

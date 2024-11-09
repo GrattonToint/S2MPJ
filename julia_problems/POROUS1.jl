@@ -35,7 +35,7 @@ function POROUS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
 # IE P                   72             $-PARAMETER 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "POROUS1"
@@ -110,7 +110,6 @@ function POROUS1(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{F
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for J = Int64(v_["1"]):Int64(v_["P"])
             pb.xlower[ix_["U"*string(Int64(v_["1"]))*","*string(J)]] = 1.0
             pb.xupper[ix_["U"*string(Int64(v_["1"]))*","*string(J)]] = 1.0

@@ -69,7 +69,7 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # RE A                   5.0            $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "NUFFIELD"
@@ -382,7 +382,6 @@ function NUFFIELD(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]] = 0.0
         pb.xupper[ix_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]] = 0.0
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%

@@ -20,7 +20,7 @@ class  EXTROSNBNE(CUTEst_problem):
 #    SIF input: Ph. Toint, Dec 1989.
 #               Nick Gould (nonlinear equation version), Jan 2019
 # 
-#    classification = "C-CNOR2-AN-V-V"
+#    classification = "C-CSOR2-AN-V-V"
 # 
 #    Number of variables
 # 
@@ -28,7 +28,7 @@ class  EXTROSNBNE(CUTEst_problem):
 # IE N                   5              $-PARAMETER     original value
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'EXTROSNBNE'
@@ -97,7 +97,6 @@ class  EXTROSNBNE(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         #%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         self.x0 = np.full((self.n,1),float(-1.0))
         #%%%%%%%%%%%%%%%%%%%% ELFTYPE %%%%%%%%%%%%%%%%%%%%%
@@ -152,7 +151,7 @@ class  EXTROSNBNE(CUTEst_problem):
         #%%%% RETURN VALUES FROM THE __INIT__ METHOD %%%%%%
         self.lincons  = (
               np.where(np.isin(self.congrps,np.setdiff1d(self.congrps,nlc)))[0])
-        self.pbclass = "C-CNOR2-AN-V-V"
+        self.pbclass = "C-CSOR2-AN-V-V"
         self.objderlvl = 2
         self.conderlvl = [2]
 

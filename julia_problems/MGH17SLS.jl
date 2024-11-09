@@ -22,13 +22,13 @@ function MGH17SLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Nick Gould and Tyrone Rees, Oct 2015
 #    Least-squares version of MGH17S.SIF, Nick Gould, Jan 2020
 # 
-#    classification = "C-CNOR2-MN-5-33"
+#    classification = "C-CSUR2-MN-5-33"
 # 
 #    Number of data values
 # 
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "MGH17SLS"
@@ -141,7 +141,6 @@ function MGH17SLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%
         pb.x0 = zeros(Float64,pb.n)
         pb.x0[ix_["B1"]] = Float64(50.0)
@@ -220,7 +219,7 @@ function MGH17SLS(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.A = Asave
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
-        pb.pbclass = "C-CNOR2-MN-5-33"
+        pb.pbclass = "C-CSUR2-MN-5-33"
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;
         return pb, pbm

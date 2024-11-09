@@ -42,7 +42,7 @@ function DTOC5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE N                   5000           $-PARAMETER n =  9999, m =  4999
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC5"
@@ -114,7 +114,6 @@ function DTOC5(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["Y"*string(Int64(v_["1"]))]] = 1.0
         pb.xupper[ix_["Y"*string(Int64(v_["1"]))]] = 1.0
         #%%%%%%%%%%%%%%%%%%% START POINT %%%%%%%%%%%%%%%%%%

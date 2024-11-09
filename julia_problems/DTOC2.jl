@@ -53,7 +53,7 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
 # IE N                   1000           $-PARAMETER # periods  }
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "DTOC2"
@@ -164,7 +164,6 @@ function DTOC2(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{Flo
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["1"]):Int64(v_["NY"])
             v_["RI"] = Float64(I)
             v_["TMP"] = v_["RI"]*v_["1/2NY"]

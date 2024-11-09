@@ -102,7 +102,6 @@ switch(action)
         %%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -Inf*ones(pb.n,1);
         pb.xupper = +Inf*ones(pb.n,1);
-        pb.xlower = zeros(pb.n,1);
         pb.xlower(ix_('X3'),1) = 1.0;
         pb.xupper(ix_('X3'),1) = 1.0;
         pb.xlower(ix_('X5'),1) = 4.0;

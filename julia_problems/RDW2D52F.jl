@@ -33,7 +33,7 @@ function RDW2D52F(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 #    SIF input: Nick Gould, May 2009
 #               correction by S. Gratton & Ph. Toint, May 2024
 # 
-#    classification = "C-CQLR2-AN-V-V"
+#    classification = "C-CQOR2-AN-V-V"
 # 
 #    Number of nodes in each direction (a power of 2)
 # 
@@ -48,7 +48,7 @@ function RDW2D52F(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   256           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "RDW2D52F"
@@ -159,7 +159,6 @@ function RDW2D52F(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["U"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]]  = (
               v_["V"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))])
         pb.xupper[ix_["U"*string(Int64(v_["0"]))*","*string(Int64(v_["0"]))]]  = (
@@ -738,7 +737,7 @@ function RDW2D52F(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         pbm.H = spzeros(Float64,0,0)
         #%%%%% RETURN VALUES FROM THE SETUP ACTION %%%%%%%%
         pb.lincons = findall(x-> x in setdiff( pbm.congrps,nlc),pbm.congrps)
-        pb.pbclass = "C-CQLR2-AN-V-V"
+        pb.pbclass = "C-CQOR2-AN-V-V"
         pb.x0          = zeros(Float64,pb.n)
         pbm.objderlvl = 2
         pb.objderlvl = pbm.objderlvl;

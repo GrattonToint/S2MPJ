@@ -32,7 +32,7 @@ function CLNLBEAM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "CLNLBEAM"
@@ -124,7 +124,6 @@ function CLNLBEAM(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         for I = Int64(v_["0"]):Int64(v_["NI"])
             pb.xlower[ix_["X"*string(I)]] = -0.05
             pb.xupper[ix_["X"*string(I)]] = 0.05

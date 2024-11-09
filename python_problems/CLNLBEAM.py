@@ -33,7 +33,7 @@ class  CLNLBEAM(CUTEst_problem):
 # IE NI                  2000           $-PARAMETER n=6003, m=4000
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Python by S2MPJ version 17 X 2024
+#   Translated to Python by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = 'CLNLBEAM'
@@ -124,7 +124,6 @@ class  CLNLBEAM(CUTEst_problem):
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         self.xlower = np.full((self.n,1),-float('Inf'))
         self.xupper = np.full((self.n,1),+float('Inf'))
-        self.xlower = np.zeros((self.n,1))
         for I in range(int(v_['0']),int(v_['NI'])+1):
             self.xlower[ix_['X'+str(I)]] = -0.05
             self.xupper[ix_['X'+str(I)]] = 0.05

@@ -44,7 +44,7 @@ function SEMICN2U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
 # IE N                   5000           $-PARAMETER
 # 
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#   Translated to Julia by S2MPJ version 17 X 2024
+#   Translated to Julia by S2MPJ version 9 XI 2024
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     name = "SEMICN2U"
@@ -151,7 +151,6 @@ function SEMICN2U(action::String,args::Union{PBM,Int,Float64,Vector{Int},Vector{
         #%%%%%%%%%%%%%%%%%%%  BOUNDS %%%%%%%%%%%%%%%%%%%%%
         pb.xlower = -1*fill(Inf,pb.n)
         pb.xupper =    fill(Inf,pb.n)
-        pb.xlower = zeros(Float64,pb.n)
         pb.xlower[ix_["U"*string(Int64(v_["0"]))]] = v_["LUA"]
         pb.xupper[ix_["U"*string(Int64(v_["0"]))]] = v_["LUA"]
         pb.xlower[ix_["U"*string(Int64(v_["N+1"]))]] = v_["LUB"]
